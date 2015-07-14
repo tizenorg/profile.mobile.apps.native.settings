@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<langlist>
+  <language id="bn_IN" string="﻿বাংলা" lang="Bengali" mcc=""/>
+  <language id="en_GB" string="English (United Kingdom)" lang="English (United Kingdom)" mcc=""/>
+  <language id="gu_IN" string="ગુજરાતી" lang="Gujarati" mcc=""/>
+  <language id="hi_IN" string="हिन्दी" lang="Hindi" mcc=""/>
+  <language id="kn_IN" string="ಕನ್ನಡ" lang="Kannada" mcc=""/>
+  <language id="ml_IN" string="മലയാളം" lang="Malayalam" mcc=""/>
+  <language id="si_IN" string="සිංහල" lang="Sinhala" mcc=""/>
+  <language id="ta_IN" string="தமிழ்" lang="Tamil" mcc=""/>
+  <language id="te_IN" string="తెలుగు" lang="Telugu" mcc=""/>
+  <language id="ur_IN" string="اردو" lang="Urdu" mcc=""/>
+</langlist>

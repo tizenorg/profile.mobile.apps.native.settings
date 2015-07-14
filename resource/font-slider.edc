@@ -1,0 +1,511 @@
+#define SLIDER_INDICATOR_TEXT_COLOR_INC      "#3B73B6FF"
+#define SLIDER_INDICATOR_TEXT_PRESSED_COLOR_INC      "#FAFAFAFF"
+#define SLIDER_INDICATOR_TEXT_DIM_COLOR_INC      "#AABCD6FF"
+#define SLIDER_INDICATOR_TEXT_SHADOW_TEXTBLOCK_NORMAL_COLOR_INC    "#000000FF"
+#define SLIDER_INDICATOR_TEXT_SHADOW_TEXTBLOCK_PRESSED_COLOR_INC    "#000000FF"
+#define SLIDER_INDICATOR_TEXT_SHADOW_TEXTBLOCK_DIM_COLOR_INC        "#212226FF"
+#define SLIDER_INDICATOR_IMAGE_BORDER_INC  32 32 32 32
+#define SLIDER_INDICATOR_IMAGE_PADDING_SIZE_INC  12 0
+#define SLIDER_UNITS_TEXT_SIZE_INC  30
+//#define SLIDER_BASE_HEIGHT_INC  34
+#define SLIDER_BASE_MIN_WIDTH_INC 375
+#define SLIDER_SWALLOW_BAR_MIN_WIDTH_INC  58
+#define SLIDER_SWALLOW_BAR_HEIGHT_INC  74
+#define SLIDER_INDICATOR_MAX_WIDTH_INC 90
+#define SLIDER_INDICATOR_WIDTH_INC 72
+#define SLIDER_INDICATOR_HEIGHT_INC 72
+#define PROGRESS_BG_IMAGE_BORDER_INC 17 17 0 0
+#define PROGRESS_BAR_IMAGE_PADDING_SIZE_INC 6 0
+#define PROGRESS_BAR_IMAGE_PADDING_SIZE_INC 6 0
+#define PROGRESS_BAR_IMAGE_BORDER_INC 8 8 0 0
+/*  slider text size   */
+#define MP_SLIDER_INDICATOR_TEXT_SIZE_INC 32
+
+   //Slider
+#define SLIDER_BASE_HEIGHT_INC  6
+#define SLIDER_INDICATOR_SIZE_INC 42
+#define SLIDER_SWALLOWBAR_HEIGHT_INC  42
+#define SLIDER_LEFT_RIGHT_PADDING_SIZE_INC 21 0
+#define SLIDER_ICON_PADDING_SIZE_INC 21 0
+#define SLIDER_CENTER_POINT_SIZE_INC 2 16
+
+collections {
+	base_scale: 1.8;
+   group { name: "elm/slider/horizontal/music/indicator/soundalive";
+      images {
+         image: "core_slider_handle_normal.png" COMP;
+	 image: "core_slider_handle_press.png" COMP;
+      }
+      parts {
+         part { name: "access";
+            type: RECT;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               color: 0 0 0 0;
+            }
+         }
+         part { name: "button_events";
+            type: RECT;
+            mouse_events: 1;
+            scale: 1;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               min: 2*SLIDER_INDICATOR_SIZE_INC 1.5*SLIDER_INDICATOR_SIZE_INC;
+               aspect: 1.0 1.0;
+               aspect_preference: VERTICAL;
+               color: 0 0 0 0;
+            }
+            description { state: "disabled" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+            }
+         }
+         part { name: "button0";
+            mouse_events: 0;
+            scale: 1;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               min: SLIDER_INDICATOR_SIZE_INC SLIDER_INDICATOR_SIZE_INC;
+               max: SLIDER_INDICATOR_SIZE_INC SLIDER_INDICATOR_SIZE_INC;
+               image {
+                  normal: "core_slider_handle_normal.png";
+               }
+               color_class: "W0641";	// color should follow latest winset GUI
+            }
+         }
+         part { name: "button0_press";
+            mouse_events: 0;
+            scale: 1;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               min: SLIDER_INDICATOR_SIZE_INC SLIDER_INDICATOR_SIZE_INC;
+               max: SLIDER_INDICATOR_SIZE_INC SLIDER_INDICATOR_SIZE_INC;
+               image {
+                  normal: "core_slider_handle_press.png";
+               }
+	       color_class: "W0641P"; // need check more with latest winst GUI
+               visible: 0;
+            }
+            description { state: "pressed" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+            }
+         }
+      }
+      programs {
+         program { name: "mouse_down";
+            signal: "mouse,down,*";
+            source: "button_events";
+            action:  STATE_SET "pressed" 0.0;
+            target: "button0_press";
+         }
+         program { name: "mouse_up";
+            signal: "mouse,up,*";
+            source: "button_events";
+            action:  STATE_SET "default" 0.0;
+            target: "button0_press";
+         }
+      }
+   }
+
+group { name: "elm/slider/horizontal/music/soundalive";
+      //alias: "elm/slider/horizontal/disabled";
+      images {
+         image: "core_progress_bar.#.png" COMP;
+         image: "soundalive_progress_point.png" COMP;
+      }
+      script {
+         public invert_on = 0;
+         public set_invert_on() {
+            set_state(PART:"level", "inverted", 0.0);
+            set_state(PART:"level2", "inverted", 0.0);
+            set_int(invert_on, 1);
+         }
+         public set_invert_off() {
+            set_state(PART:"level", "default", 0.0);
+            set_state(PART:"level2", "default", 0.0);
+            set_int(invert_on, 0);
+         }
+         public thumb_down() {
+            if(get_int(invert_on) == 0)
+               set_state(PART:"level", "pressed", 0.0);
+               set_state(PART:"level2", "pressed", 0.0);
+            }
+         public thumb_up() {
+            if(get_int(invert_on) == 0)
+               set_state(PART:"level", "default", 0.0);
+               set_state(PART:"level2", "default", 0.0);
+            }
+         public drag_state() {
+            new Float:dx, Float:dy;
+            get_drag(PART:"elm.dragable.slider", dx, dy);
+            if(dx > 0.5) {
+              set_state(PART:"level", "default", 0.0);
+              set_state(PART:"level2", "default", 0.0);
+              set_int(invert_on, 0);
+            }
+            else {
+              set_state(PART:"level", "inverted", 0.0);
+              set_state(PART:"level2", "inverted", 0.0);
+              set_int(invert_on, 1);
+            }
+         }
+      }
+         parts {
+            part { name: "access";
+               type: RECT;
+               description { state: "default" 0.0;
+                  fixed: 1 1;
+                  color: 0 0 0 0;
+               }
+            }
+            part {
+               name: "bg";
+               type: SPACER;
+               scale: 1;
+               description {
+                  state: "default" 0.0;
+                  min: 0 SLIDER_SWALLOWBAR_HEIGHT_INC;
+                  max: -1 SLIDER_SWALLOWBAR_HEIGHT_INC;
+               }
+            }
+            part {
+               name: "bar_image_left_padding";
+               type: SPACER;
+               scale: 1;
+               description {
+                  state: "default" 0.0;
+                  min: SLIDER_LEFT_RIGHT_PADDING_SIZE_INC;
+                  max: SLIDER_LEFT_RIGHT_PADDING_SIZE_INC;
+                  fixed: 1 0;
+                  rel1.to: "bg";
+                  rel2 {
+                     relative: 0.0  1.0;
+                     to: "bg";
+                  }
+                  align: 0.0 0.5;
+               }
+            }
+            part { name: "elm.swallow.icon";
+               type: SWALLOW;
+               clip_to: "icon_clipper";
+               scale: 1;
+               description { state: "default" 0.0;
+                  visible: 0;
+                  align: 0.0 0.5;
+                  rel1 {
+                     relative: 1.0 0.0;
+                     to_x: "bar_image_left_padding";
+                     to_y: "bg";
+                  }
+                  rel2 {
+                     relative: 1.0 1.0;
+                     to_x: "bar_image_left_padding";
+                     to_y: "bg";
+                  }
+               }
+               description { state: "visible" 0.0;
+                  inherit: "default" 0.0;
+                  visible: 1;
+               }
+            }
+            part {
+               name: "bar_icon_right_padding";
+               type: SPACER;
+               scale: 1;
+               description {
+                  state: "default" 0.0;
+                  min: 0 0;
+                  max: 0 0;
+                  rel1 {
+                     relative: 1.0  0.0;
+                     to: "elm.swallow.icon";
+                  }
+                  rel2 {
+                     relative: 1.0  1.0;
+                     to: "elm.swallow.icon";
+                  }
+                  fixed: 1 1;
+               }
+               description { state: "visible";
+                  inherit: "default" 0.0;
+                  min: SLIDER_ICON_PADDING_SIZE_INC;
+                  max: SLIDER_ICON_PADDING_SIZE_INC;
+               }
+            }
+            part { name: "base";
+               mouse_events: 0;
+               scale: 1;
+               description { state: "default" 0.0;
+                  min: 0 SLIDER_BASE_HEIGHT_INC;
+                  max: -1 SLIDER_BASE_HEIGHT_INC;
+                  rel1 {
+                     to: "bar_icon_right_padding";
+                     relative: 1.0 0.0;
+                  }
+                  rel2 {
+                     to: "bar_image_right_padding";
+                     relative: 0.0 1.0;
+                  }
+                  fixed: 0 1;
+                  image.normal: "core_progress_bar.#.png";
+                  color_class: "W062L1";
+               }
+            }
+            part { name: "drag_base";
+               type: "SPACER";
+               description { state: "default" 0.0;
+                  min: 0 SLIDER_SWALLOWBAR_HEIGHT_INC;
+                  rel1 {
+                     to_x: "bar_image_left_padding";
+                     to_y: "bg";
+                     relative: 0.0 0.0;
+                  }
+                  rel2.to: "bg";
+                  fixed: 1 1;
+               }
+               description { state: "visible" 0.0;
+                  inherit: "default" 0.0;
+                  rel1 {
+                     to_x: "bar_icon_right_padding";
+                     to_y: "bg";
+                     relative: 0.5 0.0;
+                  }
+                  rel2.to: "bg";
+               }
+            }
+            part { name: "level";
+               mouse_events: 0;
+               scale: 1;
+               clip_to: "clipper";
+               description { state: "default" 0.0;
+                  rel1 {
+                     to_x: "bar_icon_right_padding";
+                     relative: 1.0 0.0;
+                  }
+                  rel2 {
+                     to_x: "elm.dragable.slider";
+                     relative: 0.5 1.0;
+                  }
+                  fixed: 1 1;
+                  min: 0 SLIDER_BASE_HEIGHT_INC;
+                  max: -1 SLIDER_BASE_HEIGHT_INC;
+                  image.normal: "core_progress_bar.#.png";
+		  			color_class: "W062L1";
+					//color:255 0 0 255;
+               }
+            }
+            part { name: "level2";
+               mouse_events: 0;
+               scale: 1;
+               clip_to: "clipper";
+               description { state: "default" 0.0;
+                  fixed: 1 1;
+                  visible: 0;
+                  rel1 {
+                     to_y: "base";
+                     to_x: "elm.dragable.slider";
+                     relative: 0.5 0.0;
+                  }
+                  rel2 {
+                     to_y: "base";
+                     to_x: "bar_image_left_padding";
+                     relative: 0.0 1.0;
+                  }
+                  image.normal: "core_progress_bar.#.png";
+		  color_class: "W062L1";
+               }
+            }
+            part {
+               name: "bar_image_right_padding";
+               type: SPACER;
+               scale: 1;
+               description {
+                  state: "default" 0.0;
+                  min: SLIDER_LEFT_RIGHT_PADDING_SIZE_INC;
+                  max: SLIDER_LEFT_RIGHT_PADDING_SIZE_INC;
+                  fixed: 1 0;
+                  rel1 {
+                     relative: 1.0  0.0;
+                     to: "bg";
+                  }
+                  rel2 {
+                     relative: 1.0  1.0;
+                     to: "bg";
+                  }
+                  align: 1.0 0.5;
+               }
+            }
+            part { name: "icon_clipper";
+               scale: 1;
+               type: RECT;
+               description { state: "default" 0.0;
+                  color_class: "W0661";
+		}
+            }
+            part { name: "elm.swallow.bar";
+               type: SWALLOW;
+               mouse_events: 0;
+               scale: 1;
+               description { state: "default" 0.0;
+                  min: 0  SLIDER_SWALLOWBAR_HEIGHT_INC;
+                  max: -1 SLIDER_SWALLOWBAR_HEIGHT_INC;
+                  fixed: 0 1;
+                  rel1 {
+                     to: "bar_icon_right_padding";
+                     relative: 1.0 0.0;
+                  }
+                  rel2 {
+                     to: "bar_image_right_padding";
+                     relative: 0.0 1.0;
+                  }
+               }
+            }
+            part { name:"center_point_1";
+               scale: 1;
+               description { state: "default" 0.0;
+                  min: SLIDER_CENTER_POINT_SIZE_INC;
+                  max: SLIDER_CENTER_POINT_SIZE_INC;
+                  visible: 1;
+                  image.normal: "soundalive_progress_point.png";
+                  rel1 { relative: 0.0  0.0; to: "base"; }
+                  rel2 { relative: 0.0  1.0; to: "base"; }
+                  align: 0.5 0.5;
+                  fixed: 1 1;
+                  //color_class: "AO007";
+                  color: 181 173 181 255;
+                  //color_class: "AO001";
+               }
+            }
+            part { name:"center_point_2";
+               scale: 1;
+               description { state: "default" 0.0;
+                  min: SLIDER_CENTER_POINT_SIZE_INC;
+                  max: SLIDER_CENTER_POINT_SIZE_INC;
+                  visible: 1;
+                  image.normal: "soundalive_progress_point.png";
+                  rel1 { relative: 0.25  0.0; to: "base"; }
+                  rel2 { relative: 0.25  1.0; to: "base"; }
+                  align: 0.5 0.5;
+                  fixed: 1 1;
+                  //color_class: "AO007";
+                  color: 181 173 181 255;
+               }
+            }
+            part { name:"center_point_3";
+               scale: 1;
+               description { state: "default" 0.0;
+                  min: SLIDER_CENTER_POINT_SIZE_INC;
+                  max: SLIDER_CENTER_POINT_SIZE_INC;
+                  visible: 1;
+                  image.normal: "soundalive_progress_point.png";
+                  rel1 { relative: 0.5  0.0; to: "base"; }
+                  rel2 { relative: 0.5  1.0; to: "base"; }
+                  align: 0.5 0.5;
+                  fixed: 1 1;
+                  //color_class: "AO007";
+                  color: 181 173 181 255;
+               }
+            }
+            part { name:"center_point_4";
+               scale: 1;
+               description { state: "default" 0.0;
+                  min: SLIDER_CENTER_POINT_SIZE_INC;
+                  max: SLIDER_CENTER_POINT_SIZE_INC;
+                  visible: 1;
+                  image.normal: "soundalive_progress_point.png";
+                  rel1 { relative: 0.75  0.0; to: "base";}
+                  rel2 { relative: 0.75  1.0; to: "base"; }
+                  align: 0.5 0.5;
+                  fixed: 1 1;
+                  //color_class: "AO007";
+                  color: 181 173 181 255;
+               }
+            }
+            part { name:"center_point_5";
+               scale: 1;
+               description { state: "default" 0.0;
+                  min: SLIDER_CENTER_POINT_SIZE_INC;
+                  max: SLIDER_CENTER_POINT_SIZE_INC;
+                  visible: 1;
+                  image.normal: "soundalive_progress_point.png";
+                  rel1 { relative: 1.0  0.0; to: "base";}
+                  rel2 { relative: 1.0  1.0; to: "base";}
+                  align: 0.5 0.5;
+                  fixed: 1 1;
+                  //color_class: "AO007";
+                  color: 181 173 181 255;
+               }
+            }
+
+            part { name: "elm.dragable.slider";
+               type: GROUP;
+               source: "elm/slider/horizontal/music/indicator/soundalive";
+               mouse_events: 1;
+               scale: 1;
+               dragable {
+                  x: 1 1 0;
+                  y: 0 0 0;
+                  confine: "drag_base";
+               }
+               description { state: "default" 0.0;
+                  min: SLIDER_INDICATOR_SIZE_INC SLIDER_INDICATOR_SIZE_INC;
+                  fixed: 1 1;
+                  align: 0.5 0.5;
+                  color: 0 0 0 0;
+               }
+            }
+            part { name: "disabler";
+               type: RECT;
+               mouse_events: 1;
+               repeat_events: 0;
+               scale: 1;
+               description { state: "default" 0.0;
+                  visible: 0;
+                  color: 0 0 0 0;
+               }
+               description { state: "disabled" 0.0;
+                  inherit: "default" 0.0;
+                  visible: 1;
+               }
+            }
+            part { name: "clipper";
+               type: RECT;
+               description { state: "default" 0.0;
+                  color: 0 0 0 0;
+               }
+               description { state: "pressed" 0.0;
+                  color: 0 0 0 0;
+               }
+               description { state: "disabled" 0.0;
+                  color: 0 0 0 0;
+               }
+
+            }
+         }
+      programs {
+         program { name: "invert_on";
+            signal: "elm,state,inverted,on";
+            source: "elm";
+            script {
+               set_invert_on();
+            }
+         }
+         program { name: "invert_off";
+            signal: "elm,state,inverted,off";
+            source: "elm";
+            script {
+               set_invert_off();
+            }
+         }
+         program { name: "icon_show";
+            signal: "elm,state,icon,visible";
+            source: "elm";
+            action:  STATE_SET "visible" 0.0;
+            target: "elm.swallow.icon";
+            target: "bar_icon_right_padding";
+            target: "drag_base";
+         }
+      }
+   }
+}

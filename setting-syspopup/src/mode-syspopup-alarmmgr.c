@@ -1,0 +1,131 @@
+/*
+ * setting
+ *
+ * Copyright (c) 2000 - 2011 Samsung Electronics Co., Ltd.
+ *
+ * Contact: MyoungJune Park <mj2004.park@samsung.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+#include <mode-syspopup-alarmmgr.h>
+#include <setting-common-data-error.h>
+/**********************************************************************
+******************Global function ref*************************************
+***********************************************************************/
+
+/**
+* send
+* This function is  used to create mgr
+* @param           data[in]         pointer to AData
+* @return          when success, return EINA_TRUE or EINA_FALSE if error
+* @exception
+*/
+int mode_syspopup_alarmmgr_create(MODE_BM_AData *alarm)
+{
+	int nErr = -1;	/*no err */
+	alarm_entry_t *alarm_entry = NULL;
+	alarm_date_t alarm_data;
+
+	/*create alarm */
+	alarm_entry = alarmmgr_create_alarm();
+	retv_if(NULL == alarm_entry, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+	/*set repeat */
+	int repeat_value = 0;
+	alarm_repeat_mode_t repeat_mode = 0;
+	nErr = alarmmgr_set_repeat_mode(alarm_entry, repeat_mode, repeat_value);
+	/*set time_data */
+	struct tm pt;
+	memset(&pt, 0, sizeof(struct tm));
+	time_t ctime = time(NULL);
+	if (NULL == localtime_r(&ctime, &pt)) {
+		_DBG("fail to call localtime_r");
+	}
+
+	_DBG("alarm->hour[%d], alarm->min[%d]", alarm->hour, alarm->min);
+	pt.tm_hour = alarm->hour;
+	pt.tm_min = alarm->min;
+	SET_BM_TIME_DATA_T(&alarm_data, pt.tm_year + 1900, pt.tm_mon + 1, pt.tm_mday, pt.tm_hour, pt.tm_min, 0);
+	nErr |= alarmmgr_set_time(alarm_entry, alarm_data);
+
+	/*set type   */
+	nErr = alarmmgr_set_type(alarm_entry, ALARM_TYPE_DEFAULT);
+
+	/*create new    */
+	int alarm_mgr_id = 0;
+	nErr = alarmmgr_add_alarm_with_localtime(alarm_entry, SETTING_BM_ALARM_APP, &alarm_mgr_id);
+	/*nErr = alarmmgr_add_alarm_appsvc_with_localtime(alarm_entry, (void *)b, &alarm_mgr_id); */
+	_DBG("alarm_mgr_id [%d]", alarm_mgr_id);
+	if (nErr) {
+		_DBG("*** [ERR] alarmmgr_add_alarm_with_localtime failed ***");
+	}
+
+	alarm->alarm_mgr_id = alarm_mgr_id;
+
+	if (alarm_entry) {
+		alarmmgr_free_alarm(alarm_entry);
+	}
+	return nErr;
+}
+
+/**
+* send
+* This function is  used to remove mgr
+* @param           data[in]         pointer to AData
+* @return          when success, return EINA_TRUE or EINA_FALSE if error
+* @exception
+*/
+int mode_syspopup_alarmmgr_remove(MODE_BM_AData *alarm)
+{
+
+	int start_block_id = -1;
+	int end_block_id = -1;
+	/*vconf_get_int(VCONFKEY_SETAPPL_BM_ALARM_ID_START, &start_block_id); */
+	/*vconf_get_int(VCONFKEY_SETAPPL_BM_ALARM_ID_END, &end_block_id); */
+	_DBG("alarm->alarm_mgr_id [%d]", alarm->alarm_mgr_id);
+	int ret = -1;
+	if (start_block_id == alarm->alarm_mgr_id)	{
+		_DBG("start id remove");
+		ret = alarmmgr_remove_alarm(alarm->alarm_mgr_id);
+		/*vconf_set_int(VCONFKEY_SETAPPL_BM_ALARM_ID_START, -1); */
+	} else if (end_block_id == alarm->alarm_mgr_id)	{
+		_DBG("end id remove");
+		ret = alarmmgr_remove_alarm(alarm->alarm_mgr_id);
+		/*vconf_set_int(VCONFKEY_SETAPPL_BM_ALARM_ID_END, -1); */
+	} else {
+		_DBG("nothing to remove just create");
+	}
+
+	if (ret) {
+		_DBG("*** [ERR] alarmmgr_remove_alarm failed : err_code=[%d]", ret);
+	}
+
+	return ret;
+}
+
+/**
+* send
+* This function is  used to update mgr
+* @param           data[in]         pointer to AData
+* @return          when success, return EINA_TRUE or EINA_FALSE if error
+* @exception
+*/
+int mode_syspopup_alarmmgr_update(MODE_BM_AData *alarm)
+{
+	int ret = -1;
+	ret = mode_syspopup_alarmmgr_remove(alarm);
+	ret = mode_syspopup_alarmmgr_create(alarm);
+	_DBG("*** [ERR] mode_syspopup_alarmmgr_update failed ***");
+
+	return ret;
+}

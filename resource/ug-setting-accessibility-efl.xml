@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://tizen.org/ns/packages" package="setting-accessibility-efl" version="0.3.0-1">
+        <label>setting accessibility efl</label>
+        <author email="mj2004.park@samsung.com" href="www.samsung.com">MyoungJune Park</author>
+        <description>Setting Font Size Panel</description>
+        <ui-application appid="setting-accessibility-efl" exec="/opt/ug/bin/setting-accessibility-efl">
+                <icon>ug-setting-accessibility-efl.png</icon>
+                <label>Setting Font Size Panel</label>
+                <label xml:lang="en-us">Setting Font Size panel</label>
+        </ui-application>
+</manifest>

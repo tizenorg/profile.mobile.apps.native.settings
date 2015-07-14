@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://tizen.org/ns/packages" package="setting-font-efl" version="0.3.0-1">
+        <label>setting-font-efl</label>
+        <author email="mj2004.park@samsung.com" href="www.samsung.com">MyoungJune Park</author>
+        <description>Setting Font Panel</description>
+    	<ui-application appid="setting-font-efl" exec="/opt/ug/bin/setting-font-efl" type="capp" nodisplay="true" taskmanage="false">
+                <icon>ug-setting-font-efl.png</icon>
+                <label>Setting Font Type Panel</label>
+                <label xml:lang="en-us">Setting Font Type Panel</label>
+        </ui-application>
+</manifest>

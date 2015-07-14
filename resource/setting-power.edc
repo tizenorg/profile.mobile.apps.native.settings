@@ -1,0 +1,200 @@
+/*
+ * setting
+ *
+ * Copyright (c) 2000 - 2011 Samsung Electronics Co., Ltd.
+ *
+ * Contact: MyoungJune Park <mj2004.park@samsung.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+#include "../setting-common/include/setting-common-data-edj-define.h"
+
+collections
+{
+	styles
+	{
+		style { name: "textblock_style_center_23";
+base: "font=Tizen:style=Regular font_size=23 align=left color=#E8E8E8 wrap=word text_class=tizen";
+tag:  "br" "\n";
+tag:  "hilight" "+ font=Tizen:style=Bold";
+tag:  "b" "+ font=Tizen:style=Bold";
+tag:  "whitecolor" "+ color=#E8E8E8";
+tag:  "tab" "\t";
+		}
+		style { name: "textblock_style_center_30";
+base: "font=Tizen:style=Regular font_size=30 align=left color=#E8E8E8 wrap=word text_class=tizen";
+tag:  "br" "\n";
+tag:  "hilight" "+ font=Tizen:style=Bold";
+tag:  "b" "+ font=Tizen:style=Bold";
+tag:  "whitecolor" "+ color=#E8E8E8";
+tag:  "tab" "\t";
+		}
+		style { name: "textblock_style_center_24";
+base: "font=Tizen:style=Regular font_size=24 align=left color=#E8E8E8 wrap=word text_class=tizen";
+tag:  "br" "\n";
+tag:  "hilight" "+ font=Tizen:style=Bold";
+tag:  "b" "+ font=Tizen:style=Bold";
+tag:  "whitecolor" "+ color=#E8E8E8";
+tag:  "tab" "\t";
+		}
+	}
+
+	group {
+name: "efficiency_layout";
+	  parts {
+		  part {
+name: "bg";
+type: RECT;
+scale: 1;
+	   description {
+state: "default" 0.0;
+	   rel1 { relative: 0.0 0.0; offset: 0 0;}
+	   rel2 { relative: 1.0 1.0; offset: 0 0;}
+	   }
+		  }
+		  part { name: "left.default";
+type: SWALLOW;
+mouse_events: 0;
+			  description { state: "default" 0.0;
+visible: 0;
+align: 0.0 0.5;
+	   rel1{ relative: 0.0 0.0; offset: 0 0; to: "bg";}
+	   rel2{ relative: 0.0 1.0; offset: 36 0; to: "bg";}
+			  }
+		  }
+		  /* effect rate rect */
+		  part {
+name: "img_1";
+type: SWALLOW;
+	  //mouse_events: 1;
+scale: 1;
+color: 80 80 80 100;    // grey
+	   description {
+align: 0.0 0.5;
+min: 48 100;
+max: 48 100;
+fixed: 1 1;
+state: "default" 0.0;
+	   rel1 { relative: 0.0 0.0; offset: 4 0; to: "left.default";}
+	   rel2 { relative: 1.0 1.0; offset: 104 0; to: "left.default";}
+	   }
+		  }
+		  part {
+name: "img_2";
+type: SWALLOW;
+	  //mouse_events: 1;
+scale: 1;
+color: 80 80 80 100;    // grey
+	   description {
+align: 0.0 0.5;
+min: 48 100;
+max: 48 100;
+fixed: 1 1;
+state: "default" 0.0;
+	   rel1 { relative: 0.0 0.0; offset: 4 0; to: "img_1";}
+	   rel2 { relative: 1.0 1.0; offset: 104 0; to: "img_1";}
+	   }
+		  }
+		  part {
+name: "img_3";
+type: SWALLOW;
+	  //mouse_events: 1;
+scale: 1;
+color: 80 80 80 100;    // grey
+	   description {
+align: 0.0 0.5;
+min: 48 100;
+max: 48 100;
+fixed: 1 1;
+state: "default" 0.0;
+	   rel1 { relative: 0.0 0.0; offset: 4 0; to: "img_2";}
+	   rel2 { relative: 1.0 1.0; offset: 104 0; to: "img_2";}
+	   }
+		  }
+		  part {
+name: "img_4";
+type: SWALLOW;
+	  //mouse_events: 1;
+scale: 1;
+color: 80 80 80 100;    // grey
+	   description {
+align: 0.0 0.5;
+min: 48 100;
+max: 48 100;
+fixed: 1 1;
+state: "default" 0.0;
+	   rel1 { relative: 0.0 0.0; offset: 4 0; to: "img_3";}
+	   rel2 { relative: 1.0 1.0; offset: 104 0; to: "img_3";}
+	   }
+		  }
+		  part {
+name: "img_5";
+type: SWALLOW;
+	  //mouse_events: 1;
+scale: 1;
+color: 80 80 80 100;    // grey
+	   description {
+align: 0.0 0.5;
+min: 48 100;
+max: 48 100;
+fixed: 1 1;
+state: "default" 0.0;
+	   rel1 { relative: 0.0 0.0; offset: 4 0; to: "img_4";}
+	   rel2 { relative: 1.0 1.0; offset: 104 0; to: "img_4";}
+	   }
+		  }
+		  part {
+name: "rate";
+type: SWALLOW;
+	  //mouse_events: 1;
+scale: 1;
+color: 80 80 80 100;    // grey
+	   description {
+align: 0.0 0.5;
+min: 70 90;
+max: 70 90;
+fixed: 1 1;
+state: "default" 0.0;
+	   rel1 { relative: 0.0 0.0; offset: 4 0; to: "img_5";}
+	   rel2 { relative: 1.0 1.0; offset: 104 0; to: "img_5";}
+	   }
+		  }
+
+		  /* text */
+		  part {
+name: "bottom.text";
+type: TEXTBLOCK;
+scale: 1;
+	   description {
+min: 38 70;
+max: 38 70;
+color: 255 255 255 255;
+state: "default" 0.0;
+	   rel1 { relative: 0.0 0.0; offset: 0 5; to: "img_1";}
+	   rel2 { relative: 1.0 1.0; offset: 0 43; to: "img_1";}
+
+	   text {
+		   //align: 0.5 0.5;
+min: 0 1;
+	 //font: "Tizen:style=Bold";
+	 //size: 30;
+	 //text_class:"tizen";
+style: textblock_style_center_30;
+	   }
+	   }
+		  }	//text end
+	  }	//parts end
+	} //	group end
+}	//collention end

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE settings [
+<!ELEMENT settings (setting)>
+<!ELEMENT setting (bool , integer , string , label)>
+<!ATTLIST setting id CDATA #REQUIRED>
+<!ATTLIST setting main CDATA #REQUIRED>
+<!ATTLIST bool id CDATA #REQUIRED>
+<!ATTLIST bool value CDATA #REQUIRED>
+<!ATTLIST integer id CDATA #REQUIRED>
+<!ATTLIST integer value CDATA #REQUIRED>
+<!ATTLIST string id CDATA #REQUIRED>
+<!ATTLIST string value CDATA #REQUIRED>
+<!ATTLIST label id CDATA #REQUIRED>
+<!ATTLIST link id CDATA #REQUIRED>
+<!ATTLIST link value CDATA #REQUIRED>
+<!ATTLIST group id CDATA #REQUIRED>
+]>
+<settings>
+<setting id="page1" main="true" title="app">
+
+	<!-- header layout -->
+	<navigationbar id="navi1" title="app">
+		<button id="nav_ok_btn" title="OK"/>
+		<button id="nav_cancel_btn" title="NO"/>
+	</navigationbar>
+
+	<!-- first group -->
+	<group id="grp1" title="Group name">
+		<bool id="checkbox1" title="toggle button example" value="true"/>
+		<integer id="slider1" title="Slider control example" min="0" max="100" value="40"/>
+		<string id="editbox1" title="single line text (text field)" minlength="0" maxlength="30" value="Hello World text"/>
+		<label id="txtlabel" title="read only string here"/>
+		<link id="link1" title="click here" value="bbb.xml"/>
+		<expandlist id="expanditem1" title="background time" value="30 seconds">
+			<expanditem id="radio1" title="15 seconds" type="radio"/> 	
+			<expanditem id="radio2" title="30 seconds" type="radio"/> 	
+			<expanditem id="radio3" title="1 minute" type="radio"/> 	
+			<expanditem id="radio4" title="2 minute2" type="radio"/> 	
+		</expandlist>
+	</group>
+
+	<!-- second group -->
+	<group id="grp2" title="Group name2">
+		<bool id="checkbox2" title="toggle button example" value="true"/>
+		<integer id="slider2" title="Slider control example" min="0" max="100" value="40"/>
+		<string id="editbox2" title="single line text (text field)" minlength="0" maxlength="30" value="Hello World text222"/>
+		<label id="txtlabe2" title="read only string here"/>
+		<link id="link2" title="click here" value="bbb.xml"/>
+	</group>
+</setting>
+</settings>
+
+

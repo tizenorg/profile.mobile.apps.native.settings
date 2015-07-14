@@ -1,0 +1,10 @@
+[Unit]
+Description=Tizen firewall
+After=tizen-runtime.target
+Requires=tizen-runtime.target
+
+[Service]
+ExecStart=/usr/bin/firewall.sh
+
+[Install]
+WantedBy=multi-user.target

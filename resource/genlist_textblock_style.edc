@@ -1,0 +1,138 @@
+/*
+ * Copyright (c) 2010 Samsung Electronics Co., Ltd All Rights Reserved
+ *
+ * PROPRIETARY/CONFIDENTIAL
+ *
+ * This software is the confidential and proprietary information of SAMSUNG
+ * ELECTRONICS ("Confidential Information"). You agree and acknowledge that this
+ * software is owned by Samsung and you shall not disclose such Confidential
+ * Information and shall use it only in accordance with the terms of the license
+ * agreement you entered into with SAMSUNG ELECTRONICS. SAMSUNG make no
+ * representations or warranties about the suitability of the software, either
+ * express or implied, including but not limited to the implied warranties of
+ * merchantability, fitness for a particular purpose, or non-infringement.
+ * SAMSUNG shall not be liable for any damages suffered by licensee arising out
+ * of or releated to this software.
+ *
+ */
+
+/*
+ * vim:ts=3
+*/
+
+#define STYLE_TAG \
+      tag:  "br" "\n";\
+      tag:  "ps" "ps";\
+      tag:  "tab" "\t";\
+      tag:  "b" "+ font=Tizen:style=Bold";
+
+#define STYLE_TAG_MATCH \
+      tag:  "match" GENLIST_PART_MATCH_TAG_COLOR;
+
+// FIXME: Why this is needed? just don't use match color, right? damn textblock bug...
+#define STYLE_TAG_MATCH_FOCUS \
+      tag:  "match" GENLIST_LIST_TEXT_FOCUS_COLOR_STYLE;
+
+styles {
+   // ********************** groupindex text
+   style { name: "genlist_style_groupindex_text";
+      base: "font=Tizen:style=Bold font_size="GENLIST_GROUPINDEX_LIST_SIZE" color="GENLIST_GROUPINDEX_LIST_COLOR_STYLE" text_class=list_item ellipsis=1.0";
+      STYLE_TAG
+      STYLE_TAG_MATCH
+   }
+   style { name: "genlist_style_groupindex_text_focus";
+      base: "font=Tizen:style=Bold font_size="GENLIST_GROUPINDEX_LIST_SIZE" color="GENLIST_GROUPINDEX_LIST_FOCUS_COLOR_STYLE" text_class=list_item ellipsis=1.0";
+      STYLE_TAG
+      STYLE_TAG_MATCH
+   }
+   // ********************** dialgoue group help text
+   style { name: "genlist_style_dialogue_group_help_text";
+      base: "font=Tizen:style=Regular font_size="GENLIST_DIALOGUE_GROUP_HELP_TEXT_SIZE" color="GENLIST_DIALOGUE_GROUP_HELP_TEXT_COLOR_STYLE" text_class=list_item wrap=mixed";
+      STYLE_TAG
+      STYLE_TAG_MATCH
+   }
+   // ********************** list main text
+   style { name: "genlist_style_list_main_text_unread";
+      base: "font=Tizen:style=Regular font_size="GENLIST_LIST_MAIN_TEXT_SIZE" color="GENLIST_LIST_MAIN_TEXT_UNREAD_COLOR_STYLE" text_class=list_item ellipsis=1.0";
+      STYLE_TAG
+      STYLE_TAG_MATCH
+   }
+   style { name: "genlist_style_list_main_text_unread_dim";
+      base: "font=Tizen:style=Regular font_size="GENLIST_LIST_MAIN_TEXT_SIZE" color="GENLIST_LIST_MAIN_TEXT_UNREAD_DIM_COLOR_STYLE" text_class=list_item ellipsis=1.0";
+      STYLE_TAG
+      STYLE_TAG_MATCH
+   }
+   style { name: "genlist_style_list_main_text_read";
+      base: "font=Tizen:style=Regular font_size="GENLIST_LIST_MAIN_TEXT_SIZE" color="GENLIST_LIST_MAIN_TEXT_READ_COLOR_STYLE" text_class=list_item ellipsis=1.0";
+      STYLE_TAG
+      STYLE_TAG_MATCH
+   }
+   style { name: "genlist_style_list_main_text_read_dim";
+      base: "font=Tizen:style=Regular font_size="GENLIST_LIST_MAIN_TEXT_SIZE" color="GENLIST_LIST_MAIN_TEXT_READ_DIM_COLOR_STYLE" text_class=list_item ellipsis=1.0";
+      STYLE_TAG
+      STYLE_TAG_MATCH
+   }
+   style { name: "genlist_style_list_main_text_focus";
+      base: "font=Tizen:style=Regular font_size="GENLIST_LIST_MAIN_TEXT_SIZE" color="GENLIST_LIST_TEXT_FOCUS_COLOR_STYLE" text_class=list_item ellipsis=1.0";
+      STYLE_TAG
+      STYLE_TAG_MATCH_FOCUS
+   }
+  // **********************  list main text (multiline)
+   style { name: "genlist_style_list_main_text_unread_wrap";
+      base: "font=Tizen:style=Regular font_size="GENLIST_LIST_MAIN_TEXT_SIZE" color="GENLIST_LIST_MAIN_TEXT_UNREAD_COLOR_STYLE" text_class=list_item wrap=mixed";
+      STYLE_TAG
+      STYLE_TAG_MATCH
+   }
+   style { name: "genlist_style_list_main_text_unread_dim_wrap";
+      base: "font=Tizen:style=Regular font_size="GENLIST_LIST_MAIN_TEXT_SIZE" color="GENLIST_LIST_MAIN_TEXT_UNREAD_DIM_COLOR_STYLE" text_class=list_item wrap=mixed";
+      STYLE_TAG
+      STYLE_TAG_MATCH
+   }
+   style { name: "genlist_style_list_main_text_focus_wrap";
+      base: "font=Tizen:style=Regular font_size="GENLIST_LIST_MAIN_TEXT_SIZE" color="GENLIST_LIST_TEXT_FOCUS_COLOR_STYLE" text_class=list_item wrap=mixed";
+      STYLE_TAG
+      STYLE_TAG_MATCH_FOCUS
+   }
+   // ********************** list sub text
+   style { name: "genlist_style_list_sub_text_default";
+      base: "font=Tizen:style=Bold font_size="GENLIST_LIST_SUB_TEXT_SIZE" color="GENLIST_LIST_SUB_TEXT_DEFAULT_COLOR_STYLE" text_class=tizen ellipsis=1.0";
+      STYLE_TAG
+      STYLE_TAG_MATCH
+   }
+   style { name: "genlist_style_list_sub_text_default_dim";
+      base: "font=Tizen:style=Bold font_size="GENLIST_LIST_SUB_TEXT_SIZE" color="GENLIST_LIST_SUB_TEXT_DEFAULT_DIM_COLOR_STYLE" text_class=tizen ellipsis=1.0";
+      STYLE_TAG
+      STYLE_TAG_MATCH_FOCUS
+   }
+   style { name: "genlist_style_list_sub_text_settings";
+      base: "font=Tizen:style=Bold font_size="GENLIST_LIST_SUB_TEXT_SIZE" color="GENLIST_LIST_SUB_TEXT_SETTINGS_COLOR_STYLE" text_class=tizen ellipsis=1.0";
+      STYLE_TAG
+      STYLE_TAG_MATCH
+   }
+   style { name: "genlist_style_list_sub_text_settings_dim";
+      base: "font=Tizen:style=Bold font_size="GENLIST_LIST_SUB_TEXT_SIZE" color="GENLIST_LIST_SUB_TEXT_SETTINGS_DIM_COLOR_STYLE" text_class=tizen ellipsis=1.0";
+      STYLE_TAG
+      STYLE_TAG_MATCH
+   }
+   style { name: "genlist_style_list_sub_text_focus";
+      base: "font=Tizen:style=Bold font_size="GENLIST_LIST_SUB_TEXT_SIZE" color="GENLIST_LIST_TEXT_FOCUS_COLOR_STYLE" text_class=tizen ellipsis=1.0";
+      STYLE_TAG
+      STYLE_TAG_MATCH_FOCUS
+   }
+   // ********************** list sub text (multiline)
+   style { name: "genlist_style_list_sub_text_default_wrap";
+      base: "font=Tizen:style=Bold font_size="GENLIST_LIST_SUB_TEXT_SIZE" color="GENLIST_LIST_SUB_TEXT_DEFAULT_COLOR_STYLE" text_class=tizen wrap=mixed";
+      STYLE_TAG
+      STYLE_TAG_MATCH
+   }
+   style { name: "genlist_style_list_sub_text_default_dim_wrap";
+      base: "font=Tizen:style=Bold font_size="GENLIST_LIST_SUB_TEXT_SIZE" color="GENLIST_LIST_SUB_TEXT_DEFAULT_DIM_COLOR_STYLE" text_class=tizen wrap=mixed";
+      STYLE_TAG
+      STYLE_TAG_MATCH
+   }
+   style { name: "genlist_style_list_sub_text_focus_wrap";
+      base: "font=Tizen:style=Bold font_size="GENLIST_LIST_SUB_TEXT_SIZE" color="GENLIST_LIST_TEXT_FOCUS_COLOR_STYLE" text_class=tizen wrap=mixed";
+      STYLE_TAG
+      STYLE_TAG_MATCH
+   }
+}

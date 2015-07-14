@@ -1,0 +1,132 @@
+/**
+@page setting-display
+@section sec-setting-display setting-display
+@tableofcontents
+
+UG creation code for setting-display
+
+it consists of
+ -# Brightness
+ -# Backlight time
+ -# Touch key light duration
+ -# Auto adjust screen tone
+ -# Auto rotate screen
+ -# Display battery percentage
+ -# Dynamic status bar
+ -# Edit after screen capture
+ -# Smart Screen
+
+
+@subsection sub-brightness Brightness
+
+Brightness related vconf keys
+@verbatim
+Automatic ON/OFF control - VCONFKEY_SETAPPL_BRIGHTNESS_AUTOMATIC_INT
+Automatic Brightness value - VCONFKEY_SETAPPL_LCD_AUTOMATIC_BRIGHTNESS
+Manually Brightness value - VCONFKEY_SETAPPL_BRIGHTNESS_AUTOMATIC_INT
+@endverbatim
+
+The basic principle for brightness change
+@verbatim
+When first booting or after factory reset,Automatic shall be OFF, Auto Brightness shall be MAX value(100), Manually brightness shall be 50% of max value.
+Manually Brightness shall be restricted when device is in high temperature state.
+@endverbatim
+
+How to know the device is in high temperature state and change the brightness.
+@verbatim
+DBUS signal mechanism.
+- monitor the DBUS signal "ChangedSiop".
+- once get the signal "ChangedSiop",call device API int display_get_max_brightness(void) to update the brightness max value.
+The detailed implement,refer to following function
+- static int setting_brightness_dbus_handler_init(void* user_data).
+- static DBusHandlerResult setting_brightness_dbus_signal_filter(DBusConnection* conn, DBusMessage* message, void* user_data).
+@endverbatim
+
+@subsection sub-backlighttime Backlight time
+
+This menu is for changing different backlight time.
+
+Vconf key for storing the current backlight time
+@verbatim
+#define VCONFKEY_SETAPPL_LCD_TIMEOUT_NORMAL			VCONFKEY_SETAPPL_PREFIX"/lcd_backlight_normal"
+@endverbatim
+
+@subsection sub-touchkeylightdurtion Touch key light duration
+
+"Touch key light duration" means that when you touch the HW key, the HW key continuously lighting time, such as hard back key...
+
+This menu is for changing different Touch key light duration.
+
+Vconf key for storing the current Touch key light duration
+@verbatim
+#define VCONFKEY_SETAPPL_TOUCHKEY_LIGHT_DURATION VCONFKEY_SETAPPL_PREFIX"/display/touchkey_light_duration"
+enum {
+	SETTING_TOUCHKEY_LIGIT_DURATION_90SEC = 90,
+	SETTING_TOUCHKEY_LIGIT_DURATION_360SEC = 360,
+	SETTING_TOUCHKEY_LIGIT_DURATION_ALWAYS_OFF = 0,
+	SETTING_TOUCHKEY_LIGIT_DURATION_ALWAYS_ON = -1
+};
+@endverbatim
+
+@subsection sub-autoadjust Auto adjust screen tone
+
+enable/disable this function by setting following vconf key
+@verbatim
+#define VCONFKEY_SETAPPL_LCD_AUTO_DISPLAY_ADJUSTMENT             VCONFKEY_SETAPPL_PREFIX"/auto_display_adjustment"
+@endverbatim
+
+@subsection sub-autorotate Auto rotate screen
+
+enable/disable this function by setting following vconf key
+@verbatim
+#define VCONFKEY_SETAPPL_AUTO_ROTATE_SCREEN_BOOL                VCONFKEY_SETAPPL_PREFIX"/auto_rotate_screen"
+@endverbatim
+
+@subsection sub-batterypercentage Display battery percentage
+
+enable/disable this function by setting following vconf key
+@verbatim
+#define VCONFKEY_SETAPPL_BATTERY_PERCENTAGE_BOOL                VCONFKEY_SETAPPL_PREFIX"/battery_percentage"
+@endverbatim
+
+@subsection sub-dynamicstatusbar Dynamic status bar
+
+enable/disable this function by setting following vconf key
+@verbatim
+#define VCONFKEY_SETAPPL_DYNAMIC_STATUS_BAR                     VCONFKEY_SETAPPL_PREFIX"/display/dynamic_status_bar"
+@endverbatim
+
+@subsection sub-editaftercapture Edit after screen capture
+
+enable/disable this function by setting following vconf key
+@verbatim
+#define VCONFKEY_SETAPPL_SCREEN_CAPTURE_EDIT_AFTER_CAPTURE      VCONFKEY_SETAPPL_PREFIX"/display/edit_after_screen_capture"
+@endverbatim
+
+
+@subsection sub-smartscreen Smart screen
+
+enable/disable "smart stay" by setting following vconf key
+@verbatim
+#define VCONFKEY_SETAPPL_SCREEN_CAPTURE_EDIT_AFTER_CAPTURE      VCONFKEY_SETAPPL_PREFIX"/display/edit_after_screen_capture"
+@endverbatim
+
+enable/disable "smart rotation" by setting following vconf key
+@verbatim
+#define VCONFKEY_SETAPPL_SCREEN_CAPTURE_EDIT_AFTER_CAPTURE      VCONFKEY_SETAPPL_PREFIX"/display/edit_after_screen_capture"
+@endverbatim
+
+To lunch smart screen help page
+@verbatim
+Click menu->help in smart screen view
+@endverbatim
+
+Restrictions
+@verbatim
+smart screen cannot be turned on when TTS is enabled
+@endverbatim
+
+
+
+@section sec-setting-display2 setting-display-another
+*/

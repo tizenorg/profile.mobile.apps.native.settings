@@ -1,0 +1,538 @@
+#define BATTERY_PERCENT_IMG_DESCRIPTION(stage_val, stage_name) description {\
+					state : "percent" stage_val;\
+					inherit: "default" 0.0;\
+					image.normal : "org.tizen.setting.png";\
+				}
+
+#define BATTERY_PERCENT_IMG_PROGRAM(stage_val, stage_name) program {\
+				source : "batt_image";\
+				signal : stage_name;\
+				action : STATE_SET "percent" stage_val;\
+				target : "batt_image";\
+			}
+
+#define SBT_PERCENT_IMG_DESCRIPTION(stage_val, stage_name) description {\
+					state : "percent" stage_val;\
+					inherit: "default" 0.0;\
+					image.normal : "org.tizen.setting.png";\
+				}
+
+#define SBT_PERCENT_IMG_PROGRAM(stage_val, stage_name) program {\
+				source : "standby_lev_img";\
+				signal : stage_name;\
+				action : STATE_SET "percent" stage_val;\
+				target : "standby_lev_img";\
+			}
+
+collections {
+group { name: "label_layout";
+   parts {
+      part { name: "elm.swallow.content";
+         type: SWALLOW;
+         scale: 1;
+         description { state: "default" 0.0;
+            fixed: 1 0;
+            min: 0 500;
+         }
+      }
+   }
+}
+//group end
+
+group { name: "label_layout_landscape";
+   parts {
+       part { name: "elm.swallow.content";
+         type: SWALLOW;
+         scale: 1;
+         description { state: "default" 0.0;
+            fixed: 1 0;
+            min: 0 280;
+         }
+      }
+   }//parts
+}//group
+
+group { name: "inner_layout";
+		images {
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+			image : "org.tizen.setting.png" COMP;
+		}
+
+   parts {
+	  part { name: "base";
+         type: RECT;
+         scale: 1;
+         description { state: "default" 0.0;
+			fixed: 1 1;
+			min: 480 216;
+            color: 0 0 0 0;
+            rel1 {
+				relative: 0.0 0.0;
+			}
+			rel2 {
+				relative: 1.0 1.0;
+			}
+			align: 0.5 0.0;
+         }
+      }
+	  part { name: "text1";
+         type: TEXT;
+         mouse_events: 0;
+         scale: 1;
+         description { state: "default" 0.0;
+         	min: 272 34;
+            fixed: 1 0;
+            rel1 {
+               relative: 0.0 0.0;
+               to: "base";
+               offset: 65 32;
+            }
+            rel2 {
+               relative: 0.0 0.0;
+               to: "base";
+               offset: 65+272 109;
+            }
+            color_class: "ATO002";
+			text {
+				font: "Tizen:style=Regular";
+				text_class:"tizen";
+				size: 28;
+				min: 0 0;
+				align: 0.0 0.5;
+			}
+		 }
+       }
+       part { name: "def_image";
+	     type: IMAGE;
+		 scale: 1;
+		 description { state: "default" 0.0;
+		    fixed: 0 1;
+            min: 72 72;
+			rel1 {
+				relative: 0.0 1.0;
+				to: "text1";
+				offset: 0 0;
+			}
+			rel2 {
+				relative: 0.0 1.0;
+				to: "text1";
+				offset: 72 72;
+			}
+			//color_class: "AO004";
+			image.normal : "org.tizen.setting.png";
+			color : 100 100 100 100;
+			align: 0.0 0.0;
+			visible: 1;
+		 }
+  	  }
+      part { name: "batt_image";
+	     type: IMAGE;
+		 scale: 1;
+		 description { state: "default" 0.0;
+		    fixed: 0 1;
+            min: 72 72;
+			rel1 {
+				relative: 0.0 0.0;
+				to: "def_image";
+				offset: 0 0;
+			}
+			rel2 {
+				relative: 1.0 1.0;
+				to: "def_image";
+				offset: 0 0;
+			}
+			color_class: "AO004";
+			image.normal: "org.tizen.setting.png";
+			align: 0.0 0.0;
+			visible: 1;
+		 }
+		 description {
+				state : "percent" 1.0;
+				inherit: "default" 0.0;
+				image.normal : "org.tizen.setting.png";
+			}
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.01, "01");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.02, "02");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.03, "03");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.04, "04");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.05, "05");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.06, "06");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.07, "07");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.08, "08");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.09, "09");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.10, "10");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.11, "11");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.12, "12");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.13, "13");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.14, "14");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.15, "15");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.16, "16");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.17, "17");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.18, "18");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.19, "19");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.20, "20");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.21, "21");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.22, "22");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.23, "23");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.24, "24");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.25, "25");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.26, "26");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.27, "27");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.28, "28");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.29, "29");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.30, "30");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.31, "31");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.32, "32");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.33, "33");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.34, "34");
+			BATTERY_PERCENT_IMG_DESCRIPTION(0.35, "35");
+  	  }
+ 	  part { name: "text2";
+         type: TEXT;
+         mouse_events: 0;
+         scale: 1;
+         description { state: "default" 0.0;
+         	min: 0 34;
+            fixed: 1 0;
+            rel1 {
+               relative: 1.0 0.0;
+               to: "def_image";
+               offset: 20 0;
+            }
+            rel2 {
+               relative: 1.0 1.0;
+               to: "def_image";
+               offset: 180 0;
+            }
+            color_class: "ATO001";
+			text {
+				font: "Tizen:style=Regular";
+				text_class:"tizen";
+				size: 36;
+				min: 0 0;
+				align: 0.0 0.5;
+			}
+		 }
+      }
+	  part { name: "divider";
+         type: RECT;
+         scale: 1;
+         description { state: "default" 0.0;
+			fixed: 1 1;
+			min: 2 120;
+            color_class: "B0621L5";
+            rel1 {
+				relative: 0.0 0.0;
+				to: "base";
+				offset: 240 32;
+			}
+			rel2 {
+				relative: 0.0 0.0;
+				to: "base";
+				offset: 240 32+152;
+			}
+			align: 0.5 0.5;
+         }
+      }
+	  part { name: "text_r1";
+         type: TEXT;
+         mouse_events: 0;
+         scale: 1;
+         description { state: "default" 0.0;
+         	min: 252 68;
+            fixed: 1 0;
+            rel1 {
+               relative: 1.0 0.0;
+               to: "divider";
+               offset: 32 3;
+            }
+            rel2 {
+               relative: 1.0 0.0;
+               to: "divider";
+               offset: 32+252 3+68;
+            }
+            color_class: "ATO002";
+			text {
+				font: "Tizen:style=Regular";
+				text_class:"tizen";
+				size: 28;
+				min: 0 0;
+				align: 0.0 0.5;
+			}
+		 }
+      }
+      part { name: "standby_image";
+	     type: IMAGE;
+		 scale: 1;
+		 description { state: "default" 0.0;
+		    fixed: 0 1;
+            min: 72 72;
+			rel1 {
+				relative: 0.0 1.0;
+				to: "text_r1";
+				offset: 0 6;
+			}
+			rel2 {
+				relative: 0.0 1.0;
+				to: "text1";
+				offset: 72 6+72;
+			}
+			//color_class: "AO005";
+			image.normal : "org.tizen.setting.png";
+			color: 100 100 100 100;
+			align: 0.0 0.0;
+			visible: 1;
+		 }
+  	  }
+      part { name: "standby_lev_img";
+	     type: IMAGE;
+		 scale: 1;
+		 description { state: "default" 0.0;
+		    fixed: 0 1;
+            min: 72 72;
+			rel1 {
+				relative: 0.0 0.0;
+				to: "standby_image";
+				offset: 0 0;
+			}
+			rel2 {
+				relative: 1.0 1.0;
+				to: "standby_image";
+				offset: 0 0;
+			}
+			image.normal : "org.tizen.setting.png";
+			color_class: "AO004";
+			align: 0.0 0.0;
+		}
+		description {
+			state : "percent" 1.0;
+			inherit: "default" 0.0;
+			image.normal : "org.tizen.setting.png";
+		}
+		SBT_PERCENT_IMG_DESCRIPTION(0.01, "01");
+		SBT_PERCENT_IMG_DESCRIPTION(0.02, "02");
+		SBT_PERCENT_IMG_DESCRIPTION(0.03, "03");
+		SBT_PERCENT_IMG_DESCRIPTION(0.04, "04");
+		SBT_PERCENT_IMG_DESCRIPTION(0.05, "05");
+		SBT_PERCENT_IMG_DESCRIPTION(0.06, "06");
+		SBT_PERCENT_IMG_DESCRIPTION(0.07, "07");
+		SBT_PERCENT_IMG_DESCRIPTION(0.08, "08");
+		SBT_PERCENT_IMG_DESCRIPTION(0.09, "09");
+		SBT_PERCENT_IMG_DESCRIPTION(0.10, "10");
+		SBT_PERCENT_IMG_DESCRIPTION(0.11, "11");
+		SBT_PERCENT_IMG_DESCRIPTION(0.12, "12");
+		SBT_PERCENT_IMG_DESCRIPTION(0.13, "13");
+		SBT_PERCENT_IMG_DESCRIPTION(0.14, "14");
+		SBT_PERCENT_IMG_DESCRIPTION(0.15, "15");
+		SBT_PERCENT_IMG_DESCRIPTION(0.16, "16");
+		SBT_PERCENT_IMG_DESCRIPTION(0.17, "17");
+		SBT_PERCENT_IMG_DESCRIPTION(0.18, "18");
+		SBT_PERCENT_IMG_DESCRIPTION(0.19, "19");
+		SBT_PERCENT_IMG_DESCRIPTION(0.20, "20");
+		SBT_PERCENT_IMG_DESCRIPTION(0.21, "21");
+		SBT_PERCENT_IMG_DESCRIPTION(0.22, "22");
+		SBT_PERCENT_IMG_DESCRIPTION(0.23, "23");
+		SBT_PERCENT_IMG_DESCRIPTION(0.24, "24");
+		SBT_PERCENT_IMG_DESCRIPTION(0.25, "25");
+		SBT_PERCENT_IMG_DESCRIPTION(0.26, "26");
+		SBT_PERCENT_IMG_DESCRIPTION(0.27, "27");
+		SBT_PERCENT_IMG_DESCRIPTION(0.28, "28");
+		SBT_PERCENT_IMG_DESCRIPTION(0.29, "29");
+		SBT_PERCENT_IMG_DESCRIPTION(0.30, "30");
+		SBT_PERCENT_IMG_DESCRIPTION(0.31, "31");
+		SBT_PERCENT_IMG_DESCRIPTION(0.32, "32");
+		SBT_PERCENT_IMG_DESCRIPTION(0.33, "33");
+		SBT_PERCENT_IMG_DESCRIPTION(0.34, "34");
+		SBT_PERCENT_IMG_DESCRIPTION(0.35, "35");
+		SBT_PERCENT_IMG_DESCRIPTION(0.36, "36");
+
+  	  }
+
+	  part { name: "text_r3";
+         type: TEXT;
+         mouse_events: 0;
+         scale: 1;
+         description { state: "default" 0.0;
+         	min: 156 72;
+            fixed: 1 0;
+            rel1 {
+               relative: 1.0 0.0;
+               to: "standby_image";
+               offset: 24 0;
+            }
+            rel2 {
+               relative: 1.0 1.0;
+               to: "standby_image";
+               offset: 24+156 0;
+            }
+            color_class: "ATO003";
+			text {
+				font: "Tizen:style=Regular";
+				text_class:"tizen";
+				size: 36;
+				min: 0 0;
+				align: 0.0 0.5;
+			}
+		 }
+      }
+	  part { name: "guide_text";
+         type: SWALLOW;
+         scale: 1;
+         description { state: "default" 0.0;
+			align: 0.0 1.0;
+			rel1{
+				relative: 0.0 1.0;
+				to: "base";
+			}
+         }
+      }
+   }//parts
+	programs {
+		BATTERY_PERCENT_IMG_PROGRAM(0.01, "01")
+		BATTERY_PERCENT_IMG_PROGRAM(0.02, "02")
+		BATTERY_PERCENT_IMG_PROGRAM(0.03, "03")
+		BATTERY_PERCENT_IMG_PROGRAM(0.04, "04")
+		BATTERY_PERCENT_IMG_PROGRAM(0.05, "05")
+		BATTERY_PERCENT_IMG_PROGRAM(0.06, "06")
+		BATTERY_PERCENT_IMG_PROGRAM(0.07, "07")
+		BATTERY_PERCENT_IMG_PROGRAM(0.08, "08")
+		BATTERY_PERCENT_IMG_PROGRAM(0.09, "09")
+		BATTERY_PERCENT_IMG_PROGRAM(0.10, "10")
+		BATTERY_PERCENT_IMG_PROGRAM(0.11, "11")
+		BATTERY_PERCENT_IMG_PROGRAM(0.12, "12")
+		BATTERY_PERCENT_IMG_PROGRAM(0.13, "13")
+		BATTERY_PERCENT_IMG_PROGRAM(0.14, "14")
+		BATTERY_PERCENT_IMG_PROGRAM(0.15, "15")
+		BATTERY_PERCENT_IMG_PROGRAM(0.16, "16")
+		BATTERY_PERCENT_IMG_PROGRAM(0.17, "17")
+		BATTERY_PERCENT_IMG_PROGRAM(0.18, "18")
+		BATTERY_PERCENT_IMG_PROGRAM(0.19, "19")
+		BATTERY_PERCENT_IMG_PROGRAM(0.20, "20")
+		BATTERY_PERCENT_IMG_PROGRAM(0.21, "21")
+		BATTERY_PERCENT_IMG_PROGRAM(0.22, "22")
+		BATTERY_PERCENT_IMG_PROGRAM(0.23, "23")
+		BATTERY_PERCENT_IMG_PROGRAM(0.24, "24")
+		BATTERY_PERCENT_IMG_PROGRAM(0.25, "25")
+		BATTERY_PERCENT_IMG_PROGRAM(0.26, "26")
+		BATTERY_PERCENT_IMG_PROGRAM(0.27, "27")
+		BATTERY_PERCENT_IMG_PROGRAM(0.28, "28")
+		BATTERY_PERCENT_IMG_PROGRAM(0.29, "29")
+		BATTERY_PERCENT_IMG_PROGRAM(0.30, "30")
+		BATTERY_PERCENT_IMG_PROGRAM(0.31, "31")
+		BATTERY_PERCENT_IMG_PROGRAM(0.32, "32")
+		BATTERY_PERCENT_IMG_PROGRAM(0.33, "33")
+		BATTERY_PERCENT_IMG_PROGRAM(0.34, "34")
+		BATTERY_PERCENT_IMG_PROGRAM(0.35, "35")
+
+		SBT_PERCENT_IMG_PROGRAM(0.01, "01")
+		SBT_PERCENT_IMG_PROGRAM(0.02, "02")
+		SBT_PERCENT_IMG_PROGRAM(0.03, "03")
+		SBT_PERCENT_IMG_PROGRAM(0.04, "04")
+		SBT_PERCENT_IMG_PROGRAM(0.05, "05")
+		SBT_PERCENT_IMG_PROGRAM(0.06, "06")
+		SBT_PERCENT_IMG_PROGRAM(0.07, "07")
+		SBT_PERCENT_IMG_PROGRAM(0.08, "08")
+		SBT_PERCENT_IMG_PROGRAM(0.09, "09")
+		SBT_PERCENT_IMG_PROGRAM(0.10, "10")
+		SBT_PERCENT_IMG_PROGRAM(0.11, "11")
+		SBT_PERCENT_IMG_PROGRAM(0.12, "12")
+		SBT_PERCENT_IMG_PROGRAM(0.13, "13")
+		SBT_PERCENT_IMG_PROGRAM(0.14, "14")
+		SBT_PERCENT_IMG_PROGRAM(0.15, "15")
+		SBT_PERCENT_IMG_PROGRAM(0.16, "16")
+		SBT_PERCENT_IMG_PROGRAM(0.17, "17")
+		SBT_PERCENT_IMG_PROGRAM(0.18, "18")
+		SBT_PERCENT_IMG_PROGRAM(0.19, "19")
+		SBT_PERCENT_IMG_PROGRAM(0.20, "20")
+		SBT_PERCENT_IMG_PROGRAM(0.21, "21")
+		SBT_PERCENT_IMG_PROGRAM(0.22, "22")
+		SBT_PERCENT_IMG_PROGRAM(0.23, "23")
+		SBT_PERCENT_IMG_PROGRAM(0.24, "24")
+		SBT_PERCENT_IMG_PROGRAM(0.25, "25")
+		SBT_PERCENT_IMG_PROGRAM(0.26, "26")
+		SBT_PERCENT_IMG_PROGRAM(0.27, "27")
+		SBT_PERCENT_IMG_PROGRAM(0.28, "28")
+		SBT_PERCENT_IMG_PROGRAM(0.29, "29")
+		SBT_PERCENT_IMG_PROGRAM(0.30, "30")
+		SBT_PERCENT_IMG_PROGRAM(0.31, "31")
+		SBT_PERCENT_IMG_PROGRAM(0.32, "32")
+		SBT_PERCENT_IMG_PROGRAM(0.33, "33")
+		SBT_PERCENT_IMG_PROGRAM(0.34, "34")
+		SBT_PERCENT_IMG_PROGRAM(0.35, "35")
+		SBT_PERCENT_IMG_PROGRAM(0.36, "36")
+	}
+}//group
+}//collection
+

@@ -1,0 +1,233 @@
+/*
+*
+* Copyright 2012  Samsung Electronics Co., Ltd
+*
+* Licensed under the Flora License, Version 1.0 (the License);
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*    http://www.tizenopensource.org/license
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an AS IS BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*
+*/
+
+images {
+	image: "org.tizen.setting.png" COMP;
+	image: "org.tizen.setting.png" COMP;
+	image: "org.tizen.setting.png" COMP;
+	image: "org.tizen.setting.png" COMP;
+    image: "org.tizen.setting.png" COMP;
+}
+
+collections {
+//for repeat
+#define PART_SHOW_REPEAT_ICON(title, offset_value, ref) \
+part { name: title; \
+	type: IMAGE; \
+	repeat_events: 1; \
+	scale: 1; \
+	description { \
+		state: "default" 0.0; \
+		aspect_preference: BOTH; \
+		rel1 { relative: 1.0 0.0; offset: offset_value 0; to: ref;} \
+		rel2 { relative: 1.0 1.0; offset: (offset_value+100) 0; to: ref;} \
+		image { normal: "org.tizen.setting.png" ;} \
+	} \
+	description { \
+		state: "on" 0.0; \
+		inherit: "default" 0.0; \
+		image { normal: "org.tizen.setting.png" ;} \
+	} \
+	description { \
+		state: "landscape" 0.0; \
+		inherit: "default" 0.0; \
+		rel1 { relative: 1.0 0.0; offset: offset_value 0; to: ref;} \
+		rel2 { relative: 1.0 1.0; offset: (offset_value+180) 0; to: ref;} \
+		image { normal: "org.tizen.setting.png" ;} \
+	} \
+	description { \
+		state: "landscape_on" 0.0; \
+		inherit: "landscape" 0.0; \
+		image { normal: "org.tizen.setting.png" ;} \
+	} \
+} \
+part { name: title".onoff.bg"; \
+	type: IMAGE; \
+	scale: 1; \
+	description { \
+		state: "default" 0.0; \
+		max: 20 20; \
+		fixed: 1 1; \
+		rel1 { relative: 0.0 0.0; offset: 0 76; to: title; } \
+		rel2 { relative: 1.0 0.0; offset: 0 96; to: title; } \
+		image { normal : "org.tizen.setting.png"; } \
+		align : 0.5 0.5; \
+	} \
+} \
+part { name: title".onoff.icon"; \
+	type: IMAGE; \
+	scale: 1; \
+	description { \
+		state: "default" 0.0; \
+		max: 20 20; \
+		fixed: 1 1; \
+		rel1.to: title".onoff.bg"; \
+		rel2.to: title".onoff.bg"; \
+		image { normal: "org.tizen.setting.png"; } \
+		align: 0.5 0.5; \
+	} \
+	description { \
+		state: "on" 0.0; \
+		inherit: "default" 0.0; \
+		image{ normal: "org.tizen.setting.png"; } \
+	} \
+	description { \
+		state: "landscape" 0.0; \
+		inherit: "default" 0.0; \
+		image { normal: "org.tizen.setting.png"; } \
+	} \
+	description { \
+		state: "landscape_on" 0.0; \
+		inherit: "landscape" 0.0; \
+		image{ normal: "org.tizen.setting.png"; } \
+	} \
+}
+
+#define PART_SHOW_REPEAT_TEXT(title, reference) \
+part {\
+  name: title; \
+  type: TEXT; \
+  scale: 1; \
+  repeat_events: 1; \
+  description { \
+     state: "default" 0.0; \
+     fixed: 1 0;\
+     rel1 { relative: 0.0 0.0; offset: 0 20; to: reference; } \
+     rel2 { relative: 1.0 0.0; offset: 0 70; to: reference; } \
+     color: 8 8 8 255; \
+     text { \
+	     font: "Tizen:style=Bold"; \
+	     text_class: "tizen"; \
+	     size: 45; \
+	     align: 0.5 0.5; \
+     } \
+  } \
+  description { \
+     state: "on" 0.0; \
+     inherit: "default" 0.0; \
+     color: 135 226 45 255; \
+  } \
+  description { \
+     state: "landscape" 0.0; \
+	 inherit: "default" 0.0; \
+  } \
+  description { \
+     state: "landscape_on" 0.0; \
+     inherit: "landscape" 0.0; \
+     color: 135 226 45 255; \
+  } \
+  description { \
+     state: "sun" 0.0; \
+     inherit: "default" 0.0; \
+     color: 85 19 19 255; \
+  } \
+}
+#define PROGRAM_SHOW_CTRL(title) \
+        program \
+        { \
+            name:   title"/on"; \
+            signal:  "on,"title; \
+            source:  "*"; \
+            action:  STATE_SET "on" 0.0; \
+            target:  title; \
+            target:  "text."title; \
+            target:  title".onoff.icon"; \
+        } \
+        program \
+        { \
+            name:    title"/off"; \
+            signal:  "off,"title; \
+            source:  "*"; \
+            action:  STATE_SET "default" 0.0; \
+            target:  title; \
+            target:  "text."title; \
+            target:  title".onoff.icon"; \
+        } \
+        program \
+        { \
+            name:    title"/sun"; \
+            signal:  "sun,"title; \
+            source:  "*"; \
+            action:  STATE_SET "sun" 0.0; \
+            target:  "text."title; \
+        } \
+        program \
+        { \
+            name:    title"/landscape_off"; \
+            signal:  "landscape_off,"title; \
+            source:  "*"; \
+            action:  STATE_SET "landscape" 0.0; \
+            target:  title; \
+            target:  "text."title; \
+            target:  title".onoff.icon"; \
+        } \
+        program \
+        { \
+            name:    title"/landscape_on"; \
+            signal:  "landscape_on,"title; \
+            source:  "*"; \
+            action:  STATE_SET "landscape_on" 0.0; \
+            target:  title; \
+            target:  "text."title; \
+            target:  title".onoff.icon"; \
+        } \
+        program \
+        { \
+            name:    title"/clicked"; \
+            signal:  "mouse,clicked,1"; \
+            source:  "*"; \
+            action:  SIGNAL_EMIT "mouse,clicked" title; \
+
+		}
+       group { name: "repeat_set";
+                parts {
+                	GENLIST_PART_BASE( 115 )
+                	//GENLIST_PART_PADDING_TOP( 115 )
+                	part { name: "elm.padding.left";
+                      type: RECT;
+                      scale: 1;
+                      description {
+                         state: "default" 0.0;
+                         min: 0 115;
+                         max: 0 115;
+                         fixed: 1 1;
+                         visible: 0;
+                         rel2.relative: 0.0 1.0;
+                         //align: 0.0 0.0;
+                      }
+                   }
+		 		   PART_SHOW_REPEAT_ICON("1", 4, "elm.padding.left")
+                   PART_SHOW_REPEAT_TEXT("text.1", "1")
+                   PART_SHOW_REPEAT_ICON("2", 2, "1")
+                   PART_SHOW_REPEAT_TEXT("text.2", "2")
+                   PART_SHOW_REPEAT_ICON("3", 2, "2")
+                   PART_SHOW_REPEAT_TEXT("text.3", "3")
+                   PART_SHOW_REPEAT_ICON("4", 2, "3")
+                   PART_SHOW_REPEAT_TEXT("text.4", "4")
+                   PART_SHOW_REPEAT_ICON("5", 2, "4")
+                   PART_SHOW_REPEAT_TEXT("text.5", "5")
+				}
+                programs {
+                	PROGRAM_SHOW_CTRL(1);
+                	PROGRAM_SHOW_CTRL(2);
+                	PROGRAM_SHOW_CTRL(3);
+                	PROGRAM_SHOW_CTRL(4);
+                	PROGRAM_SHOW_CTRL(5);
+                }
+		}//for repeat
+}//collections

@@ -1,0 +1,6 @@
+opt/*
+#@PREFIX@/bin/*
+# @PREFIX@/res/locale/*
+#@PREFIX@/res/icons/*
+#@PREFIX@/res/edje/*
+#/opt/share/res/applications/*

@@ -1,0 +1,2577 @@
+msgid "IDS_ST_BODY_1_MINUTE"
+msgstr "1 min"
+
+msgid "IDS_ST_POP_SAVING"
+msgstr "Zapisywanie..."
+
+msgid "IDS_CAM_POP_MODEL"
+msgstr "Model"
+
+msgid "IDS_EMAIL_BODY_INVALID_PORT_NUMBER"
+msgstr "Nieprawidłowy numer portu"
+
+msgid "IDS_HEALTH_OPT_ACCESSORIES"
+msgstr "Akcesoria"
+
+msgid "IDS_HS_HEADER_USB_DEBUGGING_CONNECTED"
+msgstr "Debugowanie USB włączone."
+
+msgid "IDS_MSG_OPT_6_SECONDS"
+msgstr "6 sek."
+
+msgid "IDS_PB_POP_PS_ALREADY_EXISTS"
+msgstr "%s już istnieje."
+
+msgid "IDS_SAPPS_OPT_BADGE_ABB"
+msgstr "Oznaczenie"
+
+msgid "IDS_ST_BODY_DISCONNECTED"
+msgstr "Rozłączono."
+
+msgid "IDS_ST_BODY_MEDIA"
+msgstr "Media"
+
+msgid "IDS_ST_BODY_SELECT_AUTOMATICALLY"
+msgstr "Wybieraj automatycznie"
+
+msgid "IDS_ST_HEADER_AUDIO"
+msgstr "Dźwięk"
+
+msgid "IDS_ST_HEADER_FORMAT_MVERB_ABB"
+msgstr "Format"
+
+msgid "IDS_ST_HEADER_INSTANT_MESSENGER"
+msgstr "Komunikator"
+
+msgid "IDS_ST_HEADER_TIME"
+msgstr "Czas"
+
+msgid "IDS_ST_MBODY_DAYS_M_WEEKDAY"
+msgstr "Dni"
+
+msgid "IDS_ST_POP_ROAMING_WILL_INCUR_EXTRA_CHARGES_CONTINUE_Q"
+msgstr "Roaming spowoduje naliczenie dodatkowych opłat. Kontynuować?"
+
+msgid "IDS_WIFI_BODY_IP"
+msgstr "IP"
+
+msgid "IDS_BT_POP_OPERATION_FAILED"
+msgstr "Operacja nie powiodła się."
+
+msgid "IDS_CLD_OPT_MINUTE"
+msgstr "Min."
+
+msgid "IDS_CLD_OPT_MINUTES_LC_ABB"
+msgstr "min"
+
+msgid "IDS_CST_BUTTON_CLOSE"
+msgstr "Zamknij"
+
+msgid "IDS_CST_POP_FAILED"
+msgstr "Błąd"
+
+msgid "IDS_IM_BODY_SUCCESSFULLY_COMPLETED"
+msgstr "Zakończono pomyślnie."
+
+msgid "IDS_IM_POP_UNEXPECTED_ERROR"
+msgstr "Nieoczekiwany błąd"
+
+msgid "IDS_PB_BODY_INFO"
+msgstr "Informacje"
+
+msgid "IDS_PB_BUTTON_CONTACT"
+msgstr "Kontakt"
+
+msgid "IDS_SIM_BODY_INVALID_SIM_CARD"
+msgstr "Nieprawidłowa karta SIM"
+
+msgid "IDS_ST_BUTTON2_PROCESSING_ING"
+msgstr "Przetwarzanie..."
+
+msgid "IDS_ST_POP_DELETE_Q"
+msgstr "Usunąć?"
+
+msgid "IDS_VR_POP_NO_FILES"
+msgstr "Brak plików"
+
+msgid "IDS_WGT_BUTTON3_KIES_VIA_WI_FI"
+msgstr "Kies przez Wi-Fi"
+
+msgid "IDS_TPLATFORM_OPT_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_OPT_SETTINGS"
+msgstr "Ustawienia"
+
+msgid "IDS_ST_BODY_GENERAL"
+msgstr "Ogólne"
+
+msgid "IDS_ST_HEADER_PRIVACY"
+msgstr "Prywatność"
+
+msgid "IDS_BR_OPT_SCREEN"
+msgstr "Ekran"
+
+msgid "IDS_BR_OPT_LTE_GSM_WCDMA_HAUTO_CONNECT"
+msgstr "LTE/WCDMA/GSM (auto)"
+
+msgid "IDS_BR_HEADER_MULTI_WINDOW"
+msgstr "Wiele okien"
+
+msgid "IDS_BR_BODY_WEBSITE_SETTINGS"
+msgstr "Ustawienia witryn internetowych"
+
+msgid "IDS_CLD_HEADER_EVENT_NOTIFICATION"
+msgstr "Powiadomienie o wydarzeniach"
+
+msgid "IDS_CLD_BUTTON_LIST_VIEW"
+msgstr "Widok listy"
+
+msgid "IDS_CLD_BUTTON_EXPORT"
+msgstr "Eksportuj"
+
+msgid "IDS_CLD_BODY_FIRST_DAY_OF_WEEK"
+msgstr "Pierwszy dzień tygodnia"
+
+msgid "IDS_CAM_BODY_SHOWING_PD_ITEMS_T_TTS"
+msgstr "Wyświetlanie elementów: %d"
+
+msgid "IDS_COM_POP_FLIGHT_MODE_WILL_BE_DISABLED"
+msgstr "Tryb Offline zostanie wyłączony."
+
+msgid "IDS_COM_POP_CHECKING"
+msgstr "Sprawdzanie..."
+
+msgid "IDS_COM_OPT_CONTINUE_Q"
+msgstr "Kontynuować?"
+
+msgid "IDS_COM_INCORRECT_PASSWORD_ENTERED_5_TIMES"
+msgstr "Liczba powtórzeń nieprawidłowego hasła: 5."
+
+msgid "IDS_COM_BODY_YOUR_SIM_CARD_DOES_NOT_ALLOW_A_CONNECTION_TO_THIS_NETWORK"
+msgstr "Karta SIM nie zezwala na połączenie z tą siecią."
+
+msgid "IDS_COM_BODY_TYPE_A_PIN_THAT_IS_4_TO_8_NUMBERS"
+msgstr "Wpisz kod PIN o długości od 4 do 8 cyfr"
+
+msgid "IDS_COM_BODY_NETWORK_OPERATORS"
+msgstr "Operatorzy sieci"
+
+msgid "IDS_COM_BODY_FORMATTING_SD_CARD_ING"
+msgstr "Formatowanie karty pamięci..."
+
+msgid "IDS_COM_BODY_ENTER_PROXY_EMPTY"
+msgstr "Wpisz adres serwera proxy."
+
+msgid "IDS_COM_BODY_CONNECT_TO_DATA_SERVICES_WHEN_ROAMING"
+msgstr "Podczas roamingu połącz z usługami danych."
+
+msgid "IDS_ASEML_POP_PASSWORD_EXPIRED"
+msgstr "Hasło wygasło."
+
+msgid "IDS_ASEML_POP_ENTER_ANOTHER_PASSWORD"
+msgstr "Wprowadź inne hasło."
+
+msgid "IDS_ASEML_BODY_DEVICE_ENCRYPTION"
+msgstr "Szyfrowanie urządzenia"
+
+msgid "IDS_CST_POP_UNKNOWN_OPERATION"
+msgstr "Nieznana operacja."
+
+msgid "IDS_CST_POP_OPERATION_NOT_ALLOWED_DURING_CALLS"
+msgstr "Operacja niedozwolona w trakcie połączeń."
+
+msgid "IDS_CST_OPT_GSM_WCDMA_HAUTO_CONNECT"
+msgstr "WCDMA/GSM (auto)"
+
+msgid "IDS_CST_BODY_UNBLOCK_PIN2"
+msgstr "Odblokuj kod PIN2"
+
+msgid "IDS_MTTRL_MBODY_PALM_MOTION"
+msgstr "Ruch dłoni"
+
+msgid "IDS_MTTRL_BUTTON_ENABLE_MOTION"
+msgstr "Wł. f. ruchu"
+
+msgid "IDS_MTTRL_BODY_SMART_ALERT"
+msgstr "Inteligentne powiadomienie"
+
+msgid "IDS_NFC_OPT_S_BEAM"
+msgstr "S Beam"
+
+msgid "IDS_STU_BODY_SMART_STAY_DETECTS_YOUR_EYES_WITH_THE_FRONT_CAMERA_SO_THAT_THE_SCREEN_STAYS_ON_WHEN_YOU_ARE_LOOKING_AT_IT"
+msgstr "Smart stay rozpoznaje Twoje oczy za pomocą przedniego aparatu, dzięki czemu ekran pozostaje wyświetlany, kiedy na niego patrzysz."
+
+msgid "IDS_IDLE_BODY_NEW_PIN_AND_CONFIRM_PIN_DO_NOT_MATCH"
+msgstr "Nowy kod PIN i potwierdzenie kodu PIN są różne."
+
+msgid "IDS_MOBILEAP_POP_TURNING_ON_WI_FI_WILL_DISABLE_MOBILE_HOTSPOT_CONTINUE_Q_VZW"
+msgstr "Włączenie sieci Wi-Fi spowoduje wyłączenie Mobile Hotspot. Kontynuować?"
+
+msgid "IDS_MOBILEAP_MBODY_DATA_USAGE"
+msgstr "Licznik danych"
+
+msgid "IDS_MOBILEAP_BODY_TETHERING"
+msgstr "Udost. poł. internetowego"
+
+msgid "IDS_IM_POP_THIS_FEATURE_IS_NOT_AVAILABLE_WHILE_FLIGHT_MODE_IS_ON"
+msgstr "Ta funkcja nie jest dostępna, gdy włączony jest tryb Offline."
+
+msgid "IDS_EMAIL_POP_SECURITY_UPDATE_ABB"
+msgstr "Aktualizacja zabezpieczeń"
+
+msgid "IDS_EMAIL_POP_GIANT_M_TEXTSIZE"
+msgstr "Gigantyczny"
+
+msgid "IDS_EMAIL_POP_FAILED_TO_MOVE"
+msgstr "Nie można przenieść."
+
+msgid "IDS_EMAIL_OPT_HUGE_M_TEXTSIZE"
+msgstr "Ogromny"
+
+msgid "IDS_QP_POP_NETWORK_RESTRICTION_MODE_WILL_BE_DISABLED_JPN"
+msgstr "Network restriction mode will be disabled."
+
+msgid "IDS_QP_POP_IN_NETWORK_RESTRICTION_MODE_YOU_CAN_USE_ALL_YOUR_APPLICATIONS_WITHOUT_CONNECTING_TO_THE_NETWORK_YOU_CAN_ALSO_RECEIVE_CALLS_AND_SMS_MESSAGES_MSG_JPN"
+msgstr "In Network restriction mode, you can use all your applications without connecting to the network. You can also receive calls and SMS messages. Network restriction mode will be enabled."
+
+msgid "IDS_TASKMGR_BODY_ACTIVE_APPLICATIONS_C_PD"
+msgstr "Aktywne aplikacje: %d"
+
+msgid "IDS_USB_POP_UNABLE_TO_CONNECT_TO_KIES_VIA_WI_FI_WHEN_CONNECTED_TO_KIES_VIA_USB"
+msgstr "Nie można połączyć z programem Kies przez sieć Wi-Fi, gdy jest z nim nawiązane połączenie przez USB."
+
+msgid "IDS_MSGC_POP_YOUR_SD_CARD_IS_FULL"
+msgstr "Karta pamięci jest pełna."
+
+msgid "IDS_MSGC_BODY_NOT_ENOUGH_MEMORY_IN_PHONE_MEMORY_DELETE_SOME_ITEMS_AND_TRY_AGAIN"
+msgstr "Za mało pamięci w telefonie. Usuń niektóre elementy i spróbuj ponownie."
+
+msgid "IDS_KW_POP_BE_CAREFUL_WHEN_TRANSMITTING_INFORMATION_ON_AN_UNSECURED_WI_FI_NETWORK_MSG"
+msgstr "Zachowaj ostrożność podczas przesyłania informacji w niezabezpieczonej sieci Wi-Fi, ponieważ mogą one być widoczne dla innych użytkowników sieci."
+
+msgid "IDS_DN_BODY_ENCRYPT_SD_CARD"
+msgstr "Szyfrowanie karty pamięci"
+
+msgid "IDS_MSGF_POP_UNSUPPORTED"
+msgstr "Nieobsługiwane."
+
+msgid "IDS_MSGF_BODY_SERVICE_TYPE"
+msgstr "Typ usługi"
+
+msgid "IDS_MF_POP_FORMAT_COMPLETED"
+msgstr "Ukończono formatowanie."
+
+msgid "IDS_MF_OPT_NAME_HZ_TO_A"
+msgstr "Nazwa (od Z do A)"
+
+msgid "IDS_MF_OPT_NAME_HA_TO_Z"
+msgstr "Nazwa (od A do Z)"
+
+msgid "IDS_MF_BODY_SCREEN_CAPTURE_M_NOUN"
+msgstr "Przechwytywanie ekranu"
+
+msgid "IDS_XTAG_POP_RESET_ALL_SETTINGS_FOR_C_DEFAULT_APPS_BACKGROUND_DATA_RESTRICTIONS_YOUR_EXISTING_DATA_WILL_NOT_BE_LOST"
+msgstr "Wyzeruj wszystkie ustawienia dla:<br><br>Domyślnych aplikacji<br>Ograniczeń danych w tle<br><br>Istniejące dane nie zostaną utracone"
+
+msgid "IDS_PB_POP_MOVE_COMPLETED"
+msgstr "Przenoszenie zakończone."
+
+msgid "IDS_PB_BODY_MOVING_ING"
+msgstr "Przenoszenie..."
+
+msgid "IDS_SMEMO_BUTTON_IMPORT"
+msgstr "Importuj"
+
+msgid "IDS_LCKSCN_BODY_WALLPAPERS"
+msgstr "Tapety"
+
+msgid "IDS_LCKSCN_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_TO_UNLOCK_IT_MSG"
+msgstr "Dotknij ekranu i przytrzymaj go, a następnie pochyl urządzenie w swoją stronę, aby je odblokować. Jeśli ekran pozostanie zablokowany, spróbuj mocniej pochylić urządzenie. Po ustawieniu funkcji odblokowywania ekranu za pomocą ruchu obsługa ruchu zostanie automatycznie włączona w ustawieniach."
+
+msgid "IDS_SA_BUTTON_DONE_ABB"
+msgstr "OK"
+
+msgid "IDS_FP_BODY_NO_APPLICATIONS"
+msgstr "Brak aplikacji"
+
+msgid "IDS_ST_TZTAB4_MOST_USED_M_APP"
+msgstr "Najcz. używ."
+
+msgid "IDS_ST_TPOP_PERSONAL_MODE_ENABLED_ABB"
+msgstr "Tryb osobisty włączony."
+
+msgid "IDS_ST_TPOP_PERSONAL_MODE_DISABLED_ABB"
+msgstr "Tryb osobisty wyłączony."
+
+msgid "IDS_ST_TPOP_FAILED_TO_ENABLE_PERSONAL_MODE_TRY_AGAIN_ABB"
+msgstr "Nie można wł. Trybu osobist. Spr. ponownie."
+
+msgid "IDS_ST_TPOP_FAILED_TO_DISABLE_PERSONAL_MODE_TRY_AGAIN_ABB"
+msgstr "Nie można wył. Trybu osobist. Spr. ponownie."
+
+msgid "IDS_ST_TPOP_ENABLING_ULTRA_POWER_SAVING_MODE_ING"
+msgstr "Włączanie Trybu bardzo niskiego zużycia energii..."
+
+msgid "IDS_ST_SK_FORMAT_ABB"
+msgstr "Format"
+
+msgid "IDS_ST_SK3_DONE"
+msgstr "Gotowe"
+
+msgid "IDS_ST_SK2_PLEASE_WAIT"
+msgstr "Czekaj"
+
+msgid "IDS_ST_SBODY_POWER_SAVING"
+msgstr "Oszczędzanie energii"
+
+msgid "IDS_ST_SBODY_ONLY_UPDATE_THE_SECURITY_POLICY_AUTOMATICALLY_WHEN_YOUR_DEVICE_IS_CONNECTED_TO_A_WI_FI_NETWORK"
+msgstr "Aktualizuj automatycznie zasady zabezpieczeń tylko wtedy, gdy urządzenie zostanie połączone z siecią Wi-Fi."
+
+msgid "IDS_ST_SBODY_INCREASE_THE_SENSITIVITY_OF_THE_TOUCH_SCREEN_SBODY_MSG"
+msgstr "Zwiększ poziom czułości ekranu dotykowego, aby umożliwić sterowanie urządzeniem w rękawiczkach."
+
+msgid "IDS_ST_SBODY_DISABLED"
+msgstr "Wyłączone"
+
+msgid "IDS_ST_SBODY_AUTOMATICALLY_CHECK_FOR_CHANGES_TO_THE_SECURITY_POLICY_MSG"
+msgstr "Automatycznie wykrywaj zmiany w zasadach zabezpieczeń i pobieraj aktualizacje w celu poprawy bezpieczeństwa i jakości usług."
+
+msgid "IDS_ST_POP_YOU_MUST_ENTER_A_DEVICE_NAME"
+msgstr "Musisz podać nazwę urządzenia."
+
+msgid "IDS_ST_POP_YOUR_PERSONAL_MODE_SECURITY_SETTINGS_WILL_BE_RESET_AND_YOUR_PERSONAL_CONTENT_WILL_BE_DELETED_RESET_PERSONAL_MODE_Q"
+msgstr "Ustawienia zabezpieczeń trybu osobistego zostaną wyzerowane, a zawartość osobista zostanie usunięta. Wyzerować tryb osobisty?"
+
+msgid "IDS_ST_POP_USE_2D_HARDWARE_OR_SOFTWARE_ACCELERATION_IN_APPLICATIONS"
+msgstr "Użyj przyspieszenia sprzętowego 2D lub programowego w aplikacjach."
+
+msgid "IDS_ST_POP_URL_REMOVED"
+msgstr "Adres URL został usunięty."
+
+msgid "IDS_ST_POP_URLS_REMOVED"
+msgstr "Adresy URL zostały usunięte."
+
+msgid "IDS_ST_POP_UNMOUNTING_USB_OTG_STORAGE_WILL_STOP_SOME_APPLICATIONS_MSG"
+msgstr "Odinstalowanie pamięci USB OTG spowoduje zatrzymanie niektórych aplikacji. Mogą one być niedostępne do momentu ponownego zainstalowania pamięci USB OTG."
+
+msgid "IDS_ST_POP_UNMOUNTING_SD_CARD_ING_ABB"
+msgstr "Odłączanie karty pamięci..."
+
+msgid "IDS_ST_POP_UNMOUNTING_ING_ABB"
+msgstr "Odłączanie..."
+
+msgid "IDS_ST_POP_UNINSTALL_Q"
+msgstr "Odinstalować?"
+
+msgid "IDS_ST_POP_UNINSTALLING_ING"
+msgstr "Odinstalowywanie..."
+
+msgid "IDS_ST_POP_UNABLE_TO_TURN_ON_FLIGHT_MODE_VODA"
+msgstr "Nie można włączyć trybu offline"
+
+msgid "IDS_ST_POP_UNABLE_TO_SEARCH_NETWORKS_DURING_DATA_SERVICE_ACTIVATED_DO_YOU_WANT_TO_DISCONNECT_THE_DATA_SERVICE_AND_SEARCH_AVAILABLE_NETWORK_Q"
+msgstr "Nie można wyszukać sieci, gdy aktywna jest transmisja danych. Czy chcesz rozłączyć transm. danych i wyszukać dostępne sieci?"
+
+msgid "IDS_ST_POP_UNABLE_TO_CHANGE_NETWORKS_WHILE_DATA_SERVICE_IN_USE_STOP_USING_CURRENT_DATA_SERVICE_AND_SELECT_ANOTHER_AVAILABLE_NETWORK_Q"
+msgstr "Nie można zmienić sieci, gdy obsługa danych jest w użyciu. Zakończyć korzystanie z bieżącej obsługi danych i wybrać inną dostępną sieć?"
+
+msgid "IDS_ST_POP_ULTRA_POWER_SAVING_MODE_WILL_BE_DISABLED"
+msgstr "Tryb bardzo niskiego zużycia energii zostanie wyłączony."
+
+msgid "IDS_ST_POP_TO_USE_PERSONAL_MODE_YOU_MUST_REGISTER_AN_UNLOCK_METHOD"
+msgstr "Aby użyć Trybu osobistego, musisz zarejestrować metodę odblokowania."
+
+msgid "IDS_ST_POP_TO_ENABLE_HANDS_FREE_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Aby włączyć tryb głośnomówiący, włącz co najmniej jedną związaną z nim funkcję."
+
+msgid "IDS_ST_POP_THE_SCREEN_WILL_NOT_TURN_OFF_WHILE_YOU_KEEP_LOOKING_AT_IT"
+msgstr "Ekran nie wyłączy się, gdy na niego patrzysz."
+
+msgid "IDS_ST_POP_THE_MAXIMUM_NUMBERS_OF_CHARACTERS_FOR_YOUR_DEVICE_NAME_HPD_HAS_BEEN_EXCEEDED"
+msgstr "Przekroczono maksymalną liczbę znaków dla nazwy urządzenia (%d)."
+
+msgid "IDS_ST_POP_THE_APP_HAS_BEEN_UNINSTALLED"
+msgstr "Aplikacja została odinstalowana."
+
+msgid "IDS_ST_POP_TAP_OK"
+msgstr "Dotknij OK"
+
+msgid "IDS_ST_POP_SEARCHING_NETWORK_ING"
+msgstr "Wyszukiwanie sieci..."
+
+msgid "IDS_ST_POP_RESTART_PHONE_TO_USE_AUTOMATIC_UPDATE_Q"
+msgstr "Uruchomić ponownie telefon, aby użyć funkcji automatycznej aktualizacji?"
+
+msgid "IDS_ST_POP_RESET_TO_DEFAULT_Q"
+msgstr "Przywrócić ustawienia domyślne?"
+
+msgid "IDS_ST_POP_RESET_ALL_SETTINGS_AND_DELETE_ALL_DATA_THIS_CANNOT_BE_STOPPED_ONCE_STARTED"
+msgstr "Resetowanie wszystkich ustawień i usuwanie wszystkich danych. Po rozpoczęciu tego procesu nie będzie można go zatrzymać."
+
+msgid "IDS_ST_POP_REMOVE_DEFAULT_APPS_Q"
+msgstr "Usunąć domyślne aplikacje?"
+
+msgid "IDS_ST_POP_REGISTRATION_CODE_NOT_FOUND"
+msgstr "Nie znaleziono kodu rejestracji."
+
+msgid "IDS_ST_POP_REGISTERING_ING"
+msgstr "Rejestrowanie..."
+
+msgid "IDS_ST_POP_REGISTERED"
+msgstr "Zarejestrowano."
+
+msgid "IDS_ST_POP_PUK2_VERIFIED"
+msgstr "Sprawdzono PUK2."
+
+msgid "IDS_ST_POP_PUK1_VERIFIED"
+msgstr "Sprawdzono PUK1."
+
+msgid "IDS_ST_POP_PORT_REMOVED"
+msgstr "Port został usunięty."
+
+msgid "IDS_ST_POP_PORTS_REMOVED"
+msgstr "Porty zostały usunięte."
+
+msgid "IDS_ST_POP_PIN_UNBLOCKED"
+msgstr "PIN odblokowany."
+
+msgid "IDS_ST_POP_PIN2_UNBLOCKED"
+msgstr "PIN2 odblokowany."
+
+msgid "IDS_ST_POP_PIN2_CHANGED"
+msgstr "PIN2 zmieniony."
+
+msgid "IDS_ST_POP_PIN2_BLOCKED"
+msgstr "PIN2 zablokowany."
+
+msgid "IDS_ST_POP_PIN1_CHANGED"
+msgstr "Kod PIN1 zmieniony."
+
+msgid "IDS_ST_POP_PIN1_BLOCKED"
+msgstr "Kod PIN1 zablokowany."
+
+msgid "IDS_ST_POP_PD_ATTEMPT_LEFT"
+msgstr "Pozostało prób: %d."
+
+msgid "IDS_ST_POP_PD_ATTEMPTS_LEFT"
+msgstr "Pozostało prób: %d."
+
+msgid "IDS_ST_POP_PASSWORD_MUST_CONTAIN_AT_LEAST_PD_ALPHANUMERIC_CHARACTERS"
+msgstr "Hasło musi zawierać co najmniej %d znaków alfanumerycznych."
+
+msgid "IDS_ST_POP_PASSWORD_MUST_BE_MORE_THAN_P1SD_CHARACTERS_AND_LESS_THAN_P2SD"
+msgstr "Hasło musi zawierać więcej znaków niż: %1$d i mniej niż: %2$d."
+
+msgid "IDS_ST_POP_PASSWORDS_DO_NOT_MATCH"
+msgstr "Podane hasła są różne."
+
+msgid "IDS_ST_POP_NO_SD_CARD_IS_INSERTED_DISABLE_ENCRYPT_SD_CARD_ANYWAY_Q"
+msgstr "Nie włożono karty pamięci. Wyłączyć szyfrowanie karty pamięci mimo to?"
+
+msgid "IDS_ST_POP_NO_SD_CARD_HAS_BEEN_INSERTED_ENCRYPTION_WILL_START_AUTOMATICALLY_WHEN_YOU_INSERT_AN_SD_CARD"
+msgstr "Nie włożono karty pamięci. Szyfrowanie rozpocznie się automatycznie po włożeniu karty pamięci."
+
+msgid "IDS_ST_POP_NO_ITEM_SELECTED"
+msgstr "Nie wybrano elementów."
+
+msgid "IDS_ST_POP_NEW_PASSWD_SAVED"
+msgstr "Zapisano hasło."
+
+msgid "IDS_ST_POP_NETWORK_SEARCH_FAILED"
+msgstr "Wyszukanie sieci nie powiodło się."
+
+msgid "IDS_ST_POP_MOBILE_DATA_HAS_BEEN_DISABLED_MSG"
+msgstr "Wyłączono transmisję danych po sieci. Nie możesz wysyłać ani odbierać MMS. Aby zsynchronizować dane z serwerem, połącz się za pośrednictwem sieci Wi-Fi."
+
+msgid "IDS_ST_POP_MOBILE_DATA_ENABLED_CONNECTING_TO_MOBILE_NETWORKS_MAY_INCUR_EXTRA_CHARGES_DEPENDING_ON_YOUR_DATA_PLAN_CONTINUE_Q"
+msgstr "Włączono transmisję danych. Nawiązanie połączenia z sieciami komórkowymi może spowodować naliczenie dodatkowych opłat w zależności od pakietu transmisji danych. Kontynuować?"
+
+msgid "IDS_ST_POP_LOADING_ING"
+msgstr "Ładuję..."
+
+msgid "IDS_ST_POP_IP_ADDRESS_REMOVED"
+msgstr "Usunięto adres IP."
+
+msgid "IDS_ST_POP_INVALID_URL_OR_NETWORK_CONNECTION_FAILED"
+msgstr "Nieprawidłowy adres URL lub problem z połączeniem sieciowym"
+
+msgid "IDS_ST_POP_INVALID_IP_ADDRESS_OR_NETWORK_CONNECTION_FAILED"
+msgstr "Nieprawidłowy adres IP lub problem z połączeniem sieciowym"
+
+msgid "IDS_ST_POP_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Włóż kartę SIM, aby uzyskać dostęp do usług sieciowych."
+
+msgid "IDS_ST_POP_INCORRECT_PUK"
+msgstr "Błędny PUK"
+
+msgid "IDS_ST_POP_INCORRECT_PIN_PD_ATTEMPTS_LEFT"
+msgstr "Zły kod PIN. Pozostało prób: %d."
+
+msgid "IDS_ST_POP_INCORRECT_PIN2"
+msgstr "Nieprawidłowy kod PIN2."
+
+msgid "IDS_ST_POP_INCORRECT_PIN1_ATTEMPT_LEFT"
+msgstr "Zły kod PIN. Pozostała 1 próba."
+
+msgid "IDS_ST_POP_INCORRECT_PASSWORD"
+msgstr "Błędne hasło."
+
+msgid "IDS_ST_POP_IF_YOU_RESET_YOUR_DEVICE_TO_FACTORY_DEFAULTS_YOU_WILL_NOT_BE_ABLE_TO_USE_ENCRYPTED_FILES_ON_THE_SD_CARD_MSG"
+msgstr "W przypadku przywrócenia w urządzeniu domyślnych ustawień fabrycznych nie będzie można używać zaszyfrowanych plików na karcie pamięci, ale będzie można używać odszyfrowanych plików."
+
+msgid "IDS_ST_POP_FORMATTING_WILL_ERASE_ALL_DATA_FORMAT_Q"
+msgstr "Formatowanie spowoduje skasowanie wszystkich danych. Sformatować?"
+
+msgid "IDS_ST_POP_FORMATTING_ING"
+msgstr "Formatowanie..."
+
+msgid "IDS_ST_POP_FAILED_TO_UNINSTALL_THE_APP"
+msgstr "Nie można odinstalować tej aplikacji."
+
+msgid "IDS_ST_POP_ENTER_PS"
+msgstr "Wprowadź wartość %s."
+
+msgid "IDS_ST_POP_ENCRYPT_SD_CARD_Q_OPERATION_IS_IRREVERSIBLE_AND_IF_YOU_INTERRUPT_IT_YOU_WILL_LOSE_DATA"
+msgstr "Zaszyfrować kartę pamięci? Operacja jest nieodwracalna, a jej przerwanie spowoduje utratę danych"
+
+msgid "IDS_ST_POP_ENABLING_EMERGENCY_MODE_ING"
+msgstr "Włączanie Trybu awaryjnego..."
+
+msgid "IDS_ST_POP_ENABLING_AUTO_UPDATE_MEANS_YOUR_DEVICE_WILL_CHECK_FOR_SECURITY_UPDATES_AUTOMATICALLY_NOTI_MSG"
+msgstr "Włączenie automatycznych aktualizacji oznacza, że aktualizacje zabezpieczeń będą automatycznie sprawdzane przez urządzenie. Sprawdzanie przez sieć komórkową może spowodować naliczenie dodatkowych opłat."
+
+msgid "IDS_ST_POP_ENABLE_SMART_STAY_TO_TRY_IT_T_HELP"
+msgstr "Włącz funkcję Smart stay, aby ją wypróbować."
+
+msgid "IDS_ST_POP_ENABLE_SMART_ROTATION_TO_TRY_IT_T_HELP"
+msgstr "Włącz inteligentny obrót, aby go wypróbować."
+
+msgid "IDS_ST_POP_ENABLE_FLIGHT_MODE"
+msgstr "Włącz tryb offline."
+
+msgid "IDS_ST_POP_EMERGENCY_MODE_WILL_BE_DISABLED"
+msgstr "Tryb awaryjny zostanie wyłączony."
+
+msgid "IDS_ST_POP_DO_NOT_ASK_AGAIN"
+msgstr "Nie pokazuj ponownie"
+
+msgid "IDS_ST_POP_DISABLING_AUTO_UPDATE_MEANS_YOU_HAVE_TO_CHECK_FOR_SECURITY_UPDATES_MANUALLY_NOTI_MSG"
+msgstr "Wyłączenie automatycznych aktualizacji oznacza, że musisz ręcznie sprawdzać, czy są aktualizacje zabezpieczeń. Aby zapewnić ochronę urządzenia, zalecamy włączenie automatycznych aktualizacji."
+
+msgid "IDS_ST_POP_DISABLE_TETHERING_Q"
+msgstr "Wyłączyć router?"
+
+msgid "IDS_ST_POP_DEVICE_WILL_RESTART"
+msgstr "Urządzenie zostanie uruchomione ponownie."
+
+msgid "IDS_ST_POP_DEVICE_WILL_BE_RESET_ALL_SETTINGS_AND_DATA_WILL_BE_ERASED_THIS_CANNOT_BE_STOPPED_ONCE_STARTED"
+msgstr "Urządzenie zostanie wyzerowane. Wszystkie ustawienia i dane zostaną usunięte. Po rozpoczęciu tego procesu nie będzie można go zatrzymać."
+
+msgid "IDS_ST_POP_CONNECTING_TO_THE_SERVER_ING"
+msgstr "Łączenie z serwerem..."
+
+msgid "IDS_ST_POP_CHECK_FOR_SECURITY_UPDATES_AND_DOWNLOAD_NEW_UPDATES_Q_NOTI_MSG"
+msgstr "Sprawdzić, czy są aktualizacje zabezpieczeń, i pobrać nowe aktualizacje? Pobieranie za pośrednictwem sieci komórkowych może spowodować naliczenie dodatkowych opłat. Jeśli to możliwe, pobierz przez sieć Wi-Fi. Podczas pobierania można korzystać z urządzenia."
+
+msgid "IDS_ST_POP_CHAP"
+msgstr "CHAP"
+
+msgid "IDS_ST_POP_CHANGE_YOUR_POSITION_IN_RELATION_TO_THE_SCREEN_AND_SEE_HOW_IT_ADJUSTS_AUTOMATICALLY"
+msgstr "Zmień pozycję względem ekranu i zobacz, jak automatycznie się reguluje."
+
+msgid "IDS_ST_POP_AUTO_TIME_UPDATE_UNAVAILABLE_CHOOSE_ALTERNATIVE_TIME_SET_MODE_JPN_SBM"
+msgstr "Auto time update unavailable. Choose alternative time set mode."
+
+msgid "IDS_ST_POP_ANY_PERSONAL_CONTENT_WILL_NOT_BE_ACCESSIBLE_IN_NORMAL_MODE"
+msgstr "Wszelka zawartość osobista nie będzie dostępna w trybie normalnym."
+
+msgid "IDS_ST_OPT_WCDMA_GSM_HAUTO_CONNECT"
+msgstr "WCDMA/GSM (auto)"
+
+msgid "IDS_ST_OPT_UNTITLED_NETWORK"
+msgstr "Sieć bez nazwy"
+
+msgid "IDS_ST_OPT_TAB_VIEW"
+msgstr "Widok kart"
+
+msgid "IDS_ST_OPT_SELECTED"
+msgstr "Wybrane"
+
+msgid "IDS_ST_OPT_SELECT"
+msgstr "Wybierz"
+
+msgid "IDS_ST_OPT_RESET_APP_SETTINGS_ABB"
+msgstr "Zeruj ust. aplikacji"
+
+msgid "IDS_ST_OPT_NETWORK_LIST"
+msgstr "Lista sieci"
+
+msgid "IDS_ST_OPT_MASS_STORAGE_ABB"
+msgstr "Pamięć masowa"
+
+msgid "IDS_ST_OPT_LTE_WCDMA_GSM_HAUTO_CONNECT"
+msgstr "LTE/WCDMA/GSM (auto)"
+
+msgid "IDS_ST_OPT_EDIT_QUICK_SETTINGS"
+msgstr "Edytuj szybkie ustawienia"
+
+msgid "IDS_ST_OPT_DEFAULT_RINGTONE"
+msgstr "Domyślny dzwonek"
+
+msgid "IDS_ST_OPT_CUSTOM_MODE_ABB"
+msgstr "Tryb niestandardowy"
+
+msgid "IDS_ST_OPT_BLOCK_WI_FI"
+msgstr "Blokuj Wi-Fi"
+
+msgid "IDS_ST_OPT_BLOCK_MOBILE_NETWORKS"
+msgstr "Blokuj sieci telefonii komórkowej"
+
+msgid "IDS_ST_OPT_BLOCK_ALL"
+msgstr "Blokuj wszystko"
+
+msgid "IDS_ST_OPT_AUTO_UPDATE_ABB"
+msgstr "Aktualiz. automat."
+
+msgid "IDS_ST_OPT_ALLOW_ALL"
+msgstr "Zezwalaj na wszystko"
+
+msgid "IDS_ST_OPT_ALL"
+msgstr "Wszystkie"
+
+msgid "IDS_ST_MBODY_ZOOM"
+msgstr "Powiększenie"
+
+msgid "IDS_ST_MBODY_WCDMA_ONLY"
+msgstr "Tylko WCDMA"
+
+msgid "IDS_ST_MBODY_VIA_WI_FI_ONLY"
+msgstr "Tylko przez Wi-Fi"
+
+msgid "IDS_ST_MBODY_UNLOCK_METHOD"
+msgstr "Metoda odblokowania"
+
+msgid "IDS_ST_MBODY_TOUCH_SENSITIVITY_ABB"
+msgstr "Poz. czuł. dotyku"
+
+msgid "IDS_ST_MBODY_SWIPE"
+msgstr "Przeciągnij"
+
+msgid "IDS_ST_MBODY_SOFTWARE_UPDATE"
+msgstr "Aktualizacja oprogramow."
+
+msgid "IDS_ST_MBODY_SMART_STAY"
+msgstr "Smart stay"
+
+msgid "IDS_ST_MBODY_SMART_SCREEN"
+msgstr "Inteligentny ekran"
+
+msgid "IDS_ST_MBODY_SMART_ROTATION"
+msgstr "Inteligentny obrót"
+
+msgid "IDS_ST_MBODY_SIM_CARD_PROFILE_SETTINGS"
+msgstr "Ust. profilu karty SIM"
+
+msgid "IDS_ST_MBODY_SHOW_CPU_USAGE"
+msgstr "Pokaż wykorz. procesora"
+
+msgid "IDS_ST_MBODY_SELECT_WHERE_CAPTURED_IMAGES_WILL_BE_SAVED"
+msgstr "Wybierz miejsce zapisywania przechwyconych zdjęć"
+
+msgid "IDS_ST_MBODY_SCREEN_ROTATION"
+msgstr "Obrót ekranu"
+
+msgid "IDS_ST_MBODY_SCREEN_READER_HTTS"
+msgstr "Czytnik ekranu (TTS)"
+
+msgid "IDS_ST_MBODY_REGISTER"
+msgstr "Zarejestruj"
+
+msgid "IDS_ST_MBODY_PAP"
+msgstr "PAP"
+
+msgid "IDS_ST_MBODY_NONE"
+msgstr "Brak"
+
+msgid "IDS_ST_MBODY_MOTIONS_AND_GESTURES"
+msgstr "Ruchy i gesty"
+
+msgid "IDS_ST_MBODY_MOBILE_DATA"
+msgstr "Dane pakietowe"
+
+msgid "IDS_ST_MBODY_HELP"
+msgstr "Pomoc"
+
+msgid "IDS_ST_MBODY_HANDS_FREE_MODE"
+msgstr "Tryb głośnomówiący"
+
+msgid "IDS_ST_MBODY_GSM_ONLY"
+msgstr "Tylko GSM"
+
+msgid "IDS_ST_MBODY_FONT_SIZE"
+msgstr "Rozmiar tekstu"
+
+msgid "IDS_ST_MBODY_FACTORY_RESET"
+msgstr "Przywróć ustawien. fabr."
+
+msgid "IDS_ST_MBODY_EDIT_AFTER_SCREEN_CAPTURE"
+msgstr "Edytuj po przechw. ekranu"
+
+msgid "IDS_ST_MBODY_DIALLING_KEYPAD_TONE"
+msgstr "Ton klawiatury wybierania"
+
+msgid "IDS_ST_MBODY_DEVICE_STATUS"
+msgstr "Stan urządzenia"
+
+msgid "IDS_ST_MBODY_DEREGISTER"
+msgstr "Wyrejestruj"
+
+msgid "IDS_ST_MBODY_COLOUR_THEME"
+msgstr "Motyw kolorystyczny"
+
+msgid "IDS_ST_MBODY_CHARGING"
+msgstr "Ładowanie"
+
+msgid "IDS_ST_MBODY_CALL_SETTINGS"
+msgstr "Ustawienia połączeń"
+
+msgid "IDS_ST_MBODY_AUTO_ADJUST_SCREEN_TONE"
+msgstr "Aut. dost. tonację ekranu"
+
+msgid "IDS_ST_MBODY_ACTIVE_APPLICATION"
+msgstr "Aktywna aplikacja"
+
+msgid "IDS_ST_MBODY_ACCOUNTS_AND_BACKUP"
+msgstr "Konta i kopia zapasowa"
+
+msgid "IDS_ST_ITAB4_CONTROLS_M_INPUT_AND_CONTROL"
+msgstr "Sterow."
+
+msgid "IDS_ST_HEADER_WI_FI_DIRECT"
+msgstr "Wi-Fi Direct"
+
+msgid "IDS_ST_HEADER_WI_FI"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_HEADER_USER_SETTINGS_ABB"
+msgstr "Ustawienia użytkownika"
+
+msgid "IDS_ST_HEADER_USER_AND_BACKUP_M_CATEGORY"
+msgstr "Użytkownik i kopia zapasowa"
+
+msgid "IDS_ST_HEADER_USB_UTILITIES"
+msgstr "Ustawienia USB"
+
+msgid "IDS_ST_HEADER_UNLOCK_DEVICE_USING_MOTION_ABB"
+msgstr "Odbl. urządz., poruszając nim"
+
+msgid "IDS_ST_HEADER_UNAVAILABLE"
+msgstr "Niedostępny"
+
+msgid "IDS_ST_HEADER_ULTRA_POWER_SAVING_MODE"
+msgstr "Tryb bardzo niskiego zużycia energii"
+
+msgid "IDS_ST_HEADER_TOUCH_KEY_LIGHT_DURATION"
+msgstr "Podświetl. klawiszy dot."
+
+msgid "IDS_ST_HEADER_TEXT_TO_SPEECH"
+msgstr "Syntezator mowy"
+
+msgid "IDS_ST_HEADER_STANDARD_LIMIT_ABB"
+msgstr "Limit standardowy"
+
+msgid "IDS_ST_HEADER_SOUND"
+msgstr "Dźwięk"
+
+msgid "IDS_ST_HEADER_SIM_CARD_MANAGER"
+msgstr "Menedżer kart SIM"
+
+msgid "IDS_ST_HEADER_SHARED_CONTENT"
+msgstr "Udostępniona zawartość"
+
+msgid "IDS_ST_HEADER_SELECT_VIBRATION_PATTERNS_ABB"
+msgstr "Wybierz wzór wibracji"
+
+msgid "IDS_ST_HEADER_SCREEN_MIRRORING"
+msgstr "Screen Mirroring"
+
+msgid "IDS_ST_HEADER_SAMSUNG_KIES"
+msgstr "Samsung Kies"
+
+msgid "IDS_ST_HEADER_SAMSUNG_APPS"
+msgstr "Samsung Apps"
+
+msgid "IDS_ST_HEADER_RINGTONES"
+msgstr "Dzwonki"
+
+msgid "IDS_ST_HEADER_RESET_RESULTS"
+msgstr "Zeruj wyniki"
+
+msgid "IDS_ST_HEADER_RESET"
+msgstr "Wyzeruj"
+
+msgid "IDS_ST_HEADER_PRIVILEGES"
+msgstr "Przywileje"
+
+msgid "IDS_ST_HEADER_PRIVATE_MODE"
+msgstr "Tryb prywatny"
+
+msgid "IDS_ST_HEADER_PORT"
+msgstr "Port"
+
+msgid "IDS_ST_HEADER_PLEASE_WAIT"
+msgstr "Czekaj."
+
+msgid "IDS_ST_HEADER_PERSONAL_MODE"
+msgstr "Tryb osobisty"
+
+msgid "IDS_ST_HEADER_PERSONALISATION"
+msgstr "Personalizacja"
+
+msgid "IDS_ST_HEADER_PD_SELECTED_ABB"
+msgstr "Wybrano %d"
+
+msgid "IDS_ST_HEADER_PD_SELECTED"
+msgstr "Wybrano %d"
+
+msgid "IDS_ST_HEADER_NO_BACKGROUND_PROCESSES_ABB"
+msgstr "Bez procesów w tle"
+
+msgid "IDS_ST_HEADER_NEW_NETWORK"
+msgstr "Nowa sieć"
+
+msgid "IDS_ST_HEADER_NETWORK_RESTRICTION_MODE_ABB_JPN"
+msgstr "Network restriction mode"
+
+msgid "IDS_ST_HEADER_MOTION_UNLOCK"
+msgstr "Odblokowanie ruchu"
+
+msgid "IDS_ST_HEADER_MORE_DISPLAY_SETTINGS_ABB"
+msgstr "Więcej ustawień wyświetlania"
+
+msgid "IDS_ST_HEADER_LOCK_SCREEN"
+msgstr "Ekran blokady"
+
+msgid "IDS_ST_HEADER_LANGUAGE_AND_INPUT"
+msgstr "Język i wprowadzanie"
+
+msgid "IDS_ST_HEADER_INSTALLED_APPLICATIONS"
+msgstr "Zainstalowane aplikacje"
+
+msgid "IDS_ST_HEADER_INPUT_AND_MOTION"
+msgstr "Wprowadzanie i ruch"
+
+msgid "IDS_ST_HEADER_HOME_SCREEN_ABB"
+msgstr "Ekran startowy"
+
+msgid "IDS_ST_HEADER_FINGER_SCANNER_ABB"
+msgstr "Skaner odcisków palców"
+
+msgid "IDS_ST_HEADER_ENTER_VALID_DEVICE_NAME_ABB"
+msgstr "Wprow. praw. nazwy urz."
+
+msgid "IDS_ST_HEADER_ENCRYPT_DEVICE"
+msgstr "Zaszyfruj urządzenie"
+
+msgid "IDS_ST_HEADER_DIVX_VOD"
+msgstr "DivX® VOD"
+
+msgid "IDS_ST_HEADER_DISPLAY_LANGUAGE"
+msgstr "Język wyświetlania"
+
+msgid "IDS_ST_HEADER_DISPLAY"
+msgstr "Wyświetlacz"
+
+msgid "IDS_ST_HEADER_DISABLE_EMERGENCY_MODE_ABB"
+msgstr "Wyłącz Tryb awaryjny"
+
+msgid "IDS_ST_HEADER_DEVICE_MANAGER"
+msgstr "Menedżer urządzeń"
+
+msgid "IDS_ST_HEADER_CREATE_CONNECTION"
+msgstr "Utwórz połączenie"
+
+msgid "IDS_ST_HEADER_CONNECT_AND_SHARE"
+msgstr "Połącz i udostępniaj"
+
+msgid "IDS_ST_HEADER_CONFIRM_ENCRYPTION"
+msgstr "Potwierdź szyfrowanie"
+
+msgid "IDS_ST_HEADER_CHANGE_PIN_ABB"
+msgstr "Zmień kod PIN"
+
+msgid "IDS_ST_HEADER_AUTO_ROTATE_SCREEN_ABB"
+msgstr "Autom. obrót ekranu"
+
+msgid "IDS_ST_HEADER_ALLOW_USB_DEBUGGING_Q_ABB"
+msgstr "Zezw. na debug. USB?"
+
+msgid "IDS_ST_HEADER_ADD_URL"
+msgstr "Dodaj URL"
+
+msgid "IDS_ST_HEADER_ADD_PORT"
+msgstr "Dodaj port"
+
+msgid "IDS_ST_HEADER_ADD_IP"
+msgstr "Dodaj IP"
+
+msgid "IDS_ST_BUTTON_UNINSTALL_UPDATES"
+msgstr "Odinstaluj aktualizacje"
+
+msgid "IDS_ST_BUTTON_UNINSTALL"
+msgstr "Odinstaluj"
+
+msgid "IDS_ST_BUTTON_TRY_IT"
+msgstr "Wypróbuj"
+
+msgid "IDS_ST_BUTTON_STOP"
+msgstr "Stop"
+
+msgid "IDS_ST_BUTTON_SET_SCREEN_LOCK_TYPE"
+msgstr "Ustaw typ blokady ekranu"
+
+msgid "IDS_ST_BUTTON_RESET_APPS_ABB"
+msgstr "Zeruj aplikacje"
+
+msgid "IDS_ST_BUTTON_RESET"
+msgstr "Zeruj"
+
+msgid "IDS_ST_BUTTON_REMOVE_DEFAULT_APPS_ABB"
+msgstr "Usuń domyślne aplikacje"
+
+msgid "IDS_ST_BUTTON_ONLY_VIBRATE"
+msgstr "Tylko wibr."
+
+msgid "IDS_ST_BUTTON_OK_ABB"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON_MOVE_TO_SD_ABB"
+msgstr "Przenieś na SD"
+
+msgid "IDS_ST_BUTTON_MOVE_TO_PHONE"
+msgstr "Przenieś do telefonu"
+
+msgid "IDS_ST_BUTTON_FORCE_STOP"
+msgstr "Wymuś zatrzymanie"
+
+msgid "IDS_ST_BUTTON_ENABLE"
+msgstr "Włącz"
+
+msgid "IDS_ST_BUTTON_DISCONNECT"
+msgstr "Rozłącz"
+
+msgid "IDS_ST_BUTTON_DISABLE"
+msgstr "Wyłącz"
+
+msgid "IDS_ST_BUTTON_CONTINUE"
+msgstr "Kontynuuj"
+
+msgid "IDS_ST_BUTTON_CANCEL_ABB"
+msgstr "Anuluj"
+
+msgid "IDS_ST_BODY_YYYY_DD_MM_DOT"
+msgstr "RRRR/DD/MM"
+
+msgid "IDS_ST_BODY_YOU_HAVE_SELECTED_TO_LAUNCH_THIS_APPLICATION_BY_DEFAULT_FOR_SOME_ACTIONS"
+msgstr "Wybrano domyślne uruchamianie tej aplikacji w przypadku niektórych operacji."
+
+msgid "IDS_ST_BODY_YOU_CAN_DECRYPT_ACCOUNTS_SETTINGS_DOWNLOADED_APPLICATIONS_AND_THEIR_DATA_MEDIA_AND_OTHER_FILES_DECRYPTION_WARNING_MSG"
+msgstr "Istnieje możliwość odszyfrowania kont, ustawień, pobranych aplikacji i ich danych, multimediów oraz innych plików. Odszyfrowywanie może zająć godzinę lub dłużej. Rozpocznij przy w pełni naładowanej baterii i urządzeniu podłączonym do zasilania aż do zakończenia odszyfrowywania. Przerwanie procesu szyfrowania może spowodować utratę części lub całości danych."
+
+msgid "IDS_ST_BODY_YOUR_DEVICE_REGISTRATION_CODE_C_PS"
+msgstr "Kod rejestracyjny urządzenia: %s"
+
+msgid "IDS_ST_BODY_YOUR_CHANGES_ARE_BEING_MADE_T_TTS"
+msgstr "Twoje zmiany są wprowadzane."
+
+msgid "IDS_ST_BODY_WINSET"
+msgstr "Winset"
+
+msgid "IDS_ST_BODY_WHEN_THE_SOURCE_OF_LIGHT_IS_BEHIND_YOU_OR_WHEN_USING_DEVICE_IN_THE_DARK"
+msgstr "Kiedy źródło światła jest za Tobą lub podczas korzystania z urządzenia w ciemności"
+
+msgid "IDS_ST_BODY_WHEN_LEARN_ABOUT_TILT_OR_MOTION_UNLOCK_ARE_SET_MOTION_ACTIVATION_WILL_BE_AUTOMATICALLY_ENABLED_IN_SETTINGS"
+msgstr "W przypadku ustawienia nauki odblokowywania przez obracanie lub ruch aktywacja ruchu zostanie automatycznie włączona w ustawieniach."
+
+msgid "IDS_ST_BODY_WHEN_FRONT_CAMERA_IS_USED_FOR_THE_APPLICATION"
+msgstr "Kiedy w aplikacji używany jest przedni aparat"
+
+msgid "IDS_ST_BODY_WHEN_FRONT_CAMERA_FAILS_TO_DETECT_FACE_AND_EYES"
+msgstr "Gdy przedni aparat nie rozpozna twarzy i oczu"
+
+msgid "IDS_ST_BODY_WHEN_DATA_ROAMING_IS_DISABLED_APPLICATIONS_THAT_USE_THE_DATA_CONNECTION_MAY_NOT_WORK"
+msgstr "Jeśli roaming danych jest wyłączony, aplikacje korzystające z połączenia danych mogą nie działać."
+
+msgid "IDS_ST_BODY_WEB_APPLICATIONS"
+msgstr "Aplikacje internetowe"
+
+msgid "IDS_ST_BODY_WCDMA_GSM_NHAUTO_CONNECT"
+msgstr "WCDMA/GSM\n(automatyczne połączenie)"
+
+msgid "IDS_ST_BODY_WAIT_WHILE_DEVICE_IS_ENCRYPTED_PDP_COMPLETE"
+msgstr "Poczekaj na zaszyfrowanie urządzenia. Wykonano %d%."
+
+msgid "IDS_ST_BODY_WAIT_WHILE_DEVICE_IS_DECRYPTED_PDP_COMPLETE"
+msgstr "Poczekaj na odszyfrowanie urządzenia. Wykonano %d%."
+
+msgid "IDS_ST_BODY_WAITING_FOR_RESPONSE_FROM_SIM_CARD_ING"
+msgstr "Oczekiwanie na odpowiedź z karty SIM..."
+
+msgid "IDS_ST_BODY_VOLUME"
+msgstr "Głośność"
+
+msgid "IDS_ST_BODY_VOICE_RECORDING"
+msgstr "Nagranie głosowe"
+
+msgid "IDS_ST_BODY_VIBRATE_WHEN_RINGING"
+msgstr "Wibracja podczas dzwonienia"
+
+msgid "IDS_ST_BODY_VERSION_PS"
+msgstr "Wersja %s"
+
+msgid "IDS_ST_BODY_USING_MOBILE_DATA_MAY_RESULT_IN_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "Korzystanie z transmisji danych po sieci spowodować naliczenie dodatkowych opłat. Kontynuować?"
+
+msgid "IDS_ST_BODY_USE_TIME_PROVIDED_BY_NETWORK"
+msgstr "Używaj godziny dostarczonej przez sieć."
+
+msgid "IDS_ST_BODY_USE_MOTION"
+msgstr "Użycie ruchu"
+
+msgid "IDS_ST_BODY_USER_ID"
+msgstr "Identyfikator użytkownika"
+
+msgid "IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_URL_MSG"
+msgstr "Możesz zablokować wybrany adres URL. Po jego zablokowaniu dane przychodzące i wychodzące będą odrzucane."
+
+msgid "IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_PORT_MSG"
+msgstr "Możesz zablokować wybrany port. Po jego zablokowaniu dane przychodzące i wychodzące będą odrzucane."
+
+msgid "IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_IP_ADDRESS_MSG"
+msgstr "Możesz zablokować wybrany adres IP. Po jego zablokowaniu dane przychodzące i wychodzące będą odrzucane."
+
+msgid "IDS_ST_BODY_USED"
+msgstr "W użyciu"
+
+msgid "IDS_ST_BODY_USB_OTG_STORAGE"
+msgstr "Pamięć USB OTG"
+
+msgid "IDS_ST_BODY_USB_DEBUGGING_IS_INTENDED_FOR_DEVELOPMENT_PURPOSES_ONLY_MSG"
+msgstr "Debugowanie USB jest przeznaczone tylko na potrzeby opracowywania aplikacji. Można go używać do kopiowania danych między komputerem a urządzeniem, instalowania aplikacji na urządzeniu bez powiadomienia i odczytywania danych dzienników."
+
+msgid "IDS_ST_BODY_USB_DEBUGGING"
+msgstr "Debugowanie USB"
+
+msgid "IDS_ST_BODY_USB_ASK_ON_CONNECTION"
+msgstr "Pytaj przy połączeniu"
+
+msgid "IDS_ST_BODY_URL"
+msgstr "Adres URL"
+
+msgid "IDS_ST_BODY_UNMOUNT_USB_OTG_STORAGE"
+msgstr "Odinstaluj pamięć USB OTG"
+
+msgid "IDS_ST_BODY_UNMOUNT_SD_CARD"
+msgstr "Odinstaluj kartę pamięci"
+
+msgid "IDS_ST_BODY_UNMOUNTING_THE_SD_CARD_WILL_STOP_SOME_APPLICATIONS_FROM_FUNCTIONING_UNTIL_YOU_MOUNT_THE_SD_CARD_AGAIN_MSG"
+msgstr "Odłączenie karty pamięci spowoduje zatrzymanie niektórych uruchomionych aplikacji. Mogą one być niedostępne do momentu ponownego podłączenia karty pamięci"
+
+msgid "IDS_ST_BODY_UNABLE_TO_USE_CURRENT_PASSWORD"
+msgstr "Nie można użyć bieżącego hasła."
+
+msgid "IDS_ST_BODY_UMTS_MODE_ONLY_WORKS_INSIDE_3G_COVERAGE_AREA"
+msgstr "Tryb UMTS działa tylko w zasięgu sieci 3G."
+
+msgid "IDS_ST_BODY_UDRGOTHICM_JPN"
+msgstr "UDRGothicM"
+
+msgid "IDS_ST_BODY_UDMINCHO_JPN"
+msgstr "UDMincho"
+
+msgid "IDS_ST_BODY_UDGOTHIC_M_FONT"
+msgstr "UDGothic"
+
+msgid "IDS_ST_BODY_TURN_OFF"
+msgstr "Wyłącz"
+
+msgid "IDS_ST_BODY_TURNING_OFF_MOBILE_DATA_WHEN_THE_SCREEN_IS_OFF"
+msgstr "Wyłączenie funkcji Transmisja danych po sieci, gdy ekran jest wyłączony."
+
+msgid "IDS_ST_BODY_TURNING_OFF_CONNECTIVITY_FEATURES_SUCH_AS_WI_FI_AND_BLUETOOTH"
+msgstr "Wyłączenie funkcji łączności, takich jak Wi-Fi czy Bluetooth."
+
+msgid "IDS_ST_BODY_TO_USE_PERSONAL_MODE_SCREEN_LOCK_TYPE_SHOULD_BE_SET_TO_SIMPLE_PASSWORD_OR_PASSWORD"
+msgstr "Aby użyć Trybu osobistego, należy ustawić typ blokady ekranu na proste hasło lub hasło."
+
+msgid "IDS_ST_BODY_TO_PROTECT_YOUR_DATA_DISABLE_PERSONAL_MODE_AFTER_YOU_USE_IT_ALSO_USING_A_SECURE_SCREEN_LOCK_WILL_PROVIDE_BETTER_PROTECTION"
+msgstr "Aby chronić swoje dane, wyłącz Tryb osobisty po jego użyciu. Dodatkowym zabezpieczeniem będzie także korzystanie z bezpiecznej blokady ekranu."
+
+msgid "IDS_ST_BODY_TO_OPEN_THE_MENU_DOUBLE_TAP_IT_T_TTS"
+msgstr "Dotknij dwukrotnie, aby otworzyć menu."
+
+msgid "IDS_ST_BODY_TO_M_PERIOD"
+msgstr "Do"
+
+msgid "IDS_ST_BODY_TO_ENABLE_THIS_FEATURE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Aby włączyć tę funkcję, włącz przynajmniej jedną związaną z nią funkcję."
+
+msgid "IDS_ST_BODY_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_FUNCTION"
+msgstr "Aby włączyć tryb oszczędzania energii, włącz przynajmniej jedną funkcję."
+
+msgid "IDS_ST_BODY_TO_ENABLE_BLOCKING_MODE_ENABLE_AT_LEAST_ONE_OPTION"
+msgstr "Aby uaktywnić tryb blokowania, włącz przynajmniej jedną z opcji."
+
+msgid "IDS_ST_BODY_TO_AVOID_OVERHEATING_MAXIMUM_BRIGHTNESS_HAS_BEEN_REDUCED"
+msgstr "Maksymalna jasność została zmniejszona w celu uniknięcia przegrzania."
+
+msgid "IDS_ST_BODY_TOUCH"
+msgstr "Blokada ekranu"
+
+msgid "IDS_ST_BODY_TOTAL_SPACE"
+msgstr "Pamięć łącznie"
+
+msgid "IDS_ST_BODY_TOGGLE_THE_BUTTON_TO_ENABLE_OR_DISABLE_SCREEN_READER_OR_DOUBLE_TAP_TO_OPEN_THE_MENU_T_TTS"
+msgstr "Przełącz przycisk, aby włączyć lub wyłączyć czytnik ekranu, bądź dotknij dwukrotnie, aby otworzyć menu."
+
+msgid "IDS_ST_BODY_TIME_ZONE"
+msgstr "Strefa czasowa"
+
+msgid "IDS_ST_BODY_THIS_BAND_MAY_NOT_WORK_OUTSIDE_THE_USA_AND_CANADA"
+msgstr "Ten zakres może nie działać poza Ameryką i Kanadą."
+
+msgid "IDS_ST_BODY_THIS_ACTION_WILL_ERASE_THE_SD_CARD_IN_THE_PHONE_YOU_WILL_LOSE_ALL_DATA_ON_THE_CARD_E"
+msgstr "Ta operacja spowoduje usunięcie zawartości karty pamięci w telefonie. Zostaną utracone WSZYSTKIE dane na karcie!"
+
+msgid "IDS_ST_BODY_THE_SD_CARD_IS_CURRENTLY_IN_USE_THIS_ACTION_WILL_ERASE_ALL_DATA_ON_THE_SD_CARD_INCLUDING_THE_DATA_THAT_IS_CURRENTLY_BEING_USED"
+msgstr "Karta pamięci jest aktualnie używana. Ta czynność spowoduje skasowanie wszystkich danych na karcie pamięci, w tym aktualnie używanych danych"
+
+msgid "IDS_ST_BODY_THE_RED_LED_LIGHTS_UP_WHEN_YOU_CHARGE_YOUR_DEVICE_WHILE_THE_SCREEN_IS_OFF"
+msgstr "Czerwona dioda LED zapala się podczas ładowania urządzenia, gdy ekran jest wyłączony."
+
+msgid "IDS_ST_BODY_THE_RED_LED_BLINKS_WHEN_THE_BATTERY_POWER_IS_LOW_WHILE_THE_SCREEN_IS_OFF"
+msgstr "Czerwona dioda LED będzie migać przy niskim poziomie naładowania baterii, gdy ekran jest wyłączony."
+
+msgid "IDS_ST_BODY_THE_PASSWORD_MUST_NOT_CONTAIN_A_SIMPLE_SEQUENCE_HEG_1111_OR_1234"
+msgstr "Hasło nie może zawierać prostej sekwencji (np. 1111 lub 1234)"
+
+msgid "IDS_ST_BODY_THE_NAME_FIELD_CANNOT_BE_EMPTY"
+msgstr "Pole Nazwa nie może być puste."
+
+msgid "IDS_ST_BODY_THE_BLUE_LED_BLINKS_WHEN_YOU_RECORD_VOICE_WHILE_THE_SCREEN_IS_OFF"
+msgstr "Niebieska dioda LED będzie migać podczas nagrywania głosu, gdy ekran jest wyłączony."
+
+msgid "IDS_ST_BODY_THE_BLUE_LED_BLINKS_WHEN_YOU_HAVE_MISSED_CALLS_MESSAGES_OR_APP_NOTIFICATIONS_WHILE_THE_SCREEN_IS_OFF"
+msgstr "Niebieska dioda LED miga w przypadku nieodebranych połączeń, nieprzeczytanych wiadomości lub powiadomień aplikacji, gdy ekran jest wyłączony."
+
+msgid "IDS_ST_BODY_THE_APPLICATIONS_BELOW_WERE_STARTED_BY_PS_STOPPING_THESE_APPLICATIONS_MAY_CAUSE_PS_TO_FAIL"
+msgstr "Poniższe aplikacje zostały uruchomione przez aplikację %s. Ich zatrzymanie może spowodować błąd aplikacji %s."
+
+msgid "IDS_ST_BODY_THERE_ARE_NO_NETWORKS_NEARBY"
+msgstr "Brak sieci w pobliżu."
+
+msgid "IDS_ST_BODY_TEXTSTYLE_LARGE"
+msgstr "Duży"
+
+msgid "IDS_ST_BODY_TASK_SWITCHER"
+msgstr "Menedżer zadań"
+
+msgid "IDS_ST_BODY_TAP_TO_INSERT"
+msgstr "Dotknij, aby wprowadzić."
+
+msgid "IDS_ST_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_TO_UNLOCK_IT_IF_THE_SCREEN_DOES_NOT_UNLOCK_TRY_TILTING_THE_DEVICE_MORE"
+msgstr "Dotknij ekranu i przytrzymaj go, a następnie obróć urządzenie do siebie, aby go odblokować. Jeżeli ekran nie odblokuje się, ponownie obróć urządzenie."
+
+msgid "IDS_ST_BODY_SYSTEM_MEMORY"
+msgstr "Pamięć systemowa"
+
+msgid "IDS_ST_BODY_SUNDAY"
+msgstr "Niedziela"
+
+msgid "IDS_ST_BODY_STORAGE"
+msgstr "Domyślna pamięć"
+
+msgid "IDS_ST_BODY_STANDARD_T_DISPLAY_EFFECT"
+msgstr "Standardowy"
+
+msgid "IDS_ST_BODY_SPEECH"
+msgstr "Mowa"
+
+msgid "IDS_ST_BODY_SOUND_N_DISPLAY"
+msgstr "Dźwięk i wyświetlacz"
+
+msgid "IDS_ST_BODY_SOFTWARE"
+msgstr "Oprogramowanie"
+
+msgid "IDS_ST_BODY_SOCIAL_NETWORK_PROFILES"
+msgstr "Portale społecznościowe"
+
+msgid "IDS_ST_BODY_SMART_STAY_MAY_NOT_WORK_IN_THESE_SITUATIONS"
+msgstr "Smart stay może w tych przypadkach nie działać."
+
+msgid "IDS_ST_BODY_SMART_ROTATION_MAY_NOT_WORK_IN_THESE_SITUATIONS"
+msgstr "Inteligentny obrót może w tych przypadkach nie działać."
+
+msgid "IDS_ST_BODY_SMART_ROTATION_DESCRIPTION_MSG"
+msgstr "Inteligentny obrót wyłącza automatyczny obrót ekranu i wykorzystując przedni aparat do ustalenia orientacji twarzy, stosownie obraca ekran."
+
+msgid "IDS_ST_BODY_SMALL_M_TEXTSIZE"
+msgstr "Mały"
+
+msgid "IDS_ST_BODY_SIM_PASSWORD"
+msgstr "Hasło SIM"
+
+msgid "IDS_ST_BODY_SIMPLE_PASSWORD"
+msgstr "Proste hasło"
+
+msgid "IDS_ST_BODY_SHOWS_BATTERY_PERCENTAGE_ON_INDICATOR"
+msgstr "Pokazuje naładowanie baterii na wskaźniku."
+
+msgid "IDS_ST_BODY_SET_THE_DEFAULT_LOCATION_FOR_INSTALLING_APPLICATIONS_MSG"
+msgstr "Ustaw domyślną lokalizację instalowania aplikacji. Aplikacje mogą być instalowane w różnych lokalizacjach, zależnie od typu aplikacji i dostępności lokalizacji."
+
+msgid "IDS_ST_BODY_SET_FONT_AS_PS_Q"
+msgstr "Ustawić czcionkę na %s?"
+
+msgid "IDS_ST_BODY_SET_AN_UNLOCK_PASSWORD_OF_AT_LEAST_6_CHARACTERS_CONTAINING_AT_LEAST_1_NUMBER"
+msgstr "Ustaw hasło odblokowania ekranu o długości co najmniej 6 znaków i zawierające przynajmniej 1 cyfrę."
+
+msgid "IDS_ST_BODY_SERIAL_NUMBER"
+msgstr "Numer seryjny"
+
+msgid "IDS_ST_BODY_SECURITY_ENGINE"
+msgstr "Mechanizm zabezpieczeń"
+
+msgid "IDS_ST_BODY_SECURITY"
+msgstr "Bezpieczeństwo"
+
+msgid "IDS_ST_BODY_SEARCH"
+msgstr "Szukaj"
+
+msgid "IDS_ST_BODY_SD_CARD"
+msgstr "Karta pamięci"
+
+msgid "IDS_ST_BODY_SCREEN_TIMEOUT_ABB2"
+msgstr "Limit cz. ekr."
+
+msgid "IDS_ST_BODY_SCREEN_STAYS_ON_AS_LONG_AS_YOU_ARE_LOOKING_AT_IT"
+msgstr "Ekran jest podświetlany dopóki się na niego patrzysz."
+
+msgid "IDS_ST_BODY_SCREEN_ROTATION_CAN_BE_SLOWER_IF_SMART_ROTATION_ENABLED"
+msgstr "Obrót ekranu może być wolniejszy, gdy włączono inteligentny obrót"
+
+msgid "IDS_ST_BODY_SCREEN_OVERLAY_SHOWING_CURRENT_CPU_USAGE_ABB"
+msgstr "Nakładka ekranu pokazująca akt. wykorzystanie CPU."
+
+msgid "IDS_ST_BODY_SCREEN_ORIENTATION_ADJUSTS_TO_YOUR_ANGLE_OF_SIGHT"
+msgstr "Orientacja ekranu dostosowuje się do Twojego kąta patrzenia."
+
+msgid "IDS_ST_BODY_SCREEN_MODE"
+msgstr "Tryb ekranu"
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_TYPE_CANNOT_BE_CHANGED_WHILE_ENCRYPTING_THE_SD_CARD"
+msgstr "Podczas szyfrowania karty pamięci nie można zmienić typu blokady ekranu."
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_TYPE_CANNOT_BE_CHANGED_WHILE_ENCRYPTING_THE_DEVICE"
+msgstr "Podczas szyfrowania urządzenia nie można zmienić typu blokady ekranu."
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_TYPE"
+msgstr "Typ blokady ekranu"
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_SOUND"
+msgstr "Dźwięki blokowania ekranu"
+
+msgid "IDS_ST_BODY_SCHEDULE"
+msgstr "Terminarz"
+
+msgid "IDS_ST_BODY_SAVE_POWER_BY_ADJUSTING_SCREEN_TONE_ACCORDING_TO_ANALYSIS_OF_IMAGES"
+msgstr "Oszczędzaj energię, dostosowując tonację ekranu na podstawie analizy obrazów."
+
+msgid "IDS_ST_BODY_SAVES_POWER_BY_LIMITING_THE_MAXIMUM_PERFORMANCE_OF_THE_DEVICE"
+msgstr "Pozwala oszczędzać energię dzięki ograniczeniu maksymalnej wydajności urządzenia."
+
+msgid "IDS_ST_BODY_SAVED"
+msgstr "Zapisano."
+
+msgid "IDS_ST_BODY_SAVE"
+msgstr "Zapisz"
+
+msgid "IDS_ST_BODY_SAMSUNG_LEGAL"
+msgstr "Informacje prawne dotyczące firmy Samsung"
+
+msgid "IDS_ST_BODY_SAMSUNG_KIES_CONNECTION_CONNECTING_USB_HELP_MSG"
+msgstr "Jeśli Samsung Kies (oprogramowanie) lub odpowiednie sterowniki nie są jeszcze zainstalowane na komputerze, instalacja zostanie przeprowadzona w systemie Microsoft Windows. \nPo zainstalowaniu oprogramowania można wykonać następujące operacje:\n- Zsynchronizować dane telefonu\n- Uaktualnić oprogramowanie telefonu\n- Udostępnić Internet (telefon pełni funkcję modemu zapewniającego dostęp do Internetu w notebooku lub na komputerze)\n- Skopiować zakupioną muzykę/filmy (platforma Microsoft Windows Media DRM) lub zwykłe pliki na telefon."
+
+msgid "IDS_ST_BODY_RUNNING"
+msgstr "Uruchomione"
+
+msgid "IDS_ST_BODY_RESTRICTING_APPLICATION_USAGE_TO_ONLY_ESSENTIAL_APPLICATIONS_AND_THOSE_SELECTED_BY_YOU"
+msgstr "Ograniczenie użycia aplikacji tylko do niezbędnych i wybranych przez użytkownika."
+
+msgid "IDS_ST_BODY_RESET_TO_DEFAULT"
+msgstr "Przywróć domyślne"
+
+msgid "IDS_ST_BODY_RESET_SETTINGS"
+msgstr "Ustawienia fabryczne"
+
+msgid "IDS_ST_BODY_RESET_PERSONAL_MODE_SECURITY_SETTINGS_AND_DELETE_PERSONAL_CONTENT"
+msgstr "Wyzeruj ustawienia zabezpieczeń trybu osobistego i usuń zawartość osobistą"
+
+msgid "IDS_ST_BODY_RESET_PERSONAL_MODE"
+msgstr "Wyzeruj tryb osobisty"
+
+msgid "IDS_ST_BODY_RESET_ALL"
+msgstr "Wyzeruj wszystkie"
+
+msgid "IDS_ST_BODY_REMOVE_LICENCE"
+msgstr "Usuń licencję"
+
+msgid "IDS_ST_BODY_REGULATORY_INFORMATION_ABB"
+msgstr "Inform. dot. regul. praw."
+
+msgid "IDS_ST_BODY_REGISTER_AT"
+msgstr "Zarejestruj pod adresem"
+
+msgid "IDS_ST_BODY_REGIONAL_EXAMPLE"
+msgstr "Przykład regionalny"
+
+msgid "IDS_ST_BODY_REGION"
+msgstr "Region"
+
+msgid "IDS_ST_BODY_PUK"
+msgstr "PUK"
+
+msgid "IDS_ST_BODY_PROXY_PORT"
+msgstr "Port serwera proxy"
+
+msgid "IDS_ST_BODY_PROTOCOL_TYPE"
+msgstr "Typ protokołu"
+
+msgid "IDS_ST_BODY_PROTECT_YOUR_DEVICE_FROM_HARMFUL_VIRUSES_AND_MALWARE"
+msgstr "Chroń urządzenie przed szkodliwymi wirusami i złośliwym oprogramowaniem."
+
+msgid "IDS_ST_BODY_PROFILE_NAME"
+msgstr "Nazwa profilu"
+
+msgid "IDS_ST_BODY_PROFILE"
+msgstr "Profile telefonu"
+
+msgid "IDS_ST_BODY_PREPARING_THIS_COULD_TAKE_OVER_10_MINUTES_ING"
+msgstr "Przygotowywanie. Może ono potrwać dłużej niż 10 min..."
+
+msgid "IDS_ST_BODY_PREFERRED_NETWORKS"
+msgstr "Preferowane sieci"
+
+msgid "IDS_ST_BODY_POP_JPN_DCM"
+msgstr "POP"
+
+msgid "IDS_ST_BODY_PM"
+msgstr "PM"
+
+msgid "IDS_ST_BODY_PLUG_IN_CHARGER_AND_TRY_AGAIN"
+msgstr "Podłącz ładowarkę i spróbuj ponownie."
+
+msgid "IDS_ST_BODY_PLAY_TONE_WHEN_THE_DIALLING_KEYPAD_IS_TAPPED"
+msgstr "Odtwarzaj ton podczas korzystania z klawiatury ekranowej."
+
+msgid "IDS_ST_BODY_PLAY_SOUNDS_WHEN_LOCKING_AND_UNLOCKING_SCREEN"
+msgstr "Odtwarzaj dźwięki podczas blokowania i odblokowywania ekranu"
+
+msgid "IDS_ST_BODY_PIN_BLOCKED_ENTER_PUK_TO_CONTINUE_JPN_DCM"
+msgstr "PIN blocked. Enter PUK to continue."
+
+msgid "IDS_ST_BODY_PIN"
+msgstr "PIN"
+
+msgid "IDS_ST_BODY_PICTURES_VIDEOS"
+msgstr "Obrazy, filmy"
+
+msgid "IDS_ST_BODY_PHOTO_UPLOAD_SETTINGS"
+msgstr "Ustawienia wysyłania zdjęć"
+
+msgid "IDS_ST_BODY_PHONEPROFILES_SILENT"
+msgstr "Cichy"
+
+msgid "IDS_ST_BODY_PERSONAL_MODE_CAN_BE_USED_TO_HIDE_CONTENT_THAT_YOU_WANT_TO_KEEP_PRIVATE_MSG"
+msgstr "Trybu osobistego można użyć do ukrycia zawartości, która ma pozostać prywatna. Aby użyć Trybu osobistego, musisz go włączyć w Ustawieniach lub nacisnąć i przytrzymać klawisz zasilania, a następnie wybrać Tryb osobisty. Wprowadź kod PIN lub hasło. Na pasku stanu będzie wyświetlana ikona Trybu osobistego. Aby chronić swoje dane, wyłącz Tryb osobisty po jego użyciu. Dodatkowym zabezpieczeniem będzie także korzystanie z bezpiecznej blokady ekranu."
+
+msgid "IDS_ST_BODY_PD_ATTEMPTS_REMAINING_JPN_DCM"
+msgstr "%d attempts remaining"
+
+msgid "IDS_ST_BODY_PASSWORD_REQUIRED_TO_DECRYPT_DEVICE_EACH_TIME_YOU_TURN_IT_ON"
+msgstr "Hasło wymagane do odszyfrowania urządzenia przy każdym jego włączeniu."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_NO_MORE_THAN_PD_CHARACTERS_ABB"
+msgstr "Hasło może mieć maksymalnie cyfr: %d."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_PD_CHARACTERS_ABB"
+msgstr "Hasło musi zawierać co najmniej znaków: %d."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_1_NUMBER"
+msgstr "Hasło musi zawierać co najmniej 1 cyfrę."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_1_LETTER"
+msgstr "Hasło musi zawierać co najmniej 1 literę."
+
+msgid "IDS_ST_BODY_PASSWORD_EMPTY"
+msgstr "Hasło puste."
+
+msgid "IDS_ST_BODY_PASSWORD_CONTAINS_INVALID_CHARACTER_ABB"
+msgstr "Hasło zawiera nieprawidłowy znak."
+
+msgid "IDS_ST_BODY_PASSWORD"
+msgstr "Hasło"
+
+msgid "IDS_ST_BODY_OPEN_SOURCE_LICENCES"
+msgstr "Licencje oprogramowania Open source"
+
+msgid "IDS_ST_BODY_ON_M_STATUS"
+msgstr "Włączony"
+
+msgid "IDS_ST_BODY_OFFICIAL_M_DEVICE_STATUS"
+msgstr "Oficjalny"
+
+msgid "IDS_ST_BODY_NUMBER"
+msgstr "Numer"
+
+msgid "IDS_ST_BODY_NO_RESULTS_FOUND"
+msgstr "Nie znaleziono wyników."
+
+msgid "IDS_ST_BODY_NO_DEFAULTS_SET"
+msgstr "Brak ustawień domyślnych."
+
+msgid "IDS_ST_BODY_NOT_ASSIGNED"
+msgstr "Nieprzypisane"
+
+msgid "IDS_ST_BODY_NOTIFICATION_PANEL"
+msgstr "Panel powiadomień"
+
+msgid "IDS_ST_BODY_NOTIFICATIONS"
+msgstr "Powiadomienia"
+
+msgid "IDS_ST_BODY_NOTIFICATION"
+msgstr "Powiadomienie"
+
+msgid "IDS_ST_BODY_NOSERVICE"
+msgstr "Brak sieci"
+
+msgid "IDS_ST_BODY_NORMAL_T_PROFILE"
+msgstr "Normalny"
+
+msgid "IDS_ST_BODY_NONE"
+msgstr "Brak"
+
+msgid "IDS_ST_BODY_NEW_PIN2_AND_CONFIRM_PIN2_DO_NOT_MATCH"
+msgstr "Nowy kod PIN2 i potwierdzenie kodu PIN2 są różne"
+
+msgid "IDS_ST_BODY_NEW_PIN2"
+msgstr "Nowy kod PIN2"
+
+msgid "IDS_ST_BODY_NEW_PIN1"
+msgstr "Nowy kod PIN1"
+
+msgid "IDS_ST_BODY_NEW"
+msgstr "Nowe"
+
+msgid "IDS_ST_BODY_NETWORK_TYPE"
+msgstr "Typ sieci"
+
+msgid "IDS_ST_BODY_NETWORK_MODE"
+msgstr "Tryb pracy sieci"
+
+msgid "IDS_ST_BODY_NETWORK_LIST"
+msgstr "Lista sieci"
+
+msgid "IDS_ST_BODY_NETWORK_CONNECTIONS"
+msgstr "Połączenia sieciowe"
+
+msgid "IDS_ST_BODY_NETWORK_CODE"
+msgstr "Kod sieci"
+
+msgid "IDS_ST_BODY_NETWORK"
+msgstr "Sieć"
+
+msgid "IDS_ST_BODY_NATURAL_T_DISPLAY_EFFECT"
+msgstr "Naturalny"
+
+msgid "IDS_ST_BODY_NAME"
+msgstr "Nazwa"
+
+msgid "IDS_ST_BODY_MY_NUMBER"
+msgstr "Mój numer"
+
+msgid "IDS_ST_BODY_MSG_TIME_FORMAT"
+msgstr "Format godziny"
+
+msgid "IDS_ST_BODY_MOVIE_T_DISPLAY_EFFECT"
+msgstr "Film"
+
+msgid "IDS_ST_BODY_MOUNT_USB_OTG_STORAGE"
+msgstr "Zainstaluj pamięć USB OTG"
+
+msgid "IDS_ST_BODY_MOUNT_SD_CARD"
+msgstr "Włóż kartę pamięci"
+
+msgid "IDS_ST_BODY_MOTION"
+msgstr "Ruch"
+
+msgid "IDS_ST_BODY_MORE_SYSTEM_SETTINGS"
+msgstr "Więcej ustawień systemowych"
+
+msgid "IDS_ST_BODY_MORE_CONNECTIVITY_SETTINGS"
+msgstr "Więcej ustawień łączności"
+
+msgid "IDS_ST_BODY_MONDAY"
+msgstr "Poniedziałek"
+
+msgid "IDS_ST_BODY_MODE"
+msgstr "Tryb"
+
+msgid "IDS_ST_BODY_MOBILE_DATA_WILL_BE_USED_IF_YOU_DOWNLOAD_OR_UPLOAD_DATA_WITHOUT_WI_FI_CONNECTION"
+msgstr "Jeżeli będziesz pobierać lub ładować dane bez połączenia Wi-Fi, zostanie użyta transmisja danych po sieci."
+
+msgid "IDS_ST_BODY_MM_DD_YYYY_DOT"
+msgstr "MM/DD/RRRR"
+
+msgid "IDS_ST_BODY_MMS_CONNECTIONS"
+msgstr "Połączenia MMS"
+
+msgid "IDS_ST_BODY_MISCELLANEOUS_FILES"
+msgstr "Różne pliki"
+
+msgid "IDS_ST_BODY_MESSAGE"
+msgstr "Wiadomość"
+
+msgid "IDS_ST_BODY_MENU_AND_WIDGETS"
+msgstr "Menu i widgety"
+
+msgid "IDS_ST_BODY_MEMORY"
+msgstr "Pamięć"
+
+msgid "IDS_ST_BODY_MEDIUM"
+msgstr "Normalny"
+
+msgid "IDS_ST_BODY_MB"
+msgstr "MB"
+
+msgid "IDS_ST_BODY_MASS_STORAGE_HELP_MSG"
+msgstr "Możesz wykonać następujące operacje:\n- Szybkie kopiowanie plików\n- Połączenie przez komputer z systemem MAC lub Linux"
+
+msgid "IDS_ST_BODY_MARUBERI_JPN_DCM"
+msgstr "Maruberi"
+
+msgid "IDS_ST_BODY_LTE_WCDMA_GSM_NHAUTO_CONNECT"
+msgstr "LTE/WCDMA/GSM\n(automatyczne połączenie)"
+
+msgid "IDS_ST_BODY_LOCK_SCREEN_OPTIONS"
+msgstr "Opcje ekranu blokady"
+
+msgid "IDS_ST_BODY_LIST_VIEW"
+msgstr "Widok listy"
+
+msgid "IDS_ST_BODY_LIMIT_BACKGROUND_PROCESSES"
+msgstr "Ogranicz procesy w tle"
+
+msgid "IDS_ST_BODY_LICENCE"
+msgstr "Licencja"
+
+msgid "IDS_ST_BODY_LED_INDICATOR"
+msgstr "Wskaźnik LED"
+
+msgid "IDS_ST_BODY_LEDOT_LOW_BATTERY"
+msgstr "Bateria rozładowana"
+
+msgid "IDS_ST_BODY_LAUNCH_BY_DEFAULT"
+msgstr "Domyślnie uruchamiaj"
+
+msgid "IDS_ST_BODY_LANGUAGE_AND_REGION_ABB"
+msgstr "Język i region"
+
+msgid "IDS_ST_BODY_LANGUAGE_AND_KEYBOARD"
+msgstr "Język i klawiatura"
+
+msgid "IDS_ST_BODY_KEYBOARD"
+msgstr "Klawiatura"
+
+msgid "IDS_ST_BODY_KEEPS_THE_STATUS_BAR_TIDY_TAP_THE_REPRESENTATIVE_ICON_TO_SHOW_ALL_THE_ICONS"
+msgstr "Utrzymuje porządek na pasku stanu. Dotknij odpowiedniej ikony, aby wyświetlić wszystkie ikony."
+
+msgid "IDS_ST_BODY_KB"
+msgstr "kB"
+
+msgid "IDS_ST_BODY_INTRODUCTION_TO_SMART_SCREEN_ABB"
+msgstr "Prezentacja intelig. ekranu"
+
+msgid "IDS_ST_BODY_INTERNET_CONNECTION"
+msgstr "Połączenie internetowe"
+
+msgid "IDS_ST_BODY_INSTALTAB_FINISH"
+msgstr "Zakończ"
+
+msgid "IDS_ST_BODY_INSTALLED_APPLICATIONS"
+msgstr "Zainstalowane aplikacje"
+
+msgid "IDS_ST_BODY_INSTALLATION_SETTINGS"
+msgstr "Ustawienia instalacji"
+
+msgid "IDS_ST_BODY_INSERT_SD_CARD"
+msgstr "Włóż kartę pamięci."
+
+msgid "IDS_ST_BODY_INCORRECT_PIN_E"
+msgstr "Nieprawidłowy PIN."
+
+msgid "IDS_ST_BODY_INCORRECT_PASSWORD_TRY_AGAIN"
+msgstr "Nieprawidłowe hasło. Spróbuj ponownie"
+
+msgid "IDS_ST_BODY_INCOMING_CALLS_AND_NEW_NOTIFICATIONS_WILL_BE_READ_OUT_AUTOMATICALLY"
+msgstr "Rozmowy przychodzące i nowe powiadomienia będą odczytywane automatycznie."
+
+msgid "IDS_ST_BODY_INCOMING_CALL"
+msgstr "Połączenie"
+
+msgid "IDS_ST_BODY_IMEI"
+msgstr "IMEI"
+
+msgid "IDS_ST_BODY_IF_YOU_SELECT_THIS_OPTION_ONLY_USED_MEMORY_SPACE_WILL_BE_ENCRYPTED"
+msgstr "Jeśli wybierzesz tę opcję, tylko używana przestrzeń pamięci będzie szyfrowana."
+
+msgid "IDS_ST_BODY_IF_YOU_FORGET_YOUR_PERSONAL_MODE_PASSWORD_YOU_WILL_NOT_BE_ABLE_TO_RECOVER_IT_FOR_SECURITY_MSG"
+msgstr "Jeśli zapomnisz hasło do trybu osobistego, jego odzyskanie nie będzie możliwe. Ze względów bezpieczeństwa musisz zresetować tryb osobisty. Spowoduje to przywrócenie jego ustawień domyślnych oraz usunięcie zawartości osobistej."
+
+msgid "IDS_ST_BODY_IF_YOU_DONT_WANT_TO_SEE_A_NUMBER_APPEAR_ON_THE_APP_ICON_FOR_EACH_NEW_EVENT_DISABLE_BADGE"
+msgstr "Jeśli nie chcesz, aby na ikonie aplikacji pojawiała się liczba w przypadku każdego nowego zdarzenia, wyłącz oznaczenie."
+
+msgid "IDS_ST_BODY_ICON_SHOWS_THAT_SMART_SCREEN_IS_ENABLED"
+msgstr "Ikona sygnalizująca włączenie inteligentnego ekranu."
+
+msgid "IDS_ST_BODY_HOME_URL"
+msgstr "Adres strony domowej"
+
+msgid "IDS_ST_BODY_HOME_AND_LOCK_SCREEN"
+msgstr "Ekrany startowy i blokowania"
+
+msgid "IDS_ST_BODY_HELVETICA_NEUE_M_FONT_NAME"
+msgstr "Helvetica Neue"
+
+msgid "IDS_ST_BODY_HARDWARE"
+msgstr "Sprzęt"
+
+msgid "IDS_ST_BODY_GSM"
+msgstr "GSM"
+
+msgid "IDS_ST_BODY_GRID_VIEW"
+msgstr "Widok siatki"
+
+msgid "IDS_ST_BODY_GLOVE_MODE_ABB"
+msgstr "Tryb Rękawiczka"
+
+msgid "IDS_ST_BODY_GESTURES"
+msgstr "Gesty"
+
+msgid "IDS_ST_BODY_GB"
+msgstr "GB"
+
+msgid "IDS_ST_BODY_FROM_M_TIME"
+msgstr "Od"
+
+msgid "IDS_ST_BODY_FREQUENTLY_USED"
+msgstr "Często używane"
+
+msgid "IDS_ST_BODY_FORMAT_USB_OTG_STORAGE"
+msgstr "Formatuj pamięć USB OTG"
+
+msgid "IDS_ST_BODY_FORMAT_SD_CARD"
+msgstr "Formatuj kartę pamięci"
+
+msgid "IDS_ST_BODY_FORMATTING_USB_OTG_STORAGE_WILL_DELETE_ALL_DATA_DATA_CANNOT_BE_RECOVERED_CONTINUE_Q"
+msgstr "Sformatowanie pamięci USB OTG spowoduje usunięcie wszystkich danych bez możliwości ich odzyskania. Kontynuować?"
+
+msgid "IDS_ST_BODY_FORMATTING_SD_CARD_WILL_DELETE_ALL_DATA_DATA_CANNOT_BE_RECOVERED_CONTINUE_Q"
+msgstr "Formatowanie karty pamięci spowoduje usunięcie wszystkich danych bez możliwości ich odzyskania. Kontynuować?"
+
+msgid "IDS_ST_BODY_FORGOT_PASSWORD_SWA"
+msgstr "Forgot password"
+
+msgid "IDS_ST_BODY_FORBIDDEN_NETWORK"
+msgstr "Zabroniona sieć"
+
+msgid "IDS_ST_BODY_FONT_TYPE"
+msgstr "Rodzaj czcionki"
+
+msgid "IDS_ST_BODY_FONTSTYLE_ROSEMARY"
+msgstr "Rosemary"
+
+msgid "IDS_ST_BODY_FLIGHT_MODE_MSG"
+msgstr "Tryb Offline umożliwia wyłączenie funkcji połączeń, przesyłania wiadomości oraz sieci danych. Powoduje on również wyłączenie funkcji łączności, takich jak Wi-Fi oraz Bluetooth. Aby korzystać z funkcji Wi-Fi oraz Bluetooth, włącz je w Ustawieniach lub na panelu powiadomień."
+
+msgid "IDS_ST_BODY_FLIGHT_MODE_HAS_BEEN_ENABLED_NETWORK_SETTINGS_WILL_CLOSE"
+msgstr "Tryb Offline został włączony. Ustawienia sieciowe zostaną zamknięte."
+
+msgid "IDS_ST_BODY_FLIGHT_MODE"
+msgstr "Tryb Offline"
+
+msgid "IDS_ST_BODY_FIXED_DIALLING_MODE"
+msgstr "Tryb FDN"
+
+msgid "IDS_ST_BODY_FIREWALL_ENABLED_ABB"
+msgstr "Zapora włączona"
+
+msgid "IDS_ST_BODY_FIREWALL"
+msgstr "Zapora"
+
+msgid "IDS_ST_BODY_FEATURES"
+msgstr "Funkcje"
+
+msgid "IDS_ST_BODY_FAST_ENCRYPTION"
+msgstr "Szybkie szyfrowanie"
+
+msgid "IDS_ST_BODY_FAILED_TO_SELECT_NETWORK"
+msgstr "Wybranie sieci nie powiodło się."
+
+msgid "IDS_ST_BODY_FACE_AND_VOICE"
+msgstr "Twarz i głos"
+
+msgid "IDS_ST_BODY_FACEBOOK"
+msgstr "Facebook"
+
+msgid "IDS_ST_BODY_EXPLANATION_FOR_TRANSACTION_TRACKING_MENU_VODA"
+msgstr "Informacje o rekomendacjach są również dołączane do wysyłanego pliku."
+
+msgid "IDS_ST_BODY_EXPLANATION_FOR_EXPIRY_REMINDER_MENU"
+msgstr "Otrzymasz przypomnienie przed wygaśnięciem licencji na używany plik, taki jak obraz tapety."
+
+msgid "IDS_ST_BODY_ESTIMATED_MAX_STANDBY_TIME_ABB"
+msgstr "Szacowany maks.\nczas czuwania"
+
+msgid "IDS_ST_BODY_ENTER_PASSWORD_AGAIN_AFTER_PD_SECONDS"
+msgstr "Wprowadź hasło ponownie po następującej liczbie sekund: %d."
+
+msgid "IDS_ST_BODY_ENTER_PASSWORD_AGAIN"
+msgstr "Ponowne wprowadzenie hasła"
+
+msgid "IDS_ST_BODY_ENTER_PASSWORD"
+msgstr "Wpisz hasło."
+
+msgid "IDS_ST_BODY_ENTER_NEW_PASSWORD"
+msgstr "Wpisz nowe hasło."
+
+msgid "IDS_ST_BODY_ENTER_CURRENT_PASSWORD"
+msgstr "Wprowadź bieżące hasło."
+
+msgid "IDS_ST_BODY_ENCRYPT_DEVICE_Q_WARNING_MSG"
+msgstr "Zaszyfrować urządzenie? Operacja jest nieodwracalna, a jej przerwanie spowoduje utratę danych. Zaszyfrowanie może zająć ponad godzinę, a w tym czasie urządzenie zostanie kilka razy uruchomione ponownie i nie będzie można z niego korzystać."
+
+msgid "IDS_ST_BODY_ENCRYPT_DEVICE_Q_OPERATION_IS_IRREVERSIBLE_AND_IF_YOU_INTERRUPT_IT_YOU_WILL_LOSE_DATA"
+msgstr "Zaszyfrować urządzenie? Operacja jest nieodwracalna, a jej przerwanie spowoduje utratę danych"
+
+msgid "IDS_ST_BODY_ENCRYPT_ACCOUNTS_SETTINGS_DOWNLOADED_APPLICATIONS_AND_THEIR_DATA_MEDIA_AND_OTHER_FILES"
+msgstr "Zaszyfruj konta, ustawienia, pobrane aplikacje i ich dane, multimedia oraz inne pliki."
+
+msgid "IDS_ST_BODY_ENCRYPTION_WILL_TAKE_AT_LEAST_AN_HOUR"
+msgstr "Szyfrowanie potrwa co najmniej godzinę."
+
+msgid "IDS_ST_BODY_ENCRYPTING_ING"
+msgstr "Szyfrowanie..."
+
+msgid "IDS_ST_BODY_ENABLE_DATA_ACCESS_OVER_MOBILE_NETWORK"
+msgstr "Włącz dostęp do danych za pośrednictwem sieci komórkowej."
+
+msgid "IDS_ST_BODY_EMPTY"
+msgstr "Puste"
+
+msgid "IDS_ST_BODY_EMERGENCY_MODE_ABB"
+msgstr "Tryb awaryjny"
+
+msgid "IDS_ST_BODY_EMAIL"
+msgstr "E-mail"
+
+msgid "IDS_ST_BODY_EDIT"
+msgstr "Edytuj"
+
+msgid "IDS_ST_BODY_EASY_MODE"
+msgstr "Tryb ułatwienia"
+
+msgid "IDS_ST_BODY_DYNAMIC_T_DISPLAY_EFFECT"
+msgstr "Dynamiczny"
+
+msgid "IDS_ST_BODY_DYNAMIC_STATUS_BAR"
+msgstr "Dynamiczny pasek stanu"
+
+msgid "IDS_ST_BODY_DRIVING_MODE"
+msgstr "Tryb Samochód"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Nie wyświetlaj ponownie"
+
+msgid "IDS_ST_BODY_DOWNLOADS"
+msgstr "Pobrane"
+
+msgid "IDS_ST_BODY_DOWNLOAD"
+msgstr "Pobierz"
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_MENU_T_TTS"
+msgstr "Dotknij dwukrotnie, aby otworzyć menu."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "Dotknij dwukrotnie, aby edytować to pole."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_MENU_T_TTS"
+msgstr "Dotknij dwukrotnie, aby zamknąć menu."
+
+msgid "IDS_ST_BODY_DOCOMO_JPN_DCM"
+msgstr "docomo"
+
+msgid "IDS_ST_BODY_DIVX_REGISTRATION"
+msgstr "Rejestracja DivX®"
+
+msgid "IDS_ST_BODY_DIVX_DEREGISTRATION"
+msgstr "Wyrejestrowanie DivX®"
+
+msgid "IDS_ST_BODY_DISPLAY_CONTENTS"
+msgstr "Wyświetl treść"
+
+msgid "IDS_ST_BODY_DISPLAY_BATTERY_PERCENTAGE_ABB"
+msgstr "Wyświetl naład. baterii w %"
+
+msgid "IDS_ST_BODY_DISABLING_ING"
+msgstr "Wyłączanie..."
+
+msgid "IDS_ST_BODY_DE_REGISTRATION_CODE_NOT_FOUND"
+msgstr "Nie znaleziono kodu wyrejestrowania."
+
+msgid "IDS_ST_BODY_DEVICE_MEMORY"
+msgstr "Pamięć urządzenia"
+
+msgid "IDS_ST_BODY_DEVICE_INFO"
+msgstr "Informacje o urządzeniu"
+
+msgid "IDS_ST_BODY_DEVICE_ENCRYPTION_HELP_MSG"
+msgstr "Istnieje możliwość szyfrowania kont, ustawień, pobranych aplikacji i ich danych, multimediów oraz innych plików. Przy każdym włączeniu zaszyfrowanego urządzenia wymagane jest wprowadzenie hasła w celu jego odszyfrowania.\n\nSzyfrowanie zajmuje ponad godzinę. Należy je rozpocząć przy w pełni naładowanej baterii i do momentu jego ukończenia urządzenie musi być podłączone do zasilania. Przerwanie procedury szyfrowania może spowodować utratę części lub całości danych."
+
+msgid "IDS_ST_BODY_DEVICE_ENCRYPTED"
+msgstr "Urządzenie odszyfrowane."
+
+msgid "IDS_ST_BODY_DEVICE"
+msgstr "Urządzenie"
+
+msgid "IDS_ST_BODY_DEVELOPER_OPTIONS"
+msgstr "Opcje programisty"
+
+msgid "IDS_ST_BODY_DEFAULT_STORAGE"
+msgstr "Domyślna pamięć zapisu"
+
+msgid "IDS_ST_BODY_DEFAULT_RENDERING_ENGINE"
+msgstr "Domyślny mechanizm renderujący"
+
+msgid "IDS_ST_BODY_DEFAULT_FONT"
+msgstr "Czcionka domyślna"
+
+msgid "IDS_ST_BODY_DECRYPT_DEVICE_Q_WARNING_MSG"
+msgstr "Odszyfrować urządzenie? Operacja jest nieodwracalna, a jej przerwanie spowoduje utratę danych. Odszyfrowanie może zająć ponad godzinę, a w tym czasie urządzenie zostanie kilka razy uruchomione ponownie i nie będzie można z niego korzystać."
+
+msgid "IDS_ST_BODY_DECRYPT_DEVICE"
+msgstr "Odszyfruj urządzenie"
+
+msgid "IDS_ST_BODY_DECRYPTING_ING"
+msgstr "Odszyfrowywanie..."
+
+msgid "IDS_ST_BODY_DEBUGGING_MODE_LAUNCHES_WHEN_USB_IS_CONNECTED"
+msgstr "Tryb debugowania zostaje włączony po podłączeniu złącza USB."
+
+msgid "IDS_ST_BODY_DDMMYYYY_DOT"
+msgstr "DD.MM.RRRR"
+
+msgid "IDS_ST_BODY_DATE_AND_TIME"
+msgstr "Data i godzina"
+
+msgid "IDS_ST_BODY_DATE"
+msgstr "Data"
+
+msgid "IDS_ST_BODY_DATA_ROAMING"
+msgstr "Roaming danych"
+
+msgid "IDS_ST_BODY_DATA"
+msgstr "Dane"
+
+msgid "IDS_ST_BODY_CUSTOM_M_DEVICE_STATUS"
+msgstr "Niestandardowy"
+
+msgid "IDS_ST_BODY_CURRENT"
+msgstr "Bieżące"
+
+msgid "IDS_ST_BODY_CRASH_VIEWER"
+msgstr "Przeglądarka awarii"
+
+msgid "IDS_ST_BODY_CPU_USAGE"
+msgstr "Wykorzystanie procesora"
+
+msgid "IDS_ST_BODY_COUNTRY_CODE"
+msgstr "Kod kraju"
+
+msgid "IDS_ST_BODY_COOL_JAZZ"
+msgstr "Cool jazz"
+
+msgid "IDS_ST_BODY_CONTENT_FROM_GALLERY_VIDEO_MUSIC_VOICE_RECORDER_AND_MY_FILES_CAN_BE_HIDDEN_IN_PERSONAL_MODE"
+msgstr "Zawartość z katalogów Galeria, Wideo, Muzyka, Dyktafon oraz Moje pliki można ukryć w Trybie osobistym."
+
+msgid "IDS_ST_BODY_CONNECTIONSETTINGS_PROXY_ADDRESS"
+msgstr "Adres serwera proxy"
+
+msgid "IDS_ST_BODY_CONNECTIONSETTINGS_INTERNET"
+msgstr "Internet"
+
+msgid "IDS_ST_BODY_CONNECTIONS"
+msgstr "Profile trans. danych"
+
+msgid "IDS_ST_BODY_CONNECTION"
+msgstr "Połączenie"
+
+msgid "IDS_ST_BODY_CONFIRM_NEW_PIN2"
+msgstr "Powtórz nowy PIN2"
+
+msgid "IDS_ST_BODY_CONFIRM_NEW_PIN1"
+msgstr "Potwierdź nowy kod PIN1."
+
+msgid "IDS_ST_BODY_CONFIRM_NEW_PIN"
+msgstr "Potwierdź nowy PIN"
+
+msgid "IDS_ST_BODY_CONFIRM_DECRYPTION"
+msgstr "Potwierdź odszyfrowanie"
+
+msgid "IDS_ST_BODY_CONFIRM"
+msgstr "Potwierdź"
+
+msgid "IDS_ST_BODY_CONFIGURE_FIREWALL_SETTINGS"
+msgstr "Konfiguruj ustawienia zapory"
+
+msgid "IDS_ST_BODY_COMPUTING_ING"
+msgstr "Obliczanie..."
+
+msgid "IDS_ST_BODY_CLEAR_DEFAULTS"
+msgstr "Wyczyść ustawienia domyślne"
+
+msgid "IDS_ST_BODY_CHOCO_COOKY"
+msgstr "Choco cooky"
+
+msgid "IDS_ST_BODY_CHECK_FOR_UPDATES_AUTOMATICALLY_ABB"
+msgstr "Automat. sprawdzaj aktualizacje."
+
+msgid "IDS_ST_BODY_CHECK_FOR_UPDATES_ABB"
+msgstr "Sprawdź aktualizacje"
+
+msgid "IDS_ST_BODY_CHECK_FOR_UPDATES"
+msgstr "Sprawdź aktualizacje"
+
+msgid "IDS_ST_BODY_CHARGE_BATTERY_TO_ABOVE_80P_AND_TRY_AGAIN"
+msgstr "Naładuj baterię do poziomu powyżej 80% i spróbuj ponownie."
+
+msgid "IDS_ST_BODY_CHANGING_THE_FONT_SIZE_IN_ACCESSIBILITY_SETTINGS_WILL_OVERRIDE_THE_FONT_SIZE_IN_EACH_APPLICATION"
+msgstr "Zmiana rozmiaru czcionki w ustawieniach dostępności spowoduje zastąpienie rozmiaru czcionki w każdej aplikacji."
+
+msgid "IDS_ST_BODY_CHANGING_THE_COLOUR_OF_THE_SCREEN_TO_GREYSCALE"
+msgstr "Zmiana kolorów ekranu na skalę szarości."
+
+msgid "IDS_ST_BODY_CHANGE_TEXT_SIZE_IN_CONTACTS_CALENDAR_MEMO_MESSAGES_EMAIL_AND_IM"
+msgstr "Zmień rozmiar tekstu w Kontaktach, Kalendarzu, Notatkach, Wiadomościach, E-mailach i Komunikatorze."
+
+msgid "IDS_ST_BODY_CHANGE_PIN2"
+msgstr "Zmień PIN2"
+
+msgid "IDS_ST_BODY_CALL_SETTINGS"
+msgstr "Ustawienia połączeń"
+
+msgid "IDS_ST_BODY_CALL"
+msgstr "Połączenia"
+
+msgid "IDS_ST_BODY_CACHE"
+msgstr "Pamięć cache"
+
+msgid "IDS_ST_BODY_BLOCK_URL"
+msgstr "Blokuj adres URL"
+
+msgid "IDS_ST_BODY_BLOCK_UDP"
+msgstr "Blokuj protokół UDP"
+
+msgid "IDS_ST_BODY_BLOCK_TCP"
+msgstr "Blokuj protokół TCP"
+
+msgid "IDS_ST_BODY_BLOCK_PORT"
+msgstr "Blokuj port"
+
+msgid "IDS_ST_BODY_BLOCK_IP"
+msgstr "Blokuj adres IP"
+
+msgid "IDS_ST_BODY_BLOCKING_MODE_IS_ENABLED"
+msgstr "Tryb blokowania jest włączony."
+
+msgid "IDS_ST_BODY_BLOCKING_MODE"
+msgstr "Tryb blokowania"
+
+msgid "IDS_ST_BODY_BLOCKED_URL_LIST"
+msgstr "Lista blokowanych adresów URL"
+
+msgid "IDS_ST_BODY_BLOCKED_PORT_LIST"
+msgstr "Lista blokowanych portów"
+
+msgid "IDS_ST_BODY_BLOCKED_IP_LIST"
+msgstr "Lista blokowanych adresów IP"
+
+msgid "IDS_ST_BODY_BATTERY_PERCENTAGE_ABB"
+msgstr "Naładow. baterii w %"
+
+msgid "IDS_ST_BODY_BATTERY"
+msgstr "Bateria"
+
+msgid "IDS_ST_BODY_BACKUP_AND_RESET"
+msgstr "Kopia zapasowa i zerowanie"
+
+msgid "IDS_ST_BODY_BACKLIGHT_TIME"
+msgstr "Podświetlenie"
+
+msgid "IDS_ST_BODY_A_PERSON_YOU_HAVE_GRANTED_AUTHORITY_TO_IS_TRYING_TO_REMOTELY_ENABLE_EMERGENCY_MODE_ON_THIS_DEVICE_MSG"
+msgstr "Osoba, której nadano uprawnienia, próbuje zdalnie włączyć tryb awaryjny na tym urządzeniu. Informacje zostaną wysłane na serwer w ciągu 60 sekund i tryb awaryjny zostanie włączony. Dotknij opcji Anuluj, aby zatrzymać ten proces."
+
+msgid "IDS_ST_BODY_A_PASSWORD_WILL_BE_REQUIRED_TO_DECRYPT_YOUR_DEVICE_EVERY_TIME_YOU_POWER_IT_ON"
+msgstr "Hasło będzie wymagane do odszyfrowania urządzenia przy każdym włączeniu."
+
+msgid "IDS_ST_BODY_AVAILABLE_SPACE"
+msgstr "Dostępne miejsce"
+
+msgid "IDS_ST_BODY_AVAILABLE"
+msgstr "Dostępne"
+
+msgid "IDS_ST_BODY_AUTO_DOWNLOAD"
+msgstr "Automatycznie pobieranie"
+
+msgid "IDS_ST_BODY_AUTH_TYPE"
+msgstr "Typ autoryzacji"
+
+msgid "IDS_ST_BODY_APP_OPENING_IMAGE"
+msgstr "Obraz otwierania aplikacji"
+
+msgid "IDS_ST_BODY_APP_OPENING_EFFECT"
+msgstr "Efekt otwierania aplikacji"
+
+msgid "IDS_ST_BODY_APPLICATION_SETTINGS"
+msgstr "Aplikacje"
+
+msgid "IDS_ST_BODY_APPLICATION_MANAGER"
+msgstr "Menadżer aplikacji"
+
+msgid "IDS_ST_BODY_APPLICATION_INFO"
+msgstr "Informacje o aplikacji"
+
+msgid "IDS_ST_BODY_APPLICATION"
+msgstr "Aplikacje"
+
+msgid "IDS_ST_BODY_ANTIVIRUS_SOFTWARE_ABB"
+msgstr "Oprogramowanie antywirusowe"
+
+msgid "IDS_ST_BODY_AM"
+msgstr "AM"
+
+msgid "IDS_ST_BODY_ALWAYS_REJECT"
+msgstr "Zawsze odrzucaj"
+
+msgid "IDS_ST_BODY_ALWAYS_ON"
+msgstr "Zawsze włączone"
+
+msgid "IDS_ST_BODY_ALWAYS_OFF"
+msgstr "Zawsze wyłączone"
+
+msgid "IDS_ST_BODY_ALARM"
+msgstr "Alarm"
+
+msgid "IDS_ST_BODY_AFTER_YOU_DOWNLOAD_AND_INSTALL_APPLICATIONS_APPLICATIONS_WILL_BE_SHOWN_HERE"
+msgstr "Aplikacje zostaną tu wyświetlone po ich pobraniu i zainstalowaniu"
+
+msgid "IDS_ST_BODY_AFTER_RESETTING_PHONE_WILL_RESTART_AUTOMATICALLY"
+msgstr "Po zresetowaniu telefon automatycznie uruchomi się ponownie."
+
+msgid "IDS_ST_BODY_ADJUST_BRIGHTNESS_LEVEL"
+msgstr "Dostosuj poziom jasności"
+
+msgid "IDS_ST_BODY_ADJUST_AUTOMATIC_BRIGHTNESS"
+msgstr "Dostosuj automatyczną jasność"
+
+msgid "IDS_ST_BODY_ACCESS_NAME"
+msgstr "Nazwa punktu dostępu"
+
+msgid "IDS_ST_BODY_ACCESSIBILITY"
+msgstr "Dostępność"
+
+msgid "IDS_ST_BODY_ABOUT_DEVICE"
+msgstr "Informacje o urządzeniu"
+
+msgid "IDS_QCP_HEADER_QUICK_COMMAND"
+msgstr "Szybkie polecenie"
+
+msgid "IDS_ECON_BODY_EASY_CONNECT_M_SHARING_ABB"
+msgstr "Easy connect"
+
+msgid "IDS_SCR_POP_SCREEN_READER_IS_NOT_SUPPORTED_BY_PS_PRESS_THE_BACK_KEY_TO_RETURN_TO_THE_PREVIOUS_SCREEN"
+msgstr "Czytnik ekranu nie jest obsługiwany przez %s.. Naciśnij klawisz powrotu, aby powrócić do poprzedniego ekranu"
+
+msgid "IDS_KEEPIT_HEADER_KEEPIT_M_APPLICATION_NAME"
+msgstr "KeepIt"
+
+msgid "IDS_CALL_POP_UNAVAILABLE_T_DIAL"
+msgstr "Niedostępny."
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Tylko połączenia alarmowe."
+
+msgid "IDS_JAVA_OPT_SIM_SETTINGS"
+msgstr "Ustawienia karty SIM"
+
+msgid "IDS_TASK_BODY_NO_RUNNING_APPLICATION"
+msgstr "Nie uruchomiono żadnej aplikacji"
+
+msgid "IDS_VC_MBODY_NOTIFICATION_READ_OUT"
+msgstr "Odczyt powiadomień"
+
+msgid "IDS_VC_HEADER_VOICE_RECOGNITION"
+msgstr "Rozpoznawanie głosu"
+
+msgid "IDS_SSEARCH_POP_SEARCHED"
+msgstr "Zakończono wyszukiwanie."
+
+msgid "IDS_WIFI_BODY_DOT"
+msgstr "."
+
+msgid "IDS_DLNA_BODY_ACCESS_POINT_NAME"
+msgstr "Nazwa punktu dostępu"
+
+msgid "IDS_SKM_BODY_ASK_M_IDEA_SKETCH"
+msgstr "Pytać"
+
+msgid "IDS_HELP_POP_THE_FRONT_CAMERA_IS_NOT_BEING_USED_BY_ANOTHER_APPLICATION"
+msgstr "Przedni aparat nie jest używany przez inną aplikację."
+
+msgid "IDS_HELP_POP_THE_DEVICE_IS_IN_WELL_LIT_CONDITIONS_BUT_THE_SCREEN_IS_NOT_IN_DIRECT_LIGHT"
+msgstr "Urządzenie znajduje się w dobrze oświetlonym otoczeniu, ale ekran nie jest bezpośrednio oświetlony."
+
+msgid "IDS_HELP_POP_THE_DEVICE_IS_HELD_STEADY_AND_UPRIGHT"
+msgstr "Urządzenie jest trzymane stabilnie i prosto."
+
+msgid "IDS_HELP_BODY_THE_DEVICE_REACTS_INTELLIGENTLY_BY_ADAPTING_THE_SCREEN_WHEN_IT_DETECTS_YOUR_FACE"
+msgstr "Urządzenie reaguje inteligentnie, dostosowując ekran po wykryciu twarzy."
+
+msgid "IDS_HELP_BODY_SMART_SCREEN_WORKS_BEST_UNDER_THE_FOLLOWING_CONDITIONS_C"
+msgstr "Inteligentny ekran działa najlepiej w następujących warunkach:"
+
+msgid "IDS_HELP_BODY_SMART_ROTATION_DISABLES_AUTO_SCREEN_ROTATION_BY_CHECKING_THE_ORIENTATION_OF_YOUR_FACE_AND_THE_DEVICE_BY_ITS_FRONT_CAMERA"
+msgstr "Inteligentny obrót powoduje wyłączenie automatycznego obracania ekranu, sprawdzając orientację twarzy i urządzenia za pomocą przedniego aparatu."
+
+msgid "IDS_LBS_HEADER_LOCATION"
+msgstr "Lokalizacja"
+
+msgid "IDS_LBS_BODY_DESTINATION"
+msgstr "Cel podróży"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Nie"
+
+msgid "IDS_HELP_BODY_SMART_STAY_DETECTS_YOUR_EYES_WITH_THE_FRONT_CAMERA_SO_THAT_THE_SCREEN_STAYS_ON_WHEN_YOU_ARE_LOOKING_AT_IT"
+msgstr "Smart stay rozpoznaje Twoje oczy za pomocą przedniego aparatu, dzięki czemu ekran pozostaje wyświetlany, kiedy na niego patrzysz."
+
+msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_NOTI_MSG"
+msgstr "Nie będzie możliwe korzystanie z takich aplikacji, jak przeglądarka, e-mail i YouTube za pośrednictwem sieci telefonii komórkowej. Kontynuować?"
+
+msgid "IDS_ST_BODY_10_MINUTES"
+msgstr "10 min"
+
+msgid "IDS_ST_BODY_15SEC"
+msgstr "15 sek."
+
+msgid "IDS_ST_BODY_24_HOURS"
+msgstr "24 godz."
+
+msgid "IDS_ST_BODY_2_MINUTES"
+msgstr "2 min"
+
+msgid "IDS_ST_BODY_30SEC"
+msgstr "30 sek."
+
+msgid "IDS_ST_BODY_5_MINUTES"
+msgstr "5 min"
+
+msgid "IDS_ST_BODY_APPLICATIONS"
+msgstr "Aplikacje"
+
+msgid "IDS_ST_BODY_DONT_ASK_AGAIN"
+msgstr "Nie pytaj ponownie"
+
+msgid "IDS_ST_BODY_P1SS_IS_CURRENTLY_P2SS_T_TTS"
+msgstr "Aktualny status aplikacji %1$s: %2$s."
+
+msgid "IDS_ST_BODY_PASSWORDS_MUST_CONSIST_OF_AT_LEAST_4_ALPHANUMERIC_CHARACTERS_ALSO_INCLUDING_AT_LEAST_1_ALPHABETICAL_CHARACTER"
+msgstr "Hasła muszą składać się z co najmniej znaków alfanumerycznych: 4 i zawierać co najmniej znaków alfabetycznych: 1."
+
+msgid "IDS_ST_BODY_PUK1_BLOCKED"
+msgstr "PUK1 zablokowany."
+
+msgid "IDS_ST_BODY_PUK1_CODE"
+msgstr "Kod PUK1"
+
+msgid "IDS_ST_BODY_PUK2"
+msgstr "PUK2"
+
+msgid "IDS_ST_BUTTON2_POWER_SAVING_MODE_ABB"
+msgstr "Tr. oszcz. energii"
+
+msgid "IDS_ST_BUTTON_CANCEL_ABB2"
+msgstr "Anuluj"
+
+msgid "IDS_ST_HEADER_1_PROCESS_AT_MOST_ABB"
+msgstr "Najwyżej 1 proces"
+
+msgid "IDS_ST_HEADER_2_PROCESSES_AT_MOST_ABB"
+msgstr "Najwyżej 2 procesy"
+
+msgid "IDS_ST_HEADER_3_PROCESSES_AT_MOST_ABB"
+msgstr "Najwyżej 3 procesy"
+
+msgid "IDS_ST_HEADER_4_PROCESSES_AT_MOST_ABB"
+msgstr "Najwyżej 4 procesy"
+
+msgid "IDS_ST_HEADER_ENTER_PIN_ABB3"
+msgstr "Wprow. kodu PIN"
+
+msgid "IDS_ST_OPT_2G_ONLY"
+msgstr "Tylko 2G"
+
+msgid "IDS_ST_OPT_3G_2G_HAUTO_CONNECT"
+msgstr "3G/2G (auto)"
+
+msgid "IDS_ST_OPT_4G_3G_2G_HAUTO_CONNECT"
+msgstr "LTE/3G/2G (auto)"
+
+msgid "IDS_ST_POP_EMERGENCY_MODE_SAVES_BATTERY_POWER_BY_C_MSG"
+msgstr "Tryb awaryjny pozwala oszczędzać energię poprzez:\n\n- zmianę kolorów ekranu na skalę szarości;\n- ograniczanie liczby aplikacji do użycia;\n- wyłączenie transmisji danych po sieci, gdy ekran jest wyłączony;\n- wyłączenie funkcji łączności, takich jak Wi-Fi czy Bluetooth.\n\nNiektóre funkcje, takie jak Czytnik ekranu i Osłona S View będą niedostępne.\nNiektóre pola Dynamic Box ekranu startowego mogą nie być wyświetlane i może być konieczna ich ponowna konfiguracja."
+
+msgid "IDS_ST_POP_INCORRECT_PUK1_CODE"
+msgstr "Błędny kod PUK1"
+
+msgid "IDS_ST_POP_INCORRECT_PUK1_PD_ATTEMPTS_LEFT"
+msgstr "Zły PUK1. Liczba pozostałych prób: %d."
+
+msgid "IDS_ST_POP_INCORRECT_PUK2"
+msgstr "Błędny PUK2"
+
+msgid "IDS_ST_POP_INCORRECT_PUK2_PD_ATTEMPTS_LEFT"
+msgstr "Zły PUK2. Liczba pozostałych prób: %d."
+
+msgid "IDS_ST_POP_PIN_CHANGED"
+msgstr "PIN zmieniony."
+
+msgid "IDS_TASKMGR_BUTTON_CLEAR_CACHE"
+msgstr "Wyczyść pamięć"
+
+msgid "IDS_ST_BODY_3G_ONLY"
+msgstr "Tylko 3G"
+
+msgid "IDS_ST_HEADER_ADD"
+msgstr "Dodawanie"
+
+msgid "IDS_ST_BODY_SECONDS"
+msgstr "Sek."
+
+msgid "IDS_ST_BUTTON_CANCEL"
+msgstr "Anuluj"
+
+msgid "IDS_ST_BODY_1_5_SECONDS"
+msgstr "1,5 sek."
+
+msgid "IDS_MSG_ACBUTTON_CANCEL_ABB"
+msgstr "ANULUJ"
+
+msgid "IDS_MSG_ACBUTTON_DONE_ABB"
+msgstr "GOTOWE"
+
+msgid "IDS_ST_HEADER_TURN_ON_MOBILE_DATA"
+msgstr "Włączanie funkcji Transmisja danych po sieci"
+
+msgid "IDS_ST_HEADER_UNABLE_TO_PLAY_SAMPLE_ABB"
+msgstr "Nie można odtworzyć próbki"
+
+msgid "IDS_ST_POP_SAMPLES_CANNOT_BE_PLAYED_DURING_CALLS"
+msgstr "Podczas połączeń nie można odtworzyć próbek."
+
+msgid "IDS_ST_HEADER_DEVICE_NAME"
+msgstr "Nazwa urządzenia"
+
+msgid "IDS_ST_HEADER_DELETE_ITEMS_ABB2"
+msgstr "Usuwanie elementów"
+
+msgid "IDS_ST_HEADER_FEEDBACK"
+msgstr "Informacje"
+
+msgid "IDS_ST_BODY_SELECT_ALL"
+msgstr "Zaznacz wszystko"
+
+msgid "IDS_ST_BODY_TOTAL"
+msgstr "Ogółem"
+
+msgid "IDS_ST_HEADER_MANAGE_CERTIFICATES_ABB"
+msgstr "Zarządzanie certyfikatami"
+
+msgid "IDS_ST_BODY_INCORRECT_PASSWORD"
+msgstr "Błędne hasło."
+
+msgid "IDS_ST_HEADER_TURN_OFF_MOBILE_DATA"
+msgstr "Wyłączanie transmisji danych po sieci"
+
+msgid "IDS_ST_BODY_FLIGHT_MODE_DISABLES_CALLING_AND_MESSAGING_FUNCTIONS_AND_TURNS_OFF_MOBILE_DATA_AND_CONNECTIVITY_FUNCTIONS_MSG"
+msgstr "Tryb Offline powoduje wyłączenie funkcji połączeń i wysyłania/odbierania wiadomości oraz funkcji Transmisja danych po sieci i funkcji łączności, np. Wi-Fi i Bluetooth. Aby korzystać z funkcji Wi-Fi i Bluetooth w trybie Offline, włącz je w Ustawieniach lub na panelu powiadomień. Tryb Offline zostanie włączony."
+
+msgid "IDS_ST_BODY_TYPE"
+msgstr "Typ"
+
+msgid "IDS_ST_BODY_PERSONAL"
+msgstr "Osobiste"
+
+msgid "IDS_ST_HEADER_LOCK_SCREEN_AND_SECURITY_ABB"
+msgstr "Zabezpieczenia"
+
+msgid "IDS_ST_HEADER_PRIVACY_AND_SAFETY_ABB"
+msgstr "Prywatność"
+
+msgid "IDS_ST_BODY_MOBILE_NETWORKS"
+msgstr "Sieci komórkowe"
+
+msgid "IDS_ST_HEADER_MORE_CONNECTION_SETTINGS"
+msgstr "Więcej ustawień połączenia"
+
+msgid "IDS_ST_MBODY_LEGAL_INFORMATION_ABB"
+msgstr "Informacje prawne"
+
+msgid "IDS_ST_BODY_DEVICE_INFORMATION"
+msgstr "Informacje o urządzeniu"
+
+msgid "IDS_ST_BODY_PHONE_NUMBER"
+msgstr "Numer telefonu"
+
+msgid "IDS_ST_BODY_MODEL_NUMBER"
+msgstr "Numer modelu"
+
+msgid "IDS_ST_MBODY_TIZEN_VERSION"
+msgstr "Wersja Tizen"
+
+msgid "IDS_ST_MBODY_BLUETOOTH_ADDRESS"
+msgstr "Adres Bluetooth"
+
+msgid "IDS_ST_BODY_WI_FI_MAC_ADDRESS"
+msgstr "Adres MAC sieci Wi-Fi"
+
+msgid "IDS_ST_BUTTON_BATTERY_POWER_ABB"
+msgstr "Naładowanie baterii"
+
+msgid "IDS_ST_TMBODY_SECURITY_STATUS"
+msgstr "Status bezpieczeństwa"
+
+msgid "IDS_ST_SBODY_SHOW_THE_TIME_IN_24_HOUR_FORMAT_INSTEAD_OF_12_HOUR_HAM_PM_FORMAT"
+msgstr "Wyświetl godzinę w formacie 24-godzinnym zamiast 12-godzinnym (AM/PM)."
+
+msgid "IDS_ST_MBODY_AUTO_UPDATE"
+msgstr "Aktualizacja automatyczna"
+
+msgid "IDS_ST_MBODY_24_HOUR_CLOCK"
+msgstr "Zegar 24-godzinny"
+
+msgid "IDS_ST_BODY_MAGNIFIER"
+msgstr "Lupa"
+
+msgid "IDS_ST_TMBODY_CACHE"
+msgstr "Pamięć podręczna"
+
+msgid "IDS_ST_HEADER_CLEAR_CACHE_ABB"
+msgstr "Czyszczenie pamięci podręcznej"
+
+msgid "IDS_ST_POP_THERE_IS_NO_CACHE_DATA_TO_CLEAR"
+msgstr "Nie ma żadnych danych z pamięci podręcznej do wyczyszczenia."
+
+msgid "IDS_ST_POP_ALL_THE_CACHE_DATA_WILL_BE_CLEARED"
+msgstr "Wszystkie dane z pamięci podręcznej zostaną wyczyszczone."
+
+msgid "IDS_ST_BUTTON_CLEAR_CACHE_ABB"
+msgstr "Wycz.pam.podr."
+
+msgid "IDS_ST_BODY_12_HOURS"
+msgstr "12 godz."
+
+msgid "IDS_ST_BODY_1MINUTE"
+msgstr "1 min"
+
+msgid "IDS_ST_BODY_ACCOUNTS"
+msgstr "Konta"
+
+msgid "IDS_ST_HEADER_ALLSHARE"
+msgstr "AllShare"
+
+msgid "IDS_ST_BODY_ANSWERINGMODE_AUTOMATIC"
+msgstr "Automatycznie"
+
+msgid "IDS_ST_BUTTON_BACK"
+msgstr "Wstecz"
+
+msgid "IDS_ST_BODY_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BODY_ADVANCEDOPTIONS_CERTIFICATES"
+msgstr "Certyfikaty"
+
+msgid "IDS_ST_BODY_CONTACTS"
+msgstr "Kontakty"
+
+msgid "IDS_ST_BODY_MYTHEME_CREATE"
+msgstr "Utwórz"
+
+msgid "IDS_ST_BODY_CALLERID_DEFAULT"
+msgstr "Domyślny"
+
+msgid "IDS_ST_BODY_FM_RADIO"
+msgstr "Radio FM"
+
+msgid "IDS_ST_BODY_FONT"
+msgstr "Czcionka"
+
+msgid "IDS_ST_BODY_GALLERY"
+msgstr "Galeria"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Pomoc"
+
+msgid "IDS_ST_BODY_MANUAL"
+msgstr "Ręcznie"
+
+msgid "IDS_ST_BODY_APPLICATIONSETTINGS_MESSAGE"
+msgstr "Wiadomości"
+
+msgid "IDS_ST_BODY_MUSIC"
+msgstr "Muzyka"
+
+msgid "IDS_ST_BODY_NFC"
+msgstr "NFC"
+
+msgid "IDS_ST_BODY_ALERTTYPE_OFF"
+msgstr "Wyłącz"
+
+msgid "IDS_ST_BODY_ON"
+msgstr "Włącz"
+
+msgid "IDS_ST_BODY_MEMORYSTATUS_OTHERS"
+msgstr "Inne"
+
+msgid "IDS_ST_BODY_PIN_LOCK"
+msgstr "Blokada PIN"
+
+msgid "IDS_ST_BODY_RESET"
+msgstr "Wyzeruj"
+
+msgid "IDS_ST_POP_NETWORKSERVICES_SEARCHING"
+msgstr "Wyszukiwanie..."
+
+msgid "IDS_ST_BODY_SIZE"
+msgstr "Rozmiar"
+
+msgid "IDS_ST_HEADER_SYNCHRONISE"
+msgstr "Synchronizuj"
+
+msgid "IDS_ST_BODY_SYSTEM"
+msgstr "System"
+
+msgid "IDS_ST_BUTTON2_S_PLANNER"
+msgstr "Terminarz S"
+
+msgid "IDS_ST_BODY_TWITTER"
+msgstr "Twitter"
+
+msgid "IDS_ST_BODY_USERNAME"
+msgstr "Nazwa użytkownika"
+
+msgid "IDS_ST_BODY_VOICE"
+msgstr "Głos"
+
+msgid "IDS_ST_BODY_DEFAULTMEMORY_VOICE_RECORDER"
+msgstr "Dyktafon"
+
+msgid "IDS_ST_BODY_WI_FI"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BODY_YYYY_MM_DD_DOT"
+msgstr "RRRR/MM/DD"
+
+msgid "IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING"
+msgstr "Jasność"
+
+msgid "IDS_ST_HEADER_SORT_BY"
+msgstr "Sortowanie według"
+
+msgid "IDS_ST_BODY_DELETED"
+msgstr "Usunięto."
+
+msgid "IDS_ST_POP_ERROR"
+msgstr "Błąd"
+
+msgid "IDS_ST_TPOP_MAXIMUM_NUMBER_OF_CHARACTERS_REACHED"
+msgstr "Osiągnięto maksymalną liczbę znaków."
+
+msgid "IDS_ST_TPOP_TRY_AGAIN"
+msgstr "Ponów próbę."
+
+msgid "IDS_ST_BODY_VERSION"
+msgstr "Wersja"
+
+msgid "IDS_ST_BODY_DELETE"
+msgstr "Usuń"
+
+msgid "IDS_ST_SK_SET_LITE"
+msgstr "Ustaw"
+
+msgid "IDS_ST_SK_YES"
+msgstr "Tak"
+
+msgid "IDS_SAPPS_SK_TRY_ABB"
+msgstr "Spróbuj"
+
+msgid "IDS_ST_BODY_PLAY_A_SOUND_WHEN_BUTTONS_ICONS_AND_MENU_ITEMS_ARE_TAPPED"
+msgstr "Odtwarzaj dźwięk po dotknięciu przycisków, ikon i elementów menu."
+
+msgid "IDS_ST_MBODY_KEYBOARD_SOUND"
+msgstr "Dźwięk klawiatury"
+
+msgid "IDS_ST_MBODY_RINGTONE"
+msgstr "Dzwonek"
+
+msgid "IDS_ST_MBODY_TOUCH_SOUND"
+msgstr "Dźwięk dotknięcia"
+
+msgid "IDS_ST_SBODY_PLAY_A_SOUND_WHEN_THE_SAMSUNG_KEYBOARD_IS_TAPPED"
+msgstr "Odtwarzaj dźwięk podczas korzystania z klawiatury Samsung."
+
+msgid "IDS_ST_POP_MOUNTING_SD_CARD_ING"
+msgstr "Podłączanie karty pamięci..."
+
+msgid "IDS_ST_BODY_ALL"
+msgstr "Wszystkie"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "Usługa lokalizacji"
+
+msgid "IDS_ST_BODY_VPN"
+msgstr "VPN"
+
+msgid "IDS_ST_SK_OPTIONS_LITE"
+msgstr "Opcje"
+
+msgid "IDS_ST_BODY_TTS"
+msgstr "TTS"
+
+msgid "IDS_ST_BODY_VOICE_CONTROL"
+msgstr "Funkcje głosowe"
+

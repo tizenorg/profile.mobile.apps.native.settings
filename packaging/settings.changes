@@ -1,0 +1,16 @@
+* Tue Dec 11 2012 Brad Peters <brad.t.peters@intel.com>
+- LCD backlight timeout is needed on IA as well as arm, or power-manager
+ does not properly manage backlight off/on until this vconf key
+ is overwritten by some other process
+
+* Sat Nov 24 2012 Jing Yigang <yigang.jing@samsung.com>
+- Release
+
+* Tue Nov  19 2012 Taeyoung Kim <ty317.kim@samsung.com>
+- SDB is enabled when debug mode is on
+
+* Tue Nov  6 2012 Jing Yigang <yigang.jing@samsung.com>
+- Release
+
+* Fri Sept 14 2012 Brad Peters <brad.t.peters@intel.com>
+- Fix setting_about_main_get_battery_string() to be platform specific 
