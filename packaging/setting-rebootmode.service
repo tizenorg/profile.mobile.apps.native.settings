@@ -1,0 +1,10 @@
+[Unit]
+Description=Register Notifications from settings
+After=default.target
+
+[Service]
+ExecStart=/usr/apps/org.tizen.mode-syspopup/bin/mode-syspopup 1
+#ExecStart=/etc/rc.d/init.d/mode-syspopup.sh
+
+[Install]
+WantedBy=multi-user.target

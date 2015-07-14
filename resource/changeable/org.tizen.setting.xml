@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ChangeableColorTable num="1">
+	<Theme style="Dark">
+		<ChangeableColorInfo id="AO001" inputColor="1" hue="" saturation="" value="" alpha="" />
+		<ChangeableColorInfo id="AO002" inputColor="K" hue="" saturation="" value="" alpha="" />
+		<ChangeableColorInfo id="AO003" inputColor="K" hue="" saturation="" value="" alpha="" />
+		<ChangeableColorInfo id="ATO001" inputColor="W" hue="" saturation="" value="" alpha="" />
+	</Theme>
+	<Theme style="Light">
+		<ChangeableColorInfo id="AO001" inputColor="1" hue="0" saturation="0" value="0" alpha="60" />
+		<ChangeableColorInfo id="AO002" inputColor="K" hue="0" saturation="0" value="0" alpha="80" />
+		<ChangeableColorInfo id="AO003" inputColor="K" hue="0" saturation="0" value="0" alpha="80" />
+		<ChangeableColorInfo id="ATO001" inputColor="W" hue="0" saturation="85" value="88" alpha="100" />
+	</Theme>
+</ChangeableColorTable>
+<ChangeableColorTable num="2">
+	<Theme style="Dark">
+		<ChangeableColorInfo id="AO001" inputColor="2" hue="1" saturation="7" value="-11" alpha="100" />
+	</Theme>
+	<Theme style="Light">
+		<ChangeableColorInfo id="AO001" inputColor="2" hue="-3" saturation="4" value="97" alpha="100" fixedSaturation="true" fixedValue="true" />
+	</Theme>
+</ChangeableColorTable>
+<ChangeableColorTable num="3">
+	<Theme style="Dark">
+		<ChangeableColorInfo id="AO001" inputColor="2" hue="0" saturation="-5" value="-20" alpha="100" minValue="25" />
+	</Theme>
+	<Theme style="Light">
+		<ChangeableColorInfo id="AO001" inputColor="2" hue="0" saturation="0" value="96" alpha="100" fixedHue="true" fixedSaturation="true" fixedValue="true" />
+	</Theme>
+</ChangeableColorTable>

@@ -1,0 +1,638 @@
+/*
+ * setting
+ *
+ * Copyright (c) 2000 - 2011 Samsung Electronics Co., Ltd.
+ *
+ * Contact: MyoungJune Park <mj2004.park@samsung.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+#include "../setting-common/include/setting-common-data-edj-define.h"
+#define SETTING_GENLIST_TREESIZE_DEFAULT          26
+#define SETTING_DIALOGUE_PADDING_SIZE_LEFT        16+20
+#define SETTING_GENLIST_LIST_BG_COLOR                       8 8 8 255
+//#define SETTING_GENLIST_LIST_PRESS_COLOR                    87 135 194 255
+//#define SETTING_GENLIST_LIST_DIM_COLOR                      219 217 212 255
+#define SETTING_GENLIST_ICON_BIG_SIZE             72
+#define SETTING_GENLIST_PADDING_SIZE_RIGHT              26
+#define SETTING_DIALOGUE_PADDING_SIZE_RIGHT       16+20
+#define SETTING_GENLIST_HEIGHT_GROUPTITLE         52
+#define SETTING_GENLIST_PART_LIST_LINE_HEIGHT     0
+#define SETTING_GENLIST_LIST_LINE1_COLOR                    8 8 8 255
+//#define SETTING_GENLIST_LIST_LINE2_COLOR                    255 255 255 255
+#define SETTING_GENLIST_LIST_LINE2_COLOR                    64 64 64 255
+#define SETTING_GENLIST_LIST_PRESS_COLOR                    43 58 175 255
+#define SETTING_GENLIST_LIST_DIM_COLOR                      8 8 8 255
+#define SETTING_GENLIST_PADDING_SIZE_LEFT               26
+#define SETTING_GENLIST_PADDING_SIZE_DEFAULT            16
+#define SETTING_GENLIST_LIST_MAIN_TEXT_SIZE                         28
+#define SETTING_GENLIST_LIST_MAIN_TEXT_UNREAD_COLOR                 250 250 250 255
+#define SETTING_GENLIST_BTN_01_HEIGHT             74
+#define SETTING_GENLIST_LIST_MAIN_TEXT_UNREAD_DIM_COLOR             255 255 255 102
+#define SETTING_GENLIST_LIST_MAIN_TEXT_READ_COLOR                   110 111 118 255
+#define SETTING_GENLIST_LIST_MAIN_TEXT_READ_DIM_COLOR               110 111 118 204
+//#define SETTING_GENLIST_LIST_MAIN_TEXT_FOCUS_COLOR                  255 255 255 255
+#define SETTING_GENLIST_LIST_MAIN_TEXT_FOCUS_COLOR                  250 250 250 255
+#define SETTING_GENLIST_HEIGHT_1LINE              92
+
+#define SETTING_GENLIST_DATA_ITEM_NORMAL \
+	      data.item: "stacking" "above"; \
+	      data.item: "selectraise" "on"; \
+	      data.item: "flips" "elm.flip.icon elm.flip.content"; \
+	      data.item: "treesize" SETTING_GENLIST_TREESIZE_DEFAULT;
+
+#define SETTING_GENLIST_DESCRIPTION_FADE \
+   description { state: "fadeout" 0.0; \
+      inherit: "default" 0.0; \
+      color: 255 255 255 10; \
+   } \
+   description { state: "fadein" 0.0; \
+      inherit: "default" 0.0; \
+   } \
+
+#define SETTING_GENLIST_PART_RECT(NAME, DESCRIPION) \
+    part { name: NAME; \
+      scale: 1; \
+      type: RECT; \
+      DESCRIPION \
+      SETTING_GENLIST_DESCRIPTION_FADE \
+   }
+
+#define SETTING_GENLIST_PART_PERSPECTIVE_POINT \
+		 SETTING_GENLIST_PART_RECT("point", \
+		    description { \
+		       state: "default" 0.0; \
+		       color: 8 8 8 8; \
+		       rel1 { relative: 0.0 0.0; } \
+		       rel2 { relative: 1.0 0.0; } \
+		    } \
+		 )
+
+#define SETTING_GENLIST_PART_BG_IMAGE \
+		 part { name: "bg_image_clip"; \
+		    type: RECT; \
+		    scale: 1; \
+		    mouse_events: 0; \
+		    description { state: "default" 0.0; \
+		       color: 8 8 8 8; \
+		    } \
+		    description { state: "2depth" 0.0; \
+		       color: 8 8 8 8; \
+		    } \
+		 } \
+		 part { name: "bg_image"; \
+		    type: RECT; \
+		    scale: 1; \
+		    mouse_events: 0; \
+		    description { state: "default" 0.0; \
+		       color: SETTING_GENLIST_LIST_BG_COLOR; \
+		    } \
+		    description { state: "selected" 0.0; \
+		       color: SETTING_GENLIST_LIST_PRESS_COLOR; \
+		    } \
+		    description { state: "disabled" 0.0; \
+		       color: 8 8 8 255; \
+		    } \
+		    SETTING_GENLIST_DESCRIPTION_FADE \
+		 }
+
+#define SETTING_GENLIST_PART_BASE \
+		 part { name: "base"; \
+		    type: RECT; \
+		    repeat_events: 1; \
+		    scale: 1; \
+		    description { state: "default" 0.0; \
+		       align: 0.5 0.5; \
+		       color: 8 8 8 8; \
+		    } \
+		 } \
+		 SETTING_GENLIST_PART_PERSPECTIVE_POINT
+
+#define SETTING_GENLIST_PART_EXPANDED_PAD \
+         part { name: "elm.swallow.pad"; \
+            type: SWALLOW; \
+            scale: 1; \
+            mouse_events: 0; \
+            description { state: "default" 0.0; \
+               visible: 0; \
+               min: 0 0; \
+               fixed: 1 0; \
+               align: 0.0 0.5; \
+               rel1.to: "base"; \
+               rel2.to: "base"; \
+               rel2.relative: 0.0 1.0; \
+            } \
+         } \
+
+#define SETTING_GENLIST_PART_PADDING_LEFT_SIZE( SIZE ) \
+		 SETTING_GENLIST_PART_EXPANDED_PAD \
+		 SETTING_GENLIST_PART_SPACER("elm.padding.left", \
+		    SETTING_GENLIST_DESCRIPTION_L("elm.swallow.pad",  \
+		       min: SIZE 0; \
+		       max: SIZE -1; \
+		       fixed: 1 0; \
+		    ) \
+		 )
+
+#define SETTING_GENLIST_PART_SPACER(NAME, DESCRIPION) \
+    part { name: NAME; \
+      scale: 1; \
+      mouse_events: 0; \
+      type: SPACER; \
+      DESCRIPION \
+   }
+
+#define SETTING_GENLIST_PART_EDITBTN \
+         part { name: "elm.icon.edit"; \
+            type: SWALLOW; \
+            scale: 1; \
+            SETTING_GENLIST_DESCRIPTION_R("elm.padding.edit.right", \
+               fixed: 1 1; \
+               visible: 0; \
+               min: SETTING_GENLIST_ICON_BIG_SIZE SETTING_GENLIST_ICON_BIG_SIZE; \
+               max: SETTING_GENLIST_ICON_BIG_SIZE SETTING_GENLIST_ICON_BIG_SIZE; \
+            ) \
+            description { state: "editmode" 0.0; \
+               inherit: "default" 0.0; \
+               visible: 1; \
+            } \
+         } \
+         SETTING_GENLIST_PART_SPACER("elm.padding.edit.right", \
+            description { state: "default" 0.0; \
+               fixed: 1 0; \
+               align: 1.0 0.5; \
+               rel1.to: "base"; \
+               rel2.to: "base"; \
+               rel1.relative: 1 0; \
+               min: SETTING_GENLIST_PADDING_SIZE_RIGHT 0; \
+               max: SETTING_GENLIST_PADDING_SIZE_RIGHT -1; \
+            } \
+         )
+
+
+#define SETTING_GENLIST_PART_PADDING_RIGHT_SIZE_EDIT( SIZE ) \
+		 SETTING_GENLIST_PART_SPACER("elm.padding.right", \
+		    description { state: "default" 0.0; \
+		       min: SIZE 0; \
+		       max: SIZE -1; \
+		       fixed: 1 0; \
+		       align: 1.0 0.5; \
+		       rel1.to: "base"; \
+		       rel2.to: "base"; \
+		       rel1.relative: 1 0; \
+		    } \
+		    description { state: "editmode" 0.0; \
+		       inherit: "default" 0.0; \
+		       min: (SETTING_DIALOGUE_PADDING_SIZE_RIGHT+SIZE+SETTING_GENLIST_ICON_BIG_SIZE) 0; \
+		       max: (SETTING_DIALOGUE_PADDING_SIZE_RIGHT+SIZE+SETTING_GENLIST_ICON_BIG_SIZE) -1; \
+		    } \
+		 ) \
+		 SETTING_GENLIST_PART_EDITBTN
+
+#define SETTING_GENLIST_PART_TEXT(NAME, DESCRIPION) \
+	    part { name: NAME; \
+	      scale: 1; \
+	      mouse_events: 0; \
+	      type: TEXT; \
+	      DESCRIPION \
+	      SETTING_GENLIST_DESCRIPTION_FADE \
+	   }
+
+#define SETTING_GENLIST_PART_TEXTBLOCK(NAME, DESCRIPION) \
+	    part { name: NAME; \
+	      scale: 1; \
+	      mouse_events: 0; \
+	      type: TEXTBLOCK; \
+	      DESCRIPION \
+	      SETTING_GENLIST_DESCRIPTION_FADE \
+	   }
+
+// FIXME: swallow part cannot be fade out ???
+#define SETTING_GENLIST_DESCRIPTION_FADE_ICON \
+   description { state: "fadeout" 0.0; \
+      inherit: "default" 0.0; \
+      color: 8 8 8 10; \
+      visible: 0; \
+   } \
+   description { state: "fadein" 0.0; \
+      inherit: "default" 0.0; \
+   } \
+
+
+#define SETTING_GENLIST_PART_ICON(NAME, DESCRIPION) \
+	   part { name: NAME; \
+	      scale: 1; \
+	      type: SWALLOW; \
+	      DESCRIPION \
+	      SETTING_GENLIST_DESCRIPTION_FADE_ICON \
+	   }
+
+// signal: elm,state,%s,active
+//   a "check" item named %s went active
+// signal: elm,state,%s,passive
+//   a "check" item named %s went passive
+// default is passive
+#define SETTING_GENLIST_PROGRAM_DISABLED( TARGET ) \
+         program { name: "enabled"; \
+            signal: "elm,state,enabled"; \
+            source: "elm"; \
+            action: STATE_SET "default" 0.0; \
+            target: "bg_image"; \
+            TARGET \
+         } \
+         program { name: "disabled"; \
+            signal: "elm,state,disabled"; \
+            source: "elm"; \
+            action: STATE_SET "disabled" 0.0; \
+            target: "bg_image"; \
+            TARGET \
+         }\
+	program { name: "focus_in";\
+	   signal: "elm,action,focus_highlight,show";\
+	   source: "elm";\
+	   action: STATE_SET "enabled" 0.0;\
+	   target: "focus_bg";\
+	}\
+	program { name: "focus_out";\
+	   signal: "elm,action,focus_highlight,hide";\
+	   source: "elm";\
+	   action: STATE_SET "default" 0.0;\
+	   target: "focus_bg";\
+	}\
+
+#define SETTING_GENLIST_PROGRAMS_INDEX( TARGET ) \
+		 programs { \
+		    SETTING_GENLIST_PROGRAM_DISABLED( TARGET ) \
+		 }
+
+#define SETTING_GENLIST_DESCRIPTION_R( right, param ) \
+	      description { state: "default" 0.0;\
+		 align: 1 0.5; \
+		 fixed: 1 0; \
+		 rel1 { \
+		    relative: 0 0; \
+		    to_x: right; \
+		    to_y: "base"; \
+		 }\
+		 rel2 {\
+		    relative: 0 1;\
+		    to_x: right; \
+		    to_y: "base"; \
+		 }\
+		 param\
+	      }
+
+#define SETTING_GENLIST_DESCRIPTION_L( left, param ) \
+	      description { state: "default" 0.0;\
+		 align: 0 0.5; \
+		 fixed: 1 0; \
+		 rel1 { \
+		    relative: 1 0; \
+		    to_x: left; \
+		    to_y: "base"; \
+		 }\
+		 rel2 { \
+		    relative: 1 1;\
+		    to_x: left; \
+		    to_y: "base"; \
+		 }\
+		 param\
+	      }\
+		description { state: "disabled" 0.0; \
+		   inherit: "default" 0.0; \
+		}
+
+// --------------------------
+// left |--> HERE  <--| right
+// --------------------------
+#define SETTING_GENLIST_DESCRIPTION_LR( left, right, param ) \
+	      description { state: "default" 0.0;\
+		 rel1 { \
+		    relative: 1 0; \
+		    to_x: left; \
+		    to_y: "base"; \
+		 }\
+		 rel2 {\
+		    relative: 0 1;\
+		    to_x: right;\
+		    to_y: "base"; \
+		 }\
+		 param\
+	      }
+
+#define SETTING_GENLIST_PART_BOTTOM_LINE \
+			       part { name: "bottom_line"; \
+				  type: RECT; \
+				  scale: 1; \
+				  mouse_events: 0; \
+				  description { state: "default" 0.0; \
+				     min: 0 SETTING_GENLIST_PART_LIST_LINE_HEIGHT; \
+				     max: -1 SETTING_GENLIST_PART_LIST_LINE_HEIGHT; \
+				     fixed: 0 1; \
+				     align: 0.5 1; \
+				     color: SETTING_GENLIST_LIST_LINE1_COLOR; \
+				     rel1.to: "bottom_line2"; \
+				     rel2.to: "bottom_line2"; \
+				     rel2.relative: 1 0; \
+				  } \
+				  description { state: "reorder" 0.0; \
+				     inherit: "default" 0.0; \
+				     visible: 0; \
+				  } \
+				  description { state: "selected" 0.0; \
+				     inherit: "default" 0.0; \
+				     color: SETTING_GENLIST_LIST_PRESS_COLOR; \
+				  } \
+				  description { state: "disabled" 0.0; \
+				     inherit: "default" 0.0; \
+				     color: SETTING_GENLIST_LIST_DIM_COLOR; \
+				  } \
+				  SETTING_GENLIST_DESCRIPTION_FADE \
+			       } \
+			       part { name: "bottom_line2"; \
+				  type: RECT; \
+				  scale: 1; \
+				  mouse_events: 0; \
+				  description { state: "default" 0.0; \
+				     min: 0 SETTING_GENLIST_PART_LIST_LINE_HEIGHT; \
+				     max: -1 SETTING_GENLIST_PART_LIST_LINE_HEIGHT; \
+				     fixed: 0 1; \
+				     align: 0.5 1; \
+				     color: SETTING_GENLIST_LIST_LINE2_COLOR; \
+				     rel1.to_x: "elm.padding.left"; \
+				     rel1.relative: 1 0; \
+				     rel2.to_x: "elm.padding.right"; \
+				     rel2.relative: 0 1; \
+				  } \
+				  description { state: "selected" 0.0; \
+				     inherit: "default" 0.0; \
+				     color: SETTING_GENLIST_LIST_PRESS_COLOR; \
+				  } \
+				  description { state: "reorder" 0.0; \
+				     inherit: "default" 0.0; \
+				     visible: 0; \
+				  } \
+				  description { state: "disabled" 0.0; \
+				     inherit: "default" 0.0; \
+				     color: SETTING_GENLIST_LIST_DIM_COLOR; \
+				  } \
+				  SETTING_GENLIST_DESCRIPTION_FADE \
+			       }
+
+#define SETTING_GENLIST_PART_PADDING_LEFT \
+			       SETTING_GENLIST_PART_EXPANDED_PAD \
+			       SETTING_GENLIST_PART_SPACER("elm.padding.left", \
+				  SETTING_GENLIST_DESCRIPTION_L("elm.swallow.pad",  \
+				     min: SETTING_GENLIST_PADDING_SIZE_LEFT 0; \
+				     max: SETTING_GENLIST_PADDING_SIZE_LEFT -1; \
+				     fixed: 1 0; \
+				  ) \
+			       )
+
+#define SETTING_GENLIST_PART_PADDING_RIGHT \
+			       SETTING_GENLIST_PART_SPACER("elm.padding.right", \
+				  description { state: "default" 0.0; \
+				     min: SETTING_GENLIST_PADDING_SIZE_RIGHT 0; \
+				     max: SETTING_GENLIST_PADDING_SIZE_RIGHT -1; \
+				     fixed: 1 0; \
+				     align: 1.0 0.5; \
+				     rel1.to: "base"; \
+				     rel2.to: "base"; \
+				     rel1.relative: 1 0; \
+				  } \
+			       )
+
+#define SETTING_GENLIST_PARAM_ICON_BIG \
+		       min: SETTING_GENLIST_ICON_BIG_SIZE SETTING_GENLIST_ICON_BIG_SIZE; \
+		       max: SETTING_GENLIST_ICON_BIG_SIZE SETTING_GENLIST_ICON_BIG_SIZE;
+
+#define SETTING_GENLIST_PART_ICON_BIG_L(NAME, LEFT) \
+			 SETTING_GENLIST_PART_ICON(NAME, \
+			    SETTING_GENLIST_DESCRIPTION_L(LEFT, \
+			       fixed: 1 1; \
+			       SETTING_GENLIST_PARAM_ICON_BIG \
+			    ) \
+			 )
+
+#define SETTING_GENLIST_PART_PADDING_R( NAME, RIGHT ) \
+		       SETTING_GENLIST_PART_SPACER(NAME, \
+			  description { state: "default" 0.0; \
+			     fixed: 1 0; \
+			     min: SETTING_GENLIST_PADDING_SIZE_DEFAULT 0; \
+			     max: SETTING_GENLIST_PADDING_SIZE_DEFAULT -1; \
+			     align: 1 0.5; \
+			     rel1 { \
+				relative: 0 0; \
+				to_x: RIGHT; \
+			     } \
+			     rel2 { \
+				relative: 0 1; \
+				to_x: RIGHT; \
+			     } \
+			  } \
+		       )
+
+#define SETTING_GENLIST_PART_PADDING_L( NAME, LEFT ) \
+			       SETTING_GENLIST_PART_SPACER(NAME, \
+				  description { state: "default" 0.0; \
+				     fixed: 1 0; \
+				     min: SETTING_GENLIST_PADDING_SIZE_DEFAULT 0; \
+				     max: SETTING_GENLIST_PADDING_SIZE_DEFAULT -1; \
+				     align: 0 0.5; \
+				     rel1 { \
+					relative: 1 0; \
+					to_x: LEFT; \
+				     } \
+				     rel2 { \
+					relative: 1 1; \
+					to_x: LEFT; \
+				     } \
+				  } \
+			       )
+
+	      // list main text
+#define SETTING_GENLIST_PARAM_LISTITEM \
+		 color: SETTING_GENLIST_LIST_MAIN_TEXT_UNREAD_COLOR; \
+		 text { \
+		    align: 0 0.5; \
+		    min: 0 1; \
+		    font: "Tizen:style=Regular"; \
+		    size: SETTING_GENLIST_LIST_MAIN_TEXT_SIZE; \
+		    /*text_class: "list_item"; */\
+		    text_class:"tizen";\
+		 }
+
+#define SETTING_GENLIST_PARAM_ICON_BTN_01 \
+		       min: 0 SETTING_GENLIST_BTN_01_HEIGHT; \
+		       max: -1 SETTING_GENLIST_BTN_01_HEIGHT;
+
+	      // list main text
+#define SETTING_GENLIST_DESCRIPTION_LISTITEM_OTHERS \
+		 description { state: "disabled" 0.0; \
+		    inherit: "default" 0.0; \
+		    color: SETTING_GENLIST_LIST_MAIN_TEXT_UNREAD_DIM_COLOR; \
+		 } \
+		 description { state: "read" 0.0; \
+		    inherit: "default" 0.0; \
+		    color: SETTING_GENLIST_LIST_MAIN_TEXT_READ_COLOR; \
+		 } \
+		 description { state: "read,disabled" 0.0; \
+		    inherit: "default" 0.0; \
+		    color: SETTING_GENLIST_LIST_MAIN_TEXT_READ_DIM_COLOR; \
+		 } \
+		 description { state: "selected" 0.0; \
+		    inherit: "default" 0.0; \
+		    color: SETTING_GENLIST_LIST_MAIN_TEXT_FOCUS_COLOR; \
+		 }
+
+#define SETTING_GENLIST_PART_LISTITEM_LR(NAME, HEIGHT, LEFT, RIGHT, PARAM) \
+			 SETTING_GENLIST_PART_TEXT(NAME, \
+			    SETTING_GENLIST_DESCRIPTION_LR(LEFT, RIGHT, \
+			       min: 0 HEIGHT; \
+			       max: -1 HEIGHT; \
+			       SETTING_GENLIST_PARAM_LISTITEM \
+			       PARAM \
+			    ) \
+			    SETTING_GENLIST_DESCRIPTION_LISTITEM_OTHERS \
+			 )
+
+#define SETTING_GENLIST_PART_ICON_BTN_01_R(NAME, RIGHT) \
+			 SETTING_GENLIST_PART_ICON(NAME, \
+			    SETTING_GENLIST_DESCRIPTION_R(RIGHT, \
+			       SETTING_GENLIST_PARAM_ICON_BTN_01 \
+			    ) \
+			 )
+
+
+#define SETTING_GENLIST_PROGRAM_DISABLED_BOTTOMLINE( TARGET ) \
+		       program { name: "enabled"; \
+			  signal: "elm,state,enabled"; \
+			  source: "elm"; \
+			  action: STATE_SET "default" 0.0; \
+			  target: "bg_image"; \
+			  target: "bottom_line"; \
+			  target: "bottom_line2"; \
+			  target: "elm.icon.1"; \
+			  TARGET \
+		       } \
+		       program { name: "disabled"; \
+			  signal: "elm,state,disabled"; \
+			  source: "elm"; \
+			  action: STATE_SET "disabled" 0.0; \
+			  target: "bg_image"; \
+			  target: "bottom_line"; \
+			  target: "bottom_line2"; \
+			  target: "elm.icon.1"; \
+			  TARGET \
+		       }
+
+#define SETTING_GENLIST_PROGRAM_SELECT_BOTTOMLINE( TARGET ) \
+		       program { name: "selected"; \
+			  signal: "elm,state,selected"; \
+			  source: "elm"; \
+			  action: STATE_SET "selected" 0.0; \
+			  target: "bg_image"; \
+			  target: "bottom_line"; \
+			  target: "bottom_line2"; \
+			  TARGET \
+			  after: "play_button_press"; \
+		       } \
+		       program { name: "unselected"; \
+			  signal: "elm,state,unselected"; \
+			  source: "elm"; \
+			  action: STATE_SET "default" 0.0; \
+			  target: "bg_image"; \
+			  target: "bottom_line"; \
+			  target: "bottom_line2"; \
+			  TARGET \
+			  transition: LINEAR 0.1; \
+		       } \
+		       program { name: "play_button_press"; \
+			  action: PLAY_SAMPLE "button-pressed" 1.0; \
+		       }
+
+	      // FIXME: bg_color_change is used temporary
+#define SETTING_GENLIST_PROGRAM_EXPAND_FADE( TARGET ) \
+		 program { name: "bg_color_change"; \
+		    signal: "bg_color_change"; \
+		    action: STATE_SET "2depth" 0.0; \
+		    target: "bg_image_clip"; \
+		    after: "expand_start_fade"; \
+		 } \
+		 program { name: "expand_start_fade"; \
+		    signal: "flip_item"; \
+		    action: STATE_SET "fadeout" 0.0; \
+		    target: "bg_image"; \
+		    TARGET \
+		    after: "expand_end_fade"; \
+		 } \
+		 program { name: "expand_end_fade"; \
+		    action: STATE_SET "default" 0.0; \
+		    transition: DECELERATE 0.3; \
+		    target: "bg_image"; \
+		    TARGET \
+		 } \
+		 program { name: "contract_fade"; \
+		    signal: "elm,state,contract_flip"; \
+		    action: STATE_SET "fadein" 0.0; \
+		    target: "bg_image"; \
+		    TARGET \
+		    after: "contract_end_fade"; \
+		 } \
+		 program { name: "contract_end_fade"; \
+		    action: STATE_SET "fadeout" 0.0; \
+		    transition: ACCELERATE 0.3; \
+		    target: "bg_image"; \
+		    TARGET \
+		 }
+
+#define SETTING_GENLIST_PROGRAMS_NORMAL( TARGET ) \
+		      programs { \
+			      SETTING_GENLIST_PROGRAM_DISABLED_BOTTOMLINE( TARGET ) \
+			      program { name: "selected"; \
+				 signal: "elm,state,selected"; \
+				 source: "elm"; \
+				 action: STATE_SET "selected" 0.0; \
+				 target: "bg_image"; \
+				 target: "bottom_line"; \
+				 target: "bottom_line2"; \
+				 TARGET \
+			      } \
+			      program { name: "unselected"; \
+				 signal: "elm,state,unselected"; \
+				 source: "elm"; \
+				 action: STATE_SET "default" 0.0; \
+				 target: "bg_image"; \
+				 target: "bottom_line"; \
+				 target: "bottom_line2"; \
+				 TARGET \
+			      } \
+	program { name: "focus_in";\
+	   signal: "elm,action,focus_highlight,show";\
+	   source: "elm";\
+	   action: STATE_SET "enabled" 0.0;\
+	   target: "focus_bg";\
+	}\
+	program { name: "focus_out";\
+	   signal: "elm,action,focus_highlight,hide";\
+	   source: "elm";\
+	   action: STATE_SET "default" 0.0;\
+	   target: "focus_bg";\
+	}\
+			      SETTING_GENLIST_PROGRAM_EXPAND_FADE( target: "bottom_line"; target: "bottom_line2"; TARGET )\
+			      /*SETTING_GENLIST_PROGRAM_FLIP*/\
+		       }
+
+

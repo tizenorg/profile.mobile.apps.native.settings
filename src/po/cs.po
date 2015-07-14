@@ -1,0 +1,2577 @@
+msgid "IDS_ST_BODY_1_MINUTE"
+msgstr "1 minuta"
+
+msgid "IDS_ST_POP_SAVING"
+msgstr "Ukládání..."
+
+msgid "IDS_CAM_POP_MODEL"
+msgstr "Model"
+
+msgid "IDS_EMAIL_BODY_INVALID_PORT_NUMBER"
+msgstr "Neplatné číslo portu."
+
+msgid "IDS_HEALTH_OPT_ACCESSORIES"
+msgstr "Příslušenství"
+
+msgid "IDS_HS_HEADER_USB_DEBUGGING_CONNECTED"
+msgstr "Ladění USB bylo připojeno."
+
+msgid "IDS_MSG_OPT_6_SECONDS"
+msgstr "Počet sekund: 6"
+
+msgid "IDS_PB_POP_PS_ALREADY_EXISTS"
+msgstr "%s již existuje."
+
+msgid "IDS_SAPPS_OPT_BADGE_ABB"
+msgstr "Příznak"
+
+msgid "IDS_ST_BODY_DISCONNECTED"
+msgstr "Odpojeno."
+
+msgid "IDS_ST_BODY_MEDIA"
+msgstr "Média"
+
+msgid "IDS_ST_BODY_SELECT_AUTOMATICALLY"
+msgstr "Vybrat automaticky"
+
+msgid "IDS_ST_HEADER_AUDIO"
+msgstr "Zvuk"
+
+msgid "IDS_ST_HEADER_FORMAT_MVERB_ABB"
+msgstr "Formát"
+
+msgid "IDS_ST_HEADER_INSTANT_MESSENGER"
+msgstr "Rychlé zasílání zpráv"
+
+msgid "IDS_ST_HEADER_TIME"
+msgstr "Doba"
+
+msgid "IDS_ST_MBODY_DAYS_M_WEEKDAY"
+msgstr "Dny"
+
+msgid "IDS_ST_POP_ROAMING_WILL_INCUR_EXTRA_CHARGES_CONTINUE_Q"
+msgstr "Za roaming budou účtovány dodatečné poplatky. Chcete pokračovat?"
+
+msgid "IDS_WIFI_BODY_IP"
+msgstr "IP"
+
+msgid "IDS_BT_POP_OPERATION_FAILED"
+msgstr "Otevření se nezdařilo."
+
+msgid "IDS_CLD_OPT_MINUTE"
+msgstr "Minuta"
+
+msgid "IDS_CLD_OPT_MINUTES_LC_ABB"
+msgstr "minuty"
+
+msgid "IDS_CST_BUTTON_CLOSE"
+msgstr "Zavřít"
+
+msgid "IDS_CST_POP_FAILED"
+msgstr "Nezdařilo se."
+
+msgid "IDS_IM_BODY_SUCCESSFULLY_COMPLETED"
+msgstr "Úspěšně dokončeno."
+
+msgid "IDS_IM_POP_UNEXPECTED_ERROR"
+msgstr "Neočekávaná chyba."
+
+msgid "IDS_PB_BODY_INFO"
+msgstr "Informace"
+
+msgid "IDS_PB_BUTTON_CONTACT"
+msgstr "Kontakt"
+
+msgid "IDS_SIM_BODY_INVALID_SIM_CARD"
+msgstr "Chybná SIM karta."
+
+msgid "IDS_ST_BUTTON2_PROCESSING_ING"
+msgstr "Probíhá zpracování..."
+
+msgid "IDS_ST_POP_DELETE_Q"
+msgstr "Odstranit?"
+
+msgid "IDS_VR_POP_NO_FILES"
+msgstr "Žádné soubory"
+
+msgid "IDS_WGT_BUTTON3_KIES_VIA_WI_FI"
+msgstr "Kies přes Wi-Fi"
+
+msgid "IDS_TPLATFORM_OPT_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_OPT_SETTINGS"
+msgstr "Nastavení"
+
+msgid "IDS_ST_BODY_GENERAL"
+msgstr "Obecné"
+
+msgid "IDS_ST_HEADER_PRIVACY"
+msgstr "Soukromí"
+
+msgid "IDS_BR_OPT_SCREEN"
+msgstr "Displej"
+
+msgid "IDS_BR_OPT_LTE_GSM_WCDMA_HAUTO_CONNECT"
+msgstr "LTE/GSM/WCDMA (automaticky připojit)"
+
+msgid "IDS_BR_HEADER_MULTI_WINDOW"
+msgstr "Více oken"
+
+msgid "IDS_BR_BODY_WEBSITE_SETTINGS"
+msgstr "Nastavení webového serveru"
+
+msgid "IDS_CLD_HEADER_EVENT_NOTIFICATION"
+msgstr "Upozornění na událost"
+
+msgid "IDS_CLD_BUTTON_LIST_VIEW"
+msgstr "Seznam"
+
+msgid "IDS_CLD_BUTTON_EXPORT"
+msgstr "Export"
+
+msgid "IDS_CLD_BODY_FIRST_DAY_OF_WEEK"
+msgstr "První den týdne"
+
+msgid "IDS_CAM_BODY_SHOWING_PD_ITEMS_T_TTS"
+msgstr "Zobrazení %d položek"
+
+msgid "IDS_COM_POP_FLIGHT_MODE_WILL_BE_DISABLED"
+msgstr "Bude vypnut režim Letadlo."
+
+msgid "IDS_COM_POP_CHECKING"
+msgstr "Kontroluji..."
+
+msgid "IDS_COM_OPT_CONTINUE_Q"
+msgstr "Pokračovat?"
+
+msgid "IDS_COM_INCORRECT_PASSWORD_ENTERED_5_TIMES"
+msgstr "5krát bylo zadáno chybné heslo."
+
+msgid "IDS_COM_BODY_YOUR_SIM_CARD_DOES_NOT_ALLOW_A_CONNECTION_TO_THIS_NETWORK"
+msgstr "Tato SIM karta nedovoluje připojení k této síti."
+
+msgid "IDS_COM_BODY_TYPE_A_PIN_THAT_IS_4_TO_8_NUMBERS"
+msgstr "Zadejte PIN kód obsahující 4 až 8 číslic"
+
+msgid "IDS_COM_BODY_NETWORK_OPERATORS"
+msgstr "Síťoví operátoři"
+
+msgid "IDS_COM_BODY_FORMATTING_SD_CARD_ING"
+msgstr "Formátování SD karty..."
+
+msgid "IDS_COM_BODY_ENTER_PROXY_EMPTY"
+msgstr "Zadat adresu serveru proxy."
+
+msgid "IDS_COM_BODY_CONNECT_TO_DATA_SERVICES_WHEN_ROAMING"
+msgstr "Připojit k datovým službám při roamingu."
+
+msgid "IDS_ASEML_POP_PASSWORD_EXPIRED"
+msgstr "Vypršela platnost hesla."
+
+msgid "IDS_ASEML_POP_ENTER_ANOTHER_PASSWORD"
+msgstr "Zadejte jiné heslo."
+
+msgid "IDS_ASEML_BODY_DEVICE_ENCRYPTION"
+msgstr "Šifrování zařízení"
+
+msgid "IDS_CST_POP_UNKNOWN_OPERATION"
+msgstr "Neznámá operace."
+
+msgid "IDS_CST_POP_OPERATION_NOT_ALLOWED_DURING_CALLS"
+msgstr "Operace není během hovorů povolena."
+
+msgid "IDS_CST_OPT_GSM_WCDMA_HAUTO_CONNECT"
+msgstr "GSM/WCDMA (automaticky připojit)"
+
+msgid "IDS_CST_BODY_UNBLOCK_PIN2"
+msgstr "Odblokovat PIN2"
+
+msgid "IDS_MTTRL_MBODY_PALM_MOTION"
+msgstr "Pohyb dlaní"
+
+msgid "IDS_MTTRL_BUTTON_ENABLE_MOTION"
+msgstr "Zapnout pohyb"
+
+msgid "IDS_MTTRL_BODY_SMART_ALERT"
+msgstr "Inteligentní upozornění"
+
+msgid "IDS_NFC_OPT_S_BEAM"
+msgstr "S Beam"
+
+msgid "IDS_STU_BODY_SMART_STAY_DETECTS_YOUR_EYES_WITH_THE_FRONT_CAMERA_SO_THAT_THE_SCREEN_STAYS_ON_WHEN_YOU_ARE_LOOKING_AT_IT"
+msgstr "Inteligentní pohotovostní režim rozpozná vaše oči pomocí předního fotoaparátu a zůstane zapnutý, dokud se na něj díváte."
+
+msgid "IDS_IDLE_BODY_NEW_PIN_AND_CONFIRM_PIN_DO_NOT_MATCH"
+msgstr "Nový PIN kód a potvrzení PIN kódu se neshodují."
+
+msgid "IDS_MOBILEAP_POP_TURNING_ON_WI_FI_WILL_DISABLE_MOBILE_HOTSPOT_CONTINUE_Q_VZW"
+msgstr "Zapnutím Wi-Fi vypnete Mobile Hotspot. Chcete pokračovat?"
+
+msgid "IDS_MOBILEAP_MBODY_DATA_USAGE"
+msgstr "Použití dat"
+
+msgid "IDS_MOBILEAP_BODY_TETHERING"
+msgstr "Sdílení internetového připojení"
+
+msgid "IDS_IM_POP_THIS_FEATURE_IS_NOT_AVAILABLE_WHILE_FLIGHT_MODE_IS_ON"
+msgstr "Tato funkce není v režimu Letadlo k dispozici."
+
+msgid "IDS_EMAIL_POP_SECURITY_UPDATE_ABB"
+msgstr "Aktualizace zabezpečení"
+
+msgid "IDS_EMAIL_POP_GIANT_M_TEXTSIZE"
+msgstr "Obří"
+
+msgid "IDS_EMAIL_POP_FAILED_TO_MOVE"
+msgstr "Při přesouvání došlo k chybě."
+
+msgid "IDS_EMAIL_OPT_HUGE_M_TEXTSIZE"
+msgstr "Velmi velké"
+
+msgid "IDS_QP_POP_NETWORK_RESTRICTION_MODE_WILL_BE_DISABLED_JPN"
+msgstr "Network restriction mode will be disabled."
+
+msgid "IDS_QP_POP_IN_NETWORK_RESTRICTION_MODE_YOU_CAN_USE_ALL_YOUR_APPLICATIONS_WITHOUT_CONNECTING_TO_THE_NETWORK_YOU_CAN_ALSO_RECEIVE_CALLS_AND_SMS_MESSAGES_MSG_JPN"
+msgstr "In Network restriction mode, you can use all your applications without connecting to the network. You can also receive calls and SMS messages. Network restriction mode will be enabled."
+
+msgid "IDS_TASKMGR_BODY_ACTIVE_APPLICATIONS_C_PD"
+msgstr "Aktivní aplikace: %d"
+
+msgid "IDS_USB_POP_UNABLE_TO_CONNECT_TO_KIES_VIA_WI_FI_WHEN_CONNECTED_TO_KIES_VIA_USB"
+msgstr "Když je navázáno připojení k programu Kies přes USB, není možné se k němu připojit přes Wi-Fi."
+
+msgid "IDS_MSGC_POP_YOUR_SD_CARD_IS_FULL"
+msgstr "SD karta je plná."
+
+msgid "IDS_MSGC_BODY_NOT_ENOUGH_MEMORY_IN_PHONE_MEMORY_DELETE_SOME_ITEMS_AND_TRY_AGAIN"
+msgstr "Nedostatek paměti v paměti telefonu. Odstraňte některé položky a opakujte akci."
+
+msgid "IDS_KW_POP_BE_CAREFUL_WHEN_TRANSMITTING_INFORMATION_ON_AN_UNSECURED_WI_FI_NETWORK_MSG"
+msgstr "Při vysílání informací do nezabezpečené sítě Wi-Fi buďte opatrní, protože je mohou vidět ostatní uživatelé sítě."
+
+msgid "IDS_DN_BODY_ENCRYPT_SD_CARD"
+msgstr "Šifrovat SD kartu"
+
+msgid "IDS_MSGF_POP_UNSUPPORTED"
+msgstr "Není podporováno."
+
+msgid "IDS_MSGF_BODY_SERVICE_TYPE"
+msgstr "Typ služby"
+
+msgid "IDS_MF_POP_FORMAT_COMPLETED"
+msgstr "Formátování dokončeno."
+
+msgid "IDS_MF_OPT_NAME_HZ_TO_A"
+msgstr "Název (od Z do A)"
+
+msgid "IDS_MF_OPT_NAME_HA_TO_Z"
+msgstr "Název (od A do Z)"
+
+msgid "IDS_MF_BODY_SCREEN_CAPTURE_M_NOUN"
+msgstr "Kopie obrazovky"
+
+msgid "IDS_XTAG_POP_RESET_ALL_SETTINGS_FOR_C_DEFAULT_APPS_BACKGROUND_DATA_RESTRICTIONS_YOUR_EXISTING_DATA_WILL_NOT_BE_LOST"
+msgstr "Obnoví veškerá nastavení pro:<br><br>Výchozí aplikace<br>Omezení dat na pozadí<br><br>O stávající data nepřijdete"
+
+msgid "IDS_PB_POP_MOVE_COMPLETED"
+msgstr "Přesunutí dokončeno."
+
+msgid "IDS_PB_BODY_MOVING_ING"
+msgstr "Probíhá přesouvání"
+
+msgid "IDS_SMEMO_BUTTON_IMPORT"
+msgstr "Import"
+
+msgid "IDS_LCKSCN_BODY_WALLPAPERS"
+msgstr "Pozadí"
+
+msgid "IDS_LCKSCN_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_TO_UNLOCK_IT_MSG"
+msgstr "Odemknutí proveďte tak, že klepnete na displej, podržíte na něm prst a nakloníte zařízení směrem k sobě. Pokud se displej neodemkne, nakloňte zařízení více. Když bude nastaveno odemknutí pohybem, aktivace pohybem bude v Nastavení automaticky zapnutá."
+
+msgid "IDS_SA_BUTTON_DONE_ABB"
+msgstr "Hot."
+
+msgid "IDS_FP_BODY_NO_APPLICATIONS"
+msgstr "Žádné aplikace"
+
+msgid "IDS_ST_TZTAB4_MOST_USED_M_APP"
+msgstr "Nejpoužív."
+
+msgid "IDS_ST_TPOP_PERSONAL_MODE_ENABLED_ABB"
+msgstr "Osobní režim je zapnutý."
+
+msgid "IDS_ST_TPOP_PERSONAL_MODE_DISABLED_ABB"
+msgstr "Osobní režim je vypnutý."
+
+msgid "IDS_ST_TPOP_FAILED_TO_ENABLE_PERSONAL_MODE_TRY_AGAIN_ABB"
+msgstr "Nelze zapnout Osobní režim. Opakujte akci."
+
+msgid "IDS_ST_TPOP_FAILED_TO_DISABLE_PERSONAL_MODE_TRY_AGAIN_ABB"
+msgstr "Nelze vypnout Osobní režim. Opakujte akci."
+
+msgid "IDS_ST_TPOP_ENABLING_ULTRA_POWER_SAVING_MODE_ING"
+msgstr "Zapínání Ultra úsporného režimu..."
+
+msgid "IDS_ST_SK_FORMAT_ABB"
+msgstr "Form."
+
+msgid "IDS_ST_SK3_DONE"
+msgstr "Hotovo"
+
+msgid "IDS_ST_SK2_PLEASE_WAIT"
+msgstr "Počkejte prosím"
+
+msgid "IDS_ST_SBODY_POWER_SAVING"
+msgstr "Úsporný režim"
+
+msgid "IDS_ST_SBODY_ONLY_UPDATE_THE_SECURITY_POLICY_AUTOMATICALLY_WHEN_YOUR_DEVICE_IS_CONNECTED_TO_A_WI_FI_NETWORK"
+msgstr "Zásady zabezpečení budou automaticky aktualizovány pouze tehdy, když se zařízení připojí k síti Wi-Fi."
+
+msgid "IDS_ST_SBODY_INCREASE_THE_SENSITIVITY_OF_THE_TOUCH_SCREEN_SBODY_MSG"
+msgstr "Zvyšte citlivost dotykového displeje, abyste mohli ovládat zařízení v rukavicích."
+
+msgid "IDS_ST_SBODY_DISABLED"
+msgstr "Vypnuto"
+
+msgid "IDS_ST_SBODY_AUTOMATICALLY_CHECK_FOR_CHANGES_TO_THE_SECURITY_POLICY_MSG"
+msgstr "Automaticky vyhledávat změny zásad ochrany uživatelských údajů a stahovat veškeré aktualizace pro vylepšení bezpečnosti a služby."
+
+msgid "IDS_ST_POP_YOU_MUST_ENTER_A_DEVICE_NAME"
+msgstr "Musíte zadat název zařízení."
+
+msgid "IDS_ST_POP_YOUR_PERSONAL_MODE_SECURITY_SETTINGS_WILL_BE_RESET_AND_YOUR_PERSONAL_CONTENT_WILL_BE_DELETED_RESET_PERSONAL_MODE_Q"
+msgstr "Nastavení zabezpečení Osobního režimu bude obnoveno a odstraní se osobní obsah. Chcete obnovit Osobní režim?"
+
+msgid "IDS_ST_POP_USE_2D_HARDWARE_OR_SOFTWARE_ACCELERATION_IN_APPLICATIONS"
+msgstr "Použít 2D hardwarovou nebo softwarovou akceleraci v aplikacích."
+
+msgid "IDS_ST_POP_URL_REMOVED"
+msgstr "Adresa URL byla odebrána."
+
+msgid "IDS_ST_POP_URLS_REMOVED"
+msgstr "Adresy URL byly odebrány."
+
+msgid "IDS_ST_POP_UNMOUNTING_USB_OTG_STORAGE_WILL_STOP_SOME_APPLICATIONS_MSG"
+msgstr "Odpojením paměti USB OTG budou zastaveny některé aplikace. Aplikace nemusí být dostupné, dokud paměť USB OTG znovu nepřipojíte."
+
+msgid "IDS_ST_POP_UNMOUNTING_SD_CARD_ING_ABB"
+msgstr "Odpojování SD karty..."
+
+msgid "IDS_ST_POP_UNMOUNTING_ING_ABB"
+msgstr "Odpojování..."
+
+msgid "IDS_ST_POP_UNINSTALL_Q"
+msgstr "Odinstalovat?"
+
+msgid "IDS_ST_POP_UNINSTALLING_ING"
+msgstr "Odinstalování..."
+
+msgid "IDS_ST_POP_UNABLE_TO_TURN_ON_FLIGHT_MODE_VODA"
+msgstr "Režim Letadlo se nepodařilo zapnout"
+
+msgid "IDS_ST_POP_UNABLE_TO_SEARCH_NETWORKS_DURING_DATA_SERVICE_ACTIVATED_DO_YOU_WANT_TO_DISCONNECT_THE_DATA_SERVICE_AND_SEARCH_AVAILABLE_NETWORK_Q"
+msgstr "Během aktivace datové služby nelze vyhledávat sítě. Chcete odpojit datovou službu a vyhledat dostupnou síť?"
+
+msgid "IDS_ST_POP_UNABLE_TO_CHANGE_NETWORKS_WHILE_DATA_SERVICE_IN_USE_STOP_USING_CURRENT_DATA_SERVICE_AND_SELECT_ANOTHER_AVAILABLE_NETWORK_Q"
+msgstr "Když jsou používány datové služby, nelze měnit sítě. Chcete zastavit používání aktuálních datových služeb a vybrat jinou dostupnou síť?"
+
+msgid "IDS_ST_POP_ULTRA_POWER_SAVING_MODE_WILL_BE_DISABLED"
+msgstr "Ultra úsporný režim bude vypnut."
+
+msgid "IDS_ST_POP_TO_USE_PERSONAL_MODE_YOU_MUST_REGISTER_AN_UNLOCK_METHOD"
+msgstr "Chcete-li použít Osobní režim, musíte zaregistrovat způsob odemknutí."
+
+msgid "IDS_ST_POP_TO_ENABLE_HANDS_FREE_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Chcete-li zapnout režim Handsfree, zapněte alespoň jednu související funkci."
+
+msgid "IDS_ST_POP_THE_SCREEN_WILL_NOT_TURN_OFF_WHILE_YOU_KEEP_LOOKING_AT_IT"
+msgstr "Když se na displej díváte, tak se neotočí."
+
+msgid "IDS_ST_POP_THE_MAXIMUM_NUMBERS_OF_CHARACTERS_FOR_YOUR_DEVICE_NAME_HPD_HAS_BEEN_EXCEEDED"
+msgstr "Byl překročen maximální počet znaků názvu zařízení (%d)."
+
+msgid "IDS_ST_POP_THE_APP_HAS_BEEN_UNINSTALLED"
+msgstr "Aplikace byla odinstalována."
+
+msgid "IDS_ST_POP_TAP_OK"
+msgstr "Klepněte na tlačítko OK"
+
+msgid "IDS_ST_POP_SEARCHING_NETWORK_ING"
+msgstr "Hledání sítě..."
+
+msgid "IDS_ST_POP_RESTART_PHONE_TO_USE_AUTOMATIC_UPDATE_Q"
+msgstr "Chcete restartovat telefon a použít automatickou aktualizaci?"
+
+msgid "IDS_ST_POP_RESET_TO_DEFAULT_Q"
+msgstr "Obnovit výchozí nastavení?"
+
+msgid "IDS_ST_POP_RESET_ALL_SETTINGS_AND_DELETE_ALL_DATA_THIS_CANNOT_BE_STOPPED_ONCE_STARTED"
+msgstr "Obnoví všechna nastavení a odstraní všechna data. Tuto akci nelze po spuštění zastavit."
+
+msgid "IDS_ST_POP_REMOVE_DEFAULT_APPS_Q"
+msgstr "Odebrat výchozí aplikace?"
+
+msgid "IDS_ST_POP_REGISTRATION_CODE_NOT_FOUND"
+msgstr "Registrační kód nebyl nalezen."
+
+msgid "IDS_ST_POP_REGISTERING_ING"
+msgstr "Registrace..."
+
+msgid "IDS_ST_POP_REGISTERED"
+msgstr "Zaregistrováno."
+
+msgid "IDS_ST_POP_PUK2_VERIFIED"
+msgstr "PUK2 kód byl ověřen."
+
+msgid "IDS_ST_POP_PUK1_VERIFIED"
+msgstr "PUK1 kód byl ověřen."
+
+msgid "IDS_ST_POP_PORT_REMOVED"
+msgstr "Port byl odebrán."
+
+msgid "IDS_ST_POP_PORTS_REMOVED"
+msgstr "Porty byly odebrány."
+
+msgid "IDS_ST_POP_PIN_UNBLOCKED"
+msgstr "PIN odblokován."
+
+msgid "IDS_ST_POP_PIN2_UNBLOCKED"
+msgstr "PIN2 odblokován."
+
+msgid "IDS_ST_POP_PIN2_CHANGED"
+msgstr "PIN2 byl změněn."
+
+msgid "IDS_ST_POP_PIN2_BLOCKED"
+msgstr "PIN2 zablokován."
+
+msgid "IDS_ST_POP_PIN1_CHANGED"
+msgstr "PIN1 kód byl změněn."
+
+msgid "IDS_ST_POP_PIN1_BLOCKED"
+msgstr "PIN1 kód byl zablokován."
+
+msgid "IDS_ST_POP_PD_ATTEMPT_LEFT"
+msgstr "Počet zbývajících pokusů: %d."
+
+msgid "IDS_ST_POP_PD_ATTEMPTS_LEFT"
+msgstr "Počet zbývajících pokusů: %d."
+
+msgid "IDS_ST_POP_PASSWORD_MUST_CONTAIN_AT_LEAST_PD_ALPHANUMERIC_CHARACTERS"
+msgstr "Heslo musí obsahovat alespoň %d alfanumerických znaků."
+
+msgid "IDS_ST_POP_PASSWORD_MUST_BE_MORE_THAN_P1SD_CHARACTERS_AND_LESS_THAN_P2SD"
+msgstr "Heslo musí obsahovat více než %1$d znaků a méně než %2$d znaků."
+
+msgid "IDS_ST_POP_PASSWORDS_DO_NOT_MATCH"
+msgstr "Hesla se neshodují."
+
+msgid "IDS_ST_POP_NO_SD_CARD_IS_INSERTED_DISABLE_ENCRYPT_SD_CARD_ANYWAY_Q"
+msgstr "Není vložena SD karta. Opravdu chcete vypnout šifrování SD karty?"
+
+msgid "IDS_ST_POP_NO_SD_CARD_HAS_BEEN_INSERTED_ENCRYPTION_WILL_START_AUTOMATICALLY_WHEN_YOU_INSERT_AN_SD_CARD"
+msgstr "Nebyla vložena SD karta. Šifrování se automaticky spustí po vložení SD karty."
+
+msgid "IDS_ST_POP_NO_ITEM_SELECTED"
+msgstr "Nejsou vybrány žádné položky."
+
+msgid "IDS_ST_POP_NEW_PASSWD_SAVED"
+msgstr "Nové heslo bylo uloženo."
+
+msgid "IDS_ST_POP_NETWORK_SEARCH_FAILED"
+msgstr "Hledání sítě se nezdařilo."
+
+msgid "IDS_ST_POP_MOBILE_DATA_HAS_BEEN_DISABLED_MSG"
+msgstr "Byla vypnuta mobilní data. Nemůžete odesílat nebo přijímat MMS zprávy. Chcete-li synchronizovat data se serverem, připojte se pomocí sítě Wi-Fi."
+
+msgid "IDS_ST_POP_MOBILE_DATA_ENABLED_CONNECTING_TO_MOBILE_NETWORKS_MAY_INCUR_EXTRA_CHARGES_DEPENDING_ON_YOUR_DATA_PLAN_CONTINUE_Q"
+msgstr "Byla zapnuta mobilní data. Připojení k mobilním sítím může zahrnovat v závislosti na vašem datovém tarifu další poplatky. Chcete pokračovat?"
+
+msgid "IDS_ST_POP_LOADING_ING"
+msgstr "Nahrávám..."
+
+msgid "IDS_ST_POP_IP_ADDRESS_REMOVED"
+msgstr "IP adresa byla odebrána."
+
+msgid "IDS_ST_POP_INVALID_URL_OR_NETWORK_CONNECTION_FAILED"
+msgstr "Neplatná adresa URL nebo se nezdařilo připojení k síti."
+
+msgid "IDS_ST_POP_INVALID_IP_ADDRESS_OR_NETWORK_CONNECTION_FAILED"
+msgstr "Neplatná IP adresa nebo se nezdařilo připojení k síti."
+
+msgid "IDS_ST_POP_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Chcete-li používat síťové služby, vložte SIM kartu."
+
+msgid "IDS_ST_POP_INCORRECT_PUK"
+msgstr "Nesprávný PUK."
+
+msgid "IDS_ST_POP_INCORRECT_PIN_PD_ATTEMPTS_LEFT"
+msgstr "Chybný PIN kód. Zbývá %d pokusů."
+
+msgid "IDS_ST_POP_INCORRECT_PIN2"
+msgstr "Chybný PIN2."
+
+msgid "IDS_ST_POP_INCORRECT_PIN1_ATTEMPT_LEFT"
+msgstr "Chybný PIN kód. Zbývá 1 pokus."
+
+msgid "IDS_ST_POP_INCORRECT_PASSWORD"
+msgstr "Nesprávné heslo."
+
+msgid "IDS_ST_POP_IF_YOU_RESET_YOUR_DEVICE_TO_FACTORY_DEFAULTS_YOU_WILL_NOT_BE_ABLE_TO_USE_ENCRYPTED_FILES_ON_THE_SD_CARD_MSG"
+msgstr "Pokud obnovíte výchozí nastavení zařízení, nebudete moci použít zašifrované soubory na SD kartě, ale nadále budete moci použít nezašifrované soubory."
+
+msgid "IDS_ST_POP_FORMATTING_WILL_ERASE_ALL_DATA_FORMAT_Q"
+msgstr "Formátováním smažete všechna data. Formátovat?"
+
+msgid "IDS_ST_POP_FORMATTING_ING"
+msgstr "Formátování..."
+
+msgid "IDS_ST_POP_FAILED_TO_UNINSTALL_THE_APP"
+msgstr "Aplikaci se nepodařilo odinstalovat."
+
+msgid "IDS_ST_POP_ENTER_PS"
+msgstr "Zadejte %s."
+
+msgid "IDS_ST_POP_ENCRYPT_SD_CARD_Q_OPERATION_IS_IRREVERSIBLE_AND_IF_YOU_INTERRUPT_IT_YOU_WILL_LOSE_DATA"
+msgstr "Chcete zašifrovat SD kartu? Operace je nevratná a když ji přerušíte, ztratíte data."
+
+msgid "IDS_ST_POP_ENABLING_EMERGENCY_MODE_ING"
+msgstr "Zapínání Tísňového režimu..."
+
+msgid "IDS_ST_POP_ENABLING_AUTO_UPDATE_MEANS_YOUR_DEVICE_WILL_CHECK_FOR_SECURITY_UPDATES_AUTOMATICALLY_NOTI_MSG"
+msgstr "Pokud zapnete automatické aktualizace, zařízení bude kontrolovat aktualizace zabezpečení automaticky. Kontrolování prostřednictvím mobilních sítí může mít za následek další poplatky."
+
+msgid "IDS_ST_POP_ENABLE_SMART_STAY_TO_TRY_IT_T_HELP"
+msgstr "Chcete-li vyzkoušet inteligentní pohotovostní režim, zapněte ho."
+
+msgid "IDS_ST_POP_ENABLE_SMART_ROTATION_TO_TRY_IT_T_HELP"
+msgstr "Chcete-li vyzkoušet inteligentní otáčení, zapněte ho."
+
+msgid "IDS_ST_POP_ENABLE_FLIGHT_MODE"
+msgstr "Zapněte režim Letadlo."
+
+msgid "IDS_ST_POP_EMERGENCY_MODE_WILL_BE_DISABLED"
+msgstr "Tísňový režim bude vypnut."
+
+msgid "IDS_ST_POP_DO_NOT_ASK_AGAIN"
+msgstr "Příště se neptat"
+
+msgid "IDS_ST_POP_DISABLING_AUTO_UPDATE_MEANS_YOU_HAVE_TO_CHECK_FOR_SECURITY_UPDATES_MANUALLY_NOTI_MSG"
+msgstr "Pokud vypnete automatické aktualizace, budete muset kontrolovat aktualizace zabezpečení ručně. Chcete-li, aby bylo vaše zařízení zabezpečené, doporučujeme zapnout automatickou aktualizaci."
+
+msgid "IDS_ST_POP_DISABLE_TETHERING_Q"
+msgstr "Vypnout sdílení připojení k Internetu?"
+
+msgid "IDS_ST_POP_DEVICE_WILL_RESTART"
+msgstr "Zařízení bude restartováno."
+
+msgid "IDS_ST_POP_DEVICE_WILL_BE_RESET_ALL_SETTINGS_AND_DATA_WILL_BE_ERASED_THIS_CANNOT_BE_STOPPED_ONCE_STARTED"
+msgstr "Bude obnoveno nastavení zařízení. Všechna nastavení a data budou vymazána. Tuto akci nelze po spuštění zastavit."
+
+msgid "IDS_ST_POP_CONNECTING_TO_THE_SERVER_ING"
+msgstr "Připojování k serveru..."
+
+msgid "IDS_ST_POP_CHECK_FOR_SECURITY_UPDATES_AND_DOWNLOAD_NEW_UPDATES_Q_NOTI_MSG"
+msgstr "Chcete zkontrolovat aktualizace zabezpečení a stáhnout nové aktualizace? Stahování prostřednictvím mobilních sítí může mít za následek další poplatky. Pokud je to možné, stahujte přes síť Wi-Fi. Během stahování budete moci zařízení používat."
+
+msgid "IDS_ST_POP_CHAP"
+msgstr "CHAP"
+
+msgid "IDS_ST_POP_CHANGE_YOUR_POSITION_IN_RELATION_TO_THE_SCREEN_AND_SEE_HOW_IT_ADJUSTS_AUTOMATICALLY"
+msgstr "Změňte svou pozici ve vztahu k displeji a podívejte se, jak se automaticky přizpůsobí."
+
+msgid "IDS_ST_POP_AUTO_TIME_UPDATE_UNAVAILABLE_CHOOSE_ALTERNATIVE_TIME_SET_MODE_JPN_SBM"
+msgstr "Auto time update unavailable. Choose alternative time set mode."
+
+msgid "IDS_ST_POP_ANY_PERSONAL_CONTENT_WILL_NOT_BE_ACCESSIBLE_IN_NORMAL_MODE"
+msgstr "V Normálním režimu nebude dostupný žádný osobní obsah."
+
+msgid "IDS_ST_OPT_WCDMA_GSM_HAUTO_CONNECT"
+msgstr "WCDMA/GSM (automaticky připojit)"
+
+msgid "IDS_ST_OPT_UNTITLED_NETWORK"
+msgstr "Síť bez názvu"
+
+msgid "IDS_ST_OPT_TAB_VIEW"
+msgstr "Zobrazení karet"
+
+msgid "IDS_ST_OPT_SELECTED"
+msgstr "Vybráno"
+
+msgid "IDS_ST_OPT_SELECT"
+msgstr "Vybrat"
+
+msgid "IDS_ST_OPT_RESET_APP_SETTINGS_ABB"
+msgstr "Obnovit nast. apl."
+
+msgid "IDS_ST_OPT_NETWORK_LIST"
+msgstr "Seznam sítí"
+
+msgid "IDS_ST_OPT_MASS_STORAGE_ABB"
+msgstr "Velkokap. paměť"
+
+msgid "IDS_ST_OPT_LTE_WCDMA_GSM_HAUTO_CONNECT"
+msgstr "LTE/WCDMA/GSM (automaticky připojit)"
+
+msgid "IDS_ST_OPT_EDIT_QUICK_SETTINGS"
+msgstr "Upravit rychlé nastavení"
+
+msgid "IDS_ST_OPT_DEFAULT_RINGTONE"
+msgstr "Výchozí vyzváněcí tón"
+
+msgid "IDS_ST_OPT_CUSTOM_MODE_ABB"
+msgstr "Vlastní režim"
+
+msgid "IDS_ST_OPT_BLOCK_WI_FI"
+msgstr "Blokovat Wi-Fi"
+
+msgid "IDS_ST_OPT_BLOCK_MOBILE_NETWORKS"
+msgstr "Blokovat mobilní sítě"
+
+msgid "IDS_ST_OPT_BLOCK_ALL"
+msgstr "Blokovat vše"
+
+msgid "IDS_ST_OPT_AUTO_UPDATE_ABB"
+msgstr "Autom. aktualizace"
+
+msgid "IDS_ST_OPT_ALLOW_ALL"
+msgstr "Povolit vše"
+
+msgid "IDS_ST_OPT_ALL"
+msgstr "Vše"
+
+msgid "IDS_ST_MBODY_ZOOM"
+msgstr "Lupa"
+
+msgid "IDS_ST_MBODY_WCDMA_ONLY"
+msgstr "Pouze WCDMA"
+
+msgid "IDS_ST_MBODY_VIA_WI_FI_ONLY"
+msgstr "Pouze přes Wi-Fi"
+
+msgid "IDS_ST_MBODY_UNLOCK_METHOD"
+msgstr "Metoda odemknutí"
+
+msgid "IDS_ST_MBODY_TOUCH_SENSITIVITY_ABB"
+msgstr "Citlivost tlačítek"
+
+msgid "IDS_ST_MBODY_SWIPE"
+msgstr "Přejetí"
+
+msgid "IDS_ST_MBODY_SOFTWARE_UPDATE"
+msgstr "Aktualizace softwaru"
+
+msgid "IDS_ST_MBODY_SMART_STAY"
+msgstr "Inteligentní pohotovostní režim"
+
+msgid "IDS_ST_MBODY_SMART_SCREEN"
+msgstr "Inteligentní displej"
+
+msgid "IDS_ST_MBODY_SMART_ROTATION"
+msgstr "Inteligentní otáčení"
+
+msgid "IDS_ST_MBODY_SIM_CARD_PROFILE_SETTINGS"
+msgstr "Nast. profilu SIM karty"
+
+msgid "IDS_ST_MBODY_SHOW_CPU_USAGE"
+msgstr "Zobr. využití procesoru"
+
+msgid "IDS_ST_MBODY_SELECT_WHERE_CAPTURED_IMAGES_WILL_BE_SAVED"
+msgstr "Vyberte, kam se uloží dig. obrázky"
+
+msgid "IDS_ST_MBODY_SCREEN_ROTATION"
+msgstr "Otočení obrazovky"
+
+msgid "IDS_ST_MBODY_SCREEN_READER_HTTS"
+msgstr "Čtečka displeje (TTS)"
+
+msgid "IDS_ST_MBODY_REGISTER"
+msgstr "Registrovat"
+
+msgid "IDS_ST_MBODY_PAP"
+msgstr "PAP"
+
+msgid "IDS_ST_MBODY_NONE"
+msgstr "Žádný"
+
+msgid "IDS_ST_MBODY_MOTIONS_AND_GESTURES"
+msgstr "Pohyby a gesta"
+
+msgid "IDS_ST_MBODY_MOBILE_DATA"
+msgstr "Mobilní data"
+
+msgid "IDS_ST_MBODY_HELP"
+msgstr "Nápověda"
+
+msgid "IDS_ST_MBODY_HANDS_FREE_MODE"
+msgstr "Režim handsfree"
+
+msgid "IDS_ST_MBODY_GSM_ONLY"
+msgstr "Jen GSM"
+
+msgid "IDS_ST_MBODY_FONT_SIZE"
+msgstr "Velikost písma"
+
+msgid "IDS_ST_MBODY_FACTORY_RESET"
+msgstr "Obnovit výchozí nastavení"
+
+msgid "IDS_ST_MBODY_EDIT_AFTER_SCREEN_CAPTURE"
+msgstr "Po uložení kopie obr. up."
+
+msgid "IDS_ST_MBODY_DIALLING_KEYPAD_TONE"
+msgstr "Tón kláv. pro volbu čísel"
+
+msgid "IDS_ST_MBODY_DEVICE_STATUS"
+msgstr "Stav zařízení"
+
+msgid "IDS_ST_MBODY_DEREGISTER"
+msgstr "Zrušit registraci"
+
+msgid "IDS_ST_MBODY_COLOUR_THEME"
+msgstr "Barevné téma"
+
+msgid "IDS_ST_MBODY_CHARGING"
+msgstr "Nabíjení"
+
+msgid "IDS_ST_MBODY_CALL_SETTINGS"
+msgstr "Nastavení hovorů"
+
+msgid "IDS_ST_MBODY_AUTO_ADJUST_SCREEN_TONE"
+msgstr "Aut. nast. tónu displeje"
+
+msgid "IDS_ST_MBODY_ACTIVE_APPLICATION"
+msgstr "Aktivní aplikace"
+
+msgid "IDS_ST_MBODY_ACCOUNTS_AND_BACKUP"
+msgstr "Účty a zálohování"
+
+msgid "IDS_ST_ITAB4_CONTROLS_M_INPUT_AND_CONTROL"
+msgstr "Ovládání"
+
+msgid "IDS_ST_HEADER_WI_FI_DIRECT"
+msgstr "Wi-Fi Direct"
+
+msgid "IDS_ST_HEADER_WI_FI"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_HEADER_USER_SETTINGS_ABB"
+msgstr "Uživatelská nastavení"
+
+msgid "IDS_ST_HEADER_USER_AND_BACKUP_M_CATEGORY"
+msgstr "Uživatel a záloha"
+
+msgid "IDS_ST_HEADER_USB_UTILITIES"
+msgstr "Nástroje USB"
+
+msgid "IDS_ST_HEADER_UNLOCK_DEVICE_USING_MOTION_ABB"
+msgstr "Odemknutí zařízení pohybem"
+
+msgid "IDS_ST_HEADER_UNAVAILABLE"
+msgstr "Není k dispozici"
+
+msgid "IDS_ST_HEADER_ULTRA_POWER_SAVING_MODE"
+msgstr "Ultra úsporný režim"
+
+msgid "IDS_ST_HEADER_TOUCH_KEY_LIGHT_DURATION"
+msgstr "Doba osvětlení tlačítek"
+
+msgid "IDS_ST_HEADER_TEXT_TO_SPEECH"
+msgstr "Převod textu na řeč"
+
+msgid "IDS_ST_HEADER_STANDARD_LIMIT_ABB"
+msgstr "Standardní limit"
+
+msgid "IDS_ST_HEADER_SOUND"
+msgstr "Zvuk"
+
+msgid "IDS_ST_HEADER_SIM_CARD_MANAGER"
+msgstr "Správce SIM karet"
+
+msgid "IDS_ST_HEADER_SHARED_CONTENT"
+msgstr "Sdílený obsah"
+
+msgid "IDS_ST_HEADER_SELECT_VIBRATION_PATTERNS_ABB"
+msgstr "Vyberte typ vibrací"
+
+msgid "IDS_ST_HEADER_SCREEN_MIRRORING"
+msgstr "Screen Mirroring"
+
+msgid "IDS_ST_HEADER_SAMSUNG_KIES"
+msgstr "Samsung Kies"
+
+msgid "IDS_ST_HEADER_SAMSUNG_APPS"
+msgstr "Samsung Apps"
+
+msgid "IDS_ST_HEADER_RINGTONES"
+msgstr "Vyzvánění"
+
+msgid "IDS_ST_HEADER_RESET_RESULTS"
+msgstr "Vynulovat výsledky"
+
+msgid "IDS_ST_HEADER_RESET"
+msgstr "Obnovit"
+
+msgid "IDS_ST_HEADER_PRIVILEGES"
+msgstr "Oprávnění"
+
+msgid "IDS_ST_HEADER_PRIVATE_MODE"
+msgstr "Soukromý režim"
+
+msgid "IDS_ST_HEADER_PORT"
+msgstr "Port"
+
+msgid "IDS_ST_HEADER_PLEASE_WAIT"
+msgstr "Čekejte prosím."
+
+msgid "IDS_ST_HEADER_PERSONAL_MODE"
+msgstr "Osobní režim"
+
+msgid "IDS_ST_HEADER_PERSONALISATION"
+msgstr "Personalizace"
+
+msgid "IDS_ST_HEADER_PD_SELECTED_ABB"
+msgstr "Vybráno %d"
+
+msgid "IDS_ST_HEADER_PD_SELECTED"
+msgstr "Vybráno: %d"
+
+msgid "IDS_ST_HEADER_NO_BACKGROUND_PROCESSES_ABB"
+msgstr "Žádné procesy na pozadí"
+
+msgid "IDS_ST_HEADER_NEW_NETWORK"
+msgstr "Nová síť"
+
+msgid "IDS_ST_HEADER_NETWORK_RESTRICTION_MODE_ABB_JPN"
+msgstr "Network restriction mode"
+
+msgid "IDS_ST_HEADER_MOTION_UNLOCK"
+msgstr "Odemknutí pohybem"
+
+msgid "IDS_ST_HEADER_MORE_DISPLAY_SETTINGS_ABB"
+msgstr "Další nastavení zobrazení"
+
+msgid "IDS_ST_HEADER_LOCK_SCREEN"
+msgstr "Zamknout displej"
+
+msgid "IDS_ST_HEADER_LANGUAGE_AND_INPUT"
+msgstr "Jazyk a zadávání"
+
+msgid "IDS_ST_HEADER_INSTALLED_APPLICATIONS"
+msgstr "Instalované aplikace"
+
+msgid "IDS_ST_HEADER_INPUT_AND_MOTION"
+msgstr "Zadávání a pohyb"
+
+msgid "IDS_ST_HEADER_HOME_SCREEN_ABB"
+msgstr "Domovská obrazovka"
+
+msgid "IDS_ST_HEADER_FINGER_SCANNER_ABB"
+msgstr "Snímač prstů"
+
+msgid "IDS_ST_HEADER_ENTER_VALID_DEVICE_NAME_ABB"
+msgstr "Zadejte platný název zař."
+
+msgid "IDS_ST_HEADER_ENCRYPT_DEVICE"
+msgstr "Šifrovat zařízení"
+
+msgid "IDS_ST_HEADER_DIVX_VOD"
+msgstr "DivX® VOD"
+
+msgid "IDS_ST_HEADER_DISPLAY_LANGUAGE"
+msgstr "Jazyk displeje"
+
+msgid "IDS_ST_HEADER_DISPLAY"
+msgstr "Zobrazení"
+
+msgid "IDS_ST_HEADER_DISABLE_EMERGENCY_MODE_ABB"
+msgstr "Vypnout Tísňový režim"
+
+msgid "IDS_ST_HEADER_DEVICE_MANAGER"
+msgstr "Správce zařízení"
+
+msgid "IDS_ST_HEADER_CREATE_CONNECTION"
+msgstr "Vytvořit připojení"
+
+msgid "IDS_ST_HEADER_CONNECT_AND_SHARE"
+msgstr "Připojit a sdílet"
+
+msgid "IDS_ST_HEADER_CONFIRM_ENCRYPTION"
+msgstr "Potvrďte šifrování"
+
+msgid "IDS_ST_HEADER_CHANGE_PIN_ABB"
+msgstr "Změňte PIN kód"
+
+msgid "IDS_ST_HEADER_AUTO_ROTATE_SCREEN_ABB"
+msgstr "Automaticky otočit displej"
+
+msgid "IDS_ST_HEADER_ALLOW_USB_DEBUGGING_Q_ABB"
+msgstr "Povolit ladění USB?"
+
+msgid "IDS_ST_HEADER_ADD_URL"
+msgstr "Přidat URL"
+
+msgid "IDS_ST_HEADER_ADD_PORT"
+msgstr "Přidat port"
+
+msgid "IDS_ST_HEADER_ADD_IP"
+msgstr "Přidat IP adresu"
+
+msgid "IDS_ST_BUTTON_UNINSTALL_UPDATES"
+msgstr "Odinstalovat aktualizace"
+
+msgid "IDS_ST_BUTTON_UNINSTALL"
+msgstr "Odinstalovat"
+
+msgid "IDS_ST_BUTTON_TRY_IT"
+msgstr "Vyzkoušet"
+
+msgid "IDS_ST_BUTTON_STOP"
+msgstr "Stop"
+
+msgid "IDS_ST_BUTTON_SET_SCREEN_LOCK_TYPE"
+msgstr "Nastavit typ zámku displeje"
+
+msgid "IDS_ST_BUTTON_RESET_APPS_ABB"
+msgstr "Obnovit aplikace"
+
+msgid "IDS_ST_BUTTON_RESET"
+msgstr "Vynulovat"
+
+msgid "IDS_ST_BUTTON_REMOVE_DEFAULT_APPS_ABB"
+msgstr "Odebrat výchozí aplikace"
+
+msgid "IDS_ST_BUTTON_ONLY_VIBRATE"
+msgstr "Pouze vibrace"
+
+msgid "IDS_ST_BUTTON_OK_ABB"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON_MOVE_TO_SD_ABB"
+msgstr "Na SD kartu"
+
+msgid "IDS_ST_BUTTON_MOVE_TO_PHONE"
+msgstr "Přesunout do tel."
+
+msgid "IDS_ST_BUTTON_FORCE_STOP"
+msgstr "Vynucené zastavení"
+
+msgid "IDS_ST_BUTTON_ENABLE"
+msgstr "Povolit"
+
+msgid "IDS_ST_BUTTON_DISCONNECT"
+msgstr "Odpojit"
+
+msgid "IDS_ST_BUTTON_DISABLE"
+msgstr "Vypnout"
+
+msgid "IDS_ST_BUTTON_CONTINUE"
+msgstr "Pokračovat"
+
+msgid "IDS_ST_BUTTON_CANCEL_ABB"
+msgstr "Storno"
+
+msgid "IDS_ST_BODY_YYYY_DD_MM_DOT"
+msgstr "RRRR/DD/MM"
+
+msgid "IDS_ST_BODY_YOU_HAVE_SELECTED_TO_LAUNCH_THIS_APPLICATION_BY_DEFAULT_FOR_SOME_ACTIONS"
+msgstr "Některé akce spustí tuto aplikaci."
+
+msgid "IDS_ST_BODY_YOU_CAN_DECRYPT_ACCOUNTS_SETTINGS_DOWNLOADED_APPLICATIONS_AND_THEIR_DATA_MEDIA_AND_OTHER_FILES_DECRYPTION_WARNING_MSG"
+msgstr "Můžete dešifrovat účty, nastavení, stažené aplikace a jejich data, média a další soubory. Dešifrování může trvat hodinu nebo déle. Baterie musí být na začátku nabitá a zařízení musí být až do dokončení dešifrování napájeno. Pokud by došlo k přerušení procesu dešifrování, může dojít ke ztrátě některých nebo všech dat."
+
+msgid "IDS_ST_BODY_YOUR_DEVICE_REGISTRATION_CODE_C_PS"
+msgstr "Registrační kód zařízení: %s"
+
+msgid "IDS_ST_BODY_YOUR_CHANGES_ARE_BEING_MADE_T_TTS"
+msgstr "Změny byly provedeny."
+
+msgid "IDS_ST_BODY_WINSET"
+msgstr "Winset"
+
+msgid "IDS_ST_BODY_WHEN_THE_SOURCE_OF_LIGHT_IS_BEHIND_YOU_OR_WHEN_USING_DEVICE_IN_THE_DARK"
+msgstr "Když je zdroj světla za vámi nebo když používáte zařízení ve tmě"
+
+msgid "IDS_ST_BODY_WHEN_LEARN_ABOUT_TILT_OR_MOTION_UNLOCK_ARE_SET_MOTION_ACTIVATION_WILL_BE_AUTOMATICALLY_ENABLED_IN_SETTINGS"
+msgstr "Když budou nastaveny informace o naklonění nebo odemknutí pohybem, aktivace pohybem bude v Nastavení automaticky zapnutá."
+
+msgid "IDS_ST_BODY_WHEN_FRONT_CAMERA_IS_USED_FOR_THE_APPLICATION"
+msgstr "Když aplikace používá přední fotoaparát"
+
+msgid "IDS_ST_BODY_WHEN_FRONT_CAMERA_FAILS_TO_DETECT_FACE_AND_EYES"
+msgstr "Pokud přední fotoaparát nerozpozná obličej a oči"
+
+msgid "IDS_ST_BODY_WHEN_DATA_ROAMING_IS_DISABLED_APPLICATIONS_THAT_USE_THE_DATA_CONNECTION_MAY_NOT_WORK"
+msgstr "Když je datový roaming vypnutý, aplikace využívající datové připojení zřejmě nebudou fungovat."
+
+msgid "IDS_ST_BODY_WEB_APPLICATIONS"
+msgstr "Webové aplikace"
+
+msgid "IDS_ST_BODY_WCDMA_GSM_NHAUTO_CONNECT"
+msgstr "WCDMA/GSM\n(automaticky připojit)"
+
+msgid "IDS_ST_BODY_WAIT_WHILE_DEVICE_IS_ENCRYPTED_PDP_COMPLETE"
+msgstr "Počkejte na zašifrování zařízení. %d % dokončeno."
+
+msgid "IDS_ST_BODY_WAIT_WHILE_DEVICE_IS_DECRYPTED_PDP_COMPLETE"
+msgstr "Počkejte na dešifrování zařízení. %d % dokončeno."
+
+msgid "IDS_ST_BODY_WAITING_FOR_RESPONSE_FROM_SIM_CARD_ING"
+msgstr "Čekání na odezvu SIM karty..."
+
+msgid "IDS_ST_BODY_VOLUME"
+msgstr "Hlasitost"
+
+msgid "IDS_ST_BODY_VOICE_RECORDING"
+msgstr "Nahrávání hlasů"
+
+msgid "IDS_ST_BODY_VIBRATE_WHEN_RINGING"
+msgstr "Při vyzvánění vibrace"
+
+msgid "IDS_ST_BODY_VERSION_PS"
+msgstr "Verze %s"
+
+msgid "IDS_ST_BODY_USING_MOBILE_DATA_MAY_RESULT_IN_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "Používání mobilních dat může mít za následek další poplatky. Chcete pokračovat?"
+
+msgid "IDS_ST_BODY_USE_TIME_PROVIDED_BY_NETWORK"
+msgstr "Použít čas ze sítě."
+
+msgid "IDS_ST_BODY_USE_MOTION"
+msgstr "Použít pohyb"
+
+msgid "IDS_ST_BODY_USER_ID"
+msgstr "ID uživatele"
+
+msgid "IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_URL_MSG"
+msgstr "Uživatel může blokovat konkrétní adresu URL. Pokud je adresa URL blokovaná, příchozí a odchozí data budou zrušena."
+
+msgid "IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_PORT_MSG"
+msgstr "Uživatel může blokovat konkrétní port. Pokud je port blokovaný, příchozí a odchozí data budou zrušena."
+
+msgid "IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_IP_ADDRESS_MSG"
+msgstr "Uživatel může blokovat konkrétní IP adresu. Pokud je IP adresa blokovaná, příchozí a odchozí data budou zrušena."
+
+msgid "IDS_ST_BODY_USED"
+msgstr "Použito"
+
+msgid "IDS_ST_BODY_USB_OTG_STORAGE"
+msgstr "Paměť USB OTG"
+
+msgid "IDS_ST_BODY_USB_DEBUGGING_IS_INTENDED_FOR_DEVELOPMENT_PURPOSES_ONLY_MSG"
+msgstr "USB ladění je určeno pouze pro vývojářské účely. Může být použito ke kopírování dat mezi počítačem a zařízením, k instalaci aplikací do zařízení bez oznámení a ke čtení dat protokolu."
+
+msgid "IDS_ST_BODY_USB_DEBUGGING"
+msgstr "Ladění USB"
+
+msgid "IDS_ST_BODY_USB_ASK_ON_CONNECTION"
+msgstr "Zeptat se při připojení"
+
+msgid "IDS_ST_BODY_URL"
+msgstr "URL"
+
+msgid "IDS_ST_BODY_UNMOUNT_USB_OTG_STORAGE"
+msgstr "Odpojit paměť USB OTG"
+
+msgid "IDS_ST_BODY_UNMOUNT_SD_CARD"
+msgstr "Odpojit SD kartu"
+
+msgid "IDS_ST_BODY_UNMOUNTING_THE_SD_CARD_WILL_STOP_SOME_APPLICATIONS_FROM_FUNCTIONING_UNTIL_YOU_MOUNT_THE_SD_CARD_AGAIN_MSG"
+msgstr "Odpojením SD karty budou zastaveny některé aplikace. Aplikace nemusí být dostupné, dokud nebude SD karta znovu připojena"
+
+msgid "IDS_ST_BODY_UNABLE_TO_USE_CURRENT_PASSWORD"
+msgstr "Aktuální heslo nelze použít."
+
+msgid "IDS_ST_BODY_UMTS_MODE_ONLY_WORKS_INSIDE_3G_COVERAGE_AREA"
+msgstr "Režim UMTS funguje pouze v oblasti s pokrytím sítě 3G."
+
+msgid "IDS_ST_BODY_UDRGOTHICM_JPN"
+msgstr "UDRGothicM"
+
+msgid "IDS_ST_BODY_UDMINCHO_JPN"
+msgstr "UDMincho"
+
+msgid "IDS_ST_BODY_UDGOTHIC_M_FONT"
+msgstr "UDGothic"
+
+msgid "IDS_ST_BODY_TURN_OFF"
+msgstr "Vypnout"
+
+msgid "IDS_ST_BODY_TURNING_OFF_MOBILE_DATA_WHEN_THE_SCREEN_IS_OFF"
+msgstr "Vypnutím mobilních dat, když je vypnutý displej."
+
+msgid "IDS_ST_BODY_TURNING_OFF_CONNECTIVITY_FEATURES_SUCH_AS_WI_FI_AND_BLUETOOTH"
+msgstr "Vypnutím funkcí připojení, např. Wi-Fi a Bluetooth."
+
+msgid "IDS_ST_BODY_TO_USE_PERSONAL_MODE_SCREEN_LOCK_TYPE_SHOULD_BE_SET_TO_SIMPLE_PASSWORD_OR_PASSWORD"
+msgstr "Chcete-li použít Osobní režim, musíte nastavit typ zámku displeje jako jednoduché heslo nebo heslo."
+
+msgid "IDS_ST_BODY_TO_PROTECT_YOUR_DATA_DISABLE_PERSONAL_MODE_AFTER_YOU_USE_IT_ALSO_USING_A_SECURE_SCREEN_LOCK_WILL_PROVIDE_BETTER_PROTECTION"
+msgstr "Abyste ochránili svá data, musíte po použití Osobní režim vypnout. Lepší ochranu zajistíte rovněž použitím bezpečného zámku displeje."
+
+msgid "IDS_ST_BODY_TO_OPEN_THE_MENU_DOUBLE_TAP_IT_T_TTS"
+msgstr "Poklepáním otevřete menu."
+
+msgid "IDS_ST_BODY_TO_M_PERIOD"
+msgstr "Na"
+
+msgid "IDS_ST_BODY_TO_ENABLE_THIS_FEATURE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Chcete-li zapnout tento režim, zapněte alespoň jednu příslušnou funkci."
+
+msgid "IDS_ST_BODY_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_FUNCTION"
+msgstr "Chcete-li zapnout úsporný režim, zapněte alespoň jednu funkci."
+
+msgid "IDS_ST_BODY_TO_ENABLE_BLOCKING_MODE_ENABLE_AT_LEAST_ONE_OPTION"
+msgstr "Chcete-li zapnout režim Blokování, zapněte alespoň jednu možnost."
+
+msgid "IDS_ST_BODY_TO_AVOID_OVERHEATING_MAXIMUM_BRIGHTNESS_HAS_BEEN_REDUCED"
+msgstr "Maximální jas byl ztlumen, aby se zabránilo přehřátí."
+
+msgid "IDS_ST_BODY_TOUCH"
+msgstr "Dotykový"
+
+msgid "IDS_ST_BODY_TOTAL_SPACE"
+msgstr "Celkové místo"
+
+msgid "IDS_ST_BODY_TOGGLE_THE_BUTTON_TO_ENABLE_OR_DISABLE_SCREEN_READER_OR_DOUBLE_TAP_TO_OPEN_THE_MENU_T_TTS"
+msgstr "Přepnutím tlačítka zapnete nebo vypnete čtečku obrazovky, nebo poklepáním otevřete menu."
+
+msgid "IDS_ST_BODY_TIME_ZONE"
+msgstr "Časové pásmo"
+
+msgid "IDS_ST_BODY_THIS_BAND_MAY_NOT_WORK_OUTSIDE_THE_USA_AND_CANADA"
+msgstr "Toto pásmo nemusí mimo USA a Kanadu fungovat."
+
+msgid "IDS_ST_BODY_THIS_ACTION_WILL_ERASE_THE_SD_CARD_IN_THE_PHONE_YOU_WILL_LOSE_ALL_DATA_ON_THE_CARD_E"
+msgstr "Touto akcí vymažete SD kartu v telefonu. Dojde ke ztrátě VŠECH dat na kartě!"
+
+msgid "IDS_ST_BODY_THE_SD_CARD_IS_CURRENTLY_IN_USE_THIS_ACTION_WILL_ERASE_ALL_DATA_ON_THE_SD_CARD_INCLUDING_THE_DATA_THAT_IS_CURRENTLY_BEING_USED"
+msgstr "SD karta je používána. Tato akce smaže veškerá data na SD kartě včetně dat, která právě používáte"
+
+msgid "IDS_ST_BODY_THE_RED_LED_LIGHTS_UP_WHEN_YOU_CHARGE_YOUR_DEVICE_WHILE_THE_SCREEN_IS_OFF"
+msgstr "Červený LED indikátor se rozsvítí při nabíjení zařízení, jestliže je vypnutý displej."
+
+msgid "IDS_ST_BODY_THE_RED_LED_BLINKS_WHEN_THE_BATTERY_POWER_IS_LOW_WHILE_THE_SCREEN_IS_OFF"
+msgstr "Červená kontrolka bliká, když je téměř vybitá baterie, jestliže je vypnutý displej."
+
+msgid "IDS_ST_BODY_THE_PASSWORD_MUST_NOT_CONTAIN_A_SIMPLE_SEQUENCE_HEG_1111_OR_1234"
+msgstr "Heslo nesmí obsahovat jednoduché posloupnosti (např. 1111 nebo 1234)"
+
+msgid "IDS_ST_BODY_THE_NAME_FIELD_CANNOT_BE_EMPTY"
+msgstr "Pole Název nesmí být prázdné."
+
+msgid "IDS_ST_BODY_THE_BLUE_LED_BLINKS_WHEN_YOU_RECORD_VOICE_WHILE_THE_SCREEN_IS_OFF"
+msgstr "Modrá kontrolka bliká při nahrávání hlasu, jestliže je vypnutý displej."
+
+msgid "IDS_ST_BODY_THE_BLUE_LED_BLINKS_WHEN_YOU_HAVE_MISSED_CALLS_MESSAGES_OR_APP_NOTIFICATIONS_WHILE_THE_SCREEN_IS_OFF"
+msgstr "Modrý LED indikátor bliká, máte-li nepřijaté hovory, zprávy nebo oznámení aplikací, když je vypnutý displej."
+
+msgid "IDS_ST_BODY_THE_APPLICATIONS_BELOW_WERE_STARTED_BY_PS_STOPPING_THESE_APPLICATIONS_MAY_CAUSE_PS_TO_FAIL"
+msgstr "Níže uvedené aplikace byly spuštěny aplikací %s. Zastavením těchto aplikací může dojít k chybě aplikace %s."
+
+msgid "IDS_ST_BODY_THERE_ARE_NO_NETWORKS_NEARBY"
+msgstr "V blízkém okolí nejsou žádné sítě."
+
+msgid "IDS_ST_BODY_TEXTSTYLE_LARGE"
+msgstr "Velké"
+
+msgid "IDS_ST_BODY_TASK_SWITCHER"
+msgstr "Přepínač úloh"
+
+msgid "IDS_ST_BODY_TAP_TO_INSERT"
+msgstr "Klepnutím vložte."
+
+msgid "IDS_ST_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_TO_UNLOCK_IT_IF_THE_SCREEN_DOES_NOT_UNLOCK_TRY_TILTING_THE_DEVICE_MORE"
+msgstr "Odemknutí proveďte tak, že klepnete na displej, podržíte na něm prst a nakloníte zařízení směrem k sobě. Pokud se displej neodemkne, nakloňte zařízení více."
+
+msgid "IDS_ST_BODY_SYSTEM_MEMORY"
+msgstr "Systémová paměť"
+
+msgid "IDS_ST_BODY_SUNDAY"
+msgstr "Neděle"
+
+msgid "IDS_ST_BODY_STORAGE"
+msgstr "Úložiště"
+
+msgid "IDS_ST_BODY_STANDARD_T_DISPLAY_EFFECT"
+msgstr "Standardní"
+
+msgid "IDS_ST_BODY_SPEECH"
+msgstr "Mluvení"
+
+msgid "IDS_ST_BODY_SOUND_N_DISPLAY"
+msgstr "Zvuk a zobrazení"
+
+msgid "IDS_ST_BODY_SOFTWARE"
+msgstr "Software"
+
+msgid "IDS_ST_BODY_SOCIAL_NETWORK_PROFILES"
+msgstr "Profily sociálních sítí"
+
+msgid "IDS_ST_BODY_SMART_STAY_MAY_NOT_WORK_IN_THESE_SITUATIONS"
+msgstr "Inteligentní pohotovostní režim nemusí fungovat v následujících situacích."
+
+msgid "IDS_ST_BODY_SMART_ROTATION_MAY_NOT_WORK_IN_THESE_SITUATIONS"
+msgstr "Inteligentní otáčení nemusí fungovat v následujících situacích."
+
+msgid "IDS_ST_BODY_SMART_ROTATION_DESCRIPTION_MSG"
+msgstr "Inteligentní otáčení vypne automatické otáčení displeje, přičemž pomocí předního fotoaparátu určí orientaci vašeho obličeje a podle ní otočí displej."
+
+msgid "IDS_ST_BODY_SMALL_M_TEXTSIZE"
+msgstr "Malé"
+
+msgid "IDS_ST_BODY_SIM_PASSWORD"
+msgstr "Heslo karty SIM"
+
+msgid "IDS_ST_BODY_SIMPLE_PASSWORD"
+msgstr "Jednoduché heslo"
+
+msgid "IDS_ST_BODY_SHOWS_BATTERY_PERCENTAGE_ON_INDICATOR"
+msgstr "Zobrazí kapacitu baterie v indikátoru."
+
+msgid "IDS_ST_BODY_SET_THE_DEFAULT_LOCATION_FOR_INSTALLING_APPLICATIONS_MSG"
+msgstr "Nastavte výchozí umístění pro instalaci aplikací. Aplikace je možné instalovat do různých umístění podle typu aplikace a dostupnosti umístění."
+
+msgid "IDS_ST_BODY_SET_FONT_AS_PS_Q"
+msgstr "Nastavit písmo %s?"
+
+msgid "IDS_ST_BODY_SET_AN_UNLOCK_PASSWORD_OF_AT_LEAST_6_CHARACTERS_CONTAINING_AT_LEAST_1_NUMBER"
+msgstr "Heslo pro odemknutí musí obsahovat alespoň 6 znaků a alespoň 1 číslici."
+
+msgid "IDS_ST_BODY_SERIAL_NUMBER"
+msgstr "Sériové číslo"
+
+msgid "IDS_ST_BODY_SECURITY_ENGINE"
+msgstr "Modul zabezpečení"
+
+msgid "IDS_ST_BODY_SECURITY"
+msgstr "Zabezpečení"
+
+msgid "IDS_ST_BODY_SEARCH"
+msgstr "Hledat"
+
+msgid "IDS_ST_BODY_SD_CARD"
+msgstr "SD karta"
+
+msgid "IDS_ST_BODY_SCREEN_TIMEOUT_ABB2"
+msgstr "Č. limit disp."
+
+msgid "IDS_ST_BODY_SCREEN_STAYS_ON_AS_LONG_AS_YOU_ARE_LOOKING_AT_IT"
+msgstr "Displej zůstane zapnutý, dokud se na něj díváte."
+
+msgid "IDS_ST_BODY_SCREEN_ROTATION_CAN_BE_SLOWER_IF_SMART_ROTATION_ENABLED"
+msgstr "Pokud je zapnuto inteligentní otáčení, může být otáčení displeje pomalejší"
+
+msgid "IDS_ST_BODY_SCREEN_OVERLAY_SHOWING_CURRENT_CPU_USAGE_ABB"
+msgstr "Překrytí displeje zobrazuje aktuální využití proc."
+
+msgid "IDS_ST_BODY_SCREEN_ORIENTATION_ADJUSTS_TO_YOUR_ANGLE_OF_SIGHT"
+msgstr "Orientace displeje se přizpůsobuje úhlu, ze kterého se na něj díváte."
+
+msgid "IDS_ST_BODY_SCREEN_MODE"
+msgstr "Režim displeje"
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_TYPE_CANNOT_BE_CHANGED_WHILE_ENCRYPTING_THE_SD_CARD"
+msgstr "Typ zámku displeje není možné změnit během šifrování SD karty."
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_TYPE_CANNOT_BE_CHANGED_WHILE_ENCRYPTING_THE_DEVICE"
+msgstr "Typ zámku displeje není možné změnit během šifrování zařízení."
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_TYPE"
+msgstr "Typ zámku displeje"
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_SOUND"
+msgstr "Zvuk zamknutí displeje"
+
+msgid "IDS_ST_BODY_SCHEDULE"
+msgstr "Plán"
+
+msgid "IDS_ST_BODY_SAVE_POWER_BY_ADJUSTING_SCREEN_TONE_ACCORDING_TO_ANALYSIS_OF_IMAGES"
+msgstr "Šetří energii nastavením tónu displeje podle analýzy obrázků."
+
+msgid "IDS_ST_BODY_SAVES_POWER_BY_LIMITING_THE_MAXIMUM_PERFORMANCE_OF_THE_DEVICE"
+msgstr "Spoří energii omezením maximálního výkonu zařízení."
+
+msgid "IDS_ST_BODY_SAVED"
+msgstr "Uloženo."
+
+msgid "IDS_ST_BODY_SAVE"
+msgstr "Uložit"
+
+msgid "IDS_ST_BODY_SAMSUNG_LEGAL"
+msgstr "Právní informace společnosti Samsung"
+
+msgid "IDS_ST_BODY_SAMSUNG_KIES_CONNECTION_CONNECTING_USB_HELP_MSG"
+msgstr " Pokud v počítači není nainstalována aplikace Samsung Kies (počítačový software) nebo správné ovladače, instalace bude pokračovat v systému Microsoft Windows. \nPo nainstalování softwaru lze provádět následující činnosti:\n- synchronizovat data v telefonu\n- aktualizovat SW telefonu\n- sdílet připojení k Internetu (Telefon funguje jako modem a lze používat Internet v notebooku nebo počítači.)\n- kopírovat zakoupenou hudbu nebo video (Microsoft Windows Media DRM) nebo normální soubory do telefonu."
+
+msgid "IDS_ST_BODY_RUNNING"
+msgstr "Spuštěné"
+
+msgid "IDS_ST_BODY_RESTRICTING_APPLICATION_USAGE_TO_ONLY_ESSENTIAL_APPLICATIONS_AND_THOSE_SELECTED_BY_YOU"
+msgstr "Používání aplikací se omezí pouze na základní aplikace a aplikace, které vyberete."
+
+msgid "IDS_ST_BODY_RESET_TO_DEFAULT"
+msgstr "Obnovit výchozí nastavení"
+
+msgid "IDS_ST_BODY_RESET_SETTINGS"
+msgstr "Vynulovat nastavení"
+
+msgid "IDS_ST_BODY_RESET_PERSONAL_MODE_SECURITY_SETTINGS_AND_DELETE_PERSONAL_CONTENT"
+msgstr "Obnoví nastavení zabezpečení Osobního režimu a odstraní osobní obsah"
+
+msgid "IDS_ST_BODY_RESET_PERSONAL_MODE"
+msgstr "Obnovit Osobní režim"
+
+msgid "IDS_ST_BODY_RESET_ALL"
+msgstr "Obnovit vše"
+
+msgid "IDS_ST_BODY_REMOVE_LICENCE"
+msgstr "Odebrat licenci"
+
+msgid "IDS_ST_BODY_REGULATORY_INFORMATION_ABB"
+msgstr "Regulační informace"
+
+msgid "IDS_ST_BODY_REGISTER_AT"
+msgstr "Registrovat v"
+
+msgid "IDS_ST_BODY_REGIONAL_EXAMPLE"
+msgstr "Příklad místního nastavení"
+
+msgid "IDS_ST_BODY_REGION"
+msgstr "Oblast"
+
+msgid "IDS_ST_BODY_PUK"
+msgstr "PUK"
+
+msgid "IDS_ST_BODY_PROXY_PORT"
+msgstr "Port serveru proxy"
+
+msgid "IDS_ST_BODY_PROTOCOL_TYPE"
+msgstr "Typ protokolu"
+
+msgid "IDS_ST_BODY_PROTECT_YOUR_DEVICE_FROM_HARMFUL_VIRUSES_AND_MALWARE"
+msgstr "Chraňte své zařízení před škodlivými viry a malwarem."
+
+msgid "IDS_ST_BODY_PROFILE_NAME"
+msgstr "Název profilu"
+
+msgid "IDS_ST_BODY_PROFILE"
+msgstr "Profil"
+
+msgid "IDS_ST_BODY_PREPARING_THIS_COULD_TAKE_OVER_10_MINUTES_ING"
+msgstr "Probíhá příprava. Akce může trvat více než 10 minut..."
+
+msgid "IDS_ST_BODY_PREFERRED_NETWORKS"
+msgstr "Preferované sítě"
+
+msgid "IDS_ST_BODY_POP_JPN_DCM"
+msgstr "POP"
+
+msgid "IDS_ST_BODY_PM"
+msgstr "odp."
+
+msgid "IDS_ST_BODY_PLUG_IN_CHARGER_AND_TRY_AGAIN"
+msgstr "Připojte nabíječku a opakujte akci."
+
+msgid "IDS_ST_BODY_PLAY_TONE_WHEN_THE_DIALLING_KEYPAD_IS_TAPPED"
+msgstr "Přehraje tón při klepnutí na klávesnici pro volbu čísel."
+
+msgid "IDS_ST_BODY_PLAY_SOUNDS_WHEN_LOCKING_AND_UNLOCKING_SCREEN"
+msgstr "Přehrát zvuky při zamykání a odemykání displeje"
+
+msgid "IDS_ST_BODY_PIN_BLOCKED_ENTER_PUK_TO_CONTINUE_JPN_DCM"
+msgstr "PIN blocked. Enter PUK to continue."
+
+msgid "IDS_ST_BODY_PIN"
+msgstr "PIN"
+
+msgid "IDS_ST_BODY_PICTURES_VIDEOS"
+msgstr "Obrázky, video"
+
+msgid "IDS_ST_BODY_PHOTO_UPLOAD_SETTINGS"
+msgstr "Nastavení ukládání fotografií"
+
+msgid "IDS_ST_BODY_PHONEPROFILES_SILENT"
+msgstr "Tichý"
+
+msgid "IDS_ST_BODY_PERSONAL_MODE_CAN_BE_USED_TO_HIDE_CONTENT_THAT_YOU_WANT_TO_KEEP_PRIVATE_MSG"
+msgstr "Osobní režim je možné použít ke skrytí obsahu, který má zůstat soukromý. Chcete-li použít Osobní režim, zapněte ho v Nastavení, nebo stiskněte a přidržte vypínač a zvolte možnost Osobní režim. Zadejte PIN kód nebo heslo. Ikona Osobního režimu se zobrazí na stavovém panelu. Abyste ochránili svá data, musíte po použití Osobní režim vypnout. Lepší ochranu zajistíte rovněž použitím bezpečného zámku displeje."
+
+msgid "IDS_ST_BODY_PD_ATTEMPTS_REMAINING_JPN_DCM"
+msgstr "%d attempts remaining"
+
+msgid "IDS_ST_BODY_PASSWORD_REQUIRED_TO_DECRYPT_DEVICE_EACH_TIME_YOU_TURN_IT_ON"
+msgstr "Vyžaduje heslo pro dešifrování zařízení při každém zapnutí."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_NO_MORE_THAN_PD_CHARACTERS_ABB"
+msgstr "Heslo může obsahovat max. %d znaků."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_PD_CHARACTERS_ABB"
+msgstr "Heslo musí obsahovat alespoň %d znaků."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_1_NUMBER"
+msgstr "Heslo musí obsahovat alespoň jednu číslici."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_1_LETTER"
+msgstr "Heslo musí obsahovat alespoň jedno písmeno."
+
+msgid "IDS_ST_BODY_PASSWORD_EMPTY"
+msgstr "Nevyplněné heslo."
+
+msgid "IDS_ST_BODY_PASSWORD_CONTAINS_INVALID_CHARACTER_ABB"
+msgstr "Heslo obsahuje neplatný znak."
+
+msgid "IDS_ST_BODY_PASSWORD"
+msgstr "Heslo"
+
+msgid "IDS_ST_BODY_OPEN_SOURCE_LICENCES"
+msgstr "Licence Open source"
+
+msgid "IDS_ST_BODY_ON_M_STATUS"
+msgstr "Zapnout"
+
+msgid "IDS_ST_BODY_OFFICIAL_M_DEVICE_STATUS"
+msgstr "Oficiální"
+
+msgid "IDS_ST_BODY_NUMBER"
+msgstr "Číslo"
+
+msgid "IDS_ST_BODY_NO_RESULTS_FOUND"
+msgstr "Nebylo nic nalezeno."
+
+msgid "IDS_ST_BODY_NO_DEFAULTS_SET"
+msgstr "Žádné výchozí nastavení."
+
+msgid "IDS_ST_BODY_NOT_ASSIGNED"
+msgstr "Nepřiřazeno"
+
+msgid "IDS_ST_BODY_NOTIFICATION_PANEL"
+msgstr "Oznamovací panel"
+
+msgid "IDS_ST_BODY_NOTIFICATIONS"
+msgstr "Oznámení"
+
+msgid "IDS_ST_BODY_NOTIFICATION"
+msgstr "Oznámení"
+
+msgid "IDS_ST_BODY_NOSERVICE"
+msgstr "Žádné služby"
+
+msgid "IDS_ST_BODY_NORMAL_T_PROFILE"
+msgstr "Normální"
+
+msgid "IDS_ST_BODY_NONE"
+msgstr "Žádná"
+
+msgid "IDS_ST_BODY_NEW_PIN2_AND_CONFIRM_PIN2_DO_NOT_MATCH"
+msgstr "Nový PIN2 kód a potvrzení PIN2 kódu se neshodují"
+
+msgid "IDS_ST_BODY_NEW_PIN2"
+msgstr "Nový PIN2"
+
+msgid "IDS_ST_BODY_NEW_PIN1"
+msgstr "Nový PIN1 kód"
+
+msgid "IDS_ST_BODY_NEW"
+msgstr "Nový"
+
+msgid "IDS_ST_BODY_NETWORK_TYPE"
+msgstr "Typ sítě"
+
+msgid "IDS_ST_BODY_NETWORK_MODE"
+msgstr "Režim sítě"
+
+msgid "IDS_ST_BODY_NETWORK_LIST"
+msgstr "Seznam sítí"
+
+msgid "IDS_ST_BODY_NETWORK_CONNECTIONS"
+msgstr "Síťová připojení"
+
+msgid "IDS_ST_BODY_NETWORK_CODE"
+msgstr "Kód sítě"
+
+msgid "IDS_ST_BODY_NETWORK"
+msgstr "Síť"
+
+msgid "IDS_ST_BODY_NATURAL_T_DISPLAY_EFFECT"
+msgstr "Přirozený"
+
+msgid "IDS_ST_BODY_NAME"
+msgstr "Jméno"
+
+msgid "IDS_ST_BODY_MY_NUMBER"
+msgstr "Vlastní číslo"
+
+msgid "IDS_ST_BODY_MSG_TIME_FORMAT"
+msgstr "Formát času"
+
+msgid "IDS_ST_BODY_MOVIE_T_DISPLAY_EFFECT"
+msgstr "Videoklip"
+
+msgid "IDS_ST_BODY_MOUNT_USB_OTG_STORAGE"
+msgstr "Připojit paměť USB OTG"
+
+msgid "IDS_ST_BODY_MOUNT_SD_CARD"
+msgstr "Připojit SD kartu"
+
+msgid "IDS_ST_BODY_MOTION"
+msgstr "Pohyb"
+
+msgid "IDS_ST_BODY_MORE_SYSTEM_SETTINGS"
+msgstr "Další systémová nastavení"
+
+msgid "IDS_ST_BODY_MORE_CONNECTIVITY_SETTINGS"
+msgstr "Další nastavení připojení"
+
+msgid "IDS_ST_BODY_MONDAY"
+msgstr "Pondělí"
+
+msgid "IDS_ST_BODY_MODE"
+msgstr "Režim"
+
+msgid "IDS_ST_BODY_MOBILE_DATA_WILL_BE_USED_IF_YOU_DOWNLOAD_OR_UPLOAD_DATA_WITHOUT_WI_FI_CONNECTION"
+msgstr "Pokud stáhnete nebo uložíte data bez připojení Wi-Fi, budou použita mobilní data."
+
+msgid "IDS_ST_BODY_MM_DD_YYYY_DOT"
+msgstr "MM.DD.RRRR"
+
+msgid "IDS_ST_BODY_MMS_CONNECTIONS"
+msgstr "Připojení MMS"
+
+msgid "IDS_ST_BODY_MISCELLANEOUS_FILES"
+msgstr "Různé soubory"
+
+msgid "IDS_ST_BODY_MESSAGE"
+msgstr "Zpráva"
+
+msgid "IDS_ST_BODY_MENU_AND_WIDGETS"
+msgstr "Menu a nástroje"
+
+msgid "IDS_ST_BODY_MEMORY"
+msgstr "Paměť"
+
+msgid "IDS_ST_BODY_MEDIUM"
+msgstr "Střední"
+
+msgid "IDS_ST_BODY_MB"
+msgstr "MB"
+
+msgid "IDS_ST_BODY_MASS_STORAGE_HELP_MSG"
+msgstr "Můžete provádět následující činnosti:\n- rychlé kopírování souborů\n- připojení v OS MAC nebo Linux"
+
+msgid "IDS_ST_BODY_MARUBERI_JPN_DCM"
+msgstr "Maruberi"
+
+msgid "IDS_ST_BODY_LTE_WCDMA_GSM_NHAUTO_CONNECT"
+msgstr "LTE/WCDMA/GSM\n(automaticky připojit)"
+
+msgid "IDS_ST_BODY_LOCK_SCREEN_OPTIONS"
+msgstr "Možnosti zamknutého displeje"
+
+msgid "IDS_ST_BODY_LIST_VIEW"
+msgstr "Seznam"
+
+msgid "IDS_ST_BODY_LIMIT_BACKGROUND_PROCESSES"
+msgstr "Omezit procesy na pozadí"
+
+msgid "IDS_ST_BODY_LICENCE"
+msgstr "Licence"
+
+msgid "IDS_ST_BODY_LED_INDICATOR"
+msgstr "LED indikátor"
+
+msgid "IDS_ST_BODY_LEDOT_LOW_BATTERY"
+msgstr "Vybitá baterie"
+
+msgid "IDS_ST_BODY_LAUNCH_BY_DEFAULT"
+msgstr "Spustit ve výchozím nastavení"
+
+msgid "IDS_ST_BODY_LANGUAGE_AND_REGION_ABB"
+msgstr "Jazyk a oblast"
+
+msgid "IDS_ST_BODY_LANGUAGE_AND_KEYBOARD"
+msgstr "Jazyk a klávesnice"
+
+msgid "IDS_ST_BODY_KEYBOARD"
+msgstr "Klávesnice"
+
+msgid "IDS_ST_BODY_KEEPS_THE_STATUS_BAR_TIDY_TAP_THE_REPRESENTATIVE_ICON_TO_SHOW_ALL_THE_ICONS"
+msgstr "Zachová úhledný stavový panel. Klepnutím na ikonu reprezentativní zobrazíte všechny ikony."
+
+msgid "IDS_ST_BODY_KB"
+msgstr "kB"
+
+msgid "IDS_ST_BODY_INTRODUCTION_TO_SMART_SCREEN_ABB"
+msgstr "Seznámení s intelig. displejem"
+
+msgid "IDS_ST_BODY_INTERNET_CONNECTION"
+msgstr "Připojení k Internetu"
+
+msgid "IDS_ST_BODY_INSTALTAB_FINISH"
+msgstr "Dokončit"
+
+msgid "IDS_ST_BODY_INSTALLED_APPLICATIONS"
+msgstr "Instalované aplikace"
+
+msgid "IDS_ST_BODY_INSTALLATION_SETTINGS"
+msgstr "Nastavení instalace"
+
+msgid "IDS_ST_BODY_INSERT_SD_CARD"
+msgstr "Vložte SD kartu."
+
+msgid "IDS_ST_BODY_INCORRECT_PIN_E"
+msgstr "Chybný PIN."
+
+msgid "IDS_ST_BODY_INCORRECT_PASSWORD_TRY_AGAIN"
+msgstr "Chybné heslo. Opakujte akci"
+
+msgid "IDS_ST_BODY_INCOMING_CALLS_AND_NEW_NOTIFICATIONS_WILL_BE_READ_OUT_AUTOMATICALLY"
+msgstr "Příchozí hovory a nová oznámení budou přečtena automaticky."
+
+msgid "IDS_ST_BODY_INCOMING_CALL"
+msgstr "Příchozí hovor"
+
+msgid "IDS_ST_BODY_IMEI"
+msgstr "IMEI"
+
+msgid "IDS_ST_BODY_IF_YOU_SELECT_THIS_OPTION_ONLY_USED_MEMORY_SPACE_WILL_BE_ENCRYPTED"
+msgstr "Pokud zvolíte tuto možnost, bude zašifrován pouze využitý paměťový prostor."
+
+msgid "IDS_ST_BODY_IF_YOU_FORGET_YOUR_PERSONAL_MODE_PASSWORD_YOU_WILL_NOT_BE_ABLE_TO_RECOVER_IT_FOR_SECURITY_MSG"
+msgstr "Když zapomenete heslo Osobního režimu, nebudete ho moci obnovit. Kvůli bezpečnosti musíte obnovit Osobní režim. Tím obnovíte výchozí nastavení a odstraníte veškerý osobní obsah."
+
+msgid "IDS_ST_BODY_IF_YOU_DONT_WANT_TO_SEE_A_NUMBER_APPEAR_ON_THE_APP_ICON_FOR_EACH_NEW_EVENT_DISABLE_BADGE"
+msgstr "Pokud nechcete, aby se v ikoně aplikace pro každou novou událost zobrazilo číslo, vypněte symbol."
+
+msgid "IDS_ST_BODY_ICON_SHOWS_THAT_SMART_SCREEN_IS_ENABLED"
+msgstr "Ikona označuje, že je zapnutý inteligentní displej."
+
+msgid "IDS_ST_BODY_HOME_URL"
+msgstr "Domovská URL"
+
+msgid "IDS_ST_BODY_HOME_AND_LOCK_SCREEN"
+msgstr "Domovská a zamknutá obrazovka"
+
+msgid "IDS_ST_BODY_HELVETICA_NEUE_M_FONT_NAME"
+msgstr "Helvetica Neue"
+
+msgid "IDS_ST_BODY_HARDWARE"
+msgstr "Hardware"
+
+msgid "IDS_ST_BODY_GSM"
+msgstr "GSM"
+
+msgid "IDS_ST_BODY_GRID_VIEW"
+msgstr "Tabulka"
+
+msgid "IDS_ST_BODY_GLOVE_MODE_ABB"
+msgstr "Režim rukavice"
+
+msgid "IDS_ST_BODY_GESTURES"
+msgstr "Gesta"
+
+msgid "IDS_ST_BODY_GB"
+msgstr "GB"
+
+msgid "IDS_ST_BODY_FROM_M_TIME"
+msgstr "Od"
+
+msgid "IDS_ST_BODY_FREQUENTLY_USED"
+msgstr "Často použitá"
+
+msgid "IDS_ST_BODY_FORMAT_USB_OTG_STORAGE"
+msgstr "Formátovat paměť USB OTG"
+
+msgid "IDS_ST_BODY_FORMAT_SD_CARD"
+msgstr "Formátovat kartu SD"
+
+msgid "IDS_ST_BODY_FORMATTING_USB_OTG_STORAGE_WILL_DELETE_ALL_DATA_DATA_CANNOT_BE_RECOVERED_CONTINUE_Q"
+msgstr "Při formátování paměti USB OTG budou odstraněna veškerá data. Data nebude možno obnovit. Chcete pokračovat?"
+
+msgid "IDS_ST_BODY_FORMATTING_SD_CARD_WILL_DELETE_ALL_DATA_DATA_CANNOT_BE_RECOVERED_CONTINUE_Q"
+msgstr "Při formátování SD karty budou odstraněna veškerá data. Data nebude možno obnovit. Chcete pokračovat?"
+
+msgid "IDS_ST_BODY_FORGOT_PASSWORD_SWA"
+msgstr "Forgot password"
+
+msgid "IDS_ST_BODY_FORBIDDEN_NETWORK"
+msgstr "Zakázaná síť"
+
+msgid "IDS_ST_BODY_FONT_TYPE"
+msgstr "Typ písma"
+
+msgid "IDS_ST_BODY_FONTSTYLE_ROSEMARY"
+msgstr "Rosemary"
+
+msgid "IDS_ST_BODY_FLIGHT_MODE_MSG"
+msgstr "Režim Letadlo umožňuje vypnout funkce hovorů, zpráv a datových přenosů v síti. Vypne také konektivitu funkcí, jako je Wi-Fi a Bluetooth. Pokud chcete použít Wi-Fi a Bluetooth, zapněte je v Nastavení nebo na oznamovacím panelu."
+
+msgid "IDS_ST_BODY_FLIGHT_MODE_HAS_BEEN_ENABLED_NETWORK_SETTINGS_WILL_CLOSE"
+msgstr "Byl zapnut režim Letadlo. Nastavení sítě se zavře."
+
+msgid "IDS_ST_BODY_FLIGHT_MODE"
+msgstr "Režim Letadlo"
+
+msgid "IDS_ST_BODY_FIXED_DIALLING_MODE"
+msgstr "Režim pevné volby"
+
+msgid "IDS_ST_BODY_FIREWALL_ENABLED_ABB"
+msgstr "Brána firewall je zapnutá"
+
+msgid "IDS_ST_BODY_FIREWALL"
+msgstr "Brána firewall"
+
+msgid "IDS_ST_BODY_FEATURES"
+msgstr "Funkce"
+
+msgid "IDS_ST_BODY_FAST_ENCRYPTION"
+msgstr "Rychlé šifrování"
+
+msgid "IDS_ST_BODY_FAILED_TO_SELECT_NETWORK"
+msgstr "Nepodařilo se vybrat síť."
+
+msgid "IDS_ST_BODY_FACE_AND_VOICE"
+msgstr "Obličej a hlas"
+
+msgid "IDS_ST_BODY_FACEBOOK"
+msgstr "Facebook"
+
+msgid "IDS_ST_BODY_EXPLANATION_FOR_TRANSACTION_TRACKING_MENU_VODA"
+msgstr "S přenášeným souborem budou rovněž zaslány informace o vašem doporučení"
+
+msgid "IDS_ST_BODY_EXPLANATION_FOR_EXPIRY_REMINDER_MENU"
+msgstr "Před vypršením licence na použitý soubor, například obrázek na pozadí, se zobrazí připomenutí."
+
+msgid "IDS_ST_BODY_ESTIMATED_MAX_STANDBY_TIME_ABB"
+msgstr "Odhadovaná max.\npohot. doba"
+
+msgid "IDS_ST_BODY_ENTER_PASSWORD_AGAIN_AFTER_PD_SECONDS"
+msgstr "Zadejte heslo znovu za %d sekund."
+
+msgid "IDS_ST_BODY_ENTER_PASSWORD_AGAIN"
+msgstr "Zadejte heslo znovu."
+
+msgid "IDS_ST_BODY_ENTER_PASSWORD"
+msgstr "Zadejte heslo."
+
+msgid "IDS_ST_BODY_ENTER_NEW_PASSWORD"
+msgstr "Zadejte nové heslo."
+
+msgid "IDS_ST_BODY_ENTER_CURRENT_PASSWORD"
+msgstr "Zadejte aktuální heslo."
+
+msgid "IDS_ST_BODY_ENCRYPT_DEVICE_Q_WARNING_MSG"
+msgstr "Chcete zašifrovat zařízení? Operace je nevratná a když ji přerušíte, přijdete o data. Šifrování může trvat hodinu i déle a během něho se zařízení několikrát restartuje a nebudete ho moci používat."
+
+msgid "IDS_ST_BODY_ENCRYPT_DEVICE_Q_OPERATION_IS_IRREVERSIBLE_AND_IF_YOU_INTERRUPT_IT_YOU_WILL_LOSE_DATA"
+msgstr "Chcete zašifrovat zařízení? Operace je nevratná a když ji přerušíte, ztratíte data"
+
+msgid "IDS_ST_BODY_ENCRYPT_ACCOUNTS_SETTINGS_DOWNLOADED_APPLICATIONS_AND_THEIR_DATA_MEDIA_AND_OTHER_FILES"
+msgstr "Můžete zašifrovat účty, nastavení, stažené aplikace a jejich data, média a další soubory."
+
+msgid "IDS_ST_BODY_ENCRYPTION_WILL_TAKE_AT_LEAST_AN_HOUR"
+msgstr "Šifrování bude trvat nejméně hodinu."
+
+msgid "IDS_ST_BODY_ENCRYPTING_ING"
+msgstr "Šifrování..."
+
+msgid "IDS_ST_BODY_ENABLE_DATA_ACCESS_OVER_MOBILE_NETWORK"
+msgstr "Povolit přístup k datům přes mobilní síť."
+
+msgid "IDS_ST_BODY_EMPTY"
+msgstr "Prázdný"
+
+msgid "IDS_ST_BODY_EMERGENCY_MODE_ABB"
+msgstr "Tísňový režim"
+
+msgid "IDS_ST_BODY_EMAIL"
+msgstr "E-mail"
+
+msgid "IDS_ST_BODY_EDIT"
+msgstr "Upravit"
+
+msgid "IDS_ST_BODY_EASY_MODE"
+msgstr "Snadný režim"
+
+msgid "IDS_ST_BODY_DYNAMIC_T_DISPLAY_EFFECT"
+msgstr "Dynamicky"
+
+msgid "IDS_ST_BODY_DYNAMIC_STATUS_BAR"
+msgstr "Dynamický stavový panel"
+
+msgid "IDS_ST_BODY_DRIVING_MODE"
+msgstr "Režim Vozidlo"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Znovu nezobrazovat"
+
+msgid "IDS_ST_BODY_DOWNLOADS"
+msgstr "Stažené položky"
+
+msgid "IDS_ST_BODY_DOWNLOAD"
+msgstr "Stáhnout"
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_MENU_T_TTS"
+msgstr "Poklepáním otevřete menu."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "Chcete-li upravit pole, poklepejte na něj."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_MENU_T_TTS"
+msgstr "Poklepáním zavřete menu."
+
+msgid "IDS_ST_BODY_DOCOMO_JPN_DCM"
+msgstr "docomo"
+
+msgid "IDS_ST_BODY_DIVX_REGISTRATION"
+msgstr "Registrace DivX"
+
+msgid "IDS_ST_BODY_DIVX_DEREGISTRATION"
+msgstr "Zrušení registrace DivX"
+
+msgid "IDS_ST_BODY_DISPLAY_CONTENTS"
+msgstr "Zobrazit obsah"
+
+msgid "IDS_ST_BODY_DISPLAY_BATTERY_PERCENTAGE_ABB"
+msgstr "Zobrazit kapacitu baterie"
+
+msgid "IDS_ST_BODY_DISABLING_ING"
+msgstr "Vypínání..."
+
+msgid "IDS_ST_BODY_DE_REGISTRATION_CODE_NOT_FOUND"
+msgstr "Kód pro zrušení registrace nebyl nalezen."
+
+msgid "IDS_ST_BODY_DEVICE_MEMORY"
+msgstr "Paměť zařízení"
+
+msgid "IDS_ST_BODY_DEVICE_INFO"
+msgstr "Informace o zařízení"
+
+msgid "IDS_ST_BODY_DEVICE_ENCRYPTION_HELP_MSG"
+msgstr "Můžete šifrovat účty, nastavení, stažené aplikace a jejich data, média a další soubory. Po zašifrování zařízení bude při každém zapnutí vyžadováno heslo pro dešifrování.\n\nŠifrování trvá hodinu nebo déle. Baterie musí být na začátku nabitá a zařízení musí být až do dokončení šifrování napájeno. Pokud by došlo k přerušení, může dojít ke ztrátě některých nebo všech dat."
+
+msgid "IDS_ST_BODY_DEVICE_ENCRYPTED"
+msgstr "Zařízení je zašifrováno."
+
+msgid "IDS_ST_BODY_DEVICE"
+msgstr "Zařízení"
+
+msgid "IDS_ST_BODY_DEVELOPER_OPTIONS"
+msgstr "Vývojářské možnosti"
+
+msgid "IDS_ST_BODY_DEFAULT_STORAGE"
+msgstr "Výchozí umístění"
+
+msgid "IDS_ST_BODY_DEFAULT_RENDERING_ENGINE"
+msgstr "Výchozí vykreslovací modul"
+
+msgid "IDS_ST_BODY_DEFAULT_FONT"
+msgstr "Výchozí písmo"
+
+msgid "IDS_ST_BODY_DECRYPT_DEVICE_Q_WARNING_MSG"
+msgstr "Chcete dešifrovat zařízení? Operace je nevratná a když ji přerušíte, přijdete o data. Dešifrování může trvat hodinu i déle a během něho se zařízení několikrát restartuje a nebudete ho moci používat."
+
+msgid "IDS_ST_BODY_DECRYPT_DEVICE"
+msgstr "Šifrovat zařízení"
+
+msgid "IDS_ST_BODY_DECRYPTING_ING"
+msgstr "Dešifrování..."
+
+msgid "IDS_ST_BODY_DEBUGGING_MODE_LAUNCHES_WHEN_USB_IS_CONNECTED"
+msgstr "Režim ladění se spustí při připojení kabelu USB."
+
+msgid "IDS_ST_BODY_DDMMYYYY_DOT"
+msgstr "DD.MM.RRRR"
+
+msgid "IDS_ST_BODY_DATE_AND_TIME"
+msgstr "Datum a čas"
+
+msgid "IDS_ST_BODY_DATE"
+msgstr "Datum"
+
+msgid "IDS_ST_BODY_DATA_ROAMING"
+msgstr "Datový roaming"
+
+msgid "IDS_ST_BODY_DATA"
+msgstr "Data"
+
+msgid "IDS_ST_BODY_CUSTOM_M_DEVICE_STATUS"
+msgstr "Vlastní"
+
+msgid "IDS_ST_BODY_CURRENT"
+msgstr "Aktuální"
+
+msgid "IDS_ST_BODY_CRASH_VIEWER"
+msgstr "Prohlížeč chyb"
+
+msgid "IDS_ST_BODY_CPU_USAGE"
+msgstr "Využití procesoru"
+
+msgid "IDS_ST_BODY_COUNTRY_CODE"
+msgstr "Kód země"
+
+msgid "IDS_ST_BODY_COOL_JAZZ"
+msgstr "Cool jazz"
+
+msgid "IDS_ST_BODY_CONTENT_FROM_GALLERY_VIDEO_MUSIC_VOICE_RECORDER_AND_MY_FILES_CAN_BE_HIDDEN_IN_PERSONAL_MODE"
+msgstr "Obsah složek Galerie, Video, Hudba, Záznamník a Moje soubory může být v Osobním režimu skryt."
+
+msgid "IDS_ST_BODY_CONNECTIONSETTINGS_PROXY_ADDRESS"
+msgstr "Adresa proxy"
+
+msgid "IDS_ST_BODY_CONNECTIONSETTINGS_INTERNET"
+msgstr "Internet"
+
+msgid "IDS_ST_BODY_CONNECTIONS"
+msgstr "Připojení"
+
+msgid "IDS_ST_BODY_CONNECTION"
+msgstr "Připojení"
+
+msgid "IDS_ST_BODY_CONFIRM_NEW_PIN2"
+msgstr "Potvrdit nový PIN2"
+
+msgid "IDS_ST_BODY_CONFIRM_NEW_PIN1"
+msgstr "Potvrďte nový PIN1 kód."
+
+msgid "IDS_ST_BODY_CONFIRM_NEW_PIN"
+msgstr "Potvrdit nový PIN"
+
+msgid "IDS_ST_BODY_CONFIRM_DECRYPTION"
+msgstr "Potvrdit dešifrování"
+
+msgid "IDS_ST_BODY_CONFIRM"
+msgstr "Potvrdit"
+
+msgid "IDS_ST_BODY_CONFIGURE_FIREWALL_SETTINGS"
+msgstr "Konfigurace nastavení brány firewall"
+
+msgid "IDS_ST_BODY_COMPUTING_ING"
+msgstr "Probíhá výpočet..."
+
+msgid "IDS_ST_BODY_CLEAR_DEFAULTS"
+msgstr "Vymazat výchozí nastavení"
+
+msgid "IDS_ST_BODY_CHOCO_COOKY"
+msgstr "Choco cooky"
+
+msgid "IDS_ST_BODY_CHECK_FOR_UPDATES_AUTOMATICALLY_ABB"
+msgstr "Kontrolovat aktualizace autom."
+
+msgid "IDS_ST_BODY_CHECK_FOR_UPDATES_ABB"
+msgstr "Zkontrolovat aktualizace"
+
+msgid "IDS_ST_BODY_CHECK_FOR_UPDATES"
+msgstr "Zkontrolovat aktualizace"
+
+msgid "IDS_ST_BODY_CHARGE_BATTERY_TO_ABOVE_80P_AND_TRY_AGAIN"
+msgstr "Nabijte baterii na více než 80 % a opakujte akci."
+
+msgid "IDS_ST_BODY_CHANGING_THE_FONT_SIZE_IN_ACCESSIBILITY_SETTINGS_WILL_OVERRIDE_THE_FONT_SIZE_IN_EACH_APPLICATION"
+msgstr "Změna velikosti písma v nastavení usnadnění potlačí velikost písma v jednotlivých aplikacích."
+
+msgid "IDS_ST_BODY_CHANGING_THE_COLOUR_OF_THE_SCREEN_TO_GREYSCALE"
+msgstr "Změnou barvy displeje na stupně šedi."
+
+msgid "IDS_ST_BODY_CHANGE_TEXT_SIZE_IN_CONTACTS_CALENDAR_MEMO_MESSAGES_EMAIL_AND_IM"
+msgstr "Změna velikosti textu v Kontaktech, Kalendáři, Poznámkách, Zprávách, E-mailu a Chatu."
+
+msgid "IDS_ST_BODY_CHANGE_PIN2"
+msgstr "Změnit PIN2 kód"
+
+msgid "IDS_ST_BODY_CALL_SETTINGS"
+msgstr "Nastavení hovorů"
+
+msgid "IDS_ST_BODY_CALL"
+msgstr "Volat"
+
+msgid "IDS_ST_BODY_CACHE"
+msgstr "Paměť"
+
+msgid "IDS_ST_BODY_BLOCK_URL"
+msgstr "Blokovat URL"
+
+msgid "IDS_ST_BODY_BLOCK_UDP"
+msgstr "Blokovat UDP"
+
+msgid "IDS_ST_BODY_BLOCK_TCP"
+msgstr "Blokovat TCP"
+
+msgid "IDS_ST_BODY_BLOCK_PORT"
+msgstr "Blokovat port"
+
+msgid "IDS_ST_BODY_BLOCK_IP"
+msgstr "Blokovat IP"
+
+msgid "IDS_ST_BODY_BLOCKING_MODE_IS_ENABLED"
+msgstr "Režim blokování je zapnutý."
+
+msgid "IDS_ST_BODY_BLOCKING_MODE"
+msgstr "Režim blokování"
+
+msgid "IDS_ST_BODY_BLOCKED_URL_LIST"
+msgstr "Seznam blokovaných URL"
+
+msgid "IDS_ST_BODY_BLOCKED_PORT_LIST"
+msgstr "Seznam blokovaných portů"
+
+msgid "IDS_ST_BODY_BLOCKED_IP_LIST"
+msgstr "Seznam blokovaných IP"
+
+msgid "IDS_ST_BODY_BATTERY_PERCENTAGE_ABB"
+msgstr "Kapacita baterie v %"
+
+msgid "IDS_ST_BODY_BATTERY"
+msgstr "Baterie"
+
+msgid "IDS_ST_BODY_BACKUP_AND_RESET"
+msgstr "Záloha a obnovení"
+
+msgid "IDS_ST_BODY_BACKLIGHT_TIME"
+msgstr "Doba podsvícení"
+
+msgid "IDS_ST_BODY_A_PERSON_YOU_HAVE_GRANTED_AUTHORITY_TO_IS_TRYING_TO_REMOTELY_ENABLE_EMERGENCY_MODE_ON_THIS_DEVICE_MSG"
+msgstr "Uživatel, kterému jste k tomu udělili oprávnění, se pokouší dálkově zapnout Tísňový režim v tomto zařízení. Vaše informace budou odeslány na server za 60 sekund a bude zapnut Tísňový režim. Klepnutím na tlačítko Zrušit tento proces zastavíte."
+
+msgid "IDS_ST_BODY_A_PASSWORD_WILL_BE_REQUIRED_TO_DECRYPT_YOUR_DEVICE_EVERY_TIME_YOU_POWER_IT_ON"
+msgstr "Při každém zapnutí bude vyžadováno heslo pro dešifrování zařízení."
+
+msgid "IDS_ST_BODY_AVAILABLE_SPACE"
+msgstr "Volné místo"
+
+msgid "IDS_ST_BODY_AVAILABLE"
+msgstr "Dostupný"
+
+msgid "IDS_ST_BODY_AUTO_DOWNLOAD"
+msgstr "Automaticky stáhnout"
+
+msgid "IDS_ST_BODY_AUTH_TYPE"
+msgstr "Typ ověřování"
+
+msgid "IDS_ST_BODY_APP_OPENING_IMAGE"
+msgstr "Obrázek otevření aplikace"
+
+msgid "IDS_ST_BODY_APP_OPENING_EFFECT"
+msgstr "Efekt otevření aplikace"
+
+msgid "IDS_ST_BODY_APPLICATION_SETTINGS"
+msgstr "Nastavení aplikací"
+
+msgid "IDS_ST_BODY_APPLICATION_MANAGER"
+msgstr "Správce aplikací"
+
+msgid "IDS_ST_BODY_APPLICATION_INFO"
+msgstr "Informace o aplikaci"
+
+msgid "IDS_ST_BODY_APPLICATION"
+msgstr "Aplikace"
+
+msgid "IDS_ST_BODY_ANTIVIRUS_SOFTWARE_ABB"
+msgstr "Antivirový software"
+
+msgid "IDS_ST_BODY_AM"
+msgstr "dop."
+
+msgid "IDS_ST_BODY_ALWAYS_REJECT"
+msgstr "Vždy odmítnout"
+
+msgid "IDS_ST_BODY_ALWAYS_ON"
+msgstr "Vždy zapnuto"
+
+msgid "IDS_ST_BODY_ALWAYS_OFF"
+msgstr "Vždy vypnuto"
+
+msgid "IDS_ST_BODY_ALARM"
+msgstr "Upozornění"
+
+msgid "IDS_ST_BODY_AFTER_YOU_DOWNLOAD_AND_INSTALL_APPLICATIONS_APPLICATIONS_WILL_BE_SHOWN_HERE"
+msgstr "Až stáhnete a nainstalujete aplikace, aplikace se zobrazí zde"
+
+msgid "IDS_ST_BODY_AFTER_RESETTING_PHONE_WILL_RESTART_AUTOMATICALLY"
+msgstr "Po resetování se telefon automaticky restartuje."
+
+msgid "IDS_ST_BODY_ADJUST_BRIGHTNESS_LEVEL"
+msgstr "Nastavit úroveň jasu"
+
+msgid "IDS_ST_BODY_ADJUST_AUTOMATIC_BRIGHTNESS"
+msgstr "Nastavit automatický jas"
+
+msgid "IDS_ST_BODY_ACCESS_NAME"
+msgstr "Přístupové jméno"
+
+msgid "IDS_ST_BODY_ACCESSIBILITY"
+msgstr "Usnadnění"
+
+msgid "IDS_ST_BODY_ABOUT_DEVICE"
+msgstr "O zařízení"
+
+msgid "IDS_QCP_HEADER_QUICK_COMMAND"
+msgstr "Rychlý příkaz"
+
+msgid "IDS_ECON_BODY_EASY_CONNECT_M_SHARING_ABB"
+msgstr "Snadné přip."
+
+msgid "IDS_SCR_POP_SCREEN_READER_IS_NOT_SUPPORTED_BY_PS_PRESS_THE_BACK_KEY_TO_RETURN_TO_THE_PREVIOUS_SCREEN"
+msgstr "Čtečka displeje není %s podporována. Stisknutím tlačítka zpět se vraťte na předchozí obrazovku."
+
+msgid "IDS_KEEPIT_HEADER_KEEPIT_M_APPLICATION_NAME"
+msgstr "KeepIt"
+
+msgid "IDS_CALL_POP_UNAVAILABLE_T_DIAL"
+msgstr "Není k dispozici."
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Pouze tísňová volání."
+
+msgid "IDS_JAVA_OPT_SIM_SETTINGS"
+msgstr "Nastavení SIM karty"
+
+msgid "IDS_TASK_BODY_NO_RUNNING_APPLICATION"
+msgstr "Není spuštěna žádná aplikace"
+
+msgid "IDS_VC_MBODY_NOTIFICATION_READ_OUT"
+msgstr "Čtení oznámení"
+
+msgid "IDS_VC_HEADER_VOICE_RECOGNITION"
+msgstr "Rozpoznávání hlasu"
+
+msgid "IDS_SSEARCH_POP_SEARCHED"
+msgstr "Vyhledáno."
+
+msgid "IDS_WIFI_BODY_DOT"
+msgstr "."
+
+msgid "IDS_DLNA_BODY_ACCESS_POINT_NAME"
+msgstr "Název přístupového bodu"
+
+msgid "IDS_SKM_BODY_ASK_M_IDEA_SKETCH"
+msgstr "Zeptat se"
+
+msgid "IDS_HELP_POP_THE_FRONT_CAMERA_IS_NOT_BEING_USED_BY_ANOTHER_APPLICATION"
+msgstr "Přední fotoaparát není používán jinou aplikací."
+
+msgid "IDS_HELP_POP_THE_DEVICE_IS_IN_WELL_LIT_CONDITIONS_BUT_THE_SCREEN_IS_NOT_IN_DIRECT_LIGHT"
+msgstr "Zařízení je v dobře osvětleném prostředí, ale na displej nedopadá přímé světlo."
+
+msgid "IDS_HELP_POP_THE_DEVICE_IS_HELD_STEADY_AND_UPRIGHT"
+msgstr "Zařízení je drženo pevně a vzpřímeně."
+
+msgid "IDS_HELP_BODY_THE_DEVICE_REACTS_INTELLIGENTLY_BY_ADAPTING_THE_SCREEN_WHEN_IT_DETECTS_YOUR_FACE"
+msgstr "Zařízení po rozpoznání vašeho obličeje inteligentně zareaguje a přizpůsobí displej."
+
+msgid "IDS_HELP_BODY_SMART_SCREEN_WORKS_BEST_UNDER_THE_FOLLOWING_CONDITIONS_C"
+msgstr "Inteligentní displej funguje nejlépe za následujících podmínek:"
+
+msgid "IDS_HELP_BODY_SMART_ROTATION_DISABLES_AUTO_SCREEN_ROTATION_BY_CHECKING_THE_ORIENTATION_OF_YOUR_FACE_AND_THE_DEVICE_BY_ITS_FRONT_CAMERA"
+msgstr "Inteligentní otáčení vypne automatické otáčení displeje kontrolou orientace obličeje a zařízení předním fotoaparátem."
+
+msgid "IDS_LBS_HEADER_LOCATION"
+msgstr "Místo"
+
+msgid "IDS_LBS_BODY_DESTINATION"
+msgstr "Cíl"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Ne"
+
+msgid "IDS_HELP_BODY_SMART_STAY_DETECTS_YOUR_EYES_WITH_THE_FRONT_CAMERA_SO_THAT_THE_SCREEN_STAYS_ON_WHEN_YOU_ARE_LOOKING_AT_IT"
+msgstr "Inteligentní pohotovostní režim rozpozná vaše oči pomocí předního fotoaparátu a zůstane zapnutý, dokud se na něj díváte."
+
+msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_NOTI_MSG"
+msgstr "Nebudete moci dále používat aplikace jako je Internet, E-mail a YouTube prostřednictvím mobilních sítí. Chcete pokračovat?"
+
+msgid "IDS_ST_BODY_10_MINUTES"
+msgstr "10 minut"
+
+msgid "IDS_ST_BODY_15SEC"
+msgstr "15 sekund"
+
+msgid "IDS_ST_BODY_24_HOURS"
+msgstr "24 hodin"
+
+msgid "IDS_ST_BODY_2_MINUTES"
+msgstr "2 minuty"
+
+msgid "IDS_ST_BODY_30SEC"
+msgstr "30 sekund"
+
+msgid "IDS_ST_BODY_5_MINUTES"
+msgstr "5 minut"
+
+msgid "IDS_ST_BODY_APPLICATIONS"
+msgstr "Aplikace"
+
+msgid "IDS_ST_BODY_DONT_ASK_AGAIN"
+msgstr "Příště se neptat"
+
+msgid "IDS_ST_BODY_P1SS_IS_CURRENTLY_P2SS_T_TTS"
+msgstr "%1$s je %2$s."
+
+msgid "IDS_ST_BODY_PASSWORDS_MUST_CONSIST_OF_AT_LEAST_4_ALPHANUMERIC_CHARACTERS_ALSO_INCLUDING_AT_LEAST_1_ALPHABETICAL_CHARACTER"
+msgstr "Hesla musí obsahovat nejméně 4 alfanumerické znaky a také musí zahrnovat alespoň 1 abecední znak."
+
+msgid "IDS_ST_BODY_PUK1_BLOCKED"
+msgstr "PUK1 kód byl zablokován."
+
+msgid "IDS_ST_BODY_PUK1_CODE"
+msgstr "PUK1 kód"
+
+msgid "IDS_ST_BODY_PUK2"
+msgstr "PUK2"
+
+msgid "IDS_ST_BUTTON2_POWER_SAVING_MODE_ABB"
+msgstr "Úsporný režim"
+
+msgid "IDS_ST_BUTTON_CANCEL_ABB2"
+msgstr "Zrušit"
+
+msgid "IDS_ST_HEADER_1_PROCESS_AT_MOST_ABB"
+msgstr "Max. 1 proces"
+
+msgid "IDS_ST_HEADER_2_PROCESSES_AT_MOST_ABB"
+msgstr "Max. 2 procesy"
+
+msgid "IDS_ST_HEADER_3_PROCESSES_AT_MOST_ABB"
+msgstr "Max. 3 procesy"
+
+msgid "IDS_ST_HEADER_4_PROCESSES_AT_MOST_ABB"
+msgstr "Max. 4 procesy"
+
+msgid "IDS_ST_HEADER_ENTER_PIN_ABB3"
+msgstr "Zadejte PIN kód"
+
+msgid "IDS_ST_OPT_2G_ONLY"
+msgstr "Pouze 2G"
+
+msgid "IDS_ST_OPT_3G_2G_HAUTO_CONNECT"
+msgstr "3G/2G (automaticky připojit)"
+
+msgid "IDS_ST_OPT_4G_3G_2G_HAUTO_CONNECT"
+msgstr "4G/3G/2G (automaticky připojit)"
+
+msgid "IDS_ST_POP_EMERGENCY_MODE_SAVES_BATTERY_POWER_BY_C_MSG"
+msgstr "Tísňový režim šetří baterii následujícími způsoby:\n\n- Změnou barvy displeje na stupně šedi.\n- Omezením počtu použitelných aplikací.\n- Vypnutím Mobilních dat v době, kdy je vypnutý displej.\n- Vypnutím funkcí připojení, např. Wi-Fi a Bluetooth.\n\nNěkteré funkce, např. Čtečka displeje a S průhledné pouzdro, nebudou dostupné.\nNěkteré Dynamic Boxy domovské obrazovky se pravděpodobně nezobrazí a bude nutné je znovu nakonfigurovat."
+
+msgid "IDS_ST_POP_INCORRECT_PUK1_CODE"
+msgstr "Chybný PUK1 kód."
+
+msgid "IDS_ST_POP_INCORRECT_PUK1_PD_ATTEMPTS_LEFT"
+msgstr "Chybný PUK1 kód. Zbývá pokusů: %d."
+
+msgid "IDS_ST_POP_INCORRECT_PUK2"
+msgstr "Nesprávný PUK2."
+
+msgid "IDS_ST_POP_INCORRECT_PUK2_PD_ATTEMPTS_LEFT"
+msgstr "Chybný PUK2 kód. Zbývá pokusů: %d."
+
+msgid "IDS_ST_POP_PIN_CHANGED"
+msgstr "PIN byl změněn."
+
+msgid "IDS_TASKMGR_BUTTON_CLEAR_CACHE"
+msgstr "Vymazat paměť"
+
+msgid "IDS_ST_BODY_3G_ONLY"
+msgstr "Jen 3G"
+
+msgid "IDS_ST_HEADER_ADD"
+msgstr "Přidat"
+
+msgid "IDS_ST_BODY_SECONDS"
+msgstr "Sekundy"
+
+msgid "IDS_ST_BUTTON_CANCEL"
+msgstr "Storno"
+
+msgid "IDS_ST_BODY_1_5_SECONDS"
+msgstr "1,5 sekundy"
+
+msgid "IDS_MSG_ACBUTTON_CANCEL_ABB"
+msgstr "ZRUŠIT"
+
+msgid "IDS_MSG_ACBUTTON_DONE_ABB"
+msgstr "HOTOVO"
+
+msgid "IDS_ST_HEADER_TURN_ON_MOBILE_DATA"
+msgstr "Zapnout Mobilní data"
+
+msgid "IDS_ST_HEADER_UNABLE_TO_PLAY_SAMPLE_ABB"
+msgstr "Ukázku nelze přehrát"
+
+msgid "IDS_ST_POP_SAMPLES_CANNOT_BE_PLAYED_DURING_CALLS"
+msgstr "Během hovorů není možné přehrávat ukázky."
+
+msgid "IDS_ST_HEADER_DEVICE_NAME"
+msgstr "Jméno zařízení"
+
+msgid "IDS_ST_HEADER_DELETE_ITEMS_ABB2"
+msgstr "Odstranit položky"
+
+msgid "IDS_ST_HEADER_FEEDBACK"
+msgstr "Zpětná vazba"
+
+msgid "IDS_ST_BODY_SELECT_ALL"
+msgstr "Vybrat vše"
+
+msgid "IDS_ST_BODY_TOTAL"
+msgstr "Celkem"
+
+msgid "IDS_ST_HEADER_MANAGE_CERTIFICATES_ABB"
+msgstr "Správa certifikátů"
+
+msgid "IDS_ST_BODY_INCORRECT_PASSWORD"
+msgstr "Nesprávné heslo."
+
+msgid "IDS_ST_HEADER_TURN_OFF_MOBILE_DATA"
+msgstr "Vypnout Mobilní data"
+
+msgid "IDS_ST_BODY_FLIGHT_MODE_DISABLES_CALLING_AND_MESSAGING_FUNCTIONS_AND_TURNS_OFF_MOBILE_DATA_AND_CONNECTIVITY_FUNCTIONS_MSG"
+msgstr "Režim Letadlo vypíná funkce volání a zpráv a vypíná Mobilní data a funkce připojení, například Wi-Fi a Bluetooth. Pokud chcete v režimu Letadlo použít Wi-Fi a Bluetooth, zapněte je v Nastavení nebo na oznamovacím panelu. Bude zapnut režim Letadlo."
+
+msgid "IDS_ST_BODY_TYPE"
+msgstr "Typ"
+
+msgid "IDS_ST_BODY_PERSONAL"
+msgstr "Osobní"
+
+msgid "IDS_ST_HEADER_LOCK_SCREEN_AND_SECURITY_ABB"
+msgstr "Zamykací obr. a zabezp."
+
+msgid "IDS_ST_HEADER_PRIVACY_AND_SAFETY_ABB"
+msgstr "Soukromí a bezpečnost"
+
+msgid "IDS_ST_BODY_MOBILE_NETWORKS"
+msgstr "Mobilní sítě"
+
+msgid "IDS_ST_HEADER_MORE_CONNECTION_SETTINGS"
+msgstr "Další nastavení připojení"
+
+msgid "IDS_ST_MBODY_LEGAL_INFORMATION_ABB"
+msgstr "Právní informace"
+
+msgid "IDS_ST_BODY_DEVICE_INFORMATION"
+msgstr "Informace o zařízení"
+
+msgid "IDS_ST_BODY_PHONE_NUMBER"
+msgstr "Telefonní číslo"
+
+msgid "IDS_ST_BODY_MODEL_NUMBER"
+msgstr "Číslo modelu"
+
+msgid "IDS_ST_MBODY_TIZEN_VERSION"
+msgstr "Verze Tizen"
+
+msgid "IDS_ST_MBODY_BLUETOOTH_ADDRESS"
+msgstr "Adresa Bluetooth"
+
+msgid "IDS_ST_BODY_WI_FI_MAC_ADDRESS"
+msgstr "MAC adresa Wi-Fi"
+
+msgid "IDS_ST_BUTTON_BATTERY_POWER_ABB"
+msgstr "Kapacita baterie"
+
+msgid "IDS_ST_TMBODY_SECURITY_STATUS"
+msgstr "Stav zabezpečení"
+
+msgid "IDS_ST_SBODY_SHOW_THE_TIME_IN_24_HOUR_FORMAT_INSTEAD_OF_12_HOUR_HAM_PM_FORMAT"
+msgstr "Zobrazí čas ve 24hodinovém formátu místo 12hodinového (dop./odp.)."
+
+msgid "IDS_ST_MBODY_AUTO_UPDATE"
+msgstr "Automatická aktualizace"
+
+msgid "IDS_ST_MBODY_24_HOUR_CLOCK"
+msgstr "24hodinové hodiny"
+
+msgid "IDS_ST_BODY_MAGNIFIER"
+msgstr "Lupa"
+
+msgid "IDS_ST_TMBODY_CACHE"
+msgstr "Paměť"
+
+msgid "IDS_ST_HEADER_CLEAR_CACHE_ABB"
+msgstr "Vymazat paměť"
+
+msgid "IDS_ST_POP_THERE_IS_NO_CACHE_DATA_TO_CLEAR"
+msgstr "Nejsou k dispozici žádná data paměti pro smazání."
+
+msgid "IDS_ST_POP_ALL_THE_CACHE_DATA_WILL_BE_CLEARED"
+msgstr "Všechna data paměti budou vymazána."
+
+msgid "IDS_ST_BUTTON_CLEAR_CACHE_ABB"
+msgstr "Vymazat paměť"
+
+msgid "IDS_ST_BODY_12_HOURS"
+msgstr "12 hodin"
+
+msgid "IDS_ST_BODY_1MINUTE"
+msgstr "1 minuta"
+
+msgid "IDS_ST_BODY_ACCOUNTS"
+msgstr "Účty"
+
+msgid "IDS_ST_HEADER_ALLSHARE"
+msgstr "AllShare"
+
+msgid "IDS_ST_BODY_ANSWERINGMODE_AUTOMATIC"
+msgstr "Automaticky"
+
+msgid "IDS_ST_BUTTON_BACK"
+msgstr "Zpět"
+
+msgid "IDS_ST_BODY_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BODY_ADVANCEDOPTIONS_CERTIFICATES"
+msgstr "Certifikáty"
+
+msgid "IDS_ST_BODY_CONTACTS"
+msgstr "Kontakty"
+
+msgid "IDS_ST_BODY_MYTHEME_CREATE"
+msgstr "Vytvořit"
+
+msgid "IDS_ST_BODY_CALLERID_DEFAULT"
+msgstr "Výchozí"
+
+msgid "IDS_ST_BODY_FM_RADIO"
+msgstr "FM rádio"
+
+msgid "IDS_ST_BODY_FONT"
+msgstr "Písmo"
+
+msgid "IDS_ST_BODY_GALLERY"
+msgstr "Galerie"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Nápověda"
+
+msgid "IDS_ST_BODY_MANUAL"
+msgstr "Ručně"
+
+msgid "IDS_ST_BODY_APPLICATIONSETTINGS_MESSAGE"
+msgstr "Zpráva"
+
+msgid "IDS_ST_BODY_MUSIC"
+msgstr "Hudba"
+
+msgid "IDS_ST_BODY_NFC"
+msgstr "NFC"
+
+msgid "IDS_ST_BODY_ALERTTYPE_OFF"
+msgstr "Vypnuto"
+
+msgid "IDS_ST_BODY_ON"
+msgstr "Zapnuto"
+
+msgid "IDS_ST_BODY_MEMORYSTATUS_OTHERS"
+msgstr "Jiné"
+
+msgid "IDS_ST_BODY_PIN_LOCK"
+msgstr "Zámek PIN"
+
+msgid "IDS_ST_BODY_RESET"
+msgstr "Obnovit"
+
+msgid "IDS_ST_POP_NETWORKSERVICES_SEARCHING"
+msgstr "Hledání..."
+
+msgid "IDS_ST_BODY_SIZE"
+msgstr "Velikost"
+
+msgid "IDS_ST_HEADER_SYNCHRONISE"
+msgstr "Synchronizace"
+
+msgid "IDS_ST_BODY_SYSTEM"
+msgstr "Systém"
+
+msgid "IDS_ST_BUTTON2_S_PLANNER"
+msgstr "S plánovač"
+
+msgid "IDS_ST_BODY_TWITTER"
+msgstr "Twitter"
+
+msgid "IDS_ST_BODY_USERNAME"
+msgstr "Uživatelské jméno"
+
+msgid "IDS_ST_BODY_VOICE"
+msgstr "Hlas"
+
+msgid "IDS_ST_BODY_DEFAULTMEMORY_VOICE_RECORDER"
+msgstr "Záznamník"
+
+msgid "IDS_ST_BODY_WI_FI"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BODY_YYYY_MM_DD_DOT"
+msgstr "RRRR/MM/DD"
+
+msgid "IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING"
+msgstr "Jas"
+
+msgid "IDS_ST_HEADER_SORT_BY"
+msgstr "Seřadit podle"
+
+msgid "IDS_ST_BODY_DELETED"
+msgstr "Odstraněno."
+
+msgid "IDS_ST_POP_ERROR"
+msgstr "Chyba."
+
+msgid "IDS_ST_TPOP_MAXIMUM_NUMBER_OF_CHARACTERS_REACHED"
+msgstr "Bylo dosaženo maximálního počtu znaků."
+
+msgid "IDS_ST_TPOP_TRY_AGAIN"
+msgstr "Opakovat."
+
+msgid "IDS_ST_BODY_VERSION"
+msgstr "Verze"
+
+msgid "IDS_ST_BODY_DELETE"
+msgstr "Odstranit"
+
+msgid "IDS_ST_SK_SET_LITE"
+msgstr "Nast."
+
+msgid "IDS_ST_SK_YES"
+msgstr "Ano"
+
+msgid "IDS_SAPPS_SK_TRY_ABB"
+msgstr "Pokus"
+
+msgid "IDS_ST_BODY_PLAY_A_SOUND_WHEN_BUTTONS_ICONS_AND_MENU_ITEMS_ARE_TAPPED"
+msgstr "Přehraje zvuk při klepnutí na tlačítka, ikony a položky nabídky."
+
+msgid "IDS_ST_MBODY_KEYBOARD_SOUND"
+msgstr "Zvuk klávesnice"
+
+msgid "IDS_ST_MBODY_RINGTONE"
+msgstr "Vyzváněcí tón"
+
+msgid "IDS_ST_MBODY_TOUCH_SOUND"
+msgstr "Zvuk tlačítek"
+
+msgid "IDS_ST_SBODY_PLAY_A_SOUND_WHEN_THE_SAMSUNG_KEYBOARD_IS_TAPPED"
+msgstr "Přehraje zvuk při klepnutí na klávesnici Samsung."
+
+msgid "IDS_ST_POP_MOUNTING_SD_CARD_ING"
+msgstr "Připojování SD karty..."
+
+msgid "IDS_ST_BODY_ALL"
+msgstr "Vše"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "Služba určení polohy"
+
+msgid "IDS_ST_BODY_VPN"
+msgstr "VPN"
+
+msgid "IDS_ST_SK_OPTIONS_LITE"
+msgstr "Volby"
+
+msgid "IDS_ST_BODY_TTS"
+msgstr "TTS"
+
+msgid "IDS_ST_BODY_VOICE_CONTROL"
+msgstr "Ovládání hlasem"
+

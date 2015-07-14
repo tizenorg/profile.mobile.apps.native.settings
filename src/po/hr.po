@@ -1,0 +1,2577 @@
+msgid "IDS_ST_BODY_1_MINUTE"
+msgstr "1 min"
+
+msgid "IDS_ST_POP_SAVING"
+msgstr "Spremanje..."
+
+msgid "IDS_CAM_POP_MODEL"
+msgstr "Model"
+
+msgid "IDS_EMAIL_BODY_INVALID_PORT_NUMBER"
+msgstr "Neispravan broj ulaza."
+
+msgid "IDS_HEALTH_OPT_ACCESSORIES"
+msgstr "Dodaci"
+
+msgid "IDS_HS_HEADER_USB_DEBUGGING_CONNECTED"
+msgstr "USB ispravljanje grešaka spojeno."
+
+msgid "IDS_MSG_OPT_6_SECONDS"
+msgstr "6 sekundi"
+
+msgid "IDS_PB_POP_PS_ALREADY_EXISTS"
+msgstr "%s već postoji."
+
+msgid "IDS_SAPPS_OPT_BADGE_ABB"
+msgstr "Oznaka"
+
+msgid "IDS_ST_BODY_DISCONNECTED"
+msgstr "Odspojeno."
+
+msgid "IDS_ST_BODY_MEDIA"
+msgstr "Mediji"
+
+msgid "IDS_ST_BODY_SELECT_AUTOMATICALLY"
+msgstr "Odaberi automatski"
+
+msgid "IDS_ST_HEADER_AUDIO"
+msgstr "Zvuk"
+
+msgid "IDS_ST_HEADER_FORMAT_MVERB_ABB"
+msgstr "Format"
+
+msgid "IDS_ST_HEADER_INSTANT_MESSENGER"
+msgstr "IM Poruke"
+
+msgid "IDS_ST_HEADER_TIME"
+msgstr "Vrijeme"
+
+msgid "IDS_ST_MBODY_DAYS_M_WEEKDAY"
+msgstr "Dani"
+
+msgid "IDS_ST_POP_ROAMING_WILL_INCUR_EXTRA_CHARGES_CONTINUE_Q"
+msgstr "Roaming će povećati troškove. Nastavak?"
+
+msgid "IDS_WIFI_BODY_IP"
+msgstr "IP"
+
+msgid "IDS_BT_POP_OPERATION_FAILED"
+msgstr "Neuspješno."
+
+msgid "IDS_CLD_OPT_MINUTE"
+msgstr "min"
+
+msgid "IDS_CLD_OPT_MINUTES_LC_ABB"
+msgstr "min"
+
+msgid "IDS_CST_BUTTON_CLOSE"
+msgstr "Prekid"
+
+msgid "IDS_CST_POP_FAILED"
+msgstr "Neuspješno."
+
+msgid "IDS_IM_BODY_SUCCESSFULLY_COMPLETED"
+msgstr "Uspješno dovršeno."
+
+msgid "IDS_IM_POP_UNEXPECTED_ERROR"
+msgstr "Neočekivana pogreška."
+
+msgid "IDS_PB_BODY_INFO"
+msgstr "Info"
+
+msgid "IDS_PB_BUTTON_CONTACT"
+msgstr "Kontakt"
+
+msgid "IDS_SIM_BODY_INVALID_SIM_CARD"
+msgstr "Neispravna SIM kartica."
+
+msgid "IDS_ST_BUTTON2_PROCESSING_ING"
+msgstr "Obrađuje se..."
+
+msgid "IDS_ST_POP_DELETE_Q"
+msgstr "Obrisati?"
+
+msgid "IDS_VR_POP_NO_FILES"
+msgstr "Nema datoteka"
+
+msgid "IDS_WGT_BUTTON3_KIES_VIA_WI_FI"
+msgstr "Kies preko Wi-Fi"
+
+msgid "IDS_TPLATFORM_OPT_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_OPT_SETTINGS"
+msgstr "Postavke"
+
+msgid "IDS_ST_BODY_GENERAL"
+msgstr "Općenito"
+
+msgid "IDS_ST_HEADER_PRIVACY"
+msgstr "Privatnost"
+
+msgid "IDS_BR_OPT_SCREEN"
+msgstr "Zaslon"
+
+msgid "IDS_BR_OPT_LTE_GSM_WCDMA_HAUTO_CONNECT"
+msgstr "LTE//GSM/WCDMA (automatsko spajanje)"
+
+msgid "IDS_BR_HEADER_MULTI_WINDOW"
+msgstr "Više prozora"
+
+msgid "IDS_BR_BODY_WEBSITE_SETTINGS"
+msgstr "Postavke web stranice"
+
+msgid "IDS_CLD_HEADER_EVENT_NOTIFICATION"
+msgstr "Obavijest o događaju"
+
+msgid "IDS_CLD_BUTTON_LIST_VIEW"
+msgstr "Prikaz popisa"
+
+msgid "IDS_CLD_BUTTON_EXPORT"
+msgstr "Izvoz"
+
+msgid "IDS_CLD_BODY_FIRST_DAY_OF_WEEK"
+msgstr "Prvi dan tjedna"
+
+msgid "IDS_CAM_BODY_SHOWING_PD_ITEMS_T_TTS"
+msgstr "Prikaz %d stavki"
+
+msgid "IDS_COM_POP_FLIGHT_MODE_WILL_BE_DISABLED"
+msgstr "Profil bez mreže bit će isključen."
+
+msgid "IDS_COM_POP_CHECKING"
+msgstr "Provjera..."
+
+msgid "IDS_COM_OPT_CONTINUE_Q"
+msgstr "Nastaviti?"
+
+msgid "IDS_COM_INCORRECT_PASSWORD_ENTERED_5_TIMES"
+msgstr "Neispravna lozinka unesena 5 puta."
+
+msgid "IDS_COM_BODY_YOUR_SIM_CARD_DOES_NOT_ALLOW_A_CONNECTION_TO_THIS_NETWORK"
+msgstr "SIM kartica ne dopušta spajanje na ovu mrežu."
+
+msgid "IDS_COM_BODY_TYPE_A_PIN_THAT_IS_4_TO_8_NUMBERS"
+msgstr "Unesite PIN s 4 do 8 znamenki"
+
+msgid "IDS_COM_BODY_NETWORK_OPERATORS"
+msgstr "Mrežni operatori"
+
+msgid "IDS_COM_BODY_FORMATTING_SD_CARD_ING"
+msgstr "Formatiranje SD kartice..."
+
+msgid "IDS_COM_BODY_ENTER_PROXY_EMPTY"
+msgstr "Unesite proxy adresu."
+
+msgid "IDS_COM_BODY_CONNECT_TO_DATA_SERVICES_WHEN_ROAMING"
+msgstr "Spoji na podatkovne usluge u roamingu."
+
+msgid "IDS_ASEML_POP_PASSWORD_EXPIRED"
+msgstr "Lozinka istekla."
+
+msgid "IDS_ASEML_POP_ENTER_ANOTHER_PASSWORD"
+msgstr "Unesite drugu lozinku."
+
+msgid "IDS_ASEML_BODY_DEVICE_ENCRYPTION"
+msgstr "Šifriranje uređaja"
+
+msgid "IDS_CST_POP_UNKNOWN_OPERATION"
+msgstr "Nepoznata radnja."
+
+msgid "IDS_CST_POP_OPERATION_NOT_ALLOWED_DURING_CALLS"
+msgstr "Radnja nije dozvoljena tijekom poziva."
+
+msgid "IDS_CST_OPT_GSM_WCDMA_HAUTO_CONNECT"
+msgstr "GSM/WCDMA (automatsko spajanje)"
+
+msgid "IDS_CST_BODY_UNBLOCK_PIN2"
+msgstr "Deblokiraj PIN2"
+
+msgid "IDS_MTTRL_MBODY_PALM_MOTION"
+msgstr "Pokret dlanom"
+
+msgid "IDS_MTTRL_BUTTON_ENABLE_MOTION"
+msgstr "Uklj. pokret"
+
+msgid "IDS_MTTRL_BODY_SMART_ALERT"
+msgstr "Pametno upozorenje"
+
+msgid "IDS_NFC_OPT_S_BEAM"
+msgstr "S Beam"
+
+msgid "IDS_STU_BODY_SMART_STAY_DETECTS_YOUR_EYES_WITH_THE_FRONT_CAMERA_SO_THAT_THE_SCREEN_STAYS_ON_WHEN_YOU_ARE_LOOKING_AT_IT"
+msgstr "Pametno mirovanje prednjom kamerom prati vaše oči te zaslon ostaje uključen sve dok gledate u njega."
+
+msgid "IDS_IDLE_BODY_NEW_PIN_AND_CONFIRM_PIN_DO_NOT_MATCH"
+msgstr "Novi PIN korisnika i potvrđeni PIN nisu isti."
+
+msgid "IDS_MOBILEAP_POP_TURNING_ON_WI_FI_WILL_DISABLE_MOBILE_HOTSPOT_CONTINUE_Q_VZW"
+msgstr "Uključivanjem Wi-Fi isključit će se mobilna pristupna točka. Nastavak?"
+
+msgid "IDS_MOBILEAP_MBODY_DATA_USAGE"
+msgstr "Korištenje podataka"
+
+msgid "IDS_MOBILEAP_BODY_TETHERING"
+msgstr "Dijeljenje veze"
+
+msgid "IDS_IM_POP_THIS_FEATURE_IS_NOT_AVAILABLE_WHILE_FLIGHT_MODE_IS_ON"
+msgstr "Odabrana opcija nedostupna pri profilu Bez mreže."
+
+msgid "IDS_EMAIL_POP_SECURITY_UPDATE_ABB"
+msgstr "Sigurnosna aktualizacija"
+
+msgid "IDS_EMAIL_POP_GIANT_M_TEXTSIZE"
+msgstr "Ogromno"
+
+msgid "IDS_EMAIL_POP_FAILED_TO_MOVE"
+msgstr "Greška premještanja."
+
+msgid "IDS_EMAIL_OPT_HUGE_M_TEXTSIZE"
+msgstr "Jako veliko"
+
+msgid "IDS_QP_POP_NETWORK_RESTRICTION_MODE_WILL_BE_DISABLED_JPN"
+msgstr "Network restriction mode will be disabled."
+
+msgid "IDS_QP_POP_IN_NETWORK_RESTRICTION_MODE_YOU_CAN_USE_ALL_YOUR_APPLICATIONS_WITHOUT_CONNECTING_TO_THE_NETWORK_YOU_CAN_ALSO_RECEIVE_CALLS_AND_SMS_MESSAGES_MSG_JPN"
+msgstr "In Network restriction mode, you can use all your applications without connecting to the network. You can also receive calls and SMS messages. Network restriction mode will be enabled."
+
+msgid "IDS_TASKMGR_BODY_ACTIVE_APPLICATIONS_C_PD"
+msgstr "Aktivne aplikacije: %d"
+
+msgid "IDS_USB_POP_UNABLE_TO_CONNECT_TO_KIES_VIA_WI_FI_WHEN_CONNECTED_TO_KIES_VIA_USB"
+msgstr "Nije moguće spojiti se na Kies putem Wi-Fi kada je veza s Kiesom već uspostavljena putem USB veze."
+
+msgid "IDS_MSGC_POP_YOUR_SD_CARD_IS_FULL"
+msgstr "SD kartica puna"
+
+msgid "IDS_MSGC_BODY_NOT_ENOUGH_MEMORY_IN_PHONE_MEMORY_DELETE_SOME_ITEMS_AND_TRY_AGAIN"
+msgstr "Nedovoljno memorije u telefonu. Obrišite stavke i ponovite."
+
+msgid "IDS_KW_POP_BE_CAREFUL_WHEN_TRANSMITTING_INFORMATION_ON_AN_UNSECURED_WI_FI_NETWORK_MSG"
+msgstr "Budite oprezni kada šaljete informacije na nezaštićenoj Wi-Fi mreži jer mogu biti vidljive ostalima na mreži."
+
+msgid "IDS_DN_BODY_ENCRYPT_SD_CARD"
+msgstr "Šifriraj SD karticu"
+
+msgid "IDS_MSGF_POP_UNSUPPORTED"
+msgstr "Nepodržano."
+
+msgid "IDS_MSGF_BODY_SERVICE_TYPE"
+msgstr "Vrsta usluge"
+
+msgid "IDS_MF_POP_FORMAT_COMPLETED"
+msgstr "Formatiranje obavljeno."
+
+msgid "IDS_MF_OPT_NAME_HZ_TO_A"
+msgstr "Naziv (Z do A)"
+
+msgid "IDS_MF_OPT_NAME_HA_TO_Z"
+msgstr "Naziv (A do Z)"
+
+msgid "IDS_MF_BODY_SCREEN_CAPTURE_M_NOUN"
+msgstr "Snimka zaslona"
+
+msgid "IDS_XTAG_POP_RESET_ALL_SETTINGS_FOR_C_DEFAULT_APPS_BACKGROUND_DATA_RESTRICTIONS_YOUR_EXISTING_DATA_WILL_NOT_BE_LOST"
+msgstr "Resetira sve postavke za:<br><br>Zadane aplikacije<br>Ograničenja pozadinskih podataka<br><br>Nećete izgubiti postojeće podatke."
+
+msgid "IDS_PB_POP_MOVE_COMPLETED"
+msgstr "Premještanje obavljeno."
+
+msgid "IDS_PB_BODY_MOVING_ING"
+msgstr "Premještanje..."
+
+msgid "IDS_SMEMO_BUTTON_IMPORT"
+msgstr "Uvoz"
+
+msgid "IDS_LCKSCN_BODY_WALLPAPERS"
+msgstr "Pozadine"
+
+msgid "IDS_LCKSCN_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_TO_UNLOCK_IT_MSG"
+msgstr "Dodirnite i držite zaslon, zatim nagnite uređaj prema sebi da biste ga otključali. Ako se zaslon ne otključa, uređaj pokušajte još nagnuti. Kad je postavljeno otključavanje pokretom, pokret će se automatski uključiti u Postavkama."
+
+msgid "IDS_SA_BUTTON_DONE_ABB"
+msgstr "OK"
+
+msgid "IDS_FP_BODY_NO_APPLICATIONS"
+msgstr "Nema programa"
+
+msgid "IDS_ST_TZTAB4_MOST_USED_M_APP"
+msgstr "Najkorišten."
+
+msgid "IDS_ST_TPOP_PERSONAL_MODE_ENABLED_ABB"
+msgstr "Uključen Osobni način rada."
+
+msgid "IDS_ST_TPOP_PERSONAL_MODE_DISABLED_ABB"
+msgstr "Isključen Osobni način rada."
+
+msgid "IDS_ST_TPOP_FAILED_TO_ENABLE_PERSONAL_MODE_TRY_AGAIN_ABB"
+msgstr "Nemoguće uključiti Osobni način. Ponovite."
+
+msgid "IDS_ST_TPOP_FAILED_TO_DISABLE_PERSONAL_MODE_TRY_AGAIN_ABB"
+msgstr "Nemoguće isključiti Osobni način. Ponovite."
+
+msgid "IDS_ST_TPOP_ENABLING_ULTRA_POWER_SAVING_MODE_ING"
+msgstr "Uključivanje maksimalne štednje baterije..."
+
+msgid "IDS_ST_SK_FORMAT_ABB"
+msgstr "Format"
+
+msgid "IDS_ST_SK3_DONE"
+msgstr "OK"
+
+msgid "IDS_ST_SK2_PLEASE_WAIT"
+msgstr "Pričekajte"
+
+msgid "IDS_ST_SBODY_POWER_SAVING"
+msgstr "Štednja energije"
+
+msgid "IDS_ST_SBODY_ONLY_UPDATE_THE_SECURITY_POLICY_AUTOMATICALLY_WHEN_YOUR_DEVICE_IS_CONNECTED_TO_A_WI_FI_NETWORK"
+msgstr "Automatski aktualizirajte sigurnosne odredbe samo kada je uređaj spojen na Wi-Fi mrežu."
+
+msgid "IDS_ST_SBODY_INCREASE_THE_SENSITIVITY_OF_THE_TOUCH_SCREEN_SBODY_MSG"
+msgstr "Povećajte osjetljivost dodirnog zaslona da biste mogli upravljati uređajem u rukavicama."
+
+msgid "IDS_ST_SBODY_DISABLED"
+msgstr "Isključeno"
+
+msgid "IDS_ST_SBODY_AUTOMATICALLY_CHECK_FOR_CHANGES_TO_THE_SECURITY_POLICY_MSG"
+msgstr "Automatski potraži promjene u sigurnosnim odredbama i skini aktualizacije radi poboljšanja sigurnosti i usluge."
+
+msgid "IDS_ST_POP_YOU_MUST_ENTER_A_DEVICE_NAME"
+msgstr "Morate unijeti naziv uređaja."
+
+msgid "IDS_ST_POP_YOUR_PERSONAL_MODE_SECURITY_SETTINGS_WILL_BE_RESET_AND_YOUR_PERSONAL_CONTENT_WILL_BE_DELETED_RESET_PERSONAL_MODE_Q"
+msgstr "Sigurnosne postavke Osobnog načina rada bit će poništene i obrisat će se osobni sadržaj. Poništiti Osobni način rada?"
+
+msgid "IDS_ST_POP_USE_2D_HARDWARE_OR_SOFTWARE_ACCELERATION_IN_APPLICATIONS"
+msgstr "Koristi 2D ubrzanje hardvera ili softvera u aplikacijama."
+
+msgid "IDS_ST_POP_URL_REMOVED"
+msgstr "URL uklonjen."
+
+msgid "IDS_ST_POP_URLS_REMOVED"
+msgstr "URL-ovi uklonjeni."
+
+msgid "IDS_ST_POP_UNMOUNTING_USB_OTG_STORAGE_WILL_STOP_SOME_APPLICATIONS_MSG"
+msgstr "Odspajanje USB OTG memorije prekinut će neke aplikacije. Aplikacije bi mogle biti nedostupne dok ponovno ne montirate USB OTG memoriju."
+
+msgid "IDS_ST_POP_UNMOUNTING_SD_CARD_ING_ABB"
+msgstr "Odspajanje SD kartice..."
+
+msgid "IDS_ST_POP_UNMOUNTING_ING_ABB"
+msgstr "Odspajanje..."
+
+msgid "IDS_ST_POP_UNINSTALL_Q"
+msgstr "Deinstalirati?"
+
+msgid "IDS_ST_POP_UNINSTALLING_ING"
+msgstr "Deinstaliranje..."
+
+msgid "IDS_ST_POP_UNABLE_TO_TURN_ON_FLIGHT_MODE_VODA"
+msgstr "Nemoguće uključiti profil Bez mreže"
+
+msgid "IDS_ST_POP_UNABLE_TO_SEARCH_NETWORKS_DURING_DATA_SERVICE_ACTIVATED_DO_YOU_WANT_TO_DISCONNECT_THE_DATA_SERVICE_AND_SEARCH_AVAILABLE_NETWORK_Q"
+msgstr "Nemoguće tražiti mreže tijekom aktivne podatkovne usluge. Prekinuti podatkovnu vezu i tražiti dostupne mreže?"
+
+msgid "IDS_ST_POP_UNABLE_TO_CHANGE_NETWORKS_WHILE_DATA_SERVICE_IN_USE_STOP_USING_CURRENT_DATA_SERVICE_AND_SELECT_ANOTHER_AVAILABLE_NETWORK_Q"
+msgstr "Nemoguće promijeniti mreže dok je podatkovna usluga u uporabi. Prekinuti korištenje aktivne podatkovne usluge i odabrati drugu dostupnu mrežu?"
+
+msgid "IDS_ST_POP_ULTRA_POWER_SAVING_MODE_WILL_BE_DISABLED"
+msgstr "Isključit će se maksimalni način štednje baterije."
+
+msgid "IDS_ST_POP_TO_USE_PERSONAL_MODE_YOU_MUST_REGISTER_AN_UNLOCK_METHOD"
+msgstr "Da biste koristili Osobni način rada, morate registrirati metodu otključavanja."
+
+msgid "IDS_ST_POP_TO_ENABLE_HANDS_FREE_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Da biste uključili Način rada bez ruku, uključite najmanje jednu odgovarajuću funkciju."
+
+msgid "IDS_ST_POP_THE_SCREEN_WILL_NOT_TURN_OFF_WHILE_YOU_KEEP_LOOKING_AT_IT"
+msgstr "Zaslon se neće isključiti dok gledate u njega."
+
+msgid "IDS_ST_POP_THE_MAXIMUM_NUMBERS_OF_CHARACTERS_FOR_YOUR_DEVICE_NAME_HPD_HAS_BEEN_EXCEEDED"
+msgstr "Premašeni su maksimalni brojevi znakova za naziv uređaja (%d)."
+
+msgid "IDS_ST_POP_THE_APP_HAS_BEEN_UNINSTALLED"
+msgstr "Aplikacija je deinstalirana."
+
+msgid "IDS_ST_POP_TAP_OK"
+msgstr "Dodirnite U redu."
+
+msgid "IDS_ST_POP_SEARCHING_NETWORK_ING"
+msgstr "Traženje mreže..."
+
+msgid "IDS_ST_POP_RESTART_PHONE_TO_USE_AUTOMATIC_UPDATE_Q"
+msgstr "Ponovo pokrenuti telefon za auto. aktualizaciju?"
+
+msgid "IDS_ST_POP_RESET_TO_DEFAULT_Q"
+msgstr "Vratiti na zadano?"
+
+msgid "IDS_ST_POP_RESET_ALL_SETTINGS_AND_DELETE_ALL_DATA_THIS_CANNOT_BE_STOPPED_ONCE_STARTED"
+msgstr "Poništavanje svih postavki i brisanje svih podataka. Ova se naredba ne može zaustaviti jednom kada započne."
+
+msgid "IDS_ST_POP_REMOVE_DEFAULT_APPS_Q"
+msgstr "Ukloni zadane aplikacije?"
+
+msgid "IDS_ST_POP_REGISTRATION_CODE_NOT_FOUND"
+msgstr "Registracijska šifra nije pronađena."
+
+msgid "IDS_ST_POP_REGISTERING_ING"
+msgstr "Prijava..."
+
+msgid "IDS_ST_POP_REGISTERED"
+msgstr "Registrirano."
+
+msgid "IDS_ST_POP_PUK2_VERIFIED"
+msgstr "Provjeren PUK2."
+
+msgid "IDS_ST_POP_PUK1_VERIFIED"
+msgstr "Provjeren PUK1."
+
+msgid "IDS_ST_POP_PORT_REMOVED"
+msgstr "Ulaz uklonjen."
+
+msgid "IDS_ST_POP_PORTS_REMOVED"
+msgstr "Ulazi uklonjeni."
+
+msgid "IDS_ST_POP_PIN_UNBLOCKED"
+msgstr "PIN deblokiran."
+
+msgid "IDS_ST_POP_PIN2_UNBLOCKED"
+msgstr "PIN2 deblokiran."
+
+msgid "IDS_ST_POP_PIN2_CHANGED"
+msgstr "PIN2 promijenjen."
+
+msgid "IDS_ST_POP_PIN2_BLOCKED"
+msgstr "PIN2 blokiran."
+
+msgid "IDS_ST_POP_PIN1_CHANGED"
+msgstr "PIN1 lozinka promijenjena."
+
+msgid "IDS_ST_POP_PIN1_BLOCKED"
+msgstr "PIN1 lozinka blokirana."
+
+msgid "IDS_ST_POP_PD_ATTEMPT_LEFT"
+msgstr "%d pokušaj preostao."
+
+msgid "IDS_ST_POP_PD_ATTEMPTS_LEFT"
+msgstr "%d pokušaja preostalo."
+
+msgid "IDS_ST_POP_PASSWORD_MUST_CONTAIN_AT_LEAST_PD_ALPHANUMERIC_CHARACTERS"
+msgstr "Lozinka mora sadržavati najmanje %d alfanumeričkih znakova."
+
+msgid "IDS_ST_POP_PASSWORD_MUST_BE_MORE_THAN_P1SD_CHARACTERS_AND_LESS_THAN_P2SD"
+msgstr "Lozinka mora sadržavati više od %1$d i manje od %2$d znakova."
+
+msgid "IDS_ST_POP_PASSWORDS_DO_NOT_MATCH"
+msgstr "Šifre ne odgovaraju."
+
+msgid "IDS_ST_POP_NO_SD_CARD_IS_INSERTED_DISABLE_ENCRYPT_SD_CARD_ANYWAY_Q"
+msgstr "SD kartica je umetnuta. Ipak isključiti šifriranje SD kartice?"
+
+msgid "IDS_ST_POP_NO_SD_CARD_HAS_BEEN_INSERTED_ENCRYPTION_WILL_START_AUTOMATICALLY_WHEN_YOU_INSERT_AN_SD_CARD"
+msgstr "SD kartica nije umetnuta. Šifriranje će se automatski pokrenuti kada umetnete SD karticu."
+
+msgid "IDS_ST_POP_NO_ITEM_SELECTED"
+msgstr "Ništa odabrano."
+
+msgid "IDS_ST_POP_NEW_PASSWD_SAVED"
+msgstr "Nova lozinka spremljena."
+
+msgid "IDS_ST_POP_NETWORK_SEARCH_FAILED"
+msgstr "Pretraživanje neuspješno."
+
+msgid "IDS_ST_POP_MOBILE_DATA_HAS_BEEN_DISABLED_MSG"
+msgstr "Mobilni podaci isključeni. Ne možete slati ni primati MMS poruke. Za sinkronizaciju podataka s poslužiteljem spojite se preko Wi-Fi mreže."
+
+msgid "IDS_ST_POP_MOBILE_DATA_ENABLED_CONNECTING_TO_MOBILE_NETWORKS_MAY_INCUR_EXTRA_CHARGES_DEPENDING_ON_YOUR_DATA_PLAN_CONTINUE_Q"
+msgstr "Mobilni podaci uključeni. Povezivanje s mobilnim mrežama može povećati troškove ovisno o vašoj podatkovnoj tarifi. Nastavak?"
+
+msgid "IDS_ST_POP_LOADING_ING"
+msgstr "Učitavanje..."
+
+msgid "IDS_ST_POP_IP_ADDRESS_REMOVED"
+msgstr "IP adresa uklonjena."
+
+msgid "IDS_ST_POP_INVALID_URL_OR_NETWORK_CONNECTION_FAILED"
+msgstr "Neispravna URL adresa ili neuspješno spajanje na mrežu."
+
+msgid "IDS_ST_POP_INVALID_IP_ADDRESS_OR_NETWORK_CONNECTION_FAILED"
+msgstr "Neispravna IP adresa ili neuspješno spajanje na mrežu."
+
+msgid "IDS_ST_POP_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Umetnite SIM karticu za pristup mrežnim uslugama."
+
+msgid "IDS_ST_POP_INCORRECT_PUK"
+msgstr "Neispravan PUK."
+
+msgid "IDS_ST_POP_INCORRECT_PIN_PD_ATTEMPTS_LEFT"
+msgstr "Netočan PIN. Preostalo %d pokušaja."
+
+msgid "IDS_ST_POP_INCORRECT_PIN2"
+msgstr "Neispravan PIN2."
+
+msgid "IDS_ST_POP_INCORRECT_PIN1_ATTEMPT_LEFT"
+msgstr "Netočan PIN. Preostao 1 pokušaj."
+
+msgid "IDS_ST_POP_INCORRECT_PASSWORD"
+msgstr "Neispravna lozinka."
+
+msgid "IDS_ST_POP_IF_YOU_RESET_YOUR_DEVICE_TO_FACTORY_DEFAULTS_YOU_WILL_NOT_BE_ABLE_TO_USE_ENCRYPTED_FILES_ON_THE_SD_CARD_MSG"
+msgstr "Ako uređaj vratite na tvornički zadane postavke, nećete moći otvoriti šifrirane datoteke na SD kartici no i dalje ćete moći koristiti nešifrirane datoteke."
+
+msgid "IDS_ST_POP_FORMATTING_WILL_ERASE_ALL_DATA_FORMAT_Q"
+msgstr "Formatiranjem će se obrisati svi podaci. Formatirati?"
+
+msgid "IDS_ST_POP_FORMATTING_ING"
+msgstr "Formatiranje..."
+
+msgid "IDS_ST_POP_FAILED_TO_UNINSTALL_THE_APP"
+msgstr "Neuspješna deinstalacija aplikacije."
+
+msgid "IDS_ST_POP_ENTER_PS"
+msgstr "Unesite %s."
+
+msgid "IDS_ST_POP_ENCRYPT_SD_CARD_Q_OPERATION_IS_IRREVERSIBLE_AND_IF_YOU_INTERRUPT_IT_YOU_WILL_LOSE_DATA"
+msgstr "Šifrirati SD karticu? Radnja se ne može poništiti i ako je prekinete, izgubit ćete podatke."
+
+msgid "IDS_ST_POP_ENABLING_EMERGENCY_MODE_ING"
+msgstr "Uključivanje Hitnog načina..."
+
+msgid "IDS_ST_POP_ENABLING_AUTO_UPDATE_MEANS_YOUR_DEVICE_WILL_CHECK_FOR_SECURITY_UPDATES_AUTOMATICALLY_NOTI_MSG"
+msgstr "Uključivanje automatske aktualizacije znači da će uređaj automatski tražiti sigurnosne aktualizacije. Traženje preko mobilnih mreža može povećati troškove."
+
+msgid "IDS_ST_POP_ENABLE_SMART_STAY_TO_TRY_IT_T_HELP"
+msgstr "Uključite pametno mirovanje da biste ga isprobali."
+
+msgid "IDS_ST_POP_ENABLE_SMART_ROTATION_TO_TRY_IT_T_HELP"
+msgstr "Uključite pametno zakretanje da biste ga isprobali."
+
+msgid "IDS_ST_POP_ENABLE_FLIGHT_MODE"
+msgstr "Uključite profil Bez mreže."
+
+msgid "IDS_ST_POP_EMERGENCY_MODE_WILL_BE_DISABLED"
+msgstr "Hitni način bit će isključen."
+
+msgid "IDS_ST_POP_DO_NOT_ASK_AGAIN"
+msgstr "Više ne pitaj"
+
+msgid "IDS_ST_POP_DISABLING_AUTO_UPDATE_MEANS_YOU_HAVE_TO_CHECK_FOR_SECURITY_UPDATES_MANUALLY_NOTI_MSG"
+msgstr "Isključivanje automatske aktualizacije znači da ručno morate tražiti sigurnosne aktualizacije. Kako bi uređaj i dalje bio siguran, preporučujemo uključivanje automatske aktualizacije."
+
+msgid "IDS_ST_POP_DISABLE_TETHERING_Q"
+msgstr "Isključiti dijeljenje?"
+
+msgid "IDS_ST_POP_DEVICE_WILL_RESTART"
+msgstr "Uređaj će se ponovno pokrenuti."
+
+msgid "IDS_ST_POP_DEVICE_WILL_BE_RESET_ALL_SETTINGS_AND_DATA_WILL_BE_ERASED_THIS_CANNOT_BE_STOPPED_ONCE_STARTED"
+msgstr "Uređaj će se resetirati. Sve postavke i podaci bit će izbrisani. Ova se naredba ne može zaustaviti jednom kada se pokrene."
+
+msgid "IDS_ST_POP_CONNECTING_TO_THE_SERVER_ING"
+msgstr "Spajanje na poslužitelj..."
+
+msgid "IDS_ST_POP_CHECK_FOR_SECURITY_UPDATES_AND_DOWNLOAD_NEW_UPDATES_Q_NOTI_MSG"
+msgstr "Tražiti sigurnosnu aktualizaciju i preuzeti nove aktualizacije? Skidanje putem mobilnih mreža može povećati troškove. Ako je moguće, preuzmite putem Wi-Fi mreže. Tijekom preuzimanja moći ćete koristiti uređaj."
+
+msgid "IDS_ST_POP_CHAP"
+msgstr "CHAP"
+
+msgid "IDS_ST_POP_CHANGE_YOUR_POSITION_IN_RELATION_TO_THE_SCREEN_AND_SEE_HOW_IT_ADJUSTS_AUTOMATICALLY"
+msgstr "Promijenite položaj u odnosu na zaslon i vidite kako se zaslon automatski prilagođava."
+
+msgid "IDS_ST_POP_AUTO_TIME_UPDATE_UNAVAILABLE_CHOOSE_ALTERNATIVE_TIME_SET_MODE_JPN_SBM"
+msgstr "Auto time update unavailable. Choose alternative time set mode."
+
+msgid "IDS_ST_POP_ANY_PERSONAL_CONTENT_WILL_NOT_BE_ACCESSIBLE_IN_NORMAL_MODE"
+msgstr "Nikakav osobni sadržaj neće biti dostupan u Normalnom načinu rada."
+
+msgid "IDS_ST_OPT_WCDMA_GSM_HAUTO_CONNECT"
+msgstr "WCDMA/GSM (automatsko spajanje)"
+
+msgid "IDS_ST_OPT_UNTITLED_NETWORK"
+msgstr "Nenaslovljena mreža"
+
+msgid "IDS_ST_OPT_TAB_VIEW"
+msgstr "Prikaz kartice"
+
+msgid "IDS_ST_OPT_SELECTED"
+msgstr "Odabrano"
+
+msgid "IDS_ST_OPT_SELECT"
+msgstr "Odaberi"
+
+msgid "IDS_ST_OPT_RESET_APP_SETTINGS_ABB"
+msgstr "Reset. post. aplik."
+
+msgid "IDS_ST_OPT_NETWORK_LIST"
+msgstr "Popis mreža"
+
+msgid "IDS_ST_OPT_MASS_STORAGE_ABB"
+msgstr "Spremanje podataka"
+
+msgid "IDS_ST_OPT_LTE_WCDMA_GSM_HAUTO_CONNECT"
+msgstr "LTE/WCDMA/GSM (automatsko spajanje)"
+
+msgid "IDS_ST_OPT_EDIT_QUICK_SETTINGS"
+msgstr "Uredi brze postavke"
+
+msgid "IDS_ST_OPT_DEFAULT_RINGTONE"
+msgstr "Zadani ton zvona"
+
+msgid "IDS_ST_OPT_CUSTOM_MODE_ABB"
+msgstr "Prilagođeni način rada"
+
+msgid "IDS_ST_OPT_BLOCK_WI_FI"
+msgstr "Blokiraj Wi-Fi"
+
+msgid "IDS_ST_OPT_BLOCK_MOBILE_NETWORKS"
+msgstr "Blokiraj mobilne mreže"
+
+msgid "IDS_ST_OPT_BLOCK_ALL"
+msgstr "Blokiraj sve"
+
+msgid "IDS_ST_OPT_AUTO_UPDATE_ABB"
+msgstr "Auto. aktualiza."
+
+msgid "IDS_ST_OPT_ALLOW_ALL"
+msgstr "Dopusti sve"
+
+msgid "IDS_ST_OPT_ALL"
+msgstr "Sve"
+
+msgid "IDS_ST_MBODY_ZOOM"
+msgstr "Zoom"
+
+msgid "IDS_ST_MBODY_WCDMA_ONLY"
+msgstr "Samo WCDMA"
+
+msgid "IDS_ST_MBODY_VIA_WI_FI_ONLY"
+msgstr "Samo preko Wi-Fi"
+
+msgid "IDS_ST_MBODY_UNLOCK_METHOD"
+msgstr "Način otključavanja"
+
+msgid "IDS_ST_MBODY_TOUCH_SENSITIVITY_ABB"
+msgstr "Osjetlj. dodira"
+
+msgid "IDS_ST_MBODY_SWIPE"
+msgstr "Klizanje"
+
+msgid "IDS_ST_MBODY_SOFTWARE_UPDATE"
+msgstr "Aktualizacija softvera"
+
+msgid "IDS_ST_MBODY_SMART_STAY"
+msgstr "Pametno mirovanje"
+
+msgid "IDS_ST_MBODY_SMART_SCREEN"
+msgstr "Pametni zaslon"
+
+msgid "IDS_ST_MBODY_SMART_ROTATION"
+msgstr "Pametno zakretanje"
+
+msgid "IDS_ST_MBODY_SIM_CARD_PROFILE_SETTINGS"
+msgstr "Post. profila SIM kartice"
+
+msgid "IDS_ST_MBODY_SHOW_CPU_USAGE"
+msgstr "Prikaži CPU korištenje"
+
+msgid "IDS_ST_MBODY_SELECT_WHERE_CAPTURED_IMAGES_WILL_BE_SAVED"
+msgstr "Odaberite mjesto mjesto za snimljene slike"
+
+msgid "IDS_ST_MBODY_SCREEN_ROTATION"
+msgstr "Rotacija zaslona"
+
+msgid "IDS_ST_MBODY_SCREEN_READER_HTTS"
+msgstr "Čitač zaslona (TTS)"
+
+msgid "IDS_ST_MBODY_REGISTER"
+msgstr "Registriraj"
+
+msgid "IDS_ST_MBODY_PAP"
+msgstr "PAP"
+
+msgid "IDS_ST_MBODY_NONE"
+msgstr "Nema"
+
+msgid "IDS_ST_MBODY_MOTIONS_AND_GESTURES"
+msgstr "Pokreti i geste"
+
+msgid "IDS_ST_MBODY_MOBILE_DATA"
+msgstr "Mobilni podaci"
+
+msgid "IDS_ST_MBODY_HELP"
+msgstr "Pomoć"
+
+msgid "IDS_ST_MBODY_HANDS_FREE_MODE"
+msgstr "Način rada bez ruku"
+
+msgid "IDS_ST_MBODY_GSM_ONLY"
+msgstr "Samo GSM"
+
+msgid "IDS_ST_MBODY_FONT_SIZE"
+msgstr "Veličina slova"
+
+msgid "IDS_ST_MBODY_FACTORY_RESET"
+msgstr "Vraćanje tvorn. postavki"
+
+msgid "IDS_ST_MBODY_EDIT_AFTER_SCREEN_CAPTURE"
+msgstr "Uredi nakon snimke zasl."
+
+msgid "IDS_ST_MBODY_DIALLING_KEYPAD_TONE"
+msgstr "Ton tipkovnice za biranje"
+
+msgid "IDS_ST_MBODY_DEVICE_STATUS"
+msgstr "Status uređaja"
+
+msgid "IDS_ST_MBODY_DEREGISTER"
+msgstr "Deregistracija"
+
+msgid "IDS_ST_MBODY_COLOUR_THEME"
+msgstr "Tema boje"
+
+msgid "IDS_ST_MBODY_CHARGING"
+msgstr "Punjenje"
+
+msgid "IDS_ST_MBODY_CALL_SETTINGS"
+msgstr "Postavke poziva"
+
+msgid "IDS_ST_MBODY_AUTO_ADJUST_SCREEN_TONE"
+msgstr "Auto prilag. tona zaslona"
+
+msgid "IDS_ST_MBODY_ACTIVE_APPLICATION"
+msgstr "Aktivna aplikacija"
+
+msgid "IDS_ST_MBODY_ACCOUNTS_AND_BACKUP"
+msgstr "Računi i sigurnosno kop."
+
+msgid "IDS_ST_ITAB4_CONTROLS_M_INPUT_AND_CONTROL"
+msgstr "Kontrole"
+
+msgid "IDS_ST_HEADER_WI_FI_DIRECT"
+msgstr "Wi-Fi Direct"
+
+msgid "IDS_ST_HEADER_WI_FI"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_HEADER_USER_SETTINGS_ABB"
+msgstr "Korisničke postavke"
+
+msgid "IDS_ST_HEADER_USER_AND_BACKUP_M_CATEGORY"
+msgstr "Korisnik i sigurnosno kopiranje"
+
+msgid "IDS_ST_HEADER_USB_UTILITIES"
+msgstr "USB pomoćni programi"
+
+msgid "IDS_ST_HEADER_UNLOCK_DEVICE_USING_MOTION_ABB"
+msgstr "Otključavanje uređaja pokretom"
+
+msgid "IDS_ST_HEADER_UNAVAILABLE"
+msgstr "Nedostupno"
+
+msgid "IDS_ST_HEADER_ULTRA_POWER_SAVING_MODE"
+msgstr "Maksimalna štednja baterije"
+
+msgid "IDS_ST_HEADER_TOUCH_KEY_LIGHT_DURATION"
+msgstr "Trajanje svjetla tipki"
+
+msgid "IDS_ST_HEADER_TEXT_TO_SPEECH"
+msgstr "Tekst u govor"
+
+msgid "IDS_ST_HEADER_STANDARD_LIMIT_ABB"
+msgstr "Standardno ograničenje"
+
+msgid "IDS_ST_HEADER_SOUND"
+msgstr "Zvuk"
+
+msgid "IDS_ST_HEADER_SIM_CARD_MANAGER"
+msgstr "Upravitelj SIM kartice"
+
+msgid "IDS_ST_HEADER_SHARED_CONTENT"
+msgstr "Zajednički sadržaj"
+
+msgid "IDS_ST_HEADER_SELECT_VIBRATION_PATTERNS_ABB"
+msgstr "Odaberite uzorak vibracije"
+
+msgid "IDS_ST_HEADER_SCREEN_MIRRORING"
+msgstr "Screen Mirroring"
+
+msgid "IDS_ST_HEADER_SAMSUNG_KIES"
+msgstr "Samsung Kies"
+
+msgid "IDS_ST_HEADER_SAMSUNG_APPS"
+msgstr "Samsung Apps"
+
+msgid "IDS_ST_HEADER_RINGTONES"
+msgstr "Tonovi zvona"
+
+msgid "IDS_ST_HEADER_RESET_RESULTS"
+msgstr "Resetiraj rezultate"
+
+msgid "IDS_ST_HEADER_RESET"
+msgstr "Poništavanje"
+
+msgid "IDS_ST_HEADER_PRIVILEGES"
+msgstr "Privilegije"
+
+msgid "IDS_ST_HEADER_PRIVATE_MODE"
+msgstr "Privatni način"
+
+msgid "IDS_ST_HEADER_PORT"
+msgstr "Ulaz"
+
+msgid "IDS_ST_HEADER_PLEASE_WAIT"
+msgstr "Pričekajte."
+
+msgid "IDS_ST_HEADER_PERSONAL_MODE"
+msgstr "Osobni način rada"
+
+msgid "IDS_ST_HEADER_PERSONALISATION"
+msgstr "Personalizacija"
+
+msgid "IDS_ST_HEADER_PD_SELECTED_ABB"
+msgstr "%d odabrano"
+
+msgid "IDS_ST_HEADER_PD_SELECTED"
+msgstr "%d odabrano"
+
+msgid "IDS_ST_HEADER_NO_BACKGROUND_PROCESSES_ABB"
+msgstr "Bez pozadinskih procesa"
+
+msgid "IDS_ST_HEADER_NEW_NETWORK"
+msgstr "Nova mreža"
+
+msgid "IDS_ST_HEADER_NETWORK_RESTRICTION_MODE_ABB_JPN"
+msgstr "Network restriction mode"
+
+msgid "IDS_ST_HEADER_MOTION_UNLOCK"
+msgstr "Otključavanje pokretom"
+
+msgid "IDS_ST_HEADER_MORE_DISPLAY_SETTINGS_ABB"
+msgstr "Više postavki prikaza"
+
+msgid "IDS_ST_HEADER_LOCK_SCREEN"
+msgstr "Zaslon zaključavanja"
+
+msgid "IDS_ST_HEADER_LANGUAGE_AND_INPUT"
+msgstr "Jezik i unos"
+
+msgid "IDS_ST_HEADER_INSTALLED_APPLICATIONS"
+msgstr "Instalirane aplikacije"
+
+msgid "IDS_ST_HEADER_INPUT_AND_MOTION"
+msgstr "Unos i kretanje"
+
+msgid "IDS_ST_HEADER_HOME_SCREEN_ABB"
+msgstr "Početni zaslon"
+
+msgid "IDS_ST_HEADER_FINGER_SCANNER_ABB"
+msgstr "Skener otiska prsta"
+
+msgid "IDS_ST_HEADER_ENTER_VALID_DEVICE_NAME_ABB"
+msgstr "Upiš. ispr. naziv uređaja"
+
+msgid "IDS_ST_HEADER_ENCRYPT_DEVICE"
+msgstr "Šifriraj uređaj"
+
+msgid "IDS_ST_HEADER_DIVX_VOD"
+msgstr "DivX® VOD"
+
+msgid "IDS_ST_HEADER_DISPLAY_LANGUAGE"
+msgstr "Jezik teksta"
+
+msgid "IDS_ST_HEADER_DISPLAY"
+msgstr "Zaslon"
+
+msgid "IDS_ST_HEADER_DISABLE_EMERGENCY_MODE_ABB"
+msgstr "Isključi Hitni način"
+
+msgid "IDS_ST_HEADER_DEVICE_MANAGER"
+msgstr "Upravitelj uređaja"
+
+msgid "IDS_ST_HEADER_CREATE_CONNECTION"
+msgstr "Kreiraj vezu"
+
+msgid "IDS_ST_HEADER_CONNECT_AND_SHARE"
+msgstr "Povežite se i dijelite sadržaj"
+
+msgid "IDS_ST_HEADER_CONFIRM_ENCRYPTION"
+msgstr "Potvrdite šifriranje"
+
+msgid "IDS_ST_HEADER_CHANGE_PIN_ABB"
+msgstr "Promijenite PIN"
+
+msgid "IDS_ST_HEADER_AUTO_ROTATE_SCREEN_ABB"
+msgstr "Auto. rotacija zaslona"
+
+msgid "IDS_ST_HEADER_ALLOW_USB_DEBUGGING_Q_ABB"
+msgstr "Dozvoli USB debug?"
+
+msgid "IDS_ST_HEADER_ADD_URL"
+msgstr "Dodaj URL"
+
+msgid "IDS_ST_HEADER_ADD_PORT"
+msgstr "Dodaj ulaz"
+
+msgid "IDS_ST_HEADER_ADD_IP"
+msgstr "Dodaj IP"
+
+msgid "IDS_ST_BUTTON_UNINSTALL_UPDATES"
+msgstr "Deinstaliraj aktualiziranja"
+
+msgid "IDS_ST_BUTTON_UNINSTALL"
+msgstr "Deinstaliraj"
+
+msgid "IDS_ST_BUTTON_TRY_IT"
+msgstr "Isprobajte"
+
+msgid "IDS_ST_BUTTON_STOP"
+msgstr "Zaustavi"
+
+msgid "IDS_ST_BUTTON_SET_SCREEN_LOCK_TYPE"
+msgstr "Postavi vrstu zaključ. zaslona"
+
+msgid "IDS_ST_BUTTON_RESET_APPS_ABB"
+msgstr "Resetiraj aplik."
+
+msgid "IDS_ST_BUTTON_RESET"
+msgstr "Poništi"
+
+msgid "IDS_ST_BUTTON_REMOVE_DEFAULT_APPS_ABB"
+msgstr "Ukloni zadane aplikacije"
+
+msgid "IDS_ST_BUTTON_ONLY_VIBRATE"
+msgstr "Samo vibr."
+
+msgid "IDS_ST_BUTTON_OK_ABB"
+msgstr "U redu"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "U redu"
+
+msgid "IDS_ST_BUTTON_MOVE_TO_SD_ABB"
+msgstr "Na SD"
+
+msgid "IDS_ST_BUTTON_MOVE_TO_PHONE"
+msgstr "Premjesti u telefon"
+
+msgid "IDS_ST_BUTTON_FORCE_STOP"
+msgstr "Prisilno zaustavi"
+
+msgid "IDS_ST_BUTTON_ENABLE"
+msgstr "Uključi"
+
+msgid "IDS_ST_BUTTON_DISCONNECT"
+msgstr "Odspoji"
+
+msgid "IDS_ST_BUTTON_DISABLE"
+msgstr "Isključi"
+
+msgid "IDS_ST_BUTTON_CONTINUE"
+msgstr "Nastavak"
+
+msgid "IDS_ST_BUTTON_CANCEL_ABB"
+msgstr "Prekid"
+
+msgid "IDS_ST_BODY_YYYY_DD_MM_DOT"
+msgstr "GGGG.DD.MM"
+
+msgid "IDS_ST_BODY_YOU_HAVE_SELECTED_TO_LAUNCH_THIS_APPLICATION_BY_DEFAULT_FOR_SOME_ACTIONS"
+msgstr "Ova je aplikacija postavljena kao zadana za neke radnje."
+
+msgid "IDS_ST_BODY_YOU_CAN_DECRYPT_ACCOUNTS_SETTINGS_DOWNLOADED_APPLICATIONS_AND_THEIR_DATA_MEDIA_AND_OTHER_FILES_DECRYPTION_WARNING_MSG"
+msgstr "Moguće je dešifrirati račune, postavke skinute aplikacije i podatke, medije i druge datoteke. Dešifriranje traje jedan sat ili više. Započnite s napunjenom baterijom i držite uređaj ukopčan dok se dešifriranje ne dovrši. Ako prekinete proces dešifriranja, izgubit ćete dio podataka ili sve podatke."
+
+msgid "IDS_ST_BODY_YOUR_DEVICE_REGISTRATION_CODE_C_PS"
+msgstr "Registracijska šifra uređaja: %s"
+
+msgid "IDS_ST_BODY_YOUR_CHANGES_ARE_BEING_MADE_T_TTS"
+msgstr "Vaše promjene se primjenjuju."
+
+msgid "IDS_ST_BODY_WINSET"
+msgstr "Winset"
+
+msgid "IDS_ST_BODY_WHEN_THE_SOURCE_OF_LIGHT_IS_BEHIND_YOU_OR_WHEN_USING_DEVICE_IN_THE_DARK"
+msgstr "Kada je izvor svjetla iza vas ili kada koristite uređaj u mraku"
+
+msgid "IDS_ST_BODY_WHEN_LEARN_ABOUT_TILT_OR_MOTION_UNLOCK_ARE_SET_MOTION_ACTIVATION_WILL_BE_AUTOMATICALLY_ENABLED_IN_SETTINGS"
+msgstr "Kada se postavi informiranje o naginjanju ili otključavanju pokretom, u postavkama se automatski uključuje aktivacija pokretom."
+
+msgid "IDS_ST_BODY_WHEN_FRONT_CAMERA_IS_USED_FOR_THE_APPLICATION"
+msgstr "Kada se prednji fotoaparat koristi za aplikaciju"
+
+msgid "IDS_ST_BODY_WHEN_FRONT_CAMERA_FAILS_TO_DETECT_FACE_AND_EYES"
+msgstr "Kada prednja kamera ne uspije pronaći lice i oči"
+
+msgid "IDS_ST_BODY_WHEN_DATA_ROAMING_IS_DISABLED_APPLICATIONS_THAT_USE_THE_DATA_CONNECTION_MAY_NOT_WORK"
+msgstr "Kada se podatkovni roaming isključi, aplikacije koje koriste podatkovnu vezu možda neće raditi."
+
+msgid "IDS_ST_BODY_WEB_APPLICATIONS"
+msgstr "Internet aplikacije"
+
+msgid "IDS_ST_BODY_WCDMA_GSM_NHAUTO_CONNECT"
+msgstr "WCDMA/GSM\n(automatsko spajanje)"
+
+msgid "IDS_ST_BODY_WAIT_WHILE_DEVICE_IS_ENCRYPTED_PDP_COMPLETE"
+msgstr "Pričekajte dok se uređaj šifrira. %d% dovršeno."
+
+msgid "IDS_ST_BODY_WAIT_WHILE_DEVICE_IS_DECRYPTED_PDP_COMPLETE"
+msgstr "Pričekajte dok se uređaj dešifrira. %d% dovršeno."
+
+msgid "IDS_ST_BODY_WAITING_FOR_RESPONSE_FROM_SIM_CARD_ING"
+msgstr "Čekanje odgovora sa SIM kartice..."
+
+msgid "IDS_ST_BODY_VOLUME"
+msgstr "Glasnoća"
+
+msgid "IDS_ST_BODY_VOICE_RECORDING"
+msgstr "Snimanje zvuka"
+
+msgid "IDS_ST_BODY_VIBRATE_WHEN_RINGING"
+msgstr "Vibrira dok zvoni"
+
+msgid "IDS_ST_BODY_VERSION_PS"
+msgstr "Verzija %s"
+
+msgid "IDS_ST_BODY_USING_MOBILE_DATA_MAY_RESULT_IN_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "Korištenje mobilnih podataka može rezultirati dodatnim troškovima. Nastaviti?"
+
+msgid "IDS_ST_BODY_USE_TIME_PROVIDED_BY_NETWORK"
+msgstr "Koristi vrijeme koje pruža mreža."
+
+msgid "IDS_ST_BODY_USE_MOTION"
+msgstr "Koristi pokrete"
+
+msgid "IDS_ST_BODY_USER_ID"
+msgstr "Korisničko ime"
+
+msgid "IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_URL_MSG"
+msgstr "Korisnik može blokirati određeni URL. Ako je URL blokiran, dolazni i odlazni podaci bit će odbačeni."
+
+msgid "IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_PORT_MSG"
+msgstr "Korisnik može blokirati određeni ulaz. Ako je ulaz blokiran, dolazni i odlazni podaci bit će odbačeni."
+
+msgid "IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_IP_ADDRESS_MSG"
+msgstr "Korisnik može blokirati određenu IP adresu. Ako je IP adresa blokirana, dolazni i odlazni podaci bit će odbačeni."
+
+msgid "IDS_ST_BODY_USED"
+msgstr "Zauzeto"
+
+msgid "IDS_ST_BODY_USB_OTG_STORAGE"
+msgstr "USB OTG memorija"
+
+msgid "IDS_ST_BODY_USB_DEBUGGING_IS_INTENDED_FOR_DEVELOPMENT_PURPOSES_ONLY_MSG"
+msgstr "USB ispravljanje grešaka služi samo za programiranje. Može se koristiti za kopiranje podataka između računala i uređaja, instaliranje aplikacija na uređaju bez obavijesti i čitanje zapisnika."
+
+msgid "IDS_ST_BODY_USB_DEBUGGING"
+msgstr "USB ispravljanje grešaka"
+
+msgid "IDS_ST_BODY_USB_ASK_ON_CONNECTION"
+msgstr "Pitaj pri spajanju"
+
+msgid "IDS_ST_BODY_URL"
+msgstr "Adresa"
+
+msgid "IDS_ST_BODY_UNMOUNT_USB_OTG_STORAGE"
+msgstr "Odspoji USB OTG memoriju"
+
+msgid "IDS_ST_BODY_UNMOUNT_SD_CARD"
+msgstr "Odspoji SD karticu"
+
+msgid "IDS_ST_BODY_UNMOUNTING_THE_SD_CARD_WILL_STOP_SOME_APPLICATIONS_FROM_FUNCTIONING_UNTIL_YOU_MOUNT_THE_SD_CARD_AGAIN_MSG"
+msgstr "Vađenje SD kartice zaustavit će rad nekih aplikacija. One neće biti dostupne sve dok ponovno ne umetnete SD karticu"
+
+msgid "IDS_ST_BODY_UNABLE_TO_USE_CURRENT_PASSWORD"
+msgstr "Nemoguće koristiti trenutnu lozinku."
+
+msgid "IDS_ST_BODY_UMTS_MODE_ONLY_WORKS_INSIDE_3G_COVERAGE_AREA"
+msgstr "UMTS način radi samo u području s mrežom 3G."
+
+msgid "IDS_ST_BODY_UDRGOTHICM_JPN"
+msgstr "UDRGothicM"
+
+msgid "IDS_ST_BODY_UDMINCHO_JPN"
+msgstr "UDMincho"
+
+msgid "IDS_ST_BODY_UDGOTHIC_M_FONT"
+msgstr "UDGothic"
+
+msgid "IDS_ST_BODY_TURN_OFF"
+msgstr "Isključi"
+
+msgid "IDS_ST_BODY_TURNING_OFF_MOBILE_DATA_WHEN_THE_SCREEN_IS_OFF"
+msgstr "Isključivanje mobilnih podataka kad je zaslon isključen."
+
+msgid "IDS_ST_BODY_TURNING_OFF_CONNECTIVITY_FEATURES_SUCH_AS_WI_FI_AND_BLUETOOTH"
+msgstr "Isključivanje značajki povezivanja, kao što su Wi-Fi i Bluetooth."
+
+msgid "IDS_ST_BODY_TO_USE_PERSONAL_MODE_SCREEN_LOCK_TYPE_SHOULD_BE_SET_TO_SIMPLE_PASSWORD_OR_PASSWORD"
+msgstr "Za korištenje Osobnog načina rada, vrsta zaključavanja zaslona bi trebala biti postavljena na jednostavnu lozinku ili lozinku."
+
+msgid "IDS_ST_BODY_TO_PROTECT_YOUR_DATA_DISABLE_PERSONAL_MODE_AFTER_YOU_USE_IT_ALSO_USING_A_SECURE_SCREEN_LOCK_WILL_PROVIDE_BETTER_PROTECTION"
+msgstr "Da biste zaštitili podatke, isključite Osobni način rada nakon korištenja. Korištenje sigurnog zaključavanja zaslona također će pružiti bolju zaštitu."
+
+msgid "IDS_ST_BODY_TO_OPEN_THE_MENU_DOUBLE_TAP_IT_T_TTS"
+msgstr "Dvaput dodirnite za otvaranje izbornika."
+
+msgid "IDS_ST_BODY_TO_M_PERIOD"
+msgstr "Do"
+
+msgid "IDS_ST_BODY_TO_ENABLE_THIS_FEATURE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Da biste uključili ovu opciju, uključite najmanje jednu odgovarajuću funkciju."
+
+msgid "IDS_ST_BODY_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_FUNCTION"
+msgstr "Da biste uključili štednju baterije, uključite najmanje jednu funkciju."
+
+msgid "IDS_ST_BODY_TO_ENABLE_BLOCKING_MODE_ENABLE_AT_LEAST_ONE_OPTION"
+msgstr "Da biste uključili Način za blokiranje, uključite najmanje jednu opciju."
+
+msgid "IDS_ST_BODY_TO_AVOID_OVERHEATING_MAXIMUM_BRIGHTNESS_HAS_BEEN_REDUCED"
+msgstr "Maks. osvjetljenje je smanjeno da bi se izbjeglo pregrijavanje."
+
+msgid "IDS_ST_BODY_TOUCH"
+msgstr "Dodir"
+
+msgid "IDS_ST_BODY_TOTAL_SPACE"
+msgstr "Ukupno memorije"
+
+msgid "IDS_ST_BODY_TOGGLE_THE_BUTTON_TO_ENABLE_OR_DISABLE_SCREEN_READER_OR_DOUBLE_TAP_TO_OPEN_THE_MENU_T_TTS"
+msgstr "Pomoću gumba uključite ili isključite čitač zaslona ili dvaput dodirnite da biste otvorili izbornik."
+
+msgid "IDS_ST_BODY_TIME_ZONE"
+msgstr "Vremenska zona"
+
+msgid "IDS_ST_BODY_THIS_BAND_MAY_NOT_WORK_OUTSIDE_THE_USA_AND_CANADA"
+msgstr "Odabrana frekvencija neće funkcionirati izvan SAD-a i Kanade."
+
+msgid "IDS_ST_BODY_THIS_ACTION_WILL_ERASE_THE_SD_CARD_IN_THE_PHONE_YOU_WILL_LOSE_ALL_DATA_ON_THE_CARD_E"
+msgstr "Obrisati ćete sve podatke na SD kartici!"
+
+msgid "IDS_ST_BODY_THE_SD_CARD_IS_CURRENTLY_IN_USE_THIS_ACTION_WILL_ERASE_ALL_DATA_ON_THE_SD_CARD_INCLUDING_THE_DATA_THAT_IS_CURRENTLY_BEING_USED"
+msgstr "SD kartica se trenutačno koristi. Ova radnja će obrisati sve podatke na SD kartici uključujući podatke koji se trenutačno koriste"
+
+msgid "IDS_ST_BODY_THE_RED_LED_LIGHTS_UP_WHEN_YOU_CHARGE_YOUR_DEVICE_WHILE_THE_SCREEN_IS_OFF"
+msgstr "Crveno LED svjetlo se pali kada punite uređaj dok je zaslon isključen."
+
+msgid "IDS_ST_BODY_THE_RED_LED_BLINKS_WHEN_THE_BATTERY_POWER_IS_LOW_WHILE_THE_SCREEN_IS_OFF"
+msgstr "Crveno LED svjetlo treperi kada je baterija slaba dok je zaslon isključen."
+
+msgid "IDS_ST_BODY_THE_PASSWORD_MUST_NOT_CONTAIN_A_SIMPLE_SEQUENCE_HEG_1111_OR_1234"
+msgstr "Lozinka ne smije sadržavati jednostavan niz (npr. 1111 ili 1234)"
+
+msgid "IDS_ST_BODY_THE_NAME_FIELD_CANNOT_BE_EMPTY"
+msgstr "Polje Ime ne smije biti prazno."
+
+msgid "IDS_ST_BODY_THE_BLUE_LED_BLINKS_WHEN_YOU_RECORD_VOICE_WHILE_THE_SCREEN_IS_OFF"
+msgstr "Kada snimate glas dok je zaslon isključen, plavo LED svjetlo treperi."
+
+msgid "IDS_ST_BODY_THE_BLUE_LED_BLINKS_WHEN_YOU_HAVE_MISSED_CALLS_MESSAGES_OR_APP_NOTIFICATIONS_WHILE_THE_SCREEN_IS_OFF"
+msgstr "Plavo LED-svjetlo treperi kada imate propuštene pozive, poruke ili obavijesti o aplikacijama dok je zaslon isključen."
+
+msgid "IDS_ST_BODY_THE_APPLICATIONS_BELOW_WERE_STARTED_BY_PS_STOPPING_THESE_APPLICATIONS_MAY_CAUSE_PS_TO_FAIL"
+msgstr "Aplikacije u nastavku započeo je %s. Prekidanje tih aplikacija može dovesti do greške u radu %s."
+
+msgid "IDS_ST_BODY_THERE_ARE_NO_NETWORKS_NEARBY"
+msgstr "U blizini nema mreža."
+
+msgid "IDS_ST_BODY_TEXTSTYLE_LARGE"
+msgstr "Velika"
+
+msgid "IDS_ST_BODY_TASK_SWITCHER"
+msgstr "Biranje zadatka"
+
+msgid "IDS_ST_BODY_TAP_TO_INSERT"
+msgstr "Dotaknite za umetanje."
+
+msgid "IDS_ST_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_TO_UNLOCK_IT_IF_THE_SCREEN_DOES_NOT_UNLOCK_TRY_TILTING_THE_DEVICE_MORE"
+msgstr "Dodirnite i držite zaslon, zatim nagnite uređaj prema sebi da biste ga otključali. Ako se zaslon ne otključa, nagnite uređaj više."
+
+msgid "IDS_ST_BODY_SYSTEM_MEMORY"
+msgstr "Memorija sustava"
+
+msgid "IDS_ST_BODY_SUNDAY"
+msgstr "Nedjelja"
+
+msgid "IDS_ST_BODY_STORAGE"
+msgstr "Pohrana"
+
+msgid "IDS_ST_BODY_STANDARD_T_DISPLAY_EFFECT"
+msgstr "Standardno"
+
+msgid "IDS_ST_BODY_SPEECH"
+msgstr "Govor"
+
+msgid "IDS_ST_BODY_SOUND_N_DISPLAY"
+msgstr "Zvuk i zaslon"
+
+msgid "IDS_ST_BODY_SOFTWARE"
+msgstr "Softver"
+
+msgid "IDS_ST_BODY_SOCIAL_NETWORK_PROFILES"
+msgstr "Društvene mreže"
+
+msgid "IDS_ST_BODY_SMART_STAY_MAY_NOT_WORK_IN_THESE_SITUATIONS"
+msgstr "Pametno mirovanje možda neće raditi u tim situacijama."
+
+msgid "IDS_ST_BODY_SMART_ROTATION_MAY_NOT_WORK_IN_THESE_SITUATIONS"
+msgstr "Pametno zakretanje možda neće raditi u tim situacijama."
+
+msgid "IDS_ST_BODY_SMART_ROTATION_DESCRIPTION_MSG"
+msgstr "Pametno zakretanje isključuje automatsko zakretanje zaslona i koristi prednju kameru da odredi usmjerenje lica i i sukladno zakreće zaslon."
+
+msgid "IDS_ST_BODY_SMALL_M_TEXTSIZE"
+msgstr "Mala"
+
+msgid "IDS_ST_BODY_SIM_PASSWORD"
+msgstr "SIM lozinka"
+
+msgid "IDS_ST_BODY_SIMPLE_PASSWORD"
+msgstr "Jednostavna lozinka"
+
+msgid "IDS_ST_BODY_SHOWS_BATTERY_PERCENTAGE_ON_INDICATOR"
+msgstr "Pokazuje postotak baterije na indikatoru."
+
+msgid "IDS_ST_BODY_SET_THE_DEFAULT_LOCATION_FOR_INSTALLING_APPLICATIONS_MSG"
+msgstr "Postavite zadanu lokaciju za instaliranje aplikacija. Aplikacije se mogu instalirati u različite lokacije, ovisno o vrsti aplikacije i dostupnosti lokacije."
+
+msgid "IDS_ST_BODY_SET_FONT_AS_PS_Q"
+msgstr "Postaviti vrstu slova na %s?"
+
+msgid "IDS_ST_BODY_SET_AN_UNLOCK_PASSWORD_OF_AT_LEAST_6_CHARACTERS_CONTAINING_AT_LEAST_1_NUMBER"
+msgstr "Postavite lozinku za otključavanje s min. 6 znakova, uključujući min. 1 broj."
+
+msgid "IDS_ST_BODY_SERIAL_NUMBER"
+msgstr "Serijski broj"
+
+msgid "IDS_ST_BODY_SECURITY_ENGINE"
+msgstr "Zaštitni program"
+
+msgid "IDS_ST_BODY_SECURITY"
+msgstr "Sigurnost"
+
+msgid "IDS_ST_BODY_SEARCH"
+msgstr "Traži"
+
+msgid "IDS_ST_BODY_SD_CARD"
+msgstr "SD kartica"
+
+msgid "IDS_ST_BODY_SCREEN_TIMEOUT_ABB2"
+msgstr "Istek zaslona"
+
+msgid "IDS_ST_BODY_SCREEN_STAYS_ON_AS_LONG_AS_YOU_ARE_LOOKING_AT_IT"
+msgstr "Zaslon ostaje uključen sve dok gledate u njega."
+
+msgid "IDS_ST_BODY_SCREEN_ROTATION_CAN_BE_SLOWER_IF_SMART_ROTATION_ENABLED"
+msgstr "Zakretanje zaslona može biti sporije ako se uključi pametno zakretanje."
+
+msgid "IDS_ST_BODY_SCREEN_OVERLAY_SHOWING_CURRENT_CPU_USAGE_ABB"
+msgstr "Gornji sloj zaslona prikazuje CPU korištenje."
+
+msgid "IDS_ST_BODY_SCREEN_ORIENTATION_ADJUSTS_TO_YOUR_ANGLE_OF_SIGHT"
+msgstr "Orijentacija zaslona prilagođava se vašem kutu gledanja."
+
+msgid "IDS_ST_BODY_SCREEN_MODE"
+msgstr "Način zaslona"
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_TYPE_CANNOT_BE_CHANGED_WHILE_ENCRYPTING_THE_SD_CARD"
+msgstr "Vrsta zaključavanja zaslona ne može se mijenjati tijekom šifriranja SD kartice."
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_TYPE_CANNOT_BE_CHANGED_WHILE_ENCRYPTING_THE_DEVICE"
+msgstr "Vrsta zaključavanja zaslona ne može se mijenjati tijekom šifriranja uređaja."
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_TYPE"
+msgstr "Vrsta zaključavanja zaslona"
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_SOUND"
+msgstr "Zvuk zaključavanja zaslona"
+
+msgid "IDS_ST_BODY_SCHEDULE"
+msgstr "Raspored"
+
+msgid "IDS_ST_BODY_SAVE_POWER_BY_ADJUSTING_SCREEN_TONE_ACCORDING_TO_ANALYSIS_OF_IMAGES"
+msgstr "Uštedite energiju prilagodbom tona zaslona prema analizi slika."
+
+msgid "IDS_ST_BODY_SAVES_POWER_BY_LIMITING_THE_MAXIMUM_PERFORMANCE_OF_THE_DEVICE"
+msgstr "Štedi energiju ograničavanjem maksimalnih performansi uređaja."
+
+msgid "IDS_ST_BODY_SAVED"
+msgstr "Spremljeno."
+
+msgid "IDS_ST_BODY_SAVE"
+msgstr "Spremi"
+
+msgid "IDS_ST_BODY_SAMSUNG_LEGAL"
+msgstr "Samsung pravne informacije"
+
+msgid "IDS_ST_BODY_SAMSUNG_KIES_CONNECTION_CONNECTING_USB_HELP_MSG"
+msgstr "Ako Samsung Kies (računalni program) ili odgovarajući upravljački programi nisu već instalirani, instalacija će se obaviti u sustavu Microsoft Windows. \nNakon instaliranja računalnog programa možete obaviti sljedeće radnje:\n- sinkronizaciju podataka u telefonu\n- aktualizaciju programa u telefonu\n- dijeljenje datoteka putem Interneta (ovaj telefon funkcionira kao modem i omogućuje internetski pristup vašem prijenosnom ili stolnom računalu)\n- kopiranje kupljene glazbe/videozapisa (Microsoft Windows Media DRM) ili normalnih datoteka na telefon."
+
+msgid "IDS_ST_BODY_RUNNING"
+msgstr "Pokrenuto"
+
+msgid "IDS_ST_BODY_RESTRICTING_APPLICATION_USAGE_TO_ONLY_ESSENTIAL_APPLICATIONS_AND_THOSE_SELECTED_BY_YOU"
+msgstr "Korištenje aplikacija ograničava se samo na osnovne aplikacije i one koje vi odaberete."
+
+msgid "IDS_ST_BODY_RESET_TO_DEFAULT"
+msgstr "Vrati na zadano"
+
+msgid "IDS_ST_BODY_RESET_SETTINGS"
+msgstr "Poništavanje postavki"
+
+msgid "IDS_ST_BODY_RESET_PERSONAL_MODE_SECURITY_SETTINGS_AND_DELETE_PERSONAL_CONTENT"
+msgstr "Poništite sigurnosne postavke Osobnog načina rada i obrišite osobni sadržaj."
+
+msgid "IDS_ST_BODY_RESET_PERSONAL_MODE"
+msgstr "Poništi Osobni način rada"
+
+msgid "IDS_ST_BODY_RESET_ALL"
+msgstr "Poništi sve"
+
+msgid "IDS_ST_BODY_REMOVE_LICENCE"
+msgstr "Obriši licencu"
+
+msgid "IDS_ST_BODY_REGULATORY_INFORMATION_ABB"
+msgstr "Regulativne informacije"
+
+msgid "IDS_ST_BODY_REGISTER_AT"
+msgstr "Registriraj u"
+
+msgid "IDS_ST_BODY_REGIONAL_EXAMPLE"
+msgstr "Regionalni primjer"
+
+msgid "IDS_ST_BODY_REGION"
+msgstr "Regija"
+
+msgid "IDS_ST_BODY_PUK"
+msgstr "PUK"
+
+msgid "IDS_ST_BODY_PROXY_PORT"
+msgstr "Proxy ulaz"
+
+msgid "IDS_ST_BODY_PROTOCOL_TYPE"
+msgstr "Vrsta protokola"
+
+msgid "IDS_ST_BODY_PROTECT_YOUR_DEVICE_FROM_HARMFUL_VIRUSES_AND_MALWARE"
+msgstr "Zaštitite uređaj od štetnih virusa i zlonamjernih softvera."
+
+msgid "IDS_ST_BODY_PROFILE_NAME"
+msgstr "Ime profila"
+
+msgid "IDS_ST_BODY_PROFILE"
+msgstr "Profil"
+
+msgid "IDS_ST_BODY_PREPARING_THIS_COULD_TAKE_OVER_10_MINUTES_ING"
+msgstr "Priprema. Ovo bi moglo potrajati više od 10 min..."
+
+msgid "IDS_ST_BODY_PREFERRED_NETWORKS"
+msgstr "Preporučene mreže"
+
+msgid "IDS_ST_BODY_POP_JPN_DCM"
+msgstr "POP"
+
+msgid "IDS_ST_BODY_PM"
+msgstr "PM"
+
+msgid "IDS_ST_BODY_PLUG_IN_CHARGER_AND_TRY_AGAIN"
+msgstr "Uključite punjač i pokušajte ponovno."
+
+msgid "IDS_ST_BODY_PLAY_TONE_WHEN_THE_DIALLING_KEYPAD_IS_TAPPED"
+msgstr "Reproducira tonove kad se dodirne tipkovnica za biranje."
+
+msgid "IDS_ST_BODY_PLAY_SOUNDS_WHEN_LOCKING_AND_UNLOCKING_SCREEN"
+msgstr "Reproduciraj zvukove pri zaključavanju i otključavanju zaslona."
+
+msgid "IDS_ST_BODY_PIN_BLOCKED_ENTER_PUK_TO_CONTINUE_JPN_DCM"
+msgstr "PIN blocked. Enter PUK to continue."
+
+msgid "IDS_ST_BODY_PIN"
+msgstr "PIN"
+
+msgid "IDS_ST_BODY_PICTURES_VIDEOS"
+msgstr "Slike, video"
+
+msgid "IDS_ST_BODY_PHOTO_UPLOAD_SETTINGS"
+msgstr "Slanje na blogove"
+
+msgid "IDS_ST_BODY_PHONEPROFILES_SILENT"
+msgstr "Bešumno"
+
+msgid "IDS_ST_BODY_PERSONAL_MODE_CAN_BE_USED_TO_HIDE_CONTENT_THAT_YOU_WANT_TO_KEEP_PRIVATE_MSG"
+msgstr "Osobni način rada možete koristiti da biste sakrili sadržaj koji želite držati privatnim. Da biste koristili Osobni način rada, uključite ga u Postavkama ili pritisnite i držite tipku uključenja te odaberite Osobni način rada. Unesite PIN ili lozinku. Ikona Osobnog načina rada prikazat će se na statusnoj traci. Kako biste zaštitili svoje podatke, isključite Osobni način rada nakon korištenja. Također, korištenje sigurnog zaključavanja zaslona pružit će bolju zaštitu."
+
+msgid "IDS_ST_BODY_PD_ATTEMPTS_REMAINING_JPN_DCM"
+msgstr "%d attempts remaining"
+
+msgid "IDS_ST_BODY_PASSWORD_REQUIRED_TO_DECRYPT_DEVICE_EACH_TIME_YOU_TURN_IT_ON"
+msgstr "Lozinka potrebna za dešifriranje uređaja svaki put kada ga uključite."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_NO_MORE_THAN_PD_CHARACTERS_ABB"
+msgstr "Lozinka mora sadržavati ne više od %d znakova."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_PD_CHARACTERS_ABB"
+msgstr "Lozinka mora sadržavati najmanje %d znakova."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_1_NUMBER"
+msgstr "Lozinka mora sadržavati min. 1 broj."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_1_LETTER"
+msgstr "Lozinka mora sadržavati min. 1 slovo."
+
+msgid "IDS_ST_BODY_PASSWORD_EMPTY"
+msgstr "Lozinka prazna."
+
+msgid "IDS_ST_BODY_PASSWORD_CONTAINS_INVALID_CHARACTER_ABB"
+msgstr "Lozinka sadrži neispravan znak."
+
+msgid "IDS_ST_BODY_PASSWORD"
+msgstr "Šifra"
+
+msgid "IDS_ST_BODY_OPEN_SOURCE_LICENCES"
+msgstr "Potvrde otvorenog izvora"
+
+msgid "IDS_ST_BODY_ON_M_STATUS"
+msgstr "Uključeno"
+
+msgid "IDS_ST_BODY_OFFICIAL_M_DEVICE_STATUS"
+msgstr "Službena"
+
+msgid "IDS_ST_BODY_NUMBER"
+msgstr "Broj"
+
+msgid "IDS_ST_BODY_NO_RESULTS_FOUND"
+msgstr "Nema rezultata."
+
+msgid "IDS_ST_BODY_NO_DEFAULTS_SET"
+msgstr "Nema zadanih postavki."
+
+msgid "IDS_ST_BODY_NOT_ASSIGNED"
+msgstr "Nedodijeljeno"
+
+msgid "IDS_ST_BODY_NOTIFICATION_PANEL"
+msgstr "Ploča obavijesti"
+
+msgid "IDS_ST_BODY_NOTIFICATIONS"
+msgstr "Obavijesti"
+
+msgid "IDS_ST_BODY_NOTIFICATION"
+msgstr "Obavijest"
+
+msgid "IDS_ST_BODY_NOSERVICE"
+msgstr "Nema usluge"
+
+msgid "IDS_ST_BODY_NORMAL_T_PROFILE"
+msgstr "Normalno"
+
+msgid "IDS_ST_BODY_NONE"
+msgstr "Ništa"
+
+msgid "IDS_ST_BODY_NEW_PIN2_AND_CONFIRM_PIN2_DO_NOT_MATCH"
+msgstr "Novi PIN2 i potvrđeni PIN2 nisu isti."
+
+msgid "IDS_ST_BODY_NEW_PIN2"
+msgstr "Novi PIN2"
+
+msgid "IDS_ST_BODY_NEW_PIN1"
+msgstr "Nova PIN1 lozinka"
+
+msgid "IDS_ST_BODY_NEW"
+msgstr "Novi"
+
+msgid "IDS_ST_BODY_NETWORK_TYPE"
+msgstr "Vrsta mreže"
+
+msgid "IDS_ST_BODY_NETWORK_MODE"
+msgstr "Način rada mreže"
+
+msgid "IDS_ST_BODY_NETWORK_LIST"
+msgstr "Popis mreža"
+
+msgid "IDS_ST_BODY_NETWORK_CONNECTIONS"
+msgstr "Mrežne veze"
+
+msgid "IDS_ST_BODY_NETWORK_CODE"
+msgstr "Kod mreže"
+
+msgid "IDS_ST_BODY_NETWORK"
+msgstr "Mreža"
+
+msgid "IDS_ST_BODY_NATURAL_T_DISPLAY_EFFECT"
+msgstr "Prirodno"
+
+msgid "IDS_ST_BODY_NAME"
+msgstr "Ime"
+
+msgid "IDS_ST_BODY_MY_NUMBER"
+msgstr "Moj broj"
+
+msgid "IDS_ST_BODY_MSG_TIME_FORMAT"
+msgstr "Format sata"
+
+msgid "IDS_ST_BODY_MOVIE_T_DISPLAY_EFFECT"
+msgstr "Film"
+
+msgid "IDS_ST_BODY_MOUNT_USB_OTG_STORAGE"
+msgstr "Spojite USB OTG memoriju"
+
+msgid "IDS_ST_BODY_MOUNT_SD_CARD"
+msgstr "Umetnite SD karticu"
+
+msgid "IDS_ST_BODY_MOTION"
+msgstr "Pokreti"
+
+msgid "IDS_ST_BODY_MORE_SYSTEM_SETTINGS"
+msgstr "Više postavki sustava"
+
+msgid "IDS_ST_BODY_MORE_CONNECTIVITY_SETTINGS"
+msgstr "Više postavki povezivanja"
+
+msgid "IDS_ST_BODY_MONDAY"
+msgstr "Ponedjeljak"
+
+msgid "IDS_ST_BODY_MODE"
+msgstr "Način"
+
+msgid "IDS_ST_BODY_MOBILE_DATA_WILL_BE_USED_IF_YOU_DOWNLOAD_OR_UPLOAD_DATA_WITHOUT_WI_FI_CONNECTION"
+msgstr "Mobilni podaci koristit će se za skidanje ili slanje podataka bez Wi-Fi veze."
+
+msgid "IDS_ST_BODY_MM_DD_YYYY_DOT"
+msgstr "MM.DD.GGGG."
+
+msgid "IDS_ST_BODY_MMS_CONNECTIONS"
+msgstr "MMS veze"
+
+msgid "IDS_ST_BODY_MISCELLANEOUS_FILES"
+msgstr "Razne datoteke"
+
+msgid "IDS_ST_BODY_MESSAGE"
+msgstr "Poruka"
+
+msgid "IDS_ST_BODY_MENU_AND_WIDGETS"
+msgstr "Meni i widgeti"
+
+msgid "IDS_ST_BODY_MEMORY"
+msgstr "Memorija"
+
+msgid "IDS_ST_BODY_MEDIUM"
+msgstr "Srednja"
+
+msgid "IDS_ST_BODY_MB"
+msgstr "MB"
+
+msgid "IDS_ST_BODY_MASS_STORAGE_HELP_MSG"
+msgstr "Možete obaviti sljedeće radnje:\n- Brzo kopiranje datoteka\n- Spajanje putem operativnih sustava MAC ili Linux"
+
+msgid "IDS_ST_BODY_MARUBERI_JPN_DCM"
+msgstr "Maruberi"
+
+msgid "IDS_ST_BODY_LTE_WCDMA_GSM_NHAUTO_CONNECT"
+msgstr "LTE/WCDMA/GSM\n(automatsko spajanje)"
+
+msgid "IDS_ST_BODY_LOCK_SCREEN_OPTIONS"
+msgstr "Opcije zaključavanja zaslona"
+
+msgid "IDS_ST_BODY_LIST_VIEW"
+msgstr "Prikaz liste"
+
+msgid "IDS_ST_BODY_LIMIT_BACKGROUND_PROCESSES"
+msgstr "Ograniči pozadinske procese"
+
+msgid "IDS_ST_BODY_LICENCE"
+msgstr "Potvrda"
+
+msgid "IDS_ST_BODY_LED_INDICATOR"
+msgstr "LED indikator"
+
+msgid "IDS_ST_BODY_LEDOT_LOW_BATTERY"
+msgstr "Baterija skoro prazna"
+
+msgid "IDS_ST_BODY_LAUNCH_BY_DEFAULT"
+msgstr "Pokreni po zadanom"
+
+msgid "IDS_ST_BODY_LANGUAGE_AND_REGION_ABB"
+msgstr "Jezik i regija"
+
+msgid "IDS_ST_BODY_LANGUAGE_AND_KEYBOARD"
+msgstr "Jezik i tipkovnica"
+
+msgid "IDS_ST_BODY_KEYBOARD"
+msgstr "Tipkovnica"
+
+msgid "IDS_ST_BODY_KEEPS_THE_STATUS_BAR_TIDY_TAP_THE_REPRESENTATIVE_ICON_TO_SHOW_ALL_THE_ICONS"
+msgstr "Održava traku statusa urednom. Dodirnite reprezentativnu ikonu za prikaz svih ikona."
+
+msgid "IDS_ST_BODY_KB"
+msgstr "KB"
+
+msgid "IDS_ST_BODY_INTRODUCTION_TO_SMART_SCREEN_ABB"
+msgstr "Uvod u pametni zaslon"
+
+msgid "IDS_ST_BODY_INTERNET_CONNECTION"
+msgstr "Internet veza"
+
+msgid "IDS_ST_BODY_INSTALTAB_FINISH"
+msgstr "Završi"
+
+msgid "IDS_ST_BODY_INSTALLED_APPLICATIONS"
+msgstr "Instalirane aplikacije"
+
+msgid "IDS_ST_BODY_INSTALLATION_SETTINGS"
+msgstr "Instaliranje aplikacija"
+
+msgid "IDS_ST_BODY_INSERT_SD_CARD"
+msgstr "Umetnite SD karticu."
+
+msgid "IDS_ST_BODY_INCORRECT_PIN_E"
+msgstr "Neispravan PIN."
+
+msgid "IDS_ST_BODY_INCORRECT_PASSWORD_TRY_AGAIN"
+msgstr "Neispravna lozinka. Ponovite"
+
+msgid "IDS_ST_BODY_INCOMING_CALLS_AND_NEW_NOTIFICATIONS_WILL_BE_READ_OUT_AUTOMATICALLY"
+msgstr "Auto. čitanje dolaznih poziva i novih obavijesti."
+
+msgid "IDS_ST_BODY_INCOMING_CALL"
+msgstr "Dolazni poziv"
+
+msgid "IDS_ST_BODY_IMEI"
+msgstr "IMEI"
+
+msgid "IDS_ST_BODY_IF_YOU_SELECT_THIS_OPTION_ONLY_USED_MEMORY_SPACE_WILL_BE_ENCRYPTED"
+msgstr "Ako odaberete ovu opciju, šifrirat će se samo korištena memorija."
+
+msgid "IDS_ST_BODY_IF_YOU_FORGET_YOUR_PERSONAL_MODE_PASSWORD_YOU_WILL_NOT_BE_ABLE_TO_RECOVER_IT_FOR_SECURITY_MSG"
+msgstr "Ako zaboravite lozinku Osobnog načina rada, nećete je moći vratiti. Radi sigurnosti morate poništiti Osobni način rada. To će vratiti zadane postavke i obrisati sav osobni sadržaj."
+
+msgid "IDS_ST_BODY_IF_YOU_DONT_WANT_TO_SEE_A_NUMBER_APPEAR_ON_THE_APP_ICON_FOR_EACH_NEW_EVENT_DISABLE_BADGE"
+msgstr "Ako ne želite da se pojavljuje broj na ikoni aplikacije za svaki događaj, isključite značku."
+
+msgid "IDS_ST_BODY_ICON_SHOWS_THAT_SMART_SCREEN_IS_ENABLED"
+msgstr "Ikona pokazuje da je pametni zaslon uključen."
+
+msgid "IDS_ST_BODY_HOME_URL"
+msgstr "Početna stranica"
+
+msgid "IDS_ST_BODY_HOME_AND_LOCK_SCREEN"
+msgstr "Početni i zaslon zaključavanja"
+
+msgid "IDS_ST_BODY_HELVETICA_NEUE_M_FONT_NAME"
+msgstr "Helvetica Neue"
+
+msgid "IDS_ST_BODY_HARDWARE"
+msgstr "Hardware"
+
+msgid "IDS_ST_BODY_GSM"
+msgstr "GSM"
+
+msgid "IDS_ST_BODY_GRID_VIEW"
+msgstr "Prikaz mreže"
+
+msgid "IDS_ST_BODY_GLOVE_MODE_ABB"
+msgstr "Način rukavice"
+
+msgid "IDS_ST_BODY_GESTURES"
+msgstr "Pokreti"
+
+msgid "IDS_ST_BODY_GB"
+msgstr "GB"
+
+msgid "IDS_ST_BODY_FROM_M_TIME"
+msgstr "Od"
+
+msgid "IDS_ST_BODY_FREQUENTLY_USED"
+msgstr "Najčešće korišteno"
+
+msgid "IDS_ST_BODY_FORMAT_USB_OTG_STORAGE"
+msgstr "Formatiraj USB OTG memoriju"
+
+msgid "IDS_ST_BODY_FORMAT_SD_CARD"
+msgstr "Format SD kartice"
+
+msgid "IDS_ST_BODY_FORMATTING_USB_OTG_STORAGE_WILL_DELETE_ALL_DATA_DATA_CANNOT_BE_RECOVERED_CONTINUE_Q"
+msgstr "Formatiranje USB OTG memorije nepovratno će obrisati sve podatke. Nastavak?"
+
+msgid "IDS_ST_BODY_FORMATTING_SD_CARD_WILL_DELETE_ALL_DATA_DATA_CANNOT_BE_RECOVERED_CONTINUE_Q"
+msgstr "Formatiranje SD kartice nepovratno briše sve podatke. Nastavak?"
+
+msgid "IDS_ST_BODY_FORGOT_PASSWORD_SWA"
+msgstr "Forgot password"
+
+msgid "IDS_ST_BODY_FORBIDDEN_NETWORK"
+msgstr "Zabranjena mreža"
+
+msgid "IDS_ST_BODY_FONT_TYPE"
+msgstr "Vrsta slova"
+
+msgid "IDS_ST_BODY_FONTSTYLE_ROSEMARY"
+msgstr "Rosemary"
+
+msgid "IDS_ST_BODY_FLIGHT_MODE_MSG"
+msgstr "Profil bez mreže  omogućuje vam da isključite značajke poziva, poruka i podatkovnih mreža. Također isključuje značajke povezivanja kao što su Wi-Fi i Bluetooth. Da biste koristili Wi-Fi i Bluetooth, uključite ih u Postavkama ili u obavijestima."
+
+msgid "IDS_ST_BODY_FLIGHT_MODE_HAS_BEEN_ENABLED_NETWORK_SETTINGS_WILL_CLOSE"
+msgstr "Omogućen je profil Bez mreže. Zatvorit će se postavke mreže."
+
+msgid "IDS_ST_BODY_FLIGHT_MODE"
+msgstr "Profil Bez mreže"
+
+msgid "IDS_ST_BODY_FIXED_DIALLING_MODE"
+msgstr "FDN biranje"
+
+msgid "IDS_ST_BODY_FIREWALL_ENABLED_ABB"
+msgstr "Uključen je vatrozid."
+
+msgid "IDS_ST_BODY_FIREWALL"
+msgstr "Vatrozid"
+
+msgid "IDS_ST_BODY_FEATURES"
+msgstr "Značajke"
+
+msgid "IDS_ST_BODY_FAST_ENCRYPTION"
+msgstr "Brzo šifriranje"
+
+msgid "IDS_ST_BODY_FAILED_TO_SELECT_NETWORK"
+msgstr "Greška spajanja na mrežu."
+
+msgid "IDS_ST_BODY_FACE_AND_VOICE"
+msgstr "Lice i glas"
+
+msgid "IDS_ST_BODY_FACEBOOK"
+msgstr "Facebook"
+
+msgid "IDS_ST_BODY_EXPLANATION_FOR_TRANSACTION_TRACKING_MENU_VODA"
+msgstr "Vaša preporuka se šalje s datotekom koju prenesete"
+
+msgid "IDS_ST_BODY_EXPLANATION_FOR_EXPIRY_REMINDER_MENU"
+msgstr "Primit ćete podsjetnik prije isteka licence o uporabi datoteke, poput slika pozadine."
+
+msgid "IDS_ST_BODY_ESTIMATED_MAX_STANDBY_TIME_ABB"
+msgstr "Procij. maks.\nvrij. mirovanja"
+
+msgid "IDS_ST_BODY_ENTER_PASSWORD_AGAIN_AFTER_PD_SECONDS"
+msgstr "Ponovno unesite lozinku nakon %d sek."
+
+msgid "IDS_ST_BODY_ENTER_PASSWORD_AGAIN"
+msgstr "Ponovno unesite lozinku"
+
+msgid "IDS_ST_BODY_ENTER_PASSWORD"
+msgstr "Unesite lozinku."
+
+msgid "IDS_ST_BODY_ENTER_NEW_PASSWORD"
+msgstr "Unesite novu lozinku."
+
+msgid "IDS_ST_BODY_ENTER_CURRENT_PASSWORD"
+msgstr "Unesite trenutačnu lozinku."
+
+msgid "IDS_ST_BODY_ENCRYPT_DEVICE_Q_WARNING_MSG"
+msgstr "Šifrirati uređaj? Ova se radnja ne može poništiti i ako je prekinete, izgubit ćete podatke. Šifriranje može trajati jedan sat ili dulje, a za to se vrijeme uređaj ponovno pokreće nekoliko puta i nećete ga moći koristiti."
+
+msgid "IDS_ST_BODY_ENCRYPT_DEVICE_Q_OPERATION_IS_IRREVERSIBLE_AND_IF_YOU_INTERRUPT_IT_YOU_WILL_LOSE_DATA"
+msgstr "Šifrirati uređaj? Radnja se ne može poništiti i ako je prekinete, izgubit ćete podatke"
+
+msgid "IDS_ST_BODY_ENCRYPT_ACCOUNTS_SETTINGS_DOWNLOADED_APPLICATIONS_AND_THEIR_DATA_MEDIA_AND_OTHER_FILES"
+msgstr "Šifrirajte račune, postavke, skinute aplikacije i njihove podatke, medije i druge datoteke."
+
+msgid "IDS_ST_BODY_ENCRYPTION_WILL_TAKE_AT_LEAST_AN_HOUR"
+msgstr "Šifriranje će trajati najmanje sat vremena."
+
+msgid "IDS_ST_BODY_ENCRYPTING_ING"
+msgstr "Šifriranje..."
+
+msgid "IDS_ST_BODY_ENABLE_DATA_ACCESS_OVER_MOBILE_NETWORK"
+msgstr "Pristup podacima preko mobilne mreže."
+
+msgid "IDS_ST_BODY_EMPTY"
+msgstr "Prazno"
+
+msgid "IDS_ST_BODY_EMERGENCY_MODE_ABB"
+msgstr "Hitni način"
+
+msgid "IDS_ST_BODY_EMAIL"
+msgstr "Email"
+
+msgid "IDS_ST_BODY_EDIT"
+msgstr "Uredi"
+
+msgid "IDS_ST_BODY_EASY_MODE"
+msgstr "Jednostavan način"
+
+msgid "IDS_ST_BODY_DYNAMIC_T_DISPLAY_EFFECT"
+msgstr "Dinamično"
+
+msgid "IDS_ST_BODY_DYNAMIC_STATUS_BAR"
+msgstr "Traka dinamičkog statusa"
+
+msgid "IDS_ST_BODY_DRIVING_MODE"
+msgstr "U vožnji"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Ne prikazuj više"
+
+msgid "IDS_ST_BODY_DOWNLOADS"
+msgstr "Skidanja"
+
+msgid "IDS_ST_BODY_DOWNLOAD"
+msgstr "Skidanje"
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_MENU_T_TTS"
+msgstr "Dvaput dodirnite za otvaranje izbornika."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "Dvaput dodirnite za uređivanje ovog polja."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_MENU_T_TTS"
+msgstr "Dvaput dodirnite da biste zatvorili izbornik."
+
+msgid "IDS_ST_BODY_DOCOMO_JPN_DCM"
+msgstr "docomo"
+
+msgid "IDS_ST_BODY_DIVX_REGISTRATION"
+msgstr "DivX registracija"
+
+msgid "IDS_ST_BODY_DIVX_DEREGISTRATION"
+msgstr "DivX deregistracija"
+
+msgid "IDS_ST_BODY_DISPLAY_CONTENTS"
+msgstr "Prikaži sadržaj"
+
+msgid "IDS_ST_BODY_DISPLAY_BATTERY_PERCENTAGE_ABB"
+msgstr "Prikaz postotka baterije"
+
+msgid "IDS_ST_BODY_DISABLING_ING"
+msgstr "Isključivanje..."
+
+msgid "IDS_ST_BODY_DE_REGISTRATION_CODE_NOT_FOUND"
+msgstr "Nema šifre za deregistraciju."
+
+msgid "IDS_ST_BODY_DEVICE_MEMORY"
+msgstr "Memorija uređaja"
+
+msgid "IDS_ST_BODY_DEVICE_INFO"
+msgstr "Info o uređaju"
+
+msgid "IDS_ST_BODY_DEVICE_ENCRYPTION_HELP_MSG"
+msgstr "Moguće je šifrirati račune, postavke, skinute aplikacije i podatke, medije i druge datoteke. Kada šifrirate uređaj, bit će potrebna lozinka za dešifriranje svaki put kad ga uključite.\n\nŠifriranje traje jedan sat ili duže. Započnite s napunjenom baterijom i držite uređaj ukopčan dok se šifriranje ne dovrši. Ako prekinete proces šifriranja, mogli biste izgubiti dio podataka."
+
+msgid "IDS_ST_BODY_DEVICE_ENCRYPTED"
+msgstr "Uređaj šifriran."
+
+msgid "IDS_ST_BODY_DEVICE"
+msgstr "Uređaj"
+
+msgid "IDS_ST_BODY_DEVELOPER_OPTIONS"
+msgstr "Opcije razvoja"
+
+msgid "IDS_ST_BODY_DEFAULT_STORAGE"
+msgstr "Postavljena memorija"
+
+msgid "IDS_ST_BODY_DEFAULT_RENDERING_ENGINE"
+msgstr "Zadani sustav za prikaz"
+
+msgid "IDS_ST_BODY_DEFAULT_FONT"
+msgstr "Zadana slova"
+
+msgid "IDS_ST_BODY_DECRYPT_DEVICE_Q_WARNING_MSG"
+msgstr "Dešifrirati uređaj? Ova se radnja ne može poništiti i ako je prekinete, izgubit ćete podatke. Dešifriranje može trajati jedan sat ili dulje, a za to se vrijeme uređaj ponovno pokreće nekoliko puta i nećete ga moći koristiti."
+
+msgid "IDS_ST_BODY_DECRYPT_DEVICE"
+msgstr "Dešifriraj uređaj"
+
+msgid "IDS_ST_BODY_DECRYPTING_ING"
+msgstr "Dešifriranje..."
+
+msgid "IDS_ST_BODY_DEBUGGING_MODE_LAUNCHES_WHEN_USB_IS_CONNECTED"
+msgstr "Ispravljanje grešaka pokreće se pri spajanju USB-a."
+
+msgid "IDS_ST_BODY_DDMMYYYY_DOT"
+msgstr "DD.MM.GGGG"
+
+msgid "IDS_ST_BODY_DATE_AND_TIME"
+msgstr "Datum i vrijeme"
+
+msgid "IDS_ST_BODY_DATE"
+msgstr "Datum"
+
+msgid "IDS_ST_BODY_DATA_ROAMING"
+msgstr "Podatkovni roaming"
+
+msgid "IDS_ST_BODY_DATA"
+msgstr "Podaci"
+
+msgid "IDS_ST_BODY_CUSTOM_M_DEVICE_STATUS"
+msgstr "Prilagođeno"
+
+msgid "IDS_ST_BODY_CURRENT"
+msgstr "Trenutni"
+
+msgid "IDS_ST_BODY_CRASH_VIEWER"
+msgstr "Preglednik rušenja sustava"
+
+msgid "IDS_ST_BODY_CPU_USAGE"
+msgstr "Iskorištenost procesora"
+
+msgid "IDS_ST_BODY_COUNTRY_CODE"
+msgstr "Pozivni broj zemlje"
+
+msgid "IDS_ST_BODY_COOL_JAZZ"
+msgstr "Cool jazz"
+
+msgid "IDS_ST_BODY_CONTENT_FROM_GALLERY_VIDEO_MUSIC_VOICE_RECORDER_AND_MY_FILES_CAN_BE_HIDDEN_IN_PERSONAL_MODE"
+msgstr "Sadržaj iz Galerije, Videozapisa, Glazbe, Diktafona i Mojih datoteka može se sakriti u Osobnom načinu rada."
+
+msgid "IDS_ST_BODY_CONNECTIONSETTINGS_PROXY_ADDRESS"
+msgstr "Proxy adresa"
+
+msgid "IDS_ST_BODY_CONNECTIONSETTINGS_INTERNET"
+msgstr "Internet"
+
+msgid "IDS_ST_BODY_CONNECTIONS"
+msgstr "Veze"
+
+msgid "IDS_ST_BODY_CONNECTION"
+msgstr "Spajanje"
+
+msgid "IDS_ST_BODY_CONFIRM_NEW_PIN2"
+msgstr "Potvrdite novi PIN2"
+
+msgid "IDS_ST_BODY_CONFIRM_NEW_PIN1"
+msgstr "Potvrdite novu PIN1 lozinku."
+
+msgid "IDS_ST_BODY_CONFIRM_NEW_PIN"
+msgstr "Potvrdite novi PIN"
+
+msgid "IDS_ST_BODY_CONFIRM_DECRYPTION"
+msgstr "Potvrdite dešifriranje"
+
+msgid "IDS_ST_BODY_CONFIRM"
+msgstr "Potvrdi"
+
+msgid "IDS_ST_BODY_CONFIGURE_FIREWALL_SETTINGS"
+msgstr "Konfiguriraj postavke vatrozida."
+
+msgid "IDS_ST_BODY_COMPUTING_ING"
+msgstr "Izračunavanje..."
+
+msgid "IDS_ST_BODY_CLEAR_DEFAULTS"
+msgstr "Obriši zadane postavke"
+
+msgid "IDS_ST_BODY_CHOCO_COOKY"
+msgstr "Choco cooky"
+
+msgid "IDS_ST_BODY_CHECK_FOR_UPDATES_AUTOMATICALLY_ABB"
+msgstr "Automatski nađi aktualizacije."
+
+msgid "IDS_ST_BODY_CHECK_FOR_UPDATES_ABB"
+msgstr "Potraži ažuriranja"
+
+msgid "IDS_ST_BODY_CHECK_FOR_UPDATES"
+msgstr "Provjeri aktualiziranja"
+
+msgid "IDS_ST_BODY_CHARGE_BATTERY_TO_ABOVE_80P_AND_TRY_AGAIN"
+msgstr "Napunite bateriju na preko 80% i pokušajte ponovno."
+
+msgid "IDS_ST_BODY_CHANGING_THE_FONT_SIZE_IN_ACCESSIBILITY_SETTINGS_WILL_OVERRIDE_THE_FONT_SIZE_IN_EACH_APPLICATION"
+msgstr "Mijenjanje veličine fonta u postavkama pristupačnosti zamijenit će veličinu fonta u svakoj aplikaciji."
+
+msgid "IDS_ST_BODY_CHANGING_THE_COLOUR_OF_THE_SCREEN_TO_GREYSCALE"
+msgstr "Mijenjanje boje zaslona na sive tonove."
+
+msgid "IDS_ST_BODY_CHANGE_TEXT_SIZE_IN_CONTACTS_CALENDAR_MEMO_MESSAGES_EMAIL_AND_IM"
+msgstr "Promijenite veličinu teksta u Kontaktima, Kalendaru, Bilješkama, Porukama, Email porukama i IM."
+
+msgid "IDS_ST_BODY_CHANGE_PIN2"
+msgstr "Promijenite PIN2"
+
+msgid "IDS_ST_BODY_CALL_SETTINGS"
+msgstr "Postavke poziva"
+
+msgid "IDS_ST_BODY_CALL"
+msgstr "Poziv"
+
+msgid "IDS_ST_BODY_CACHE"
+msgstr "Međuspremnik"
+
+msgid "IDS_ST_BODY_BLOCK_URL"
+msgstr "Blokiraj URL"
+
+msgid "IDS_ST_BODY_BLOCK_UDP"
+msgstr "Blokiraj UDP"
+
+msgid "IDS_ST_BODY_BLOCK_TCP"
+msgstr "Blokiraj TCP"
+
+msgid "IDS_ST_BODY_BLOCK_PORT"
+msgstr "Blokiraj ulaz"
+
+msgid "IDS_ST_BODY_BLOCK_IP"
+msgstr "Blokiraj IP"
+
+msgid "IDS_ST_BODY_BLOCKING_MODE_IS_ENABLED"
+msgstr "Način blokiranja je uključen."
+
+msgid "IDS_ST_BODY_BLOCKING_MODE"
+msgstr "Način Blokiranja"
+
+msgid "IDS_ST_BODY_BLOCKED_URL_LIST"
+msgstr "Popis blokiranih URL-ova"
+
+msgid "IDS_ST_BODY_BLOCKED_PORT_LIST"
+msgstr "Popis blokiranih ulaza"
+
+msgid "IDS_ST_BODY_BLOCKED_IP_LIST"
+msgstr "Popis blokiranih IP adresa"
+
+msgid "IDS_ST_BODY_BATTERY_PERCENTAGE_ABB"
+msgstr "Postotak baterije"
+
+msgid "IDS_ST_BODY_BATTERY"
+msgstr "Baterija"
+
+msgid "IDS_ST_BODY_BACKUP_AND_RESET"
+msgstr "Sigurnosno kopiranje i poništavanje"
+
+msgid "IDS_ST_BODY_BACKLIGHT_TIME"
+msgstr "Trajanje"
+
+msgid "IDS_ST_BODY_A_PERSON_YOU_HAVE_GRANTED_AUTHORITY_TO_IS_TRYING_TO_REMOTELY_ENABLE_EMERGENCY_MODE_ON_THIS_DEVICE_MSG"
+msgstr "Osoba kojoj ste dali ovlasti pokušava daljinski uključiti Hitni način na ovom uređaju. Vaši će se podaci poslati na poslužitelj za 60 sekundi i uključit će se Hitni način. Dodirnite Prekid da biste zaustavili ovaj postupak."
+
+msgid "IDS_ST_BODY_A_PASSWORD_WILL_BE_REQUIRED_TO_DECRYPT_YOUR_DEVICE_EVERY_TIME_YOU_POWER_IT_ON"
+msgstr "Lozinka će biti potrebna za dešifriranje uređaja svaki put kad ga uključite."
+
+msgid "IDS_ST_BODY_AVAILABLE_SPACE"
+msgstr "Slobodna memorija"
+
+msgid "IDS_ST_BODY_AVAILABLE"
+msgstr "Dostupno"
+
+msgid "IDS_ST_BODY_AUTO_DOWNLOAD"
+msgstr "Auto. skidanje"
+
+msgid "IDS_ST_BODY_AUTH_TYPE"
+msgstr "Provjera"
+
+msgid "IDS_ST_BODY_APP_OPENING_IMAGE"
+msgstr "Slika otvaranja aplikacije"
+
+msgid "IDS_ST_BODY_APP_OPENING_EFFECT"
+msgstr "Efekt otvaranja aplikacije"
+
+msgid "IDS_ST_BODY_APPLICATION_SETTINGS"
+msgstr "Postavke aplikacija"
+
+msgid "IDS_ST_BODY_APPLICATION_MANAGER"
+msgstr "Upravljanje aplikacijama"
+
+msgid "IDS_ST_BODY_APPLICATION_INFO"
+msgstr "Detalji aplikacije"
+
+msgid "IDS_ST_BODY_APPLICATION"
+msgstr "Aplikacija"
+
+msgid "IDS_ST_BODY_ANTIVIRUS_SOFTWARE_ABB"
+msgstr "Protuvirusni softver"
+
+msgid "IDS_ST_BODY_AM"
+msgstr "AM"
+
+msgid "IDS_ST_BODY_ALWAYS_REJECT"
+msgstr "Uvijek odbij"
+
+msgid "IDS_ST_BODY_ALWAYS_ON"
+msgstr "Uvijek uključeno"
+
+msgid "IDS_ST_BODY_ALWAYS_OFF"
+msgstr "Uvijek isključeno"
+
+msgid "IDS_ST_BODY_ALARM"
+msgstr "Alarm"
+
+msgid "IDS_ST_BODY_AFTER_YOU_DOWNLOAD_AND_INSTALL_APPLICATIONS_APPLICATIONS_WILL_BE_SHOWN_HERE"
+msgstr "Nakon skidanja i instaliranja aplikacija, aplikacije će se ovdje prikazati"
+
+msgid "IDS_ST_BODY_AFTER_RESETTING_PHONE_WILL_RESTART_AUTOMATICALLY"
+msgstr "Nakon vraćanja na zadane postavke, telefon će se ponovno pokrenuti."
+
+msgid "IDS_ST_BODY_ADJUST_BRIGHTNESS_LEVEL"
+msgstr "Podesite razinu svjetline"
+
+msgid "IDS_ST_BODY_ADJUST_AUTOMATIC_BRIGHTNESS"
+msgstr "Podesite automatsku svjetlinu"
+
+msgid "IDS_ST_BODY_ACCESS_NAME"
+msgstr "Pristupno ime"
+
+msgid "IDS_ST_BODY_ACCESSIBILITY"
+msgstr "Pristupačnost"
+
+msgid "IDS_ST_BODY_ABOUT_DEVICE"
+msgstr "O uređaju"
+
+msgid "IDS_QCP_HEADER_QUICK_COMMAND"
+msgstr "Brza naredba"
+
+msgid "IDS_ECON_BODY_EASY_CONNECT_M_SHARING_ABB"
+msgstr "Jed. spajanje"
+
+msgid "IDS_SCR_POP_SCREEN_READER_IS_NOT_SUPPORTED_BY_PS_PRESS_THE_BACK_KEY_TO_RETURN_TO_THE_PREVIOUS_SCREEN"
+msgstr "%s ne podržava čitač zaslona. Pritisnite tipku Nazad za vraćanje na prethodni zaslon."
+
+msgid "IDS_KEEPIT_HEADER_KEEPIT_M_APPLICATION_NAME"
+msgstr "KeepIt"
+
+msgid "IDS_CALL_POP_UNAVAILABLE_T_DIAL"
+msgstr "Nedostupno."
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Samo SOS pozivi."
+
+msgid "IDS_JAVA_OPT_SIM_SETTINGS"
+msgstr "SIM postavke"
+
+msgid "IDS_TASK_BODY_NO_RUNNING_APPLICATION"
+msgstr "Nema pokrenutih aplikacija..."
+
+msgid "IDS_VC_MBODY_NOTIFICATION_READ_OUT"
+msgstr "Čitanje obavijesti"
+
+msgid "IDS_VC_HEADER_VOICE_RECOGNITION"
+msgstr "Glasovno prepoznavanje"
+
+msgid "IDS_SSEARCH_POP_SEARCHED"
+msgstr "Pretraženo."
+
+msgid "IDS_WIFI_BODY_DOT"
+msgstr "."
+
+msgid "IDS_DLNA_BODY_ACCESS_POINT_NAME"
+msgstr "Naziv pristupne točke"
+
+msgid "IDS_SKM_BODY_ASK_M_IDEA_SKETCH"
+msgstr "Pitaj"
+
+msgid "IDS_HELP_POP_THE_FRONT_CAMERA_IS_NOT_BEING_USED_BY_ANOTHER_APPLICATION"
+msgstr "Prednji fotoaparat trenutno ne koristi nijedna aplikacija."
+
+msgid "IDS_HELP_POP_THE_DEVICE_IS_IN_WELL_LIT_CONDITIONS_BUT_THE_SCREEN_IS_NOT_IN_DIRECT_LIGHT"
+msgstr "Uređaj se nalazi u uvjetima dobrog osvjetljenja no zaslon nije na izravnom svijetlu."
+
+msgid "IDS_HELP_POP_THE_DEVICE_IS_HELD_STEADY_AND_UPRIGHT"
+msgstr "Uređaj se drži čvrsto i uspravno."
+
+msgid "IDS_HELP_BODY_THE_DEVICE_REACTS_INTELLIGENTLY_BY_ADAPTING_THE_SCREEN_WHEN_IT_DETECTS_YOUR_FACE"
+msgstr "Uređaj reagira pametno tako da prilagodi zaslon kada prepozna vaše lice i oči."
+
+msgid "IDS_HELP_BODY_SMART_SCREEN_WORKS_BEST_UNDER_THE_FOLLOWING_CONDITIONS_C"
+msgstr "Pametni zaslon najbolje radi u sljedećim uvjetima:"
+
+msgid "IDS_HELP_BODY_SMART_ROTATION_DISABLES_AUTO_SCREEN_ROTATION_BY_CHECKING_THE_ORIENTATION_OF_YOUR_FACE_AND_THE_DEVICE_BY_ITS_FRONT_CAMERA"
+msgstr "Pametno zakretanje isključuje automatsko zakretanje zaslona provjerom usmjerenosti lica i uređaja prednjim fotoaparatom."
+
+msgid "IDS_LBS_HEADER_LOCATION"
+msgstr "Položaj"
+
+msgid "IDS_LBS_BODY_DESTINATION"
+msgstr "Odredište"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Ne"
+
+msgid "IDS_HELP_BODY_SMART_STAY_DETECTS_YOUR_EYES_WITH_THE_FRONT_CAMERA_SO_THAT_THE_SCREEN_STAYS_ON_WHEN_YOU_ARE_LOOKING_AT_IT"
+msgstr "Pametno mirovanje prednjom kamerom prati vaše oči te zaslon ostaje uključen sve dok gledate u njega."
+
+msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_NOTI_MSG"
+msgstr "Nećete više moći koristiti aplikacije kao što su internet, email i YouTube putem mobilnih mreža. Nastavak?"
+
+msgid "IDS_ST_BODY_10_MINUTES"
+msgstr "10 minuta"
+
+msgid "IDS_ST_BODY_15SEC"
+msgstr "15 sek"
+
+msgid "IDS_ST_BODY_24_HOURS"
+msgstr "24 sati"
+
+msgid "IDS_ST_BODY_2_MINUTES"
+msgstr "2 min"
+
+msgid "IDS_ST_BODY_30SEC"
+msgstr "30 sek"
+
+msgid "IDS_ST_BODY_5_MINUTES"
+msgstr "5 minuta"
+
+msgid "IDS_ST_BODY_APPLICATIONS"
+msgstr "Aplikacije"
+
+msgid "IDS_ST_BODY_DONT_ASK_AGAIN"
+msgstr "Ne pitaj više"
+
+msgid "IDS_ST_BODY_P1SS_IS_CURRENTLY_P2SS_T_TTS"
+msgstr "%1$s je trenutno %2$s."
+
+msgid "IDS_ST_BODY_PASSWORDS_MUST_CONSIST_OF_AT_LEAST_4_ALPHANUMERIC_CHARACTERS_ALSO_INCLUDING_AT_LEAST_1_ALPHABETICAL_CHARACTER"
+msgstr "Lozinke moraju sadržavati najmanje 4 alfanumerička znaka, pri čemu je najmanje 1 slovo abecede."
+
+msgid "IDS_ST_BODY_PUK1_BLOCKED"
+msgstr "PUK1 blokiran."
+
+msgid "IDS_ST_BODY_PUK1_CODE"
+msgstr "PUK1 lozinka"
+
+msgid "IDS_ST_BODY_PUK2"
+msgstr "PUK2"
+
+msgid "IDS_ST_BUTTON2_POWER_SAVING_MODE_ABB"
+msgstr "Štednja baterije"
+
+msgid "IDS_ST_BUTTON_CANCEL_ABB2"
+msgstr "Prekid"
+
+msgid "IDS_ST_HEADER_1_PROCESS_AT_MOST_ABB"
+msgstr "Najviše 1 proces"
+
+msgid "IDS_ST_HEADER_2_PROCESSES_AT_MOST_ABB"
+msgstr "Najviše 2 procesa"
+
+msgid "IDS_ST_HEADER_3_PROCESSES_AT_MOST_ABB"
+msgstr "Najviše 3 procesa"
+
+msgid "IDS_ST_HEADER_4_PROCESSES_AT_MOST_ABB"
+msgstr "Najviše 4 procesa"
+
+msgid "IDS_ST_HEADER_ENTER_PIN_ABB3"
+msgstr "Unesite PIN"
+
+msgid "IDS_ST_OPT_2G_ONLY"
+msgstr "Samo 2G"
+
+msgid "IDS_ST_OPT_3G_2G_HAUTO_CONNECT"
+msgstr "3G/2G (automatsko spajanje)"
+
+msgid "IDS_ST_OPT_4G_3G_2G_HAUTO_CONNECT"
+msgstr "4G/3G/2G (automatsko spajanje)"
+
+msgid "IDS_ST_POP_EMERGENCY_MODE_SAVES_BATTERY_POWER_BY_C_MSG"
+msgstr "Hitni način štedi bateriju tako što:\n\n- Mijenja boje zaslona u sive tonove.\n- Ograničava broj aplikacija koje se mogu koristiti.\n- Isključi mobilne podatke dok je zaslon isključen.\n- Isključi značajke povezivanja kao što su Wi-Fi i Bluetooth.\n\nNeke značajke, kao što su čitač zaslona i S View poklopac, neće biti dostupne.\nNeki od vaših Dynamic Boxova početnog zaslona možda se neće prikazati te će ih možda trebati ponovno konfigurirati."
+
+msgid "IDS_ST_POP_INCORRECT_PUK1_CODE"
+msgstr "Neispravna PUK1 lozinka."
+
+msgid "IDS_ST_POP_INCORRECT_PUK1_PD_ATTEMPTS_LEFT"
+msgstr "Neispravan PUK1. Preostalo %d pokušaja."
+
+msgid "IDS_ST_POP_INCORRECT_PUK2"
+msgstr "Neispravan PUK2."
+
+msgid "IDS_ST_POP_INCORRECT_PUK2_PD_ATTEMPTS_LEFT"
+msgstr "Neispravan PUK2. Preostalo %d pokušaja."
+
+msgid "IDS_ST_POP_PIN_CHANGED"
+msgstr "PIN promijenjen."
+
+msgid "IDS_TASKMGR_BUTTON_CLEAR_CACHE"
+msgstr "Obriši privrem. mem."
+
+msgid "IDS_ST_BODY_3G_ONLY"
+msgstr "Samo 3G"
+
+msgid "IDS_ST_HEADER_ADD"
+msgstr "Dodaj"
+
+msgid "IDS_ST_BODY_SECONDS"
+msgstr "Sek"
+
+msgid "IDS_ST_BUTTON_CANCEL"
+msgstr "Prekid"
+
+msgid "IDS_ST_BODY_1_5_SECONDS"
+msgstr "1,5 sek"
+
+msgid "IDS_MSG_ACBUTTON_CANCEL_ABB"
+msgstr "ODUSTANI"
+
+msgid "IDS_MSG_ACBUTTON_DONE_ABB"
+msgstr "GOTOVO"
+
+msgid "IDS_ST_HEADER_TURN_ON_MOBILE_DATA"
+msgstr "Uključi mobilne podatke"
+
+msgid "IDS_ST_HEADER_UNABLE_TO_PLAY_SAMPLE_ABB"
+msgstr "Nemogućnost reprodukc. uzorka"
+
+msgid "IDS_ST_POP_SAMPLES_CANNOT_BE_PLAYED_DURING_CALLS"
+msgstr "Uzorci se ne mogu reproducirati tijekom poziva."
+
+msgid "IDS_ST_HEADER_DEVICE_NAME"
+msgstr "Naziv uređaja"
+
+msgid "IDS_ST_HEADER_DELETE_ITEMS_ABB2"
+msgstr "Izbriši stavke"
+
+msgid "IDS_ST_HEADER_FEEDBACK"
+msgstr "Povratna informacija"
+
+msgid "IDS_ST_BODY_SELECT_ALL"
+msgstr "Odaberi sve"
+
+msgid "IDS_ST_BODY_TOTAL"
+msgstr "Ukupno"
+
+msgid "IDS_ST_HEADER_MANAGE_CERTIFICATES_ABB"
+msgstr "Upravljanje certifikatima"
+
+msgid "IDS_ST_BODY_INCORRECT_PASSWORD"
+msgstr "Neispravna lozinka."
+
+msgid "IDS_ST_HEADER_TURN_OFF_MOBILE_DATA"
+msgstr "Isključi mobilne podatke"
+
+msgid "IDS_ST_BODY_FLIGHT_MODE_DISABLES_CALLING_AND_MESSAGING_FUNCTIONS_AND_TURNS_OFF_MOBILE_DATA_AND_CONNECTIVITY_FUNCTIONS_MSG"
+msgstr "Profil Bez mreže onemogućuje funkcije poziva i slanja poruka i isključuje funkcije mobilnih podataka i spajanja, kao što su Wi-Fi i Bluetooth. Da biste koristili Wi-Fi i Bluetooth u profilu Bez mreže, uključite ih u Postavkama ili u ploči s obavijestima. Uključit će se profil Bez mreže."
+
+msgid "IDS_ST_BODY_TYPE"
+msgstr "Vrsta"
+
+msgid "IDS_ST_BODY_PERSONAL"
+msgstr "Osobno"
+
+msgid "IDS_ST_HEADER_LOCK_SCREEN_AND_SECURITY_ABB"
+msgstr "Zaslon zaklj. i sigurnost"
+
+msgid "IDS_ST_HEADER_PRIVACY_AND_SAFETY_ABB"
+msgstr "Privatnost i sigurnost"
+
+msgid "IDS_ST_BODY_MOBILE_NETWORKS"
+msgstr "Mobilne mreže"
+
+msgid "IDS_ST_HEADER_MORE_CONNECTION_SETTINGS"
+msgstr "Više postavki veze"
+
+msgid "IDS_ST_MBODY_LEGAL_INFORMATION_ABB"
+msgstr "Pravne informacije"
+
+msgid "IDS_ST_BODY_DEVICE_INFORMATION"
+msgstr "Informacije o uređaju"
+
+msgid "IDS_ST_BODY_PHONE_NUMBER"
+msgstr "Telefonski broj"
+
+msgid "IDS_ST_BODY_MODEL_NUMBER"
+msgstr "Broj modela"
+
+msgid "IDS_ST_MBODY_TIZEN_VERSION"
+msgstr "Tizen verzija"
+
+msgid "IDS_ST_MBODY_BLUETOOTH_ADDRESS"
+msgstr "Bluetooth adresa"
+
+msgid "IDS_ST_BODY_WI_FI_MAC_ADDRESS"
+msgstr "Wi-Fi MAC adresa"
+
+msgid "IDS_ST_BUTTON_BATTERY_POWER_ABB"
+msgstr "Baterija"
+
+msgid "IDS_ST_TMBODY_SECURITY_STATUS"
+msgstr "Sigurnosni status"
+
+msgid "IDS_ST_SBODY_SHOW_THE_TIME_IN_24_HOUR_FORMAT_INSTEAD_OF_12_HOUR_HAM_PM_FORMAT"
+msgstr "Prikaz vremena u formatu 24 sata umjesto u formatu 12 sati (ujutro/popodne)."
+
+msgid "IDS_ST_MBODY_AUTO_UPDATE"
+msgstr "Auto. aktualizacija"
+
+msgid "IDS_ST_MBODY_24_HOUR_CLOCK"
+msgstr "24-satni sat"
+
+msgid "IDS_ST_BODY_MAGNIFIER"
+msgstr "Povećalo"
+
+msgid "IDS_ST_TMBODY_CACHE"
+msgstr "Predmemorija"
+
+msgid "IDS_ST_HEADER_CLEAR_CACHE_ABB"
+msgstr "Brisanje predmemorije"
+
+msgid "IDS_ST_POP_THERE_IS_NO_CACHE_DATA_TO_CLEAR"
+msgstr "Nema podataka za brisanje iz predmemorije."
+
+msgid "IDS_ST_POP_ALL_THE_CACHE_DATA_WILL_BE_CLEARED"
+msgstr "Izbrisat će se svi podaci iz predmemorije."
+
+msgid "IDS_ST_BUTTON_CLEAR_CACHE_ABB"
+msgstr "Izbr. predmem."
+
+msgid "IDS_ST_BODY_12_HOURS"
+msgstr "12 sati"
+
+msgid "IDS_ST_BODY_1MINUTE"
+msgstr "1 min"
+
+msgid "IDS_ST_BODY_ACCOUNTS"
+msgstr "Računi"
+
+msgid "IDS_ST_HEADER_ALLSHARE"
+msgstr "AllShare"
+
+msgid "IDS_ST_BODY_ANSWERINGMODE_AUTOMATIC"
+msgstr "Automatski"
+
+msgid "IDS_ST_BUTTON_BACK"
+msgstr "Nazad"
+
+msgid "IDS_ST_BODY_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BODY_ADVANCEDOPTIONS_CERTIFICATES"
+msgstr "Certifikati"
+
+msgid "IDS_ST_BODY_CONTACTS"
+msgstr "Imenik"
+
+msgid "IDS_ST_BODY_MYTHEME_CREATE"
+msgstr "Novi"
+
+msgid "IDS_ST_BODY_CALLERID_DEFAULT"
+msgstr "Postavljeno"
+
+msgid "IDS_ST_BODY_FM_RADIO"
+msgstr "FM Radio"
+
+msgid "IDS_ST_BODY_FONT"
+msgstr "Slova"
+
+msgid "IDS_ST_BODY_GALLERY"
+msgstr "Galerija"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Upute"
+
+msgid "IDS_ST_BODY_MANUAL"
+msgstr "Ručno"
+
+msgid "IDS_ST_BODY_APPLICATIONSETTINGS_MESSAGE"
+msgstr "Poruka"
+
+msgid "IDS_ST_BODY_MUSIC"
+msgstr "Glazba"
+
+msgid "IDS_ST_BODY_NFC"
+msgstr "NFC"
+
+msgid "IDS_ST_BODY_ALERTTYPE_OFF"
+msgstr "Isključeno"
+
+msgid "IDS_ST_BODY_ON"
+msgstr "Uključeno"
+
+msgid "IDS_ST_BODY_MEMORYSTATUS_OTHERS"
+msgstr "Ostalo"
+
+msgid "IDS_ST_BODY_PIN_LOCK"
+msgstr "PIN zaključavanje"
+
+msgid "IDS_ST_BODY_RESET"
+msgstr "Poništavanje"
+
+msgid "IDS_ST_POP_NETWORKSERVICES_SEARCHING"
+msgstr "Pretraživanje..."
+
+msgid "IDS_ST_BODY_SIZE"
+msgstr "Veličina"
+
+msgid "IDS_ST_HEADER_SYNCHRONISE"
+msgstr "Sinkronizacija"
+
+msgid "IDS_ST_BODY_SYSTEM"
+msgstr "Sistem"
+
+msgid "IDS_ST_BUTTON2_S_PLANNER"
+msgstr "S Planer"
+
+msgid "IDS_ST_BODY_TWITTER"
+msgstr "Twitter"
+
+msgid "IDS_ST_BODY_USERNAME"
+msgstr "Korisničko ime"
+
+msgid "IDS_ST_BODY_VOICE"
+msgstr "Zvuk"
+
+msgid "IDS_ST_BODY_DEFAULTMEMORY_VOICE_RECORDER"
+msgstr "Diktafon"
+
+msgid "IDS_ST_BODY_WI_FI"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BODY_YYYY_MM_DD_DOT"
+msgstr "GGGG.MM.DD"
+
+msgid "IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING"
+msgstr "Svjetlina"
+
+msgid "IDS_ST_HEADER_SORT_BY"
+msgstr "Sortiraj po"
+
+msgid "IDS_ST_BODY_DELETED"
+msgstr "Obrisano."
+
+msgid "IDS_ST_POP_ERROR"
+msgstr "Greška."
+
+msgid "IDS_ST_TPOP_MAXIMUM_NUMBER_OF_CHARACTERS_REACHED"
+msgstr "Dosegnut maksimalan broj znakova."
+
+msgid "IDS_ST_TPOP_TRY_AGAIN"
+msgstr "Ponovite."
+
+msgid "IDS_ST_BODY_VERSION"
+msgstr "Verzija"
+
+msgid "IDS_ST_BODY_DELETE"
+msgstr "Obriši"
+
+msgid "IDS_ST_SK_SET_LITE"
+msgstr "Postavi"
+
+msgid "IDS_ST_SK_YES"
+msgstr "Da"
+
+msgid "IDS_SAPPS_SK_TRY_ABB"
+msgstr "Pokušaj"
+
+msgid "IDS_ST_BODY_PLAY_A_SOUND_WHEN_BUTTONS_ICONS_AND_MENU_ITEMS_ARE_TAPPED"
+msgstr "Reproduciraj zvuk kada se dodirnu gumbi, ikone ili stavke izbornika."
+
+msgid "IDS_ST_MBODY_KEYBOARD_SOUND"
+msgstr "Zvuk tipkovnice"
+
+msgid "IDS_ST_MBODY_RINGTONE"
+msgstr "Melodija"
+
+msgid "IDS_ST_MBODY_TOUCH_SOUND"
+msgstr "Ton dodira"
+
+msgid "IDS_ST_SBODY_PLAY_A_SOUND_WHEN_THE_SAMSUNG_KEYBOARD_IS_TAPPED"
+msgstr "Reproduciraj zvuk kada se dodirne Samsung tipkovnica."
+
+msgid "IDS_ST_POP_MOUNTING_SD_CARD_ING"
+msgstr "Umetanje SD kartice..."
+
+msgid "IDS_ST_BODY_ALL"
+msgstr "Sve"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "Usluga lokacije"
+
+msgid "IDS_ST_BODY_VPN"
+msgstr "VPN"
+
+msgid "IDS_ST_SK_OPTIONS_LITE"
+msgstr "Opcije"
+
+msgid "IDS_ST_BODY_TTS"
+msgstr "TTS"
+
+msgid "IDS_ST_BODY_VOICE_CONTROL"
+msgstr "Kontrola glasom"
+

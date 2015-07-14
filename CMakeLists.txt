@@ -1,0 +1,104 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+PROJECT(setting)
+
+SET(SETTING_PKG_NAME org.tizen.setting)
+
+SET(PREFIX "/usr/apps/org.tizen.setting")
+SET(BINDIR "${PREFIX}/bin")
+SET(RESDIR "${PREFIX}/res")
+SET(DATADIR "${PREFIX}/data")
+SET(LOCALEDIR "${RESDIR}/locale")
+SET(ICONDIR "/usr/share/icons/default/small")
+SET(EDJDIR "${RESDIR}/edje")
+SET(IMAGEDIR "${RESDIR}/images")
+SET(CMAKE_SKIP_BUILD_RPATH true)
+
+
+#set variable
+SET(SETTING_PROFILE setting-profile)
+SET(SETTING_CONNECTIVITY setting-connectivity)
+SET(SETTING_SECURITY setting-security)
+SET(SETTING_LOCKTYPE setting-locktype)
+SET(SETTING_DISPLAY setting-display)
+SET(SETTING_APPLICATIONS setting-applications)
+SET(SETTING_MORECONNECTIONS setting-moreconnections)
+SET(SETTING_TIME setting-time)
+SET(SETTING_PHONE setting-phone)
+SET(SETTING_PASSWORD setting-password)
+SET(SETTING_COMMON setting-common)
+SET(SETTING_NETWORK setting-network)
+SET(SETTING_ABOUT setting-about)
+SET(SETTING_FONT setting-font)
+SET(SETTING_STORAGE setting-storage)
+SET(SETTING_FILEVIEW setting-fileview)
+SET(SETTING_RINGTONE setting-ringtone)
+#SET(SETTING_DATAUSAGE setting-datausage)
+SET(SETTING_APPMGR setting-appmgr)
+SET(SETTING_FLIGHTMODE setting-flightmode)
+SET(SETTING_SYSPOPUP setting-syspopup)
+SET(SETTING_ACCESSIBILITY setting-accessibility)
+
+SET(SETTING_PROFILE_UG setting-profile-efl)
+SET(SETTING_DEVELOPEROPTION_UG setting-developeroption-efl)
+SET(SETTING_SECURITY_UG setting-security-efl)
+SET(SETTING_LOCKTYPE_UG setting-locktype-efl)
+SET(SETTING_DISPLAY_UG setting-display-efl)
+SET(SETTING_APPLICATIONS_UG setting-applications-efl)
+SET(SETTING_MORECONNECTIONS_UG setting-moreconnections-efl)
+SET(SETTING_TIME_UG setting-time-efl)
+SET(SETTING_PHONE_UG setting-phone-efl)
+SET(SETTING_NETWORK_UG setting-network-efl)
+SET(SETTING_ABOUT_UG setting-about-efl)
+SET(SETTING_FILEVIEW_UG setting-fileview-efl)
+SET(SETTING_RINGTONE_UG setting-ringtone-efl)
+
+SET(SETTING_PASSWORD_UG setting-password-efl)
+SET(SETTING_FONT_UG setting-font-efl)
+SET(SETTING_STORAGE_UG setting-storage-efl)
+#(SETTING_DATAUSAGE_UG setting-datausage-efl)
+SET(SETTING_MANAGE_APPS_UG setting-manage-applications-efl)
+SET(SETTING_FLIGHTMODE_UG setting-flightmode-efl)
+SET(SETTING_ACCESSIBILITY_UG setting-accessibility-efl)
+
+
+SET(LIB_SETTING_COMMON setting-common)
+
+
+#SET(GC_SECTIONS_FLAGS "-fdata-sections -ffunction-sections -Wl,--gc-sections -Werror-implicit-function-declaration -Wparentheses -feliminate-unused-debug-types -pipe -Wall -Wp, -D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -Wformat -Wformat-security -fmessage-length=0 -fdiagnostics-color=never -Wno-deprecated-declarations")
+SET(GC_SECTIONS_FLAGS "-fdata-sections -ffunction-sections -Wl,--gc-sections")
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${GC_SECTIONS_FLAGS}")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GC_SECTIONS_FLAGS}")
+
+
+#setting main view build start
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${SETTING_COMMON}/include)
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_COMMON})
+
+# setting bin
+# setting plugin
+ADD_SUBDIRECTORY(src)
+
+# all UGs for Setting itself
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_PHONE})
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_CONNECTIVITY})
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_DISPLAY})
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_NETWORK})
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_APPLICATIONS})
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_MORECONNECTIONS})
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_PROFILE})
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_SECURITY})
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_LOCKTYPE})
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_TIME})
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_ABOUT})
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_PASSWORD})
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_FONT})
+#ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_FILEVIEW})
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_RINGTONE})
+#ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_APPMGR})
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_FLIGHTMODE})
+#ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_SYSPOPUP})
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_ACCESSIBILITY})
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_STORAGE})
+
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/${SETTING_PKG_NAME}.efl DESTINATION /etc/smack/accesses.d)

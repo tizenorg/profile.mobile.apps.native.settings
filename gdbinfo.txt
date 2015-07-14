@@ -1,0 +1,17 @@
+directory ./src
+directory ./setting-profile/src
+directory ./setting-about/src
+directory ./setting-common/src
+directory ./setting-connectivity/src
+directory ./setting-display/src
+directory ./setting-font/src
+directory ./setting-memory/src
+directory ./setting-network/src
+directory ./setting-password/src
+directory ./setting-phone/src
+directory ./setting-profile/src
+directory ./setting-reset/src
+directory ./setting-security/src
+directory ./setting-time/src
+directory ./setting-menuscreen/src
+

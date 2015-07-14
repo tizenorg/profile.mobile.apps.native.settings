@@ -1,0 +1,509 @@
+#!/bin/sh
+#This is setting postinst file
+
+GOPTION=""  # Set without -g, -u options
+if [ ${USER} == "root" ]
+then
+  # Set vconf values with -g/-u options
+  GOPTION="-g 6514"
+fi
+
+ECHO="echo"
+################# shell paragrames ##############
+FLIGHTMODE="flightmode"
+NETWORK="network"
+USBCON="usbconnectivity"
+
+SOUND="sounds"
+WALLPAPER="wallpaper"
+DISPLAY="display"
+
+MOTIONS="motions"
+TILT_ZOOM="tilt_zoom"
+TILT_SCROLL="tilt_scroll"
+PANNING_MOVE="panning_move"
+PANNING_BROWSER="panning_browser"
+DOUBLETAP="double_tap"
+TURNOVER="turn_over"
+SHAKE="shake"
+PICKUP_NOTIFIED="pickup_notified"
+PICKUP_CALL="pickup_call"
+
+POWERSAVING="powersaving"
+FONT="font"
+ROTATIONLOCK="rotationLock"
+TIMEDATE="timeAndData"
+ACCESS="accessibility"
+LANGREGION="language"
+VIEWTYPE="viewtype"
+TOUCH="touch"
+LICENSE="license"
+
+NOTI="notification"
+SECURITY="security"
+MEMORY="memory"
+ABOUT="about"
+MENUWIDGET="menuwidget"
+MENUSCREEN="menuscreen"
+
+resetMenuscreen()
+{
+	#vconftool $GOPTION set -t string db/setting/menuscreen/selected "com.samsung.cluster-home"
+	vconftool $GOPTION set -t string db/setting/menuscreen/package_name "com.samsung.menu-screen"
+}
+
+#$ECHO $GOPTION
+
+#Flightmode
+resetFlightmode()
+{
+	vconftool $GOPTION set -t bool db/setting/flight_mode "0"
+}
+
+#network
+resetNetwork()
+{
+	vconftool $GOPTION set -t int db/setting/select_network "0"
+	vconftool $GOPTION set -t int db/setting/network_mode "0"
+	vconftool $GOPTION set -t bool db/setting/3gEnabled "1"
+	vconftool $GOPTION set -t bool db/setting/data_roaming "1"
+}
+
+#UsbConnectivity
+resetUsbConnectivity()
+{
+	vconftool $GOPTION set -t int memory/setting/usb_mode "-1" -i -f
+	vconftool $GOPTION set -t int memory/setting/usb_sel_mode "0" -i -f
+	vconftool $GOPTION set -t int memory/setting/usb_in_mode_change "0" -i -f
+}
+
+#sound profiles
+resetSound()
+{
+	DEFAULT_CALL_TONE="/opt/share/settings/Ringtones/Over the horizon.mp3"
+	DEFAULT_NOTI_TONE="/opt/share/settings/Alerts/Whistle.mp3"
+	DEFAULT_MEDIA_TONE="/opt/share/settings/Previews/Over the horizon.mp3"
+
+	vconftool $GOPTION set -t bool db/setting/sound/sound_on "1"
+	vconftool $GOPTION set -t bool db/setting/sound/vibration_on "1"
+
+	vconftool $GOPTION set -t int db/setting/sound/call/ringtone_sound_volume "13"
+	vconftool $GOPTION set -t int db/setting/sound/noti/sound_volume "7"
+	vconftool $GOPTION set -t int db/setting/sound/media/sound_volume "7"
+	vconftool $GOPTION set -t int db/setting/sound/touch_feedback/sound_volume "5"
+
+	vconftool $GOPTION set -t int db/setting/sound/noti/vibration_level "5"
+	vconftool $GOPTION set -t int db/setting/sound/touch_feedback/vibration_level "3"
+	vconftool $GOPTION set -t int db/setting/sound/touch_feedback/vibration_level_bak "3" ##private key
+
+	vconftool $GOPTION set -t string db/setting/sound/call/ringtone_path "${DEFAULT_CALL_TONE}"
+	vconftool $GOPTION set -t int db/setting/sound/call/vibration_type "2"
+
+	vconftool $GOPTION set -t string db/setting/sound/noti/msg_ringtone_path	"${DEFAULT_NOTI_TONE}"
+	vconftool $GOPTION set -t int db/setting/sound/noti/msg_alert_rep_type		"0"
+
+	vconftool $GOPTION set -t string db/setting/sound/noti/email_ringtone_path	"${DEFAULT_NOTI_TONE}"
+	vconftool $GOPTION set -t int db/setting/sound/noti/email_alert_rep_type		"0"
+
+	vconftool $GOPTION set -t bool db/setting/sound/sound_lock "1"
+}
+
+#wallpaper
+resetWallpaper()
+{
+	vconftool $GOPTION set -t string db/menu_widget/bgset "/opt/share/settings/Wallpapers/Home_default.jpg"
+	vconftool $GOPTION set -t string db/idle_lock/bgset "/opt/share/settings/Wallpapers/Home_default.jpg"
+}
+
+#motions
+resetTiltZoom()
+{
+	vconftool $GOPTION set -t bool db/setting/use_tilt "1"
+	vconftool $GOPTION set -t int db/setting/tilt_sensitivity "3"
+}
+resetTiltScroll()
+{
+	vconftool $GOPTION set -t bool db/setting/use_tilt_scroll "1"
+	vconftool $GOPTION set -t int db/setting/tilt_scroll_sensitivity "3"
+}
+
+resetPanningMove()
+{
+	vconftool $GOPTION set -t bool db/setting/use_panning "1"
+	vconftool $GOPTION set -t int db/setting/panning_sensitivity "3"
+}
+resetPanningBrowser()
+{
+	vconftool $GOPTION set -t bool db/setting/use_panning_browser "1"
+	vconftool $GOPTION set -t int db/setting/panning_browser_sensitivity "3"
+}
+resetDoubleTap()
+{
+	vconftool $GOPTION set -t bool db/setting/use_double_tap "1"
+}
+
+resetShake()
+{
+	vconftool $GOPTION set -t bool db/setting/use_shake "1"
+}
+resetPickupNotified()
+{
+	vconftool $GOPTION set -t bool db/setting/use_pick_up "1"
+}
+resetPickupCall()
+{
+	vconftool $GOPTION set -t bool db/setting/use_pick_up_call "1"
+}
+
+resetTurnOver()
+{
+	vconftool $GOPTION set -t bool db/setting/use_turn_over "1"
+}
+
+resetMotions()
+{
+	vconftool $GOPTION set -t bool db/setting/motion_active "1"
+	vconftool $GOPTION set -t bool db/setting/motion/palm_swipe_capture "1"
+	vconftool $GOPTION set -t bool db/setting/motion/palm_touch_mute "1"
+
+	resetTiltZoom
+	resetTiltScroll
+	resetPanningMove
+	resetPanningBrowser
+	resetDoubleTap
+	resetTurnOver
+	resetShake
+	resetPickupNotified
+	resetPickupCall
+}
+
+#display and light
+resetDisplay()
+{
+	#backlight
+	vconftool $GOPTION set -t int db/setting/lcd_backlight_normal "30"
+	#vconftool $GOPTION set -t int db/setting/lcd_timeout_normal_backup "30"
+
+	#brightness
+	vconftool $GOPTION set -t int db/setting/Brightness "-1"
+	vconftool $GOPTION set -t int db/setting/brightness_automatic "0"
+
+	#battery
+	vconftool $GOPTION set -t bool db/setting/battery_percentage "0"
+	#launch
+	#vconftool $GOPTION set -t string db/menu_widget/launch_effect "0"
+}
+
+resetPowersaving()
+{
+	vconftool $GOPTION set -t bool db/setting/pwrsv/system_mode/status "1"
+	vconftool $GOPTION set -t bool db/setting/pwrsv/system_mode/reminder "1"
+	vconftool $GOPTION set -t bool db/setting/pwrsv/custom_mode/status "0"
+
+	vconftool $GOPTION set -t int db/setting/pwrsv/custom_mode/at "30"
+	vconftool $GOPTION set -t bool db/setting/pwrsv/custom_mode/wifi "1"
+	vconftool $GOPTION set -t bool db/setting/pwrsv/custom_mode/bt "1"
+	vconftool $GOPTION set -t bool db/setting/pwrsv/custom_mode/gps "1"
+	vconftool $GOPTION set -t bool db/setting/pwrsv/custom_mode/data_sync "1"
+	vconftool $GOPTION set -t bool db/setting/pwrsv/custom_mode/hotspot "1"
+
+	vconftool $GOPTION set -t bool db/setting/pwrsv/custom_mode/brt/status  "1"
+	vconftool $GOPTION set -t bool db/setting/pwrsv/custom_mode/brt/auto/status "0"
+	vconftool $GOPTION set -t int db/setting/pwrsv/custom_mode/brt/value "10"
+	vconftool $GOPTION set -t int db/setting/pwrsv/custom_mode/backlight/time "15"
+
+	#v0.4
+	vconftool $GOPTION set -t bool db/setting/pwrsv/custom_mode/cpu "0"
+	vconftool $GOPTION set -t bool db/setting/pwrsv/custom_mode/display "0"
+	vconftool $GOPTION set -t bool db/setting/pwrsv/custom_mode/bg_color "0"
+	vconftool $GOPTION set -t bool db/setting/pwrsv/custom_mode/screen_vib "0"
+}
+
+#font
+resetFont()
+{
+	vconftool $GOPTION set -t int db/setting/font_size "1"
+	vconftool $GOPTION set -t int db/setting/font_type "0"
+}
+
+#RotationLock
+resetRotationLock()
+{
+	vconftool $GOPTION set -t bool db/setting/rotate_lock "1"
+}
+
+#time and date (zone)
+resetTimeAndData()
+{
+	vconftool $GOPTION set -t bool db/setting/automatic_time_update "1"
+
+	vconftool $GOPTION set -t int db/menu_widget/regionformat_time1224 "1"
+	vconftool $GOPTION set -t int db/setting/date_format "0"
+	vconftool $GOPTION set -t int db/setting/weekofday_format  "0"
+
+	vconftool $GOPTION set -t string db/setting/timezone "+9"
+	# to be removed
+	vconftool $GOPTION set -t string db/setting/cityname_id "IDS_WCL_BODY_CITYNAME_SEOUL"
+
+	vconftool $GOPTION set -t string db/setting/timezone_id "Asia/Seoul"
+
+	#if [ -f /opt/etc/localtime ]
+	#then
+	rm -f /opt/etc/localtime
+	ln -s /usr/share/zoneinfo/Asia/Seoul /opt/etc/localtime
+	#fi
+}
+
+#accessibility
+resetAccessibility()
+{
+	vconftool $GOPTION set -t bool db/setting/accessibility/accessibility "0"
+	vconftool $GOPTION set -t bool db/setting/accessibility/high_contrast "0"
+	vconftool $GOPTION set -t bool db/setting/accessibility/screen_zoom "1"
+	vconftool $GOPTION set -t int db/setting/accessibility/font_size "1"
+	#vconftool $GOPTION set -t int db/setting/accessibility/font_style "0"
+	vconftool $GOPTION set -t bool db/setting/accessibility/torch_light "0"
+	vconftool $GOPTION set -t bool db/setting/accessibility/mono_audio "0"
+	vconftool $GOPTION set -t int db/setting/accessibility/power_key_hold "1"
+	vconftool $GOPTION set -t bool db/setting/accessibility/led_notify "0"
+
+	vconftool $GOPTION set -t bool db/ciss/call_answering_key "0"
+	vconftool $GOPTION set -t bool db/ciss/call_power_key_ends_call "0"
+	vconftool $GOPTION set -t int db/ciss/answering_mode "0"
+	vconftool $GOPTION set -t int db/ciss/answering_mode_time "3"
+
+	vconftool $GOPTION set -t bool db/setting/accessibility/accept_call "0"
+	vconftool $GOPTION set -t bool db/setting/accessibility/enable_auto_answer "0"
+	vconftool $GOPTION set -t int db/setting/accessibility/auto_answer "1"
+        vconftool $GOPTION set -t bool db/setting/accessibility/powerkey_end_calls "0"
+
+}
+
+#language & region
+resetLanguageAndRegion()
+{
+	vconftool $GOPTION set -t int db/setting/lang "2"
+	vconftool $GOPTION set -t string db/menu_widget/language "en_US.UTF-8"
+	vconftool $GOPTION set -t string db/menu_widget/regionformat "en_US.UTF-8"
+}
+
+#viewtype
+#resetViewtype()
+#{
+	#vconftool $GOPTION set -t int db/menuscreen/viewtype "0"
+	#vconftool $GOPTION set -t int db/taskswitcher/viewtype "0"
+#}
+
+#License
+resetLicense()
+{
+	vconftool $GOPTION set -t bool db/setting/transaction_tracking "0"
+	vconftool $GOPTION set -t bool db/setting/expiry_reminder "0"
+	vconftool $GOPTION set -t int db/setting/roaming_network "0"
+}
+
+#Ticker notification
+resetNotification()
+{
+	vconftool $GOPTION set -t bool db/setting/ticker_noti/messages "1"
+	vconftool $GOPTION set -t bool db/setting/ticker_noti/email "1"
+	vconftool $GOPTION set -t bool db/setting/ticker_noti/im "1"
+	vconftool $GOPTION set -t bool db/setting/ticker_noti/twitter "1"
+	vconftool $GOPTION set -t bool db/setting/ticker_noti/facebook "1"
+
+	# display content
+	vconftool $GOPTION set -t bool db/setting/ticker_noti/display_content/messages "1"
+	vconftool $GOPTION set -t bool db/setting/ticker_noti/display_content/email "1"
+	vconftool $GOPTION set -t bool db/setting/ticker_noti/display_content/im "1"
+	vconftool $GOPTION set -t bool db/setting/ticker_noti/display_content/twitter "1"
+	vconftool $GOPTION set -t bool db/setting/ticker_noti/display_content/facebook "1"
+
+	vconftool $GOPTION set -t bool db/setting/ticker_noti/badge/messages "1"
+	vconftool $GOPTION set -t bool db/setting/ticker_noti/badge/email "1"
+	vconftool $GOPTION set -t bool db/setting/ticker_noti/badge/im "1"
+	vconftool $GOPTION set -t bool db/setting/ticker_noti/badge/twitter "1"
+	vconftool $GOPTION set -t bool db/setting/ticker_noti/badge/facebook "1"
+}
+
+#security
+resetSecurity()
+{
+	rm -rf /opt/data/setting/set_info
+
+	vconftool $GOPTION set -t bool db/setting/power_on_lock "0"
+	vconftool $GOPTION set -t bool db/setting/simple_password "1"
+	vconftool $GOPTION set -t bool db/setting/fmm/sim_change_alert "0"
+	vconftool $GOPTION set -t string db/setting/fmm/recipients ""
+	vconftool $GOPTION set -t string db/setting/fmm/sender ""
+	vconftool $GOPTION set -t string db/setting/fmm/alert_message ""
+	vconftool $GOPTION set -t bool db/setting/fmm/remote_control "0"
+	vconftool $GOPTION set -t bool db/setting/fmm/location_consent "0"
+
+	# NOT USED NOW.
+	#vconftool $GOPTION set -t bool db/setting/rcs "0"
+
+	vconftool $GOPTION set -t int db/setting/phone_lock_attempts_left "5"
+	vconftool $GOPTION set -t string db/setting/phone_lock_timestamp ""
+	vconftool $GOPTION set -t int db/setting/sim_lock_attempts_left "5"
+	vconftool $GOPTION set -t string db/setting/sim_lock_timestamp ""
+
+	vconftool $GOPTION set -t bool db/setting/fixed_dialing_mode "0"
+}
+
+#Memory
+resetMemory()
+{
+	vconftool $GOPTION set -t int db/setting/default_memory/wap "0"
+	vconftool $GOPTION set -t int db/setting/default_memory/bluetooth "0"
+	vconftool $GOPTION set -t int db/setting/default_memory/camera "0"
+	vconftool $GOPTION set -t int db/setting/default_memory/voice_recorder "0"
+	vconftool $GOPTION set -t int db/setting/default_memory/fm_radio "0"
+	vconftool $GOPTION set -t int db/setting/default_memory/all_share "0"
+	vconftool $GOPTION set -t int db/setting/default_memory/adobe_air "0"
+	vconftool $GOPTION set -t int db/setting/default_memory/dvb_h "0"
+
+	# format - system server
+	#vconftool $GOPTION -i set -t int memory/mmc/format "0"
+}
+
+#about
+resetAbout()
+{
+	vconftool $GOPTION set -t string db/setting/device_name "Redwood"
+}
+
+########## invoke functions #######
+
+if [ $1 == $FLIGHTMODE ]; then
+	resetFlightmode
+
+elif [ $1 == $NETWORK ]; then
+	resetNetwork
+
+elif [ $1 == $USBCON ]; then
+	resetUsbConnectivity
+
+elif [ $1 == $SOUND ]; then
+	resetSound
+
+elif [ $1 == $WALLPAPER ]; then
+	resetWallpaper
+
+elif [ $1 == $DISPLAY ]; then
+	resetDisplay
+
+elif [ $1 == $MOTIONS ]; then
+	resetMotions
+
+elif [ $1 == $TILT_ZOOM ]; then
+	resetTiltZoom
+
+elif [ $1 == $TILT_SCROLL ]; then
+	resetTiltScroll
+
+elif [ $1 == $PANNING_MOVE ]; then
+	resetPanningMove
+
+elif [ $1 == $PANNING_BROWSER ]; then
+	resetPanningBrowser
+
+elif [ $1 == $DOUBLETAP ]; then
+	resetDoubleTap
+
+elif [ $1 == $SHAKE ]; then
+	resetShake
+
+elif [ $1 == $PICKUP_NOTIFIED ]; then
+	resetPickupNotified
+
+elif [ $1 == $PICKUP_CALL ]; then
+	resetPickupCall
+
+elif [ $1 == $TURNOVER ]; then
+	resetTurnOver
+
+elif [ $1 == $FONT ]; then
+	resetFont
+
+elif [ $1 == $POWERSAVING ]; then
+	resetPowersaving
+
+elif [ $1 == $ROTATIONLOCK ]; then
+	resetRotationLock
+
+elif [ $1 == $TIMEDATE ]; then
+	resetTimeAndData
+
+elif [ $1 == $ACCESS ]; then
+	resetAccessibility
+
+elif [ $1 == $LANGREGION ]; then
+	resetLanguageAndRegion
+
+#elif [ $1 == $VIEWTYPE ]; then
+#	resetViewtype
+
+elif [ $1 == $LICENSE ]; then
+	resetLicense
+
+elif [ $1 == $NOTI ]; then
+	resetNotification
+
+elif [ $1 == $SECURITY ]; then
+	resetSecurity
+
+elif [ $1 == $MEMORY ]; then
+	resetMemory
+
+elif [ $1 == $ABOUT ]; then
+	resetAbout
+
+elif [ $1 == $MENUSCREEN ]; then
+	resetMenuscreen
+else
+	resetFlightmode
+	resetNetwork
+	resetUsbConnectivity
+	resetSound
+	resetWallpaper
+	resetMotions
+	resetDisplay
+	resetPowersaving
+	resetFont
+	resetRotationLock
+	resetTimeAndData
+	resetAccessibility
+	resetLanguageAndRegion
+#	resetViewtype
+	resetLicense
+	resetNotification
+	resetSecurity
+	resetMemory
+	resetAbout
+	resetMenuscreen
+
+	vconftool $GOPTION -i set -t int memory/setting/font_changed "0"
+	#vconftool $GOPTION -i set -t int memory/mobile_hotspot/skin_changed "0"
+fi
+
+########## ending #######
+
+
+#create directory /opt/data/setting
+if [ "${USER}" == "root" ]
+then
+	if [ ! -d /opt/data/setting ]
+	then
+	  mkdir -p /opt/data/setting
+	fi
+
+#	if [ -f /opt/data/setting/setting.cfg ]
+#	then
+#		rm -rf /opt/data/setting/setting.cfg
+#	fi
+	chown 5000:5000 /opt/data/setting -R
+fi
+
+#heynotitool set setting_time_changed -a
+sync
+

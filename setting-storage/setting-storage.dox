@@ -1,0 +1,31 @@
+/**
+* @page setting-storage
+* @section setting-storage
+* @tableofcontents
+* UG creation code for setting-storage
+* it consists of:
+* - UG creation of only the default storage existing state.
+* - UG creation of the SD Card existing state.
+
+* @sebsection Showing the space infos of the storage
+*  such as: System memory, Applications, Audio, etc.
+
+* @sebsection Supporting the plugin and plugout of the SD Card
+* Function: storageUg_main_append_SD_info
+* If detecting SD Card existing, append the SD Card contents.
+
+* @sebsection providing the selecting storage type function for
+*  the applications below
+*  1. Shared content:
+*  - Bluttooth
+*  - NFC
+*  - WiFi direct
+*  - Bluttooth
+*
+*  2. Installed applications:
+
+* @subsection how to calculate each storage area
+* look at
+* http://slp-info.sec.samsung.net/confluence/display/SettingsUtility/Setting+-+Storage
+
+*/

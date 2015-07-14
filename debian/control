@@ -1,0 +1,20 @@
+Source: setting
+Section: misc
+Priority: extra
+Maintainer: Taesoo Jun <steve.jun@samsung.com>, MyoungJune Park <mj2004.park@samsung.com>, Hyejin Kim <hyejin0906.kim@samsung.com>, Taeyoung Kim <ty317.kim@samsung.com>
+Uploaders: Taesoo Jun <steve.jun@samsung.com>, MyoungJune Park <mj2004.park@samsung.com>, Hyejin Kim <hyejin0906.kim@samsung.com>, Taeyoung Kim <ty317.kim@samsung.com>
+Build-Depends: debhelper (>= 5), autotools-dev, libappcore-common-dev, libappcore-efl-dev, libelm-dev, libui-idlecapture-dev, libslp-setting-dev, libslp-tapi-dev, libslp-utilx-dev, libdevman-dev, libdevman-haptic-dev, libsvi-dev, capi-media-sound-manager-dev, libcontacts-service-dev, libslp-msg-service-dev, iniparser-dev, libslp-memo-dev, libslp-calendar-dev, libheynoti-dev, libslp-sysman, libslp-sysman-dev, libui-gadget-dev, libbundle-dev, libjson-glib-dev, dlog-dev, libaul-1-dev, libslp-pm-dev, libecore-dev, libeina-dev, libicu-dev, libail-0-dev, libnetwork-dev, capi-media-player-dev, drm-trusted-dev, drm-client-dev, libsvi-dev, libsecurity-server-client-dev, libmdm-dev, libelm-webview-dev, libbluetooth-frwk-dev, libappsvc-dev, libpango1.0-dev, capi-system-device-dev, capi-appfw-application-dev libcairo2-dev, libnotification-dev
+Standards-Version: 0.1.0
+
+Package: com.samsung.setting
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libicu
+Description: Setting application
+ Setting application
+
+Package: com.samsung.setting-dbg
+Architecture: any
+Depends: ${misc:Depends}, libicu
+Description: Setting application debug package (unstripped)
+ Setting application debug package
+

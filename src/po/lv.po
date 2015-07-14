@@ -1,0 +1,2577 @@
+msgid "IDS_ST_BODY_1_MINUTE"
+msgstr "1 minūte"
+
+msgid "IDS_ST_POP_SAVING"
+msgstr "Saglabā..."
+
+msgid "IDS_CAM_POP_MODEL"
+msgstr "Modelis"
+
+msgid "IDS_EMAIL_BODY_INVALID_PORT_NUMBER"
+msgstr "Nederīgs porta numurs."
+
+msgid "IDS_HEALTH_OPT_ACCESSORIES"
+msgstr "Piederumi"
+
+msgid "IDS_HS_HEADER_USB_DEBUGGING_CONNECTED"
+msgstr "USB atkļūdošana pievienota."
+
+msgid "IDS_MSG_OPT_6_SECONDS"
+msgstr "6 sekundes"
+
+msgid "IDS_PB_POP_PS_ALREADY_EXISTS"
+msgstr "%s jau pastāv."
+
+msgid "IDS_SAPPS_OPT_BADGE_ABB"
+msgstr "Simbols"
+
+msgid "IDS_ST_BODY_DISCONNECTED"
+msgstr "Atvienots."
+
+msgid "IDS_ST_BODY_MEDIA"
+msgstr "Multivide"
+
+msgid "IDS_ST_BODY_SELECT_AUTOMATICALLY"
+msgstr "Izvēlēties automātiski"
+
+msgid "IDS_ST_HEADER_AUDIO"
+msgstr "Audio"
+
+msgid "IDS_ST_HEADER_FORMAT_MVERB_ABB"
+msgstr "Formāts"
+
+msgid "IDS_ST_HEADER_INSTANT_MESSENGER"
+msgstr "Tūlītējā ziņojumapmaiņa"
+
+msgid "IDS_ST_HEADER_TIME"
+msgstr "Laiks"
+
+msgid "IDS_ST_MBODY_DAYS_M_WEEKDAY"
+msgstr "Dienas"
+
+msgid "IDS_ST_POP_ROAMING_WILL_INCUR_EXTRA_CHARGES_CONTINUE_Q"
+msgstr "Par viesabonēšanu tiks piemērota papildu maksa. Vai turpināt?"
+
+msgid "IDS_WIFI_BODY_IP"
+msgstr "IP"
+
+msgid "IDS_BT_POP_OPERATION_FAILED"
+msgstr "Darbība neizdevās."
+
+msgid "IDS_CLD_OPT_MINUTE"
+msgstr "Minūte"
+
+msgid "IDS_CLD_OPT_MINUTES_LC_ABB"
+msgstr "minūtes"
+
+msgid "IDS_CST_BUTTON_CLOSE"
+msgstr "Aizvērt"
+
+msgid "IDS_CST_POP_FAILED"
+msgstr "Neizdevās."
+
+msgid "IDS_IM_BODY_SUCCESSFULLY_COMPLETED"
+msgstr "Veiksmīgi pabeigts."
+
+msgid "IDS_IM_POP_UNEXPECTED_ERROR"
+msgstr "Negaidīta kļūda."
+
+msgid "IDS_PB_BODY_INFO"
+msgstr "Informācija"
+
+msgid "IDS_PB_BUTTON_CONTACT"
+msgstr "Kontakts"
+
+msgid "IDS_SIM_BODY_INVALID_SIM_CARD"
+msgstr "Nederīga SIM karte."
+
+msgid "IDS_ST_BUTTON2_PROCESSING_ING"
+msgstr "Apstrādā..."
+
+msgid "IDS_ST_POP_DELETE_Q"
+msgstr "Vai dzēst?"
+
+msgid "IDS_VR_POP_NO_FILES"
+msgstr "Nav failu"
+
+msgid "IDS_WGT_BUTTON3_KIES_VIA_WI_FI"
+msgstr "Kies, izmantojot Wi-Fi"
+
+msgid "IDS_TPLATFORM_OPT_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_OPT_SETTINGS"
+msgstr "Iestatījumi"
+
+msgid "IDS_ST_BODY_GENERAL"
+msgstr "Vispārīgi"
+
+msgid "IDS_ST_HEADER_PRIVACY"
+msgstr "Konfidencialitāte"
+
+msgid "IDS_BR_OPT_SCREEN"
+msgstr "Ekrāns"
+
+msgid "IDS_BR_OPT_LTE_GSM_WCDMA_HAUTO_CONNECT"
+msgstr "LTE/GSM/WCDMA (automātisks savienojums)"
+
+msgid "IDS_BR_HEADER_MULTI_WINDOW"
+msgstr "Vairāki logi"
+
+msgid "IDS_BR_BODY_WEBSITE_SETTINGS"
+msgstr "Tīmekļa vietnes iestatījumi"
+
+msgid "IDS_CLD_HEADER_EVENT_NOTIFICATION"
+msgstr "Paziņojums par notikumu"
+
+msgid "IDS_CLD_BUTTON_LIST_VIEW"
+msgstr "Saraksta skats"
+
+msgid "IDS_CLD_BUTTON_EXPORT"
+msgstr "Eksportēt"
+
+msgid "IDS_CLD_BODY_FIRST_DAY_OF_WEEK"
+msgstr "Nedēļas pirmā diena"
+
+msgid "IDS_CAM_BODY_SHOWING_PD_ITEMS_T_TTS"
+msgstr "Rāda %d objektus"
+
+msgid "IDS_COM_POP_FLIGHT_MODE_WILL_BE_DISABLED"
+msgstr "Tiks deaktivizēts lidojuma režīms."
+
+msgid "IDS_COM_POP_CHECKING"
+msgstr "Pārbauda..."
+
+msgid "IDS_COM_OPT_CONTINUE_Q"
+msgstr "Vai turpināt?"
+
+msgid "IDS_COM_INCORRECT_PASSWORD_ENTERED_5_TIMES"
+msgstr "5 reizes ievadīta nepareiza parole."
+
+msgid "IDS_COM_BODY_YOUR_SIM_CARD_DOES_NOT_ALLOW_A_CONNECTION_TO_THIS_NETWORK"
+msgstr "Jūsu SIM karte neļauj izveidot savienojumu ar šo tīklu."
+
+msgid "IDS_COM_BODY_TYPE_A_PIN_THAT_IS_4_TO_8_NUMBERS"
+msgstr "Ierakstiet PIN kodu, kurā ir 4­8 cipari"
+
+msgid "IDS_COM_BODY_NETWORK_OPERATORS"
+msgstr "Tīkla operatori"
+
+msgid "IDS_COM_BODY_FORMATTING_SD_CARD_ING"
+msgstr "Formatē SD karti..."
+
+msgid "IDS_COM_BODY_ENTER_PROXY_EMPTY"
+msgstr "Ievadiet starpniekservera adresi."
+
+msgid "IDS_COM_BODY_CONNECT_TO_DATA_SERVICES_WHEN_ROAMING"
+msgstr "Viesabonēšanas laikā, izveidot savienojumu ar datu pakalpojumiem."
+
+msgid "IDS_ASEML_POP_PASSWORD_EXPIRED"
+msgstr "Parolei beidzies derīguma termiņš."
+
+msgid "IDS_ASEML_POP_ENTER_ANOTHER_PASSWORD"
+msgstr "Ievadiet citu paroli."
+
+msgid "IDS_ASEML_BODY_DEVICE_ENCRYPTION"
+msgstr "Ierīces šifrēšana"
+
+msgid "IDS_CST_POP_UNKNOWN_OPERATION"
+msgstr "Nezināma darbība."
+
+msgid "IDS_CST_POP_OPERATION_NOT_ALLOWED_DURING_CALLS"
+msgstr "Zvana laikā darbība nav atļauta."
+
+msgid "IDS_CST_OPT_GSM_WCDMA_HAUTO_CONNECT"
+msgstr "GSM/WCDMA (automātisks savienojums)"
+
+msgid "IDS_CST_BODY_UNBLOCK_PIN2"
+msgstr "Atbloķēt PIN2"
+
+msgid "IDS_MTTRL_MBODY_PALM_MOTION"
+msgstr "Plaukstas kustība"
+
+msgid "IDS_MTTRL_BUTTON_ENABLE_MOTION"
+msgstr "Akt. kustību"
+
+msgid "IDS_MTTRL_BODY_SMART_ALERT"
+msgstr "Viedais signāls"
+
+msgid "IDS_NFC_OPT_S_BEAM"
+msgstr "S Beam"
+
+msgid "IDS_STU_BODY_SMART_STAY_DETECTS_YOUR_EYES_WITH_THE_FRONT_CAMERA_SO_THAT_THE_SCREEN_STAYS_ON_WHEN_YOU_ARE_LOOKING_AT_IT"
+msgstr "Viedā sekošana uztver jūsu acis, izmantojot priekšējo kameru, tādējādi ekrāns tiek rādīts, kamēr jūs tajā skatāties."
+
+msgid "IDS_IDLE_BODY_NEW_PIN_AND_CONFIRM_PIN_DO_NOT_MATCH"
+msgstr "Jaunais PIN kods un apstiprinājuma PIN kods nesakrīt."
+
+msgid "IDS_MOBILEAP_POP_TURNING_ON_WI_FI_WILL_DISABLE_MOBILE_HOTSPOT_CONTINUE_Q_VZW"
+msgstr "Ieslēdzot Wi-Fi, tiks deaktivizēts mobilais tīklājs. Vai turpināt?"
+
+msgid "IDS_MOBILEAP_MBODY_DATA_USAGE"
+msgstr "Datu lietošana"
+
+msgid "IDS_MOBILEAP_BODY_TETHERING"
+msgstr "Ierīces piesaiste tālrunim"
+
+msgid "IDS_IM_POP_THIS_FEATURE_IS_NOT_AVAILABLE_WHILE_FLIGHT_MODE_IS_ON"
+msgstr "Šī funkcija nav pieejama, ja ir ieslēgts lidojuma režīms."
+
+msgid "IDS_EMAIL_POP_SECURITY_UPDATE_ABB"
+msgstr "Drošības atjauninājums"
+
+msgid "IDS_EMAIL_POP_GIANT_M_TEXTSIZE"
+msgstr "Milzīgs"
+
+msgid "IDS_EMAIL_POP_FAILED_TO_MOVE"
+msgstr "Neizdevās pārvietot."
+
+msgid "IDS_EMAIL_OPT_HUGE_M_TEXTSIZE"
+msgstr "Ļoti liels"
+
+msgid "IDS_QP_POP_NETWORK_RESTRICTION_MODE_WILL_BE_DISABLED_JPN"
+msgstr "Network restriction mode will be disabled."
+
+msgid "IDS_QP_POP_IN_NETWORK_RESTRICTION_MODE_YOU_CAN_USE_ALL_YOUR_APPLICATIONS_WITHOUT_CONNECTING_TO_THE_NETWORK_YOU_CAN_ALSO_RECEIVE_CALLS_AND_SMS_MESSAGES_MSG_JPN"
+msgstr "In Network restriction mode, you can use all your applications without connecting to the network. You can also receive calls and SMS messages. Network restriction mode will be enabled."
+
+msgid "IDS_TASKMGR_BODY_ACTIVE_APPLICATIONS_C_PD"
+msgstr "Aktīvās programmas: %d"
+
+msgid "IDS_USB_POP_UNABLE_TO_CONNECT_TO_KIES_VIA_WI_FI_WHEN_CONNECTED_TO_KIES_VIA_USB"
+msgstr "Nevar izveidot savienojumu ar Kies, izmantojot Wi-Fi, ja ir izveidots savienojums ar Kies, izmantojot USB."
+
+msgid "IDS_MSGC_POP_YOUR_SD_CARD_IS_FULL"
+msgstr "SD karte ir pilna."
+
+msgid "IDS_MSGC_BODY_NOT_ENOUGH_MEMORY_IN_PHONE_MEMORY_DELETE_SOME_ITEMS_AND_TRY_AGAIN"
+msgstr "Tālruņa atmiņā nepietiek vietas. Izdzēsiet dažus objektus un mēģiniet vēlreiz."
+
+msgid "IDS_KW_POP_BE_CAREFUL_WHEN_TRANSMITTING_INFORMATION_ON_AN_UNSECURED_WI_FI_NETWORK_MSG"
+msgstr "Ja pārsūtāt informāciju, izmantojot neaizsargātu Wi-Fi tīklu, rīkojieties uzmanīgi, jo citas personas, iespējams, var redzēt šo informāciju."
+
+msgid "IDS_DN_BODY_ENCRYPT_SD_CARD"
+msgstr "Šifrēt SD karti"
+
+msgid "IDS_MSGF_POP_UNSUPPORTED"
+msgstr "Neatbalstīts."
+
+msgid "IDS_MSGF_BODY_SERVICE_TYPE"
+msgstr "Pakalpojuma veids"
+
+msgid "IDS_MF_POP_FORMAT_COMPLETED"
+msgstr "Formatēšana pabeigta."
+
+msgid "IDS_MF_OPT_NAME_HZ_TO_A"
+msgstr "Nosaukums (no Z līdz A)"
+
+msgid "IDS_MF_OPT_NAME_HA_TO_Z"
+msgstr "Nosaukums (no A līdz Z)"
+
+msgid "IDS_MF_BODY_SCREEN_CAPTURE_M_NOUN"
+msgstr "Ekrāna tvērums"
+
+msgid "IDS_XTAG_POP_RESET_ALL_SETTINGS_FOR_C_DEFAULT_APPS_BACKGROUND_DATA_RESTRICTIONS_YOUR_EXISTING_DATA_WILL_NOT_BE_LOST"
+msgstr "Atiestatīt visus iestatījumus:<br><br>Noklusējuma programmām<br>Fona datu ierobežojumiem<br><br>Jūsu esošie dati netiks zaudēti"
+
+msgid "IDS_PB_POP_MOVE_COMPLETED"
+msgstr "Pārvietošana pabeigta."
+
+msgid "IDS_PB_BODY_MOVING_ING"
+msgstr "Pārvieto..."
+
+msgid "IDS_SMEMO_BUTTON_IMPORT"
+msgstr "Importēt"
+
+msgid "IDS_LCKSCN_BODY_WALLPAPERS"
+msgstr "Fona attēli"
+
+msgid "IDS_LCKSCN_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_TO_UNLOCK_IT_MSG"
+msgstr "Pieskarieties ekrānam un turiet to, pēc tam sasveriet ierīci uz savu pusi, lai to atbloķētu. Ja ekrāns netiek atbloķēts, sasveriet ierīci vēl vairāk. Ja ir iestatīta atbloķēšana ar kustību, iestatījumos automātiski tiks aktivizēta kustība."
+
+msgid "IDS_SA_BUTTON_DONE_ABB"
+msgstr "Gat."
+
+msgid "IDS_FP_BODY_NO_APPLICATIONS"
+msgstr "Nav programmu"
+
+msgid "IDS_ST_TZTAB4_MOST_USED_M_APP"
+msgstr "Biežāk liet."
+
+msgid "IDS_ST_TPOP_PERSONAL_MODE_ENABLED_ABB"
+msgstr "Personiskais režīms ir aktivizēts"
+
+msgid "IDS_ST_TPOP_PERSONAL_MODE_DISABLED_ABB"
+msgstr "Personiskais režīms ir deaktivizēts"
+
+msgid "IDS_ST_TPOP_FAILED_TO_ENABLE_PERSONAL_MODE_TRY_AGAIN_ABB"
+msgstr "Neizdevās aktiv. pers. režīmu. Mēģ. vēlreiz."
+
+msgid "IDS_ST_TPOP_FAILED_TO_DISABLE_PERSONAL_MODE_TRY_AGAIN_ABB"
+msgstr "Neizdevās deakt. pers. režīmu. Mēģ. vēlreiz."
+
+msgid "IDS_ST_TPOP_ENABLING_ULTRA_POWER_SAVING_MODE_ING"
+msgstr "Aktivizē īpašo enerģijas taupīšanas režīmu..."
+
+msgid "IDS_ST_SK_FORMAT_ABB"
+msgstr "Formatēt"
+
+msgid "IDS_ST_SK3_DONE"
+msgstr "Gatavs"
+
+msgid "IDS_ST_SK2_PLEASE_WAIT"
+msgstr "Lūdzu, uzgaidiet"
+
+msgid "IDS_ST_SBODY_POWER_SAVING"
+msgstr "Enerģijas taupīšana"
+
+msgid "IDS_ST_SBODY_ONLY_UPDATE_THE_SECURITY_POLICY_AUTOMATICALLY_WHEN_YOUR_DEVICE_IS_CONNECTED_TO_A_WI_FI_NETWORK"
+msgstr "Automātiski atjaunot drošības politiku tikai tad, kad ierīce ir savienota ar Wi-Fi tīklu."
+
+msgid "IDS_ST_SBODY_INCREASE_THE_SENSITIVITY_OF_THE_TOUCH_SCREEN_SBODY_MSG"
+msgstr "Palieliniet skārienekrāna jutību, lai varētu vadīt ierīci, kad jums rokās ir cimdi."
+
+msgid "IDS_ST_SBODY_DISABLED"
+msgstr "Deaktivizēts"
+
+msgid "IDS_ST_SBODY_AUTOMATICALLY_CHECK_FOR_CHANGES_TO_THE_SECURITY_POLICY_MSG"
+msgstr "Automātiski meklēt izmaiņas drošības politikā un lejupielādēt atjauninājumus, kas uzlabo drošību un pakalpojumu."
+
+msgid "IDS_ST_POP_YOU_MUST_ENTER_A_DEVICE_NAME"
+msgstr "Ievadiet ierīces nosaukumu."
+
+msgid "IDS_ST_POP_YOUR_PERSONAL_MODE_SECURITY_SETTINGS_WILL_BE_RESET_AND_YOUR_PERSONAL_CONTENT_WILL_BE_DELETED_RESET_PERSONAL_MODE_Q"
+msgstr "Jūsu personiskā režīma drošības iestatījumi tiks atiestatīti un jūsu personiskais saturs tiks izdzēsts. Vai atiestatīt personisko režīmu?"
+
+msgid "IDS_ST_POP_USE_2D_HARDWARE_OR_SOFTWARE_ACCELERATION_IN_APPLICATIONS"
+msgstr "Izmantot 2D aparatūras vai programmatūras paātrināšanu programmās."
+
+msgid "IDS_ST_POP_URL_REMOVED"
+msgstr "URL ir noņemts."
+
+msgid "IDS_ST_POP_URLS_REMOVED"
+msgstr "URL ir noņemti."
+
+msgid "IDS_ST_POP_UNMOUNTING_USB_OTG_STORAGE_WILL_STOP_SOME_APPLICATIONS_MSG"
+msgstr "Atvienojot USB OTG krātuvi, tiks apturēta dažu programmu darbība. Programmas var nebūt pieejamas, līdz atkārtoti pievienosit USB OTG krātuvi."
+
+msgid "IDS_ST_POP_UNMOUNTING_SD_CARD_ING_ABB"
+msgstr "Izņem SD karti..."
+
+msgid "IDS_ST_POP_UNMOUNTING_ING_ABB"
+msgstr "Izņem..."
+
+msgid "IDS_ST_POP_UNINSTALL_Q"
+msgstr "Vai atinstalēt?"
+
+msgid "IDS_ST_POP_UNINSTALLING_ING"
+msgstr "Atinstalē..."
+
+msgid "IDS_ST_POP_UNABLE_TO_TURN_ON_FLIGHT_MODE_VODA"
+msgstr "Nevar ieslēgt lidojuma režīmu"
+
+msgid "IDS_ST_POP_UNABLE_TO_SEARCH_NETWORKS_DURING_DATA_SERVICE_ACTIVATED_DO_YOU_WANT_TO_DISCONNECT_THE_DATA_SERVICE_AND_SEARCH_AVAILABLE_NETWORK_Q"
+msgstr "Datu pakalpojuma darbības laikā nevar meklēt tīklus. Vai vēlaties atvienot datu pakalpojumu un meklēt pieejamos tīklus?"
+
+msgid "IDS_ST_POP_UNABLE_TO_CHANGE_NETWORKS_WHILE_DATA_SERVICE_IN_USE_STOP_USING_CURRENT_DATA_SERVICE_AND_SELECT_ANOTHER_AVAILABLE_NETWORK_Q"
+msgstr "Datu pakalpojumu lietošanas laikā nevar mainīt tīklus. Vai pārtraukt pašreizējo datu pakalpojumu un izvēlēties citu pieejamu tīklu?"
+
+msgid "IDS_ST_POP_ULTRA_POWER_SAVING_MODE_WILL_BE_DISABLED"
+msgstr "Īpašais enerģijas taupīšanas režīms tiks deaktivizēts."
+
+msgid "IDS_ST_POP_TO_USE_PERSONAL_MODE_YOU_MUST_REGISTER_AN_UNLOCK_METHOD"
+msgstr "Lai izmantotu personisko režīmu, jums ir jāreģistrē atbloķēšanas metode."
+
+msgid "IDS_ST_POP_TO_ENABLE_HANDS_FREE_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Lai aktivizētu brīvroku režīmu, aktivizējiet vismaz vienu atbilstošu funkciju."
+
+msgid "IDS_ST_POP_THE_SCREEN_WILL_NOT_TURN_OFF_WHILE_YOU_KEEP_LOOKING_AT_IT"
+msgstr "Ekrāns netiks izslēgts, kamēr skatīsities tajā."
+
+msgid "IDS_ST_POP_THE_MAXIMUM_NUMBERS_OF_CHARACTERS_FOR_YOUR_DEVICE_NAME_HPD_HAS_BEEN_EXCEEDED"
+msgstr "Pārsniegts maksimālais ierīces nosaukuma rakstzīmju skaits (%d)."
+
+msgid "IDS_ST_POP_THE_APP_HAS_BEEN_UNINSTALLED"
+msgstr "Programma ir atinstalēta."
+
+msgid "IDS_ST_POP_TAP_OK"
+msgstr "Pieskarieties pie Labi"
+
+msgid "IDS_ST_POP_SEARCHING_NETWORK_ING"
+msgstr "Meklē tīklu..."
+
+msgid "IDS_ST_POP_RESTART_PHONE_TO_USE_AUTOMATIC_UPDATE_Q"
+msgstr "Vai restartēt tālruni, lai izmantotu automātisko atjaunināšanu?"
+
+msgid "IDS_ST_POP_RESET_TO_DEFAULT_Q"
+msgstr "Vai atjaunot noklusējumu?"
+
+msgid "IDS_ST_POP_RESET_ALL_SETTINGS_AND_DELETE_ALL_DATA_THIS_CANNOT_BE_STOPPED_ONCE_STARTED"
+msgstr "Atiestatīt visus iestatījumus un izdzēst visus datus. Sākot darbību, to nevar apturēt."
+
+msgid "IDS_ST_POP_REMOVE_DEFAULT_APPS_Q"
+msgstr "Vai noņemt noklusējuma programmas?"
+
+msgid "IDS_ST_POP_REGISTRATION_CODE_NOT_FOUND"
+msgstr "Reģistrācijas kods nav atrasts."
+
+msgid "IDS_ST_POP_REGISTERING_ING"
+msgstr "Reģistrē..."
+
+msgid "IDS_ST_POP_REGISTERED"
+msgstr "Reģistrēts."
+
+msgid "IDS_ST_POP_PUK2_VERIFIED"
+msgstr "PUK2 verificēts."
+
+msgid "IDS_ST_POP_PUK1_VERIFIED"
+msgstr "PUK1 verificēts."
+
+msgid "IDS_ST_POP_PORT_REMOVED"
+msgstr "Ports noņemts."
+
+msgid "IDS_ST_POP_PORTS_REMOVED"
+msgstr "Porti noņemti."
+
+msgid "IDS_ST_POP_PIN_UNBLOCKED"
+msgstr "PIN atbloķēts."
+
+msgid "IDS_ST_POP_PIN2_UNBLOCKED"
+msgstr "PIN2 kods atbloķēts."
+
+msgid "IDS_ST_POP_PIN2_CHANGED"
+msgstr "PIN2 kods nomainīts."
+
+msgid "IDS_ST_POP_PIN2_BLOCKED"
+msgstr "PIN2 kods bloķēts."
+
+msgid "IDS_ST_POP_PIN1_CHANGED"
+msgstr "PIN1 kods mainīts."
+
+msgid "IDS_ST_POP_PIN1_BLOCKED"
+msgstr "PIN1 kods bloķēts."
+
+msgid "IDS_ST_POP_PD_ATTEMPT_LEFT"
+msgstr "Atlicis %d mēģinājums."
+
+msgid "IDS_ST_POP_PD_ATTEMPTS_LEFT"
+msgstr "Atlikuši %d mēģinājumi."
+
+msgid "IDS_ST_POP_PASSWORD_MUST_CONTAIN_AT_LEAST_PD_ALPHANUMERIC_CHARACTERS"
+msgstr "Parolē ir jābūt vismaz %d burtciparu rakstzīmēm."
+
+msgid "IDS_ST_POP_PASSWORD_MUST_BE_MORE_THAN_P1SD_CHARACTERS_AND_LESS_THAN_P2SD"
+msgstr "Parolē jābūt ne mazāk kā %1$d un ne vairāk kā %2$d rakstzīmēm."
+
+msgid "IDS_ST_POP_PASSWORDS_DO_NOT_MATCH"
+msgstr "Paroles nav vienādas."
+
+msgid "IDS_ST_POP_NO_SD_CARD_IS_INSERTED_DISABLE_ENCRYPT_SD_CARD_ANYWAY_Q"
+msgstr "Nav ievietota neviena SD karte. Vai tomēr deaktivizēt SD kartes šifrēšanu?"
+
+msgid "IDS_ST_POP_NO_SD_CARD_HAS_BEEN_INSERTED_ENCRYPTION_WILL_START_AUTOMATICALLY_WHEN_YOU_INSERT_AN_SD_CARD"
+msgstr "Nav ievietota neviena SD karte. Kad tiks ievietota SD karte, šifrēšana tiks sākta automātiski."
+
+msgid "IDS_ST_POP_NO_ITEM_SELECTED"
+msgstr "Nav izvēlētu objektu."
+
+msgid "IDS_ST_POP_NEW_PASSWD_SAVED"
+msgstr "Jaunā parole saglabāta."
+
+msgid "IDS_ST_POP_NETWORK_SEARCH_FAILED"
+msgstr "Neizdevās atrast tīklu."
+
+msgid "IDS_ST_POP_MOBILE_DATA_HAS_BEEN_DISABLED_MSG"
+msgstr "Mobilie dati ir deaktivizēti. Jūs nevarat sūtīt vai saņemt multiziņas. Lai sinhronizētu datus ar serveri, izveidojiet savienojumu ar Wi-Fi tīklu."
+
+msgid "IDS_ST_POP_MOBILE_DATA_ENABLED_CONNECTING_TO_MOBILE_NETWORKS_MAY_INCUR_EXTRA_CHARGES_DEPENDING_ON_YOUR_DATA_PLAN_CONTINUE_Q"
+msgstr "Mobilie dati ir aktivizēti. Savienojuma izveide ar mobilajiem tīkliem var radīt papildu izmaksas atkarībā no jūsu datu plāna. Vai turpināt?"
+
+msgid "IDS_ST_POP_LOADING_ING"
+msgstr "Ielādē..."
+
+msgid "IDS_ST_POP_IP_ADDRESS_REMOVED"
+msgstr "IP adrese ir noņemta."
+
+msgid "IDS_ST_POP_INVALID_URL_OR_NETWORK_CONNECTION_FAILED"
+msgstr "Nederīgs vietrādis URL vai neizdevās izveidot tīkla savienojumu."
+
+msgid "IDS_ST_POP_INVALID_IP_ADDRESS_OR_NETWORK_CONNECTION_FAILED"
+msgstr "Nederīga IP adrese vai neizdevās izveidot tīkla savienojumu."
+
+msgid "IDS_ST_POP_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Lai piekļūtu tīkla pakalpojumiem, ievietojiet SIM karti."
+
+msgid "IDS_ST_POP_INCORRECT_PUK"
+msgstr "Nepareizs PUK kods."
+
+msgid "IDS_ST_POP_INCORRECT_PIN_PD_ATTEMPTS_LEFT"
+msgstr "Nepareizs PIN kods. Atlikuši %d mēģinājumi."
+
+msgid "IDS_ST_POP_INCORRECT_PIN2"
+msgstr "Nepareizs PIN2."
+
+msgid "IDS_ST_POP_INCORRECT_PIN1_ATTEMPT_LEFT"
+msgstr "Nepareizs PIN kods. Atlicis 1 mēģinājums."
+
+msgid "IDS_ST_POP_INCORRECT_PASSWORD"
+msgstr "Nepareiza parole."
+
+msgid "IDS_ST_POP_IF_YOU_RESET_YOUR_DEVICE_TO_FACTORY_DEFAULTS_YOU_WILL_NOT_BE_ABLE_TO_USE_ENCRYPTED_FILES_ON_THE_SD_CARD_MSG"
+msgstr "Ja atjaunosit ierīcē rūpnīcas noklusējuma iestatījumus, jūs nevarēsit izmantot SD kartē esošos šifrētos failus, taču joprojām varēsit izmantot nešifrētos failus."
+
+msgid "IDS_ST_POP_FORMATTING_WILL_ERASE_ALL_DATA_FORMAT_Q"
+msgstr "Formatējot tiks izdzēsti visi dati. Vai formatēt?"
+
+msgid "IDS_ST_POP_FORMATTING_ING"
+msgstr "Formatē..."
+
+msgid "IDS_ST_POP_FAILED_TO_UNINSTALL_THE_APP"
+msgstr "Neizdevās atinstalēt programmu."
+
+msgid "IDS_ST_POP_ENTER_PS"
+msgstr "Ievadiet %s."
+
+msgid "IDS_ST_POP_ENCRYPT_SD_CARD_Q_OPERATION_IS_IRREVERSIBLE_AND_IF_YOU_INTERRUPT_IT_YOU_WILL_LOSE_DATA"
+msgstr "Vai šifrēt SD karti? Šī darbība ir neatgriezeniska, un ja to pārtrauksit, zaudēsit datus."
+
+msgid "IDS_ST_POP_ENABLING_EMERGENCY_MODE_ING"
+msgstr "Aktivizē ārkārtas režīmu..."
+
+msgid "IDS_ST_POP_ENABLING_AUTO_UPDATE_MEANS_YOUR_DEVICE_WILL_CHECK_FOR_SECURITY_UPDATES_AUTOMATICALLY_NOTI_MSG"
+msgstr "Ja aktivizēsit automātisko atjaunināšanu, ierīce automātiski meklēs drošības atjauninājumus. Meklēšana, izmantojot mobilos tīklus, var radīt papildu izmaksas."
+
+msgid "IDS_ST_POP_ENABLE_SMART_STAY_TO_TRY_IT_T_HELP"
+msgstr "Lai izmēģinātu video sekošanu, aktivizējiet to."
+
+msgid "IDS_ST_POP_ENABLE_SMART_ROTATION_TO_TRY_IT_T_HELP"
+msgstr "Lai izmēģinātu viedo pagriešanu, aktivizējiet to."
+
+msgid "IDS_ST_POP_ENABLE_FLIGHT_MODE"
+msgstr "Aktivizējiet lidojuma režīmu."
+
+msgid "IDS_ST_POP_EMERGENCY_MODE_WILL_BE_DISABLED"
+msgstr "Ārkārtas režīms tiks deaktivizēts."
+
+msgid "IDS_ST_POP_DO_NOT_ASK_AGAIN"
+msgstr "Vairs nevaicāt"
+
+msgid "IDS_ST_POP_DISABLING_AUTO_UPDATE_MEANS_YOU_HAVE_TO_CHECK_FOR_SECURITY_UPDATES_MANUALLY_NOTI_MSG"
+msgstr "Ja deaktivizēsit automātisko atjaunināšanu, drošības atjauninājumi būs jāatrod manuāli. Lai jūsu ierīce būtu drošībā, iesakām aktivizēt automātisko atjaunināšanu."
+
+msgid "IDS_ST_POP_DISABLE_TETHERING_Q"
+msgstr "Vai deaktivizēt piesaisti?"
+
+msgid "IDS_ST_POP_DEVICE_WILL_RESTART"
+msgstr "Ierīce tiks restartēta."
+
+msgid "IDS_ST_POP_DEVICE_WILL_BE_RESET_ALL_SETTINGS_AND_DATA_WILL_BE_ERASED_THIS_CANNOT_BE_STOPPED_ONCE_STARTED"
+msgstr "Ierīce tiks atiestatīta. Visi iestatījumi un dati tiks izdzēsti. Sākot darbību, to nevar apturēt."
+
+msgid "IDS_ST_POP_CONNECTING_TO_THE_SERVER_ING"
+msgstr "Veido savienojumu ar serveri..."
+
+msgid "IDS_ST_POP_CHECK_FOR_SECURITY_UPDATES_AND_DOWNLOAD_NEW_UPDATES_Q_NOTI_MSG"
+msgstr "Vai meklēt drošības atjauninājumus un lejupielādēt jaunos atjauninājumus? Lejupielāde, izmantojot mobilos tīklus, var radīt papildu izmaksas. Ja iespējams, lejupielādējiet, izmantojot Wi-Fi tīklu. Lejupielādes laikā ierīci var izmantot."
+
+msgid "IDS_ST_POP_CHAP"
+msgstr "CHAP"
+
+msgid "IDS_ST_POP_CHANGE_YOUR_POSITION_IN_RELATION_TO_THE_SCREEN_AND_SEE_HOW_IT_ADJUSTS_AUTOMATICALLY"
+msgstr "Mainiet savu pozīciju attiecībā pret ekrānu un skatiet, kā tas tiek automātiski pielāgots."
+
+msgid "IDS_ST_POP_AUTO_TIME_UPDATE_UNAVAILABLE_CHOOSE_ALTERNATIVE_TIME_SET_MODE_JPN_SBM"
+msgstr "Auto time update unavailable. Choose alternative time set mode."
+
+msgid "IDS_ST_POP_ANY_PERSONAL_CONTENT_WILL_NOT_BE_ACCESSIBLE_IN_NORMAL_MODE"
+msgstr "Parastajā režīmā personiskajam saturam nevarēs piekļūt."
+
+msgid "IDS_ST_OPT_WCDMA_GSM_HAUTO_CONNECT"
+msgstr "WCDMA/GSM (automātiska savienojuma izveide)"
+
+msgid "IDS_ST_OPT_UNTITLED_NETWORK"
+msgstr "Tīkls bez nosaukuma"
+
+msgid "IDS_ST_OPT_TAB_VIEW"
+msgstr "Cilnes skats"
+
+msgid "IDS_ST_OPT_SELECTED"
+msgstr "Izvēlēts"
+
+msgid "IDS_ST_OPT_SELECT"
+msgstr "Izvēlēties"
+
+msgid "IDS_ST_OPT_RESET_APP_SETTINGS_ABB"
+msgstr "Atiest. progr. iest."
+
+msgid "IDS_ST_OPT_NETWORK_LIST"
+msgstr "Tīklu saraksts"
+
+msgid "IDS_ST_OPT_MASS_STORAGE_ABB"
+msgstr "Lielapj. atmiņa"
+
+msgid "IDS_ST_OPT_LTE_WCDMA_GSM_HAUTO_CONNECT"
+msgstr "LTE/WCDMA/GSM (automātiska savienojuma izveide)"
+
+msgid "IDS_ST_OPT_EDIT_QUICK_SETTINGS"
+msgstr "Rediģēt ātros iestatījumus"
+
+msgid "IDS_ST_OPT_DEFAULT_RINGTONE"
+msgstr "Noklusējuma zvana signāls"
+
+msgid "IDS_ST_OPT_CUSTOM_MODE_ABB"
+msgstr "Pielāgots režīms"
+
+msgid "IDS_ST_OPT_BLOCK_WI_FI"
+msgstr "Bloķēt Wi-Fi"
+
+msgid "IDS_ST_OPT_BLOCK_MOBILE_NETWORKS"
+msgstr "Bloķēt mobilos tīklus"
+
+msgid "IDS_ST_OPT_BLOCK_ALL"
+msgstr "Bloķēt visus"
+
+msgid "IDS_ST_OPT_AUTO_UPDATE_ABB"
+msgstr "Autom. atjaunināt"
+
+msgid "IDS_ST_OPT_ALLOW_ALL"
+msgstr "Atļaut visus"
+
+msgid "IDS_ST_OPT_ALL"
+msgstr "Visas"
+
+msgid "IDS_ST_MBODY_ZOOM"
+msgstr "Tālummaiņa"
+
+msgid "IDS_ST_MBODY_WCDMA_ONLY"
+msgstr "Tikai WCDMA"
+
+msgid "IDS_ST_MBODY_VIA_WI_FI_ONLY"
+msgstr "Tikai, izmantojot Wi-Fi"
+
+msgid "IDS_ST_MBODY_UNLOCK_METHOD"
+msgstr "Atbloķēšanas metode"
+
+msgid "IDS_ST_MBODY_TOUCH_SENSITIVITY_ABB"
+msgstr "Skāriena jutība"
+
+msgid "IDS_ST_MBODY_SWIPE"
+msgstr "Vilkt"
+
+msgid "IDS_ST_MBODY_SOFTWARE_UPDATE"
+msgstr "Programmatūras atjaun."
+
+msgid "IDS_ST_MBODY_SMART_STAY"
+msgstr "Viedā sekošana"
+
+msgid "IDS_ST_MBODY_SMART_SCREEN"
+msgstr "Viedais ekrāns"
+
+msgid "IDS_ST_MBODY_SMART_ROTATION"
+msgstr "Viedā pagriešana"
+
+msgid "IDS_ST_MBODY_SIM_CARD_PROFILE_SETTINGS"
+msgstr "SIM kartes profila iest."
+
+msgid "IDS_ST_MBODY_SHOW_CPU_USAGE"
+msgstr "Rādīt centr. proc. liet."
+
+msgid "IDS_ST_MBODY_SELECT_WHERE_CAPTURED_IMAGES_WILL_BE_SAVED"
+msgstr "Izvēlieties, kur saglabāt uzņemtos attēlus"
+
+msgid "IDS_ST_MBODY_SCREEN_ROTATION"
+msgstr "Ekrāna pagriešana"
+
+msgid "IDS_ST_MBODY_SCREEN_READER_HTTS"
+msgstr "Ekrāna lasītājs (TTS)"
+
+msgid "IDS_ST_MBODY_REGISTER"
+msgstr "Reģistrēt"
+
+msgid "IDS_ST_MBODY_PAP"
+msgstr "PAP"
+
+msgid "IDS_ST_MBODY_NONE"
+msgstr "Nav"
+
+msgid "IDS_ST_MBODY_MOTIONS_AND_GESTURES"
+msgstr "Kustības un žesti"
+
+msgid "IDS_ST_MBODY_MOBILE_DATA"
+msgstr "Mobilie dati"
+
+msgid "IDS_ST_MBODY_HELP"
+msgstr "Palīdzība"
+
+msgid "IDS_ST_MBODY_HANDS_FREE_MODE"
+msgstr "Brīvroku režīms"
+
+msgid "IDS_ST_MBODY_GSM_ONLY"
+msgstr "Tikai GSM"
+
+msgid "IDS_ST_MBODY_FONT_SIZE"
+msgstr "Fonta lielums"
+
+msgid "IDS_ST_MBODY_FACTORY_RESET"
+msgstr "Rūpnīcas iestat. atjaun."
+
+msgid "IDS_ST_MBODY_EDIT_AFTER_SCREEN_CAPTURE"
+msgstr "Red. pēc ekrāna tveršanas"
+
+msgid "IDS_ST_MBODY_DIALLING_KEYPAD_TONE"
+msgstr "Num. sast. tastat. sign."
+
+msgid "IDS_ST_MBODY_DEVICE_STATUS"
+msgstr "Ierīces statuss"
+
+msgid "IDS_ST_MBODY_DEREGISTER"
+msgstr "Atcelt reģistrāciju"
+
+msgid "IDS_ST_MBODY_COLOUR_THEME"
+msgstr "Krāsu motīvs"
+
+msgid "IDS_ST_MBODY_CHARGING"
+msgstr "Notiek uzlāde"
+
+msgid "IDS_ST_MBODY_CALL_SETTINGS"
+msgstr "Zvana iestatījumi"
+
+msgid "IDS_ST_MBODY_AUTO_ADJUST_SCREEN_TONE"
+msgstr "Aut. pielāgot ekrāna toni"
+
+msgid "IDS_ST_MBODY_ACTIVE_APPLICATION"
+msgstr "Aktīva programma"
+
+msgid "IDS_ST_MBODY_ACCOUNTS_AND_BACKUP"
+msgstr "Konti un dublēšana"
+
+msgid "IDS_ST_ITAB4_CONTROLS_M_INPUT_AND_CONTROL"
+msgstr "Vadība"
+
+msgid "IDS_ST_HEADER_WI_FI_DIRECT"
+msgstr "Wi-Fi Direct"
+
+msgid "IDS_ST_HEADER_WI_FI"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_HEADER_USER_SETTINGS_ABB"
+msgstr "Lietotāja iestatījumi"
+
+msgid "IDS_ST_HEADER_USER_AND_BACKUP_M_CATEGORY"
+msgstr "Lietotājs un dublēšana"
+
+msgid "IDS_ST_HEADER_USB_UTILITIES"
+msgstr "USB savienojums"
+
+msgid "IDS_ST_HEADER_UNLOCK_DEVICE_USING_MOTION_ABB"
+msgstr "Atbloķēt ierīci ar kustību"
+
+msgid "IDS_ST_HEADER_UNAVAILABLE"
+msgstr "Nav pieejams"
+
+msgid "IDS_ST_HEADER_ULTRA_POWER_SAVING_MODE"
+msgstr "Īpašais enerģijas taupīšanas režīms"
+
+msgid "IDS_ST_HEADER_TOUCH_KEY_LIGHT_DURATION"
+msgstr "Taustiņa apgaismojuma ilgums pēc pieskaršanās"
+
+msgid "IDS_ST_HEADER_TEXT_TO_SPEECH"
+msgstr "Teksta pārveide runā"
+
+msgid "IDS_ST_HEADER_STANDARD_LIMIT_ABB"
+msgstr "Standarta ierobežojums"
+
+msgid "IDS_ST_HEADER_SOUND"
+msgstr "Skaņa"
+
+msgid "IDS_ST_HEADER_SIM_CARD_MANAGER"
+msgstr "SIM kartes pārvaldnieks"
+
+msgid "IDS_ST_HEADER_SHARED_CONTENT"
+msgstr "Koplietojamais saturs"
+
+msgid "IDS_ST_HEADER_SELECT_VIBRATION_PATTERNS_ABB"
+msgstr "Izvēlieties vibrozvana veidus"
+
+msgid "IDS_ST_HEADER_SCREEN_MIRRORING"
+msgstr "Screen Mirroring"
+
+msgid "IDS_ST_HEADER_SAMSUNG_KIES"
+msgstr "Samsung Kies"
+
+msgid "IDS_ST_HEADER_SAMSUNG_APPS"
+msgstr "Samsung Apps"
+
+msgid "IDS_ST_HEADER_RINGTONES"
+msgstr "Zvana signāli"
+
+msgid "IDS_ST_HEADER_RESET_RESULTS"
+msgstr "Atiestatīt rezultātus"
+
+msgid "IDS_ST_HEADER_RESET"
+msgstr "Atiestatīt"
+
+msgid "IDS_ST_HEADER_PRIVILEGES"
+msgstr "Privilēģijas"
+
+msgid "IDS_ST_HEADER_PRIVATE_MODE"
+msgstr "Privātais režīms"
+
+msgid "IDS_ST_HEADER_PORT"
+msgstr "Ports"
+
+msgid "IDS_ST_HEADER_PLEASE_WAIT"
+msgstr "Lūdzu, uzgaidiet."
+
+msgid "IDS_ST_HEADER_PERSONAL_MODE"
+msgstr "Personiskais režīms"
+
+msgid "IDS_ST_HEADER_PERSONALISATION"
+msgstr "Personalizēšana"
+
+msgid "IDS_ST_HEADER_PD_SELECTED_ABB"
+msgstr "Izvēlēts: %d"
+
+msgid "IDS_ST_HEADER_PD_SELECTED"
+msgstr "Izvēlēti: %d"
+
+msgid "IDS_ST_HEADER_NO_BACKGROUND_PROCESSES_ABB"
+msgstr "Fonā nenotiek neviens process"
+
+msgid "IDS_ST_HEADER_NEW_NETWORK"
+msgstr "Jauns tīkls"
+
+msgid "IDS_ST_HEADER_NETWORK_RESTRICTION_MODE_ABB_JPN"
+msgstr "Network restriction mode"
+
+msgid "IDS_ST_HEADER_MOTION_UNLOCK"
+msgstr "Atbloķēšana ar kustību"
+
+msgid "IDS_ST_HEADER_MORE_DISPLAY_SETTINGS_ABB"
+msgstr "Citi displeja iestatījumi"
+
+msgid "IDS_ST_HEADER_LOCK_SCREEN"
+msgstr "Bloķēšanas ekrāns"
+
+msgid "IDS_ST_HEADER_LANGUAGE_AND_INPUT"
+msgstr "Valoda un ievade"
+
+msgid "IDS_ST_HEADER_INSTALLED_APPLICATIONS"
+msgstr "Instalētās programmas"
+
+msgid "IDS_ST_HEADER_INPUT_AND_MOTION"
+msgstr "Ievade un kustība"
+
+msgid "IDS_ST_HEADER_HOME_SCREEN_ABB"
+msgstr "Sākuma ekrāns"
+
+msgid "IDS_ST_HEADER_FINGER_SCANNER_ABB"
+msgstr "Finger Scanner"
+
+msgid "IDS_ST_HEADER_ENTER_VALID_DEVICE_NAME_ABB"
+msgstr "Iev. derīgu ierīces nos."
+
+msgid "IDS_ST_HEADER_ENCRYPT_DEVICE"
+msgstr "Šifrēt ierīci"
+
+msgid "IDS_ST_HEADER_DIVX_VOD"
+msgstr "DivX® VOD"
+
+msgid "IDS_ST_HEADER_DISPLAY_LANGUAGE"
+msgstr "Displeja valoda"
+
+msgid "IDS_ST_HEADER_DISPLAY"
+msgstr "Displejs"
+
+msgid "IDS_ST_HEADER_DISABLE_EMERGENCY_MODE_ABB"
+msgstr "Deaktivizēt ārkārtas režīmu"
+
+msgid "IDS_ST_HEADER_DEVICE_MANAGER"
+msgstr "Ierīces pārvaldnieks"
+
+msgid "IDS_ST_HEADER_CREATE_CONNECTION"
+msgstr "Izveidot savienojumu"
+
+msgid "IDS_ST_HEADER_CONNECT_AND_SHARE"
+msgstr "Saziņa un kopīgošana"
+
+msgid "IDS_ST_HEADER_CONFIRM_ENCRYPTION"
+msgstr "Apstiprināt šifrēšanu"
+
+msgid "IDS_ST_HEADER_CHANGE_PIN_ABB"
+msgstr "Mainiet PIN kodu"
+
+msgid "IDS_ST_HEADER_AUTO_ROTATE_SCREEN_ABB"
+msgstr "Automātiski pagriezt ekrānu"
+
+msgid "IDS_ST_HEADER_ALLOW_USB_DEBUGGING_Q_ABB"
+msgstr "Vai atļ. USB atkļ.?"
+
+msgid "IDS_ST_HEADER_ADD_URL"
+msgstr "Pievienot URL"
+
+msgid "IDS_ST_HEADER_ADD_PORT"
+msgstr "Pievienot portu"
+
+msgid "IDS_ST_HEADER_ADD_IP"
+msgstr "Pievienot IP"
+
+msgid "IDS_ST_BUTTON_UNINSTALL_UPDATES"
+msgstr "Atinstalēt atjauninājumus"
+
+msgid "IDS_ST_BUTTON_UNINSTALL"
+msgstr "Atinstalēt"
+
+msgid "IDS_ST_BUTTON_TRY_IT"
+msgstr "Izmēģināt"
+
+msgid "IDS_ST_BUTTON_STOP"
+msgstr "Apt."
+
+msgid "IDS_ST_BUTTON_SET_SCREEN_LOCK_TYPE"
+msgstr "Iestatīt ekrāna bloķ. veidu"
+
+msgid "IDS_ST_BUTTON_RESET_APPS_ABB"
+msgstr "Atiest. progr."
+
+msgid "IDS_ST_BUTTON_RESET"
+msgstr "Nodzēst"
+
+msgid "IDS_ST_BUTTON_REMOVE_DEFAULT_APPS_ABB"
+msgstr "Noņemt noklusējuma programmas"
+
+msgid "IDS_ST_BUTTON_ONLY_VIBRATE"
+msgstr "Tikai vibrēt"
+
+msgid "IDS_ST_BUTTON_OK_ABB"
+msgstr "Labi"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "Labi"
+
+msgid "IDS_ST_BUTTON_MOVE_TO_SD_ABB"
+msgstr "Pārv. uz SD"
+
+msgid "IDS_ST_BUTTON_MOVE_TO_PHONE"
+msgstr "Pārvietot uz tālruni"
+
+msgid "IDS_ST_BUTTON_FORCE_STOP"
+msgstr "Piespiedu apturēšana"
+
+msgid "IDS_ST_BUTTON_ENABLE"
+msgstr "Aktivizēt"
+
+msgid "IDS_ST_BUTTON_DISCONNECT"
+msgstr "Atvienot"
+
+msgid "IDS_ST_BUTTON_DISABLE"
+msgstr "Deaktiviz."
+
+msgid "IDS_ST_BUTTON_CONTINUE"
+msgstr "Turpināt"
+
+msgid "IDS_ST_BUTTON_CANCEL_ABB"
+msgstr "Atcelt"
+
+msgid "IDS_ST_BODY_YYYY_DD_MM_DOT"
+msgstr "GGGG.DD.MM"
+
+msgid "IDS_ST_BODY_YOU_HAVE_SELECTED_TO_LAUNCH_THIS_APPLICATION_BY_DEFAULT_FOR_SOME_ACTIONS"
+msgstr "Dažām darbībām ir iestatīts, ka šī programma tiek atvērta pēc noklusējuma."
+
+msgid "IDS_ST_BODY_YOU_CAN_DECRYPT_ACCOUNTS_SETTINGS_DOWNLOADED_APPLICATIONS_AND_THEIR_DATA_MEDIA_AND_OTHER_FILES_DECRYPTION_WARNING_MSG"
+msgstr "Varat atšifrēt kontus, iestatījumus, lejupielādētās programmas un datus, multivides un citus failus. Atšifrēšana var ilgt stundu vai ilgāk. Uzlādējiet akumulatoru un neatvienojiet ierīci, līdz atšifrēšana ir pabeigta. Ja atšifrēšana tiek pārtraukta, var zaudēt daļu datu vai visus datus."
+
+msgid "IDS_ST_BODY_YOUR_DEVICE_REGISTRATION_CODE_C_PS"
+msgstr "Jūsu ierīces reģistrācijas kods: %s"
+
+msgid "IDS_ST_BODY_YOUR_CHANGES_ARE_BEING_MADE_T_TTS"
+msgstr "Jūsu izmaiņas tiek saglabātas."
+
+msgid "IDS_ST_BODY_WINSET"
+msgstr "Winset"
+
+msgid "IDS_ST_BODY_WHEN_THE_SOURCE_OF_LIGHT_IS_BEHIND_YOU_OR_WHEN_USING_DEVICE_IN_THE_DARK"
+msgstr "Ja gaismas avots atrodas aiz jums vai ja ierīce tiek lietota tumsā"
+
+msgid "IDS_ST_BODY_WHEN_LEARN_ABOUT_TILT_OR_MOTION_UNLOCK_ARE_SET_MOTION_ACTIVATION_WILL_BE_AUTOMATICALLY_ENABLED_IN_SETTINGS"
+msgstr "Kad ir iestatīta informācija par sasvēršanu un kustības atbloķēšanu, kustības aktivizēšana tiks automātiski iespējota sadaļā Iestatījumi."
+
+msgid "IDS_ST_BODY_WHEN_FRONT_CAMERA_IS_USED_FOR_THE_APPLICATION"
+msgstr "Ja programmai tiek izmantota priekšējā kamera"
+
+msgid "IDS_ST_BODY_WHEN_FRONT_CAMERA_FAILS_TO_DETECT_FACE_AND_EYES"
+msgstr "Ja priekšējai kamerai neizdodas noteikt seju un acis"
+
+msgid "IDS_ST_BODY_WHEN_DATA_ROAMING_IS_DISABLED_APPLICATIONS_THAT_USE_THE_DATA_CONNECTION_MAY_NOT_WORK"
+msgstr "Ja datu viesabonēšana ir deaktivizēta, programmas, kas izmanto datu savienojumu, iespējams, nedarbosies."
+
+msgid "IDS_ST_BODY_WEB_APPLICATIONS"
+msgstr "Tīmekļa programmas"
+
+msgid "IDS_ST_BODY_WCDMA_GSM_NHAUTO_CONNECT"
+msgstr "WCDMA/GSM\n(automātiska savienojuma izveide)"
+
+msgid "IDS_ST_BODY_WAIT_WHILE_DEVICE_IS_ENCRYPTED_PDP_COMPLETE"
+msgstr "Uzgaidiet, kamēr ierīce tiek šifrēta. Pabeigti %d%."
+
+msgid "IDS_ST_BODY_WAIT_WHILE_DEVICE_IS_DECRYPTED_PDP_COMPLETE"
+msgstr "Uzgaidiet, līdz ierīce tiek atšifrēta. Pabeigti %d%."
+
+msgid "IDS_ST_BODY_WAITING_FOR_RESPONSE_FROM_SIM_CARD_ING"
+msgstr "Gaida atbildi no SIM kartes..."
+
+msgid "IDS_ST_BODY_VOLUME"
+msgstr "Skaļums"
+
+msgid "IDS_ST_BODY_VOICE_RECORDING"
+msgstr "Balss ieraksts"
+
+msgid "IDS_ST_BODY_VIBRATE_WHEN_RINGING"
+msgstr "Vibrācija zvana laikā"
+
+msgid "IDS_ST_BODY_VERSION_PS"
+msgstr "Versija %s"
+
+msgid "IDS_ST_BODY_USING_MOBILE_DATA_MAY_RESULT_IN_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "Mobilo datu lietošana var radīt papildu izmaksas. Vai turpināt?"
+
+msgid "IDS_ST_BODY_USE_TIME_PROVIDED_BY_NETWORK"
+msgstr "Lietojiet tīkla norādīto laiku."
+
+msgid "IDS_ST_BODY_USE_MOTION"
+msgstr "Lietot kustību"
+
+msgid "IDS_ST_BODY_USER_ID"
+msgstr "Lietotāja ID"
+
+msgid "IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_URL_MSG"
+msgstr "Lietotājs var atbloķēt noteiktu URL. Ja URL adrese ir bloķēta, ienākošie un izejošie dati tiek izmesti."
+
+msgid "IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_PORT_MSG"
+msgstr "Lietotājs var bloķēt noteiktu portu. Ja ports ir bloķēts, ienākošie un izejošie dati tiek izmesti."
+
+msgid "IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_IP_ADDRESS_MSG"
+msgstr "Lietotājs var bloķēt noteiktu IP adresi. Ja IP adrese ir bloķēta, ienākošie un izejošie dati tiek izmesti."
+
+msgid "IDS_ST_BODY_USED"
+msgstr "Izmantots"
+
+msgid "IDS_ST_BODY_USB_OTG_STORAGE"
+msgstr "USB OTG krātuve"
+
+msgid "IDS_ST_BODY_USB_DEBUGGING_IS_INTENDED_FOR_DEVELOPMENT_PURPOSES_ONLY_MSG"
+msgstr "USB atkļūdošana ir paredzēta tikai izstrādes nolūkiem. To var lietot, lai kopētu datus no datora uz jūsu ierīci un pretēji, instalētu ierīcē programmas bez paziņojuma un nolasītu žurnāla datus."
+
+msgid "IDS_ST_BODY_USB_DEBUGGING"
+msgstr "USB atkļūdošana"
+
+msgid "IDS_ST_BODY_USB_ASK_ON_CONNECTION"
+msgstr "Vaicāt, veidojot savienojumu"
+
+msgid "IDS_ST_BODY_URL"
+msgstr "URL"
+
+msgid "IDS_ST_BODY_UNMOUNT_USB_OTG_STORAGE"
+msgstr "Atvienot USB OTG krātuvi"
+
+msgid "IDS_ST_BODY_UNMOUNT_SD_CARD"
+msgstr "Izņemiet SD karti"
+
+msgid "IDS_ST_BODY_UNMOUNTING_THE_SD_CARD_WILL_STOP_SOME_APPLICATIONS_FROM_FUNCTIONING_UNTIL_YOU_MOUNT_THE_SD_CARD_AGAIN_MSG"
+msgstr "Izņemot SD karti, tiks apturēta dažu programmu darbība. Šīs programmas var nebūt pieejamas, līdz atkārtoti ievietosit SD karti"
+
+msgid "IDS_ST_BODY_UNABLE_TO_USE_CURRENT_PASSWORD"
+msgstr "Nevar izmantot pašreizējo paroli."
+
+msgid "IDS_ST_BODY_UMTS_MODE_ONLY_WORKS_INSIDE_3G_COVERAGE_AREA"
+msgstr "UMTS režīms darbojas tikai 3G pārklājuma zonā."
+
+msgid "IDS_ST_BODY_UDRGOTHICM_JPN"
+msgstr "UDRGothicM"
+
+msgid "IDS_ST_BODY_UDMINCHO_JPN"
+msgstr "UDMincho"
+
+msgid "IDS_ST_BODY_UDGOTHIC_M_FONT"
+msgstr "UDGothic"
+
+msgid "IDS_ST_BODY_TURN_OFF"
+msgstr "Izslēgt"
+
+msgid "IDS_ST_BODY_TURNING_OFF_MOBILE_DATA_WHEN_THE_SCREEN_IS_OFF"
+msgstr "Izslēdz mobilos datus, kad ir izslēgts ekrāns."
+
+msgid "IDS_ST_BODY_TURNING_OFF_CONNECTIVITY_FEATURES_SUCH_AS_WI_FI_AND_BLUETOOTH"
+msgstr "Izslēdz savienojuma funkcijas, piemēram, Wi-Fi un Bluetooth."
+
+msgid "IDS_ST_BODY_TO_USE_PERSONAL_MODE_SCREEN_LOCK_TYPE_SHOULD_BE_SET_TO_SIMPLE_PASSWORD_OR_PASSWORD"
+msgstr "Lai izmantotu personisko režīmu, ekrāna bloķēšanas veids ir jāiestata uz vienkāršu paroli vai paroli."
+
+msgid "IDS_ST_BODY_TO_PROTECT_YOUR_DATA_DISABLE_PERSONAL_MODE_AFTER_YOU_USE_IT_ALSO_USING_A_SECURE_SCREEN_LOCK_WILL_PROVIDE_BETTER_PROTECTION"
+msgstr "Lai aizsargātu savus datus, deaktivizējiet personisko režīmu pēc tā lietošanas. Papildu drošību sniedz arī drošās ekrāna bloķēšanas izmantošana."
+
+msgid "IDS_ST_BODY_TO_OPEN_THE_MENU_DOUBLE_TAP_IT_T_TTS"
+msgstr "Veiciet dubultskārienu izvēlnei, lai to atvērtu."
+
+msgid "IDS_ST_BODY_TO_M_PERIOD"
+msgstr "Līdz"
+
+msgid "IDS_ST_BODY_TO_ENABLE_THIS_FEATURE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Lai aktivizētu šo funkciju, aktivizējiet vismaz vienu atbilstošu funkciju."
+
+msgid "IDS_ST_BODY_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_FUNCTION"
+msgstr "Lai aktivizētu enerģijas taupīšanas režīmu, aktivizējiet vismaz vienu funkciju."
+
+msgid "IDS_ST_BODY_TO_ENABLE_BLOCKING_MODE_ENABLE_AT_LEAST_ONE_OPTION"
+msgstr "Lai aktivizētu bloķēšanas režīmu, aktivizējiet vismaz vienu iespēju."
+
+msgid "IDS_ST_BODY_TO_AVOID_OVERHEATING_MAXIMUM_BRIGHTNESS_HAS_BEEN_REDUCED"
+msgstr "Lai nepieļautu pārkaršanu, samazināts maksimālais spilgtuma līmenis."
+
+msgid "IDS_ST_BODY_TOUCH"
+msgstr "Skāriens"
+
+msgid "IDS_ST_BODY_TOTAL_SPACE"
+msgstr "Kopējais vietas apjoms"
+
+msgid "IDS_ST_BODY_TOGGLE_THE_BUTTON_TO_ENABLE_OR_DISABLE_SCREEN_READER_OR_DOUBLE_TAP_TO_OPEN_THE_MENU_T_TTS"
+msgstr "Pārslēdziet pogu, lai aktivizētu vai deaktivizētu ekrāna lasītāju, vai veiciet dubultskārienu, lai atvērtu izvēlni."
+
+msgid "IDS_ST_BODY_TIME_ZONE"
+msgstr "Laika josla"
+
+msgid "IDS_ST_BODY_THIS_BAND_MAY_NOT_WORK_OUTSIDE_THE_USA_AND_CANADA"
+msgstr "Šī frekvence var nedarboties ārpus ASV un Kanādas."
+
+msgid "IDS_ST_BODY_THIS_ACTION_WILL_ERASE_THE_SD_CARD_IN_THE_PHONE_YOU_WILL_LOSE_ALL_DATA_ON_THE_CARD_E"
+msgstr "Šī darbība tālrunī izdzēsīs visus SD kartes datus. Zaudēsit VISUS kartes datus!"
+
+msgid "IDS_ST_BODY_THE_SD_CARD_IS_CURRENTLY_IN_USE_THIS_ACTION_WILL_ERASE_ALL_DATA_ON_THE_SD_CARD_INCLUDING_THE_DATA_THAT_IS_CURRENTLY_BEING_USED"
+msgstr "SD karte šobrīd tiek lietota. Veicot šo darbību, tiks izdzēsti visi SD kartes dati, ieskaitot datus, kas šobrīd tiek lietoti"
+
+msgid "IDS_ST_BODY_THE_RED_LED_LIGHTS_UP_WHEN_YOU_CHARGE_YOUR_DEVICE_WHILE_THE_SCREEN_IS_OFF"
+msgstr "Sarkans indikators iedegas, ja ekrāns ir izslēgts un tiek veikta ierīces uzlāde."
+
+msgid "IDS_ST_BODY_THE_RED_LED_BLINKS_WHEN_THE_BATTERY_POWER_IS_LOW_WHILE_THE_SCREEN_IS_OFF"
+msgstr "Sarkans indikators mirgo, ir zems akumulatora uzlādes līmenis, kamēr ekrāns ir izslēgts."
+
+msgid "IDS_ST_BODY_THE_PASSWORD_MUST_NOT_CONTAIN_A_SIMPLE_SEQUENCE_HEG_1111_OR_1234"
+msgstr "Parole nevar ietvert vienkāršu virkni (piem., 1111 vai 1234)"
+
+msgid "IDS_ST_BODY_THE_NAME_FIELD_CANNOT_BE_EMPTY"
+msgstr "Nosaukuma lauks nevar būt tukšs."
+
+msgid "IDS_ST_BODY_THE_BLUE_LED_BLINKS_WHEN_YOU_RECORD_VOICE_WHILE_THE_SCREEN_IS_OFF"
+msgstr "Zils indikators mirgo, ja jūs ierakstāt balsi, kamēr ekrāns ir izslēgts."
+
+msgid "IDS_ST_BODY_THE_BLUE_LED_BLINKS_WHEN_YOU_HAVE_MISSED_CALLS_MESSAGES_OR_APP_NOTIFICATIONS_WHILE_THE_SCREEN_IS_OFF"
+msgstr "Zilais indikators mirgo, ja ekrāns ir izslēgts un ir neatbildēti zvani, ziņas vai programmu paziņojumi."
+
+msgid "IDS_ST_BODY_THE_APPLICATIONS_BELOW_WERE_STARTED_BY_PS_STOPPING_THESE_APPLICATIONS_MAY_CAUSE_PS_TO_FAIL"
+msgstr "Tālāk redzamās programmas aktivizēja programma %s. Ja apturēsit šo programmu darbību, programmas %s darbībā var rasties kļūme."
+
+msgid "IDS_ST_BODY_THERE_ARE_NO_NETWORKS_NEARBY"
+msgstr "Tuvumā nav pieejamu tīklu."
+
+msgid "IDS_ST_BODY_TEXTSTYLE_LARGE"
+msgstr "Liels"
+
+msgid "IDS_ST_BODY_TASK_SWITCHER"
+msgstr "Uzdevumu pārslēdzējs"
+
+msgid "IDS_ST_BODY_TAP_TO_INSERT"
+msgstr "Pieskarieties, lai ievietotu."
+
+msgid "IDS_ST_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_TO_UNLOCK_IT_IF_THE_SCREEN_DOES_NOT_UNLOCK_TRY_TILTING_THE_DEVICE_MORE"
+msgstr "Pieskarieties ekrānam un turiet to, pēc tam sasveriet ierīci uz savu pusi, lai to atbloķētu. Ja ekrāns netiek atbloķēts, sasveriet ierīci vēl vairāk."
+
+msgid "IDS_ST_BODY_SYSTEM_MEMORY"
+msgstr "Sistēmas atmiņa"
+
+msgid "IDS_ST_BODY_SUNDAY"
+msgstr "Svētdiena"
+
+msgid "IDS_ST_BODY_STORAGE"
+msgstr "Krātuve"
+
+msgid "IDS_ST_BODY_STANDARD_T_DISPLAY_EFFECT"
+msgstr "Standarta"
+
+msgid "IDS_ST_BODY_SPEECH"
+msgstr "Runa"
+
+msgid "IDS_ST_BODY_SOUND_N_DISPLAY"
+msgstr "Skaņa un displejs"
+
+msgid "IDS_ST_BODY_SOFTWARE"
+msgstr "Programmatūra"
+
+msgid "IDS_ST_BODY_SOCIAL_NETWORK_PROFILES"
+msgstr "Sociālo tīklu profili"
+
+msgid "IDS_ST_BODY_SMART_STAY_MAY_NOT_WORK_IN_THESE_SITUATIONS"
+msgstr "Viedā sekošana var nedarboties šajās situācijās."
+
+msgid "IDS_ST_BODY_SMART_ROTATION_MAY_NOT_WORK_IN_THESE_SITUATIONS"
+msgstr "Viedā pagriešana var nedarboties šādās situācijās."
+
+msgid "IDS_ST_BODY_SMART_ROTATION_DESCRIPTION_MSG"
+msgstr "Viedā pagriešana deaktivizē automātisko ekrāna pagriešanu un izmanto priekšējo kameru, lai noteiktu jūsu sejas orientāciju, un atbilstoši pagriež ekrānu."
+
+msgid "IDS_ST_BODY_SMALL_M_TEXTSIZE"
+msgstr "Mazs"
+
+msgid "IDS_ST_BODY_SIM_PASSWORD"
+msgstr "SIM parole"
+
+msgid "IDS_ST_BODY_SIMPLE_PASSWORD"
+msgstr "Vienkārša parole"
+
+msgid "IDS_ST_BODY_SHOWS_BATTERY_PERCENTAGE_ON_INDICATOR"
+msgstr "Indikators rāda akumulatora uzlādes līmeni."
+
+msgid "IDS_ST_BODY_SET_THE_DEFAULT_LOCATION_FOR_INSTALLING_APPLICATIONS_MSG"
+msgstr "Iestatiet noklusējuma vietu programmu instalēšanai. Programmas var instalēt dažādās vietās atkarībā no programmas veida un vietas pieejamības."
+
+msgid "IDS_ST_BODY_SET_FONT_AS_PS_Q"
+msgstr "Vai iestatīt fontu %s?"
+
+msgid "IDS_ST_BODY_SET_AN_UNLOCK_PASSWORD_OF_AT_LEAST_6_CHARACTERS_CONTAINING_AT_LEAST_1_NUMBER"
+msgstr "Iestatiet atbloķēšanas paroli, kurā ir vismaz 6 rakstzīmes, no kurām vismaz viena ir cipars."
+
+msgid "IDS_ST_BODY_SERIAL_NUMBER"
+msgstr "Sērijas numurs"
+
+msgid "IDS_ST_BODY_SECURITY_ENGINE"
+msgstr "Drošības programma"
+
+msgid "IDS_ST_BODY_SECURITY"
+msgstr "Drošība"
+
+msgid "IDS_ST_BODY_SEARCH"
+msgstr "Meklēt"
+
+msgid "IDS_ST_BODY_SD_CARD"
+msgstr "SD karte"
+
+msgid "IDS_ST_BODY_SCREEN_TIMEOUT_ABB2"
+msgstr "Ekr. taimauts"
+
+msgid "IDS_ST_BODY_SCREEN_STAYS_ON_AS_LONG_AS_YOU_ARE_LOOKING_AT_IT"
+msgstr "Ekrāns tiek rādīts tik ilgi, kamēr jūs tajā skatāties."
+
+msgid "IDS_ST_BODY_SCREEN_ROTATION_CAN_BE_SLOWER_IF_SMART_ROTATION_ENABLED"
+msgstr "Ekrāna pagriešana var notikt lēnāk, ja ir aktivizēta viedā pagriešana"
+
+msgid "IDS_ST_BODY_SCREEN_OVERLAY_SHOWING_CURRENT_CPU_USAGE_ABB"
+msgstr "Ekr. pārklāj. rāda pašreiz. centr. proc. lietojumu."
+
+msgid "IDS_ST_BODY_SCREEN_ORIENTATION_ADJUSTS_TO_YOUR_ANGLE_OF_SIGHT"
+msgstr "Ekrāna orientācija tiek pielāgota jūsu skata leņķim."
+
+msgid "IDS_ST_BODY_SCREEN_MODE"
+msgstr "Ekrāna režīms"
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_TYPE_CANNOT_BE_CHANGED_WHILE_ENCRYPTING_THE_SD_CARD"
+msgstr "Ekrāna bloķēšanas tipu nevar mainīt SD kartes šifrēšanas laikā."
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_TYPE_CANNOT_BE_CHANGED_WHILE_ENCRYPTING_THE_DEVICE"
+msgstr "Ekrāna bloķēšanas tipu nevar mainīt ierīces šifrēšanas laikā."
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_TYPE"
+msgstr "Ekrāna bloķēšanas tips"
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_SOUND"
+msgstr "Ekrāna bloķēšanas skaņa"
+
+msgid "IDS_ST_BODY_SCHEDULE"
+msgstr "Grafiks"
+
+msgid "IDS_ST_BODY_SAVE_POWER_BY_ADJUSTING_SCREEN_TONE_ACCORDING_TO_ANALYSIS_OF_IMAGES"
+msgstr "Ietaupiet enerģiju, pielāgojot ekrāna toni atbilstoši attēlu analīzei."
+
+msgid "IDS_ST_BODY_SAVES_POWER_BY_LIMITING_THE_MAXIMUM_PERFORMANCE_OF_THE_DEVICE"
+msgstr "Taupa enerģiju, ierobežojot ierīces maksimālo veiktspēju."
+
+msgid "IDS_ST_BODY_SAVED"
+msgstr "Saglabāts."
+
+msgid "IDS_ST_BODY_SAVE"
+msgstr "Saglabāt"
+
+msgid "IDS_ST_BODY_SAMSUNG_LEGAL"
+msgstr "Samsung juridiskā informācija"
+
+msgid "IDS_ST_BODY_SAMSUNG_KIES_CONNECTION_CONNECTING_USB_HELP_MSG"
+msgstr "Ja Samsung Kies (datora programmatūra) vai attiecīgie draiveri nav instalēti datorā, instalēšana turpināsies Microsoft operētājsistēmā Windows. \nKad datora programmatūra ir instalēta, varat veikt šādas darbības:\n - Sinhronizēt tālruņa datus\n- Jaunināt tālruņa programmatūru\n- Veikt koplietošanu internetā (tālrunis darbojas kā modems, kas jūsu piezīmjdatoram vai galddatoram nodrošina piekļuvi internetam)\n- Kopēt iegādātos mūzikas ierakstus/videoklipus (Microsoft Windows Media DRM) vai parastos failus savā tālrunī."
+
+msgid "IDS_ST_BODY_RUNNING"
+msgstr "Darbojas"
+
+msgid "IDS_ST_BODY_RESTRICTING_APPLICATION_USAGE_TO_ONLY_ESSENTIAL_APPLICATIONS_AND_THOSE_SELECTED_BY_YOU"
+msgstr "Programmu lietojuma ierobežošana, atļaujot tikai svarīgākās un jūsu izvēlētās programmas."
+
+msgid "IDS_ST_BODY_RESET_TO_DEFAULT"
+msgstr "Atjaunot noklusējumu"
+
+msgid "IDS_ST_BODY_RESET_SETTINGS"
+msgstr "Atjaunot iestatījumus"
+
+msgid "IDS_ST_BODY_RESET_PERSONAL_MODE_SECURITY_SETTINGS_AND_DELETE_PERSONAL_CONTENT"
+msgstr "Atiestatiet personiskā režīma drošības iestatījumus un izdzēsiet personisko saturu"
+
+msgid "IDS_ST_BODY_RESET_PERSONAL_MODE"
+msgstr "Atiestatīt personisko režīmu"
+
+msgid "IDS_ST_BODY_RESET_ALL"
+msgstr "Atiestatīt visu"
+
+msgid "IDS_ST_BODY_REMOVE_LICENCE"
+msgstr "Noņemt licenci"
+
+msgid "IDS_ST_BODY_REGULATORY_INFORMATION_ABB"
+msgstr "Reglamentējoša inform."
+
+msgid "IDS_ST_BODY_REGISTER_AT"
+msgstr "Reģistrēt"
+
+msgid "IDS_ST_BODY_REGIONAL_EXAMPLE"
+msgstr "Reģionālais piemērs"
+
+msgid "IDS_ST_BODY_REGION"
+msgstr "Apgabals"
+
+msgid "IDS_ST_BODY_PUK"
+msgstr "PUK"
+
+msgid "IDS_ST_BODY_PROXY_PORT"
+msgstr "Starpniekservera ports"
+
+msgid "IDS_ST_BODY_PROTOCOL_TYPE"
+msgstr "Protokola tips"
+
+msgid "IDS_ST_BODY_PROTECT_YOUR_DEVICE_FROM_HARMFUL_VIRUSES_AND_MALWARE"
+msgstr "Aizsargājiet savu ierīci no ļaunprātīgiem vīrusiem un ļaunprogrammatūras."
+
+msgid "IDS_ST_BODY_PROFILE_NAME"
+msgstr "Profila nosaukums"
+
+msgid "IDS_ST_BODY_PROFILE"
+msgstr "Profils"
+
+msgid "IDS_ST_BODY_PREPARING_THIS_COULD_TAKE_OVER_10_MINUTES_ING"
+msgstr "Sagatavo. Tas var ilgt vairāk nekā 10 minūtes..."
+
+msgid "IDS_ST_BODY_PREFERRED_NETWORKS"
+msgstr "Ieteicamie tīkli"
+
+msgid "IDS_ST_BODY_POP_JPN_DCM"
+msgstr "POP"
+
+msgid "IDS_ST_BODY_PM"
+msgstr "PM"
+
+msgid "IDS_ST_BODY_PLUG_IN_CHARGER_AND_TRY_AGAIN"
+msgstr "Pievienojiet lādētāju un mēģiniet vēlreiz."
+
+msgid "IDS_ST_BODY_PLAY_TONE_WHEN_THE_DIALLING_KEYPAD_IS_TAPPED"
+msgstr "Pieskaroties numuru sastādīšanas tastatūrai, atskaņot signālu."
+
+msgid "IDS_ST_BODY_PLAY_SOUNDS_WHEN_LOCKING_AND_UNLOCKING_SCREEN"
+msgstr "Bloķējot vai atbloķējot ekrānu, atskaņot skaņu"
+
+msgid "IDS_ST_BODY_PIN_BLOCKED_ENTER_PUK_TO_CONTINUE_JPN_DCM"
+msgstr "PIN blocked. Enter PUK to continue."
+
+msgid "IDS_ST_BODY_PIN"
+msgstr "PIN"
+
+msgid "IDS_ST_BODY_PICTURES_VIDEOS"
+msgstr "Attēli, videoklipi"
+
+msgid "IDS_ST_BODY_PHOTO_UPLOAD_SETTINGS"
+msgstr "Fotoattēlu augšupielādes iestatījumi"
+
+msgid "IDS_ST_BODY_PHONEPROFILES_SILENT"
+msgstr "Klusums"
+
+msgid "IDS_ST_BODY_PERSONAL_MODE_CAN_BE_USED_TO_HIDE_CONTENT_THAT_YOU_WANT_TO_KEEP_PRIVATE_MSG"
+msgstr "Personisko režīmu var izmantot, lai paslēptu saturu, kuru vēlaties paturēt privātu. Lai izmantotu personisko režīmu, aktivizējiet to izvēlnē Iestatījumi vai nospiediet un turiet ieslēgšanas/izslēgšanas taustiņu un pēc tam izvēlieties Personiskais režīms. Ievadiet savu PIN kodu vai paroli. Statusa joslā tiks rādīta personiskā režīma ikona. Lai aizsargātu savus datus, pēc personiskā režīma lietošanas deaktivizējiet to. Papildu drošību sniedz arī drošās ekrāna bloķēšanas izmantošana."
+
+msgid "IDS_ST_BODY_PD_ATTEMPTS_REMAINING_JPN_DCM"
+msgstr "%d attempts remaining"
+
+msgid "IDS_ST_BODY_PASSWORD_REQUIRED_TO_DECRYPT_DEVICE_EACH_TIME_YOU_TURN_IT_ON"
+msgstr "Lai atšifrētu ierīci ikreiz, kad to ieslēdzat, nepieciešama parole."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_NO_MORE_THAN_PD_CHARACTERS_ABB"
+msgstr "Parolē ir jābūt ne vairāk par %d rakstzīmēm."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_PD_CHARACTERS_ABB"
+msgstr "Parolē ir jābūt vismaz %d rakstzīmēm."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_1_NUMBER"
+msgstr "Parolē ir jābūt vismaz 1 ciparam."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_1_LETTER"
+msgstr "Parolē ir jābūt vismaz 1 burtam."
+
+msgid "IDS_ST_BODY_PASSWORD_EMPTY"
+msgstr "Paroles lauks ir tukšs."
+
+msgid "IDS_ST_BODY_PASSWORD_CONTAINS_INVALID_CHARACTER_ABB"
+msgstr "Parolē ir nederīga rakstzīme."
+
+msgid "IDS_ST_BODY_PASSWORD"
+msgstr "Parole"
+
+msgid "IDS_ST_BODY_OPEN_SOURCE_LICENCES"
+msgstr "Atklātā pirmkoda licences"
+
+msgid "IDS_ST_BODY_ON_M_STATUS"
+msgstr "Ieslēgts"
+
+msgid "IDS_ST_BODY_OFFICIAL_M_DEVICE_STATUS"
+msgstr "Apstiprināts"
+
+msgid "IDS_ST_BODY_NUMBER"
+msgstr "Numurs"
+
+msgid "IDS_ST_BODY_NO_RESULTS_FOUND"
+msgstr "Nav atrasts neviens rezultāts."
+
+msgid "IDS_ST_BODY_NO_DEFAULTS_SET"
+msgstr "Nav iestatīts neviens noklusējums."
+
+msgid "IDS_ST_BODY_NOT_ASSIGNED"
+msgstr "Nav piešķirta"
+
+msgid "IDS_ST_BODY_NOTIFICATION_PANEL"
+msgstr "Paziņojumu panelis"
+
+msgid "IDS_ST_BODY_NOTIFICATIONS"
+msgstr "Paziņojumi"
+
+msgid "IDS_ST_BODY_NOTIFICATION"
+msgstr "Paziņojums"
+
+msgid "IDS_ST_BODY_NOSERVICE"
+msgstr "Nav pakalpojuma"
+
+msgid "IDS_ST_BODY_NORMAL_T_PROFILE"
+msgstr "Parasts"
+
+msgid "IDS_ST_BODY_NONE"
+msgstr "Nav"
+
+msgid "IDS_ST_BODY_NEW_PIN2_AND_CONFIRM_PIN2_DO_NOT_MATCH"
+msgstr "Jaunais PIN2 kods un apstiprinājuma PIN2 kods nesakrīt"
+
+msgid "IDS_ST_BODY_NEW_PIN2"
+msgstr "Jaunais PIN2"
+
+msgid "IDS_ST_BODY_NEW_PIN1"
+msgstr "Jaunais PIN1 kods"
+
+msgid "IDS_ST_BODY_NEW"
+msgstr "Jaunāks"
+
+msgid "IDS_ST_BODY_NETWORK_TYPE"
+msgstr "Tīkla veids"
+
+msgid "IDS_ST_BODY_NETWORK_MODE"
+msgstr "Tīkla režīms"
+
+msgid "IDS_ST_BODY_NETWORK_LIST"
+msgstr "Tīklu saraksts"
+
+msgid "IDS_ST_BODY_NETWORK_CONNECTIONS"
+msgstr "Tīkla savienojumi"
+
+msgid "IDS_ST_BODY_NETWORK_CODE"
+msgstr "Tīkla kods"
+
+msgid "IDS_ST_BODY_NETWORK"
+msgstr "Tīkls"
+
+msgid "IDS_ST_BODY_NATURAL_T_DISPLAY_EFFECT"
+msgstr "Dabisks"
+
+msgid "IDS_ST_BODY_NAME"
+msgstr "Vārds"
+
+msgid "IDS_ST_BODY_MY_NUMBER"
+msgstr "Mans numurs"
+
+msgid "IDS_ST_BODY_MSG_TIME_FORMAT"
+msgstr "Laika formāts"
+
+msgid "IDS_ST_BODY_MOVIE_T_DISPLAY_EFFECT"
+msgstr "Filma"
+
+msgid "IDS_ST_BODY_MOUNT_USB_OTG_STORAGE"
+msgstr "Pievienot USB OTG krātuvi"
+
+msgid "IDS_ST_BODY_MOUNT_SD_CARD"
+msgstr "SD-kartes ievietošana"
+
+msgid "IDS_ST_BODY_MOTION"
+msgstr "Kustība"
+
+msgid "IDS_ST_BODY_MORE_SYSTEM_SETTINGS"
+msgstr "Citi sistēmas iestatījumi"
+
+msgid "IDS_ST_BODY_MORE_CONNECTIVITY_SETTINGS"
+msgstr "Citi savienojumu iestatījumi"
+
+msgid "IDS_ST_BODY_MONDAY"
+msgstr "Pirmdiena"
+
+msgid "IDS_ST_BODY_MODE"
+msgstr "Režīms"
+
+msgid "IDS_ST_BODY_MOBILE_DATA_WILL_BE_USED_IF_YOU_DOWNLOAD_OR_UPLOAD_DATA_WITHOUT_WI_FI_CONNECTION"
+msgstr "Ja lejupielādēsit vai augšupielādēsit datus, neizmantojot Wi-Fi savienojumu, tiks izmantoti mobilie dati."
+
+msgid "IDS_ST_BODY_MM_DD_YYYY_DOT"
+msgstr "MM.DD.GGGG."
+
+msgid "IDS_ST_BODY_MMS_CONNECTIONS"
+msgstr "MMS savienojumi"
+
+msgid "IDS_ST_BODY_MISCELLANEOUS_FILES"
+msgstr "Dažādi faili"
+
+msgid "IDS_ST_BODY_MESSAGE"
+msgstr "Ziņa"
+
+msgid "IDS_ST_BODY_MENU_AND_WIDGETS"
+msgstr "Izvēlne un logrīki"
+
+msgid "IDS_ST_BODY_MEMORY"
+msgstr "Atmiņa"
+
+msgid "IDS_ST_BODY_MEDIUM"
+msgstr "Vidējs"
+
+msgid "IDS_ST_BODY_MB"
+msgstr "MB"
+
+msgid "IDS_ST_BODY_MASS_STORAGE_HELP_MSG"
+msgstr "Ir iespējamas šādas darbības:\n- Ātra failu kopēšana\n- Savienojuma izveide, izmantojot operētājsistēmu MAC vai Linux"
+
+msgid "IDS_ST_BODY_MARUBERI_JPN_DCM"
+msgstr "Maruberi"
+
+msgid "IDS_ST_BODY_LTE_WCDMA_GSM_NHAUTO_CONNECT"
+msgstr "LTE/WCDMA/GSM\n(automātiska savienojuma izveide)"
+
+msgid "IDS_ST_BODY_LOCK_SCREEN_OPTIONS"
+msgstr "Bloķēšanas ekrāna iespējas"
+
+msgid "IDS_ST_BODY_LIST_VIEW"
+msgstr "Saraksta skats"
+
+msgid "IDS_ST_BODY_LIMIT_BACKGROUND_PROCESSES"
+msgstr "Ierobežot fona procesus"
+
+msgid "IDS_ST_BODY_LICENCE"
+msgstr "Licence"
+
+msgid "IDS_ST_BODY_LED_INDICATOR"
+msgstr "LED indikators"
+
+msgid "IDS_ST_BODY_LEDOT_LOW_BATTERY"
+msgstr "Akumulators gandrīz tukšs"
+
+msgid "IDS_ST_BODY_LAUNCH_BY_DEFAULT"
+msgstr "Palaist pēc noklusējuma"
+
+msgid "IDS_ST_BODY_LANGUAGE_AND_REGION_ABB"
+msgstr "Valoda un reģions"
+
+msgid "IDS_ST_BODY_LANGUAGE_AND_KEYBOARD"
+msgstr "Valoda un tastatūra"
+
+msgid "IDS_ST_BODY_KEYBOARD"
+msgstr "Tastatūra"
+
+msgid "IDS_ST_BODY_KEEPS_THE_STATUS_BAR_TIDY_TAP_THE_REPRESENTATIVE_ICON_TO_SHOW_ALL_THE_ICONS"
+msgstr "Sakārto statusa joslu. Pieskarieties reprezentatīvajai ikonai, lai rādītu visas ikonas."
+
+msgid "IDS_ST_BODY_KB"
+msgstr "KB"
+
+msgid "IDS_ST_BODY_INTRODUCTION_TO_SMART_SCREEN_ABB"
+msgstr "Informācija par viedo ekrānu"
+
+msgid "IDS_ST_BODY_INTERNET_CONNECTION"
+msgstr "Interneta savienojums"
+
+msgid "IDS_ST_BODY_INSTALTAB_FINISH"
+msgstr "Beigt"
+
+msgid "IDS_ST_BODY_INSTALLED_APPLICATIONS"
+msgstr "Instalētās programmas"
+
+msgid "IDS_ST_BODY_INSTALLATION_SETTINGS"
+msgstr "Instalēšanas iestatījumi"
+
+msgid "IDS_ST_BODY_INSERT_SD_CARD"
+msgstr "Ievietojiet SD karti."
+
+msgid "IDS_ST_BODY_INCORRECT_PIN_E"
+msgstr "Nepareizs PIN."
+
+msgid "IDS_ST_BODY_INCORRECT_PASSWORD_TRY_AGAIN"
+msgstr "Nepareiza parole. Mēģiniet vēlreiz"
+
+msgid "IDS_ST_BODY_INCOMING_CALLS_AND_NEW_NOTIFICATIONS_WILL_BE_READ_OUT_AUTOMATICALLY"
+msgstr "Ienākošie zvani un jauni paziņojumi tiks automātiski nolasīti."
+
+msgid "IDS_ST_BODY_INCOMING_CALL"
+msgstr "Ienākošais zvans"
+
+msgid "IDS_ST_BODY_IMEI"
+msgstr "IMEI"
+
+msgid "IDS_ST_BODY_IF_YOU_SELECT_THIS_OPTION_ONLY_USED_MEMORY_SPACE_WILL_BE_ENCRYPTED"
+msgstr "Izvēloties šo iespēju, tiks šifrēts tikai izmantotais atmiņas apjoms."
+
+msgid "IDS_ST_BODY_IF_YOU_FORGET_YOUR_PERSONAL_MODE_PASSWORD_YOU_WILL_NOT_BE_ABLE_TO_RECOVER_IT_FOR_SECURITY_MSG"
+msgstr "Ja aizmirsīsit sava personiskā režīma paroli, to nevarēs atkopt. Drošības dēļ jums jāveic personiskā režīma atiestatīšana. Tādējādi tiks atjaunoti tā noklusējuma iestatījumi un izdzēsts viss jūsu personiskais saturs."
+
+msgid "IDS_ST_BODY_IF_YOU_DONT_WANT_TO_SEE_A_NUMBER_APPEAR_ON_THE_APP_ICON_FOR_EACH_NEW_EVENT_DISABLE_BADGE"
+msgstr "Ja nevēlaties, lai uz programmas ikonas tiktu rādīts katra jaunā notikuma skaitlis, deaktivizējiet emblēmu."
+
+msgid "IDS_ST_BODY_ICON_SHOWS_THAT_SMART_SCREEN_IS_ENABLED"
+msgstr "Ikona norāda, ka viedais ekrāns ir aktivizēts."
+
+msgid "IDS_ST_BODY_HOME_URL"
+msgstr "Mājas lapas URL"
+
+msgid "IDS_ST_BODY_HOME_AND_LOCK_SCREEN"
+msgstr "Sākuma un bloķēšanas ekrāns"
+
+msgid "IDS_ST_BODY_HELVETICA_NEUE_M_FONT_NAME"
+msgstr "Helvetica Neue"
+
+msgid "IDS_ST_BODY_HARDWARE"
+msgstr "Aparatūra"
+
+msgid "IDS_ST_BODY_GSM"
+msgstr "GSM"
+
+msgid "IDS_ST_BODY_GRID_VIEW"
+msgstr "Režģa skats"
+
+msgid "IDS_ST_BODY_GLOVE_MODE_ABB"
+msgstr "Cimdu režīms"
+
+msgid "IDS_ST_BODY_GESTURES"
+msgstr "Žesti"
+
+msgid "IDS_ST_BODY_GB"
+msgstr "GB"
+
+msgid "IDS_ST_BODY_FROM_M_TIME"
+msgstr "No"
+
+msgid "IDS_ST_BODY_FREQUENTLY_USED"
+msgstr "Bieži lietotie"
+
+msgid "IDS_ST_BODY_FORMAT_USB_OTG_STORAGE"
+msgstr "Formatēt USB OTG krātuvi"
+
+msgid "IDS_ST_BODY_FORMAT_SD_CARD"
+msgstr "SD kartes formatēšana"
+
+msgid "IDS_ST_BODY_FORMATTING_USB_OTG_STORAGE_WILL_DELETE_ALL_DATA_DATA_CANNOT_BE_RECOVERED_CONTINUE_Q"
+msgstr "USB OTG krātuves formatēšanas laikā tiks dzēsti visi dati. Datus nevarēs atkopt. Vai turpināt?"
+
+msgid "IDS_ST_BODY_FORMATTING_SD_CARD_WILL_DELETE_ALL_DATA_DATA_CANNOT_BE_RECOVERED_CONTINUE_Q"
+msgstr "Kartes SD formatēšanas laikā tiks dzēsti visi dati. Datus nevarēs atgūt. Vai turpināt?"
+
+msgid "IDS_ST_BODY_FORGOT_PASSWORD_SWA"
+msgstr "Forgot password"
+
+msgid "IDS_ST_BODY_FORBIDDEN_NETWORK"
+msgstr "Aizliegts tīkls"
+
+msgid "IDS_ST_BODY_FONT_TYPE"
+msgstr "Fonta veids"
+
+msgid "IDS_ST_BODY_FONTSTYLE_ROSEMARY"
+msgstr "Rozmarīns"
+
+msgid "IDS_ST_BODY_FLIGHT_MODE_MSG"
+msgstr "Lidojuma režīms ļauj izslēgt zvanu, ziņapmaiņas un datu tīkla funkcijas. Tas izslēdz arī savienojuma funkcijas, piemēram, Wi-Fi un Bluetooth. Lai lietotu Wi-Fi un Bluetooth, ieslēdziet šīs funkcijas sadaļā Iestatījumi vai paziņojumu panelī."
+
+msgid "IDS_ST_BODY_FLIGHT_MODE_HAS_BEEN_ENABLED_NETWORK_SETTINGS_WILL_CLOSE"
+msgstr "Ir aktivizēts lidojuma režīms. Tīkla iestatījumi tiks aizvērti."
+
+msgid "IDS_ST_BODY_FLIGHT_MODE"
+msgstr "Lidojuma režīms"
+
+msgid "IDS_ST_BODY_FIXED_DIALLING_MODE"
+msgstr "Fiksēto zvanu režīms"
+
+msgid "IDS_ST_BODY_FIREWALL_ENABLED_ABB"
+msgstr "Ugunsmūris ir aktivizēts"
+
+msgid "IDS_ST_BODY_FIREWALL"
+msgstr "Ugunsmūris"
+
+msgid "IDS_ST_BODY_FEATURES"
+msgstr "Funkcijas"
+
+msgid "IDS_ST_BODY_FAST_ENCRYPTION"
+msgstr "Ātrā šifrēšana"
+
+msgid "IDS_ST_BODY_FAILED_TO_SELECT_NETWORK"
+msgstr "Neizdevās izvēlēties tīklu."
+
+msgid "IDS_ST_BODY_FACE_AND_VOICE"
+msgstr "Seja un balss"
+
+msgid "IDS_ST_BODY_FACEBOOK"
+msgstr "Facebook"
+
+msgid "IDS_ST_BODY_EXPLANATION_FOR_TRANSACTION_TRACKING_MENU_VODA"
+msgstr "Jūsu informācija par ieteikumiem arī ir nosūtīta ar pārsūtīto failu."
+
+msgid "IDS_ST_BODY_EXPLANATION_FOR_EXPIRY_REMINDER_MENU"
+msgstr "Pirms lietoto failu licences termiņš ir beidzies, piemēram, fona attēliem, saņemiet atgādinājumu."
+
+msgid "IDS_ST_BODY_ESTIMATED_MAX_STANDBY_TIME_ABB"
+msgstr "Apt. maks. gaid. režīma laiks"
+
+msgid "IDS_ST_BODY_ENTER_PASSWORD_AGAIN_AFTER_PD_SECONDS"
+msgstr "Pēc %d sekundēm vēlreiz ievadiet paroli."
+
+msgid "IDS_ST_BODY_ENTER_PASSWORD_AGAIN"
+msgstr "Vēlreiz ievadiet paroli"
+
+msgid "IDS_ST_BODY_ENTER_PASSWORD"
+msgstr "Ievadiet paroli."
+
+msgid "IDS_ST_BODY_ENTER_NEW_PASSWORD"
+msgstr "Ievadiet jauno paroli."
+
+msgid "IDS_ST_BODY_ENTER_CURRENT_PASSWORD"
+msgstr "Ievadiet pašreizējo paroli."
+
+msgid "IDS_ST_BODY_ENCRYPT_DEVICE_Q_WARNING_MSG"
+msgstr "Vai šifrēt ierīci? Šī darbība ir neatgriezeniska, un, ja to pārtrauksit, zaudēsit datus. Šifrēšana var ilgt vairāk nekā stundu; tās laikā ierīce tiks restartēta vairākas reizes un jūs to nevarēsit izmantot."
+
+msgid "IDS_ST_BODY_ENCRYPT_DEVICE_Q_OPERATION_IS_IRREVERSIBLE_AND_IF_YOU_INTERRUPT_IT_YOU_WILL_LOSE_DATA"
+msgstr "Vai šifrēt ierīci? Šī darbība ir neatgriezeniska, un ja to pārtrauksit, zaudēsit datus"
+
+msgid "IDS_ST_BODY_ENCRYPT_ACCOUNTS_SETTINGS_DOWNLOADED_APPLICATIONS_AND_THEIR_DATA_MEDIA_AND_OTHER_FILES"
+msgstr "Šifrēt kontus, iestatījumus, lejupielādētās programmas, to datus, kā arī multivides un citus failus."
+
+msgid "IDS_ST_BODY_ENCRYPTION_WILL_TAKE_AT_LEAST_AN_HOUR"
+msgstr "Šifrēšana ilgs vismaz vienu stundu."
+
+msgid "IDS_ST_BODY_ENCRYPTING_ING"
+msgstr "Notiek šifrēšana..."
+
+msgid "IDS_ST_BODY_ENABLE_DATA_ACCESS_OVER_MOBILE_NETWORK"
+msgstr "Aktivizēt datu piekļuvi mobilajā tīklā."
+
+msgid "IDS_ST_BODY_EMPTY"
+msgstr "Tukšs"
+
+msgid "IDS_ST_BODY_EMERGENCY_MODE_ABB"
+msgstr "Ārkārtas režīms"
+
+msgid "IDS_ST_BODY_EMAIL"
+msgstr "E-pasts"
+
+msgid "IDS_ST_BODY_EDIT"
+msgstr "Rediģēt"
+
+msgid "IDS_ST_BODY_EASY_MODE"
+msgstr "Vienkāršais režīms"
+
+msgid "IDS_ST_BODY_DYNAMIC_T_DISPLAY_EFFECT"
+msgstr "Dinamisks"
+
+msgid "IDS_ST_BODY_DYNAMIC_STATUS_BAR"
+msgstr "Dinamiskā statusa josla"
+
+msgid "IDS_ST_BODY_DRIVING_MODE"
+msgstr "Braukšanas režīms"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Nerādīt vēlreiz"
+
+msgid "IDS_ST_BODY_DOWNLOADS"
+msgstr "Lejupielādes"
+
+msgid "IDS_ST_BODY_DOWNLOAD"
+msgstr "Lejupielāde"
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_MENU_T_TTS"
+msgstr "Veiciet dubultskārienu, lai atvērtu izvēlni."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "Veiciet dubultskārienu, lai rediģētu šo lauku."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_MENU_T_TTS"
+msgstr "Veiciet dubultskārienu, lai aizvērtu izvēlni."
+
+msgid "IDS_ST_BODY_DOCOMO_JPN_DCM"
+msgstr "docomo"
+
+msgid "IDS_ST_BODY_DIVX_REGISTRATION"
+msgstr "DivX reģistrācija"
+
+msgid "IDS_ST_BODY_DIVX_DEREGISTRATION"
+msgstr "DivX reģistrācijas atcelšana"
+
+msgid "IDS_ST_BODY_DISPLAY_CONTENTS"
+msgstr "Parādīt saturu"
+
+msgid "IDS_ST_BODY_DISPLAY_BATTERY_PERCENTAGE_ABB"
+msgstr "Rādīt akumul. uzlādes līmeni"
+
+msgid "IDS_ST_BODY_DISABLING_ING"
+msgstr "Deaktivizē..."
+
+msgid "IDS_ST_BODY_DE_REGISTRATION_CODE_NOT_FOUND"
+msgstr "Reģistrācijas atcelšanas kods nav atrasts."
+
+msgid "IDS_ST_BODY_DEVICE_MEMORY"
+msgstr "Ierīces atmiņa"
+
+msgid "IDS_ST_BODY_DEVICE_INFO"
+msgstr "Informācija par ierīci"
+
+msgid "IDS_ST_BODY_DEVICE_ENCRYPTION_HELP_MSG"
+msgstr "Varat šifrēt kontus, iestatījumus, lejupielādētās programmas, to datus, kā arī multivides un citus failus. Pēc tam, kad ierīce ir šifrēta, ikreiz, kad to ieslēgsit, būs jāievada parole, lai to atšifrētu.\n\nŠifrēšana ilgst vismaz vienu stundu. Vispirms uzlādējiet akumulatoru un neatvienojiet ierīci, līdz šifrēšana ir pabeigta. Pārtraucot procesu, var tikt zaudēti visi vai daļa datu."
+
+msgid "IDS_ST_BODY_DEVICE_ENCRYPTED"
+msgstr "Ierīce ir šifrēta."
+
+msgid "IDS_ST_BODY_DEVICE"
+msgstr "Ierīce"
+
+msgid "IDS_ST_BODY_DEVELOPER_OPTIONS"
+msgstr "Izstrādātāja iespējas"
+
+msgid "IDS_ST_BODY_DEFAULT_STORAGE"
+msgstr "Noklusējuma krātuve"
+
+msgid "IDS_ST_BODY_DEFAULT_RENDERING_ENGINE"
+msgstr "Noklusējuma renderēšanas programma"
+
+msgid "IDS_ST_BODY_DEFAULT_FONT"
+msgstr "Noklusējuma fonts"
+
+msgid "IDS_ST_BODY_DECRYPT_DEVICE_Q_WARNING_MSG"
+msgstr "Vai atšifrēt ierīci? Šī darbība ir neatgriezeniska, un, ja to pārtrauksit, zaudēsit datus. Atšifrēšana var ilgt vairāk nekā stundu; tās laikā ierīce tiks restartēta vairākas reizes un jūs to nevarēsit izmantot."
+
+msgid "IDS_ST_BODY_DECRYPT_DEVICE"
+msgstr "Atšifrēt ierīci"
+
+msgid "IDS_ST_BODY_DECRYPTING_ING"
+msgstr "Atšifrē..."
+
+msgid "IDS_ST_BODY_DEBUGGING_MODE_LAUNCHES_WHEN_USB_IS_CONNECTED"
+msgstr "Atkļūdošanas režīms tiek palaists, pievienojot USB."
+
+msgid "IDS_ST_BODY_DDMMYYYY_DOT"
+msgstr "DD.MM.GGGG."
+
+msgid "IDS_ST_BODY_DATE_AND_TIME"
+msgstr "Datums un laiks"
+
+msgid "IDS_ST_BODY_DATE"
+msgstr "Datums"
+
+msgid "IDS_ST_BODY_DATA_ROAMING"
+msgstr "Datu viesabonēšana"
+
+msgid "IDS_ST_BODY_DATA"
+msgstr "Dati"
+
+msgid "IDS_ST_BODY_CUSTOM_M_DEVICE_STATUS"
+msgstr "Pielāgots"
+
+msgid "IDS_ST_BODY_CURRENT"
+msgstr "Pašreizējais"
+
+msgid "IDS_ST_BODY_CRASH_VIEWER"
+msgstr "Avāriju skatītājs"
+
+msgid "IDS_ST_BODY_CPU_USAGE"
+msgstr "Centrālā procesora lietojums"
+
+msgid "IDS_ST_BODY_COUNTRY_CODE"
+msgstr "Valsts kods"
+
+msgid "IDS_ST_BODY_COOL_JAZZ"
+msgstr "Nomierinošs džezs"
+
+msgid "IDS_ST_BODY_CONTENT_FROM_GALLERY_VIDEO_MUSIC_VOICE_RECORDER_AND_MY_FILES_CAN_BE_HIDDEN_IN_PERSONAL_MODE"
+msgstr "Personiskajā režīmā var paslēpt saturu no mapes Galerija, Video, Mūzika, Balss ierakstīšana un Mani faili."
+
+msgid "IDS_ST_BODY_CONNECTIONSETTINGS_PROXY_ADDRESS"
+msgstr "Starpniekservera adrese"
+
+msgid "IDS_ST_BODY_CONNECTIONSETTINGS_INTERNET"
+msgstr "Internets"
+
+msgid "IDS_ST_BODY_CONNECTIONS"
+msgstr "Savienojumi"
+
+msgid "IDS_ST_BODY_CONNECTION"
+msgstr "Savienojums"
+
+msgid "IDS_ST_BODY_CONFIRM_NEW_PIN2"
+msgstr "Apstiprināt jauno PIN2 kodu"
+
+msgid "IDS_ST_BODY_CONFIRM_NEW_PIN1"
+msgstr "Apstipriniet jauno PIN1 kodu."
+
+msgid "IDS_ST_BODY_CONFIRM_NEW_PIN"
+msgstr "Apstiprināt jauno PIN kodu"
+
+msgid "IDS_ST_BODY_CONFIRM_DECRYPTION"
+msgstr "Apstiprināt atšifrēšanu"
+
+msgid "IDS_ST_BODY_CONFIRM"
+msgstr "Apstiprināt"
+
+msgid "IDS_ST_BODY_CONFIGURE_FIREWALL_SETTINGS"
+msgstr "Konfigurēt ugunsmūra iestatījumus"
+
+msgid "IDS_ST_BODY_COMPUTING_ING"
+msgstr "Nosaka..."
+
+msgid "IDS_ST_BODY_CLEAR_DEFAULTS"
+msgstr "Notīrīt noklusējumus"
+
+msgid "IDS_ST_BODY_CHOCO_COOKY"
+msgstr "Šokolādes cepums"
+
+msgid "IDS_ST_BODY_CHECK_FOR_UPDATES_AUTOMATICALLY_ABB"
+msgstr "Automāt. meklēt atjauninājumus."
+
+msgid "IDS_ST_BODY_CHECK_FOR_UPDATES_ABB"
+msgstr "Meklēt atjauninājumus"
+
+msgid "IDS_ST_BODY_CHECK_FOR_UPDATES"
+msgstr "Pārbaudīt atjauninājumus"
+
+msgid "IDS_ST_BODY_CHARGE_BATTERY_TO_ABOVE_80P_AND_TRY_AGAIN"
+msgstr "Uzlādējiet akumulatoru virs 80% un mēģiniet vēlreiz."
+
+msgid "IDS_ST_BODY_CHANGING_THE_FONT_SIZE_IN_ACCESSIBILITY_SETTINGS_WILL_OVERRIDE_THE_FONT_SIZE_IN_EACH_APPLICATION"
+msgstr "Mainot fonta lielumu pieejamības iestatījumos, šis fonta lielums tiks izmantots visās programmās."
+
+msgid "IDS_ST_BODY_CHANGING_THE_COLOUR_OF_THE_SCREEN_TO_GREYSCALE"
+msgstr "Maina ekrāna krāsas uz pelēktoņu režīmu."
+
+msgid "IDS_ST_BODY_CHANGE_TEXT_SIZE_IN_CONTACTS_CALENDAR_MEMO_MESSAGES_EMAIL_AND_IM"
+msgstr "Mainiet teksta lielumu mapē Kontakti, Kalendārs, Piezīme, Ziņas, E-pasts un Tūlītējā ziņapmaiņa."
+
+msgid "IDS_ST_BODY_CHANGE_PIN2"
+msgstr "Mainīt PIN2"
+
+msgid "IDS_ST_BODY_CALL_SETTINGS"
+msgstr "Zvana iestatījumi"
+
+msgid "IDS_ST_BODY_CALL"
+msgstr "Zvans"
+
+msgid "IDS_ST_BODY_CACHE"
+msgstr "Kešatmiņa"
+
+msgid "IDS_ST_BODY_BLOCK_URL"
+msgstr "Bloķēt URL"
+
+msgid "IDS_ST_BODY_BLOCK_UDP"
+msgstr "Bloķēt UDP"
+
+msgid "IDS_ST_BODY_BLOCK_TCP"
+msgstr "Bloķēt TCP"
+
+msgid "IDS_ST_BODY_BLOCK_PORT"
+msgstr "Bloķēt portu"
+
+msgid "IDS_ST_BODY_BLOCK_IP"
+msgstr "Bloķēt IP adresi"
+
+msgid "IDS_ST_BODY_BLOCKING_MODE_IS_ENABLED"
+msgstr "Bloķēšanas režīms ir aktivizēts."
+
+msgid "IDS_ST_BODY_BLOCKING_MODE"
+msgstr "Bloķēšanas režīms"
+
+msgid "IDS_ST_BODY_BLOCKED_URL_LIST"
+msgstr "Bloķēto URL saraksts"
+
+msgid "IDS_ST_BODY_BLOCKED_PORT_LIST"
+msgstr "Bloķēto portu saraksts"
+
+msgid "IDS_ST_BODY_BLOCKED_IP_LIST"
+msgstr "Bloķēto IP adrešu saraksts"
+
+msgid "IDS_ST_BODY_BATTERY_PERCENTAGE_ABB"
+msgstr "Akum. uzlādes līm."
+
+msgid "IDS_ST_BODY_BATTERY"
+msgstr "Akumulators"
+
+msgid "IDS_ST_BODY_BACKUP_AND_RESET"
+msgstr "Dublēšana un atiestatīšana"
+
+msgid "IDS_ST_BODY_BACKLIGHT_TIME"
+msgstr "Apgaismojuma ilgums"
+
+msgid "IDS_ST_BODY_A_PERSON_YOU_HAVE_GRANTED_AUTHORITY_TO_IS_TRYING_TO_REMOTELY_ENABLE_EMERGENCY_MODE_ON_THIS_DEVICE_MSG"
+msgstr "Persona, kurai jūs piešķīrāt pilnvaras, mēģina attāli aktivizēt ārkārtas režīmu šajā ierīcē. Jūsu informācija tiks nosūtīta uz serveri 60 sekunžu laikā, un tiks aktivizēts ārkārtas režīms. Lai atceltu šo procesu, pieskarieties pie Atcelt."
+
+msgid "IDS_ST_BODY_A_PASSWORD_WILL_BE_REQUIRED_TO_DECRYPT_YOUR_DEVICE_EVERY_TIME_YOU_POWER_IT_ON"
+msgstr "Ikreiz, kad ieslēgsit ierīci, tās atšifrēšanai būs nepieciešama parole."
+
+msgid "IDS_ST_BODY_AVAILABLE_SPACE"
+msgstr "Pieejamā vieta"
+
+msgid "IDS_ST_BODY_AVAILABLE"
+msgstr "Pieejams"
+
+msgid "IDS_ST_BODY_AUTO_DOWNLOAD"
+msgstr "Automātiska lejupielāde"
+
+msgid "IDS_ST_BODY_AUTH_TYPE"
+msgstr "Autentifikācijas veids"
+
+msgid "IDS_ST_BODY_APP_OPENING_IMAGE"
+msgstr "Programmas atvēršanas attēls"
+
+msgid "IDS_ST_BODY_APP_OPENING_EFFECT"
+msgstr "Programmas atvēršanas efekts"
+
+msgid "IDS_ST_BODY_APPLICATION_SETTINGS"
+msgstr "Programmas iestatījumi"
+
+msgid "IDS_ST_BODY_APPLICATION_MANAGER"
+msgstr "Programmu pārvaldnieks"
+
+msgid "IDS_ST_BODY_APPLICATION_INFO"
+msgstr "Informācija par programmu"
+
+msgid "IDS_ST_BODY_APPLICATION"
+msgstr "Progr."
+
+msgid "IDS_ST_BODY_ANTIVIRUS_SOFTWARE_ABB"
+msgstr "Antivīrusu programmatūra"
+
+msgid "IDS_ST_BODY_AM"
+msgstr "AM"
+
+msgid "IDS_ST_BODY_ALWAYS_REJECT"
+msgstr "Vienmēr atteikt"
+
+msgid "IDS_ST_BODY_ALWAYS_ON"
+msgstr "Vienmēr ieslēgts"
+
+msgid "IDS_ST_BODY_ALWAYS_OFF"
+msgstr "Vienmēr izslēgts"
+
+msgid "IDS_ST_BODY_ALARM"
+msgstr "Signāls"
+
+msgid "IDS_ST_BODY_AFTER_YOU_DOWNLOAD_AND_INSTALL_APPLICATIONS_APPLICATIONS_WILL_BE_SHOWN_HERE"
+msgstr "Kad būsit lejupielādējis un instalējis programmas, tās tiks parādītas šeit"
+
+msgid "IDS_ST_BODY_AFTER_RESETTING_PHONE_WILL_RESTART_AUTOMATICALLY"
+msgstr "Pēc atiestatīšanas tālrunis tiks automātiski restartēts."
+
+msgid "IDS_ST_BODY_ADJUST_BRIGHTNESS_LEVEL"
+msgstr "Pielāgot spilgtuma līmeni"
+
+msgid "IDS_ST_BODY_ADJUST_AUTOMATIC_BRIGHTNESS"
+msgstr "Pielāgot automātisko spilgtumu"
+
+msgid "IDS_ST_BODY_ACCESS_NAME"
+msgstr "Piekļuves nosaukums"
+
+msgid "IDS_ST_BODY_ACCESSIBILITY"
+msgstr "Pieejamība"
+
+msgid "IDS_ST_BODY_ABOUT_DEVICE"
+msgstr "Par ierīci"
+
+msgid "IDS_QCP_HEADER_QUICK_COMMAND"
+msgstr "Ātrā komanda"
+
+msgid "IDS_ECON_BODY_EASY_CONNECT_M_SHARING_ABB"
+msgstr "Vienk. sav."
+
+msgid "IDS_SCR_POP_SCREEN_READER_IS_NOT_SUPPORTED_BY_PS_PRESS_THE_BACK_KEY_TO_RETURN_TO_THE_PREVIOUS_SCREEN"
+msgstr "%s neatbalsta ekrāna lasītāju. Nospiediet atgriešanās taustiņu, lai atgrieztos iepriekšējā ekrānā."
+
+msgid "IDS_KEEPIT_HEADER_KEEPIT_M_APPLICATION_NAME"
+msgstr "KeepIt"
+
+msgid "IDS_CALL_POP_UNAVAILABLE_T_DIAL"
+msgstr "Nav pieejams."
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Tikai ārkārtas zvani."
+
+msgid "IDS_JAVA_OPT_SIM_SETTINGS"
+msgstr "SIM kartes iestatījumi"
+
+msgid "IDS_TASK_BODY_NO_RUNNING_APPLICATION"
+msgstr "Nav aktīvu programmu"
+
+msgid "IDS_VC_MBODY_NOTIFICATION_READ_OUT"
+msgstr "Paziņojuma nolasīšana"
+
+msgid "IDS_VC_HEADER_VOICE_RECOGNITION"
+msgstr "Balss atpazīšana"
+
+msgid "IDS_SSEARCH_POP_SEARCHED"
+msgstr "Meklēšana pabeigta."
+
+msgid "IDS_WIFI_BODY_DOT"
+msgstr "."
+
+msgid "IDS_DLNA_BODY_ACCESS_POINT_NAME"
+msgstr "Piekļuves punkta nosaukums"
+
+msgid "IDS_SKM_BODY_ASK_M_IDEA_SKETCH"
+msgstr "Jautāt"
+
+msgid "IDS_HELP_POP_THE_FRONT_CAMERA_IS_NOT_BEING_USED_BY_ANOTHER_APPLICATION"
+msgstr "Cita programma neizmanto priekšējo kameru."
+
+msgid "IDS_HELP_POP_THE_DEVICE_IS_IN_WELL_LIT_CONDITIONS_BUT_THE_SCREEN_IS_NOT_IN_DIRECT_LIGHT"
+msgstr "Ierīce atrodas labi izgaismotā vietā, taču ekrāns nav tiešā apgaismojumā."
+
+msgid "IDS_HELP_POP_THE_DEVICE_IS_HELD_STEADY_AND_UPRIGHT"
+msgstr "Ierīce tiek nekustīgi turēta taisni."
+
+msgid "IDS_HELP_BODY_THE_DEVICE_REACTS_INTELLIGENTLY_BY_ADAPTING_THE_SCREEN_WHEN_IT_DETECTS_YOUR_FACE"
+msgstr "Kad ierīce uztver jūsu seju, tā pielāgo ekrānu."
+
+msgid "IDS_HELP_BODY_SMART_SCREEN_WORKS_BEST_UNDER_THE_FOLLOWING_CONDITIONS_C"
+msgstr "Viedais ekrāns vislabāk darbojas šādos apstākļos:"
+
+msgid "IDS_HELP_BODY_SMART_ROTATION_DISABLES_AUTO_SCREEN_ROTATION_BY_CHECKING_THE_ORIENTATION_OF_YOUR_FACE_AND_THE_DEVICE_BY_ITS_FRONT_CAMERA"
+msgstr "Viedā pagriešana deaktivizē automātisko ekrāna pagriešanu, ar priekšējo kameru nosakot jūsu sejas un ierīces orientāciju."
+
+msgid "IDS_LBS_HEADER_LOCATION"
+msgstr "Atrašanās vieta"
+
+msgid "IDS_LBS_BODY_DESTINATION"
+msgstr "Adresāts"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Nē"
+
+msgid "IDS_HELP_BODY_SMART_STAY_DETECTS_YOUR_EYES_WITH_THE_FRONT_CAMERA_SO_THAT_THE_SCREEN_STAYS_ON_WHEN_YOU_ARE_LOOKING_AT_IT"
+msgstr "Viedā sekošana uztver jūsu acis, izmantojot priekšējo kameru, tādējādi ekrāns tiek rādīts, kamēr jūs tajā skatāties."
+
+msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_NOTI_MSG"
+msgstr "Jūs vairs nevarēsit lietot tādas programmas kā internets, e-pasts un YouTube, izmantojot mobilos tīklus. Vai turpināt?"
+
+msgid "IDS_ST_BODY_10_MINUTES"
+msgstr "10 minūtes"
+
+msgid "IDS_ST_BODY_15SEC"
+msgstr "15 sekundes"
+
+msgid "IDS_ST_BODY_24_HOURS"
+msgstr "24 stundas"
+
+msgid "IDS_ST_BODY_2_MINUTES"
+msgstr "2 minūtes"
+
+msgid "IDS_ST_BODY_30SEC"
+msgstr "30 sekundes"
+
+msgid "IDS_ST_BODY_5_MINUTES"
+msgstr "5 minūtes"
+
+msgid "IDS_ST_BODY_APPLICATIONS"
+msgstr "Programmas"
+
+msgid "IDS_ST_BODY_DONT_ASK_AGAIN"
+msgstr "Vairs nejautāt"
+
+msgid "IDS_ST_BODY_P1SS_IS_CURRENTLY_P2SS_T_TTS"
+msgstr "%1$s šobrīd ir %2$s."
+
+msgid "IDS_ST_BODY_PASSWORDS_MUST_CONSIST_OF_AT_LEAST_4_ALPHANUMERIC_CHARACTERS_ALSO_INCLUDING_AT_LEAST_1_ALPHABETICAL_CHARACTER"
+msgstr "Parolē jābūt vismaz 4 burtciparu rakstzīmēm, tostarp vismaz 1 burtam."
+
+msgid "IDS_ST_BODY_PUK1_BLOCKED"
+msgstr "PUK1 bloķēts."
+
+msgid "IDS_ST_BODY_PUK1_CODE"
+msgstr "PUK1 kods"
+
+msgid "IDS_ST_BODY_PUK2"
+msgstr "PUK2"
+
+msgid "IDS_ST_BUTTON2_POWER_SAVING_MODE_ABB"
+msgstr "Enerģijas taup. rež."
+
+msgid "IDS_ST_BUTTON_CANCEL_ABB2"
+msgstr "Atcelt"
+
+msgid "IDS_ST_HEADER_1_PROCESS_AT_MOST_ABB"
+msgstr "Ne vairāk kā 1 process"
+
+msgid "IDS_ST_HEADER_2_PROCESSES_AT_MOST_ABB"
+msgstr "Ne vairāk kā 2 procesi"
+
+msgid "IDS_ST_HEADER_3_PROCESSES_AT_MOST_ABB"
+msgstr "Ne vairāk kā 3 procesi"
+
+msgid "IDS_ST_HEADER_4_PROCESSES_AT_MOST_ABB"
+msgstr "Ne vairāk kā 4 procesi"
+
+msgid "IDS_ST_HEADER_ENTER_PIN_ABB3"
+msgstr "Ievadiet PIN kodu"
+
+msgid "IDS_ST_OPT_2G_ONLY"
+msgstr "Tikai 2G"
+
+msgid "IDS_ST_OPT_3G_2G_HAUTO_CONNECT"
+msgstr "3G/2G (automātiska savienojuma izveide)"
+
+msgid "IDS_ST_OPT_4G_3G_2G_HAUTO_CONNECT"
+msgstr "4G/3G/2G (automātiska savienojuma izveide)"
+
+msgid "IDS_ST_POP_EMERGENCY_MODE_SAVES_BATTERY_POWER_BY_C_MSG"
+msgstr "Ārkārtas režīms ietaupa akumulatora enerģiju šādi:\n\n- Mainot ekrāna krāsas uz pelēko toņu skalu.\n- Ierobežojot izmantojamo programmu skaitu.\n- Izslēdzot mobilos datus, kad ekrāns ir izslēgts.\n- Izslēdzot savienojuma funkcijas, piemēram, Wi-Fi un Bluetooth.\n\nNebūs pieejamas dažas funkcijas, piemēram, Ekrāna lasītājs un S View vāks.\nDaži sākuma ekrāna Dynamic Box lauki var netikt parādīti vai ir atkārtoti jākonfigurē."
+
+msgid "IDS_ST_POP_INCORRECT_PUK1_CODE"
+msgstr "Nepareizs PUK1 kods."
+
+msgid "IDS_ST_POP_INCORRECT_PUK1_PD_ATTEMPTS_LEFT"
+msgstr "Nepareizs PUK1. Atlikuši %d mēģinājumi."
+
+msgid "IDS_ST_POP_INCORRECT_PUK2"
+msgstr "Nepareizs PUK2 kods."
+
+msgid "IDS_ST_POP_INCORRECT_PUK2_PD_ATTEMPTS_LEFT"
+msgstr "Nepareizs PUK2. Atlikuši %d mēģinājumi."
+
+msgid "IDS_ST_POP_PIN_CHANGED"
+msgstr "PIN kods nomainīts."
+
+msgid "IDS_TASKMGR_BUTTON_CLEAR_CACHE"
+msgstr "Notīrīt kešatmiņu"
+
+msgid "IDS_ST_BODY_3G_ONLY"
+msgstr "Tikai 3G"
+
+msgid "IDS_ST_HEADER_ADD"
+msgstr "Pievienot"
+
+msgid "IDS_ST_BODY_SECONDS"
+msgstr "Sekundes"
+
+msgid "IDS_ST_BUTTON_CANCEL"
+msgstr "Atcelt"
+
+msgid "IDS_ST_BODY_1_5_SECONDS"
+msgstr "1.5 sekundes"
+
+msgid "IDS_MSG_ACBUTTON_CANCEL_ABB"
+msgstr "ATCELT"
+
+msgid "IDS_MSG_ACBUTTON_DONE_ABB"
+msgstr "GATAVS"
+
+msgid "IDS_ST_HEADER_TURN_ON_MOBILE_DATA"
+msgstr "Ieslēgt mobilos datus"
+
+msgid "IDS_ST_HEADER_UNABLE_TO_PLAY_SAMPLE_ABB"
+msgstr "Nevar atskaņot paraugu"
+
+msgid "IDS_ST_POP_SAMPLES_CANNOT_BE_PLAYED_DURING_CALLS"
+msgstr "Paraugus nevar atskaņot sarunu laikā."
+
+msgid "IDS_ST_HEADER_DEVICE_NAME"
+msgstr "Ierīces nosaukums"
+
+msgid "IDS_ST_HEADER_DELETE_ITEMS_ABB2"
+msgstr "Dzēst objektus"
+
+msgid "IDS_ST_HEADER_FEEDBACK"
+msgstr "Atbilde"
+
+msgid "IDS_ST_BODY_SELECT_ALL"
+msgstr "Izv. visu"
+
+msgid "IDS_ST_BODY_TOTAL"
+msgstr "Kopā"
+
+msgid "IDS_ST_HEADER_MANAGE_CERTIFICATES_ABB"
+msgstr "Pārvaldīt sertifikātus"
+
+msgid "IDS_ST_BODY_INCORRECT_PASSWORD"
+msgstr "Nepareiza parole."
+
+msgid "IDS_ST_HEADER_TURN_OFF_MOBILE_DATA"
+msgstr "Izslēgt mobilos datus"
+
+msgid "IDS_ST_BODY_FLIGHT_MODE_DISABLES_CALLING_AND_MESSAGING_FUNCTIONS_AND_TURNS_OFF_MOBILE_DATA_AND_CONNECTIVITY_FUNCTIONS_MSG"
+msgstr "Lidojuma režīms deaktivizē zvanīšanas un ziņapmaiņas funkcijas, kā arī izslēdz mobilo datu un savienojumu izveides funkcijas, piemēram, Wi-Fi un Bluetooth. Lai lidojuma režīmā izmantotu Wi-Fi un Bluetooth, ieslēdziet šīs funkcijas iestatījumos vai paziņojumu panelī. Tiks aktivizēts lidojuma režīms."
+
+msgid "IDS_ST_BODY_TYPE"
+msgstr "Veids"
+
+msgid "IDS_ST_BODY_PERSONAL"
+msgstr "Privāti"
+
+msgid "IDS_ST_HEADER_LOCK_SCREEN_AND_SECURITY_ABB"
+msgstr "Bloķēšanas ekr. un drošība"
+
+msgid "IDS_ST_HEADER_PRIVACY_AND_SAFETY_ABB"
+msgstr "Konfidenc. un drošība"
+
+msgid "IDS_ST_BODY_MOBILE_NETWORKS"
+msgstr "Mobilie tīkli"
+
+msgid "IDS_ST_HEADER_MORE_CONNECTION_SETTINGS"
+msgstr "Citi savienojuma iestatījumi"
+
+msgid "IDS_ST_MBODY_LEGAL_INFORMATION_ABB"
+msgstr "Juridiskā informācija"
+
+msgid "IDS_ST_BODY_DEVICE_INFORMATION"
+msgstr "Informācija par ierīci"
+
+msgid "IDS_ST_BODY_PHONE_NUMBER"
+msgstr "Tālruņa numurs"
+
+msgid "IDS_ST_BODY_MODEL_NUMBER"
+msgstr "Modeļa numurs"
+
+msgid "IDS_ST_MBODY_TIZEN_VERSION"
+msgstr "Tizen versija"
+
+msgid "IDS_ST_MBODY_BLUETOOTH_ADDRESS"
+msgstr "Bluetooth adrese"
+
+msgid "IDS_ST_BODY_WI_FI_MAC_ADDRESS"
+msgstr "Wi-Fi MAC adrese"
+
+msgid "IDS_ST_BUTTON_BATTERY_POWER_ABB"
+msgstr "Akumulatora\njauda"
+
+msgid "IDS_ST_TMBODY_SECURITY_STATUS"
+msgstr "Drošības statuss"
+
+msgid "IDS_ST_SBODY_SHOW_THE_TIME_IN_24_HOUR_FORMAT_INSTEAD_OF_12_HOUR_HAM_PM_FORMAT"
+msgstr "12 stundu (AM/PM) formāta vietā rādiet laiku 24 stundu formātā."
+
+msgid "IDS_ST_MBODY_AUTO_UPDATE"
+msgstr "Automātiska atjaunināšana"
+
+msgid "IDS_ST_MBODY_24_HOUR_CLOCK"
+msgstr "24 stundu pulkstenis"
+
+msgid "IDS_ST_BODY_MAGNIFIER"
+msgstr "Lupa"
+
+msgid "IDS_ST_TMBODY_CACHE"
+msgstr "Kešatmiņa"
+
+msgid "IDS_ST_HEADER_CLEAR_CACHE_ABB"
+msgstr "Notīrīt kešatmiņu"
+
+msgid "IDS_ST_POP_THERE_IS_NO_CACHE_DATA_TO_CLEAR"
+msgstr "Nav kešatmiņas datu, ko notīrīt."
+
+msgid "IDS_ST_POP_ALL_THE_CACHE_DATA_WILL_BE_CLEARED"
+msgstr "Visi kešatmiņas dati tiks notīrīti."
+
+msgid "IDS_ST_BUTTON_CLEAR_CACHE_ABB"
+msgstr "Notīr. kešatm."
+
+msgid "IDS_ST_BODY_12_HOURS"
+msgstr "12 stundas"
+
+msgid "IDS_ST_BODY_1MINUTE"
+msgstr "1 minūte"
+
+msgid "IDS_ST_BODY_ACCOUNTS"
+msgstr "Konti"
+
+msgid "IDS_ST_HEADER_ALLSHARE"
+msgstr "AllShare"
+
+msgid "IDS_ST_BODY_ANSWERINGMODE_AUTOMATIC"
+msgstr "Automātiski"
+
+msgid "IDS_ST_BUTTON_BACK"
+msgstr "Atpakaļ"
+
+msgid "IDS_ST_BODY_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BODY_ADVANCEDOPTIONS_CERTIFICATES"
+msgstr "Sertifikāti"
+
+msgid "IDS_ST_BODY_CONTACTS"
+msgstr "Kontakti"
+
+msgid "IDS_ST_BODY_MYTHEME_CREATE"
+msgstr "Izveidot"
+
+msgid "IDS_ST_BODY_CALLERID_DEFAULT"
+msgstr "Noklusējums"
+
+msgid "IDS_ST_BODY_FM_RADIO"
+msgstr "FM radio"
+
+msgid "IDS_ST_BODY_FONT"
+msgstr "Fonts"
+
+msgid "IDS_ST_BODY_GALLERY"
+msgstr "Galerija"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Palīdzība"
+
+msgid "IDS_ST_BODY_MANUAL"
+msgstr "Manuāli"
+
+msgid "IDS_ST_BODY_APPLICATIONSETTINGS_MESSAGE"
+msgstr "Ziņa"
+
+msgid "IDS_ST_BODY_MUSIC"
+msgstr "Mūzika"
+
+msgid "IDS_ST_BODY_NFC"
+msgstr "NFC"
+
+msgid "IDS_ST_BODY_ALERTTYPE_OFF"
+msgstr "Izslēgts"
+
+msgid "IDS_ST_BODY_ON"
+msgstr "Ieslēgts"
+
+msgid "IDS_ST_BODY_MEMORYSTATUS_OTHERS"
+msgstr "Citi"
+
+msgid "IDS_ST_BODY_PIN_LOCK"
+msgstr "PIN bloķēšana"
+
+msgid "IDS_ST_BODY_RESET"
+msgstr "Atiestatīt"
+
+msgid "IDS_ST_POP_NETWORKSERVICES_SEARCHING"
+msgstr "Meklē..."
+
+msgid "IDS_ST_BODY_SIZE"
+msgstr "Lielums"
+
+msgid "IDS_ST_HEADER_SYNCHRONISE"
+msgstr "Sinhronizēt"
+
+msgid "IDS_ST_BODY_SYSTEM"
+msgstr "Sistēma"
+
+msgid "IDS_ST_BUTTON2_S_PLANNER"
+msgstr "S Planner"
+
+msgid "IDS_ST_BODY_TWITTER"
+msgstr "Twitter"
+
+msgid "IDS_ST_BODY_USERNAME"
+msgstr "Lietotājvārds"
+
+msgid "IDS_ST_BODY_VOICE"
+msgstr "Balss"
+
+msgid "IDS_ST_BODY_DEFAULTMEMORY_VOICE_RECORDER"
+msgstr "Balss ierakstītājs"
+
+msgid "IDS_ST_BODY_WI_FI"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BODY_YYYY_MM_DD_DOT"
+msgstr "GGGG.MM.DD"
+
+msgid "IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING"
+msgstr "Spilgtums"
+
+msgid "IDS_ST_HEADER_SORT_BY"
+msgstr "Kārtot pēc"
+
+msgid "IDS_ST_BODY_DELETED"
+msgstr "Izdzēsts."
+
+msgid "IDS_ST_POP_ERROR"
+msgstr "Kļūda."
+
+msgid "IDS_ST_TPOP_MAXIMUM_NUMBER_OF_CHARACTERS_REACHED"
+msgstr "Sasniegts maksimālais rakstzīmju skaits."
+
+msgid "IDS_ST_TPOP_TRY_AGAIN"
+msgstr "Mēģiniet vēlreiz"
+
+msgid "IDS_ST_BODY_VERSION"
+msgstr "Versija"
+
+msgid "IDS_ST_BODY_DELETE"
+msgstr "Dzēst"
+
+msgid "IDS_ST_SK_SET_LITE"
+msgstr "Iestat."
+
+msgid "IDS_ST_SK_YES"
+msgstr "Jā"
+
+msgid "IDS_SAPPS_SK_TRY_ABB"
+msgstr "Mēģināt"
+
+msgid "IDS_ST_BODY_PLAY_A_SOUND_WHEN_BUTTONS_ICONS_AND_MENU_ITEMS_ARE_TAPPED"
+msgstr "Pieskaroties pogām, ikonām un izvēlnes elementiem, atskaņot skaņu."
+
+msgid "IDS_ST_MBODY_KEYBOARD_SOUND"
+msgstr "Tastatūras skaņa"
+
+msgid "IDS_ST_MBODY_RINGTONE"
+msgstr "Zvana signāls"
+
+msgid "IDS_ST_MBODY_TOUCH_SOUND"
+msgstr "Pieskaršanās skaņa"
+
+msgid "IDS_ST_SBODY_PLAY_A_SOUND_WHEN_THE_SAMSUNG_KEYBOARD_IS_TAPPED"
+msgstr "Atskaņot skaņu, kad pieskaraties Samsung tastatūrai."
+
+msgid "IDS_ST_POP_MOUNTING_SD_CARD_ING"
+msgstr "Pievieno SD karti..."
+
+msgid "IDS_ST_BODY_ALL"
+msgstr "Visas"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "Atrašanās vietas noteikšanas pakalpojums"
+
+msgid "IDS_ST_BODY_VPN"
+msgstr "VPN"
+
+msgid "IDS_ST_SK_OPTIONS_LITE"
+msgstr "Iesp."
+
+msgid "IDS_ST_BODY_TTS"
+msgstr "TTS"
+
+msgid "IDS_ST_BODY_VOICE_CONTROL"
+msgstr "Balss vadība"
+
