@@ -212,15 +212,6 @@ mkdir -p %{buildroot}%{_libdir}/systemd/system/default.target.wants
 %post
 update-mime-database /usr/share/mime
 
-
-#setting cap_raw/admin to iptables lib
-#setcap cap_net_admin,cap_net_raw=ei /usr/sbin/iptables-multi
-setfattr -n security.capability -v 0sAQAAAgAAAAAAMAAAAAAAAAAAAAA= /usr/sbin/iptables-multi
-
-#for personal page
-#mkdir -p /opt/usr/.personalstorage
-#mkdir -p /opt/storage/personalstorage
-
 # Set vconf values with -g/-u options
 GOPTION="-g 6514"
 
@@ -266,31 +257,19 @@ then
 fi
 
 
-if [ ! -d /var/kdb/file/fixedGrid ]
-then
-    mkdir -p /var/kdb/file/fixedGrid
-fi
-
-if [ -d /var/kdb/file/fixedGrid ]
-then
-	chown app:app /var/kdb/file/fixedGrid -R
-fi
-
 # for support shared menu icons
 ln -s /usr/apps/org.tizen.setting/res/icons /usr/apps/org.tizen.setting/shared/res/icons
 
-
 /usr/apps/org.tizen.setting/bin/setting_conf_util timezone_init
-chown 5000:5000 %{PREF_DATADIR} -R
 #------------------------------------------
 sync
 
-if [ -d /opt/share/settings ]
+if [ -d /opt/usr/share/settings ]
 then
-	rm -rf /opt/share/settings
+	rm -rf /opt/usr/share/settings
 fi
 
-ln -s /opt/usr/share/settings /opt/share/settings
+#ln -s /opt/usr/share/settings /opt/share/settings
 
 
 mkdir -p /usr/ug/bin/
