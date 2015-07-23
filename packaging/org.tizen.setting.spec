@@ -113,6 +113,8 @@ Requires(post): attr
 #Requires(post): /sbin/ldconfig
 #Requires(postun): /sbin/ldconfig
 
+# ls: cannot access /opt/usr/share/settings: No such file or directory
+
 %description
 Setting application
  BEAT UI, Setting application.
@@ -264,10 +266,11 @@ ln -s /usr/apps/org.tizen.setting/res/icons /usr/apps/org.tizen.setting/shared/r
 #------------------------------------------
 sync
 
-if [ -d /opt/usr/share/settings ]
-then
-	rm -rf /opt/usr/share/settings
-fi
+#if [ -d /opt/usr/share/settings ]
+#then
+#	rm -rf /opt/usr/share/settings
+#	mkdir -p /opt/usr/share/settings
+#fi
 
 #ln -s /opt/usr/share/settings /opt/share/settings
 
