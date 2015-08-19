@@ -212,6 +212,16 @@ mkdir -p %{buildroot}%{_libdir}/systemd/system/default.target.wants
 %clean
 
 %post
+#create directory /opt/usr/apps/org.tizen.setting.data
+if [ ! -d /opt/usr/apps/org.tizen.setting ]
+then
+    mkdir -p /opt/usr/apps/org.tizen.setting
+    mkdir -p /opt/usr/apps/org.tizen.setting/data
+    mkdir -p %{PREF_DATADIR}
+fi
+chmod a+w /opt/usr/apps/org.tizen.setting/data
+
+
 update-mime-database /usr/share/mime
 
 # Set vconf values with -g/-u options
@@ -247,17 +257,6 @@ GOPTION="-g 6514"
 
 #resetSecurity
 	rm -rf /opt/usr/data/setting/set_info
-
-#------------------------------------------
-#create directory /opt/usr/data/setting
-#------------------------------------------
-#create directory /opt/usr/apps/org.tizen.setting.data
-if [ ! -d /opt/usr/apps/org.tizen.setting ]
-then
-    mkdir -p /opt/usr/apps/org.tizen.setting
-    mkdir -p %{PREF_DATADIR}
-fi
-
 
 # for support shared menu icons
 ln -s /usr/apps/org.tizen.setting/res/icons /usr/apps/org.tizen.setting/shared/res/icons
