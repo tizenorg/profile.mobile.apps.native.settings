@@ -17,7 +17,7 @@
  *
  */
 #include <appsvc.h>
-#include <efl_assist.h>
+#include <efl_extension.h>
 
 #include "setting-appmgr-utils.h"
 #include "setting-appmgr-runinfo.h"
@@ -69,7 +69,7 @@ static void appmgrUg_main_sort_popup(void *data, Evas_Object *obj,
 	elm_object_style_set(popup, "default");
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	elm_object_part_text_set(popup, "title,text", _(MGRAPP_STR_SORT_BY));
-	ea_object_event_callback_add(popup, EA_CALLBACK_BACK, appmgrUg_popup_del, ad);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, appmgrUg_popup_del, ad);
 	evas_object_smart_callback_add(popup, "block,clicked", appmgrUg_popup_del, ad);
 	evas_object_show(popup);
 
@@ -206,8 +206,8 @@ static void appmgrUg_main_create_more_popup(void *data, Evas_Object *obj,
 	ctxpopup = elm_ctxpopup_add(ad->navi);
 	elm_object_style_set(ctxpopup, "more/default");
 	elm_ctxpopup_auto_hide_disabled_set(ctxpopup, EINA_TRUE);
-	ea_object_event_callback_add(ctxpopup, EA_CALLBACK_BACK, ea_ctxpopup_back_cb, NULL);
-	ea_object_event_callback_add(ctxpopup, EA_CALLBACK_MORE, ea_ctxpopup_back_cb, NULL);
+	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_BACK, eext_ctxpopup_back_cb, NULL);
+	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_MORE, eext_ctxpopup_back_cb, NULL);
 
 	evas_object_smart_callback_add(ctxpopup, "dismissed", appmgrUg_popup_del, ad);
 	evas_object_smart_callback_add(elm_object_top_widget_get(ctxpopup),
@@ -220,7 +220,7 @@ static void appmgrUg_main_create_more_popup(void *data, Evas_Object *obj,
 	elm_object_item_domain_text_translatable_set(it, SETTING_PACKAGE, EINA_TRUE);
 
 	Evas_Object *ao = elm_object_part_access_object_get(ctxpopup, "access.outline");
-	ea_screen_reader_access_info_prepend_cb_set(ao, ELM_ACCESS_CONTEXT_INFO,
+	eext_screen_reader_access_info_prepend_cb_set(ao, ELM_ACCESS_CONTEXT_INFO,
 	                                            _appmgrUg_access_info_prepend_cb, 2);
 
 	if (ad->popup)

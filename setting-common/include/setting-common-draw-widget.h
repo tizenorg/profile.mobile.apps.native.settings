@@ -709,7 +709,7 @@ extern Evas_Object *setting_create_image_with_round_corner(Evas *evas, const cha
 extern Evas_Object *setting_create_gif(Evas_Object *parent, const char **png_list);
 
 extern void setting_add_hardkey_features(Evas_Object *popup, void *data);
-extern void ea_popup_back_cb_2(void *data, Evas_Object *obj, void *event_info);
+extern void eext_popup_back_cb_2(void *data, Evas_Object *obj, void *event_info);
 /**
 * @ create a popup window which contents a progressbar
 * @return a popup window which contents a progressbar

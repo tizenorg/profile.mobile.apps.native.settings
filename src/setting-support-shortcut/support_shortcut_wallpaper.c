@@ -30,7 +30,7 @@
 #include <feedback.h>
 #include <dd-led.h>
 #include <device.h>
-#include <efl_assist.h>
+#include <efl_extension.h>
 #include <setting-common-general-func.h>
 
 #define EXPORT_PUBLIC __attribute__((visibility("default")))

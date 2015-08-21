@@ -7,7 +7,7 @@ pkg_check_modules(pkgs_network REQUIRED elementary evas ecore ecore-imf eina edj
 appcore-common appcore-efl
 ui-gadget-1 capi-appfw-application
 capi-network-connection
-tapi dlog efl-assist
+tapi dlog efl-extension efl-assist
 notification json-glib-1.0 eventsystem)
 
 FOREACH(flag ${pkgs_network_CFLAGS})

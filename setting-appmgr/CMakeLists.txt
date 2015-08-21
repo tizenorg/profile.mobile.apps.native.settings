@@ -20,6 +20,7 @@ pkg_check_modules(pkgs_appmgr REQUIRED
 		capi-appfw-app-manager
 		vconf
 		pkgmgr-info
+		efl-extension
 		efl-assist
 		app2sd
 		json-glib-1.0

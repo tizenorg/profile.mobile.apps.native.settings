@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include <efl_assist.h>
+#include <efl_extension.h>
 
 #include <appcore-efl.h>
 #include <aul.h>
@@ -1320,7 +1320,7 @@ static Evas_Object *__add_progressbar(void *data, Evas_Object *parent,
 	Evas_Object *layout;
 
 	ad = (struct appdata *) data;
-	popup = ea_center_popup_add(parent);
+	popup = eext_center_popup_add(parent);
 
 	layout = elm_layout_add(popup);
 	elm_layout_file_set(layout, POPUP_EDJ, "popup_processingview_1button");	/*u can use add button or not */
@@ -1402,7 +1402,7 @@ static Evas_Object *__add_double_line_progressbar(void *data, Evas_Object *paren
 	Evas_Object *label;
 	Evas_Object *layout;
 	Evas_Object *progressbar = NULL;
-	popup = ea_center_popup_add(parent);
+	popup = eext_center_popup_add(parent);
 	/* [UI] add lable */
 	if (progressbar_lable) {
 		label = elm_label_add(popup);
@@ -1529,9 +1529,9 @@ void release_evas_object(Evas_Object **obj)
 }
 
 
-static void ea_popup_back_cb_overide(void *data, Evas_Object *obj, void *event_info)
+static void eext_popup_back_cb_overide(void *data, Evas_Object *obj, void *event_info)
 {
-	ea_popup_back_cb(data, obj, event_info);
+	eext_popup_back_cb(data, obj, event_info);
 
 	if (NULL == data) return;
 	struct appdata *ad = data;
@@ -1540,7 +1540,7 @@ static void ea_popup_back_cb_overide(void *data, Evas_Object *obj, void *event_i
 
 static void timeout_response_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	ea_popup_back_cb(data, obj, event_info);
+	eext_popup_back_cb(data, obj, event_info);
 
 	if (NULL == data) return;
 	struct appdata *ad = data;
@@ -2355,7 +2355,7 @@ static Evas_Object *mode_syspopup_create_popup_with_label_check(void *data,
 	if (!ad) return NULL;
 	Evas_Object *popup = elm_popup_add(parent);
 #if 0
-	ea_object_event_callback_add(popup, EA_CALLBACK_BACK, ea_popup_back_cb, NULL);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb, NULL);
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	if (title) {
 		elm_object_part_text_set(popup, "title,text", _(title));
@@ -2381,7 +2381,7 @@ static Evas_Object *mode_syspopup_create_popup_with_label_check(void *data,
 	evas_object_show(popup);
 	return popup;
 #endif
-	ea_object_event_callback_add(popup, EA_CALLBACK_BACK, ea_popup_back_cb, NULL);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb, NULL);
 	/*setting_add_hardkey_features(popup, data); */
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 

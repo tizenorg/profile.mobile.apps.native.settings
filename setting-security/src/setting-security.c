@@ -22,7 +22,7 @@
 #include <setting-security.h>
 #include <setting-cfg.h>
 
-#include <efl_assist.h>
+#include <efl_extension.h>
 #include <app_manager.h>
 #if SUPPORT_ENCRYPTION
 #include <ode.h>
@@ -318,7 +318,7 @@ int pwd_handler_sec_pw_pin1_blocked(SettingSecurityUG *data, void *arg)
 	                                              setting_security_pin1_blocked_resp_cb,
 	                                              0, 1,
 	                                              "IDS_ST_BUTTON_OK");
-	ea_object_event_callback_del(ad->sim_popup, EA_CALLBACK_BACK, ea_popup_back_cb_2);
+	eext_object_event_callback_del(ad->sim_popup, EEXT_CALLBACK_BACK, eext_popup_back_cb_2);
 
 	/* End. */
 	return 0;

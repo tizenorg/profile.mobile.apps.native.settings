@@ -20,7 +20,7 @@
  */
 #include <setting-network-main.h>
 #include <app_preference.h>
-#include <efl_assist.h>
+#include <efl_extension.h>
 #include <eventsystem.h>
 #include <bundle_internal.h>
 
@@ -1219,7 +1219,7 @@ void __change_search_view_on_resp_cb(void *data, Evas_Object *obj,
 Evas_Object *_create_popup(Evas_Object *parent, char *content, setting_call_back_func response_cb, void *data)
 {
 	Evas_Object *popup = elm_popup_add(parent);
-	ea_object_event_callback_add(popup, EA_CALLBACK_BACK, response_cb, data);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, response_cb, data);
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND,
 	                                 EVAS_HINT_EXPAND);
 
@@ -1249,7 +1249,7 @@ Evas_Object *_create_popup_with_btn(void *data,
 {
 	SETTING_TRACE_BEGIN;
 	Evas_Object *popup = elm_popup_add(parent);
-	ea_object_event_callback_add(popup, EA_CALLBACK_BACK, ea_popup_back_cb_2, NULL);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb_2, NULL);
 	setting_add_hardkey_features(popup, data);
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND,
 	                                 EVAS_HINT_EXPAND);

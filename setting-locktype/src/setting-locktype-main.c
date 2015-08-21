@@ -27,7 +27,7 @@
 #include <security-server.h>
 #include <pkgmgr-info.h>
 #include <ail.h>
-#include <efl_assist.h>
+#include <efl_extension.h>
 #if SUPPORT_ENCRYPTION
 #include <ode.h>
 #endif

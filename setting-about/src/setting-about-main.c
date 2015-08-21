@@ -32,6 +32,7 @@
 
 #include <app_manager.h>
 #include <efl_assist_events.h>
+#include <efl_extension.h>
 #include <ITapiModem.h>
 
 
@@ -336,7 +337,7 @@ static void __setting_about_popup_regulatory_info(void *data)
 
 	ad = (SettingAboutUG *) data;
 	popup = elm_popup_add(ad->win_main_layout);
-	ea_object_event_callback_add(popup, EA_CALLBACK_BACK, ea_popup_back_cb, NULL);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb, NULL);
 
 	elm_object_part_text_set(popup, "title,text", _(KeyStr_Regulatory_Info));
 	layout = elm_layout_add(popup);

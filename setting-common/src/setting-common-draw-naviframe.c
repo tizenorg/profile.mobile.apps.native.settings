@@ -21,7 +21,7 @@
 #include <setting-common-draw-widget.h>
 #include <glib.h>
 #include <Elementary.h>
-#include <efl_assist.h>
+#include <efl_extension.h>
 
 extern Eina_List *elm_widget_scrollable_children_get(Evas_Object *obj);
 
@@ -330,8 +330,8 @@ EXPORT_PUBLIC void setting_create_more_btn_click_cb(void *data, Evas_Object *obj
 	Evas_Object *ctxpopup = elm_ctxpopup_add(btn_data->parent);
 	elm_object_style_set(ctxpopup, "more/default");
 	elm_ctxpopup_auto_hide_disabled_set(ctxpopup, EINA_TRUE); /*to disable the rotating dismiss issue */
-	ea_object_event_callback_add(ctxpopup, EA_CALLBACK_BACK, ea_ctxpopup_back_cb, NULL); /*to make ctxpopup get the "Back" key event */
-	ea_object_event_callback_add(ctxpopup, EA_CALLBACK_MORE, ea_ctxpopup_back_cb, NULL);/*to make ctxpopup get the "More" key event */
+	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_BACK, eext_ctxpopup_back_cb, NULL); /*to make ctxpopup get the "Back" key event */
+	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_MORE, eext_ctxpopup_back_cb, NULL);/*to make ctxpopup get the "More" key event */
 	Ecore_Event_Handler *event_handler = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, __ctxpopup_key_press_cb, ctxpopup);
 	evas_object_data_set(ctxpopup, "event_handler", event_handler);
 
@@ -536,8 +536,8 @@ Evas_Object *setting_create_navi_bar(Evas_Object *layout)
 
 	elm_naviframe_prev_btn_auto_pushed_set(navi, EINA_FALSE);
 
-	ea_object_event_callback_add(navi, EA_CALLBACK_BACK, ea_naviframe_back_cb, NULL);
-	ea_object_event_callback_add(navi, EA_CALLBACK_MORE, ea_naviframe_more_cb, NULL);
+	eext_object_event_callback_add(navi, EEXT_CALLBACK_BACK, eext_naviframe_back_cb, NULL);
+	eext_object_event_callback_add(navi, EEXT_CALLBACK_MORE, eext_naviframe_more_cb, NULL);
 
 	/*elm_object_item_signal_callback_event(navi */
 

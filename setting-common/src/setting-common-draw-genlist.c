@@ -21,6 +21,7 @@
 #include <setting-common-draw-widget.h>
 #include <glib.h>
 #include <system_settings.h>
+#include <efl_extension.h>
 #include <efl_assist.h>
 #include <setting-debug.h>
 
@@ -1184,7 +1185,7 @@ static Evas_Object *_datefield_picker_popup_add(Evas_Object *parent, Evas_Object
 	Setting_GenGroupItem_Data *item_data = param->item_data;
 
 	Evas_Object *popup = elm_popup_add(parent);
-	ea_object_event_callback_add(popup, EA_CALLBACK_BACK, ea_popup_back_cb, NULL);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb, NULL);
 
 	Evas_Object *cancel_btn = elm_button_add(popup);
 	elm_object_style_set(cancel_btn, "popup");

@@ -19,7 +19,7 @@
  *
  */
 #include <setting-network-preferred-network.h>
-#include <efl_assist.h>
+#include <efl_extension.h>
 
 static int setting_network_preferred_network_create(void *cb);
 static int setting_network_preferred_network_destroy(void *cb);
@@ -291,7 +291,7 @@ setting_network_preferred_network_click_softkey_add_cb(void *data,
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
 
 	ad->popup = elm_ctxpopup_add(ad->navi_bar);
-	ea_object_event_callback_add(ad->popup, EA_CALLBACK_BACK, ea_ctxpopup_back_cb, NULL);
+	eext_object_event_callback_add(ad->popup, EEXT_CALLBACK_BACK, eext_ctxpopup_back_cb, NULL);
 
 	/* evas_object_smart_callback_add(ad->popup, "hide", _ctxpopup_cb, ad->popup); */
 

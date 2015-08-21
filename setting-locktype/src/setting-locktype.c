@@ -25,7 +25,7 @@
  */
 
 #include <setting-locktype.h>
-#include <efl_assist.h>
+#include <efl_extension.h>
 
 #include <security-server.h>
 

@@ -4,7 +4,7 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${SETTING_COMMON}/include)
 INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_locktype REQUIRED ecore evas elementary dlog
 ui-gadget-1 capi-appfw-application appcore-common security-server ail
-capi-media-recorder deviced efl-assist pkgmgr-info
+capi-media-recorder deviced efl-extension efl-assist pkgmgr-info
 )
 
 FOREACH(flag ${pkgs_locktype_CFLAGS})

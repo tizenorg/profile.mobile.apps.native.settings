@@ -38,6 +38,8 @@
 #include <notification.h>
 #include <account.h>
 #include <app_manager.h>
+
+#include <efl_extension.h>
 #include <efl_assist.h>
 #include <dd-display.h>
 /*#include <tethering.h> */

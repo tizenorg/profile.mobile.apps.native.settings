@@ -27,7 +27,7 @@
 #include <app_manager.h>
 #include <metadata_extractor.h>
 #include <player.h>
-#include <efl_assist.h>
+#include <efl_extension.h>
 #include <sound_manager_internal.h>
 
 #define PLAY_FEEDBACK(f_type, f_pattern) {\

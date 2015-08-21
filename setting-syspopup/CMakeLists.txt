@@ -28,6 +28,7 @@ pkg_check_modules(pkgs_syspopup REQUIRED
 	ui-gadget-1
 	notification
 	alarm-service
+	efl-extension
 	efl-assist
 	tapi
 	pkgmgr

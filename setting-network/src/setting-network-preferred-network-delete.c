@@ -19,7 +19,7 @@
  *
  */
 #include <setting-network-preferred-network-delete.h>
-#include <efl_assist.h>
+#include <efl_extension.h>
 
 static int setting_network_preferred_network_delete_create(void *cb);
 static int setting_network_preferred_network_delete_destroy(void *cb);
@@ -519,7 +519,7 @@ static void setting_network_preferred_network_create_delete_pop(void *data)
 	}
 	Evas_Object *popup;
 	popup = elm_popup_add(ad->win_get);
-	ea_object_event_callback_add(popup, EA_CALLBACK_BACK, ea_popup_back_cb_2, NULL);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb_2, NULL);
 	setting_add_hardkey_features(popup, ad);
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND,
 	                                 EVAS_HINT_EXPAND);

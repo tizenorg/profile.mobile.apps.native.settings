@@ -27,7 +27,7 @@
 #include <setting-security-main.h>
 #include <setting-debug.h>
 #include <app.h>
-#include <efl_assist.h>
+#include <efl_extension.h>
 
 static int setting_view_security_update_create(void *cb);
 static int setting_view_security_update_destroy(void *cb);
@@ -553,7 +553,7 @@ static void __ask_create_manual_update_pop_cb(void *data, Evas_Object *obj,
 
 		/*POP_UP */
 		ad->pop_progress = elm_popup_add(ad->win_get);
-		ea_object_event_callback_add(ad->pop_progress, EA_CALLBACK_BACK, ea_popup_back_cb_2, NULL);
+		eext_object_event_callback_add(ad->pop_progress, EEXT_CALLBACK_BACK, eext_popup_back_cb_2, NULL);
 		setting_add_hardkey_features(ad->pop_progress, ad);
 		evas_object_size_hint_weight_set(ad->pop_progress, EVAS_HINT_EXPAND,
 		                                 EVAS_HINT_EXPAND);

@@ -26,7 +26,7 @@
 #include <setting-common-general-func.h>
 #include <setting-common-draw-widget.h>
 #include <setting-common-view.h>
-#include <efl_assist.h>
+#include <efl_extension.h>
 #include <feedback.h>
 
 #define VOLUME_APP_NAME "org.tizen.setting.volume"

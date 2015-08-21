@@ -22,7 +22,7 @@
 #include <setting-network-preferred-network-delete.h>
 #include <setting-network-preferred-network.h>
 #include <setting-debug.h>
-#include <efl_assist.h>
+#include <efl_extension.h>
 #include <setting-cfg.h>
 
 
@@ -910,7 +910,7 @@ void setting_tapi_set_plmn_mode_cb(TapiHandle *handle, int result, void *data, v
 	setting_network_update_sel_network(ad);
 
 	Evas_Object *popup = elm_popup_add(ad->win_get);
-	ea_object_event_callback_add(popup, EA_CALLBACK_BACK, ea_popup_back_cb, NULL);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb, NULL);
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND,
 	                                 EVAS_HINT_EXPAND);
 	char r_str_text[128] = { 0, };
@@ -1542,7 +1542,7 @@ static Evas_Object *__create_registering_popup(void *data)
 	SettingNetworkUG			*ad = list_item->userdata;
 
 	Evas_Object *popup = elm_popup_add(ad->win_get);
-	ea_object_event_callback_add(popup, EA_CALLBACK_BACK, __ignore_back_key_cb, list_item);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, __ignore_back_key_cb, list_item);
 
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 
@@ -1640,7 +1640,7 @@ Evas_Object *__create_searching_popup(void *data)
 	SettingNetworkUG *ad = list_item->userdata;
 
 	Evas_Object *popup = elm_popup_add(ad->ly_main);
-	ea_object_event_callback_add(popup, EA_CALLBACK_BACK, __search_network_cancel_cb, list_item);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, __search_network_cancel_cb, list_item);
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND,
 	                                 EVAS_HINT_EXPAND);
 

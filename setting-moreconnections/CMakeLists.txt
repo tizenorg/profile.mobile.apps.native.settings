@@ -14,6 +14,7 @@ pkg_check_modules(pkgs REQUIRED
 		dlog
 		capi-system-device
 		deviced
+		efl-extension
 		efl-assist
 		json-glib-1.0)
 

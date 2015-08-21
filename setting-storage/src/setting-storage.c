@@ -20,7 +20,7 @@
 #define UG_MODULE_API __attribute__ ((visibility("default")))
 #endif
 
-#include <efl_assist.h>
+#include <efl_extension.h>
 #include <media_content.h>
 
 #include "setting-cfg.h"
@@ -137,8 +137,8 @@ static inline Evas_Object *storageUg_create_navi(Evas_Object *parent,
 	navi = elm_naviframe_add(parent);
 	elm_naviframe_prev_btn_auto_pushed_set(navi, EINA_FALSE);
 
-	ea_object_event_callback_add(navi, EA_CALLBACK_BACK, storageUg_navi_back, ad);
-	/*ea_object_event_callback_add(navi, EA_CALLBACK_MORE, ea_naviframe_more_cb, NULL); */
+	eext_object_event_callback_add(navi, EEXT_CALLBACK_BACK, storageUg_navi_back, ad);
+	/*eext_object_event_callback_add(navi, EEXT_CALLBACK_MORE, eext_naviframe_more_cb, NULL); */
 
 	evas_object_show(navi);
 	return navi;

@@ -20,7 +20,7 @@
  */
 #include <setting-common-draw-widget.h>
 #include <glib.h>
-#include <efl_assist.h>
+#include <efl_extension.h>
 
 #if SUPPORT_HELPUI
 #include <libhelpui.h>

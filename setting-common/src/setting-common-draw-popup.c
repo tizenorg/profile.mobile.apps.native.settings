@@ -21,7 +21,7 @@
 
 #include <setting-common-draw-widget.h>
 #include <glib.h>
-#include <efl_assist.h>
+#include <efl_extension.h>
 #include <notification.h>
 #include <notification_internal.h>
 
@@ -91,7 +91,7 @@ static void __hardkey_keyup_cb(void *data, Evas *e, Evas_Object *obj, void *even
 	#endif
 }
 
-EXPORT_PUBLIC void ea_popup_back_cb_2(void *data, Evas_Object *obj, void *event_info)
+EXPORT_PUBLIC void eext_popup_back_cb_2(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	popup_handle_hardkey(data, obj);
@@ -318,7 +318,7 @@ EXPORT_PUBLIC void __popup_event_set(Evas_Object *popup, void *data,
 		}
 #endif
 		evas_object_event_callback_add(popup, EVAS_CALLBACK_DEL, __popup_del_cb, NULL);
-		ea_object_event_callback_add(popup, EA_CALLBACK_BACK, __ignore_back_key_cb, NULL);
+		eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, __ignore_back_key_cb, NULL);
 	}
 }
 
@@ -338,7 +338,7 @@ static Evas_Object *__add_progressbar(void *data, Evas_Object *parent,
 	SETTING_TRACE_BEGIN;
 
 	Evas_Object *popup = elm_popup_add(parent);
-	ea_object_event_callback_add(popup, EA_CALLBACK_BACK, __ignore_back_key_cb, NULL);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, __ignore_back_key_cb, NULL);
 	/*setting_add_hardkey_features(popup, data); */
 	int value = 0;
 	vconf_get_bool(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, &value);
@@ -575,7 +575,7 @@ Evas_Object *setting_create_popup_with_btn(void *data,
 {
 	SETTING_TRACE_BEGIN;
 	Evas_Object *popup = elm_popup_add(parent);
-	ea_object_event_callback_add(popup, EA_CALLBACK_BACK, ea_popup_back_cb_2, data);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb_2, data);
 	setting_add_hardkey_features(popup, data);
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND,
 	                                 EVAS_HINT_EXPAND);
@@ -697,7 +697,7 @@ Evas_Object *setting_create_popup_without_btn(void *data,
                                               bool keygrab_flag)
 {
 	Evas_Object *popup = elm_popup_add(parent);
-	ea_object_event_callback_add(popup, EA_CALLBACK_BACK, ea_popup_back_cb_2, data);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb_2, data);
 	setting_add_hardkey_features(popup, data);
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND,
 	                                 EVAS_HINT_EXPAND);
@@ -920,7 +920,7 @@ Evas_Object *setting_create_popup_with_gif(void *data,
 	                                                         "popup_checkview_image", NULL, timeout);
 
 	setting_add_hardkey_features(popup, data);
-	ea_object_event_callback_add(popup, EA_CALLBACK_BACK, ea_popup_back_cb_2, data);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb_2, data);
 	/*evas_object_size_hint_align_set(scroller, EVAS_HINT_FILL, EVAS_HINT_FILL); */
 	/*evas_object_size_hint_weight_set(scroller, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND); */
 	/*evas_object_size_hint_min_set(scroller, ELM_SCALE_SIZE(480), ELM_SCALE_SIZE(700)); */
@@ -1002,7 +1002,7 @@ Evas_Object *setting_create_popup_with_label_and_reverse_btn(void *data,
 	/*struct appdata *ad = (struct appdata *) data; */
 
 	popup = elm_popup_add(parent);
-	ea_object_event_callback_add(popup, EA_CALLBACK_BACK, ea_popup_back_cb_2, data);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb_2, data);
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	elm_object_text_set(popup, _(text));
 	ADD_POPUP_MULTI_LANGUAGE_AUTO_UPDATE(popup, NULL, text, NULL, NULL, NULL);
@@ -1026,7 +1026,7 @@ Evas_Object *setting_create_popup_with_label_check(void *data,
                                                    int btn_num, ...)
 {
 	Evas_Object *popup = elm_popup_add(parent);
-	ea_object_event_callback_add(popup, EA_CALLBACK_BACK, ea_popup_back_cb_2, data);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb_2, data);
 	setting_add_hardkey_features(popup, data);
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 
@@ -1150,7 +1150,7 @@ Evas_Object *setting_create_popup_with_image_check(void *data,
 	Evas_Object *popup = setting_create_popup_with_checkview(parent, title, check_str, scroller,
 	                                                         "popup_checkview_image", check, timeout);
 	setting_add_hardkey_features(popup, data);
-	ea_object_event_callback_add(popup, EA_CALLBACK_BACK, ea_popup_back_cb_2, data);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb_2, data);
 
 	ADD_POPUP_BTN(btn_num, popup, response_cb, data);
 	evas_object_show(popup);
@@ -1184,7 +1184,7 @@ Evas_Object *setting_create_popup_with_list(Evas_Object **genlist, void *data, E
 
 	elm_object_content_set(popup, scroller);
 	setting_add_hardkey_features(popup, data);
-	ea_object_event_callback_add(popup, EA_CALLBACK_BACK, ea_popup_back_cb_2, data);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb_2, data);
 	return popup;
 }
 

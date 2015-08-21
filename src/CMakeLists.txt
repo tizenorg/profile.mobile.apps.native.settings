@@ -24,6 +24,7 @@ pkg_check_modules(pkgs_main REQUIRED
 					  notification
 					  capi-appfw-app-manager
 					  pkgmgr-info
+					  efl-extension
 					  efl-assist
 					  sqlite3
 					  accounts-svc

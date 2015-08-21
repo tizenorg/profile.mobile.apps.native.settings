@@ -4,7 +4,7 @@
 
 Name:       org.tizen.setting
 Summary:    Setting application
-Version:    0.1.99
+Version:    0.2.0
 Release:    99
 Group:      misc
 License:    Apache-1.0
@@ -85,6 +85,7 @@ BuildRequires:  pkgconfig(alarm-service)
 BuildRequires:  pkgconfig(contacts-service2)
 BuildRequires:  pkgconfig(deviced)
 BuildRequires:  pkgconfig(badge)
+BuildRequires:  pkgconfig(efl-extension)
 BuildRequires:  pkgconfig(efl-assist)
 BuildRequires:  pkgconfig(sqlite3)
 BuildRequires:  pkgconfig(capi-media-camera)
