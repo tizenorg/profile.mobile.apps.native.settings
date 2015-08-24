@@ -114,7 +114,7 @@ Requires(post): attr
 #Requires(post): /sbin/ldconfig
 #Requires(postun): /sbin/ldconfig
 
-# ls: cannot access /opt/usr/share/settings: No such file or directory
+# ls: cannot access %{_datadir}/settings: No such file or directory
 
 %description
 Setting application
@@ -142,11 +142,10 @@ Group: Application Framework/Settings
 
 %build
 
-%define PREFIX    "/usr/apps/org.tizen.setting"
-%define RESDIR    "/usr/apps/org.tizen.setting/res"
-%define DATADIR    "/usr/apps/org.tizen.setting/data"
-%define PREF_DATADIR "/opt/usr/apps/org.tizen.setting/data"
-%define IMAGEDIR    "/usr/apps/org.tizen.setting/res/images"
+%define PREFIX    %{_prefix}/apps/org.tizen.setting
+%define RESDIR    %{PREFIX}/res
+%define DATADIR    %{PREFIX}/data
+%define IMAGEDIR    %{RESDIR}/images
 CFLAGS+=" -fPIC -fvisibility=hidden ";export CFLAGS
 CXXFLAGS+=" -fPIC -fvisibility=hidden ";export CFLAGS
 LDFLAGS+="-Wl,--rpath=%{PREFIX}/lib -Wl,--hash-style=both -Wl,--as-needed";export LDFLAGS
@@ -200,167 +199,125 @@ rm -rf %{buildroot}
 %make_install
 
 %define tizen_sign 1
-%define tizen_sign_base /usr/apps/org.tizen.setting
+%define tizen_sign_base %{PREFIX}
 %define tizen_sign_level platform
 %define tizen_author_sign 1
 %define tizen_dist_sign 1
 
-mkdir -p %{buildroot}%{PREF_DATADIR}
-mkdir -p %{buildroot}/opt/usr/apps/org.tizen.mode-syspopup/data
+mkdir -p %{buildroot}%{DATADIR}
+mkdir -p %{buildroot}%{_prefix}/apps/org.tizen.mode-syspopup/data
 mkdir -p %{buildroot}%{_libdir}/systemd/system/multi-user.target.wants
 mkdir -p %{buildroot}%{_libdir}/systemd/system/default.target.wants
 
 %clean
 
 %post
-#create directory /opt/usr/apps/org.tizen.setting.data
-if [ ! -d /opt/usr/apps/org.tizen.setting ]
+#create directory %{_prefix}/apps/org.tizen.setting.data
+if [ ! -d %{PREFIX} ]
 then
-    mkdir -p /opt/usr/apps/org.tizen.setting
-    mkdir -p /opt/usr/apps/org.tizen.setting/data
-    mkdir -p %{PREF_DATADIR}
+    mkdir -p %{PREFIX}
+    mkdir -p %{DATADIR}
 fi
-chmod a+w /opt/usr/apps/org.tizen.setting/data
+chmod a+w %{PREFIX}/data
 
 
-update-mime-database /usr/share/mime
+update-mime-database %{_prefix}/share/mime
 
 # Set vconf values with -g/-u options
 GOPTION="-g 6514"
 
 #resetSound
-%ifarch %{arm}
-	DEFAULT_CALL_TONE="/opt/usr/share/settings/Ringtones/ringtone_sdk.mp3"
-%else
-	DEFAULT_CALL_TONE="/opt/usr/share/settings/Ringtones/ringtone_sdk.mp3"
-%endif
+	DEFAULT_CALL_TONE="%{_datadir}/settings/Ringtones/ringtone_sdk.mp3"
+	DEFAULT_NOTI_TONE="%{_datadir}/settings/Alerts/General notification_sdk.wav"
 
-%ifarch %{arm}
-	DEFAULT_NOTI_TONE="/opt/usr/share/settings/Alerts/General notification_sdk.wav"
-%else
-	DEFAULT_NOTI_TONE="/opt/usr/share/settings/Alerts/General notification_sdk.wav"
-%endif
+#resetImages
+	DEFAULT_HOME="%{_datadir}/settings/Wallpapers/Home_default.jpg"
+	DEFAULT_LOCK="%{_datadir}/settings/Wallpapers/Default.jpg"
 
-#resetSound
-%ifarch %{arm}
-	DEFAULT_HOME="/opt/usr/share/settings/Wallpapers/Home_default.jpg"
-	DEFAULT_LOCK="/opt/usr/share/settings/Wallpapers/Default.jpg"
-%else
-	# for emulator
-	DEFAULT_HOME="/opt/usr/share/settings/Wallpapers/Home_default.jpg"
-	DEFAULT_LOCK="/opt/usr/share/settings/Wallpapers/Default.jpg"
-%endif
+	rm -f %{_sysconfdir}/localtime
+	ln -s %{_datadir}/zoneinfo/Asia/Seoul %{_sysconfdir}/localtime
 
-	rm -f /opt/etc/localtime
-	ln -s /usr/share/zoneinfo/Asia/Seoul /opt/etc/localtime
-	rm -f /etc/localtime
-	ln -s /opt/etc/localtime /etc/localtime
 
 #resetSecurity
-	rm -rf /opt/usr/data/setting/set_info
+	rm -rf {_prefix}/data/setting/set_info
 
 # for support shared menu icons
-ln -s /usr/apps/org.tizen.setting/res/icons /usr/apps/org.tizen.setting/shared/res/icons
+ln -s %{RESDIR}/icons %{PREFIX}/shared/res/icons
 
-/usr/apps/org.tizen.setting/bin/setting_conf_util timezone_init
-#------------------------------------------
+%{PREFIX}/bin/setting_conf_util timezone_init
 sync
 
-#if [ -d /opt/usr/share/settings ]
-#then
-#	rm -rf /opt/usr/share/settings
-#	mkdir -p /opt/usr/share/settings
-#fi
-
-#ln -s /opt/usr/share/settings /opt/share/settings
-
-
-mkdir -p /usr/ug/bin/
+mkdir -p %{_prefix}/ug/bin/
 # help directory
-mkdir -p /usr/apps/org.tizen.setting/shared
-mkdir -p /usr/apps/org.tizen.setting/shared/res
-mkdir -p /usr/apps/org.tizen.mode-syspopup/res/edje
-mkdir -p /usr/apps/org.tizen.mode-syspopup/bin/
-
-#%post ref
-#Requires(post): org.tizen.setting
-
+mkdir -p %{PREFIX}/shared
+mkdir -p %{PREFIX}/shared/res
+mkdir -p %{_prefix}/apps/org.tizen.mode-syspopup/res/edje
+mkdir -p %{_prefix}/apps/org.tizen.mode-syspopup/bin/
 
 %post ref
-rm -rf /usr/share/packages/org.tizen.setting.xml
-mv /usr/share/packages/org.tizen.setting.xml.ref /usr/share/packages/org.tizen.setting.xml
+rm -rf %{_datadir}/packages/org.tizen.setting.xml
+mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen.setting.xml
 
 %posttrans
 
-#%files -n settings
 %files -n org.tizen.setting
 %manifest org.tizen.setting.manifest
 
-
-/usr/apps/org.tizen.setting/author-signature.xml
-/usr/apps/org.tizen.setting/signature1.xml
+%{PREFIX}/author-signature.xml
+%{PREFIX}/signature1.xml
 
 # Smack default --------------------------------------------------
-/etc/smack/accesses.d/org.tizen.setting.efl
+%{_sysconfdir}/smack/accesses.d/org.tizen.setting.efl
 
 # Firewall -------------------------------------------------------
-/etc/opt/upgrade/210.org.tizen.setting.patch.sh
+%{_sysconfdir}/opt/upgrade/210.org.tizen.setting.patch.sh
 
 %defattr(-,root,root,-)
-#/usr/apps/org.tizen.mode-syspopup/bin/mode-syspopup
-#/usr/apps/org.tizen.mode-syspopup/res/images/*
-#/usr/apps/org.tizen.mode-syspopup/res/edje/mode-syspopup.edj
-#/usr/apps/org.tizen.mode-syspopup/res/edje/popup-custom.edj
-#/usr/apps/org.tizen.mode-syspopup/res/edje/ultra-popup.edj
-/usr/apps/org.tizen.mode-syspopup/res/locale/*
+%{_prefix}/apps/org.tizen.mode-syspopup/res/locale/*
 
-#%attr(-,app,app) %dir /opt/usr/apps/org.tizen.mode-syspopup/data
+%attr(-,app,app) %dir %{DATADIR}
+%{PREFIX}/bin/setting
+%{DATADIR}/*
+%{PREFIX}/bin/setting_conf_util
+%{PREFIX}/bin/setting_turnoff_light
+%{PREFIX}/bin/setting_volume_popup
 
-%attr(-,app,app) %dir %{PREF_DATADIR}
-/usr/apps/org.tizen.setting/bin/setting
-/usr/apps/org.tizen.setting/data/*
-/usr/apps/org.tizen.setting/bin/setting_conf_util
-/usr/apps/org.tizen.setting/bin/setting_turnoff_light
-/usr/apps/org.tizen.setting/bin/setting_volume_popup
+%attr(0755,root,root) %{PREFIX}/bin/setting_help_ringtone
 
-%attr(0755,root,root) /usr/apps/org.tizen.setting/bin/setting_help_ringtone
+%{_libdir}/lib*.so.*
 
-/usr/lib/lib*.so.*
+%{_datadir}/packages/org.tizen.setting.xml
 
-/usr/share/packages/org.tizen.setting.xml
+%{_datadir}/icons/default/small/org.tizen.setting.png
+%{_datadir}/settings/*
+%{PREFIX}/res/*
+%{_datadir}/mime/packages/*
 
-/usr/share/icons/default/small/org.tizen.setting.png
-/opt/usr/share/settings/*
-/usr/apps/org.tizen.setting/res/*
-/usr/share/mime/packages/*
+%{PREFIX}/shared/res/*
+%attr(-,app,app) %dir %{PREFIX}/shared
 
-/usr/apps/org.tizen.setting/shared/res/*
-%attr(-,app,app) %dir /usr/apps/org.tizen.setting/shared
-
-/opt/usr/apps/org.tizen.setting/data/test.db
+%{DATADIR}/test.db
 
 # new
-/usr/apps/org.tizen.setting/lib/ug/*
+%{PREFIX}/lib/ug/*
 
 %files devel
 #---------------------------------------------
 # moved from org.tizen.setting
 #---------------------------------------------
-#/usr/apps/org.tizen.setting/lib/lib*.so
-/usr/lib/lib*.so
-/usr/apps/org.tizen.setting/lib/ug/*
+%{_libdir}/lib*.so
+%{PREFIX}/lib/ug/*
 
-#%{_libdir}/pkgconfig/*.pc
-/usr/lib/pkgconfig/setting-common-internal.pc
-/usr/include/setting-cfg.h
-/usr/include/setting-common-data-edj-define.h
-/usr/include/setting-common-data-error.h
-/usr/include/setting-common-data-type.h
-/usr/include/setting-common-draw-widget.h
-/usr/include/setting-common-general-func.h
-/usr/include/setting-common-resource.h
-/usr/include/setting-common-search.h
+%{_libdir}/pkgconfig/setting-common-internal.pc
+%{_includedir}/setting-cfg.h
+%{_includedir}/setting-common-data-edj-define.h
+%{_includedir}/setting-common-data-error.h
+%{_includedir}/setting-common-data-type.h
+%{_includedir}/setting-common-draw-widget.h
+%{_includedir}/setting-common-general-func.h
+%{_includedir}/setting-common-resource.h
+%{_includedir}/setting-common-search.h
 
 %files ref
-/usr/share/mime/packages/mime.setting.xml
-/usr/share/packages/org.tizen.setting.xml.ref
+%{_datadir}/mime/packages/mime.setting.xml
+%{_datadir}/packages/org.tizen.setting.xml.ref

@@ -38,7 +38,7 @@ SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS} -fPIC")
 SET(CMAKE_C_FLAGS_DEBUG "-O0 -g")
 SET(BUILD_ARCH "${ARCH}")
 
-SET(APP_DATA_DIR_PATH "/opt/usr/apps/org.tizen.setting/data/")
+SET(APP_DATA_DIR_PATH "/usr/apps/org.tizen.setting/data/")
 
 IF (BINARY_RELEASE_TYPE_ENG)
 	MESSAGE("eng binary--------------------------------")
@@ -256,9 +256,9 @@ INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/images DESTINATION /usr/apps/${SE
 
 # install media-data
 IF("${BUILD_ARCH}" STREQUAL "arm")
-	INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media-data-sdk/settings DESTINATION /opt/usr/share PATTERN "*")
+	INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media-data-sdk/settings DESTINATION /usr/share PATTERN "*")
 ELSE("${BUILD_ARCH}" STREQUAL "arm")
-	INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media-data-sdk/settings DESTINATION /opt/usr/share PATTERN "*")
+	INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media-data-sdk/settings DESTINATION /usr/share PATTERN "*")
 ENDIF("${BUILD_ARCH}" STREQUAL "arm")
 
 
