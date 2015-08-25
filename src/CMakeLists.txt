@@ -81,8 +81,6 @@ INSTALL(TARGETS ${SETTING_CONFUTIL} DESTINATION /usr/apps/${SETTING_PKG_NAME}/bi
 
 ####FOR TEST>>>>########
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} -L${CMAKE_BINARY_DIR}/${SETTING_COMMON} -lsetting-common)
-#TARGET_LINK_LIBRARIES(${PROJECT_NAME} -L/usr/apps/${SETTING_PKG_NAME}/lib -lsetting-common)
-# /usr/apps/${SETTING_PKG_NAME}/lib
 
 
 # util to turn off assistive light
@@ -284,7 +282,7 @@ CONFIGURE_FILE(
     ${CMAKE_CURRENT_SOURCE_DIR}/setting-common-internal.pc
     @ONLY
 )
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/src/setting-common-internal.pc DESTINATION /usr/lib/pkgconfig)
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/src/setting-common-internal.pc DESTINATION ${LIBDIR}/pkgconfig)
 #-----------------------------------------------------------------------------------
 
 # install firewall script for FOTA(210.org.tizen.setting.patch.sh)
