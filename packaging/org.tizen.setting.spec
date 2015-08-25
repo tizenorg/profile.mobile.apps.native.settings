@@ -173,14 +173,14 @@ export CFLAGS="$CFLAGS -DTIZEN_BUILD_EMULATOR"
 %endif
 
 %ifarch %{arm}
-	cmake . -DCMAKE_INSTALL_PREFIX=%{PREFIX} -DARCH=arm \
+	cmake . -DCMAKE_INSTALL_PREFIX=%{PREFIX} -DARCH=arm -DLIBDIR=%{_libdir} -DINCLUDEDIR=%{_includedir} \
 %if %{with wayland} && !%{with x}
 -Dwith_wayland=TRUE
 %else
 -Dwith_x=TRUE
 %endif
 %else
-	cmake . -DCMAKE_INSTALL_PREFIX=%{PREFIX} -DARCH=x86 \
+	cmake . -DCMAKE_INSTALL_PREFIX=%{PREFIX} -DARCH=x86 -DLIBDIR=%{_libdir} -DINCLUDEDIR=%{_includedir} \
 %if %{with wayland} && !%{with x}
 -Dwith_wayland=TRUE
 %else

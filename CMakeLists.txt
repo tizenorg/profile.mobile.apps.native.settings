@@ -4,6 +4,10 @@ PROJECT(setting)
 SET(SETTING_PKG_NAME org.tizen.setting)
 
 SET(PREFIX "/usr/apps/org.tizen.setting")
+
+#SET(LIBDIR "${PREFIX}/lib")
+#SET(INCLUDEDIR "${PREFIX}/include")
+
 SET(BINDIR "${PREFIX}/bin")
 SET(RESDIR "${PREFIX}/res")
 SET(DATADIR "${PREFIX}/data")
