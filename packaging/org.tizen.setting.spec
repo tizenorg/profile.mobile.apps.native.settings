@@ -143,6 +143,8 @@ Group: Application Framework/Settings
 %build
 
 %define PREFIX    %{_prefix}/apps/org.tizen.setting
+%define OPTPREFIX /opt/usr/apps/org.tizen.setting
+%define OPTSHAREREFIX    /opt/usr/share/settings
 %define RESDIR    %{PREFIX}/res
 %define DATADIR    %{PREFIX}/data
 %define IMAGEDIR    %{RESDIR}/images
@@ -212,13 +214,15 @@ mkdir -p %{buildroot}%{_libdir}/systemd/system/default.target.wants
 %clean
 
 %post
-#create directory %{_prefix}/apps/org.tizen.setting.data
-if [ ! -d %{PREFIX} ]
+if [ ! -d %{OPTPREFIX} ]
 then
-    mkdir -p %{PREFIX}
+	echo "CREATE %{OPTPREFIX} DIR"
+    mkdir -p %{OPTPREFIX}
+	echo "CREATE %{DATADIR} DIR"
     mkdir -p %{DATADIR}
 fi
-chmod a+w %{PREFIX}/data
+chmod a+w %{OPTPREFIX}/data
+
 
 
 update-mime-database %{_prefix}/share/mime
@@ -227,12 +231,12 @@ update-mime-database %{_prefix}/share/mime
 GOPTION="-g 6514"
 
 #resetSound
-	DEFAULT_CALL_TONE="%{_datadir}/settings/Ringtones/ringtone_sdk.mp3"
-	DEFAULT_NOTI_TONE="%{_datadir}/settings/Alerts/General notification_sdk.wav"
+	DEFAULT_CALL_TONE="%{OPTSHAREREFIX}/Ringtones/ringtone_sdk.mp3"
+	DEFAULT_NOTI_TONE="%{OPTSHAREREFIX}/Alerts/General notification_sdk.wav"
 
 #resetImages
-	DEFAULT_HOME="%{_datadir}/settings/Wallpapers/Home_default.jpg"
-	DEFAULT_LOCK="%{_datadir}/settings/Wallpapers/Default.jpg"
+	DEFAULT_HOME="%{OPTSHAREREFIX}/Wallpapers/Home_default.jpg"
+	DEFAULT_LOCK="%{OPTSHAREREFIX}/Wallpapers/Default.jpg"
 
 	rm -f %{_sysconfdir}/localtime
 	ln -s %{_datadir}/zoneinfo/Asia/Seoul %{_sysconfdir}/localtime
@@ -285,16 +289,21 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %attr(0755,root,root) %{PREFIX}/bin/setting_help_ringtone
 
 %{_libdir}/lib*.so.*
-
 %{_datadir}/packages/org.tizen.setting.xml
-
 %{_datadir}/icons/default/small/org.tizen.setting.png
-%{_datadir}/settings/*
+
+#%{_datadir}/settings/*
+
 %{PREFIX}/res/*
 %{_datadir}/mime/packages/*
 
+#/opt/usr/share/settings/*
+%{OPTSHAREREFIX}/*
+
 %{PREFIX}/shared/res/*
 %attr(-,app,app) %dir %{PREFIX}/shared
+
+#[  124s] error: File not found by glob: /usr/src/packages/BUILDROOT/org.tizen.setting-0.2.0-99.aarch64/usr/share/settings/*
 
 %{DATADIR}/test.db
 

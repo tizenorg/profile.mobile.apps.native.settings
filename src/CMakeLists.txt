@@ -252,11 +252,11 @@ INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/images DESTINATION /usr/apps/${SE
 #SET(HELPDATADIR_PH "/usr/apps/org.tizen.setting/shared/res")
 #INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/help DESTINATION ${HELPDATADIR_PH} PATTERN "*")
 
-# install media-data
+# install media-data ; should be at /opt/usr/share
 IF("${BUILD_ARCH}" STREQUAL "arm")
-	INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media-data-sdk/settings DESTINATION /usr/share PATTERN "*")
+	INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media-data-sdk/settings DESTINATION /opt/usr/share PATTERN "*")
 ELSE("${BUILD_ARCH}" STREQUAL "arm")
-	INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media-data-sdk/settings DESTINATION /usr/share PATTERN "*")
+	INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media-data-sdk/settings DESTINATION /opt/usr/share PATTERN "*")
 ENDIF("${BUILD_ARCH}" STREQUAL "arm")
 
 
