@@ -218,8 +218,8 @@ if [ ! -d %{OPTPREFIX} ]
 then
 	echo "CREATE %{OPTPREFIX} DIR"
     mkdir -p %{OPTPREFIX}
-	echo "CREATE %{DATADIR} DIR"
-    mkdir -p %{DATADIR}
+	echo "CREATE %{OPTPREFIX}/data DIR"
+    mkdir -p %{OPTPREFIX}/data
 fi
 chmod a+w %{OPTPREFIX}/data
 
@@ -248,7 +248,7 @@ GOPTION="-g 6514"
 # for support shared menu icons
 ln -s %{RESDIR}/icons %{PREFIX}/shared/res/icons
 
-%{PREFIX}/bin/setting_conf_util timezone_init
+#%{PREFIX}/bin/setting_conf_util timezone_init
 sync
 
 mkdir -p %{_prefix}/ug/bin/
