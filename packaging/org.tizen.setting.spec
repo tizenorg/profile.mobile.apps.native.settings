@@ -270,9 +270,6 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %{PREFIX}/author-signature.xml
 %{PREFIX}/signature1.xml
 
-# Smack default --------------------------------------------------
-%{_sysconfdir}/smack/accesses.d/org.tizen.setting.efl
-
 # Firewall -------------------------------------------------------
 %{_sysconfdir}/opt/upgrade/210.org.tizen.setting.patch.sh
 
