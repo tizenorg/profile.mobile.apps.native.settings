@@ -1,50 +1,5 @@
 <manifest>
-	<define>
-		<domain name="org.tizen.setting"/>
-		<request>
-			<smack request="pkgmgr::svc" type="rx"/>
-			<smack request="pkgmgr::info" type="r"/>
-			<smack request="bt-service::public" type="w"/>
-			<smack request="bt-service::platform" type="w"/>
-			<smack request="nfc-manager::admin" type="rw"/>
-
-			<smack request="tizen::vconf::platform:rw" type="rw"/>
-			<smack request="tizen::vconf::setting" type="rw"/>
-			<smack request="tizen::vconf::setting::admin" type="rw"/>
-			<smack request="tizen::vconf::volume::set" type="rw"/>
-			<!-- VCONFKEY_SYSTEM_TIME_CHANGED -->
-			<smack request="tizen::vconf::public::r::platform::rw" type="rw"/>
-		</request>
-	</define>
-	<assign>
-		<filesystem path="/usr/share/icons/default/small/org.tizen.setting.png" label="_"/>
-		<filesystem path="/usr/share/icons/default/small/Accessibility.png" label="_"/>
-		<filesystem path="/usr/share/icons/default/small/defaultapp.png" access="org.tizen.setting" label="_"/>
-		<filesystem path="/usr/share/icons/default/small/defaultservice.png" access="org.tizen.setting" label="_"/>
-
-		<filesystem path="/usr/ug/lib/*" label="_"/>
-		<filesystem path="/usr/ug/res/*" label="_"/>
-
-		<filesystem path="/opt/usr/apps/org.tizen.setting/data/langlist.xml" label="_"/>
-		<filesystem path="/opt/usr/apps/org.tizen.setting/data/langlist_all.xml" label="_"/>
-		<filesystem path="/opt/usr/apps/org.tizen.setting/data/test.db" label="_"/>
-		<filesystem path="/opt/usr/apps/org.tizen.setting/data/*" label="_"/>
-
-		<filesystem path="/opt/usr/share/settings" label="_"/>
-		<filesystem path="/opt/usr/share/settings/*" label="_"/>
-		<filesystem path="/usr/apps/org.tizen.setting/firewall" label="_"/>
-		<filesystem path="/home/app/.firewall/*" label="_"/>
-
-		<filesystem path="/usr/ug/bin/*" label="_" exec_label="_"/>
-
-		<filesystem path="/usr/apps/org.tizen.setting/author-signature.xml" label="_"/>
-		<filesystem path="/usr/apps/org.tizen.setting/signature1.xml" label="_"/>
-	</assign>
-	<request>
-		<domain name="org.tizen.setting"/>
-	</request>
+        <request>
+                <domain name="_" />
+        </request>
 </manifest>
-
-
-
-
