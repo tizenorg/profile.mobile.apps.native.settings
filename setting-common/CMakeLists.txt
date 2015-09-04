@@ -10,6 +10,7 @@ INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_common_data REQUIRED appcore-efl elementary vconf openssl evas
 ecore ecore-imf json-glib-1.0 edje glib-2.0 libxml-2.0 ui-gadget-1 alarm-service cairo
 capi-appfw-application capi-system-info capi-system-system-settings pkgmgr-info
+capi-appfw-app-common
 efl-extension efl-assist notification feedback capi-media-player capi-media-sound-manager dbus-1 icu-i18n icu-io icu-le icu-lx icu-uc eventsystem)
 
 

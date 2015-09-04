@@ -28,17 +28,29 @@
 #include <setting-common-data-slp-setting.h>
 #include <unistd.h>
 #include <vconf.h>
+#include <app_common.h>
 
-#define CFG_FILE_DIR_PATH	"/opt/usr/apps/org.tizen.setting/data/"
-#define CFG_FILE_PATH		CFG_FILE_DIR_PATH"setting.cfg"
+#define CFG_FILE_DIR_PATH	setting_cfg_get_dir_path()
+#define CFG_FILE_PATH		setting_cfg_get_path()
 
 JsonParser *parser;
 JsonNode   *root; /* category_list */
 
 EXPORT_PUBLIC
+char *setting_cfg_get_dir_path()
+{
+	return app_get_data_path();
+}
+
+
+// /home/owner/apps_rw/org.tizen.setting/data/setting.cfg!
+EXPORT_PUBLIC
 char *setting_cfg_get_path()
 {
-	return CFG_FILE_PATH;
+	char* path = app_get_data_path();
+	char string[1024];
+	sprintf(string, "%s%s", path, "setting.cfg");
+	return strdup(string);
 }
 
 int setting_cfg_file_write(JsonNode *node);

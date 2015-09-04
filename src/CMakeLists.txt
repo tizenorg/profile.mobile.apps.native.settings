@@ -254,11 +254,10 @@ INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/images DESTINATION /usr/apps/${SE
 
 # install media-data ; should be at /opt/usr/share
 IF("${BUILD_ARCH}" STREQUAL "arm")
-	INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media-data-sdk/settings DESTINATION /opt/usr/share PATTERN "*")
+	INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media-data-sdk/settings DESTINATION /usr/apps/org.tizen.setting/shared/res PATTERN "*")
 ELSE("${BUILD_ARCH}" STREQUAL "arm")
-	INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media-data-sdk/settings DESTINATION /opt/usr/share PATTERN "*")
+	INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media-data-sdk/settings DESTINATION /usr/apps/org.tizen.setting/shared/res PATTERN "*")
 ENDIF("${BUILD_ARCH}" STREQUAL "arm")
-
 
 # install the SEARCH db
 INSTALL(FILES ${CMAKE_SOURCE_DIR}/resource/test.db DESTINATION ${APP_DATA_DIR_PATH})

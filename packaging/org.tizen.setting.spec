@@ -74,6 +74,7 @@ BuildRequires:  pkgconfig(capi-system-system-settings)
 BuildRequires:  pkgconfig(capi-network-wifi)
 BuildRequires:  pkgconfig(capi-network-bluetooth)
 BuildRequires:  pkgconfig(capi-media-metadata-extractor)
+BuildRequires:  pkgconfig(capi-appfw-app-common)
 BuildRequires:  pkgconfig(shortcut)
 BuildRequires:  pkgconfig(ecore-evas)
 BuildRequires:  pkgconfig(pkgmgr)
@@ -144,8 +145,9 @@ Group: Application Framework/Settings
 
 %define PREFIX    %{_prefix}/apps/org.tizen.setting
 %define OPTPREFIX /opt/usr/apps/org.tizen.setting
-%define OPTSHAREREFIX    /opt/usr/share/settings
 %define RESDIR    %{PREFIX}/res
+%define OPTSHAREREFIX    /usr/apps/org.tizen.setting/shared/res/settings
+
 %define DATADIR    %{PREFIX}/data
 %define IMAGEDIR    %{RESDIR}/images
 CFLAGS+=" -fPIC -fvisibility=hidden ";export CFLAGS
@@ -214,14 +216,14 @@ mkdir -p %{buildroot}%{_libdir}/systemd/system/default.target.wants
 %clean
 
 %post
-if [ ! -d %{OPTPREFIX} ]
-then
-	echo "CREATE %{OPTPREFIX} DIR"
-    mkdir -p %{OPTPREFIX}
-	echo "CREATE %{OPTPREFIX}/data DIR"
-    mkdir -p %{OPTPREFIX}/data
-fi
-chmod a+w %{OPTPREFIX}/data
+#if [ ! -d %{OPTPREFIX} ]
+#then
+#	echo "CREATE %{OPTPREFIX} DIR"
+#    mkdir -p %{OPTPREFIX}
+#	echo "CREATE %{OPTPREFIX}/data DIR"
+#    mkdir -p %{OPTPREFIX}/data
+#fi
+#chmod a+w %{OPTPREFIX}/data
 
 
 
@@ -248,7 +250,8 @@ GOPTION="-g 6514"
 # for support shared menu icons
 ln -s %{RESDIR}/icons %{PREFIX}/shared/res/icons
 
-#%{PREFIX}/bin/setting_conf_util timezone_init
+#APP_PATH_INFO=`%{PREFIX}/bin/setting_conf_util get_data_path`
+#echo "-------------------------------------------------------------> "$APP_PATH_INFO
 sync
 
 mkdir -p %{_prefix}/ug/bin/
