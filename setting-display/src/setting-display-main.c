@@ -529,7 +529,7 @@ static int setting_display_main_create(void *cb)
 	char *pa_backlight_time = get_pa_backlight_time_str();
 	ad->data_back =
 	    setting_create_Gendial_field_def(scroller,
-	                                     &itc_2text_3_parent,
+										 &itc_1text_parent,
 	                                     setting_display_main_mouse_up_Gendial_list_cb, ad,
 	                                     SWALLOW_Type_INVALID, NULL, NULL,
 	                                     0, KeyStr_BacklightTime,

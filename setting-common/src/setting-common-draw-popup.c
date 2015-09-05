@@ -1165,24 +1165,35 @@ Evas_Object *setting_create_popup_with_list(Evas_Object **genlist, void *data, E
 	SETTING_TRACE_BEGIN;
 	retv_if(NULL == parent, NULL);
 	Evas_Object *popup = elm_popup_add(parent);
-	elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
+	elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 0.5);
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	elm_object_part_text_set(popup, "title,text", _(title));
 	ADD_POPUP_MULTI_LANGUAGE_AUTO_UPDATE(popup, title, NULL, NULL, NULL, NULL);
 
 	evas_object_show(popup);
 
+	// create box
+	Evas_Object *box;
+	 box = elm_box_add(popup);
+    evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+
+
 	/* genlist */
-	Evas_Object *scroller = elm_genlist_add(popup);
-	elm_genlist_mode_set(scroller, ELM_LIST_COMPRESS);/*essential to auto compute the height of genlist */
+	Evas_Object *scroller = elm_genlist_add(box);
+	//elm_genlist_mode_set(scroller, ELM_LIST_COMPRESS);/*essential to auto compute the height of genlist */
+
 	evas_object_size_hint_weight_set(scroller, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(scroller, EVAS_HINT_FILL, EVAS_HINT_FILL);
-	elm_scroller_content_min_limit(scroller, EINA_FALSE, EINA_TRUE);/*essential to auto compute the height of genlist */
+	//elm_scroller_content_min_limit(scroller, EINA_FALSE, EINA_TRUE);/*essential to auto compute the height of genlist */
 	evas_object_show(scroller);
 
-	if (genlist) *genlist = scroller;
+	//if (genlist) *genlist = scroller;
+	*genlist = scroller;
 
-	elm_object_content_set(popup, scroller);
+	elm_box_pack_end(box, scroller);
+    evas_object_size_hint_min_set(box, -1, 192*7);
+    elm_object_content_set(popup, box);
+
 	setting_add_hardkey_features(popup, data);
 	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, eext_popup_back_cb_2, data);
 	return popup;
