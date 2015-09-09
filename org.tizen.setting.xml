@@ -293,5 +293,8 @@
 		<icon>turnofflight.png</icon>
 		<label>Turn off assistive light</label>
 	</ui-application>
+	<privileges>
+		<privilege>http://tizen.org/privilege/appmanager.launch</privilege>
+		<privilege>http://tizen.org/privilege/appmanager.kill</privilege>
+	</privileges>
 </manifest>
-
