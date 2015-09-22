@@ -27,8 +27,6 @@
 #include <setting-locktype.h>
 #include <efl_extension.h>
 
-#include <security-server.h>
-
 #define Max_Passwd_View_Type_Len	64
 #ifndef UG_MODULE_API
 #define UG_MODULE_API __attribute__ ((visibility("default")))
@@ -157,8 +155,10 @@ static void *setting_locktype_ug_on_create(ui_gadget_h ug,
 	} else if (locktypeUG->caller && !safeStrCmp(locktypeUG->caller, "lockscreen")) {
 		locktypeUG->viewtype = SETTING_LOCKTYPE_VIEWTYPE_RECOVERY;
 		vconf_set_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, SETTING_SCREEN_LOCK_TYPE_SWIPE);
+#if SECURITY_SERVER
 		int result = security_server_reset_pwd("0000", 0, 0);
 		SETTING_TRACE_DEBUG("reset_pwd result : %d", result);
+#endif
 	} else {
 		locktypeUG->viewtype = SETTING_LOCKTYPE_VIEWTYPE_MAIN;
 	}

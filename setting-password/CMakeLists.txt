@@ -8,7 +8,7 @@ INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_password REQUIRED evas ecore edje elementary appcore-common
 appcore-efl deviced ecore-imf
 ui-gadget-1 capi-appfw-application tapi dlog
-security-server notification
+notification
 )
 
 FOREACH(flag ${pkgs_password_CFLAGS})

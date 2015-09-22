@@ -24,7 +24,6 @@
 #include <setting-common-view.h>
 
 #include <setting-locktype-main.h>
-#include <security-server.h>
 #include <pkgmgr-info.h>
 #include <ail.h>
 #include <efl_extension.h>
@@ -605,8 +604,10 @@ setting_locktype_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 			/* To do : Call security-server API. pw : 0000 */
 			if (old_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD
 			    || old_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
+#if SECURITY_SERVER
 				int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
 				SETTING_TRACE_DEBUG("set_pwd result : %d", result);
+#endif
 
 				uid_t user = 5000;
 #if 0
@@ -655,8 +656,10 @@ setting_locktype_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 		case SETTING_SCREEN_LOCK_TYPE_OTHER:
 			if (old_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD
 			    || old_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
+#if SECURITY_SERVER
 				int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
 				SETTING_TRACE_DEBUG("set_pwd result : %d", result);
+#endif
 				uid_t user = 5000;
 #if 0
 				int ckmc_ret = CKMC_ERROR_NONE;
@@ -701,8 +704,10 @@ setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj, void *event_i
 			/* To do : Call security-server API. pw : 0000 */
 			if (old_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD
 			    || old_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
+#if SECURITY_SERVER
 				int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
 				SETTING_TRACE_DEBUG("set_pwd result : %d", result);
+#endif
 				uid_t user = 5000;
 #if 0
 				int ckmc_ret = CKMC_ERROR_NONE;
@@ -751,8 +756,10 @@ setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj, void *event_i
 				char *pkg_name = NULL;
 				if (old_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD
 				    || old_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
+#if SECURITY_SERVER
 					int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
 					SETTING_TRACE_DEBUG("set_pwd result : %d", result);
+#endif
 					uid_t user = 5000;
 #if 0
 					int ckmc_ret = CKMC_ERROR_NONE;

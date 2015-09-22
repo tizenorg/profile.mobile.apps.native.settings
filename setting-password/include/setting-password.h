@@ -28,7 +28,6 @@
 #include <TelSim.h>
 #include <TapiUtility.h>
 #include <glib-object.h>
-#include <security-server.h>
 #include <dlog.h>
 
 #include <setting-common-draw-widget.h>

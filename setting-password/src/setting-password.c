@@ -20,7 +20,6 @@
  */
 #include <setting-password.h>
 #include <setting-password-main.h>
-#include <security-server.h>
 
 extern void setting_get_pin_lock_info_cb(TapiHandle *handle, int result, void *data, void *user_data);
 
@@ -61,6 +60,7 @@ void __chk_cur_pw_status(SettingPasswordUG *ad, app_control_h service)
 
 	ad->pw_status = SETTING_PW_STATUS_DEFAULT;
 
+#if SECURITY_SERVER
 	ret = security_server_is_pwd_valid(&attempt, &max_attempt, &expire_sec);
 	SETTING_TRACE_DEBUG("status of password : %d (cur attempt %d, max %d, expire %d", ret, attempt, max_attempt, expire_sec);
 
@@ -68,6 +68,7 @@ void __chk_cur_pw_status(SettingPasswordUG *ad, app_control_h service)
 		SETTING_TRACE("security-server has no password!");
 		ad->pw_status = SETTING_PW_STATUS_EMPTY;
 	}
+#endif
 }
 
 void __get_extra_data(SettingPasswordUG *ad, app_control_h service)
@@ -645,6 +646,7 @@ int setting_password_check_password(const char *challenge, unsigned int *remain_
 	unsigned int valid_secs = 0;
 
 	SETTING_TRACE_DEBUG("check pwd : %s", challenge);
+#if SECURITY_SERVER
 	inner_ret = security_server_chk_pwd(challenge, &current_attempt, &max_attempt, &valid_secs);
 
 	SETTING_TRACE_DEBUG("chk password : %d", inner_ret);
@@ -664,7 +666,7 @@ int setting_password_check_password(const char *challenge, unsigned int *remain_
 		}
 		ret = SETTING_RETURN_FAIL;
 	}
-
+#endif
 	return ret;
 }
 
@@ -681,6 +683,7 @@ int setting_password_set_password(const char *cur_pwd, const char *new_pwd, void
 	uid_t user = 5000;
 	/*int ckmc_ret = CKMC_ERROR_NONE; */
 
+#if SECURITY_SERVER
 	/* max attempt count will be handled in passwordug for a while. */
 	if (ad->pw_status == SETTING_PW_STATUS_EMPTY) {
 		ret = security_server_set_pwd(NULL, new_pwd, 0, 0);
@@ -709,6 +712,7 @@ int setting_password_set_password(const char *cur_pwd, const char *new_pwd, void
 			return SETTING_PW_ERROR_UNKNOWN;
 		}
 	}
+#endif
 }
 
 
