@@ -73,7 +73,6 @@
 
 
 #define SETTING_EDJ_PATH		EDJDIR
-#define SETTING_MEMORY_EDJ_NAME		SETTING_EDJ_PATH"/setting-memory.edj"
 #define SETTING_THEME_EDJ_NAME		SETTING_EDJ_PATH"/setting-theme.edj"
 #define SETTING_5STEP_SLIDER_EDJ_NAME		SETTING_EDJ_PATH"/font-slider.edj"
 #define SETTING_NEWUX_EDJ_NAME		SETTING_EDJ_PATH"/setting-newux.edj"

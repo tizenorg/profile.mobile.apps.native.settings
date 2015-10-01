@@ -166,14 +166,6 @@
 			<label xml:lang="ja-jp">サウンド</label>
 			<label xml:lang="ko-kr">소리</label>
 	</ui-application>
-	<ui-application appid="setting-datausage-efl" exec="/usr/apps/org.tizen.setting/bin/setting-datausage-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
-			<icon>/usr/apps/org.tizen.setting/res/icons/org.tizen.traf-control.png</icon>
-			<label>Data usage</label>
-			<label xml:lang="en-us">Data usage</label>
-			<label xml:lang="ja-jp">データ使用量</label>
-			<label xml:lang="ko-kr">데이터 사용량</label>
-			<label xml:lang="pl-pl">Licznik danych</label>
-	</ui-application>
 	<ui-application appid="setting-plugin-efl" exec="/usr/apps/org.tizen.setting/bin/setting-plugin-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
 			<icon>ug-setting-plugin-efl.png</icon>
 			<label>Setting Plugin </label>
@@ -205,13 +197,6 @@
 			<icon>/usr/apps/org.tizen.setting/res/icons/A01-1_icon_Motion.png</icon>
 			<label>Motion</label>
 			<label xml:lang="en-us">Motion</label>
-	</ui-application>
-	<ui-application appid="setting-powersaving-efl" exec="/usr/apps/org.tizen.setting/bin/setting-powersaving-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
-			<icon>/usr/apps/org.tizen.setting/res/icons/A01-1_icon_Power_saving_mode.png</icon>
-			<label>Power saving mode</label>
-			<label xml:lang="en-us">Power saving mode</label>
-			<label xml:lang="ja-jp">省電力モード</label>
-			<label xml:lang="ko-kr">절전 모드</label>
 	</ui-application>
 	<ui-application appid="setting-blockingmode-efl" exec="/usr/apps/org.tizen.setting/bin/setting-blockingmode-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
 			<icon>/usr/apps/org.tizen.setting/res/icons/settings_106_block.png</icon>
