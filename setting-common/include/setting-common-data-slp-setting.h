@@ -26,11 +26,8 @@
 #include <vconf.h>
 #include <setting-common-general-func.h>
 
-#define LANGLIST_FILE_DIR_PATH	DATADIR"/"
-#define LANGLIST_FILE_PATH		"/opt/usr/apps/org.tizen.setting/data/langlist.xml"
+#define LANGLIST_FILE_PATH		"/usr/apps/org.tizen.setting/def_config/langlist.xml"
 #define LANGLIST_ALL_FILE_PATH	"/opt/usr/apps/org.tizen.setting/data/langlist_all.xml"
-#define CSC_LANGLIST_FILE_PATH	"/opt/system/csc-default/usr/language/langlist.xml"
-
 
 #define SETTING_STR_SLP_LEN 256
 #define VCONFKEY_SETAPPL_USE_PACKET_DATA_BOOL				   VCONFKEY_SETAPPL_PREFIX"/use_packet_data"

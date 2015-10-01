@@ -4,7 +4,7 @@
 
 Name:       org.tizen.setting
 Summary:    Setting application
-Version:    0.2.0
+Version:    0.2.1
 Release:    99
 Group:      misc
 License:    Apache-1.0
@@ -147,7 +147,7 @@ Group: Application Framework/Settings
 %define RESDIR    %{PREFIX}/res
 %define OPTSHAREREFIX    /usr/apps/org.tizen.setting/shared/res/settings
 
-%define DATADIR    %{PREFIX}/data
+%define CONFIGDIR    %{PREFIX}/def_config
 %define IMAGEDIR    %{RESDIR}/images
 CFLAGS+=" -fPIC -fvisibility=hidden ";export CFLAGS
 CXXFLAGS+=" -fPIC -fvisibility=hidden ";export CFLAGS
@@ -207,7 +207,6 @@ rm -rf %{buildroot}
 %define tizen_author_sign 1
 %define tizen_dist_sign 1
 
-mkdir -p %{buildroot}%{DATADIR}
 mkdir -p %{buildroot}%{_prefix}/apps/org.tizen.mode-syspopup/data
 mkdir -p %{buildroot}%{_libdir}/systemd/system/multi-user.target.wants
 mkdir -p %{buildroot}%{_libdir}/systemd/system/default.target.wants
@@ -278,9 +277,8 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %defattr(-,root,root,-)
 %{_prefix}/apps/org.tizen.mode-syspopup/res/locale/*
 
-%attr(-,app,app) %dir %{DATADIR}
 %{PREFIX}/bin/setting
-%{DATADIR}/*
+%{CONFIGDIR}/*
 %{PREFIX}/bin/setting_conf_util
 %{PREFIX}/bin/setting_turnoff_light
 %{PREFIX}/bin/setting_volume_popup
@@ -303,8 +301,6 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %attr(-,app,app) %dir %{PREFIX}/shared
 
 #[  124s] error: File not found by glob: /usr/src/packages/BUILDROOT/org.tizen.setting-0.2.0-99.aarch64/usr/share/settings/*
-
-%{DATADIR}/test.db
 
 # new
 %{PREFIX}/lib/ug/*

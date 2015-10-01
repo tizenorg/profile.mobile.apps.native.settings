@@ -38,8 +38,6 @@ SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS} -fPIC")
 SET(CMAKE_C_FLAGS_DEBUG "-O0 -g")
 SET(BUILD_ARCH "${ARCH}")
 
-SET(APP_DATA_DIR_PATH "/usr/apps/org.tizen.setting/data/")
-
 IF (BINARY_RELEASE_TYPE_ENG)
 	MESSAGE("eng binary--------------------------------")
 	ADD_DEFINITIONS("-DBINARY_RELEASE_TYPE_ENG")
@@ -231,10 +229,7 @@ ADD_CUSTOM_TARGET(setting-batt.edj
 ADD_DEPENDENCIES(${PROJECT_NAME} setting-batt.edj)
 INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-batt.edj DESTINATION /usr/apps/${SETTING_PKG_NAME}/res/edje/)
 
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/resource/langlist.xml DESTINATION /usr/apps/${SETTING_PKG_NAME}/data)
-#INSTALL(FILES ${CMAKE_SOURCE_DIR}/resource/langlist.xml DESTINATION ${APP_DATA_DIR_PATH})
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/resource/langlist_all.xml DESTINATION /usr/apps/${SETTING_PKG_NAME}/data)
-#INSTALL(FILES ${CMAKE_SOURCE_DIR}/resource/langlist_all.xml DESTINATION ${APP_DATA_DIR_PATH})
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/resource/langlist.xml DESTINATION /usr/apps/${SETTING_PKG_NAME}/def_config)
 #------------------------------------------------------------------------------------------
 
 # install desktop file & icon
@@ -258,9 +253,6 @@ IF("${BUILD_ARCH}" STREQUAL "arm")
 ELSE("${BUILD_ARCH}" STREQUAL "arm")
 	INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media-data-sdk/settings DESTINATION /usr/apps/org.tizen.setting/shared/res PATTERN "*")
 ENDIF("${BUILD_ARCH}" STREQUAL "arm")
-
-# install the SEARCH db
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/resource/test.db DESTINATION ${APP_DATA_DIR_PATH})
 
 # install changeable UI code
 INSTALL(FILES ${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting.xml DESTINATION /usr/apps/org.tizen.setting/shared/res/tables)
