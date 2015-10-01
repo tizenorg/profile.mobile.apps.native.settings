@@ -595,7 +595,6 @@ int __setting_init_search_index_module()
 		"setting-font-efl",						/* NO CODE !!! */
 		"quickpanel-setting-efl",				/* NO CODE !!! */
 		"setting-easymode-efl",					/* NO CODE !!! */
-		"setting-accessibility-efl",			/* NO CODE !!! */
 		"setting-personalpage-efl",				/* NO CODE !!! */
 		"setting-voice-efl",					/* NO CODE !!! */
 		"setting-motion-efl",					/* NO CODE !!! */

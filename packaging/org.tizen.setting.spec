@@ -105,16 +105,9 @@ BuildRequires:  efl-assist-devel
 BuildRequires:  capi-security-privilege-manager-devel
 BuildRequires:  hash-signer
 BuildRequires: pkgconfig(libtzplatform-config)
-#BuildRequires:  system-resource-devel-meta
-#BuildRequires: model-build-features
 
-#Requires: libeas-common
 Requires: capi-security-privilege-manager
 Requires(post): attr
-#Requires(post): /sbin/ldconfig
-#Requires(postun): /sbin/ldconfig
-
-# ls: cannot access %{_datadir}/settings: No such file or directory
 
 %description
 Setting application
@@ -143,7 +136,6 @@ Group: Application Framework/Settings
 %build
 
 %define PREFIX    %{_prefix}/apps/org.tizen.setting
-%define OPTPREFIX /opt/usr/apps/org.tizen.setting
 %define RESDIR    %{PREFIX}/res
 %define OPTSHAREREFIX    /usr/apps/org.tizen.setting/shared/res/settings
 
@@ -214,17 +206,6 @@ mkdir -p %{buildroot}%{_libdir}/systemd/system/default.target.wants
 %clean
 
 %post
-#if [ ! -d %{OPTPREFIX} ]
-#then
-#	echo "CREATE %{OPTPREFIX} DIR"
-#    mkdir -p %{OPTPREFIX}
-#	echo "CREATE %{OPTPREFIX}/data DIR"
-#    mkdir -p %{OPTPREFIX}/data
-#fi
-#chmod a+w %{OPTPREFIX}/data
-
-
-
 update-mime-database %{_prefix}/share/mime
 
 # Set vconf values with -g/-u options

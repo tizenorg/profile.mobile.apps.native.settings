@@ -105,11 +105,6 @@
 			<label xml:lang="ja-jp">LEDインジケーター</label>
 			<label xml:lang="ko-kr">LED 상태 표시등</label>
         </ui-application>
-        <ui-application appid="setting-accessibility-efl" exec="/usr/apps/org.tizen.setting/bin/setting-accessibility-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
-                        <icon>/usr/apps/org.tizen.setting/res/icons/settings_led_indi.png</icon>
-                        <label>Accessibility</label>
-                        <label xml:lang="en-us">Accessibility</label>
-        </ui-application>
 	<ui-application appid="setting-accessory-efl" exec="/usr/apps/org.tizen.setting/bin/setting-accessory-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
                         <icon>/usr/apps/org.tizen.setting/res/icons/settings_accessories.png</icon>
                         <label>Accessories</label>
@@ -179,19 +174,6 @@
 	</ui-application>
         <ui-application appid="org.tizen.setting-blockingmode-alarm" exec="/usr/apps/org.tizen.setting/bin/setting-blockingmode-alarm" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
 			<label>Setting-blockingmode-alarm</label>
-	</ui-application>
-	<ui-application appid="setting-privacy-efl" exec="/usr/apps/org.tizen.setting/bin/setting-privacy-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
-			<icon>/usr/apps/org.tizen.setting/res/icons/settings_privacy.png</icon>
-			<label>Privacy </label>
-			<label xml:lang="en-us">Privacy</label>
-			<label xml:lang="ja-jp">プライバシー</label>
-			<label xml:lang="ko-kr">개인 정보 보호</label>
-			<application-service>
-				<operation name="http://samsung.com/appcontrol/operation/configure/privacy"/>
-			</application-service>
-			<application-service>
-				<operation name="http://tizen.org/appcontrol/operation/configure/privacy"/>
-			</application-service>
 	</ui-application>
 	<ui-application appid="setting-motion-efl" exec="/usr/apps/org.tizen.setting/bin/setting-motion-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
 			<icon>/usr/apps/org.tizen.setting/res/icons/A01-1_icon_Motion.png</icon>
