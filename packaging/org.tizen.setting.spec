@@ -109,6 +109,7 @@ BuildRequires: pkgconfig(libtzplatform-config)
 #BuildRequires: model-build-features
 
 #Requires: libeas-common
+Requires: tzdata
 Requires: capi-security-privilege-manager
 Requires(post): attr
 #Requires(post): /sbin/ldconfig
