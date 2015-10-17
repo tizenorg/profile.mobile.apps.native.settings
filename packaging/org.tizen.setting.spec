@@ -109,7 +109,7 @@ BuildRequires: pkgconfig(libtzplatform-config)
 #BuildRequires: model-build-features
 
 #Requires: libeas-common
-Requires: tzdata
+#Requires: tzdata
 Requires: capi-security-privilege-manager
 Requires(post): attr
 #Requires(post): /sbin/ldconfig
@@ -239,8 +239,8 @@ GOPTION="-g 6514"
 	DEFAULT_HOME="%{OPTSHAREREFIX}/Wallpapers/Home_default.jpg"
 	DEFAULT_LOCK="%{OPTSHAREREFIX}/Wallpapers/Default.jpg"
 
-	rm -f %{_sysconfdir}/localtime
-	ln -s %{_datadir}/zoneinfo/Asia/Seoul %{_sysconfdir}/localtime
+#	rm -f %{_sysconfdir}/localtime
+#	ln -s %{_datadir}/zoneinfo/Asia/Seoul %{_sysconfdir}/localtime
 
 
 #resetSecurity
