@@ -2,7 +2,7 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${SETTING_COMMON}/include)
 
 INCLUDE(FindPkgConfig)
-pkg_check_modules(pkgs REQUIRED
+pkg_check_modules(pkgs_moreconnections REQUIRED
 		elementary
 		ecore
 		edje
@@ -15,14 +15,14 @@ pkg_check_modules(pkgs REQUIRED
 		capi-system-device
 		deviced
 		efl-extension
-		efl-assist
+		#capi-location-manager
 		json-glib-1.0)
 
-FOREACH(flag ${pkgs_display_CFLAGS})
+FOREACH(flag ${pkgs_moreconnections_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
 ENDFOREACH(flag)
 
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS} -fPIC")
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS}")
 SET(CMAKE_C_FLAGS_DEBUG "-O0 -g")
 IF("${ARCH}" STREQUAL "arm")
 	ADD_DEFINITIONS("-DTARGET")
@@ -41,6 +41,6 @@ ADD_LIBRARY(${SETTING_MORECONNECTIONS_UG} SHARED
 	)
 
 TARGET_LINK_LIBRARIES(${SETTING_MORECONNECTIONS_UG} -L${CMAKE_BINARY_DIR}/${SETTING_COMMON} -lsetting-common)
-TARGET_LINK_LIBRARIES(${SETTING_MORECONNECTIONS_UG} ${pkgs_display_LDFLAGS})
+TARGET_LINK_LIBRARIES(${SETTING_MORECONNECTIONS_UG} ${pkgs_moreconnections_LDFLAGS})
 
 INSTALL(TARGETS ${SETTING_MORECONNECTIONS_UG} DESTINATION ${PREFIX}/lib/ug)

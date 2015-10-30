@@ -49,16 +49,20 @@ static int setting_connectivity_usb_help_create(void *cb)
 	char mass_storage_help[HELP_LEN];
 	char debugging_mode_help[HELP_LEN];
 
-	snprintf(samsung_kies_help, HELP_LEN,
-	         "%s%s%s%s", "<b>", _("IDS_ST_HEADER_SAMSUNG_KIES"), "</b><br>",
-	         evas_textblock_text_utf8_to_markup(NULL, _("IDS_ST_BODY_SAMSUNG_KIES_CONNECTION_CONNECTING_USB_HELP_MSG")));
-	snprintf(mass_storage_help, HELP_LEN,
-	         "%s%s%s%s", "<b>", _("IDS_ST_OPT_MASS_STORAGE_ABB"), "</b><br>",
-	         evas_textblock_text_utf8_to_markup(NULL, _("IDS_ST_BODY_MASS_STORAGE_HELP_MSG")));
-	snprintf(debugging_mode_help, HELP_LEN,
-	         "%s%s%s%s", "<b>", _("IDS_ST_BODY_USB_DEBUGGING"), "</b><br>",
-	         evas_textblock_text_utf8_to_markup(NULL, _("IDS_ST_BODY_USB_DEBUGGING_IS_INTENDED_FOR_DEVELOPMENT_PURPOSES_ONLY_MSG")));
+	char* kies_help_mk = evas_textblock_text_utf8_to_markup(NULL, _("IDS_ST_BODY_SAMSUNG_KIES_CONNECTION_CONNECTING_USB_HELP_MSG"));
+	char* storage_help_mk = evas_textblock_text_utf8_to_markup(NULL, _("IDS_ST_BODY_MASS_STORAGE_HELP_MSG"));
+	char* debugmode_help_mk = evas_textblock_text_utf8_to_markup(NULL, _("IDS_ST_BODY_USB_DEBUGGING_IS_INTENDED_FOR_DEVELOPMENT_PURPOSES_ONLY_MSG"));
 
+	snprintf(samsung_kies_help, HELP_LEN,
+	         "%s%s%s%s", "<b>", _("IDS_ST_HEADER_SAMSUNG_KIES"), "</b><br>", kies_help_mk);
+	snprintf(mass_storage_help, HELP_LEN,
+	         "%s%s%s%s", "<b>", _("IDS_ST_OPT_MASS_STORAGE_ABB"), "</b><br>", storage_help_mk);
+	snprintf(debugging_mode_help, HELP_LEN,
+	         "%s%s%s%s", "<b>", _("IDS_ST_BODY_USB_DEBUGGING"), "</b><br>", debugmode_help_mk);
+
+	FREE(kies_help_mk);
+	FREE(storage_help_mk);
+	FREE(debugmode_help_mk);
 
 	Evas_Object *genlist;
 	setting_push_layout_navi_bar_genlist(ad->win_main_layout,

@@ -138,29 +138,16 @@ static int setting_font_font_size_create(void *cb)
 	int idx = 0;
 
 	while (font_size_table[idx].key_font_name) {
-		/*item_data = setting_create_Gendial_field_1radio(scroller, &(ad->itc_1text_1icon_2),
-							setting_font_font_size_list_mouse_up_cb,
-							ad->size_rdg,
-							SWALLOW_Type_1RADIO_1LABLE,
-							ad->size_rdg, font_size_table[idx].font_size,
-							setting_customize_text(_(font_size_table[idx].key_font_name), convert_font_size(font_size_table[idx].font_size),NULL,NULL),
-							NULL);*/
 		Setting_GenGroupItem_Data *item_data = (Setting_GenGroupItem_Data *) calloc(1, sizeof(Setting_GenGroupItem_Data));
 		setting_retvm_if(!item_data, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER, "calloc failed");
 		item_data->keyStr2 = (char *)g_strdup(font_size_table[idx].key_font_name);/*setting_customize_text(_(font_size_table[idx].key_font_name), convert_font_size(font_size_table[idx].font_size),NULL,NULL);//for display */
 		item_data->keyStr = (char *)g_strdup(_(font_size_table[idx].key_font_name));/*for tts feature; */
-		item_data->swallow_type = SWALLOW_Type_1RADIO_1LABLE;
+		item_data->swallow_type = SWALLOW_Type_1CHECK_RIGHT;
+
 		item_data->chk_status = font_size_table[idx].font_size;
 		item_data->chk_change_cb = NULL;
 		item_data->rgd = ad->size_rdg;
 		item_data->userdata = ad;
-		if (idx == 0) {
-			item_data->group_style = SETTING_GROUP_STYLE_TOP;
-		} else if (idx == sizeof(font_size_table) / sizeof(font_size_table[0]) - 1) {
-			item_data->group_style = SETTING_GROUP_STYLE_BOTTOM;
-		} else {
-			item_data->group_style = SETTING_GROUP_STYLE_CENTER;
-		}
 
 		item_data->item = elm_genlist_item_append(scroller, &(ad->itc_1text_1icon_2_font_size), item_data, NULL,
 		                                          ELM_GENLIST_ITEM_NONE, setting_font_font_size_list_mouse_up_cb, ad->size_rdg);
@@ -326,24 +313,11 @@ void setting_font_font_size_list_mouse_up_cb(void *data, Evas_Object *obj, void 
 
 	ad->ret_font_size = list_item->chk_status;
 
-	/*Due to long time taken by font Setting, add the block code when font is Setting. */
-	/*if (ad->size_popup) { */
-	/*	evas_object_del(ad->size_popup); */
-	/*	ad->size_popup = NULL; */
-	/*} */
-#if 1
 	/* original popup */
 	ad->size_rdg = NULL;
 	ad->size_popup = setting_create_popup_with_progressbar(ad, ad->win_get,
 	                                                       PROGRESSBAR_STYLE,
-	                                                       NULL, KeyStr_Loading, __setting_font_size_progress_popup_cb, 3/*0*/, TRUE, TRUE);	/* 3 seconds to wait in maximum */
-#else
-	setting_create_popup_with_progressbar_withobject(ad, ad->size_popup, ad->win_get,
-	                                                 PROGRESSBAR_STYLE,
-	                                                 NULL, NULL, __setting_font_size_progress_popup_cb, 3/*0*/, TRUE, TRUE);	/* 3 seconds to wait in maximum */
-
-	/*elm_config_all_flush(); */
-#endif
+	                                                       NULL, KeyStr_Loading, __setting_font_size_progress_popup_cb, 3/*0*/, TRUE, TRUE, 0);	/* 3 seconds to wait in maximum */
 	ad->font_size_idler = ecore_timer_add(1, (Ecore_Task_Cb)__font_change_call, ad);
 }
 

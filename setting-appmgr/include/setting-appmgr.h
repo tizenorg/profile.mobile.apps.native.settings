@@ -67,7 +67,7 @@ typedef struct _appmgr_pkginfo {
 	char *main_appid;
 	int sz_total;
 	int sz_data;
-	int sz_cache;
+	long long sz_cache;
 	bool nodisplay;
 	bool removable;
 	bool taskmanage;
@@ -98,8 +98,6 @@ typedef struct _appmgr_pkginfo {
 typedef struct _appmgr_listinfo {
 	Elm_Object_Item *item;
 
-	int group_style;
-
 	char *pkgid;
 	char *icon_path;
 	char *pkg_label;
@@ -126,6 +124,9 @@ typedef struct _SettingAppMgrUG {
 	int sorttype;
 	int can_sizesort;
 	int pkg_request;
+
+	Evas_Object *sort_rdg;
+	char *sort_str;
 
 	setting_view *main_view;
 	setting_view *runinfo_view;

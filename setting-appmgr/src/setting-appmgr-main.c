@@ -41,12 +41,19 @@ static void appmgrUg_main_sort_sel(void *data, Evas_Object *obj, void *event_inf
 
 	const char *item_str = list_item->keyStr;
 	SETTING_TRACE_ERROR("str: %s", item_str);
-	if (!safeStrCmp(item_str, MGRAPP_STR_SIZE))
+	if (!safeStrCmp(item_str, MGRAPP_STR_SIZE)) {
+		ad->sort_str = (char *)strdup(MGRAPP_STR_SIZE);
 		ad->sorttype = APPMGRUG_SORT_SIZE;
-	else if (!safeStrCmp(item_str, MGRAPP_STR_Z_TO_A))
+		elm_radio_value_set(ad->sort_rdg, 2);
+	} else if (!safeStrCmp(item_str, MGRAPP_STR_Z_TO_A)) {
+		ad->sort_str = (char *)strdup(MGRAPP_STR_Z_TO_A);
 		ad->sorttype = APPMGRUG_SORT_ZTOA;
-	else
+		elm_radio_value_set(ad->sort_rdg, 1);
+	} else {
+		ad->sort_str = (char *)strdup(MGRAPP_STR_A_TO_Z);
 		ad->sorttype = APPMGRUG_SORT_ATOZ;
+		elm_radio_value_set(ad->sort_rdg, 0);
+	}
 
 	ad->pkg_list = appmgrUg_sort_pkg_list(ad->sorttype, ad->pkg_list);
 
@@ -60,91 +67,56 @@ static void appmgrUg_main_sort_sel(void *data, Evas_Object *obj, void *event_inf
 static void appmgrUg_main_sort_popup(void *data, Evas_Object *obj,
                                      void *event_info)
 {
-	SettingAppMgrUG *ad = data;
-	Evas_Object *popup, *group;
+	SETTING_TRACE_BEGIN;
+	setting_retm_if(data == NULL, "data is NULL");
 
-	ret_if(NULL == data);
-
-	popup = elm_popup_add(ad->win);
-	elm_object_style_set(popup, "default");
-	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	elm_object_part_text_set(popup, "title,text", _(MGRAPP_STR_SORT_BY));
-	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, appmgrUg_popup_del, ad);
-	evas_object_smart_callback_add(popup, "block,clicked", appmgrUg_popup_del, ad);
-	evas_object_show(popup);
-
-	/* box */
-	Evas_Object *box = elm_box_add(popup);
-	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-
-	/* genlist */
-	Evas_Object *genlist = elm_genlist_add(box);
-	evas_object_size_hint_weight_set(genlist, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(genlist, EVAS_HINT_FILL, EVAS_HINT_FILL);
-
-	/*item a to z */
-	group = elm_radio_add(box);
-	elm_radio_state_value_set(group, APPMGRUG_SORT_ATOZ);
-	/*evas_object_show(group); */
-	setting_create_Gendial_field_1radio(genlist, &itc_1text_1icon,
-	                                    appmgrUg_main_sort_sel,
-	                                    ad,
-	                                    SWALLOW_Type_1RADIO,
-	                                    group, APPMGRUG_SORT_ATOZ,
-	                                    MGRAPP_STR_A_TO_Z,
-	                                    NULL);
-
-	setting_create_Gendial_field_1radio(genlist, &itc_1text_1icon,
-	                                    appmgrUg_main_sort_sel,
-	                                    ad,
-	                                    SWALLOW_Type_1RADIO,
-	                                    group, APPMGRUG_SORT_ZTOA,
-	                                    MGRAPP_STR_Z_TO_A,
-	                                    NULL);
-
-	Setting_GenGroupItem_Data *it_data = setting_create_Gendial_field_1radio(genlist, &itc_1text_1icon,
-	                                                                         appmgrUg_main_sort_sel,
-	                                                                         ad,
-	                                                                         SWALLOW_Type_1RADIO,
-	                                                                         group, APPMGRUG_SORT_SIZE,
-	                                                                         MGRAPP_STR_SIZE,
-	                                                                         NULL);
-
-	if (FALSE == ad->can_sizesort && it_data && it_data->item)
-		elm_object_item_disabled_set(it_data->item, EINA_TRUE);
-
-	elm_radio_value_set(group, ad->sorttype);
-
-	evas_object_show(genlist);
-	elm_box_pack_end(box, genlist);
-	evas_object_size_hint_min_set(box, -1, ELM_SCALE_SIZE(288));
-
-	elm_object_content_set(popup, box);
+	SettingAppMgrUG *ad = (SettingAppMgrUG *) data;
 
 	if (ad->popup)
 		evas_object_del(ad->popup);
-	ad->popup = popup;
-}
 
-static void appmgrUg_main_reset_apps(void *data, Evas_Object *obj,
-                                     void *event_info)
-{
-	char *btn_str;
-	SettingAppMgrUG *ad = data;
+	Evas_Object *menu_glist = NULL;
+	ad->popup = setting_create_popup_with_list(&menu_glist, ad, ad->win,
+												MGRAPP_STR_SORT_BY, NULL, 0, false, false, 0);
 
-	ret_if(NULL == data);
+	Evas_Object *rdg = elm_radio_add(menu_glist);
+	elm_object_style_set(rdg, "list");
+	evas_object_propagate_events_set(rdg, EINA_TRUE);
+	elm_radio_state_value_set(rdg, -1);
+	evas_object_data_set(menu_glist, "radio", rdg);
+	ad->sort_rdg = rdg;
 
-	btn_str = elm_entry_markup_to_utf8(elm_object_text_get(obj));
+	setting_create_Gendial_field_1radio(menu_glist, &(itc_1text_1icon),
+										appmgrUg_main_sort_sel,
+										ad,
+										SWALLOW_Type_1RADIO_RIGHT,
+										rdg, 0,
+										MGRAPP_STR_A_TO_Z,
+										NULL);
 
-	if (ad->popup) {
-		evas_object_del(ad->popup);
-		ad->popup = NULL;
+	setting_create_Gendial_field_1radio(menu_glist, &(itc_1text_1icon),
+										appmgrUg_main_sort_sel,
+										ad,
+										SWALLOW_Type_1RADIO_RIGHT,
+										rdg, 1,
+										MGRAPP_STR_Z_TO_A,
+										NULL);
+
+	setting_create_Gendial_field_1radio(menu_glist, &(itc_1text_1icon),
+										appmgrUg_main_sort_sel,
+										ad,
+										SWALLOW_Type_1RADIO_RIGHT,
+										rdg, 2,
+										MGRAPP_STR_SIZE,
+										NULL);
+	SETTING_TRACE("ad->sort_str:%s", ad->sort_str);
+	if (!safeStrCmp(ad->sort_str, MGRAPP_STR_SIZE)) {
+		elm_radio_value_set(rdg, 2);
+	} else if (!safeStrCmp(ad->sort_str, MGRAPP_STR_Z_TO_A)) {
+		elm_radio_value_set(rdg, 1);
+	} else {
+		elm_radio_value_set(rdg, 0);
 	}
-
-	if (0 == safeStrCmp(btn_str, _(MGRAPP_STR_RESET_APPS)))
-		appmgrUg_reset_app_settings(ad);
-
-	free(btn_str);
 }
 
 static void appmgrUg_main_more_popup_rotate(void *data, Evas_Object *obj,
@@ -219,10 +191,6 @@ static void appmgrUg_main_create_more_popup(void *data, Evas_Object *obj,
 	                              appmgrUg_main_sort_popup, ad);
 	elm_object_item_domain_text_translatable_set(it, SETTING_PACKAGE, EINA_TRUE);
 
-	Evas_Object *ao = elm_object_part_access_object_get(ctxpopup, "access.outline");
-	eext_screen_reader_access_info_prepend_cb_set(ao, ELM_ACCESS_CONTEXT_INFO,
-	                                            _appmgrUg_access_info_prepend_cb, 2);
-
 	if (ad->popup)
 		evas_object_del(ad->popup);
 	ad->popup = ctxpopup;
@@ -239,23 +207,7 @@ static void appmgrUg_main_gl_realized(void *data, Evas_Object *obj,
 	Elm_Object_Item *item = (Elm_Object_Item *)event_info;
 	appmgr_listinfo *list_item = (appmgr_listinfo *)elm_object_item_data_get(item);
 
-	setting_check_genlist_item_bottom_line(item);
-	if (list_item) {
-		/*SETTING_TRACE("%s:%d", _(list_item->keyStr), list_item->group_style); */
-		if (list_item->group_style == SETTING_GROUP_STYLE_TOP) {
-			elm_object_item_signal_emit(item, "elm,state,top", "");
-		} else if (list_item->group_style == SETTING_GROUP_STYLE_BOTTOM) {
-			elm_object_item_signal_emit(item, "elm,state,bottom", "");
-			elm_object_item_signal_emit(item, "elm,state,bottomline,hide", "");
-		} else if (list_item->group_style == SETTING_GROUP_STYLE_CENTER) {
-			elm_object_item_signal_emit(item, "elm,state,center", "");
-		} else {
-			elm_object_item_signal_emit(item, "elm,state,normal", "");
-		}
-	} else {
-		/* item is used for description */
-		elm_object_item_signal_emit(item, "elm,state,center", "");
-	}
+	// setting_check_genlist_item_bottom_line(item);
 }
 
 static Evas_Object *appmgrUg_main_genlist(Evas_Object *parent)
@@ -349,27 +301,6 @@ static inline Evas_Object *appmgrUg_main_no_item_handle(SettingAppMgrUG *ad)
 	return lo;
 }
 
-void _genlist_item_groupstyle_set(appmgr_listinfo *list_item, setting_group_style group_style)
-{
-	if (list_item) {
-		list_item->group_style = group_style;
-		/*SETTING_TRACE("list_item->group_style:%d", list_item->group_style); */
-		if (list_item->item) {
-			/*SETTING_TRACE("%s:%d", _(list_item->keyStr), list_item->group_style); */
-			if (list_item->group_style == SETTING_GROUP_STYLE_TOP) {
-				elm_object_item_signal_emit(list_item->item, "elm,state,top", "");
-			} else if (list_item->group_style == SETTING_GROUP_STYLE_BOTTOM) {
-				elm_object_item_signal_emit(list_item->item, "elm,state,bottom", "");
-				elm_object_item_signal_emit(list_item->item, "elm,state,bottomline,hide", "");
-			} else if (list_item->group_style == SETTING_GROUP_STYLE_CENTER) {
-				elm_object_item_signal_emit(list_item->item, "elm,state,center", "");
-			} else {
-				elm_object_item_signal_emit(list_item->item, "elm,state,normal", "");
-			}
-		}
-	}
-}
-
 void appmgrUg_main_genlist_append_items(SettingAppMgrUG *ad)
 {
 	GList *cursor;
@@ -389,9 +320,6 @@ void appmgrUg_main_genlist_append_items(SettingAppMgrUG *ad)
 		lo_new = ad->gl_main = appmgrUg_main_genlist(ad->navi);
 	} else
 		elm_genlist_clear(ad->gl_main);
-
-	if (ad->gl_main)
-		appmgrUg_append_separator(ad->gl_main, ad);
 
 	cursor = ad->pkg_list;
 	while (cursor && (ad->tabtype != APPMGRUG_TAB_RUNNING || ad->is_runlist_ready)) {
@@ -430,20 +358,7 @@ void appmgrUg_main_genlist_append_items(SettingAppMgrUG *ad)
 			                                     ELM_GENLIST_ITEM_NONE, appmgrUg_main_gl_sel, ad);
 			item_cnt++;
 		}
-
-		if (item_cnt == 1) {
-			_genlist_item_groupstyle_set(info, SETTING_GROUP_STYLE_TOP);
-		} else {
-			_genlist_item_groupstyle_set(info, SETTING_GROUP_STYLE_CENTER);
-		}
 	}
-	if (item_cnt == 1) {
-		_genlist_item_groupstyle_set(info, SETTING_GROUP_STYLE_CENTER);
-	} else if (item_cnt > 1) {
-		_genlist_item_groupstyle_set(info, SETTING_GROUP_STYLE_BOTTOM);
-	}
-
-	if (ad->gl_main) appmgrUg_append_separator(ad->gl_main, ad);
 
 	if (0 == item_cnt) {
 		if (lo_new)
@@ -462,6 +377,30 @@ void appmgrUg_main_genlist_append_items(SettingAppMgrUG *ad)
 		if (ad->gl_main)
 			ad->lo_noitem = NULL;
 	}
+}
+
+char *appmgrUg_main_gl_label_new_get(void *data, Evas_Object *obj, const char *part)
+{
+	SETTING_TRACE(" ------------> label get [%s]",part);
+
+	char *label = NULL;
+	appmgr_listinfo *info = data;
+
+	retv_if(data == NULL, NULL);
+
+	if (0 == strcmp(part, "elm.text")) {
+		label = SAFE_STRDUP(info->pkg_label);
+	} else if (0 == strcmp(part, "elm.text.sub")) {
+		char desc[APPMGRUG_MAX_STR_LEN] = {0};
+		if (info->valid_size) {
+			appmgrUg_size_to_str(info->total_size, desc, sizeof(desc));
+			label = strdup(desc);
+		} else {
+			label = strdup(_(MGRAPP_STR_COMPUTING));
+		}
+	}
+
+	return label;
 }
 
 char *appmgrUg_main_gl_label_get(void *data, Evas_Object *obj, const char *part)
@@ -501,6 +440,40 @@ static inline char *appmgrUg_get_listinfo_default_icon(const char *appid)
 
 	return icon;
 }
+
+
+Evas_Object *appmgrUg_main_gl_icon_new_get(void *data, Evas_Object *obj, const char *part)
+{
+	SETTING_TRACE(" ------------> content get [%s]",part);
+
+	Evas_Object *icon = NULL;
+	Evas_Object *lay = NULL;
+	appmgr_listinfo *info = data;
+
+	retv_if(data == NULL, NULL);
+
+	if (!safeStrCmp(part, "elm.swallow.icon")) {
+		icon = elm_icon_add(obj);
+
+		if (NULL == info->icon_path)
+			info->icon_path = appmgrUg_get_listinfo_default_icon(info->mainappid);
+
+		elm_image_file_set(icon, info->icon_path, NULL);
+		evas_object_size_hint_weight_set(icon, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+		evas_object_size_hint_align_set(icon, EVAS_HINT_FILL, EVAS_HINT_FILL);
+
+		lay = elm_layout_add(obj);
+		retv_if(lay == NULL, NULL);
+		elm_layout_theme_set(lay, "layout", "list/B/type.2", "default");
+		elm_layout_content_set(lay, "elm.swallow.content", icon);
+
+		return lay;
+	} else {
+		return NULL;
+	}
+}
+
+
 
 Evas_Object *appmgrUg_main_gl_icon_get(void *data, Evas_Object *obj,
                                        const char *part)
@@ -593,9 +566,9 @@ static void appmgrUg_main_clear_defapp_click(void *data, Evas_Object *obj,
 	if (ad->popup)
 		evas_object_del(ad->popup);
 
-	ad->popup = setting_create_popup_with_btn(ad, ad->win, NULL,
-	                                          MGRAPP_STR_CLEAR_DEFAULT_APPS_Q, appmgrUg_main_clear_defapp, 0,
-	                                          2, MGRAPP_STR_OK, MGRAPP_STR_CANCEL);
+	ad->popup = setting_create_popup(ad, ad->win, NULL,
+									 MGRAPP_STR_CLEAR_DEFAULT_APPS_Q, appmgrUg_main_clear_defapp, 0, FALSE, FALSE,
+									 2, MGRAPP_STR_OK, MGRAPP_STR_CANCEL);
 }
 
 static inline Evas_Object *appmgrUg_main_clear_defapp_toolbar(
@@ -775,7 +748,7 @@ static int appmgrUg_main_create(void *data)
 
 	/* back button */
 	back_btn = setting_create_button(ad->navi, MGRAPP_STR_APP_MANAGER,
-	                                 NAVI_BACK_BUTTON_STYLE,
+                                     NAVI_BACK_ARROW_BUTTON_STYLE,
 	                                 setting_appmgr_main_click_softkey_back_cb, ad);
 
 	navi_it = elm_naviframe_item_push(ad->navi, MGRAPP_STR_APP_MANAGER,

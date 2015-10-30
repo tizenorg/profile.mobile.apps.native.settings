@@ -22,6 +22,8 @@
 #include <setting-common-draw-widget.h>
 #include <eventsystem.h>
 
+#include <system_settings.h>
+
 #define MAX_REGION_STRLEN 256
 
 
@@ -35,8 +37,6 @@ setting_view setting_view_phone_region_format = {
 	.update = NULL,
 	.cleanup = setting_phone_region_format_cleanup,
 };
-
-
 
 /**
  * @brief Function of add color to display string by html charactor
@@ -155,6 +155,7 @@ static int setting_phone_region_format_compare_cb(const void *d1, const void *d2
 			return -1;
 		}
 	}
+	return SETTING_RETURN_FAIL;
 }
 
 
@@ -208,18 +209,29 @@ static int setting_phone_region_format_get_region_fmt(char *list[],
 		}
 
 		loc_list = uloc_getAvailable(i);
+		setting_retvm_if(NULL == loc_list, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER, "loc_list is NULL");
 
-		// EXPORT_PUBLIC char *substring(const char *str, size_t begin, size_t len)
 		char* e = strchr(loc_list, '_');
 		char* result;
 		if (e) {
 			int index = (int)(e-loc_list);
-			result = substring(loc_list,0, index);
-			SETTING_TRACE("lang code : %s", result);
+			result = substring(loc_list, 0, index);
+			//SETTING_TRACE("lang code : %s", result);
 		} else {
-			SETTING_TRACE("lang code itself : %s", loc_list);
+			//SETTING_TRACE("lang code itself : %s", loc_list);
 			result = loc_list;
 		}
+
+		//****************************************************************************
+		//****************************************************************************
+		//****************************************************************************
+		// current font doesn't support the font
+		// filter out if result == 'bo'
+		if (0 == safeStrCmp(result, "bo")
+			|| 0 == safeStrCmp(result, "dz") ) continue;
+		//****************************************************************************
+		//****************************************************************************
+		//****************************************************************************
 
 		uloc_getDisplayLanguage(loc_list, localeID, lang, LANGUAGE_STR_LEN, &language_status);
 		if (U_FAILURE(language_status)) {
@@ -251,10 +263,10 @@ static int setting_phone_region_format_get_region_fmt(char *list[],
 		str_variant = setting_phone_lang_str_to_utf8(variant);
 		str_displayname = setting_phone_lang_str_to_utf8(displayname);
 
-		SETTING_TRACE(" lang : %s, country : %s ---> str_displayname : %s ", str_lang, str_country, str_displayname);
+		//SETTING_TRACE(" lang : %s, country : %s ---> str_displayname : %s ", str_lang, str_country, str_displayname);
 
 		if (0 == safeStrCmp(str_lang, result)) {
-			SETTING_TRACE(" str_lang is equal to result %s %s ", str_lang, result);
+			//SETTING_TRACE(" str_lang is equal to result %s %s ", str_lang, result);
 			FREE(str_lang);
 			FREE(str_country);
 			FREE(str_variant);
@@ -264,14 +276,14 @@ static int setting_phone_region_format_get_region_fmt(char *list[],
 		}
 
 		if (str_lang == NULL) {
-			SETTING_TRACE(" str_lang is NULL. ");
+			//SETTING_TRACE(" str_lang is NULL. ");
 			FREE(str_lang);
 			FREE(str_country);
 			FREE(str_variant);
 			FREE(str_displayname);
 			continue;
 		} else if (0 == safeStrCmp(str_lang, "")) {
-			SETTING_TRACE(" str_lang is Empty string. ");
+			//SETTING_TRACE(" str_lang is Empty string. ");
 			FREE(str_lang);
 			FREE(str_country);
 			FREE(str_variant);
@@ -495,7 +507,6 @@ static Eina_Bool __region_genlist_update(void *data)
 		if (item_data) {
 			item_data->userdata = ad;
 			item_data->keyStr2 = _("IDS_ST_BODY_ANSWERINGMODE_AUTOMATIC");
-			item_data->group_style = SETTING_GROUP_STYLE_TOP;
 		} else {
 			SETTING_TRACE_ERROR("item_data is NULL");
 		}
@@ -523,11 +534,6 @@ static Eina_Bool __region_genlist_update(void *data)
 			if (item_data) {
 				item_data->userdata = ad;
 				item_data->keyStr2 = ad->region_desc[i];
-				if (search_count == 0) {
-					item_data->group_style = SETTING_GROUP_STYLE_TOP;
-				} else {
-					item_data->group_style = SETTING_GROUP_STYLE_CENTER;
-				}
 			} else {
 				SETTING_TRACE_ERROR("item_data is NULL");
 			}
@@ -541,35 +547,51 @@ static Eina_Bool __region_genlist_update(void *data)
 		}
 	}
 
-	if (search_count == 1) {
-		if (item_data) {
-			item_data->group_style = SETTING_GROUP_STYLE_NONE;
-		}
-	} else if (search_count > 1) {
+	if (search_count > 1) {
 		Setting_GenGroupItem_Data *last_item =
 			(Setting_GenGroupItem_Data *)elm_object_item_data_get(elm_genlist_last_item_get(ad->gl_region));
-		if (last_item) {
-			last_item->group_style = SETTING_GROUP_STYLE_BOTTOM;
+	}
+
+	if (search_count == 0) {
+		if(!ad->nocontents)
+		{
+			ad->nocontents = elm_layout_add(ad->win_get);
+			elm_layout_theme_set(ad->nocontents, "layout", "nocontents", "search");
+			elm_object_part_text_set(ad->nocontents, "elm.text", _("IDS_ST_BODY_NO_RESULTS_FOUND"));
 		}
+		if (ad->nocontents != elm_object_part_content_get(ad->ly_sub_region, "elm.swallow.content"))
+		{
+			ad->gl_region = elm_object_part_content_unset(ad->ly_sub_region, "elm.swallow.content");
+			evas_object_hide(ad->gl_region);
+			elm_object_part_content_set(ad->ly_sub_region, "elm.swallow.content", ad->nocontents);
+		}
+	}
+	else
+	{
+		if (ad->gl_region != elm_object_part_content_get(ad->ly_sub_region, "elm.swallow.content"))
+		{
+			ad->nocontents = elm_object_part_content_unset(ad->ly_sub_region, "elm.swallow.content");
+			evas_object_hide(ad->nocontents);
+			elm_object_part_content_set(ad->ly_sub_region, "elm.swallow.content", ad->gl_region);
+		}
+	}
+
+#if 0
+	int automatic_select = 0;
+	vconf_get_bool(VCONFKEY_SETAPPL_REGION_AUTOMATIC_BOOL, &automatic_select);
+	if(automatic_select){
+		ad->selected_region_idx = 0;
 	}
 
 	if (ad->selected_region_idx > -1) {
 		elm_radio_value_set(ad->chk_region, ad->selected_region_idx);
 	}
-
-	if (search_count == 0) {
-		setting_create_Gendial_field_def(ad->gl_region,
-										 &(ad->itc_1icon_with_no_line), NULL, NULL,
-										 SWALLOW_Type_INVALID, NULL, NULL, 0,
-										 _("IDS_ST_BODY_NO_RESULTS_FOUND"), NULL, NULL);
-	}
+#endif
 
 	ad->search_idler = NULL;
 	ad->searchlist_update_timer = NULL;
 	return ECORE_CALLBACK_CANCEL;
 }
-
-
 
 /**
  * @brief Callback of entry change
@@ -733,9 +755,6 @@ static Eina_Bool __region_animator_cb(void *data)
 	if (ad->gl_region_cur_index >=  ad->region_num) {
 		Setting_GenGroupItem_Data *last_item =
 			(Setting_GenGroupItem_Data *)elm_object_item_data_get(elm_genlist_last_item_get(ad->gl_region));
-		if (last_item) {
-			last_item->group_style = SETTING_GROUP_STYLE_BOTTOM;
-		}
 
 		if (ad->animator) {
 			ecore_animator_del(ad->animator);
@@ -764,7 +783,6 @@ static Eina_Bool __region_animator_cb(void *data)
 
 		if (item_data) {
 			item_data->userdata = ad;
-			item_data->group_style = SETTING_GROUP_STYLE_CENTER;
 		} else {
 			SETTING_TRACE_ERROR("item_data is NULL");
 		}
@@ -831,7 +849,7 @@ static void __region_genlist_create(void *data)
 	}
 	ad->pop_progress = setting_create_popup_with_progressbar(ad, ad->win_get,
 															 PROGRESSBAR_STYLE,
-															 NULL, KeyStr_Loading, NULL, 0, TRUE, TRUE);
+															 NULL, KeyStr_Loading, NULL, 0, TRUE, TRUE, 0);
 
 	if (ad->popup_timer) {
 		ecore_timer_del(ad->popup_timer);
@@ -860,7 +878,6 @@ static void __region_genlist_create(void *data)
 	if (item_data) {
 		item_data->userdata = ad;
 		item_data->keyStr2 = _("IDS_ST_BODY_ANSWERINGMODE_AUTOMATIC");
-		item_data->group_style = SETTING_GROUP_STYLE_TOP;
 	} else {
 		SETTING_TRACE_ERROR("item_data is NULL");
 	}
@@ -880,7 +897,6 @@ static void __region_genlist_create(void *data)
 			if (item_data) {
 				item_data->userdata = ad;
 				item_data->keyStr2 = ad->region_desc[i];
-				item_data->group_style = SETTING_GROUP_STYLE_CENTER;
 			} else {
 				SETTING_TRACE_ERROR("item_data is NULL");
 			}
@@ -915,9 +931,6 @@ static void __region_genlist_create(void *data)
 
 		Setting_GenGroupItem_Data *last_item =
 			(Setting_GenGroupItem_Data *)elm_object_item_data_get(elm_genlist_last_item_get(ad->gl_region));
-		if (last_item) {
-			last_item->group_style = SETTING_GROUP_STYLE_BOTTOM;
-		}
 	}
 }
 
@@ -1014,7 +1027,7 @@ static int setting_phone_region_format_create(void *cb)
 	app_control_h service = ad->bundle_data;
 	app_control_get_extra_data(service, "viewtype", &ad->region_search_id);
 	if (!safeStrCmp(ad->region_search_id, "region")) {
-		Evas_Object *layout_main = setting_create_win_layout(ad->win_main_layout, ad->win_get);
+		Evas_Object *layout_main = setting_create_win_layout(ad->win_get);
 		retvm_if(layout_main == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER, "layout_main create fail");
 		ad->ly_region = layout_main;
 
@@ -1037,25 +1050,26 @@ static int setting_phone_region_format_create(void *cb)
 	}
 
 	/* */
-	setting_create_Gendial_itc("1icon/with_no_line", &(ad->itc_1icon_with_no_line));
+	setting_create_Gendial_itc("1icon", &(ad->itc_1icon_with_no_line));
 	ad->itc_1icon_with_no_line.func.content_get = _item_content_get;
 
 	Elm_Object_Item *navi_it = setting_push_layout_navi_bar(REGION_FORMAT_LOWER,
 															"IDS_ST_BUTTON_BACK",
 															NULL,
 															NULL,
-															NULL,
+															setting_phone_region_format_click_softkey_cancel_cb,
 															NULL,
 															NULL, ad, sub_layout, ad->navi_bar, NULL);
 	elm_naviframe_item_pop_cb_set(navi_it, gl_sel_cb, ad);
 	evas_object_data_set(ad->navi_bar, "sip.naviframe.title_obj", "SEARCH");
 	ad->gl_region = elm_genlist_add(ad->navi_bar);
+	elm_genlist_mode_set(ad->gl_region, ELM_LIST_COMPRESS);	/* resolve abnormal height issue */
+	elm_genlist_homogeneous_set(ad->gl_region, EINA_TRUE);
+	//elm_genlist_realization_mode_set(ad->gl_region, EINA_TRUE);
+	elm_genlist_clear(ad->gl_region);	/* first to clear list */
 
 	retvm_if(ad->gl_region == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER, "ad->gl_region is NULL");
-	//elm_genlist_realization_mode_set(ad->gl_region, EINA_TRUE);
-	elm_object_style_set(ad->gl_region, "dialogue");
-
-	evas_object_smart_callback_add(ad->gl_region, "realized", __gl_realized_cb, NULL);
+	//evas_object_smart_callback_add(ad->gl_region, "realized", __gl_realized_cb, NULL);
 
 	ad->chk_region = elm_radio_add(ad->gl_region);
 	elm_radio_state_value_set(ad->chk_region, -1);
@@ -1081,7 +1095,20 @@ static int setting_phone_region_format_create(void *cb)
 		}
 	}
 
+	/* SET SEARCHBAR AREA SIZE */
+	int value = 0;
+	ret = system_settings_get_value_int(SYSTEM_SETTINGS_KEY_FONT_SIZE, &value);
+
+	if (value == SYSTEM_SETTINGS_FONT_SIZE_GIANT) {
+		elm_object_signal_emit(ad->search_bar, "set,show,giant", "*");
+	} else {
+		elm_object_signal_emit(ad->search_bar, "set,show,normal", "*");
+	}
+
 	elm_object_part_content_set(sub_layout, "elm.swallow.content", ad->gl_region);
+
+	ad->ly_sub_region = sub_layout;
+
 
 	setting_view_phone_region_format.is_create = 1;
 	return SETTING_RETURN_SUCCESS;

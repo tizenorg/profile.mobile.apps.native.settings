@@ -48,8 +48,6 @@ static void setting_security_main_mouse_up_Gendial_list_cb(void *data,
                                                            Evas_Object *obj,
                                                            void *event_info);
 
-static Eina_Bool setting_security_engine_list_timer_cb(void *data);
-/*static void __security_exp_cb(void *data, Evas_Object *obj, void *event_info); */
 void __security_sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info);
 
 #define SECURITY_ENGINE_NAME_MAX_LEN 128
@@ -285,8 +283,8 @@ int _handle_sim_exception(void *data, int sim_status)
 
 		case VCONFKEY_TELEPHONY_SIM_NOT_PRESENT:
 
-			setting_create_simple_popup(NULL, ad->win_get,
-			                            NULL, _(SECURITY_SIM_NOT_PRESENT_MSG));
+			setting_create_popup(NULL, ad->win_get,
+			                            NULL, _(SECURITY_SIM_NOT_PRESENT_MSG), NULL, 0, false, false, 0);
 			SETTING_TRACE_DEBUG
 			("%s*** [ERR] INCORRECTED SIM. sim_slot_type=%d ***%s",
 			 SETTING_FONT_RED, sim_status, SETTING_FONT_BLACK);
@@ -297,8 +295,8 @@ int _handle_sim_exception(void *data, int sim_status)
 		case VCONFKEY_TELEPHONY_SIM_CARD_ERROR:
 		case VCONFKEY_TELEPHONY_SIM_UNKNOWN:
 
-			setting_create_simple_popup(NULL, ad->win_get,
-			                            NULL, _("IDS_SIM_BODY_INVALID_SIM_CARD"));
+			setting_create_popup(NULL, ad->win_get,
+			                            NULL, _("IDS_SIM_BODY_INVALID_SIM_CARD"), NULL, 0, false, false, 0);
 			SETTING_TRACE_DEBUG
 			("%s*** [ERR] INCORRECTED SIM. sim_slot_type=%d ***%s",
 			 SETTING_FONT_RED, sim_status, SETTING_FONT_BLACK);
@@ -333,10 +331,10 @@ static Eina_Bool _check_tapi_async_cb_is_called(void *data)
 	SettingSecurityUG *ad = (SettingSecurityUG *)data;
 
 	if (!ad->enter_tapi_async_cb_flag) {
-		ad->sim_popup = setting_create_popup_without_btn(ad, ad->win_get,
-		                                                 NULL, _(KeyStr_Security_Waiting_Sim),
-		                                                 (setting_call_back_func)__remove_sim_popup_cb,
-		                                                 0, FALSE, FALSE);
+		ad->sim_popup = setting_create_popup(ad, ad->win_get,
+		                                     NULL, KeyStr_Security_Waiting_Sim,
+		                                     (setting_call_back_func)__remove_sim_popup_cb,
+		                                     0, FALSE, FALSE, 0);
 		ad->remove_sim_popup_timer = ecore_timer_add(1, __remove_sim_popup_cb, ad);
 	}
 	ad->tapi_async_cb_check_timer = NULL;

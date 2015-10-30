@@ -418,10 +418,8 @@ static Eina_Bool __imf_event_key_down_cb(void *data, int type, void *event)
 
 	if (!safeStrCmp(commit_str, "Return"))
 		return EINA_TRUE;
-	#if 0
-	else if (!safeStrCmp(commit_str, KEY_BACK))
+	else if (!safeStrCmp(commit_str, "XF86Back"))
 		return EINA_TRUE;
-	#endif
 
 	if (!safeStrCmp(commit_str, "BackSpace")) {
 		if (ad->sp_focused_num > 0)
@@ -470,6 +468,7 @@ void __imf_show_for_simple_password(void *data)
 		ecore_imf_context_reset(imf_context);
 		ecore_imf_context_input_panel_imdata_set(imf_context, (void *)"type=password", 13); /* for password read out with TTS */
 		ecore_imf_context_input_panel_layout_set(imf_context, ECORE_IMF_INPUT_PANEL_LAYOUT_DATETIME);
+		ecore_imf_context_input_panel_return_key_disabled_set(imf_context, EINA_TRUE);
 		ecore_imf_context_focus_in(imf_context);
 		ad->imf_handler = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, __imf_event_key_down_cb, ad);
 		if (!ad->imf_handler)
@@ -537,9 +536,7 @@ static int setting_password_simple_create(void *cb)
 
 	ad->ly_main = setting_create_layout_navi_bar(ad->win_main_layout, ad->win_get, "IDS_ST_BODY_SIMPLE_PASSWORD",
 	                                             _("IDS_ST_BUTTON_BACK"),
-	                                             NULL, NULL,
 	                                             (setting_call_back_func)setting_password_simple_click_softkey_cancel_cb,
-	                                             NULL, NULL,
 	                                             ad,
 	                                             ad->simple_layout,
 	                                             &(ad->navi_bar), NULL);

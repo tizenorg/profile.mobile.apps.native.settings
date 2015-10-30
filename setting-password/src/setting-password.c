@@ -20,6 +20,7 @@
  */
 #include <setting-password.h>
 #include <setting-password-main.h>
+#include <security-server.h>
 
 extern void setting_get_pin_lock_info_cb(TapiHandle *handle, int result, void *data, void *user_data);
 
@@ -60,7 +61,6 @@ void __chk_cur_pw_status(SettingPasswordUG *ad, app_control_h service)
 
 	ad->pw_status = SETTING_PW_STATUS_DEFAULT;
 
-#if SECURITY_SERVER
 	ret = security_server_is_pwd_valid(&attempt, &max_attempt, &expire_sec);
 	SETTING_TRACE_DEBUG("status of password : %d (cur attempt %d, max %d, expire %d", ret, attempt, max_attempt, expire_sec);
 
@@ -68,7 +68,6 @@ void __chk_cur_pw_status(SettingPasswordUG *ad, app_control_h service)
 		SETTING_TRACE("security-server has no password!");
 		ad->pw_status = SETTING_PW_STATUS_EMPTY;
 	}
-#endif
 }
 
 void __get_extra_data(SettingPasswordUG *ad, app_control_h service)
@@ -257,7 +256,7 @@ static void *setting_password_ug_on_create(ui_gadget_h ug,
 	bindtextdomain(SETTING_PACKAGE, SETTING_LOCALEDIR);
 	evas_object_smart_callback_add(passwordUG->win_get, "wm,rotation,changed", setting_password_rotated_cb, passwordUG);
 
-	setting_create_Gendial_itc("groupindex", &(passwordUG->itc_title));
+	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE, &(passwordUG->itc_title));
 	setting_create_Gendial_itc("1icon", &(passwordUG->itc_variable_height));
 
 	passwordUG->itc_err_desc.item_style = "multiline_sub";
@@ -556,9 +555,9 @@ setting_password_ug_create_popup_notitle_nobtn(void *data, char *str,
 		evas_object_del(ad->notify);
 		ad->notify = NULL;
 	}
-	ad->notify = setting_create_popup_without_btn(ad, ad->ly_main, NULL, str,
-	                                              setting_password_ug_popup_resp_cb,
-	                                              POPUP_INTERVAL, FALSE, FALSE);
+	ad->notify = setting_create_popup(ad, ad->ly_main, NULL, str,
+									  setting_password_ug_popup_resp_cb,
+									  POPUP_INTERVAL, FALSE, FALSE, 0);
 }
 
 void setting_password_ug_check_attemps_left(void *data)
@@ -646,7 +645,6 @@ int setting_password_check_password(const char *challenge, unsigned int *remain_
 	unsigned int valid_secs = 0;
 
 	SETTING_TRACE_DEBUG("check pwd : %s", challenge);
-#if SECURITY_SERVER
 	inner_ret = security_server_chk_pwd(challenge, &current_attempt, &max_attempt, &valid_secs);
 
 	SETTING_TRACE_DEBUG("chk password : %d", inner_ret);
@@ -666,7 +664,7 @@ int setting_password_check_password(const char *challenge, unsigned int *remain_
 		}
 		ret = SETTING_RETURN_FAIL;
 	}
-#endif
+
 	return ret;
 }
 
@@ -683,7 +681,6 @@ int setting_password_set_password(const char *cur_pwd, const char *new_pwd, void
 	uid_t user = 5000;
 	/*int ckmc_ret = CKMC_ERROR_NONE; */
 
-#if SECURITY_SERVER
 	/* max attempt count will be handled in passwordug for a while. */
 	if (ad->pw_status == SETTING_PW_STATUS_EMPTY) {
 		ret = security_server_set_pwd(NULL, new_pwd, 0, 0);
@@ -712,7 +709,6 @@ int setting_password_set_password(const char *cur_pwd, const char *new_pwd, void
 			return SETTING_PW_ERROR_UNKNOWN;
 		}
 	}
-#endif
 }
 
 

@@ -58,7 +58,7 @@ static void storageUg_SD_unmount(SettingStorageUG *ad, storageUg_mmc_cb cb)
 	ret_if(ad == NULL);
 
 	ad->popup = setting_create_popup_with_progressbar(ad, ad->win, PROGRESSBAR_STYLE,
-	                                                  NULL, STORAGEUG_STR_UNMOUNTING_SD, storageUg_popup_del, 0, TRUE, TRUE);
+	                                                  NULL, STORAGEUG_STR_UNMOUNTING_SD, storageUg_popup_del, 0, TRUE, TRUE, 0);
 
 	ad->mmc_content.mmc_cb = cb;
 	ad->mmc_content.user_data = ad;
@@ -102,14 +102,15 @@ static void storageUg_SD_handle_mount_unmount(void *data)
 	}
 
 	if (VCONFKEY_SYSMAN_MMC_MOUNTED == ad->mmc_status) {
-		ad->popup = setting_create_popup_with_btn(ad, ad->win, NULL,
-		                                          STORAGEUG_STR_SD_UNMOUNT_POPUP_MSG, storageUg_SD_unmount_resp, 0,
-		                                          2, STORAGEUG_STR_OK, STORAGEUG_STR_CANCEL);
+		ad->popup = setting_create_popup(ad, ad->win, STORAGEUG_STR_UNMOUNT_SD,
+										 STORAGEUG_STR_SD_UNMOUNT_POPUP_MSG, storageUg_SD_unmount_resp,
+										 0, FALSE, FALSE,
+										 2, STORAGEUG_STR_OK, STORAGEUG_STR_CANCEL);
 	} else {
 		int ret;
 
 		ad->popup = setting_create_popup_with_progressbar(ad, ad->win,
-		                                                  PROGRESSBAR_STYLE, NULL, NULL, storageUg_popup_del, 0, TRUE, TRUE);
+		                                                  PROGRESSBAR_STYLE, NULL, "IDS_ST_POP_MOUNTING_SD_CARD_ING", storageUg_popup_del, 0, TRUE, TRUE, 0);
 
 		ad->mmc_content.mmc_cb = storageUg_SD_finish_progress;
 		ad->mmc_content.user_data = ad;
@@ -163,8 +164,8 @@ static void storageUg_SD_format(int result, void *data)
 		return;
 	}
 
-	ad->popup = setting_create_popup_with_progressbar(ad, ad->win, PROGRESSBAR_STYLE,
-	                                                  NULL, STORAGEUG_STR_FORMATTING_SD, NULL, 0, TRUE, TRUE);
+	ad->popup = setting_create_popup_with_progressbar(ad, ad->win, "default",
+	                                                  NULL, STORAGEUG_STR_FORMATTING_SD, NULL, 0, TRUE, TRUE, 0);
 
 	ad->mmc_content.mmc_cb = storageUg_SD_finish_format;
 	ad->mmc_content.user_data = ad;
@@ -201,9 +202,10 @@ static void storageUg_SD_format_se_confirm(SettingStorageUG *ad)
 	if (ad->popup)
 		evas_object_del(ad->popup);
 
-	ad->popup = setting_create_popup_with_btn(ad, ad->win, NULL,
-	                                          STORAGEUG_STR_FORMAT_SECOND_Q, storageUg_SD_format_se_confirm_resp, 0,
-	                                          2, STORAGEUG_STR_OK, STORAGEUG_STR_CANCEL);
+	ad->popup = setting_create_popup(ad, ad->win, NULL,
+									 STORAGEUG_STR_FORMAT_SECOND_Q, storageUg_SD_format_se_confirm_resp,
+									 0, FALSE, FALSE,
+									 2, STORAGEUG_STR_OK, STORAGEUG_STR_CANCEL);
 
 }
 
@@ -308,9 +310,10 @@ static inline void storageUg_SD_handle_format(SettingStorageUG *ad)
 
 	popup_msg = STORAGEUG_STR_FORMAT_USE_MSG;
 
-	ad->popup = setting_create_popup_with_btn(ad, ad->win, NULL, popup_msg,
-	                                          storageUg_SD_format_first_confirm_resp, 0,
-	                                          2, STORAGEUG_STR_OK, STORAGEUG_STR_CANCEL);
+	ad->popup = setting_create_popup(ad, ad->win, NULL, popup_msg,
+									 storageUg_SD_format_first_confirm_resp,
+									 0, FALSE, FALSE,
+									 2, STORAGEUG_STR_OK, STORAGEUG_STR_CANCEL);
 }
 
 static void storageUg_SD_sel(void *data, Evas_Object *obj, void *event_info)
@@ -339,7 +342,6 @@ static Setting_GenGroupItem_Data *storageUg_SD_gl_insert_after(
     void *sel_data,
     const char *keyStr,
     char *sub_desc,
-    setting_group_style group_style,
     SettingStorageUG *ad)
 {
 	Setting_GenGroupItem_Data *it_data = calloc(1, sizeof(Setting_GenGroupItem_Data));
@@ -348,7 +350,6 @@ static Setting_GenGroupItem_Data *storageUg_SD_gl_insert_after(
 	it_data->keyStr = (char *)g_strdup(keyStr);
 	it_data->sub_desc = (char *)g_strdup(sub_desc);
 	it_data->swallow_type = SWALLOW_Type_INVALID;
-	it_data->group_style = group_style;
 	it_data->userdata = ad;
 
 	it_data->item = elm_genlist_item_insert_after(genlist, itc, it_data, NULL, before,
@@ -362,7 +363,7 @@ static inline void storageUg_SD_info_removed(SettingStorageUG *ad)
 
 	ad->sd_mount = storageUg_SD_gl_insert_after(ad->gl_main, &itc_2text_2,
 	                                            ad->sd_card->item, NULL, NULL, STORAGEUG_STR_MOUNT_SD, STORAGEUG_STR_INSERT,
-	                                            SETTING_GROUP_STYLE_NONE, NULL);
+	                                             NULL);
 	if (ad->sd_mount) {
 		elm_object_item_disabled_set(ad->sd_mount->item, EINA_TRUE);
 	} else {
@@ -374,12 +375,9 @@ static inline void storageUg_SD_info_inserted_not_mounted(SettingStorageUG *ad)
 {
 	ad->sd_mount = storageUg_SD_gl_insert_after(ad->gl_main, &itc_1text,
 	                                            ad->sd_card->item, storageUg_SD_sel, ad, STORAGEUG_STR_MOUNT_SD, NULL,
-	                                            SETTING_GROUP_STYLE_TOP, ad);
+	                                            ad);
 	warn_if(NULL == ad->sd_mount, "ad->sd_mount is NULL");
 
-	ad->sd_format = storageUg_SD_gl_insert_after(ad->gl_main, &itc_1text,
-	                                             ad->sd_mount->item, storageUg_SD_sel, ad, STORAGEUG_STR_FORMAT_SD, NULL,
-	                                             SETTING_GROUP_STYLE_BOTTOM, ad);
 	if (ad->sd_format) {
 		int status = -1;
 
@@ -407,26 +405,26 @@ static inline void storageUg_SD_info_mounted(SettingStorageUG *ad)
 
 	ad->sd_total = storageUg_SD_gl_insert_after(ad->gl_main, &itc_2text_2,
 	                                            ad->sd_card->item, NULL, ad, STORAGEUG_STR_TOTAL, total_str,
-	                                            SETTING_GROUP_STYLE_TOP, ad);
+	                                            ad);
 	if (ad->sd_total) {
 		elm_genlist_item_select_mode_set(ad->sd_total->item,
 		                                 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 		ad->sd_avail = storageUg_SD_gl_insert_after(ad->gl_main, &itc_2text_2,
 		                                            ad->sd_total->item, NULL, ad, STORAGEUG_STR_AVAIL_SPACE, avail_str,
-		                                            SETTING_GROUP_STYLE_CENTER, ad);
+		                                            ad);
 		if (ad->sd_avail) {
 			elm_genlist_item_select_mode_set(ad->sd_avail->item,
 			                                 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 			ad->sd_mount = storageUg_SD_gl_insert_after(ad->gl_main, &itc_1text,
 			                                            ad->sd_avail->item, storageUg_SD_sel, ad, STORAGEUG_STR_UNMOUNT_SD, NULL,
-			                                            SETTING_GROUP_STYLE_CENTER, ad);
+			                                            ad);
 			warn_if(NULL == ad->sd_mount, "ad->sd_mount is NULL");
 		} else {
 			SETTING_TRACE_ERROR("ad->sd_avail is NULL");
 		}
 		ad->sd_format = storageUg_SD_gl_insert_after(ad->gl_main, &itc_1text,
 		                                             ad->sd_mount->item, storageUg_SD_sel, ad, STORAGEUG_STR_FORMAT_SD, NULL,
-		                                             SETTING_GROUP_STYLE_BOTTOM, ad);
+		                                             ad);
 		warn_if(NULL == ad->sd_format, "ad->sd_format is NULL");
 
 	} else {

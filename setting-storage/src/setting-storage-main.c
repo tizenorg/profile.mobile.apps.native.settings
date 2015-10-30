@@ -29,14 +29,12 @@
 #include "setting-storage-main.h"
 #if 0
 #define SETTING_STORAGE_PIE_RECT_WIDTH (432 * WIDGET_SCALE_FACTOR)
-#define SETTING_STORAGE_PIE_RECT_SIZE (414 * WIDGET_SCALE_FACTOR)
+#define SETTING_STORAGE_PIE_RECT_HEIGHT (414 * WIDGET_SCALE_FACTOR)
 #define SETTING_STORAGE_PIE_CYCLE_SIZE (294 * WIDGET_SCALE_FACTOR)
-#define SETTING_STORAGE_ITEM_LIST_SIZE (180 * WIDGET_SCALE_FACTOR)
 #else
 #define SETTING_STORAGE_PIE_RECT_WIDTH (ELM_SCALE_SIZE(432))
-#define SETTING_STORAGE_PIE_RECT_SIZE (ELM_SCALE_SIZE(414))
+#define SETTING_STORAGE_PIE_RECT_HEIGHT (ELM_SCALE_SIZE(414))
 #define SETTING_STORAGE_PIE_CYCLE_SIZE (ELM_SCALE_SIZE(294))
-#define SETTING_STORAGE_ITEM_LIST_SIZE (ELM_SCALE_SIZE(180))
 #endif
 
 
@@ -53,7 +51,7 @@ const char *storageUg_MMC_stat = VCONFKEY_SYSMAN_MMC_STATUS;
 static setting_view setting_view_storage_main;
 
 static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
-                                                  SettingStorageUG *ad)
+												  SettingStorageUG *ad)
 {
 	cairo_t *cr;
 	double total_size;
@@ -136,7 +134,7 @@ static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 	account_size = 0.75;
 	cairo_line_to(cr, cairo_w / 2, cairo_h / 2);
 	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2, account_size * 2 * M_PI,
-	                   (account_size - system_sz) * 2 * M_PI);
+					   (account_size - system_sz) * 2 * M_PI);
 	cairo_set_source_rgba(cr, 153 / 255., 66 / 255., 194 / 255., 1);
 	cairo_fill(cr);
 	account_size -= system_sz;
@@ -144,7 +142,7 @@ static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 	/*app */
 	cairo_line_to(cr, cairo_w / 2, cairo_h / 2);
 	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2, account_size * 2 * M_PI,
-	                   (account_size - apps_sz) * 2 * M_PI);
+					   (account_size - apps_sz) * 2 * M_PI);
 	cairo_set_source_rgba(cr, 255 / 255., 189 / 255., 8 / 255., 1);
 	cairo_fill(cr);
 	account_size -= apps_sz;
@@ -152,7 +150,7 @@ static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 	/*pic */
 	cairo_line_to(cr, cairo_w / 2, cairo_h / 2);
 	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2, account_size * 2 * M_PI,
-	                   (account_size - pics_sz) * 2 * M_PI);
+					   (account_size - pics_sz) * 2 * M_PI);
 	cairo_set_source_rgba(cr, 119 / 255., 222 / 255., 60 / 255., 1);
 	cairo_fill(cr);
 	account_size -= pics_sz;
@@ -160,7 +158,7 @@ static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 	/*audio */
 	cairo_line_to(cr, cairo_w / 2, cairo_h / 2);
 	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2, account_size * 2 * M_PI,
-	                   (account_size - audio_size) * 2 * M_PI);
+					   (account_size - audio_size) * 2 * M_PI);
 	cairo_set_source_rgba(cr, 28 / 255., 140 / 255., 252 / 255., 1);
 	cairo_fill(cr);
 	account_size -= audio_size;
@@ -168,7 +166,7 @@ static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 	/*miscellaneous files */
 	cairo_line_to(cr, cairo_w / 2, cairo_h / 2);
 	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2, account_size * 2 * M_PI,
-	                   (account_size - misces_sz) * 2 * M_PI);
+					   (account_size - misces_sz) * 2 * M_PI);
 	cairo_set_source_rgba(cr, 52 / 255., 220 / 255., 250 / 255., 1);
 	cairo_fill(cr);
 	account_size -= misces_sz;
@@ -176,11 +174,13 @@ static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 	/*cache files */
 	cairo_line_to(cr, cairo_w / 2, cairo_h / 2);
 	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2, account_size * 2 * M_PI,
-	                   (account_size - cache_sz) * 2 * M_PI);
+					   (account_size - cache_sz) * 2 * M_PI);
 	cairo_set_source_rgba(cr, 26 / 255., 49 / 255., 125 / 255., 1);
 	cairo_fill(cr);
 	account_size -= cache_sz;
 
+	//evas_object_image_alpha_set(pie_image, EINA_FALSE);
+	evas_object_image_alpha_set(pie_image, EINA_TRUE);
 	evas_object_image_size_set(pie_image, cairo_w, cairo_h);
 	evas_object_image_data_set(pie_image, cairo_image_surface_get_data(cairo_surface));
 	evas_object_image_fill_set(pie_image, 0, 0, cairo_w, cairo_h);
@@ -189,7 +189,7 @@ static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 }
 
 static inline void storageUg_main_part_pie_graph_set(Evas_Object *parent,
-                                                     const char *part, void *data)
+													 const char *part, void *data)
 {
 	Evas *evas;
 	int cairo_w, cairo_h;
@@ -222,7 +222,7 @@ static inline void storageUg_main_part_pie_graph_set(Evas_Object *parent,
 }
 
 Evas_Object *storageUg_main_pie_item_get_icon(void *data, Evas_Object *obj,
-                                              const char *part)
+											  const char *part)
 {
 	int layout_w, layout_h;
 	double used_size;
@@ -236,69 +236,80 @@ Evas_Object *storageUg_main_pie_item_get_icon(void *data, Evas_Object *obj,
 	retvm_if(safeStrCmp(part, "elm.icon"), NULL, "part(%s) Invaild", part);
 
 	layout_w = SETTING_STORAGE_PIE_RECT_WIDTH;
-	layout_h = SETTING_STORAGE_PIE_RECT_SIZE;
+	layout_h = SETTING_STORAGE_PIE_RECT_HEIGHT;
 
 	layout = elm_layout_add(obj);
 	elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME, "storage_pie");
 
-	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, 0.0);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 
 	/*title */
 	elm_object_part_text_set(layout, "storage_title.text",
-	                         _(STORAGEUG_STR_INTERNAL_STORAGE));
+							 _(STORAGEUG_STR_INTERNAL_STORAGE));
 
 	storageUg_size_to_str(ad->sz_inter_avail, size_str, sizeof(size_str));
 	snprintf(final_str, sizeof(final_str), "%s %s", size_str,
-	         _(STORAGEUG_STR_AVAIL));
+			 _(STORAGEUG_STR_AVAIL));
 	elm_object_part_text_set(layout, "storage_total.text", final_str);
 
 	used_size = ad->sz_inter_total - ad->sz_inter_avail;
 	storageUg_size_to_str(used_size, size_str, sizeof(size_str));
 	snprintf(final_str, sizeof(final_str), "%s %s", size_str,
-	         _(STORAGEUG_STR_USED));
+			 _(STORAGEUG_STR_USED));
 	elm_object_part_text_set(layout, "storage_used.text", final_str);
 
 	/*pie */
 	storageUg_main_part_pie_graph_set(layout, "pie_rect", ad);
-	setting_resize_object(layout, layout_w, layout_h);
+	/*setting_resize_object(layout, layout_w, layout_h); */
 	evas_object_show(layout);
 
 	return layout;
 }
 
 Evas_Object *storageUg_color_item_content_get(void *data, Evas_Object *obj,
-                                              const char *part)
+											  const char *part)
 {
 	setting_retvm_if(data == NULL, NULL, "data is NULL");
 	Setting_GenGroupItem_Data *list_item = data;
 	int color = list_item->color;
-	if (!strcmp(part, "elm.icon.1")) {
+
+	SETTING_TRACE_ERROR("part : %s", part);
+
+	if (!strcmp(part, "elm.swallow.icon")) {
 		Evas_Object *layout = elm_layout_add(obj);
-		elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME, "storage_elem");
+
+		Eina_Bool result = elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME, "storage_edge");
+		evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+		evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
+		if (!result) {
+			SETTING_TRACE_ERROR(" ERROR -- elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME, storage_edge)");
+			return NULL;
+		}
 
 		switch (color) {
-			case 1:
-				break;
-			case 2:
-				elm_object_signal_emit(layout, "elm,state,show,app", "elm");
-				break;
-			case 3:
-				elm_object_signal_emit(layout, "elm,state,show,pic", "elm");
-				break;
-			case 4:
-				elm_object_signal_emit(layout, "elm,state,show,audio", "elm");
-				break;
-			case 5:
-				elm_object_signal_emit(layout, "elm,state,show,misc", "elm");
-				break;
-			case 6:
-				elm_object_signal_emit(layout, "elm,state,show,cache", "elm");
-				break;
-			case 7:
-				elm_object_signal_emit(layout, "elm,state,show,avail", "elm");
-				break;
-			default:
-				break;
+		case 1:
+			elm_object_signal_emit(layout, "elm,state,show,system", "elm");
+			break;
+		case 2:
+			elm_object_signal_emit(layout, "elm,state,show,app", "elm");
+			break;
+		case 3:
+			elm_object_signal_emit(layout, "elm,state,show,pic", "elm");
+			break;
+		case 4:
+			elm_object_signal_emit(layout, "elm,state,show,audio", "elm");
+			break;
+		case 5:
+			elm_object_signal_emit(layout, "elm,state,show,misc", "elm");
+			break;
+		case 6:
+			elm_object_signal_emit(layout, "elm,state,show,cache", "elm");
+			break;
+		case 7:
+			elm_object_signal_emit(layout, "elm,state,show,avail", "elm");
+			break;
+		default:
+			break;
 		}
 		evas_object_show(layout);
 		return layout;
@@ -312,12 +323,12 @@ static void __storage_cache_file_clean_popup_no_cache_rsp_cb(void *data, Evas_Ob
 	setting_retm_if(data == NULL, "data is NULL");
 	SettingStorageUG *ad = (SettingStorageUG *)data;
 	switch (btn_type(obj)) {
-		case POPUP_RESPONSE_OK: {
-				break;
-			}
-		case POPUP_RESPONSE_CANCEL: {
-				break;
-			}
+	case POPUP_RESPONSE_OK: {
+			break;
+		}
+	case POPUP_RESPONSE_CANCEL: {
+			break;
+		}
 	}
 
 	if (ad->popup) {
@@ -334,20 +345,20 @@ static void __storage_cache_file_clean_popup_rsp_cb(void *data, Evas_Object *obj
 	setting_retm_if(data == NULL, "data is NULL");
 	SettingStorageUG *ad = (SettingStorageUG *)data;
 	switch (btn_type(obj)) {
-		case POPUP_RESPONSE_OK: {
-				int ret = package_manager_clear_all_cache_dir();
-				if (PACKAGE_MANAGER_ERROR_NONE == ret) {
-					ad->sz_caches = 0;
-					storageug_genlist_text_update(ad->caches, ad->sz_caches);
-				} else {
-					SETTING_TRACE_ERROR("Failed to call package_manager_clear_all_cache_dir() with error code-%d", ret);
-				}
+	case POPUP_RESPONSE_OK: {
+			int ret = package_manager_clear_all_cache_dir();
+			if (PACKAGE_MANAGER_ERROR_NONE == ret) {
+				ad->sz_caches = 0;
+				storageug_genlist_text_update(ad->caches, ad->sz_caches);
+			} else {
+				SETTING_TRACE_ERROR("Failed to call package_manager_clear_all_cache_dir() with error code-%d", ret);
+			}
 
-				break;
-			}
-		case POPUP_RESPONSE_CANCEL: {
-				break;
-			}
+			break;
+		}
+	case POPUP_RESPONSE_CANCEL: {
+			break;
+		}
 	}
 
 	if (ad->popup) {
@@ -384,23 +395,25 @@ static void storageUg_main_sel(void *data, Evas_Object *obj, void *event_info)
 	} else if (!safeStrCmp(STORAGEUG_STR_CACHE, list_item->keyStr)) {
 		if (ad->sz_caches <= 0) {
 
-			ad->popup = setting_create_popup_with_btn(ad, ad->win,
-			                                          "IDS_ST_HEADER_CLEAR_CACHE_ABB",
-			                                          "IDS_ST_POP_THERE_IS_NO_CACHE_DATA_TO_CLEAR",
-			                                          __storage_cache_file_clean_popup_no_cache_rsp_cb,
-			                                          0, 1, "IDS_ST_BUTTON_OK_ABB");
+			ad->popup = setting_create_popup(ad, ad->win,
+											 "IDS_ST_HEADER_CLEAR_CACHE_ABB",
+											 "IDS_ST_POP_THERE_IS_NO_CACHE_DATA_TO_CLEAR",
+											 __storage_cache_file_clean_popup_no_cache_rsp_cb,
+											 0, FALSE, FALSE,
+											 1, "IDS_ST_BUTTON_OK_ABB");
 		} else {
-			ad->popup = setting_create_popup_with_btn(ad, ad->win,
-			                                          "IDS_ST_HEADER_CLEAR_CACHE_ABB",
-			                                          "IDS_ST_POP_ALL_THE_CACHE_DATA_WILL_BE_CLEARED",
-			                                          __storage_cache_file_clean_popup_rsp_cb,
-			                                          0, 2, "IDS_ST_BUTTON_CLEAR_CACHE_ABB", "IDS_ST_BUTTON_CANCEL_ABB");
+			ad->popup = setting_create_popup(ad, ad->win,
+											 "IDS_ST_HEADER_CLEAR_CACHE_ABB",
+											 "IDS_ST_POP_ALL_THE_CACHE_DATA_WILL_BE_CLEARED",
+											 __storage_cache_file_clean_popup_rsp_cb,
+											 0, FALSE, FALSE,
+											 2, "IDS_ST_BUTTON_CLEAR_CACHE_ABB", "IDS_ST_BUTTON_CANCEL_ABB");
 		}
 	}
 }
 
 static Setting_GenGroupItem_Data *storageUg_main_append_group_mid_item(
-    SettingStorageUG *ad, int color, const char *key_str, const char *sub_str)
+	SettingStorageUG *ad, int color, const char *key_str, const char *sub_str)
 {
 	Setting_GenGroupItem_Data *item_data = NULL;
 	item_data = (Setting_GenGroupItem_Data *) calloc(1, sizeof(Setting_GenGroupItem_Data));
@@ -410,7 +423,7 @@ static Setting_GenGroupItem_Data *storageUg_main_append_group_mid_item(
 		item_data->sub_desc = (char *)g_strdup(sub_str);
 		item_data->color = color;
 		item_data->item = elm_genlist_item_append(ad->gl_main, &(ad->itc_color_item), item_data, NULL,
-		                                          ELM_GENLIST_ITEM_NONE, storageUg_main_sel, ad);
+												  ELM_GENLIST_ITEM_NONE, storageUg_main_sel, ad);
 	} else {
 		SETTING_TRACE_ERROR("item_data is NULL");
 	}
@@ -426,50 +439,49 @@ static inline void storageUg_main_dev_memory_detail(SettingStorageUG *ad)
 	/* memory total */
 	storageUg_size_to_str(ad->sz_inter_total, total_desc, sizeof(total_desc));
 	ad->total_space = setting_create_Gendial_field_def(ad->gl_main, &itc_2text_2,
-	                                                   NULL, ad, SWALLOW_Type_INVALID, NULL, NULL, 0, STORAGEUG_STR_TOTAL,
-	                                                   total_desc, NULL);
+													   NULL, ad, SWALLOW_Type_INVALID, NULL, NULL, 0, STORAGEUG_STR_TOTAL,
+													   total_desc, NULL);
 	ret_if(NULL == ad->total_space);
 	ad->total_space->userdata = ad;
-	ad->total_space->group_style = SETTING_GROUP_STYLE_TOP;
 	elm_genlist_item_select_mode_set(ad->total_space->item,
-	                                 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+									 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	/* system memory */
 	ad->sys_mem = storageUg_main_append_group_mid_item(ad,
-	                                                   1, STORAGEUG_STR_SYS_MEM, STORAGEUG_STR_WAIT);
+													   1, STORAGEUG_STR_SYS_MEM, STORAGEUG_STR_WAIT);
 	ret_if(NULL == ad->sys_mem);
 	elm_genlist_item_select_mode_set(ad->sys_mem->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	/* Applications */
 	ad->apps = storageUg_main_append_group_mid_item(ad,
-	                                                2, STORAGEUG_STR_APPS, STORAGEUG_STR_WAIT);
+													2, STORAGEUG_STR_APPS, STORAGEUG_STR_WAIT);
 	ret_if(NULL == ad->apps);
 
 	/* Pictures, Videos */
 	ad->pics_videos = storageUg_main_append_group_mid_item(ad,
-	                                                       3, STORAGEUG_STR_PICS, STORAGEUG_STR_WAIT);
+														   3, STORAGEUG_STR_PICS, STORAGEUG_STR_WAIT);
 	ret_if(NULL == ad->pics_videos);
 
 	/* Audio */
 	ad->audio = storageUg_main_append_group_mid_item(ad,
-	                                                 4, STORAGEUG_STR_AUDIO, STORAGEUG_STR_WAIT);
+													 4, STORAGEUG_STR_AUDIO, STORAGEUG_STR_WAIT);
 	ret_if(NULL == ad->audio);
 
 	/* Miscellaneous files */
 	ad->misces = storageUg_main_append_group_mid_item(ad,
-	                                                  5, STORAGEUG_STR_MISCES, STORAGEUG_STR_WAIT);
+													  5, STORAGEUG_STR_MISCES, STORAGEUG_STR_WAIT);
 	ret_if(NULL == ad->misces);
 
 	/* cache files */
 	ad->caches = storageUg_main_append_group_mid_item(ad,
-	                                                  6, STORAGEUG_STR_CACHE, STORAGEUG_STR_WAIT);
+													  6, STORAGEUG_STR_CACHE, STORAGEUG_STR_WAIT);
 	ret_if(NULL == ad->caches);
 
 
 	/* Available */
 	storageUg_size_to_str(ad->sz_inter_avail, avail_desc, sizeof(avail_desc));
 	ad->avail = storageUg_main_append_group_mid_item(ad,
-	                                                 7, STORAGEUG_STR_AVAIL, avail_desc);
+													 7, STORAGEUG_STR_AVAIL, avail_desc);
 	ret_if(NULL == ad->avail);
 	elm_genlist_item_select_mode_set(ad->avail->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 }
@@ -486,15 +498,15 @@ static void storageUg_main_dev_memory_update(SettingStorageUG *ad)
 	storageUg_size_to_str(ad->sz_inter_total, desc, sizeof(desc));
 	G_FREE(ad->total_space->sub_desc);
 	ad->total_space->sub_desc = (char *)g_strdup(desc);
-	elm_genlist_item_fields_update(ad->total_space->item, "elm.text.sub.left.bottom",
-	                               ELM_GENLIST_ITEM_FIELD_TEXT);
+	elm_genlist_item_fields_update(ad->total_space->item, "elm.text.sub",
+								   ELM_GENLIST_ITEM_FIELD_TEXT);
 
 	/* update internal available size */
 	storageUg_size_to_str(ad->sz_inter_avail, desc, sizeof(desc));
 	G_FREE(ad->avail->sub_desc);
 	ad->avail->sub_desc = (char *)g_strdup(desc);
-	elm_genlist_item_fields_update(ad->avail->item, "elm.text.sub.left.bottom",
-	                               ELM_GENLIST_ITEM_FIELD_TEXT);
+	elm_genlist_item_fields_update(ad->avail->item, "elm.text.sub",
+								   ELM_GENLIST_ITEM_FIELD_TEXT);
 
 }
 
@@ -508,12 +520,12 @@ static Eina_Bool storageUg_update_timer(void *data)
 	storageUg_main_dev_memory_update(ad);
 	SETTING_TRACE_DEBUG("ad->misces_view->is_create:%d", ad->misces_view->is_create);
 	if (ad->misces_view->is_create) {
-		setting_view_update(ad->misces_view, ad);
+		/* setting_view_update(ad->misces_view, ad); */
 	}
 	if (ad->size_worker)
 		storageUg_stop_async_worker(ad->size_worker);
 	ad->size_worker = storageUg_start_async_worker(storageUg_get_internal_detail,
-	                                               storageUg_get_internal_detail_cb, ad);
+												   storageUg_get_internal_detail_cb, ad);
 
 
 	ad->update_timer = NULL;
@@ -534,15 +546,15 @@ static void storageUg_main_update_media_data(SettingStorageUG *ad)
 }
 
 static void storageUg_media_filesys_changed_cb(
-    media_content_error_e error,
-    int pid,
-    media_content_db_update_item_type_e update_item,
-    media_content_db_update_type_e update_type,
-    media_content_type_e media_type,
-    char *uuid,
-    char *path,
-    char *mime_type,
-    void *user_data)
+	media_content_error_e error,
+	int pid,
+	media_content_db_update_item_type_e update_item,
+	media_content_db_update_type_e update_type,
+	media_content_type_e media_type,
+	char *uuid,
+	char *path,
+	char *mime_type,
+	void *user_data)
 {
 	SETTING_TRACE_BEGIN;
 	SettingStorageUG *ad = user_data;
@@ -577,7 +589,7 @@ static Eina_Bool storageUg_main_back_cb(void *data, Elm_Object_Item *it)
 
 	ug_destroy_me(ad->ug);
 	SETTING_TRACE_END;
-	return EINA_TRUE;
+	return EINA_FALSE;
 }
 
 static inline Evas_Object *storageUg_main_genlist(Evas_Object *parent)
@@ -589,10 +601,15 @@ static inline Evas_Object *storageUg_main_genlist(Evas_Object *parent)
 		SETTING_TRACE_ERROR("elm_genlist_add() Fail");
 		return NULL;
 	}
-	elm_genlist_homogeneous_set(genlist, EINA_TRUE);
-	/*elm_object_style_set(genlist, "dialogue"); */
-	elm_genlist_block_count_set(genlist, 3);
+#if 0
+	elm_genlist_realization_mode_set(genlist, EINA_FALSE);
+	elm_genlist_block_count_set(genlist, 2);
+#else
+	//elm_genlist_realization_mode_set(genlist, EINA_TRUE);
 	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
+	elm_genlist_homogeneous_set(genlist, EINA_TRUE);
+	elm_genlist_block_count_set(genlist, 2);
+#endif
 	evas_object_show(genlist);
 
 	evas_object_smart_callback_add(genlist, "realized", __gl_realized_cb, NULL);
@@ -614,16 +631,17 @@ static int storageUg_main_create(void *data)
 	retv_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 	retv_if(NULL == ad->lo_parent, SETTING_DRAW_ERR_FAIL_LOAD_EDJ);
 
-	ad->gl_main = storageUg_main_genlist(ad->navi);
-	setting_create_navi_bar_buttons(STORAGEUG_STR_STORAGE, STORAGEUG_STR_BACK, NULL,
-	                                NULL, (setting_call_back_func)storageUg_main_back_cb, NULL, NULL, ad,
-	                                ad->gl_main, ad->navi, NULL);
+	ad->gl_main = storageUg_main_genlist (ad->navi);
+	setting_create_navi_bar_buttons(STORAGEUG_STR_STORAGE, NULL, /* arrow style */
+									(setting_call_back_func)storageUg_main_back_cb,
+									 ad,
+									ad->gl_main, ad->navi, NULL);
 
 	storageUg_get_internal_storage_status(&ad->sz_inter_total, &ad->sz_inter_avail);
 
 	/* storage pie view */
 	pie_item = elm_genlist_item_append(ad->gl_main, &(ad->itc_pie),
-	                                   ad, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
+									   ad, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	elm_genlist_item_select_mode_set(pie_item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 	ad->pie_it = pie_item;
 
@@ -632,7 +650,7 @@ static int storageUg_main_create(void *data)
 	if (ad->size_worker)
 		storageUg_stop_async_worker(ad->size_worker);
 	ad->size_worker = storageUg_start_async_worker(storageUg_get_internal_detail,
-	                                               storageUg_get_internal_detail_cb, ad);
+												   storageUg_get_internal_detail_cb, ad);
 
 	storageUG_update_apps_info(ad);
 	storageUG_update_cache_info(ad);
@@ -646,15 +664,16 @@ static int storageUg_main_create(void *data)
 
 		/* Default storage */
 		setting_create_Gendial_field_def(ad->gl_main, &itc_1text,
-		                                 storageUg_main_sel, ad, SWALLOW_Type_INVALID, NULL, NULL, 0,
-		                                 STORAGEUG_STR_DEF_STORAGE, NULL, NULL);
+										 storageUg_main_sel, ad, SWALLOW_Type_INVALID, NULL, NULL, 0,
+										 STORAGEUG_STR_DEF_STORAGE, NULL, NULL);
 
 		storageUg_append_separator(ad->gl_main, ad);
 
 		/* SD */
 		ad->sd_card = setting_create_Gendial_field_titleItem(ad->gl_main,
-		                                                     &itc_group_item, STORAGEUG_STR_SD_CARD, NULL);
-		storageUg_main_append_SD_info(ad);
+															 &itc_group_item, STORAGEUG_STR_SD_CARD, NULL);
+		if (ad->sd_card)
+			storageUg_main_append_SD_info(ad);
 
 		storageUg_append_separator(ad->gl_main, ad);
 

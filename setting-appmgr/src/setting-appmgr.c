@@ -65,10 +65,10 @@ _main_gl_del_cb(void *data, Evas_Object *obj EINA_UNUSED)
 
 static inline void appmgrUg_init_itcs(SettingAppMgrUG *ad)
 {
-	setting_create_Gendial_itc("groupindex", &(ad->itc_grp_title));
+	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE, &(ad->itc_grp_title));
 	setting_create_Gendial_itc("multiline_sub", &(ad->itc_multiline));
-	setting_create_Gendial_itc("1line", &(ad->itc_1txt_1ic_2));
-	setting_create_Gendial_itc("1line", &(ad->itc_1txt));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(ad->itc_1txt_1ic_2));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(ad->itc_1txt));
 	setting_create_Gendial_itc("multiline_sub.main", &(ad->itc_multiline_2txt));
 
 	ad->itc_sep.item_style = "dialogue/separator.transparent.2";
@@ -77,11 +77,19 @@ static inline void appmgrUg_init_itcs(SettingAppMgrUG *ad)
 	ad->itc_sep.func.state_get = NULL;
 	ad->itc_sep.func.del = NULL;
 
-	ad->itc_main.item_style = "2line.top";
+	#if OLD_GENLIST_STYLE
+	ad->itc_main.item_style = SETTING_GENLIST_2LINE_STYLE;
 	ad->itc_main.func.text_get = appmgrUg_main_gl_label_get;
 	ad->itc_main.func.content_get = appmgrUg_main_gl_icon_get;
 	ad->itc_main.func.state_get = NULL;
 	ad->itc_main.func.del = _main_gl_del_cb;
+	#else
+	ad->itc_main.item_style = SETTING_GENLIST_2LINE_STYLE;
+	ad->itc_main.func.text_get = appmgrUg_main_gl_label_new_get;
+	ad->itc_main.func.content_get = appmgrUg_main_gl_icon_new_get;
+	ad->itc_main.func.state_get = NULL;
+	ad->itc_main.func.del = _main_gl_del_cb;
+	#endif
 
 	ad->itc_1ic.item_style = "1icon";
 	ad->itc_1ic.func.text_get = NULL;
@@ -89,11 +97,19 @@ static inline void appmgrUg_init_itcs(SettingAppMgrUG *ad)
 	ad->itc_1ic.func.state_get = NULL;
 	ad->itc_1ic.func.del = NULL;
 
-	ad->itc_info_title.item_style = "2line.top";
+	#if OLD_GENLIST_STYLE
+	ad->itc_info_title.item_style = SETTING_GENLIST_2LINE_STYLE;
 	ad->itc_info_title.func.text_get = appmgrUg_info_title_gl_label_get;
 	ad->itc_info_title.func.content_get = appmgrUg_info_title_gl_icon_get;
 	ad->itc_info_title.func.state_get = NULL;
 	ad->itc_info_title.func.del = NULL;
+	#else
+	ad->itc_info_title.item_style = SETTING_GENLIST_2LINE_STYLE;
+	ad->itc_info_title.func.text_get = appmgrUg_info_title_gl_label_get;
+	ad->itc_info_title.func.content_get = appmgrUg_info_title_gl_icon_get;
+	ad->itc_info_title.func.state_get = NULL;
+	ad->itc_info_title.func.del = NULL;
+	#endif
 
 	ad->itc_2button1.item_style = "1icon";
 	ad->itc_2button1.func.text_get = NULL;
@@ -112,12 +128,13 @@ static inline void appmgrUg_init_itcs(SettingAppMgrUG *ad)
 	ad->itc_1button.func.content_get = appmgrUg_info_1button_gl_icon_get;
 	ad->itc_1button.func.del = NULL;
 
-	setting_create_Gendial_itc("2line.top", &(ad->itc_2txt_2));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(ad->itc_2txt_2));
 	ad->itc_2txt_2.func.text_get = appmgrUg_pkg_size_gl_label_get;
 }
 
 static void appmgrUg_navi_back(void *data, Evas_Object *obj, void *event_info)
 {
+	SETTING_TRACE_BEGIN;
 	SettingAppMgrUG *ad = data;
 
 	ret_if(data == NULL);
@@ -187,7 +204,7 @@ static void *appmgrUg_on_create(ui_gadget_h ug, enum ug_mode mode,
 
 	/*elm_theme_extension_add(NULL, SETTING_THEME_EDJ_NAME); */
 
-	ad->lo_main = setting_create_win_layout(ad->lo_parent, ad->win);
+	ad->lo_main = setting_create_win_layout(ad->win);
 	ad->navi = appmgrUg_create_navi(ad->lo_main, ad);
 	if (NULL == ad->navi) {
 		SETTING_TRACE_ERROR("calloc() Fail");

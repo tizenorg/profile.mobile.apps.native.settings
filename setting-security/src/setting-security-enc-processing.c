@@ -49,61 +49,68 @@ setting_view setting_view_security_enc_processing = {
 static void __encrypting_key_grab(SettingSecurityUG *ad)
 {
 	SETTING_TRACE_BEGIN;
+#ifdef ECORE_X
 	Ecore_X_Window xwin = 0;
 	Ecore_X_Display *disp = NULL;
+#endif
 
 	int ret = 0;
 
 	if (ad == NULL)
 		return;
 
-#if 0
+#ifdef ECORE_X
 	disp = ecore_x_display_get();
 	xwin = elm_win_xwindow_get((Evas_Object *)ug_get_window());
-
-	ret = utilx_grab_key(disp, xwin, KEY_POWER, TOP_POSITION_GRAB);
-	if (ret)
-		return;
-	ret = utilx_grab_key(disp, xwin, KEY_HOME, TOP_POSITION_GRAB);
-	if (ret)
-		return;
-	ret = utilx_grab_key(disp, xwin, KEY_VOLUMEUP, TOP_POSITION_GRAB);
-	if (ret)
-		return;
-	ret = utilx_grab_key(disp, xwin, KEY_VOLUMEDOWN, TOP_POSITION_GRAB);
-	if (ret)
-		return;
 #endif
+
+	ret = eext_win_keygrab_set(xwin, "XF86PowerOff");
+	if (ret)
+		return;
+	ret = eext_win_keygrab_set(xwin, "XF86Home");
+	if (ret)
+		return;
+	ret = eext_win_keygrab_set(xwin, "XF86AudioRaiseVolume");
+	if (ret)
+		return;
+	ret = eext_win_keygrab_set(xwin, "XF86AudioLowerVolume");
+	if (ret)
+		return;
+
 	ad->event_handler = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, NULL, NULL);
 	SETTING_TRACE_END;
 }
 static void __encrypting_key_ungrab(SettingSecurityUG *ad)
 {
 	SETTING_TRACE_BEGIN;
+#ifdef ECORE_X
 	Ecore_X_Window xwin = 0;
 	Ecore_X_Display *disp = NULL;
+#endif
 
 	int ret = 0;
 
 	if (ad == NULL)
 		return;
-#if 0
+
+#ifdef ECORE_X
 	disp = ecore_x_display_get();
 	xwin = elm_win_xwindow_get((Evas_Object *)ug_get_window());
-
-	ret = utilx_ungrab_key(disp, xwin, KEY_POWER);
-	if (ret)
-		return;
-	ret = utilx_ungrab_key(disp, xwin, KEY_HOME);
-	if (ret)
-		return;
-	ret = utilx_ungrab_key(disp, xwin, KEY_VOLUMEUP);
-	if (ret)
-		return;
-	ret = utilx_ungrab_key(disp, xwin, KEY_VOLUMEDOWN);
-	if (ret)
-		return;
 #endif
+
+	ret = eext_win_keygrab_unset(xwin, "XF86PowerOff");
+	if (ret)
+		return;
+	ret = eext_win_keygrab_unset(xwin, "XF86Home");
+	if (ret)
+		return;
+	ret = eext_win_keygrab_unset(xwin, "XF86AudioRaiseVolume");
+	if (ret)
+		return;
+	ret = eext_win_keygrab_unset(xwin, "XF86AudioLowerVolume");
+	if (ret)
+		return;
+
 	ecore_event_handler_del(ad->event_handler);
 }
 

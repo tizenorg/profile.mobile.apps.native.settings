@@ -20,8 +20,8 @@
  */
 
 #include "setting-accessibility-main.h"
+#include "setting-accessibility-screen-reader.h"
 #include "app_control.h"
-
 
 static int setting_accessibility_main_create(void *cb);
 static int setting_accessibility_main_destroy(void *cb);
@@ -35,6 +35,19 @@ setting_view setting_view_accessibility_main = {
 	.cleanup = setting_accessibility_main_cleanup,
 };
 
+static void setting_accessibility_screen_reader_key_change_vconf_cb(keynode_t *node, void *user_data)
+{
+	SETTING_TRACE_BEGIN;
+	Setting_GenGroupItem_Data *screen_reader_item = user_data;
+	if (screen_reader_item->sub_desc)
+		free(screen_reader_item->sub_desc);
+	screen_reader_item->sub_desc = strdup(node->value.b ? _(DEVOPTION_STR_ACCESSIBILITY_SCREEN_READER_ON) : _(DEVOPTION_STR_ACCESSIBILITY_SCREEN_READER_OFF));
+	elm_genlist_item_update(screen_reader_item->item);
+
+	SETTING_TRACE_END;
+}
+
+
 /**
 * @brief Do process when clicking '<-' button
 *
@@ -44,7 +57,7 @@ setting_view setting_view_accessibility_main = {
 */
 static Eina_Bool
 setting_accessibility_main_click_softkey_back_cb(void *data, Evas_Object *obj,
-                                                 void *event_info)
+												 void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if(data == NULL, EINA_FALSE, "Data parameter is NULL");
@@ -52,104 +65,23 @@ setting_accessibility_main_click_softkey_back_cb(void *data, Evas_Object *obj,
 	if (ad->empty_flag) {
 		return EINA_FALSE;
 	}
+	vconf_ignore_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, setting_accessibility_screen_reader_key_change_vconf_cb);
 	/* Send destroy request */
 	ug_destroy_me(ad->ug);
 	SETTING_TRACE_END;
 	return EINA_FALSE;
 }
 
-static void screen_reader_key_change_vconf_cb(keynode_t *node, void *user_data)
+static void setting_accessibility_vision_screen_reader_mouse_up_Gendial_list_cb(void *data,
+																				Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	Setting_GenGroupItem_Data *screenReaderItem = user_data;
-	//SETTING_TRACE_DEBUG("check_status: %i, node->value.i: %i", screenReaderItem->chk_status, node->value.i);
-	/* I don't know why following code does not update check box to checked/unchecked */
-	//setting_update_gl_item_chk_status(screenReaderItem, node->value.b ? 1 : 0);
-	elm_genlist_item_update(screenReaderItem->item);
-	SETTING_TRACE_END;
-}
-
-static void setting_accessibility_main_chk_magnifier_cb(void *data,
-                                                        Evas_Object *obj, void *event_info)
-{
-	SETTING_TRACE_BEGIN;
-	retm_if(data == NULL, "Data parameter is NULL");
-	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
-	SettingAccessibilityUG *ad = list_item->userdata;
-
-	list_item->chk_status = elm_check_state_get(obj);   /* for genlist update status */
-
-	SETTING_TRACE_DEBUG("check_status: %i", list_item->chk_status);
-	const char magnifierAppId[]  = "com.samsung.xmagnifier";
-	if (list_item->chk_status) {
-		app_control_h appControl;
-		app_control_create(&appControl);
-		app_control_set_app_id(appControl, magnifierAppId);
-		SETTING_TRACE_DEBUG("Trying to launch %s app.", magnifierAppId);
-		if (app_control_send_launch_request(appControl, NULL, NULL) != APP_CONTROL_ERROR_NONE) {
-			SETTING_TRACE_WARNING("Failed to launch %s app.", magnifierAppId);
-		}
-		app_control_destroy(appControl);
-	} else {
-		vconf_set_bool(VCONFKEY_SETAPPL_ACCESSIBILITY_SCREEN_ZOOM, 0);
-	}
-
-	SETTING_TRACE_END;
-}
-
-static void setting_accessibility_magnifier_mouse_up_Gendial_list_cb(void *data,
-                                                                     Evas_Object *obj, void *event_info)
-{
-	SETTING_TRACE_BEGIN;
-	retm_if(data == NULL, "Invalid argument: data is NULL");
-	retm_if(event_info == NULL, "Invalid argument: event_info is NULL");
 	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
 	SettingAccessibilityUG *ad = (SettingAccessibilityUG *)data;
-
 	elm_genlist_item_selected_set(item, 0);
-
+	setting_accessibility_screen_reader_page_create(ad);
 	SETTING_TRACE_END;
 }
-
-static void setting_accessibility_main_chk_screenreader_vconf_update(int state)
-{
-	vconf_set_bool(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, state ? 1 : 0);
-}
-
-static void setting_accessibility_main_chk_screenreader_cb(void *data,
-                                                           Evas_Object *obj, void *event_info)
-{
-	SETTING_TRACE_BEGIN;
-	retm_if(data == NULL, "Data parameter is NULL");
-	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
-	SettingAccessibilityUG *ad = list_item->userdata;
-
-	list_item->chk_status = elm_check_state_get(obj);   /* for genlist update status */
-
-	SETTING_TRACE_DEBUG("check_status: %i", list_item->chk_status);
-	setting_accessibility_main_chk_screenreader_vconf_update(list_item->chk_status);
-	SETTING_TRACE_END;
-}
-
-static void setting_accessibility_screenreader_mouse_up_Gendial_list_cb(void *data,
-                                                                        Evas_Object *obj, void *event_info)
-{
-	SETTING_TRACE_BEGIN;
-	retm_if(data == NULL, "Invalid argument: data is NULL");
-	retm_if(event_info == NULL, "Invalid argument: event_info is NULL");
-	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
-	SettingAccessibilityUG *ad = (SettingAccessibilityUG *)data;
-
-	elm_genlist_item_selected_set(item, 0);
-
-	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
-	setting_retm_if(data == NULL, "Data parameter is NULL");
-	setting_update_gl_item_chk_status(list_item, list_item->chk_status ? 0 : 1);
-	setting_accessibility_main_chk_screenreader_vconf_update(list_item->chk_status ? 1 : 0);
-	SETTING_TRACE_END;
-}
-
-
 
 /**
  * @brief create main view genlist items
@@ -165,35 +97,27 @@ int setting_accessibility_main_generate_genlist(void *data)
 	retv_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
 	SettingAccessibilityUG *ad = (SettingAccessibilityUG *) data;
-	/*bool is_emul_bin = isEmulBin(); */
-
 	Evas_Object *scroller = ad->genlist;
+	(void)setting_create_Gendial_field_titleItem(scroller, &(itc_group_item), _(DEVOPTION_STR_ACCESSIBILITY_VISION), NULL);
 
-	ad->screenreader_checkbox =
-	    setting_create_Gendial_field_def(scroller, &itc_1text_1icon,
-	                                     setting_accessibility_screenreader_mouse_up_Gendial_list_cb,
-	                                     ad, SWALLOW_Type_1ICON_1RADIO, NULL,
-	                                     NULL, 1, DEVOPTION_STR_ACCESSIBILITY_SCREENREADER,
-	                                     NULL, setting_accessibility_main_chk_screenreader_cb);
+	int screen_reader = 0;
+	vconf_get_bool(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, &screen_reader);
 
-	if (ad->screenreader_checkbox) {
-		ad->screenreader_checkbox->userdata = ad;
-		__BACK_POINTER_SET(ad->screenreader_checkbox);
-		int screen_reader = 0;
-		vconf_get_bool(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, &screen_reader);
-		ad->screenreader_checkbox->chk_status = screen_reader ? 1 : 0;
-		/*---------------------------------------------------------------------------------------------- */
-		int vconf_ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS,
-		                                         screen_reader_key_change_vconf_cb, &ad->screenreader_checkbox);
-		if (vconf_ret != 0) {
-			SETTING_TRACE("FAIL: vconf_notify_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS)");
-			return SETTING_RETURN_FAIL;
-		}
-
-	} else {
-		SETTING_TRACE_ERROR("ad->screenreader_checkbox is NULL");
+	Setting_GenGroupItem_Data *screen_reader_item =
+		setting_create_Gendial_field_def(scroller, &itc_2text,
+										 setting_accessibility_vision_screen_reader_mouse_up_Gendial_list_cb,
+										 ad, SWALLOW_Type_INVALID, NULL,
+										 NULL, 1, _(DEVOPTION_STR_ACCESSIBILITY_SCREENREADER),
+										 screen_reader ? _(DEVOPTION_STR_ACCESSIBILITY_SCREEN_READER_ON) : _(DEVOPTION_STR_ACCESSIBILITY_SCREEN_READER_OFF),
+										 NULL);
+	int vconf_ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS,setting_accessibility_screen_reader_key_change_vconf_cb,screen_reader_item);
+	if (vconf_ret != 0) {
+		SETTING_TRACE("FAIL: vconf_notify_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS)");
 		return SETTING_RETURN_FAIL;
 	}
+	screen_reader_item->userdata = ad;
+	__BACK_POINTER_SET(screen_reader_item);
+
 	SETTING_TRACE_END;
 	return SETTING_RETURN_SUCCESS;
 }
@@ -207,18 +131,18 @@ static int setting_accessibility_main_create(void *cb)
 	SettingAccessibilityUG *ad = (SettingAccessibilityUG *) cb;
 	Evas_Object *scroller = elm_genlist_add(ad->win_main_layout);
 	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
-	         "Cannot set scroller object  as contento of layout");
-	//elm_genlist_realization_mode_set(scroller, EINA_TRUE);
+			 "Cannot set scroller object  as contento of layout");
+	elm_genlist_realization_mode_set(scroller, EINA_TRUE);
 	elm_object_style_set(scroller, "dialogue");
 	elm_genlist_clear(scroller);	/* first to clear list */
 	ad->genlist = scroller;
 	ad->ly_main =
-	    setting_create_layout_navi_bar(ad->win_main_layout, ad->win_get,
-	                                   KeyStr_Accessibility,
-	                                   _("IDS_ST_BUTTON_BACK"), NULL, NULL,
-	                                   (setting_call_back_func)setting_accessibility_main_click_softkey_back_cb,
-	                                   NULL, NULL, ad, scroller,
-	                                   &ad->navi_bar, NULL);
+		setting_create_layout_navi_bar(ad->win_main_layout, ad->win_get,
+									   KeyStr_Accessibility,
+									   _("IDS_ST_BUTTON_BACK"),
+									   (setting_call_back_func)setting_accessibility_main_click_softkey_back_cb,
+									   ad, scroller,
+									   &ad->navi_bar, NULL);
 	ad->navi_item = elm_naviframe_top_item_get(ad->navi_bar);
 
 	setting_accessibility_main_generate_genlist((void *)ad);

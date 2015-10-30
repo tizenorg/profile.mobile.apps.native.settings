@@ -92,12 +92,6 @@ static void *setting_about_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	SettingAboutUG *aboutUG = priv;
 	aboutUG->ug = ug;
 
-#if SUPPORT_TETHERING
-	int ret = tethering_create(&aboutUG->tethering_handle);
-	if (ret != TETHERING_ERROR_NONE) {
-		SETTING_TRACE_ERROR("tethering_create is failed : %d", ret);
-	}
-#endif
 	aboutUG->win_main_layout = (Evas_Object *) ug_get_parent_layout(ug);
 	aboutUG->win_get = (Evas_Object *) ug_get_window();
 	evas_object_show(aboutUG->win_main_layout);
@@ -113,11 +107,11 @@ static void *setting_about_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	setting_view_node_table_register(&setting_view_about_main, NULL);
 
 	/*  creating a view. */
-	setting_create_Gendial_itc("1line", &(aboutUG->itc_1text));
-	setting_create_Gendial_itc("2line.top", &(aboutUG->itc_2text_2));
-	setting_create_Gendial_itc("groupindex", &(aboutUG->itc_group_item));
-	setting_create_Gendial_itc("2line.top", &(aboutUG->itc_2text_3_parent));
-	setting_create_Gendial_itc("2line.top", &(aboutUG->itc_1icon_1text_sub));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(aboutUG->itc_1text));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(aboutUG->itc_2text_2));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(aboutUG->itc_2text_3_parent));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(aboutUG->itc_1icon_1text_sub));
+	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE, &(aboutUG->itc_group_item));
 	setting_create_Gendial_itc("multiline/1text", &(aboutUG->itc_help_style));
 
 	setting_view_node_set_cur_view(&setting_view_about_main);
@@ -191,12 +185,6 @@ static void setting_about_ug_on_destroy(ui_gadget_h ug, app_control_h service,
 	setting_retm_if((!priv), "!priv");
 	SettingAboutUG *aboutUG = priv;
 
-#if SUPPORT_TETHERING
-	int ret = tethering_destroy(aboutUG->tethering_handle);
-	if (ret != TETHERING_ERROR_NONE) {
-		SETTING_TRACE_ERROR("tethering_destroy() is failed : %d", ret);
-	}
-#endif
 	evas_object_event_callback_del(aboutUG->win_main_layout, EVAS_CALLBACK_RESIZE, setting_about_ug_cb_resize);	/* fix flash issue for gallery */
 	aboutUG->ug = ug;
 

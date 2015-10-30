@@ -52,6 +52,7 @@
 #include <ITapiSim.h>
 /*#include <tethering.h> */
 #include <notification.h>
+#include <dbus/dbus.h>
 
 #define MAX_DISPLAY_STR_LEN_ON_PHONE_INFO	256
 
@@ -134,9 +135,6 @@ struct _SettingAboutUG {
 	bool popup_showed_flag; /** if popup has been showed, do not show again*/
 	bool drag_flag;
 	int noti_id;
-#if SUPPORT_TETHERING
-	tethering_h tethering_handle;
-#endif
 	SETTING_SIM_STATUS sim_status;
 	Eina_Bool need_update;
 

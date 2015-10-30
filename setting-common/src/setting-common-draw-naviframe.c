@@ -222,29 +222,6 @@ void setting_navi_items_update(Evas_Object *navigate_bar)
 	SETTING_TRACE_END;
 }
 
-static void __dismissed_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	SETTING_TRACE_BEGIN;
-	ret_if(!data);
-	Setting_Btn_Data *btn_data = data;
-	if (btn_data->ctxpopup) {
-		evas_object_del(btn_data->ctxpopup);
-		btn_data->ctxpopup = NULL;
-	}
-}
-
-static void __btn_click_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	SETTING_TRACE_BEGIN;
-	ret_if(!data);
-	Setting_Btn_Data *btn_data = data;
-	btn_data->btn_click_cb(btn_data->btn_cb_data, obj, event_info);
-	if (btn_data->ctxpopup) {
-		evas_object_del(btn_data->ctxpopup);
-		btn_data->ctxpopup = NULL;
-	}
-}
-
 static void __rotate_ctxpopup_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
@@ -252,8 +229,8 @@ static void __rotate_ctxpopup_cb(void *data, Evas_Object *obj, void *event_info)
 	Setting_Btn_Data *btn_data = (Setting_Btn_Data *)data;
 	Evas_Coord w, h;
 	int pos = -1;
-#if 0
-	//ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
+#ifdef ECORE_X
+	ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
 	pos = elm_win_rotation_get(ug_get_window());
 	SETTING_TRACE_DEBUG("pos: %d, w: %d, h: %d", pos, w, h);
 	if (pos == 90) {
@@ -282,124 +259,8 @@ static void __ctxpopup_lang_change_cb(keynode_t *key, void *data)
 	}
 }
 
-static void __delete_rotate_ctxpopup_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-	/*SETTING_TRACE_BEGIN; */
-	ret_if(data == NULL);
-	Setting_Btn_Data *btn_data = (Setting_Btn_Data *)data;
-	Evas_Object *ctxpopup = btn_data->ctxpopup;
-
-	Ecore_Event_Handler *event_handler = evas_object_data_get(ctxpopup, "event_handler");
-	ecore_event_handler_del(event_handler);
-	evas_object_data_set(ctxpopup, "event_handler", NULL);
-
-	(void)vconf_ignore_key_changed(VCONFKEY_LANGSET, __ctxpopup_lang_change_cb);
-	evas_object_smart_callback_del(elm_object_top_widget_get(ctxpopup), "rotation,changed", __rotate_ctxpopup_cb);
-}
-
-static Eina_Bool __ctxpopup_key_press_cb(void *data, int type, void *event)
-{
-	SETTING_TRACE_BEGIN;
-	Evas_Event_Key_Down *ev = event;
-	if (!ev || !data) {
-		SETTING_TRACE("Invalid event object");
-		return ECORE_CALLBACK_RENEW;
-	}
-	SETTING_TRACE("Pressed %s", ev->keyname);
-	Evas_Object *ctxpopup = data;
-
-	#if 0
-	if (!strcmp(ev->keyname, KEY_HOME)) {
-		elm_ctxpopup_dismiss(ctxpopup);
-	}
-	#endif
-	return ECORE_CALLBACK_RENEW;
-}
-
-EXPORT_PUBLIC void setting_create_more_btn_click_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	SETTING_TRACE_BEGIN;
-	ret_if(!data);
-	Setting_Btn_Data *btn_data = data;
-
-	if (btn_data->ctxpopup) {
-		evas_object_del(btn_data->ctxpopup);
-		btn_data->ctxpopup = NULL;
-	}
-
-	Evas_Object *ctxpopup = elm_ctxpopup_add(btn_data->parent);
-	elm_object_style_set(ctxpopup, "more/default");
-	elm_ctxpopup_auto_hide_disabled_set(ctxpopup, EINA_TRUE); /*to disable the rotating dismiss issue */
-	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_BACK, eext_ctxpopup_back_cb, NULL); /*to make ctxpopup get the "Back" key event */
-	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_MORE, eext_ctxpopup_back_cb, NULL);/*to make ctxpopup get the "More" key event */
-	Ecore_Event_Handler *event_handler = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, __ctxpopup_key_press_cb, ctxpopup);
-	evas_object_data_set(ctxpopup, "event_handler", event_handler);
-
-	evas_object_smart_callback_add(ctxpopup, "dismissed", __dismissed_cb, btn_data);
-	evas_object_event_callback_add(ctxpopup, EVAS_CALLBACK_DEL, __delete_rotate_ctxpopup_cb, btn_data);
-	evas_object_smart_callback_add(elm_object_top_widget_get(ctxpopup), "rotation,changed", __rotate_ctxpopup_cb, btn_data);
-	vconf_notify_key_changed(VCONFKEY_LANGSET, __ctxpopup_lang_change_cb, btn_data);
-
-	SETTING_TRACE("Clicked a more button, the call back of selecting objects in context popup is not the same as button callback");
-	Evas_Object *icon = NULL;
-
-	int i = 0;
-	/*while(btn_data->btn_text[i]) */
-	for (i = 0; i < MAX_BUTTON_NUM; i++) {
-		/*SETTING_TRACE("btn_data->btn_text[%d]:%s", i, btn_data->btn_text[i]); */
-		if (isEmptyStr(btn_data->btn_text[i])) continue;
-		if (btn_data->btn_icon[i]) {
-			icon = elm_image_add(ctxpopup);
-			elm_image_file_set(icon, btn_data->btn_icon[i], NULL);
-
-		}
-		btn_data->item[i] = elm_ctxpopup_item_append(ctxpopup, _(btn_data->btn_text[i]), icon, __btn_click_cb, btn_data);
-	}
-
-	btn_data->ctxpopup = ctxpopup;
-
-	Evas_Coord w , h;
-
-#if 0
-	int pos = -1;
-	ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
-	pos = elm_win_rotation_get(ug_get_window());
-	if (pos == 90) {
-		evas_object_move(ctxpopup, 0, w);
-	} else if (pos == 270) {
-		evas_object_move(ctxpopup, h, w);
-	} else {
-		evas_object_move(ctxpopup, 0, h);
-	}
-#endif
-	evas_object_show(ctxpopup);
-}
-
-EXPORT_PUBLIC void setting_create_more_btn_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-	SETTING_TRACE_BEGIN;
-	ret_if(!data);
-	Setting_Btn_Data *btn_data = data;
-
-	evas_object_smart_callback_del(btn_data->ctxpopup, "dismissed", __dismissed_cb);
-	if (btn_data->ctxpopup) {
-		evas_object_del(btn_data->ctxpopup);
-		btn_data->ctxpopup = NULL;
-	}
-	int i = 0;
-	/*while(btn_data->btn_text[i]) */
-	for (i = 0; i < MAX_BUTTON_NUM; i++) {
-		FREE(btn_data->btn_text[i]);
-		FREE(btn_data->btn_icon[i]);
-	}
-	FREE(btn_data);/*delete the date. */
-	SETTING_TRACE_END;
-	/*evas_object_data_set(obj, "more_btn_data", NULL); */
-}
-
 EXPORT_PUBLIC
-Evas_Object *setting_create_win_layout(Evas_Object *win_layout,
-                                       Evas_Object *win_obj)
+Evas_Object *setting_create_win_layout(Evas_Object *win_obj)
 {
 	Evas_Object *layout = NULL;
 	/*  Base Layout */
@@ -433,8 +294,7 @@ Elm_Object_Item *setting_create_guild_layout(Evas_Object *navi_bar,
 {
 	Evas_Object *scroller = elm_genlist_add(navi_bar);
 	retvm_if(scroller == NULL, NULL, "Cannot set scroller object  as contento of layout");
-	//elm_genlist_realization_mode_set(scroller, EINA_TRUE);
-	elm_object_style_set(scroller, "dialogue");
+	elm_genlist_realization_mode_set(scroller, EINA_TRUE);
 	elm_genlist_clear(scroller);	/* first to clear list */
 	elm_genlist_mode_set(scroller, ELM_LIST_COMPRESS);
 	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb, NULL);
@@ -691,153 +551,83 @@ Elm_Object_Item *setting_create_navi_bar_top_buttons(char *title_str,
 	return navi_it;
 }
 
-Elm_Object_Item *__create_navi_bar_bottom_buttons(char *title_str, char *lbutton_str, char *rbutton_str,
-                                                  char *mbutton_str, setting_call_back_func lbutton_click_cb,/* MORE */
-                                                  setting_call_back_func rbutton_click_cb,
-                                                  setting_call_back_func mbutton_click_cb,
+static void _move_ctxpopup(Evas_Object *ctxpopup, Evas_Object *btn)
+{
+	Evas_Coord x, y, w , h;
+	evas_object_geometry_get(btn, &x, &y, &w, &h);
+	evas_object_move(ctxpopup, x + (w / 2), y + (h / 2));
+}
+
+static void _ctxpopup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Evas_Object* ctxpopup = (Evas_Object *)data;
+	evas_object_del(ctxpopup);
+	ctxpopup = NULL;
+}
+
+/* Icon + Text (More button style : Naviframe Toolbar) */
+static void
+_ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+
+}
+
+Elm_Object_Item *__create_navi_bar_bottom_buttons(char *title_str,
+												  char *lbutton_str,
+												  setting_call_back_func lbutton_click_cb,
                                                   void *cb_data, Evas_Object *eo_view,/*any container obj */
-                                                  Evas_Object *navigate_bar,	/*the specialized navigation bar */
-                                                  Evas_Object *titleobj)
+                                                  Evas_Object *navigate_bar)
 {
 	SETTING_TRACE_BEGIN;
 	Elm_Object_Item *navi_it = NULL;
-	/*Evas_Object *mbtn = NULL; */
-	/*Evas_Object *rbtn = NULL; */
 	Evas_Object *lbtn = NULL;
 	Evas_Object *toolbar = NULL;
 
-	/*  arrange buttons into  controlbar*/
+#define USE_BACK 0
+#if USE_BACK
+	/*  arrange buttons into  controlbar */
 	if (0 == safeStrCmp(_(lbutton_str), _("IDS_ST_BUTTON_BACK"))) {
 		lbtn = setting_create_button(navigate_bar, _(lbutton_str),
 		                             NAVI_BACK_BUTTON_STYLE,
 		                             /*NULL, NULL); */
 		                             lbutton_click_cb, cb_data);
-#if SUPPORT_TTS
-		setting_set_tts_info(lbtn, _(lbutton_str), NULL, NULL, TTS_CONTENT_BACK_CLICK_INFO);
+		navi_it = elm_naviframe_item_push(navigate_bar, title_str, NULL, NULL, eo_view, NULL);	/* add new button */
+		elm_object_item_part_content_set(navi_it, "title_left_btn", lbtn);
+
+		if (navi_it) {
+			elm_object_item_domain_text_translatable_set(navi_it, SETTING_PACKAGE, EINA_TRUE);
+			elm_naviframe_item_pop_cb_set(navi_it, (Elm_Naviframe_Item_Pop_Cb)lbutton_click_cb, cb_data);
+		}
+
+		//----------------------
+		// CREATE TOOLBAR
+		//----------------------
+	} else {
 #endif
+		// ARROW here back
+		lbtn = setting_create_button(navigate_bar, _(lbutton_str),
+		                             NAVI_BACK_ARROW_BUTTON_STYLE,
+		                             /*NULL, NULL); */
+		                             lbutton_click_cb, cb_data);
+
+		// create naviframe with Arror button
 		navi_it = elm_naviframe_item_push(navigate_bar, title_str, lbtn, NULL, eo_view, NULL);	/* add new button */
+
+		if (lbutton_click_cb)
+			elm_naviframe_item_pop_cb_set(navi_it, (Elm_Naviframe_Item_Pop_Cb)lbutton_click_cb, cb_data);
+
 		if (navi_it) {
 			if (0 != safeStrCmp(title_str, dgettext(SETTING_PACKAGE, title_str)))
 				elm_object_item_domain_text_translatable_set(navi_it, SETTING_PACKAGE, EINA_TRUE);
-			else
-				elm_object_item_domain_text_translatable_set(navi_it, "sys_string", EINA_TRUE);
-
-			elm_object_style_set(lbtn, NAVI_BACK_BUTTON_STYLE);	/* take into effect */
-			elm_naviframe_item_pop_cb_set(navi_it, (Elm_Naviframe_Item_Pop_Cb)lbutton_click_cb, cb_data);
-			ADD_MULTI_LANGUAGE_AUTO_UPDATE(eo_view, navi_it, title_str, lbutton_str, mbutton_str, rbutton_str);
 		}
-
-		/* more handler */
-		/*elm_object_item_signal_callback_add(navi_it, "elm,action,more,event", more_cb, cb_data); */
-
-		if (!rbutton_str && !mbutton_str) {
-			/*do nothing.. */
-		} else if (rbutton_str && mbutton_str) {	/* both exist.. */
-			toolbar = elm_toolbar_add(navigate_bar);
-			if (toolbar) {
-				elm_object_style_set(toolbar, "default");
-				elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_NONE);
-				elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
-				elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
-				elm_toolbar_item_append(toolbar, NULL, _(mbutton_str), mbutton_click_cb, cb_data);
-				elm_toolbar_item_append(toolbar, NULL, _(rbutton_str), rbutton_click_cb, cb_data);
-
-				elm_object_item_part_content_set(navi_it, "toolbar", toolbar);
-			}
-			/*mbtn = setting_create_button(navigate_bar, mbutton_str, NAVI_DEF_BUTTON_STYLE, mbutton_click_cb, cb_data); */
-			/*rbtn = setting_create_button(navigate_bar, rbutton_str, NAVI_DEF_BUTTON_STYLE, rbutton_click_cb, cb_data); */
-			/*elm_object_item_part_content_set(navi_it, "toolbar_button1", mbtn); */
-			/*elm_object_item_part_content_set(navi_it, "toolbar_button2", rbtn); */
-		} else if (rbutton_str) {	/* r_btn exist.. */
-			toolbar = elm_toolbar_add(navigate_bar);
-			if (toolbar) {
-				elm_object_style_set(toolbar, "default");
-				elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_NONE);
-				elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
-				elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
-				elm_toolbar_item_append(toolbar, NULL, _(rbutton_str), rbutton_click_cb, cb_data);
-
-				elm_object_item_part_content_set(navi_it, "toolbar", toolbar);
-			}
-			/*rbtn = setting_create_button(navigate_bar, rbutton_str, NAVI_DEF_BUTTON_STYLE, rbutton_click_cb, cb_data); */
-			/*elm_object_item_part_content_set(navi_it, "toolbar_button1", rbtn); */
-			/*elm_object_item_part_content_set(navi_it, "toolbar_button2", setting_create_button(navigate_bar, "", NULL, NULL, NULL)); */
-		} else if (mbutton_str) {	/* m_btn exist.. */
-			toolbar = elm_toolbar_add(navigate_bar);
-			if (toolbar) {
-				elm_object_style_set(toolbar, "default");
-				elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_NONE);
-				elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
-				elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
-				elm_toolbar_item_append(toolbar, NULL, _(mbutton_str), mbutton_click_cb, cb_data);
-
-				elm_object_item_part_content_set(navi_it, "toolbar", toolbar);
-			}
-			/*mbtn = setting_create_button(navigate_bar, mbutton_str, NAVI_DEF_BUTTON_STYLE, mbutton_click_cb, cb_data); */
-			/*elm_object_item_part_content_set(navi_it, "toolbar_button1", mbtn); */
-			/*elm_object_item_part_content_set(navi_it, "toolbar_button2", setting_create_button(navigate_bar, "", NULL, NULL, NULL)); */
-		}
-		return navi_it;
+		//----------------------
+		// CREATE TOOLBAR
+		//----------------------
+#if USE_BACK
 	}
-	navi_it = elm_naviframe_item_push(navigate_bar, title_str, NULL, NULL, eo_view, NULL);
-	if (navi_it) {
-		SETTING_TRACE("dgettext(SETTING_PACKAGE, title_str):%s", dgettext(SETTING_PACKAGE, title_str));
-		SETTING_TRACE("dgettext(SYSTEM_PACKAGE, title_str):%s", dgettext(SYSTEM_PACKAGE, title_str));
-		if (0 != safeStrCmp(title_str, dgettext(SETTING_PACKAGE, title_str)))
-			elm_object_item_domain_text_translatable_set(navi_it, SETTING_PACKAGE, EINA_TRUE);
-		else
-			elm_object_item_domain_text_translatable_set(navi_it, "sys_string", EINA_TRUE);
-		ADD_MULTI_LANGUAGE_AUTO_UPDATE(eo_view, navi_it, title_str, lbutton_str, mbutton_str, rbutton_str);
-	}
-	if (rbutton_str || mbutton_str) {
-		toolbar = elm_toolbar_add(navigate_bar);
-		if (toolbar) {
-			elm_object_style_set(toolbar, "default");
-			elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_NONE);
-			elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
-			elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
-		}
-	}
-	if (lbutton_str && mbutton_str && rbutton_str) {
-		lbtn = setting_create_button(navigate_bar, lbutton_str, NAVI_DEF_BUTTON_STYLE, lbutton_click_cb, cb_data);
-		elm_object_item_part_content_set(navi_it, "toolbar_more_btn", lbtn);
-		/*mbtn = setting_create_button(navigate_bar, mbutton_str, NAVI_DEF_BUTTON_STYLE, mbutton_click_cb, cb_data); */
-		/*elm_object_item_part_content_set(navi_it, "toolbar_button1", mbtn); */
-		/*rbtn = setting_create_button(navigate_bar, rbutton_str, NAVI_DEF_BUTTON_STYLE, rbutton_click_cb, cb_data); */
-		/*elm_object_item_part_content_set(navi_it, "toolbar_button2", rbtn); */
-
-		elm_toolbar_item_append(toolbar, NULL, _(mbutton_str), mbutton_click_cb, cb_data);
-		elm_toolbar_item_append(toolbar, NULL, _(rbutton_str), rbutton_click_cb, cb_data);
-
-		if (0 == safeStrCmp(_(lbutton_str), _("IDS_ST_BUTTON_CANCEL_ABB")))
-			elm_naviframe_item_pop_cb_set(navi_it, (Elm_Naviframe_Item_Pop_Cb)lbutton_click_cb, cb_data);
-	} else {
-		/*bool has_btn_flag = FALSE;//first "toolbar_button1", then "toolbar_button2". */
-		if (lbutton_str) {
-			/*lbtn = setting_create_button(navigate_bar, lbutton_str, NAVI_DEF_BUTTON_STYLE, lbutton_click_cb, cb_data); */
-			/*elm_object_item_part_content_set(navi_it, "toolbar_button1", lbtn); */
-			elm_toolbar_item_append(toolbar, NULL, _(lbutton_str), lbutton_click_cb, cb_data);
-			/*has_btn_flag = TRUE; */
-
-			if (0 == safeStrCmp(_(lbutton_str), _("IDS_ST_BUTTON_CANCEL_ABB")))
-				elm_naviframe_item_pop_cb_set(navi_it, (Elm_Naviframe_Item_Pop_Cb)lbutton_click_cb, cb_data);
-		}
-		if (mbutton_str) {
-			/*mbtn = setting_create_button(navigate_bar, mbutton_str, NAVI_DEF_BUTTON_STYLE, mbutton_click_cb, cb_data); */
-			/*elm_object_item_part_content_set(navi_it, has_btn_flag ? "toolbar_button2" : "toolbar_button1", mbtn); */
-			elm_toolbar_item_append(toolbar, NULL, _(mbutton_str), mbutton_click_cb, cb_data);
-			/*has_btn_flag = TRUE; */
-		}
-		if (rbutton_str) {
-			/*rbtn = setting_create_button(navigate_bar, rbutton_str, NAVI_DEF_BUTTON_STYLE, rbutton_click_cb, cb_data); */
-			/*elm_object_item_part_content_set(navi_it, has_btn_flag ? "toolbar_button2" : "toolbar_button1", rbtn); */
-			elm_toolbar_item_append(toolbar, NULL, _(rbutton_str), rbutton_click_cb, cb_data);
-			/*has_btn_flag = TRUE; */
-		}
-	}
-	elm_object_item_part_content_set(navi_it, "toolbar", toolbar);
+#endif
 	return navi_it;
-
 }
 
 
@@ -849,22 +639,17 @@ Elm_Object_Item *__create_navi_bar_bottom_buttons(char *title_str, char *lbutton
 *
 */
 EXPORT_PUBLIC
-void setting_create_navi_bar_buttons(char *title_str, char *lbutton_str, char *rbutton_str,
-                                     char *mbutton_str, setting_call_back_func lbutton_click_cb,
-                                     setting_call_back_func rbutton_click_cb,
-                                     setting_call_back_func mbutton_click_cb,
+void setting_create_navi_bar_buttons(char *title_str,
+									char *lbutton_str,
+									setting_call_back_func lbutton_click_cb,
                                      void *cb_data, Evas_Object *eo_view,/*any container obj */
                                      Evas_Object *navigate_bar,	/*the specialized navigation bar */
                                      Evas_Object *titleobj)
 {
-	/* controlbar */
 	__create_navi_bar_bottom_buttons(title_str, lbutton_str,
-	                                 rbutton_str, mbutton_str,
 	                                 lbutton_click_cb,
-	                                 rbutton_click_cb,
-	                                 mbutton_click_cb,
 	                                 cb_data, eo_view,
-	                                 navigate_bar, titleobj);
+	                                 navigate_bar);
 	return;
 }
 
@@ -878,18 +663,24 @@ void setting_create_navi_bar_buttons(char *title_str, char *lbutton_str, char *r
 * return main layout of UG or App..
 */
 EXPORT_PUBLIC
-Evas_Object *setting_create_layout_navi_bar(Evas_Object *win_layout, Evas_Object *win_obj, char *title_str, char *lbutton_str, char *rbutton_str, char *mbutton_str, setting_call_back_func lbutton_click_cb, setting_call_back_func rbutton_click_cb, setting_call_back_func mbutton_click_cb, void *cb_data, Evas_Object *eo_view,	/*any container obj constructed on any evas obj */
+Evas_Object *setting_create_layout_navi_bar(Evas_Object *win_layout,
+											Evas_Object *win_obj,
+											char *title_str,
+											char *lbutton_str,
+											setting_call_back_func lbutton_click_cb,
+											void *cb_data,
+											Evas_Object *eo_view,	/*any container obj constructed on any evas obj */
                                             Evas_Object **navi_bar,
                                             Evas_Object **titleobj)
 {
 
-	Evas_Object *layout = setting_create_win_layout(win_layout, win_obj);
+	Evas_Object *layout = setting_create_win_layout(win_obj);
 	*navi_bar = setting_create_navi_bar(layout);
 
 	setting_create_navi_bar_buttons(title_str,
-	                                lbutton_str, rbutton_str, mbutton_str,
-	                                lbutton_click_cb, rbutton_click_cb,
-	                                mbutton_click_cb, cb_data, eo_view /*content */ ,
+	                                lbutton_str,
+	                                lbutton_click_cb,
+	                                cb_data, eo_view /*content */ ,
 	                                *navi_bar, NULL);
 	return layout;
 }
@@ -917,7 +708,7 @@ Evas_Object *setting_create_layout_navi_bar_scroller(Evas_Object *win_layout,
                                                      Evas_Object **navi_bar)
 {
 
-	Evas_Object *layout = setting_create_win_layout(win_layout, win_obj);
+	Evas_Object *layout = setting_create_win_layout(win_obj);
 	*navi_bar = setting_create_navi_bar(layout);
 
 	/*****/
@@ -938,9 +729,9 @@ Evas_Object *setting_create_layout_navi_bar_scroller(Evas_Object *win_layout,
 	/*****/
 
 	setting_create_navi_bar_buttons(title_str,
-	                                lbutton_str, rbutton_str, NULL,
-	                                lbutton_click_cb, rbutton_click_cb,
-	                                NULL, cb_data, scrl /*content */ ,
+	                                lbutton_str,
+	                                lbutton_click_cb,
+	                                cb_data, scrl /*content */ ,
 	                                *navi_bar, NULL);
 	return layout;
 }
@@ -956,189 +747,32 @@ Evas_Object *setting_create_layout_navi_bar_genlist(Evas_Object *win_layout,
                                                     Evas_Object *win_obj,
                                                     char *title_str,
                                                     char *lbutton_str,
-                                                    char *rbutton_str,
+                                                    char *rbutton_str, /* do nothing */
                                                     setting_call_back_func lbutton_click_cb,
-                                                    setting_call_back_func rbutton_click_cb,
+                                                    setting_call_back_func rbutton_click_cb,/* do nothing */
                                                     void *cb_data,
                                                     Evas_Object **genlist,
                                                     Evas_Object **navi_bar)
 {
 	/*  win_layout -> layout */
-	Evas_Object *layout = setting_create_win_layout(win_layout, win_obj);
+	Evas_Object *layout = setting_create_win_layout(win_obj);
 	*navi_bar = setting_create_navi_bar(layout);
 
 	*genlist = elm_genlist_add(*navi_bar);
 	retvm_if(*genlist == NULL, NULL,
 	         "Cannot set scroller object as contento of layout");
-	//elm_genlist_realization_mode_set(*genlist, EINA_TRUE);
-	elm_object_style_set(*genlist, "dialogue");
+	elm_genlist_mode_set(*genlist, ELM_LIST_COMPRESS);
+	elm_genlist_realization_mode_set(*genlist, EINA_TRUE);
 	elm_genlist_clear(*genlist);	/* first to clear list */
 	evas_object_smart_callback_add(*genlist, "realized", __gl_realized_cb, NULL);
 
 	setting_create_navi_bar_buttons(title_str,
-	                                lbutton_str, rbutton_str, NULL,
-	                                lbutton_click_cb, rbutton_click_cb,
-	                                NULL, cb_data, *genlist, *navi_bar,
+	                                lbutton_str,
+	                                lbutton_click_cb,
+	                                cb_data, *genlist, *navi_bar,
 	                                NULL);
 	return layout;
 }
-
-EXPORT_PUBLIC
-Elm_Object_Item *__push_navi_bar_bottom_buttons(char *title_str,
-                                                char *lbutton_str, char *rbutton_str,
-                                                char *mbutton_str,
-                                                setting_call_back_func lbutton_click_cb,
-                                                setting_call_back_func rbutton_click_cb,
-                                                setting_call_back_func mbutton_click_cb,
-                                                void *cb_data, Evas_Object *eo_view,
-                                                Evas_Object *navigate_bar, Evas_Object **titleobj)
-{
-	Elm_Object_Item *navi_it = NULL;
-	/*Evas_Object *mbtn = NULL; */
-	/*Evas_Object *rbtn = NULL; */
-	Evas_Object *lbtn = NULL;
-	Evas_Object *toolbar = NULL;
-
-	/*  arrange buttons into  controlbar*/
-	if (0 == safeStrCmp(_(lbutton_str), _("IDS_ST_BUTTON_BACK"))) {
-		lbtn = setting_create_button(navigate_bar, _(lbutton_str),
-		                             NAVI_BACK_BUTTON_STYLE,
-		                             NULL, NULL);
-		/*lbutton_click_cb, cb_data); */
-#if SUPPORT_TTS
-		setting_set_tts_info(lbtn, _(lbutton_str), NULL, NULL, TTS_CONTENT_BACK_CLICK_INFO);
-#endif
-		navi_it = elm_naviframe_item_push(navigate_bar, title_str, lbtn, NULL, eo_view, NULL);
-		if (0 != safeStrCmp(title_str, dgettext(SETTING_PACKAGE, title_str)))
-			elm_object_item_domain_text_translatable_set(navi_it, SETTING_PACKAGE, EINA_TRUE);
-		else
-			elm_object_item_domain_text_translatable_set(navi_it, "sys_string", EINA_TRUE);
-		ADD_MULTI_LANGUAGE_AUTO_UPDATE(eo_view, navi_it, title_str, lbutton_str, mbutton_str, rbutton_str);
-
-		elm_object_style_set(lbtn, NAVI_BACK_BUTTON_STYLE);	/* take into effect */
-		if (lbutton_click_cb)
-			elm_naviframe_item_pop_cb_set(navi_it, (Elm_Naviframe_Item_Pop_Cb)lbutton_click_cb, cb_data);
-
-		if (!rbutton_str && !mbutton_str) {
-			return navi_it;
-		}
-
-		toolbar = elm_toolbar_add(navigate_bar);
-		elm_object_style_set(toolbar, "default");
-		elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_NONE);
-		elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
-		elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
-
-		if (rbutton_str && mbutton_str) {
-			if (safeStrLen(_(mbutton_str)) <= MAX_BUTTON_TEXT_LEN
-			    && safeStrLen(_(rbutton_str)) <= MAX_BUTTON_TEXT_LEN) {
-				/*mbtn = setting_create_button(navigate_bar, mbutton_str, NAVI_DEF_BUTTON_STYLE, mbutton_click_cb, cb_data); */
-				/*rbtn = setting_create_button(navigate_bar, rbutton_str, NAVI_DEF_BUTTON_STYLE, rbutton_click_cb, cb_data); */
-
-				elm_toolbar_item_append(toolbar, NULL, _(mbutton_str), mbutton_click_cb, cb_data);
-				elm_toolbar_item_append(toolbar, NULL, _(rbutton_str), rbutton_click_cb, cb_data);
-
-				elm_object_item_part_content_set(navi_it, "toolbar", toolbar);
-
-				/*elm_object_item_part_content_set(navi_it, "toolbar_button1", mbtn); */
-				/*elm_object_item_part_content_set(navi_it, "toolbar_button2", rbtn); */
-			} else {
-				elm_toolbar_item_append(toolbar, NULL, _(mbutton_str), mbutton_click_cb, cb_data);
-
-				elm_object_item_part_content_set(navi_it, "toolbar", toolbar);
-				/*mbtn = setting_create_button(navigate_bar, mbutton_str, NAVI_DEF_BUTTON_STYLE, mbutton_click_cb, cb_data); */
-				/*elm_object_item_part_content_set(navi_it, "toolbar_button1", mbtn); */
-
-				Evas_Object *more_btn = elm_button_add(navigate_bar);
-				if (!more_btn) return NULL;
-				elm_object_style_set(more_btn, NAVI_MORE_BUTTON_STYLE);
-
-				Setting_Btn_Data *btn_data = calloc(1, sizeof(Setting_Btn_Data));
-				setting_retvm_if(!btn_data, NULL, "calloc failed");
-				btn_data->btn_text[0] = strdup(rbutton_str);
-				btn_data->btn_click_cb = rbutton_click_cb;
-				btn_data->btn_cb_data = cb_data;
-				btn_data->parent = navigate_bar;
-				/*evas_object_data_set(more_btn, "more_btn_data", btn_data); */
-				evas_object_event_callback_add(more_btn, EVAS_CALLBACK_DEL, setting_create_more_btn_del_cb, btn_data);
-				evas_object_smart_callback_add(more_btn, "clicked", setting_create_more_btn_click_cb, btn_data);
-
-				elm_object_item_part_content_set(navi_it, "toolbar_more_btn", more_btn);
-			}
-		} else if (rbutton_str) {
-			elm_toolbar_item_append(toolbar, NULL, _(rbutton_str), rbutton_click_cb, cb_data);
-
-			elm_object_item_part_content_set(navi_it, "toolbar", toolbar);
-			/*rbtn = setting_create_button(navigate_bar, rbutton_str, NAVI_DEF_BUTTON_STYLE, rbutton_click_cb, cb_data); */
-			/*elm_object_item_part_content_set(navi_it, "toolbar_button1", rbtn); */
-			/*elm_object_item_part_content_set(navi_it, "toolbar_button2", setting_create_button(navigate_bar, "", NULL, NULL, NULL)); */
-		} else if (mbutton_str) {
-			elm_toolbar_item_append(toolbar, NULL, _(mbutton_str), mbutton_click_cb, cb_data);
-
-			elm_object_item_part_content_set(navi_it, "toolbar", toolbar);
-			/*mbtn = setting_create_button(navigate_bar, mbutton_str, NAVI_DEF_BUTTON_STYLE, mbutton_click_cb, cb_data); */
-			/*elm_object_item_part_content_set(navi_it, "toolbar_button1", mbtn); */
-			/*elm_object_item_part_content_set(navi_it, "toolbar_button2", setting_create_button(navigate_bar, "", NULL, NULL, NULL)); */
-		}
-	} else {	/*  no need back button on navi_bar */
-		navi_it = elm_naviframe_item_push(navigate_bar, title_str, NULL, NULL, eo_view, NULL);
-		if (0 != safeStrCmp(title_str, dgettext(SETTING_PACKAGE, title_str)))
-			elm_object_item_domain_text_translatable_set(navi_it, SETTING_PACKAGE, EINA_TRUE);
-		else
-			elm_object_item_domain_text_translatable_set(navi_it, "sys_string", EINA_TRUE);
-		ADD_MULTI_LANGUAGE_AUTO_UPDATE(eo_view, navi_it, title_str, lbutton_str, mbutton_str, rbutton_str);
-		if (!lbutton_str && !rbutton_str && !mbutton_str) {
-			return navi_it;
-		}
-
-		toolbar = elm_toolbar_add(navigate_bar);
-		elm_object_style_set(toolbar, "default");
-		elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_NONE);
-		elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
-		elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
-
-		/*remove '<-' button, insteadly using controlbar */
-		Evas_Object *back_btn = elm_object_item_part_content_get(navi_it, "prev_btn");
-		elm_object_item_part_content_set(navi_it, "prev_btn", NULL);
-		evas_object_del(back_btn);
-
-		if (lbutton_str && mbutton_str && rbutton_str) {
-			lbtn = setting_create_button(navigate_bar, _(lbutton_str), NAVI_DEF_BUTTON_STYLE, lbutton_click_cb, cb_data);
-			elm_object_item_part_content_set(navi_it, "toolbar_more_btn", lbtn);
-			/*mbtn = setting_create_button(navigate_bar, mbutton_str, NAVI_DEF_BUTTON_STYLE, mbutton_click_cb, cb_data); */
-			/*elm_object_item_part_content_set(navi_it, "toolbar_button1", mbtn); */
-			/*rbtn = setting_create_button(navigate_bar, rbutton_str, NAVI_DEF_BUTTON_STYLE, rbutton_click_cb, cb_data); */
-			/*elm_object_item_part_content_set(navi_it, "toolbar_button2", rbtn); */
-
-			elm_toolbar_item_append(toolbar, NULL, _(mbutton_str), mbutton_click_cb, cb_data);
-			elm_toolbar_item_append(toolbar, NULL, _(rbutton_str), rbutton_click_cb, cb_data);
-		} else {
-			/*bool has_btn_flag = FALSE;//first "toolbar_button1", then "toolbar_button2". */
-			if (lbutton_str) {
-				/*lbtn = setting_create_button(navigate_bar, lbutton_str, NAVI_DEF_BUTTON_STYLE, lbutton_click_cb, cb_data); */
-				/*elm_object_item_part_content_set(navi_it, "toolbar_button1", lbtn); */
-				elm_toolbar_item_append(toolbar, NULL, _(lbutton_str), lbutton_click_cb, cb_data);
-				/*has_btn_flag = TRUE; */
-			}
-			if (mbutton_str) {
-				/*mbtn = setting_create_button(navigate_bar, mbutton_str, NAVI_DEF_BUTTON_STYLE, mbutton_click_cb, cb_data); */
-				/*elm_object_item_part_content_set(navi_it, has_btn_flag ? "toolbar_button2" : "toolbar_button1", mbtn); */
-				elm_toolbar_item_append(toolbar, NULL, _(mbutton_str), mbutton_click_cb, cb_data);
-				/*has_btn_flag = TRUE; */
-			}
-			if (rbutton_str) {
-				/*rbtn = setting_create_button(navigate_bar, rbutton_str, NAVI_DEF_BUTTON_STYLE, rbutton_click_cb, cb_data); */
-				/*elm_object_item_part_content_set(navi_it, has_btn_flag ? "toolbar_button2" : "toolbar_button1", rbtn); */
-				elm_toolbar_item_append(toolbar, NULL, _(rbutton_str), rbutton_click_cb, cb_data);
-				/*has_btn_flag = TRUE; */
-			}
-		}
-		elm_object_item_part_content_set(navi_it, "toolbar", toolbar);
-	}
-
-	return navi_it;
-}
-
 
 /**
 * The general API to push any evas object(@param[eo_view]) to the specialized navi_bar,
@@ -1155,12 +789,11 @@ setting_push_layout_navi_bar(char *title_str,
                              void *cb_data, Evas_Object *eo_view,
                              Evas_Object *navi_bar, Evas_Object **titleobj)
 {
-	return __push_navi_bar_bottom_buttons(title_str,
-	                                      lbutton_str, rbutton_str, mbutton_str,
+
+	return __create_navi_bar_bottom_buttons(title_str,
+	                                      lbutton_str,
 	                                      lbutton_click_cb,
-	                                      rbutton_click_cb,
-	                                      mbutton_click_cb,
-	                                      cb_data, eo_view, navi_bar, titleobj);
+	                                      cb_data, eo_view, navi_bar);
 }
 
 /**
@@ -1218,9 +851,13 @@ setting_push_layout_navi_bar_genlist(Evas_Object *win_layout,
 		*genlist = elm_genlist_add(navi_bar);
 		retvm_if(*genlist == NULL, NULL,
 		         "Cannot set scroller object  as contento of layout");
-		//elm_genlist_realization_mode_set(*genlist, EINA_TRUE);
+		elm_genlist_mode_set(*genlist, ELM_LIST_COMPRESS);
+
+		elm_genlist_homogeneous_set(*genlist, EINA_TRUE);
+
+		elm_genlist_realization_mode_set(*genlist, EINA_TRUE);
+		//elm_genlist_block_count_set(*genlist, 2);
 		gl = *genlist;
-		elm_object_style_set(*genlist, "dialogue");
 		elm_genlist_clear(gl);	/* first to clear list */
 		evas_object_smart_callback_add(gl, "realized", __gl_realized_cb, NULL);
 	}

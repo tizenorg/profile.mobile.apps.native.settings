@@ -28,6 +28,8 @@
 #include <setting-common-view.h>
 #include <efl_extension.h>
 #include <feedback.h>
+#include <call-manager.h>
+#include <system_settings.h>
 
 #define VOLUME_APP_NAME "org.tizen.setting.volume"
 #define MAX_SAFETY_VOLUME_LEVEL 10
@@ -48,7 +50,7 @@
 #define ICON_NOTI_NORMAL    SETTING_ICON_PATH_CFG"B04_slider_icon_notification.png"
 
 /*Media: 2 icon status */
-#define ICON_MEDIA_MUTE     SETTING_ICON_PATH_CFG"00_volume_icon.png"
+#define ICON_MEDIA_MUTE     SETTING_ICON_PATH_CFG"B04_volume_icon_mute.png"
 #define ICON_MEDIA_NORMAL   SETTING_ICON_PATH_CFG"00_volume_icon.png"
 
 /*System:2 icon status */
@@ -95,6 +97,7 @@ struct _SettingProfileUG {
 	Setting_GenGroupItem_Data *data_touch_volume;
 	Setting_GenGroupItem_Data *data_media_volume;
 	Setting_GenGroupItem_Data *data_sound_when_ring;
+	Setting_GenGroupItem_Data *data_do_not_disturb;
 
 	/* Feedback */
 	Setting_GenGroupItem_Data *data_lock_sound;
@@ -131,6 +134,8 @@ extern void setting_sound_play_sound_origin(player_h **mp_handle, void *data,
                                             sound_type_e sound_type);
 extern int setting_sound_check_file_exist(void *data, const char *file_path);
 
+extern void system_settings_changed_silent_mode(system_settings_key_e key, void *user_data);
+
 extern player_h *setting_sound_play_sound(void *data, void *cb,
                                           char *ringtone_file,
                                           int vol,
@@ -149,5 +154,6 @@ extern char *setting_sound_get_slider_icon(int type, int volume);
 extern void setting_sound_update_slider_icon(Setting_GenGroupItem_Data *item_data, int type);
 extern Evas_Object *setting_sound_init(void *data);
 extern void setting_sound_deinit(void *data);
+char *setting_do_not_disturb_is_enable(void *data);
 
 #endif

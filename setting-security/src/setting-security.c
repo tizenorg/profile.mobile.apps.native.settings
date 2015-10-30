@@ -1,5 +1,5 @@
 /*
- * setting
+  setting
  *
  * Copyright (c) 2000 - 2011 Samsung Electronics Co., Ltd.
  *
@@ -206,9 +206,9 @@ int pwd_handler_sec_pw_change_pin1(SettingSecurityUG *data, void *arg)
 	SETTING_TRACE_BEGIN;
 	SettingSecurityUG *ad = (SettingSecurityUG *)data;
 
-	setting_create_popup_without_btn(ad, ad->ly_main, NULL, _("IDS_ST_POP_PIN_CHANGED"),
+	setting_create_popup(ad, ad->ly_main, NULL, "IDS_ST_POP_PIN_CHANGED",
 	                                 NULL,
-	                                 POPUP_INTERVAL, FALSE, FALSE);
+	                                 POPUP_INTERVAL, FALSE, FALSE, 0);
 	return 0;
 }
 
@@ -279,46 +279,50 @@ int pwd_handler_sec_pw_pin1_blocked(SettingSecurityUG *data, void *arg)
 	char popup_text[2048] = {0,};
 	snprintf(popup_text, 2048, "%s", _(PIN_BLOCKED_ENTER_PUK_DESC));
 
-	int ret = 0;
-
-#if 0
+#ifdef ECORE_X
 	Ecore_X_Window xwin = 0;
 	Ecore_X_Display *disp = NULL;
+#endif
 
+	int ret = 0;
+#ifdef ECORE_X
 	disp = ecore_x_display_get();
 	xwin = elm_win_xwindow_get(ad->win_get);
 
 	ecore_x_netwm_window_type_set(xwin, ECORE_X_WINDOW_TYPE_NOTIFICATION);
 	utilx_set_system_notification_level(disp, xwin, UTILX_NOTIFICATION_LEVEL_LOW);
 
-	ret = utilx_grab_key(disp, xwin, KEY_BACK, EXCLUSIVE_GRAB);
+	ret = eext_win_keygrab_set(xwin, "XF86Back");
 	if (ret)
-		SETTING_TRACE("utilx_grab_key() failed.");
-	ret = utilx_grab_key(disp, xwin, KEY_HOME, EXCLUSIVE_GRAB);
+		SETTING_TRACE("eext_win_keygrab_set() failed.");
+	ret = eext_win_keygrab_set(xwin, "XF86Home");
 	if (ret)
-		SETTING_TRACE("utilx_grab_key() failed.");
-	ret = utilx_grab_key(disp, xwin, KEY_VOLUMEUP, TOP_POSITION_GRAB);
+		SETTING_TRACE("eext_win_keygrab_set() failed.");
+	ret = eext_win_keygrab_set(xwin, "XF86AudioRaiseVolume");
 	if (ret)
-		SETTING_TRACE("utilx_grab_key() failed.");
-	ret = utilx_grab_key(disp, xwin, KEY_VOLUMEDOWN, TOP_POSITION_GRAB);
+		SETTING_TRACE("eext_win_keygrab_set() failed.");
+	ret = eext_win_keygrab_set(xwin, "XF86AudioLowerVolume");
 	if (ret)
-		SETTING_TRACE("utilx_grab_key() failed.");
+		SETTING_TRACE("eext_win_keygrab_set() failed.");
+#endif
+
 	unsigned int val[3];
 	val[0] = 0; 	/* always enable F */
 	val[1] = 0;		/* quickpanel enable F */
 	val[2] = 0; 	/* apptray enable F */
 	/* set quickpanel disable */
+#ifdef ECORE_X
 	Ecore_X_Atom ATOM_PANEL_SCROLLABLE_STATE = 0;
 	ATOM_PANEL_SCROLLABLE_STATE = ecore_x_atom_get("_E_MOVE_PANEL_SCROLLABLE_STATE");
 	ecore_x_window_prop_card32_set(xwin, ATOM_PANEL_SCROLLABLE_STATE, val, 3);
 #endif
 
-	ad->sim_popup = setting_create_popup_with_btn(ad, ad->win_get, NULL,
-	                                              popup_text,
-	                                              setting_security_pin1_blocked_resp_cb,
-	                                              0, 1,
-	                                              "IDS_ST_BUTTON_OK");
-	eext_object_event_callback_del(ad->sim_popup, EEXT_CALLBACK_BACK, eext_popup_back_cb_2);
+	ad->sim_popup = setting_create_popup(ad, ad->win_get, NULL,
+	                                     popup_text,
+	                                     setting_security_pin1_blocked_resp_cb,
+	                                     0, FALSE, FALSE,
+										 1, "IDS_ST_BUTTON_OK");
+	eext_object_event_callback_del(ad->sim_popup, EEXT_CALLBACK_BACK, setting_popup_del_cb);
 
 	/* End. */
 	return 0;
@@ -342,10 +346,10 @@ int pwd_handler_sec_pw_pin2_blocked(SettingSecurityUG *data, void *arg)
 	char popup_text[2048] = {0,};
 	snprintf(popup_text, 2048, "%s", _("IDS_ST_POP_PIN2_BLOCKED"));
 
-	setting_create_popup_without_btn(ad, ad->win_get, NULL,
+	setting_create_popup(ad, ad->win_get, NULL,
 	                                 popup_text,
 	                                 NULL,
-	                                 2, FALSE, FALSE);
+	                                 2, FALSE, FALSE, 0);
 
 	ad->pin2_blocked_flag = TRUE;
 	setting_view_update(&setting_view_security_sim_settings, ad);
@@ -485,12 +489,12 @@ static void *setting_security_ug_on_create(ui_gadget_h ug,
 	/* register view node table */
 	setting_view_node_table_intialize();
 
-	setting_create_Gendial_itc("1line", &(securityUG->itc_1text));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(securityUG->itc_1text));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(securityUG->itc_1text_1icon));
+	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE, &(securityUG->itc_group_item));
 	setting_create_Gendial_itc("multiline_sub", &(securityUG->itc_bg_1icon));
-	setting_create_Gendial_itc("2line.top", &(securityUG->itc_2text_2));
-	setting_create_Gendial_itc("1line", &(securityUG->itc_1text_1icon));
-	setting_create_Gendial_itc("groupindex", &(securityUG->itc_group_item));
-	setting_create_Gendial_itc("2line.top", &(securityUG->itc_2text_3_parent));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(securityUG->itc_2text_2));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(securityUG->itc_2text_3_parent));
 
 	securityUG->update_view_timer = NULL;
 	securityUG->remove_sim_popup_timer = NULL;
@@ -535,32 +539,35 @@ static void setting_security_ug_on_pause(ui_gadget_h ug, app_control_h service,
 		app_manager_is_running("org.tizen.pwlock", &is_running);
 		if (is_running) {
 			SETTING_TRACE_DEBUG("pwlock is running");
-
-#if 0
+#ifdef ECORE_X
 			Ecore_X_Window xwin = 0;
 			Ecore_X_Display *disp = NULL;
+
 			disp = ecore_x_display_get();
 			xwin = elm_win_xwindow_get(securityUG->win_get);
 
 			ecore_x_netwm_window_type_set(xwin, ECORE_X_WINDOW_TYPE_NORMAL);
 			int ret;
-			ret = utilx_ungrab_key(disp, xwin, KEY_BACK);
+			ret = eext_win_keygrab_unset(xwin, "XF86Back");
 			if (ret)
-				SETTING_TRACE("utilx_ungrab_key() failed.");
-			ret = utilx_ungrab_key(disp, xwin, KEY_HOME);
+				SETTING_TRACE("eext_win_keygrab_unset() failed.");
+			ret = eext_win_keygrab_unset(xwin, "XF86Home");
 			if (ret)
-				SETTING_TRACE("utilx_ungrab_key() failed.");
-			ret = utilx_ungrab_key(disp, xwin, KEY_VOLUMEUP);
+				SETTING_TRACE("eext_win_keygrab_unset() failed.");
+			ret = eext_win_keygrab_unset(xwin, "XF86AudioRaiseVolume");
 			if (ret)
-				SETTING_TRACE("utilx_ungrab_key() failed.");
-			ret = utilx_ungrab_key(disp, xwin, KEY_VOLUMEDOWN);
+				SETTING_TRACE("eext_win_keygrab_unset() failed.");
+			ret = eext_win_keygrab_unset(xwin, "XF86AudioLowerVolume");
 			if (ret)
-				SETTING_TRACE("utilx_ungrab_key() failed.");
+				SETTING_TRACE("eext_win_keygrab_unset() failed.");
+#endif
+
 			unsigned int val[3];
 			val[0] = 1; 	/* always enable */
 			val[1] = 1;		/* quickpanel enable */
 			val[2] = 1; 	/* apptray enable */
 			/* set quickpanel enable */
+#ifdef ECORE_X
 			Ecore_X_Atom ATOM_PANEL_SCROLLABLE_STATE = 0;
 			ATOM_PANEL_SCROLLABLE_STATE = ecore_x_atom_get("_E_MOVE_PANEL_SCROLLABLE_STATE");
 			ecore_x_window_prop_card32_set(xwin, ATOM_PANEL_SCROLLABLE_STATE, val, 3);
@@ -885,8 +892,8 @@ void setting_security_end_password_ug_cb(ui_gadget_h ug,
 
 	if (setting_view_security_sim_settings.is_create == TRUE && ad->pw_type == SETTING_SEC_PW_PIN1_UNBLOCKED) {
 		SETTING_TRACE("ungrab keys");
-#if 0
 		/* ungrab keys. */
+#ifdef ECORE_X
 		Ecore_X_Window xwin = 0;
 		Ecore_X_Display *disp = NULL;
 
@@ -895,16 +902,16 @@ void setting_security_end_password_ug_cb(ui_gadget_h ug,
 		disp = ecore_x_display_get();
 		xwin = elm_win_xwindow_get((Evas_Object *)ug_get_window());
 
-		ret = utilx_ungrab_key(disp, xwin, KEY_BACK);
+		ret = eext_win_keygrab_unset(xwin, "XF86Back");
 		if (ret)
 			SETTING_TRACE("KEY_BACK ungrab failed.");
-		ret = utilx_ungrab_key(disp, xwin, KEY_SELECT);
+		ret = eext_win_keygrab_unset(xwin, "XF86Home");
 		if (ret)
-			SETTING_TRACE("KEY_SELECT ungrab failed.");
-		ret = utilx_ungrab_key(disp, xwin, KEY_VOLUMEUP);
+			SETTING_TRACE("XF86Home ungrab failed.");
+		ret = eext_win_keygrab_unset(xwin, "XF86AudioRaiseVolume");
 		if (ret)
 			SETTING_TRACE("KEY_VOLUMEUP ungrab failed.");
-		ret = utilx_ungrab_key(disp, xwin, KEY_VOLUMEDOWN);
+		ret = eext_win_keygrab_unset(xwin, "XF86AudioLowerVolume");
 		if (ret)
 			SETTING_TRACE("KEY_VOLUMEDOWN ungrab failed.");
 #endif

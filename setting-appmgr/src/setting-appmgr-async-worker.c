@@ -82,13 +82,11 @@ static void *_async_worker_thread(void *data)
 
 	retv_if(NULL == data, NULL);
 
-#if 0
 	ret = pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, NULL);
 	if (0 != ret) {
 		SETTING_TRACE_ERROR("pthread_setcancelstate() Fail(%d)", ret);
 		pthread_exit(NULL);
 	}
-#endif
 
 	worker->fn_ret = worker->fn(worker->ad);
 
@@ -97,11 +95,11 @@ static void *_async_worker_thread(void *data)
 	worker->worker_idler = ecore_idler_add(_async_worker_idler, worker);
 	if (worker->worker_idler == NULL) {
 		SETTING_TRACE_ERROR("worker->worker_idler == NULL");
-		worker->alive = FALSE;
+		//worker->alive = FALSE;
 		/*----------------------------------- */
 		/* work around */
 		/*----------------------------------- */
-		_async_worker_idler(worker);
+	//	_async_worker_idler(worker);
 	}
 
 	SETTING_TRACE(" --------------------------- thread worker : END ");

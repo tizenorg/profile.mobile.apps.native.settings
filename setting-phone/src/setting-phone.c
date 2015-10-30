@@ -37,6 +37,7 @@
 #include <setting-cfg.h>
 
 #include <eventsystem.h>
+#include <system_settings.h>
 
 #ifndef UG_MODULE_API
 #define UG_MODULE_API __attribute__ ((visibility("default")))
@@ -575,19 +576,16 @@ static void *setting_phone_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	/* register view node table */
 	setting_view_node_table_intialize();
 
-	setting_create_Gendial_itc("1line", &(phoneUG->itc_1text_1icon_2));
-	setting_create_Gendial_itc("1line", &(phoneUG->itc_1text_1icon));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(phoneUG->itc_1text_1icon_2));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(phoneUG->itc_1text_1icon));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(phoneUG->itc_1text_tb));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(phoneUG->itc_1text));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(phoneUG->itc_1icon_1text_sub));
 
 	/* 2 text - genlist > items */
 	setting_create_Gendial_itc("dialogue/2text", &(phoneUG->itc_1icon_2text));
-
-	setting_create_Gendial_itc("1line", &(phoneUG->itc_1text_tb));
-	setting_create_Gendial_itc("1line", &(phoneUG->itc_1text));
-	setting_create_Gendial_itc("2line.top", &(phoneUG->itc_2text_3_parent));
-	setting_create_Gendial_itc("1line", &(phoneUG->itc_1icon_1text_sub));
-
-
-	setting_create_Gendial_itc("2line.top", &(phoneUG->itc_2text_2));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(phoneUG->itc_2text_3_parent));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(phoneUG->itc_2text_2));
 	setting_create_Gendial_itc("multiline/1text",
 	                           &(phoneUG->itc_bg_1icon));
 	phoneUG->pattern_generator = NULL;
@@ -815,29 +813,33 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv, 
 	return 0;
 }
 
-void set_language_helper(char *lang)
+int set_language_helper(char *lang)
 {
+	#if 0
 	int ret = vconf_set_str(VCONFKEY_LANGSET, lang);
 	if (ret == 0) {
 		/* on success */
 		/* set event system */
-		setting_set_event_system(SYS_EVENT_LANGUAGE_SET,
-		                         EVT_KEY_LANGUAGE_SET,
-		                         lang);
-
+		setting_set_event_system(SYS_EVENT_LANGUAGE_SET, EVT_KEY_LANGUAGE_SET, lang);
 	}
+	#else
+	int ret = system_settings_set_value_string(SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, lang);
+	#endif
+	return ret;
 }
 
 int set_regionformat_helper(char *region)
 {
 
+	#if 0
 	int ret = vconf_set_str(VCONFKEY_REGIONFORMAT, region);
 	if (ret == 0) {
 		/* set event system */
-		setting_set_event_system(SYS_EVENT_REGION_FORMAT,
-		                         EVT_KEY_REGION_FORMAT,
-		                         region);
+		setting_set_event_system(SYS_EVENT_REGION_FORMAT, EVT_KEY_REGION_FORMAT, region);
 	}
+	#else
+	int ret = system_settings_set_value_string(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, region);
+	#endif
 	return ret;
 }
 
