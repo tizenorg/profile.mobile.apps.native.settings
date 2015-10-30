@@ -1,0 +1,2634 @@
+msgid "IDS_ST_BODY_1_MINUTE"
+msgstr "1 minut"
+
+msgid "IDS_ST_POP_SAVING"
+msgstr "Se salvează..."
+
+msgid "IDS_CAM_POP_MODEL"
+msgstr "Model"
+
+msgid "IDS_EMAIL_BODY_INVALID_PORT_NUMBER"
+msgstr "Număr de port nevalid"
+
+msgid "IDS_HEALTH_OPT_ACCESSORIES"
+msgstr "Accesorii"
+
+msgid "IDS_HS_HEADER_USB_DEBUGGING_CONNECTED"
+msgstr "Depanare USB conectată"
+
+msgid "IDS_MSG_OPT_6_SECONDS"
+msgstr "6 secunde"
+
+msgid "IDS_PB_POP_PS_ALREADY_EXISTS"
+msgstr "%s există deja."
+
+msgid "IDS_SAPPS_OPT_BADGE_ABB"
+msgstr "Etichetă"
+
+msgid "IDS_ST_BODY_DISCONNECTED"
+msgstr "S-a deconectat."
+
+msgid "IDS_ST_BODY_MEDIA"
+msgstr "Media"
+
+msgid "IDS_ST_BODY_SELECT_AUTOMATICALLY"
+msgstr "Selectare automată"
+
+msgid "IDS_ST_HEADER_AUDIO"
+msgstr "Audio"
+
+msgid "IDS_ST_HEADER_FORMAT_MVERB_ABB"
+msgstr "Format"
+
+msgid "IDS_ST_HEADER_INSTANT_MESSENGER"
+msgstr "Mesaje imediate"
+
+msgid "IDS_ST_HEADER_TIME"
+msgstr "Oră"
+
+msgid "IDS_ST_MBODY_DAYS_M_WEEKDAY"
+msgstr "Zile"
+
+msgid "IDS_ST_POP_ROAMING_WILL_INCUR_EXTRA_CHARGES_CONTINUE_Q"
+msgstr "Roamingul va genera costuri suplimentare. Continuaţi?"
+
+msgid "IDS_WIFI_BODY_IP"
+msgstr "IP"
+
+msgid "IDS_BT_POP_OPERATION_FAILED"
+msgstr "Operaţie nereuşită"
+
+msgid "IDS_CLD_OPT_MINUTE"
+msgstr "Minut"
+
+msgid "IDS_CLD_OPT_MINUTES_LC_ABB"
+msgstr "minute"
+
+msgid "IDS_CST_BUTTON_CLOSE"
+msgstr "Închide"
+
+msgid "IDS_CST_POP_FAILED"
+msgstr "Nereuşit"
+
+msgid "IDS_IM_BODY_SUCCESSFULLY_COMPLETED"
+msgstr "Finalizare reuşită"
+
+msgid "IDS_IM_POP_UNEXPECTED_ERROR"
+msgstr "Eroare neaşteptată"
+
+msgid "IDS_PB_BODY_INFO"
+msgstr "Informaţii"
+
+msgid "IDS_PB_BUTTON_CONTACT"
+msgstr "Contact"
+
+msgid "IDS_SIM_BODY_INVALID_SIM_CARD"
+msgstr "Cartelă SIM incorectă"
+
+msgid "IDS_ST_BUTTON2_PROCESSING_ING"
+msgstr "Se procesează..."
+
+msgid "IDS_ST_POP_DELETE_Q"
+msgstr "Ştergeţi?"
+
+msgid "IDS_VR_POP_NO_FILES"
+msgstr "Nu există fişiere"
+
+msgid "IDS_WGT_BUTTON3_KIES_VIA_WI_FI"
+msgstr "Kies prin Wi-Fi"
+
+msgid "IDS_TPLATFORM_OPT_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_OPT_SETTINGS"
+msgstr "Setări"
+
+msgid "IDS_ST_BODY_GENERAL"
+msgstr "General"
+
+msgid "IDS_ST_HEADER_PRIVACY"
+msgstr "Confidenţialitate"
+
+msgid "IDS_BR_OPT_SCREEN"
+msgstr "Ecran"
+
+msgid "IDS_BR_OPT_LTE_GSM_WCDMA_HAUTO_CONNECT"
+msgstr "LTE/GSM/WCDMA (conectare automată)"
+
+msgid "IDS_BR_HEADER_MULTI_WINDOW"
+msgstr "Ferestre"
+
+msgid "IDS_BR_BODY_WEBSITE_SETTINGS"
+msgstr "Setări pentru site-uri web"
+
+msgid "IDS_CLD_HEADER_EVENT_NOTIFICATION"
+msgstr "Notificare privind evenimentul"
+
+msgid "IDS_CLD_BUTTON_LIST_VIEW"
+msgstr "Vizualizare listă"
+
+msgid "IDS_CLD_BUTTON_EXPORT"
+msgstr "Exportaţi"
+
+msgid "IDS_CLD_BODY_FIRST_DAY_OF_WEEK"
+msgstr "Prima zi a săptămânii"
+
+msgid "IDS_CAM_BODY_SHOWING_PD_ITEMS_T_TTS"
+msgstr "Se afişează %d elemente"
+
+msgid "IDS_COM_POP_FLIGHT_MODE_WILL_BE_DISABLED"
+msgstr "Modul Avion va fi dezactivat."
+
+msgid "IDS_COM_POP_CHECKING"
+msgstr "Verificare..."
+
+msgid "IDS_COM_OPT_CONTINUE_Q"
+msgstr "Continuaţi?"
+
+msgid "IDS_COM_INCORRECT_PASSWORD_ENTERED_5_TIMES"
+msgstr "Parolă incorectă introdusă de 5 ori"
+
+msgid "IDS_COM_BODY_YOUR_SIM_CARD_DOES_NOT_ALLOW_A_CONNECTION_TO_THIS_NETWORK"
+msgstr "Cartela dvs. SIM nu permite conectarea la această reţea."
+
+msgid "IDS_COM_BODY_TYPE_A_PIN_THAT_IS_4_TO_8_NUMBERS"
+msgstr "Introduceţi un cod PIN de 4 până la 8 numere"
+
+msgid "IDS_COM_BODY_NETWORK_OPERATORS"
+msgstr "Operatori de reţea"
+
+msgid "IDS_COM_BODY_FORMATTING_SD_CARD_ING"
+msgstr "Se formatează cartela SD..."
+
+msgid "IDS_COM_BODY_ENTER_PROXY_EMPTY"
+msgstr "Introducere adresă proxy"
+
+msgid "IDS_COM_BODY_CONNECT_TO_DATA_SERVICES_WHEN_ROAMING"
+msgstr "Conectare la serviciile de date în timpul roamingului"
+
+msgid "IDS_ASEML_POP_PASSWORD_EXPIRED"
+msgstr "Parolă expirată"
+
+msgid "IDS_ASEML_POP_ENTER_ANOTHER_PASSWORD"
+msgstr "Introduceţi altă parolă."
+
+msgid "IDS_ASEML_BODY_DEVICE_ENCRYPTION"
+msgstr "Criptare dispozitiv"
+
+msgid "IDS_CST_POP_UNKNOWN_OPERATION"
+msgstr "Operaţie necunoscută"
+
+msgid "IDS_CST_POP_OPERATION_NOT_ALLOWED_DURING_CALLS"
+msgstr "Operaţia nu este permisă în timpul apelurilor."
+
+msgid "IDS_CST_OPT_GSM_WCDMA_HAUTO_CONNECT"
+msgstr "GSM/WCDMA (conectare automată)"
+
+msgid "IDS_CST_BODY_UNBLOCK_PIN2"
+msgstr "Deblocare PIN2"
+
+msgid "IDS_MTTRL_MBODY_PALM_MOTION"
+msgstr "Mişcarea palmei"
+
+msgid "IDS_MTTRL_BUTTON_ENABLE_MOTION"
+msgstr "Activ. mişc."
+
+msgid "IDS_MTTRL_BODY_SMART_ALERT"
+msgstr "Alertă inteligentă"
+
+msgid "IDS_NFC_OPT_S_BEAM"
+msgstr "S Beam"
+
+msgid "IDS_STU_BODY_SMART_STAY_DETECTS_YOUR_EYES_WITH_THE_FRONT_CAMERA_SO_THAT_THE_SCREEN_STAYS_ON_WHEN_YOU_ARE_LOOKING_AT_IT"
+msgstr "Funcţia ecran activ inteligent detectează ochii cu ajutorul camerei frontale, astfel încât ecranul rămâne activ atunci când îl priviţi."
+
+msgid "IDS_IDLE_BODY_NEW_PIN_AND_CONFIRM_PIN_DO_NOT_MATCH"
+msgstr "Codul PIN nou şi confirmarea codului PIN nu se potrivesc."
+
+msgid "IDS_MOBILEAP_POP_TURNING_ON_WI_FI_WILL_DISABLE_MOBILE_HOTSPOT_CONTINUE_Q_VZW"
+msgstr "Activarea Wi-Fi va dezactiva Mobile Hotspot. Continuaţi?"
+
+msgid "IDS_MOBILEAP_MBODY_DATA_USAGE"
+msgstr "Utilizare date"
+
+msgid "IDS_MOBILEAP_BODY_TETHERING"
+msgstr "Tethering"
+
+msgid "IDS_IM_POP_THIS_FEATURE_IS_NOT_AVAILABLE_WHILE_FLIGHT_MODE_IS_ON"
+msgstr "Această funcţie nu este disponibilă în timp ce este activat modul Avion."
+
+msgid "IDS_EMAIL_POP_SECURITY_UPDATE_ABB"
+msgstr "Actualizare securitate"
+
+msgid "IDS_EMAIL_POP_GIANT_M_TEXTSIZE"
+msgstr "Gigant"
+
+msgid "IDS_EMAIL_POP_FAILED_TO_MOVE"
+msgstr "Mutare nereuşită"
+
+msgid "IDS_EMAIL_OPT_HUGE_M_TEXTSIZE"
+msgstr "Foarte mare"
+
+msgid "IDS_QP_POP_NETWORK_RESTRICTION_MODE_WILL_BE_DISABLED_JPN"
+msgstr "Network restriction mode will be disabled."
+
+msgid "IDS_QP_POP_IN_NETWORK_RESTRICTION_MODE_YOU_CAN_USE_ALL_YOUR_APPLICATIONS_WITHOUT_CONNECTING_TO_THE_NETWORK_YOU_CAN_ALSO_RECEIVE_CALLS_AND_SMS_MESSAGES_MSG_JPN"
+msgstr "In Network restriction mode, you can use all your applications without connecting to the network. You can also receive calls and SMS messages. Network restriction mode will be enabled."
+
+msgid "IDS_TASKMGR_BODY_ACTIVE_APPLICATIONS_C_PD"
+msgstr "Aplicaţii active: %d"
+
+msgid "IDS_USB_POP_UNABLE_TO_CONNECT_TO_KIES_VIA_WI_FI_WHEN_CONNECTED_TO_KIES_VIA_USB"
+msgstr "Imposibil de realizat conectarea la Kies prin Wi-Fi când conexiunea la Kies este realizată prin USB"
+
+msgid "IDS_MSGC_POP_YOUR_SD_CARD_IS_FULL"
+msgstr "Cartela dvs. SD este plină."
+
+msgid "IDS_MSGC_BODY_NOT_ENOUGH_MEMORY_IN_PHONE_MEMORY_DELETE_SOME_ITEMS_AND_TRY_AGAIN"
+msgstr "Memoria telefonului este insuficientă. Ştergeţi câteva elemente şi încercaţi din nou."
+
+msgid "IDS_KW_POP_BE_CAREFUL_WHEN_TRANSMITTING_INFORMATION_ON_AN_UNSECURED_WI_FI_NETWORK_MSG"
+msgstr "Procedaţi cu atenţie la transmiterea informaţiilor printr-o reţea Wi-Fi nesecurizată, deoarece acestea pot fi vizibile şi pentru alte persoane din reţea."
+
+msgid "IDS_DN_BODY_ENCRYPT_SD_CARD"
+msgstr "Criptare cartelă SD"
+
+msgid "IDS_MSGF_POP_UNSUPPORTED"
+msgstr "Neacceptat"
+
+msgid "IDS_MSGF_BODY_SERVICE_TYPE"
+msgstr "Tip serviciu"
+
+msgid "IDS_MF_POP_FORMAT_COMPLETED"
+msgstr "Formatare terminată"
+
+msgid "IDS_MF_OPT_NAME_HZ_TO_A"
+msgstr "Nume (de la Z la A)"
+
+msgid "IDS_MF_OPT_NAME_HA_TO_Z"
+msgstr "Nume (de la A la Z)"
+
+msgid "IDS_MF_BODY_SCREEN_CAPTURE_M_NOUN"
+msgstr "Captură ecran"
+
+msgid "IDS_XTAG_POP_RESET_ALL_SETTINGS_FOR_C_DEFAULT_APPS_BACKGROUND_DATA_RESTRICTIONS_YOUR_EXISTING_DATA_WILL_NOT_BE_LOST"
+msgstr "Restabiliţi toate setările pentru:<br><br>Aplicaţiile implicite<br>Restricţiile privind datele de fundal<br><br>Datele existente nu se vor pierde"
+
+msgid "IDS_PB_POP_MOVE_COMPLETED"
+msgstr "Mutare finalizată"
+
+msgid "IDS_PB_BODY_MOVING_ING"
+msgstr "Mutare"
+
+msgid "IDS_SMEMO_BUTTON_IMPORT"
+msgstr "Import"
+
+msgid "IDS_LCKSCN_BODY_WALLPAPERS"
+msgstr "Fundaluri"
+
+msgid "IDS_LCKSCN_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_TO_UNLOCK_IT_MSG"
+msgstr "Menţineţi apăsat ecranul, apoi înclinaţi dispozitivul spre dvs. pentru a-l debloca. Dacă ecranul nu se deblochează, încercaţi să înclinaţi mai mult dispozitivul. Când este setată deblocarea prin mişcări, mişcările vor fi activate automat în Setări."
+
+msgid "IDS_SA_BUTTON_DONE_ABB"
+msgstr "Gata"
+
+msgid "IDS_FP_BODY_NO_APPLICATIONS"
+msgstr "Nu există aplicaţii"
+
+msgid "IDS_ST_TZTAB4_MOST_USED_M_APP"
+msgstr "Cele m. utiliz."
+
+msgid "IDS_ST_TPOP_PERSONAL_MODE_ENABLED_ABB"
+msgstr "Modul Personal a fost activat."
+
+msgid "IDS_ST_TPOP_PERSONAL_MODE_DISABLED_ABB"
+msgstr "Modul Personal a fost dezactivat."
+
+msgid "IDS_ST_TPOP_FAILED_TO_ENABLE_PERSONAL_MODE_TRY_AGAIN_ABB"
+msgstr "Modul Personal nu s-a activat. Reîncercaţi."
+
+msgid "IDS_ST_TPOP_FAILED_TO_DISABLE_PERSONAL_MODE_TRY_AGAIN_ABB"
+msgstr "Modul Personal nu s-a dezactiv. Reîncercaţi."
+
+msgid "IDS_ST_TPOP_ENABLING_ULTRA_POWER_SAVING_MODE_ING"
+msgstr "Se activează modul Economisire maximă energie..."
+
+msgid "IDS_ST_SK_FORMAT_ABB"
+msgstr "Format"
+
+msgid "IDS_ST_SK3_DONE"
+msgstr "Gata"
+
+msgid "IDS_ST_SK2_PLEASE_WAIT"
+msgstr "Aşteptaţi"
+
+msgid "IDS_ST_SBODY_POWER_SAVING"
+msgstr "Economisire energie"
+
+msgid "IDS_ST_SBODY_ONLY_UPDATE_THE_SECURITY_POLICY_AUTOMATICALLY_WHEN_YOUR_DEVICE_IS_CONNECTED_TO_A_WI_FI_NETWORK"
+msgstr "Actualizaţi automat politica de securitate numai când dispozitivul este conectat la o reţea Wi-Fi."
+
+msgid "IDS_ST_SBODY_INCREASE_THE_SENSITIVITY_OF_THE_TOUCH_SCREEN_SBODY_MSG"
+msgstr "Creşteţi sensibilitatea ecranului tactil, pentru a putea să controlaţi dispozitivul când purtaţi mănuşi."
+
+msgid "IDS_ST_SBODY_DISABLED"
+msgstr "Dezactivat"
+
+msgid "IDS_ST_SBODY_AUTOMATICALLY_CHECK_FOR_CHANGES_TO_THE_SECURITY_POLICY_MSG"
+msgstr "Verificaţi automat modificările politicii de securitate şi descărcaţi toate actualizările pentru îmbunătăţirea securităţii şi a serviciului."
+
+msgid "IDS_ST_POP_YOU_MUST_ENTER_A_DEVICE_NAME"
+msgstr "Trebuie să introduceţi un nume de dispozitiv."
+
+msgid "IDS_ST_POP_YOUR_PERSONAL_MODE_SECURITY_SETTINGS_WILL_BE_RESET_AND_YOUR_PERSONAL_CONTENT_WILL_BE_DELETED_RESET_PERSONAL_MODE_Q"
+msgstr "Setările de securitate ale Modului Personal vor fi restabilite şi conţinutul personal va fi şters. Resetaţi Modul Personal?"
+
+msgid "IDS_ST_POP_USE_2D_HARDWARE_OR_SOFTWARE_ACCELERATION_IN_APPLICATIONS"
+msgstr "Utilizare accelerare hardware sau software 2D în aplicaţii."
+
+msgid "IDS_ST_POP_URL_REMOVED"
+msgstr "Adresă URL eliminată"
+
+msgid "IDS_ST_POP_URLS_REMOVED"
+msgstr "Adrese URL eliminate"
+
+msgid "IDS_ST_POP_UNMOUNTING_USB_OTG_STORAGE_WILL_STOP_SOME_APPLICATIONS_MSG"
+msgstr "Dezactivarea spaţiului de stocare USB OTG va opri unele aplicaţii. Este posibil ca aplicaţiile să nu fie disponibile decât după reactivarea spaţiului de stocare USB OTG."
+
+msgid "IDS_ST_POP_UNMOUNTING_SD_CARD_ING_ABB"
+msgstr "Se dezactivează cartela SD..."
+
+msgid "IDS_ST_POP_UNMOUNTING_ING_ABB"
+msgstr "Se dezactivează..."
+
+msgid "IDS_ST_POP_UNINSTALL_Q"
+msgstr "Dezinstalaţi?"
+
+msgid "IDS_ST_POP_UNINSTALLING_ING"
+msgstr "Se dezinstalează..."
+
+msgid "IDS_ST_POP_UNABLE_TO_TURN_ON_FLIGHT_MODE_VODA"
+msgstr "Imposibil de activat modul Avion"
+
+msgid "IDS_ST_POP_UNABLE_TO_SEARCH_NETWORKS_DURING_DATA_SERVICE_ACTIVATED_DO_YOU_WANT_TO_DISCONNECT_THE_DATA_SERVICE_AND_SEARCH_AVAILABLE_NETWORK_Q"
+msgstr "Imposibil de căutat reţele în timp ce serviciul de date este activat. Doriţi să deconectaţi serviciul de date şi să căutaţi reţele disponibile?"
+
+msgid "IDS_ST_POP_UNABLE_TO_CHANGE_NETWORKS_WHILE_DATA_SERVICE_IN_USE_STOP_USING_CURRENT_DATA_SERVICE_AND_SELECT_ANOTHER_AVAILABLE_NETWORK_Q"
+msgstr "Imposibil de schimbat reţelele în timp ce serviciul de date se află în uz. Opriţi utilizarea serviciului de date curent şi selectaţi o altă reţea disponibilă?"
+
+msgid "IDS_ST_POP_ULTRA_POWER_SAVING_MODE_WILL_BE_DISABLED"
+msgstr "Modul Economisire maximă a energiei va fi dezactivat."
+
+msgid "IDS_ST_POP_TO_USE_PERSONAL_MODE_YOU_MUST_REGISTER_AN_UNLOCK_METHOD"
+msgstr "Pentru a utiliza modul Personal, trebuie să înregistraţi o metodă de deblocare."
+
+msgid "IDS_ST_POP_TO_ENABLE_HANDS_FREE_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Pentru activarea modului Mâini libere, activaţi cel puţin o funcţie relevantă."
+
+msgid "IDS_ST_POP_THE_SCREEN_WILL_NOT_TURN_OFF_WHILE_YOU_KEEP_LOOKING_AT_IT"
+msgstr "Ecranul nu se va închide cât timp vă uitaţi la acesta."
+
+msgid "IDS_ST_POP_THE_MAXIMUM_NUMBERS_OF_CHARACTERS_FOR_YOUR_DEVICE_NAME_HPD_HAS_BEEN_EXCEEDED"
+msgstr "S-a depăşit numărul maxim de caractere pentru numele dispozitivului (%d)."
+
+msgid "IDS_ST_POP_THE_APP_HAS_BEEN_UNINSTALLED"
+msgstr "Aplicaţia a fost dezinstalată."
+
+msgid "IDS_ST_POP_TAP_OK"
+msgstr "Atingeţi OK"
+
+msgid "IDS_ST_POP_SEARCHING_NETWORK_ING"
+msgstr "Se caută reţeaua..."
+
+msgid "IDS_ST_POP_RESTART_PHONE_TO_USE_AUTOMATIC_UPDATE_Q"
+msgstr "Reporniţi telefonul pentru a utiliza Actualizare automată?"
+
+msgid "IDS_ST_POP_RESET_TO_DEFAULT_Q"
+msgstr "Resetare la poziţia implicită?"
+
+msgid "IDS_ST_POP_RESET_ALL_SETTINGS_AND_DELETE_ALL_DATA_THIS_CANNOT_BE_STOPPED_ONCE_STARTED"
+msgstr "Resetaţi toate setările şi ştergeţi toate datele. Această operaţie nu poate fi oprită dacă este pornită."
+
+msgid "IDS_ST_POP_REMOVE_DEFAULT_APPS_Q"
+msgstr "Eliminaţi aplicaţiile implicite?"
+
+msgid "IDS_ST_POP_REGISTRATION_CODE_NOT_FOUND"
+msgstr "Codul de înregistrare nu a fost găsit."
+
+msgid "IDS_ST_POP_REGISTERING_ING"
+msgstr "Se înregistrează..."
+
+msgid "IDS_ST_POP_REGISTERED"
+msgstr "Înregistrat"
+
+msgid "IDS_ST_POP_PUK2_VERIFIED"
+msgstr "PUK2 verificat"
+
+msgid "IDS_ST_POP_PUK1_VERIFIED"
+msgstr "PUK1 verificat"
+
+msgid "IDS_ST_POP_PORT_REMOVED"
+msgstr "Port eliminat"
+
+msgid "IDS_ST_POP_PORTS_REMOVED"
+msgstr "Porturi eliminate"
+
+msgid "IDS_ST_POP_PIN_UNBLOCKED"
+msgstr "PIN deblocat"
+
+msgid "IDS_ST_POP_PIN2_UNBLOCKED"
+msgstr "PIN2 deblocat"
+
+msgid "IDS_ST_POP_PIN2_CHANGED"
+msgstr "PIN2 schimbat"
+
+msgid "IDS_ST_POP_PIN2_BLOCKED"
+msgstr "PIN2 blocat"
+
+msgid "IDS_ST_POP_PIN1_CHANGED"
+msgstr "Codul PIN1 a fost modificat."
+
+msgid "IDS_ST_POP_PIN1_BLOCKED"
+msgstr "Codul PIN1 a fost blocat."
+
+msgid "IDS_ST_POP_PD_ATTEMPT_LEFT"
+msgstr "%d încercare rămasă"
+
+msgid "IDS_ST_POP_PD_ATTEMPTS_LEFT"
+msgstr "%d încercări rămase"
+
+msgid "IDS_ST_POP_PASSWORD_MUST_CONTAIN_AT_LEAST_PD_ALPHANUMERIC_CHARACTERS"
+msgstr "Parola trebuie să conţină minimum %d caractere alfanumerice."
+
+msgid "IDS_ST_POP_PASSWORD_MUST_BE_MORE_THAN_P1SD_CHARACTERS_AND_LESS_THAN_P2SD"
+msgstr "Parola trebuie să fie cuprinsă între %1$d - %2$d caractere."
+
+msgid "IDS_ST_POP_PASSWORDS_DO_NOT_MATCH"
+msgstr "Parolele nu se potrivesc."
+
+msgid "IDS_ST_POP_NO_SD_CARD_IS_INSERTED_DISABLE_ENCRYPT_SD_CARD_ANYWAY_Q"
+msgstr "Nu aţi introdus niciun card SD. Dezactivaţi totuşi criptarea cardului SD?"
+
+msgid "IDS_ST_POP_NO_SD_CARD_HAS_BEEN_INSERTED_ENCRYPTION_WILL_START_AUTOMATICALLY_WHEN_YOU_INSERT_AN_SD_CARD"
+msgstr "Nu a fost introdus niciun card SD. Criptarea va începe automat când introduceţi un card SD."
+
+msgid "IDS_ST_POP_NO_ITEM_SELECTED"
+msgstr "Niciun element selectat"
+
+msgid "IDS_ST_POP_NEW_PASSWD_SAVED"
+msgstr "Noua parolă s-a salvat."
+
+msgid "IDS_ST_POP_NETWORK_SEARCH_FAILED"
+msgstr "Căutare reţea nereuşită"
+
+msgid "IDS_ST_POP_MOBILE_DATA_HAS_BEEN_DISABLED_MSG"
+msgstr "Datele mobile au fost dezactivate. Nu puteţi trimite sau primi mesaje MMS. Pentru a sincroniza datele cu serverul, conectaţi-vă prin reţeaua Wi-Fi."
+
+msgid "IDS_ST_POP_MOBILE_DATA_ENABLED_CONNECTING_TO_MOBILE_NETWORKS_MAY_INCUR_EXTRA_CHARGES_DEPENDING_ON_YOUR_DATA_PLAN_CONTINUE_Q"
+msgstr "Date mobile activate. Conectarea la reţelele mobile poate genera costuri suplimentare, în funcţie de planul de date. Continuaţi?"
+
+msgid "IDS_ST_POP_LOADING_ING"
+msgstr "Încărcare..."
+
+msgid "IDS_ST_POP_IP_ADDRESS_REMOVED"
+msgstr "Adresă IP eliminată"
+
+msgid "IDS_ST_POP_INVALID_URL_OR_NETWORK_CONNECTION_FAILED"
+msgstr "Adresa URL nu este validă sau conexiunea la reţea nu a reuşit."
+
+msgid "IDS_ST_POP_INVALID_IP_ADDRESS_OR_NETWORK_CONNECTION_FAILED"
+msgstr "Adresa IP nu este validă sau conexiunea la reţea nu a reuşit."
+
+msgid "IDS_ST_POP_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Introduceţi cartela SIM pentru a accesa serviciile de reţea."
+
+msgid "IDS_ST_POP_INCORRECT_PUK"
+msgstr "PUK greşit"
+
+msgid "IDS_ST_POP_INCORRECT_PIN_PD_ATTEMPTS_LEFT"
+msgstr "PIN incorect. %d încercări rămase."
+
+msgid "IDS_ST_POP_INCORRECT_PIN2"
+msgstr "PIN2 incorect"
+
+msgid "IDS_ST_POP_INCORRECT_PIN1_ATTEMPT_LEFT"
+msgstr "PIN1 incorect. 1 încercare rămasă."
+
+msgid "IDS_ST_POP_INCORRECT_PASSWORD"
+msgstr "Parolă incorectă"
+
+msgid "IDS_ST_POP_IF_YOU_RESET_YOUR_DEVICE_TO_FACTORY_DEFAULTS_YOU_WILL_NOT_BE_ABLE_TO_USE_ENCRYPTED_FILES_ON_THE_SD_CARD_MSG"
+msgstr "Dacă resetaţi dispozitivul la setările implicite din fabrică, nu veţi putea să utilizaţi fişierele criptate de pe cardul SD, însă veţi putea să le utilizaţi în continuare pe cele necriptate."
+
+msgid "IDS_ST_POP_FORMATTING_WILL_ERASE_ALL_DATA_FORMAT_Q"
+msgstr "Formatarea va şterge toate datele. Formataţi?"
+
+msgid "IDS_ST_POP_FORMATTING_ING"
+msgstr "Formatare..."
+
+msgid "IDS_ST_POP_FAILED_TO_UNINSTALL_THE_APP"
+msgstr "Dezinstalarea aplicaţiei nu a reuşit."
+
+msgid "IDS_ST_POP_ENTER_PS"
+msgstr "Introducere %s"
+
+msgid "IDS_ST_POP_ENCRYPT_SD_CARD_Q_OPERATION_IS_IRREVERSIBLE_AND_IF_YOU_INTERRUPT_IT_YOU_WILL_LOSE_DATA"
+msgstr "Criptaţi cardul SD? Operaţiunea este ireversibilă şi, dacă o întrerupeţi, veţi pierde datele."
+
+msgid "IDS_ST_POP_ENABLING_EMERGENCY_MODE_ING"
+msgstr "Se activează modul Urgenţă..."
+
+msgid "IDS_ST_POP_ENABLING_AUTO_UPDATE_MEANS_YOUR_DEVICE_WILL_CHECK_FOR_SECURITY_UPDATES_AUTOMATICALLY_NOTI_MSG"
+msgstr "Activarea actualizării automate înseamnă că dispozitivul va verifica automat actualizările de securitate. Verificarea prin intermediul reţelelor mobile poate genera costuri suplimentare."
+
+msgid "IDS_ST_POP_ENABLE_SMART_STAY_TO_TRY_IT_T_HELP"
+msgstr "Activaţi ecranul activ inteligent pentru a-l încerca."
+
+msgid "IDS_ST_POP_ENABLE_SMART_ROTATION_TO_TRY_IT_T_HELP"
+msgstr "Activaţi rotirea inteligentă pentru a o încerca."
+
+msgid "IDS_ST_POP_ENABLE_FLIGHT_MODE"
+msgstr "Activaţi modul Avion."
+
+msgid "IDS_ST_POP_EMERGENCY_MODE_WILL_BE_DISABLED"
+msgstr "Modul Urgenţă va fi dezactivat."
+
+msgid "IDS_ST_POP_DO_NOT_ASK_AGAIN"
+msgstr "Nu întreba din nou"
+
+msgid "IDS_ST_POP_DISABLING_AUTO_UPDATE_MEANS_YOU_HAVE_TO_CHECK_FOR_SECURITY_UPDATES_MANUALLY_NOTI_MSG"
+msgstr "Dezactivarea actualizării automate înseamnă că trebuie să verificaţi manual actualizările de securitate. Pentru a menţine dispozitivul în siguranţă, vă recomandăm să activaţi actualizarea automată."
+
+msgid "IDS_ST_POP_DISABLE_TETHERING_Q"
+msgstr "Dezactivaţi furnizarea accesului la internet?"
+
+msgid "IDS_ST_POP_DEVICE_WILL_RESTART"
+msgstr "Dispozitivul va reporni."
+
+msgid "IDS_ST_POP_DEVICE_WILL_BE_RESET_ALL_SETTINGS_AND_DATA_WILL_BE_ERASED_THIS_CANNOT_BE_STOPPED_ONCE_STARTED"
+msgstr "Dispozitivul va fi resetat. Toate setările şi datele vor fi şterse. Această operaţie nu poate fi oprită dacă este pornită."
+
+msgid "IDS_ST_POP_CONNECTING_TO_THE_SERVER_ING"
+msgstr "Se conectează la server..."
+
+msgid "IDS_ST_POP_CHECK_FOR_SECURITY_UPDATES_AND_DOWNLOAD_NEW_UPDATES_Q_NOTI_MSG"
+msgstr "Căutaţi actualizări de securitate şi descărcaţi actualizări noi? Descărcarea prin reţele mobile poate genera costuri suplimentare. Dacă este posibil, descărcaţi printr-o reţea Wi-Fi. Veţi putea utiliza dispozitivul în timpul descărcării."
+
+msgid "IDS_ST_POP_CHAP"
+msgstr "CHAP"
+
+msgid "IDS_ST_POP_CHANGE_YOUR_POSITION_IN_RELATION_TO_THE_SCREEN_AND_SEE_HOW_IT_ADJUSTS_AUTOMATICALLY"
+msgstr "Schimbaţi-vă poziţia faţă de ecran şi vedeţi cum se reglează automat."
+
+msgid "IDS_ST_POP_AUTO_TIME_UPDATE_UNAVAILABLE_CHOOSE_ALTERNATIVE_TIME_SET_MODE_JPN_SBM"
+msgstr "Auto time update unavailable. Choose alternative time set mode."
+
+msgid "IDS_ST_POP_ANY_PERSONAL_CONTENT_WILL_NOT_BE_ACCESSIBLE_IN_NORMAL_MODE"
+msgstr "Conţinutul personal nu va putea fi accesat în modul Normal."
+
+msgid "IDS_ST_OPT_WCDMA_GSM_HAUTO_CONNECT"
+msgstr "WCDMA/GSM (conectare automată)"
+
+msgid "IDS_ST_OPT_UNTITLED_NETWORK"
+msgstr "Reţea nedenumită"
+
+msgid "IDS_ST_OPT_TAB_VIEW"
+msgstr "Vizualizarea Filă"
+
+msgid "IDS_ST_OPT_SELECTED"
+msgstr "Selectat"
+
+msgid "IDS_ST_OPT_SELECT"
+msgstr "Selectare"
+
+msgid "IDS_ST_OPT_RESET_APP_SETTINGS_ABB"
+msgstr "Restabil. set. apl."
+
+msgid "IDS_ST_OPT_NETWORK_LIST"
+msgstr "Listă reţele"
+
+msgid "IDS_ST_OPT_MASS_STORAGE_ABB"
+msgstr "Stocare în masă"
+
+msgid "IDS_ST_OPT_LTE_WCDMA_GSM_HAUTO_CONNECT"
+msgstr "LTE/WCDMA/GSM (conectare automată)"
+
+msgid "IDS_ST_OPT_EDIT_QUICK_SETTINGS"
+msgstr "Editaţi setările rapide"
+
+msgid "IDS_ST_OPT_DEFAULT_RINGTONE"
+msgstr "Sonerie de apel implicită"
+
+msgid "IDS_ST_OPT_CUSTOM_MODE_ABB"
+msgstr "Modul Personalizat"
+
+msgid "IDS_ST_OPT_BLOCK_WI_FI"
+msgstr "Blocare Wi-Fi"
+
+msgid "IDS_ST_OPT_BLOCK_MOBILE_NETWORKS"
+msgstr "Blocare reţele mobile"
+
+msgid "IDS_ST_OPT_BLOCK_ALL"
+msgstr "Blocare integrală"
+
+msgid "IDS_ST_OPT_AUTO_UPDATE_ABB"
+msgstr "Actualiz. automată"
+
+msgid "IDS_ST_OPT_ALLOW_ALL"
+msgstr "Permitere integrală"
+
+msgid "IDS_ST_OPT_ALL"
+msgstr "Toate"
+
+msgid "IDS_ST_MBODY_ZOOM"
+msgstr "Zoom"
+
+msgid "IDS_ST_MBODY_WCDMA_ONLY"
+msgstr "Numai WCDMA"
+
+msgid "IDS_ST_MBODY_VIA_WI_FI_ONLY"
+msgstr "Numai prin Wi-Fi"
+
+msgid "IDS_ST_MBODY_UNLOCK_METHOD"
+msgstr "Metodă de deblocare"
+
+msgid "IDS_ST_MBODY_TOUCH_SENSITIVITY_ABB"
+msgstr "Sensib. atingere"
+
+msgid "IDS_ST_MBODY_SWIPE"
+msgstr "Glisare"
+
+msgid "IDS_ST_MBODY_SOFTWARE_UPDATE"
+msgstr "Actualizare software"
+
+msgid "IDS_ST_MBODY_SMART_STAY"
+msgstr "Ecran activ inteligent"
+
+msgid "IDS_ST_MBODY_SMART_SCREEN"
+msgstr "Ecran inteligent"
+
+msgid "IDS_ST_MBODY_SMART_ROTATION"
+msgstr "Rotire inteligentă"
+
+msgid "IDS_ST_MBODY_SIM_CARD_PROFILE_SETTINGS"
+msgstr "Setări profil cartelă SIM"
+
+msgid "IDS_ST_MBODY_SHOW_CPU_USAGE"
+msgstr "Afişare utilizare CPU"
+
+msgid "IDS_ST_MBODY_SELECT_WHERE_CAPTURED_IMAGES_WILL_BE_SAVED"
+msgstr "Selectaţi locaţia pentru salvarea imaginilor preluate"
+
+msgid "IDS_ST_MBODY_SCREEN_ROTATION"
+msgstr "Rotire ecran"
+
+msgid "IDS_ST_MBODY_SCREEN_READER_HTTS"
+msgstr "Cititor de ecran (TTS)"
+
+msgid "IDS_ST_MBODY_REGISTER"
+msgstr "Înregistrare"
+
+msgid "IDS_ST_MBODY_PAP"
+msgstr "PAP"
+
+msgid "IDS_ST_MBODY_NONE"
+msgstr "Niciuna"
+
+msgid "IDS_ST_MBODY_MOTIONS_AND_GESTURES"
+msgstr "Mişcări şi gesturi"
+
+msgid "IDS_ST_MBODY_MOBILE_DATA"
+msgstr "Date mobile"
+
+msgid "IDS_ST_MBODY_HELP"
+msgstr "Ajutor"
+
+msgid "IDS_ST_MBODY_HANDS_FREE_MODE"
+msgstr "Modul Mâini libere"
+
+msgid "IDS_ST_MBODY_GSM_ONLY"
+msgstr "Numai GSM"
+
+msgid "IDS_ST_MBODY_FONT_SIZE"
+msgstr "Dimensiune font"
+
+msgid "IDS_ST_MBODY_FACTORY_RESET"
+msgstr "Reset. la val. din fabr."
+
+msgid "IDS_ST_MBODY_EDIT_AFTER_SCREEN_CAPTURE"
+msgstr "Editare după capt. ecran"
+
+msgid "IDS_ST_MBODY_DIALLING_KEYPAD_TONE"
+msgstr "Ton tastatură de apelare"
+
+msgid "IDS_ST_MBODY_DEVICE_STATUS"
+msgstr "Stare dispozitiv"
+
+msgid "IDS_ST_MBODY_DEREGISTER"
+msgstr "Anulare înregistrare"
+
+msgid "IDS_ST_MBODY_COLOUR_THEME"
+msgstr "Temă de culoare"
+
+msgid "IDS_ST_MBODY_CHARGING"
+msgstr "Se încarcă"
+
+msgid "IDS_ST_MBODY_CALL_SETTINGS"
+msgstr "Setări apeluri"
+
+msgid "IDS_ST_MBODY_AUTO_ADJUST_SCREEN_TONE"
+msgstr "Reglare autom. ton ecran"
+
+msgid "IDS_ST_MBODY_ACTIVE_APPLICATION"
+msgstr "Aplicaţie activă"
+
+msgid "IDS_ST_MBODY_ACCOUNTS_AND_BACKUP"
+msgstr "Conturi şi cop. de rez."
+
+msgid "IDS_ST_ITAB4_CONTROLS_M_INPUT_AND_CONTROL"
+msgstr "Contr."
+
+msgid "IDS_ST_HEADER_WI_FI_DIRECT"
+msgstr "Wi-Fi Direct"
+
+msgid "IDS_ST_HEADER_WI_FI"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_HEADER_USER_SETTINGS_ABB"
+msgstr "Setări utilizator"
+
+msgid "IDS_ST_HEADER_USER_AND_BACKUP_M_CATEGORY"
+msgstr "Utilizator şi backup"
+
+msgid "IDS_ST_HEADER_USB_UTILITIES"
+msgstr "Utilitare USB"
+
+msgid "IDS_ST_HEADER_UNLOCK_DEVICE_USING_MOTION_ABB"
+msgstr "Debl. dispoz. utilizând mişc."
+
+msgid "IDS_ST_HEADER_UNAVAILABLE"
+msgstr "Indisponibil"
+
+msgid "IDS_ST_HEADER_ULTRA_POWER_SAVING_MODE"
+msgstr "Modul Economisire maximă a energiei"
+
+msgid "IDS_ST_HEADER_TOUCH_KEY_LIGHT_DURATION"
+msgstr "Durată iluminare tastă atingere"
+
+msgid "IDS_ST_HEADER_TEXT_TO_SPEECH"
+msgstr "Din text în vorbire"
+
+msgid "IDS_ST_HEADER_STANDARD_LIMIT_ABB"
+msgstr "Limită standard"
+
+msgid "IDS_ST_HEADER_SOUND"
+msgstr "Sunet"
+
+msgid "IDS_ST_HEADER_SIM_CARD_MANAGER"
+msgstr "Manager cartelă SIM"
+
+msgid "IDS_ST_HEADER_SHARED_CONTENT"
+msgstr "Conţinut partajat"
+
+msgid "IDS_ST_HEADER_SELECT_VIBRATION_PATTERNS_ABB"
+msgstr "Selectare modele vibraţie"
+
+msgid "IDS_ST_HEADER_SCREEN_MIRRORING"
+msgstr "Screen Mirroring"
+
+msgid "IDS_ST_HEADER_SAMSUNG_KIES"
+msgstr "Samsung Kies"
+
+msgid "IDS_ST_HEADER_SAMSUNG_APPS"
+msgstr "Samsung Apps"
+
+msgid "IDS_ST_HEADER_RINGTONES"
+msgstr "Tonuri sonerie"
+
+msgid "IDS_ST_HEADER_RESET_RESULTS"
+msgstr "Resetare rezultate"
+
+msgid "IDS_ST_HEADER_RESET"
+msgstr "Reiniţializare"
+
+msgid "IDS_ST_HEADER_PRIVILEGES"
+msgstr "Privilegii"
+
+msgid "IDS_ST_HEADER_PRIVATE_MODE"
+msgstr "Mod Privat"
+
+msgid "IDS_ST_HEADER_PORT"
+msgstr "Port"
+
+msgid "IDS_ST_HEADER_PLEASE_WAIT"
+msgstr "Aşteptaţi."
+
+msgid "IDS_ST_HEADER_PERSONAL_MODE"
+msgstr "Modul Personal"
+
+msgid "IDS_ST_HEADER_PERSONALISATION"
+msgstr "Personalizare"
+
+msgid "IDS_ST_HEADER_PD_SELECTED_ABB"
+msgstr "%d selectate"
+
+msgid "IDS_ST_HEADER_PD_SELECTED"
+msgstr "%d selectate"
+
+msgid "IDS_ST_HEADER_NO_BACKGROUND_PROCESSES_ABB"
+msgstr "Nu sunt procese în fundal"
+
+msgid "IDS_ST_HEADER_NEW_NETWORK"
+msgstr "Reţea nouă"
+
+msgid "IDS_ST_HEADER_NETWORK_RESTRICTION_MODE_ABB_JPN"
+msgstr "Network restriction mode"
+
+msgid "IDS_ST_HEADER_MOTION_UNLOCK"
+msgstr "Deblocare mişcare"
+
+msgid "IDS_ST_HEADER_MORE_DISPLAY_SETTINGS_ABB"
+msgstr "Mai multe setări de afişare"
+
+msgid "IDS_ST_HEADER_LOCK_SCREEN"
+msgstr "Blocare ecran"
+
+msgid "IDS_ST_HEADER_LANGUAGE_AND_INPUT"
+msgstr "Setări regionale şi text"
+
+msgid "IDS_ST_HEADER_INSTALLED_APPLICATIONS"
+msgstr "Aplicaţii instalate"
+
+msgid "IDS_ST_HEADER_INPUT_AND_MOTION"
+msgstr "Introducere şi mişcare"
+
+msgid "IDS_ST_HEADER_HOME_SCREEN_ABB"
+msgstr "Ecran de pornire"
+
+msgid "IDS_ST_HEADER_FINGER_SCANNER_ABB"
+msgstr "Scaner degete"
+
+msgid "IDS_ST_HEADER_ENTER_VALID_DEVICE_NAME_ABB"
+msgstr "Introd. nume disp. valid"
+
+msgid "IDS_ST_HEADER_ENCRYPT_DEVICE"
+msgstr "Criptare dispozitiv"
+
+msgid "IDS_ST_HEADER_DIVX_VOD"
+msgstr "VOD DivX®"
+
+msgid "IDS_ST_HEADER_DISPLAY_LANGUAGE"
+msgstr "Limbă de afişare"
+
+msgid "IDS_ST_HEADER_DISPLAY"
+msgstr "Afişare"
+
+msgid "IDS_ST_HEADER_DISABLE_EMERGENCY_MODE_ABB"
+msgstr "Dezactivare mod Urgenţă"
+
+msgid "IDS_ST_HEADER_DEVICE_MANAGER"
+msgstr "Manager dispozitive"
+
+msgid "IDS_ST_HEADER_CREATE_CONNECTION"
+msgstr "Creare conexiune"
+
+msgid "IDS_ST_HEADER_CONNECT_AND_SHARE"
+msgstr "Conectare şi partajare"
+
+msgid "IDS_ST_HEADER_CONFIRM_ENCRYPTION"
+msgstr "Confirmare criptare"
+
+msgid "IDS_ST_HEADER_CHANGE_PIN_ABB"
+msgstr "Schimbare cod PIN"
+
+msgid "IDS_ST_HEADER_AUTO_ROTATE_SCREEN_ABB"
+msgstr "Rotire automată ecran"
+
+msgid "IDS_ST_HEADER_ALLOW_USB_DEBUGGING_Q_ABB"
+msgstr "Permit. depan. USB?"
+
+msgid "IDS_ST_HEADER_ADD_URL"
+msgstr "Adăugare URL"
+
+msgid "IDS_ST_HEADER_ADD_PORT"
+msgstr "Adăugare port"
+
+msgid "IDS_ST_HEADER_ADD_IP"
+msgstr "Adăugare IP"
+
+msgid "IDS_ST_BUTTON_UNINSTALL_UPDATES"
+msgstr "Dezinstalare actualizări"
+
+msgid "IDS_ST_BUTTON_UNINSTALL"
+msgstr "Dezinstalare"
+
+msgid "IDS_ST_BUTTON_TRY_IT"
+msgstr "Încercaţi"
+
+msgid "IDS_ST_BUTTON_STOP"
+msgstr "Stop"
+
+msgid "IDS_ST_BUTTON_SET_SCREEN_LOCK_TYPE"
+msgstr "Set. tip de blocare ecran"
+
+msgid "IDS_ST_BUTTON_RESET_APPS_ABB"
+msgstr "Reset. aplicaţii"
+
+msgid "IDS_ST_BUTTON_RESET"
+msgstr "Resetare"
+
+msgid "IDS_ST_BUTTON_REMOVE_DEFAULT_APPS_ABB"
+msgstr "Eliminare aplicaţii implicite"
+
+msgid "IDS_ST_BUTTON_ONLY_VIBRATE"
+msgstr "Doar vibrare"
+
+msgid "IDS_ST_BUTTON_OK_ABB"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON_MOVE_TO_SD_ABB"
+msgstr "Mutare pe SD"
+
+msgid "IDS_ST_BUTTON_MOVE_TO_PHONE"
+msgstr "Mutare în telefon"
+
+msgid "IDS_ST_BUTTON_FORCE_STOP"
+msgstr "Oprire forţată"
+
+msgid "IDS_ST_BUTTON_ENABLE"
+msgstr "Activare"
+
+msgid "IDS_ST_BUTTON_DISCONNECT"
+msgstr "Deconectare"
+
+msgid "IDS_ST_BUTTON_DISABLE"
+msgstr "Dezactiv."
+
+msgid "IDS_ST_BUTTON_CONTINUE"
+msgstr "Continuare"
+
+msgid "IDS_ST_BUTTON_CANCEL_ABB"
+msgstr "Anulare"
+
+msgid "IDS_ST_BODY_YYYY_DD_MM_DOT"
+msgstr "AAAA.ZZ.LL"
+
+msgid "IDS_ST_BODY_YOU_HAVE_SELECTED_TO_LAUNCH_THIS_APPLICATION_BY_DEFAULT_FOR_SOME_ACTIONS"
+msgstr "Această aplicaţie este setată să se deschidă în mod implicit pentru anumite acţiuni."
+
+msgid "IDS_ST_BODY_YOU_CAN_DECRYPT_ACCOUNTS_SETTINGS_DOWNLOADED_APPLICATIONS_AND_THEIR_DATA_MEDIA_AND_OTHER_FILES_DECRYPTION_WARNING_MSG"
+msgstr "Puteţi decripta conturi, setări, aplicaţii descărcate şi datele acestora, conţinut media şi alte fişiere. Decriptarea durează cel puţin o oră. Începeţi având bateria încărcată şi menţineţi dispozitivul conectat până la finalizarea decriptării. Dacă întrerupeţi procesul, este posibil să pierdeţi parţial sau total datele."
+
+msgid "IDS_ST_BODY_YOUR_DEVICE_REGISTRATION_CODE_C_PS"
+msgstr "Codul de înregistrare al dispozitivului dvs.: %s"
+
+msgid "IDS_ST_BODY_YOUR_CHANGES_ARE_BEING_MADE_T_TTS"
+msgstr "Se fac modificările."
+
+msgid "IDS_ST_BODY_WINSET"
+msgstr "Winset"
+
+msgid "IDS_ST_BODY_WHEN_THE_SOURCE_OF_LIGHT_IS_BEHIND_YOU_OR_WHEN_USING_DEVICE_IN_THE_DARK"
+msgstr "Când sursa de lumină se află în spatele dvs. sau când utilizaţi dispozitivul pe întuneric"
+
+msgid "IDS_ST_BODY_WHEN_LEARN_ABOUT_TILT_OR_MOTION_UNLOCK_ARE_SET_MOTION_ACTIVATION_WILL_BE_AUTOMATICALLY_ENABLED_IN_SETTINGS"
+msgstr "Dacă deblocarea la înclinare sau la mişcare este setată, activarea la mişcare va fi activată automat în Setări."
+
+msgid "IDS_ST_BODY_WHEN_FRONT_CAMERA_IS_USED_FOR_THE_APPLICATION"
+msgstr "Când camera frontală este utilizată pentru aplicaţie"
+
+msgid "IDS_ST_BODY_WHEN_FRONT_CAMERA_FAILS_TO_DETECT_FACE_AND_EYES"
+msgstr "Când camera foto frontală nu reuşeşte să detecteze faţa şi ochii"
+
+msgid "IDS_ST_BODY_WHEN_DATA_ROAMING_IS_DISABLED_APPLICATIONS_THAT_USE_THE_DATA_CONNECTION_MAY_NOT_WORK"
+msgstr "Când roamingul de date este dezactivat, este posibil ca aplicaţiile care utilizează conexiunea de date să nu funcţioneze."
+
+msgid "IDS_ST_BODY_WEB_APPLICATIONS"
+msgstr "Aplicaţii web"
+
+msgid "IDS_ST_BODY_WCDMA_GSM_NHAUTO_CONNECT"
+msgstr "WCDMA/GSM\n(conectare automată)"
+
+msgid "IDS_ST_BODY_WAIT_WHILE_DEVICE_IS_ENCRYPTED_PDP_COMPLETE"
+msgstr "Aşteptaţi criptarea dispozitivului. %d% finalizat."
+
+msgid "IDS_ST_BODY_WAIT_WHILE_DEVICE_IS_DECRYPTED_PDP_COMPLETE"
+msgstr "Aşteptaţi decriptarea dispozitivului. %d% finalizat."
+
+msgid "IDS_ST_BODY_WAITING_FOR_RESPONSE_FROM_SIM_CARD_ING"
+msgstr "Se aşteaptă răspunsul de la cartela SIM..."
+
+msgid "IDS_ST_BODY_VOLUME"
+msgstr "Volum"
+
+msgid "IDS_ST_BODY_VOICE_RECORDING"
+msgstr "Înregistrare voce"
+
+msgid "IDS_ST_BODY_VIBRATE_WHEN_RINGING"
+msgstr "Vibraţie când sună"
+
+msgid "IDS_ST_BODY_VERSION_PS"
+msgstr "Versiunea %s"
+
+msgid "IDS_ST_BODY_USING_MOBILE_DATA_MAY_RESULT_IN_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "Utilizarea datelor mobile poate genera costuri suplimentare. Continuaţi?"
+
+msgid "IDS_ST_BODY_USE_TIME_PROVIDED_BY_NETWORK"
+msgstr "Utilizaţi ora furnizată de reţea."
+
+msgid "IDS_ST_BODY_USE_MOTION"
+msgstr "Utilizare mişcare"
+
+msgid "IDS_ST_BODY_USER_ID"
+msgstr "ID utilizator"
+
+msgid "IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_URL_MSG"
+msgstr "Utilizatorul poate bloca o anumită adresă URL. Dacă o adresă URL este blocată, datele primite şi trimise vor fi eliminate."
+
+msgid "IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_PORT_MSG"
+msgstr "Utilizatorul poate bloca un anumit port. Dacă un port este blocat, datele primite şi trimise vor fi eliminate."
+
+msgid "IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_IP_ADDRESS_MSG"
+msgstr "Utilizatorul poate bloca o anumită adresă IP. Dacă o adresă IP este blocată, datele primite şi trimise vor fi eliminate."
+
+msgid "IDS_ST_BODY_USED"
+msgstr "Utilizat"
+
+msgid "IDS_ST_BODY_USB_OTG_STORAGE"
+msgstr "Spaţiu de stocare USB OTG"
+
+msgid "IDS_ST_BODY_USB_DEBUGGING_IS_INTENDED_FOR_DEVELOPMENT_PURPOSES_ONLY_MSG"
+msgstr "Depanarea USB este destinată exclusiv scopurilor de dezvoltare. Poate fi utilizată pentru a copia date de pe computerul dvs. pe dispozitiv, pentru a instala aplicaţii pe dispozitiv fără notificare şi pentru a citi datele din jurnale."
+
+msgid "IDS_ST_BODY_USB_DEBUGGING"
+msgstr "Depanare USB"
+
+msgid "IDS_ST_BODY_USB_ASK_ON_CONNECTION"
+msgstr "Întreabă la conectare"
+
+msgid "IDS_ST_BODY_URL"
+msgstr "URL"
+
+msgid "IDS_ST_BODY_UNMOUNT_USB_OTG_STORAGE"
+msgstr "Dezactivare spaţiu de stocare USB OTG"
+
+msgid "IDS_ST_BODY_UNMOUNT_SD_CARD"
+msgstr "Dezinstalare cartelă SD"
+
+msgid "IDS_ST_BODY_UNMOUNTING_THE_SD_CARD_WILL_STOP_SOME_APPLICATIONS_FROM_FUNCTIONING_UNTIL_YOU_MOUNT_THE_SD_CARD_AGAIN_MSG"
+msgstr "Dezactivarea cardului SD va opri funcţionarea anumitor aplicaţii. Este posibil ca aceste aplicaţii să fie disponibile numai după reactivarea cardului SD"
+
+msgid "IDS_ST_BODY_UNABLE_TO_USE_CURRENT_PASSWORD"
+msgstr "Imposibil de utilizat parola curentă"
+
+msgid "IDS_ST_BODY_UMTS_MODE_ONLY_WORKS_INSIDE_3G_COVERAGE_AREA"
+msgstr "Modul UMTS funcţionează numai în zona cu acoperire 3G."
+
+msgid "IDS_ST_BODY_UDRGOTHICM_JPN"
+msgstr "UDRGothicM"
+
+msgid "IDS_ST_BODY_UDMINCHO_JPN"
+msgstr "UDMincho"
+
+msgid "IDS_ST_BODY_UDGOTHIC_M_FONT"
+msgstr "UDGothic"
+
+msgid "IDS_ST_BODY_TURN_OFF"
+msgstr "Închidere"
+
+msgid "IDS_ST_BODY_TURNING_OFF_MOBILE_DATA_WHEN_THE_SCREEN_IS_OFF"
+msgstr "Dezactivarea datelor mobile când ecranul este stins."
+
+msgid "IDS_ST_BODY_TURNING_OFF_CONNECTIVITY_FEATURES_SUCH_AS_WI_FI_AND_BLUETOOTH"
+msgstr "Dezactivarea caracteristicilor de conectivitate, cum ar fi Wi-Fi şi Bluetooth."
+
+msgid "IDS_ST_BODY_TO_USE_PERSONAL_MODE_SCREEN_LOCK_TYPE_SHOULD_BE_SET_TO_SIMPLE_PASSWORD_OR_PASSWORD"
+msgstr "Pentru a utiliza modul Personal, tipul de blocare a ecranului trebuie setat la parolă simplă sau parolă."
+
+msgid "IDS_ST_BODY_TO_PROTECT_YOUR_DATA_DISABLE_PERSONAL_MODE_AFTER_YOU_USE_IT_ALSO_USING_A_SECURE_SCREEN_LOCK_WILL_PROVIDE_BETTER_PROTECTION"
+msgstr "Pentru a vă proteja datele, dezactivaţi modul Personal după ce îl utilizaţi. De asemenea, utilizarea unei blocări securizate a ecranului vă va oferi o protecţie suplimentară."
+
+msgid "IDS_ST_BODY_TO_OPEN_THE_MENU_DOUBLE_TAP_IT_T_TTS"
+msgstr "Pentru a deschide meniul, atingeţi-l de două ori."
+
+msgid "IDS_ST_BODY_TO_M_PERIOD"
+msgstr "Până la"
+
+msgid "IDS_ST_BODY_TO_ENABLE_THIS_FEATURE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Pentru a activa această caracteristică, activaţi cel puţin o funcţie relevantă."
+
+msgid "IDS_ST_BODY_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_FUNCTION"
+msgstr "Pentru activarea modului Economisire energie, activaţi cel puţin o funcţie."
+
+msgid "IDS_ST_BODY_TO_ENABLE_BLOCKING_MODE_ENABLE_AT_LEAST_ONE_OPTION"
+msgstr "Pentru a activa modul Blocare, activaţi cel puţin o opţiune."
+
+msgid "IDS_ST_BODY_TO_AVOID_OVERHEATING_MAXIMUM_BRIGHTNESS_HAS_BEEN_REDUCED"
+msgstr "Pentru a evita supraîncălzirea, luminozitatea maximă a fost redusă."
+
+msgid "IDS_ST_BODY_TOUCH"
+msgstr "Atingere"
+
+msgid "IDS_ST_BODY_TOTAL_SPACE"
+msgstr "Spaţiu total"
+
+msgid "IDS_ST_BODY_TOGGLE_THE_BUTTON_TO_ENABLE_OR_DISABLE_SCREEN_READER_OR_DOUBLE_TAP_TO_OPEN_THE_MENU_T_TTS"
+msgstr "Comutaţi butonul pentru a activa sau a dezactiva cititorul de ecran sau atingeţi de două ori pentru a deschide meniul."
+
+msgid "IDS_ST_BODY_TIME_ZONE"
+msgstr "Fus orar"
+
+msgid "IDS_ST_BODY_THIS_BAND_MAY_NOT_WORK_OUTSIDE_THE_USA_AND_CANADA"
+msgstr "Este posibil ca această bandă să nu funcţioneze în afara Statelor Unite şi a Canadei."
+
+msgid "IDS_ST_BODY_THIS_ACTION_WILL_ERASE_THE_SD_CARD_IN_THE_PHONE_YOU_WILL_LOSE_ALL_DATA_ON_THE_CARD_E"
+msgstr "Această acţiune va şterge cartela SD aflată în telefon. Veţi pierde TOATE datele de pe cartelă!"
+
+msgid "IDS_ST_BODY_THE_SD_CARD_IS_CURRENTLY_IN_USE_THIS_ACTION_WILL_ERASE_ALL_DATA_ON_THE_SD_CARD_INCLUDING_THE_DATA_THAT_IS_CURRENTLY_BEING_USED"
+msgstr "Cardul SD este utilizat în prezent. Această acţiune va şterge toate datele de pe cardul SD, inclusiv datele care sunt utilizate în prezent"
+
+msgid "IDS_ST_BODY_THE_RED_LED_LIGHTS_UP_WHEN_YOU_CHARGE_YOUR_DEVICE_WHILE_THE_SCREEN_IS_OFF"
+msgstr "LED-ul roşu se aprinde când încărcaţi dispozitivul, dacă ecranul este stins."
+
+msgid "IDS_ST_BODY_THE_RED_LED_BLINKS_WHEN_THE_BATTERY_POWER_IS_LOW_WHILE_THE_SCREEN_IS_OFF"
+msgstr "LED-ul roşu se aprinde intermitent când bateria este descărcată, dacă ecranul este stins."
+
+msgid "IDS_ST_BODY_THE_PASSWORD_MUST_NOT_CONTAIN_A_SIMPLE_SEQUENCE_HEG_1111_OR_1234"
+msgstr "Parola nu poate conţine o secvenţă simplă (de exemplu., 1111 sau 1234)"
+
+msgid "IDS_ST_BODY_THE_NAME_FIELD_CANNOT_BE_EMPTY"
+msgstr "Câmpul Nume nu poate rămâne necompletat."
+
+msgid "IDS_ST_BODY_THE_BLUE_LED_BLINKS_WHEN_YOU_RECORD_VOICE_WHILE_THE_SCREEN_IS_OFF"
+msgstr "LED-ul albastru se aprinde intermitent când înregistraţi vocea dacă ecranul este stins."
+
+msgid "IDS_ST_BODY_THE_BLUE_LED_BLINKS_WHEN_YOU_HAVE_MISSED_CALLS_MESSAGES_OR_APP_NOTIFICATIONS_WHILE_THE_SCREEN_IS_OFF"
+msgstr "LED-ul albastru se aprinde intermitent când aveţi apeluri pierdute, mesaje sau notificări legate de aplicaţii, dacă ecranul este stins."
+
+msgid "IDS_ST_BODY_THE_APPLICATIONS_BELOW_WERE_STARTED_BY_PS_STOPPING_THESE_APPLICATIONS_MAY_CAUSE_PS_TO_FAIL"
+msgstr "Aplicaţiile de mai jos au fost pornite de %s. Oprirea acestora poate cauza o eroare %s."
+
+msgid "IDS_ST_BODY_THERE_ARE_NO_NETWORKS_NEARBY"
+msgstr "Nu există reţele în apropiere."
+
+msgid "IDS_ST_BODY_TEXTSTYLE_LARGE"
+msgstr "Mare"
+
+msgid "IDS_ST_BODY_TASK_SWITCHER"
+msgstr "Comutator activităţi"
+
+msgid "IDS_ST_BODY_TAP_TO_INSERT"
+msgstr "Atingeţi pentru a insera."
+
+msgid "IDS_ST_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_TO_UNLOCK_IT_IF_THE_SCREEN_DOES_NOT_UNLOCK_TRY_TILTING_THE_DEVICE_MORE"
+msgstr "Mențineți apăsat ecranul, apoi înclinaţi dispozitivul spre dvs. pentru a-l debloca. Dacă ecranul nu se deblochează, încercaţi să înclinaţi mai mult dispozitivul."
+
+msgid "IDS_ST_BODY_SYSTEM_MEMORY"
+msgstr "Memorie sistem"
+
+msgid "IDS_ST_BODY_SUNDAY"
+msgstr "Duminică"
+
+msgid "IDS_ST_BODY_STORAGE"
+msgstr "Stocare"
+
+msgid "IDS_ST_BODY_STANDARD_T_DISPLAY_EFFECT"
+msgstr "Standard"
+
+msgid "IDS_ST_BODY_SPEECH"
+msgstr "Vorbire"
+
+msgid "IDS_ST_BODY_SOUND_N_DISPLAY"
+msgstr "Sunete şi afişare"
+
+msgid "IDS_ST_BODY_SOFTWARE"
+msgstr "Software"
+
+msgid "IDS_ST_BODY_SOCIAL_NETWORK_PROFILES"
+msgstr "Profiluri de reţele de socializare"
+
+msgid "IDS_ST_BODY_SMART_STAY_MAY_NOT_WORK_IN_THESE_SITUATIONS"
+msgstr "Este posibil ca ecranul activ inteligent să nu funcţioneze în aceste situaţii."
+
+msgid "IDS_ST_BODY_SMART_ROTATION_MAY_NOT_WORK_IN_THESE_SITUATIONS"
+msgstr "Este posibil ca rotirea inteligentă să nu funcţioneze în aceste situaţii."
+
+msgid "IDS_ST_BODY_SMART_ROTATION_DESCRIPTION_MSG"
+msgstr "Rotirea inteligentă dezactivează rotirea automată a ecranului şi utilizează camera frontală pentru a determina orientarea feţei, rotind ecranul în mod corespunzător."
+
+msgid "IDS_ST_BODY_SMALL_M_TEXTSIZE"
+msgstr "Mic"
+
+msgid "IDS_ST_BODY_SIM_PASSWORD"
+msgstr "Parolă SIM"
+
+msgid "IDS_ST_BODY_SIMPLE_PASSWORD"
+msgstr "Parolă simplă"
+
+msgid "IDS_ST_BODY_SHOWS_BATTERY_PERCENTAGE_ON_INDICATOR"
+msgstr "Indică procentajul bateriei la indicator."
+
+msgid "IDS_ST_BODY_SET_THE_DEFAULT_LOCATION_FOR_INSTALLING_APPLICATIONS_MSG"
+msgstr "Setaţi locaţia implicită pentru instalarea aplicaţiilor. Aplicaţiile pot fi instalate în locaţii diferite, în funcţie de tipul de aplicaţie şi de disponibilitatea locaţiei."
+
+msgid "IDS_ST_BODY_SET_FONT_AS_PS_Q"
+msgstr "Setaţi fontul ca %s?"
+
+msgid "IDS_ST_BODY_SET_AN_UNLOCK_PASSWORD_OF_AT_LEAST_6_CHARACTERS_CONTAINING_AT_LEAST_1_NUMBER"
+msgstr "Stabiliţi o parolă de deblocare de minimum 6 caractere, care să conţină minimum o cifră."
+
+msgid "IDS_ST_BODY_SERIAL_NUMBER"
+msgstr "Număr serie"
+
+msgid "IDS_ST_BODY_SECURITY_ENGINE"
+msgstr "Motor pentru securitate"
+
+msgid "IDS_ST_BODY_SECURITY"
+msgstr "Securitate"
+
+msgid "IDS_ST_BODY_SEARCH"
+msgstr "Căutare"
+
+msgid "IDS_ST_BODY_SD_CARD"
+msgstr "Cartelă SD"
+
+msgid "IDS_ST_BODY_SCREEN_TIMEOUT_ABB2"
+msgstr "Expirare ecran"
+
+msgid "IDS_ST_BODY_SCREEN_STAYS_ON_AS_LONG_AS_YOU_ARE_LOOKING_AT_IT"
+msgstr "Ecranul rămâne activ atâta timp cât îl priviţi."
+
+msgid "IDS_ST_BODY_SCREEN_ROTATION_CAN_BE_SLOWER_IF_SMART_ROTATION_ENABLED"
+msgstr "Rotirea ecranului poate fi mai lentă dacă este activată rotirea inteligentă"
+
+msgid "IDS_ST_BODY_SCREEN_OVERLAY_SHOWING_CURRENT_CPU_USAGE_ABB"
+msgstr "Suprap. pe ecran indicând utilizarea curentă a CPU"
+
+msgid "IDS_ST_BODY_SCREEN_ORIENTATION_ADJUSTS_TO_YOUR_ANGLE_OF_SIGHT"
+msgstr "Orientarea ecranului reglează unghiul de vizionare."
+
+msgid "IDS_ST_BODY_SCREEN_MODE"
+msgstr "Mod ecran"
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_TYPE_CANNOT_BE_CHANGED_WHILE_ENCRYPTING_THE_SD_CARD"
+msgstr "Tipul de blocare a ecranului nu poate fi modificat în timpul criptării cardului SD."
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_TYPE_CANNOT_BE_CHANGED_WHILE_ENCRYPTING_THE_DEVICE"
+msgstr "Tipul de blocare a ecranului nu poate fi modificat în timpul criptării dispozitivului."
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_TYPE"
+msgstr "Tip blocare ecran"
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_SOUND"
+msgstr "Sunet blocare ecran"
+
+msgid "IDS_ST_BODY_SCHEDULE"
+msgstr "Planificare"
+
+msgid "IDS_ST_BODY_SAVE_POWER_BY_ADJUSTING_SCREEN_TONE_ACCORDING_TO_ANALYSIS_OF_IMAGES"
+msgstr "Economisiţi energie reglând tonalitatea ecranului conform analizei imaginilor."
+
+msgid "IDS_ST_BODY_SAVES_POWER_BY_LIMITING_THE_MAXIMUM_PERFORMANCE_OF_THE_DEVICE"
+msgstr "Economiseşte energie limitând performanţa maximă a dispozitivului."
+
+msgid "IDS_ST_BODY_SAVED"
+msgstr "Salvat"
+
+msgid "IDS_ST_BODY_SAVE"
+msgstr "Salvare"
+
+msgid "IDS_ST_BODY_SAMSUNG_LEGAL"
+msgstr "Aspecte juridice Samsung"
+
+msgid "IDS_ST_BODY_SAMSUNG_KIES_CONNECTION_CONNECTING_USB_HELP_MSG"
+msgstr "Dacă Samsung Kies (software PC) sau driverele corespunzătoare nu sunt deja instalate pe computer, instalarea va continua în Microsoft Windows. \nDupă instalarea software-ului pentru computer, puteţi efectua următoarele operaţii:\n- Sincronizare date telefon\n- Actualizare software telefon\n- Partajare pe Internet (Acest telefon funcţionează ca un modem pentru a oferi acces la Internet  notebookului sau  computerului dvs.)\n- Copiere muzică achiziţionată/videoclip achiziţionat (DRM pentru Microsoft Windows Media) sau fişiere normale pe telefon."
+
+msgid "IDS_ST_BODY_RUNNING"
+msgstr "În funcţiune"
+
+msgid "IDS_ST_BODY_RESTRICTING_APPLICATION_USAGE_TO_ONLY_ESSENTIAL_APPLICATIONS_AND_THOSE_SELECTED_BY_YOU"
+msgstr "Se restricţionează utilizarea aplicaţiilor la aplicaţiile esenţiale şi la cele selectate de dvs."
+
+msgid "IDS_ST_BODY_RESET_TO_DEFAULT"
+msgstr "Reiniţializare la valori implicite"
+
+msgid "IDS_ST_BODY_RESET_SETTINGS"
+msgstr "Reiniţializare setări"
+
+msgid "IDS_ST_BODY_RESET_PERSONAL_MODE_SECURITY_SETTINGS_AND_DELETE_PERSONAL_CONTENT"
+msgstr "Restabiliţi setările de securitate ale Modului Personal şi ştergeţi conţinutul personal"
+
+msgid "IDS_ST_BODY_RESET_PERSONAL_MODE"
+msgstr "Resetare Mod Personal"
+
+msgid "IDS_ST_BODY_RESET_ALL"
+msgstr "Resetare totală"
+
+msgid "IDS_ST_BODY_REMOVE_LICENCE"
+msgstr "Eliminare licenţă"
+
+msgid "IDS_ST_BODY_REGULATORY_INFORMATION_ABB"
+msgstr "Inform. de reglementare"
+
+msgid "IDS_ST_BODY_REGISTER_AT"
+msgstr "Înregistrare la"
+
+msgid "IDS_ST_BODY_REGIONAL_EXAMPLE"
+msgstr "Exemplu regional"
+
+msgid "IDS_ST_BODY_REGION"
+msgstr "Regiune"
+
+msgid "IDS_ST_BODY_PUK"
+msgstr "Cod PUK"
+
+msgid "IDS_ST_BODY_PROXY_PORT"
+msgstr "Port proxy"
+
+msgid "IDS_ST_BODY_PROTOCOL_TYPE"
+msgstr "Tip protocol"
+
+msgid "IDS_ST_BODY_PROTECT_YOUR_DEVICE_FROM_HARMFUL_VIRUSES_AND_MALWARE"
+msgstr "Protejaţi-vă dispozitivul împotriva viruşilor şi a programelor malware dăunătoare."
+
+msgid "IDS_ST_BODY_PROFILE_NAME"
+msgstr "Nume profil"
+
+msgid "IDS_ST_BODY_PROFILE"
+msgstr "Profil"
+
+msgid "IDS_ST_BODY_PREPARING_THIS_COULD_TAKE_OVER_10_MINUTES_ING"
+msgstr "În pregătire. Aceasta poate dura peste 10 minute..."
+
+msgid "IDS_ST_BODY_PREFERRED_NETWORKS"
+msgstr "Reţele preferate"
+
+msgid "IDS_ST_BODY_POP_JPN_DCM"
+msgstr "POP"
+
+msgid "IDS_ST_BODY_PM"
+msgstr "PM"
+
+msgid "IDS_ST_BODY_PLUG_IN_CHARGER_AND_TRY_AGAIN"
+msgstr "Conectaţi încărcătorul şi încercaţi din nou."
+
+msgid "IDS_ST_BODY_PLAY_TONE_WHEN_THE_DIALLING_KEYPAD_IS_TAPPED"
+msgstr "Se redă tonul când se atinge tastatura de apelare."
+
+msgid "IDS_ST_BODY_PLAY_SOUNDS_WHEN_LOCKING_AND_UNLOCKING_SCREEN"
+msgstr "Redare sunete la blocarea şi deblocarea ecranului"
+
+msgid "IDS_ST_BODY_PIN_BLOCKED_ENTER_PUK_TO_CONTINUE_JPN_DCM"
+msgstr "PIN blocked. Enter PUK to continue."
+
+msgid "IDS_ST_BODY_PIN"
+msgstr "PIN"
+
+msgid "IDS_ST_BODY_PICTURES_VIDEOS"
+msgstr "Imagini, videoclipuri"
+
+msgid "IDS_ST_BODY_PHOTO_UPLOAD_SETTINGS"
+msgstr "Setări de încărcare a fotografiilor"
+
+msgid "IDS_ST_BODY_PHONEPROFILES_SILENT"
+msgstr "Silenţios"
+
+msgid "IDS_ST_BODY_PERSONAL_MODE_CAN_BE_USED_TO_HIDE_CONTENT_THAT_YOU_WANT_TO_KEEP_PRIVATE_MSG"
+msgstr "Modul Personal poate fi utilizat pentru a ascunde conţinutul care doriţi să rămână privat. Pentru a utiliza modul Personal, activaţi-l din Setări sau apăsaţi lung butonul de pornire şi selectaţi Modul Personal. Introduceţi PIN-ul sau parola. Pictograma pentru modul Personal va apărea în bara de stare. Pentru a vă proteja datele, dezactivaţi modul Personal după ce îl utilizaţi. De asemenea, utilizarea unui ecran blocat securizat vă va oferi o protecţie suplimentară."
+
+msgid "IDS_ST_BODY_PD_ATTEMPTS_REMAINING_JPN_DCM"
+msgstr "%d attempts remaining"
+
+msgid "IDS_ST_BODY_PASSWORD_REQUIRED_TO_DECRYPT_DEVICE_EACH_TIME_YOU_TURN_IT_ON"
+msgstr "Este necesară o parolă pentru decriptarea dispozitivului la fiecare pornire a acestuia."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_NO_MORE_THAN_PD_CHARACTERS_ABB"
+msgstr "Parola trebuie să conţină maxim. %d caractere."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_PD_CHARACTERS_ABB"
+msgstr "Parola trebuie să conţină minimum %d caractere."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_1_NUMBER"
+msgstr "Parola trebuie să conţină cel puţin un număr."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_1_LETTER"
+msgstr "Parola trebuie să conţină cel puţin o literă."
+
+msgid "IDS_ST_BODY_PASSWORD_EMPTY"
+msgstr "Parola lipseşte."
+
+msgid "IDS_ST_BODY_PASSWORD_CONTAINS_INVALID_CHARACTER_ABB"
+msgstr "Parola conţine caractere nevalide."
+
+msgid "IDS_ST_BODY_PASSWORD"
+msgstr "Parolă"
+
+msgid "IDS_ST_BODY_OPEN_SOURCE_LICENCES"
+msgstr "Licenţe open source"
+
+msgid "IDS_ST_BODY_ON_M_STATUS"
+msgstr "Pornit"
+
+msgid "IDS_ST_BODY_OFFICIAL_M_DEVICE_STATUS"
+msgstr "Oficial"
+
+msgid "IDS_ST_BODY_NUMBER"
+msgstr "Număr"
+
+msgid "IDS_ST_BODY_NO_RESULTS_FOUND"
+msgstr "Nu au fost găsite rezultate."
+
+msgid "IDS_ST_BODY_NO_DEFAULTS_SET"
+msgstr "Nu sunt setate valori implicite."
+
+msgid "IDS_ST_BODY_NOT_ASSIGNED"
+msgstr "Neatribuit"
+
+msgid "IDS_ST_BODY_NOTIFICATION_PANEL"
+msgstr "Panoul de notificare"
+
+msgid "IDS_ST_BODY_NOTIFICATIONS"
+msgstr "Notificări"
+
+msgid "IDS_ST_BODY_NOTIFICATION"
+msgstr "Notificare"
+
+msgid "IDS_ST_BODY_NOSERVICE"
+msgstr "Nici un serviciu"
+
+msgid "IDS_ST_BODY_NORMAL_T_PROFILE"
+msgstr "Normal"
+
+msgid "IDS_ST_BODY_NONE"
+msgstr "Niciuna"
+
+msgid "IDS_ST_BODY_NEW_PIN2_AND_CONFIRM_PIN2_DO_NOT_MATCH"
+msgstr "Codul PIN2 nou şi confirmarea codului PIN2 nu se potrivesc"
+
+msgid "IDS_ST_BODY_NEW_PIN2"
+msgstr "PIN2 nou"
+
+msgid "IDS_ST_BODY_NEW_PIN1"
+msgstr "Cod PIN1 nou"
+
+msgid "IDS_ST_BODY_NEW"
+msgstr "Nou"
+
+msgid "IDS_ST_BODY_NETWORK_TYPE"
+msgstr "Tip reţea"
+
+msgid "IDS_ST_BODY_NETWORK_MODE"
+msgstr "Mod reţea"
+
+msgid "IDS_ST_BODY_NETWORK_LIST"
+msgstr "Listă reţele"
+
+msgid "IDS_ST_BODY_NETWORK_CONNECTIONS"
+msgstr "Conexiuni la reţea"
+
+msgid "IDS_ST_BODY_NETWORK_CODE"
+msgstr "Cod reţea"
+
+msgid "IDS_ST_BODY_NETWORK"
+msgstr "Reţea"
+
+msgid "IDS_ST_BODY_NATURAL_T_DISPLAY_EFFECT"
+msgstr "Natural"
+
+msgid "IDS_ST_BODY_NAME"
+msgstr "Nume"
+
+msgid "IDS_ST_BODY_MY_NUMBER"
+msgstr "Numărul meu"
+
+msgid "IDS_ST_BODY_MSG_TIME_FORMAT"
+msgstr "Format oră"
+
+msgid "IDS_ST_BODY_MOVIE_T_DISPLAY_EFFECT"
+msgstr "Film"
+
+msgid "IDS_ST_BODY_MOUNT_USB_OTG_STORAGE"
+msgstr "Activare spaţiu de stocare USB OTG"
+
+msgid "IDS_ST_BODY_MOUNT_SD_CARD"
+msgstr "Fixare cartelă SD"
+
+msgid "IDS_ST_BODY_MOTION"
+msgstr "Mişcare"
+
+msgid "IDS_ST_BODY_MORE_SYSTEM_SETTINGS"
+msgstr "Alte setări de sistem"
+
+msgid "IDS_ST_BODY_MORE_CONNECTIVITY_SETTINGS"
+msgstr "Alte setări de conectivitate"
+
+msgid "IDS_ST_BODY_MONDAY"
+msgstr "Luni"
+
+msgid "IDS_ST_BODY_MODE"
+msgstr "Mod"
+
+msgid "IDS_ST_BODY_MOBILE_DATA_WILL_BE_USED_IF_YOU_DOWNLOAD_OR_UPLOAD_DATA_WITHOUT_WI_FI_CONNECTION"
+msgstr "Dacă descărcaţi sau încărcaţi date fără conexiunea Wi-Fi, se vor utiliza date mobile."
+
+msgid "IDS_ST_BODY_MM_DD_YYYY_DOT"
+msgstr "LL.ZZ.AAAA"
+
+msgid "IDS_ST_BODY_MMS_CONNECTIONS"
+msgstr "Conexiuni MMS"
+
+msgid "IDS_ST_BODY_MISCELLANEOUS_FILES"
+msgstr "Diferite fişiere"
+
+msgid "IDS_ST_BODY_MESSAGE"
+msgstr "Mesaj"
+
+msgid "IDS_ST_BODY_MENU_AND_WIDGETS"
+msgstr "Meniuri şi obiecte widget"
+
+msgid "IDS_ST_BODY_MEMORY"
+msgstr "Memorie"
+
+msgid "IDS_ST_BODY_MEDIUM"
+msgstr "Mediu"
+
+msgid "IDS_ST_BODY_MB"
+msgstr "MO"
+
+msgid "IDS_ST_BODY_MASS_STORAGE_HELP_MSG"
+msgstr "Puteţi efectua următoarele operaţii:\n- Copiere rapidă de fişiere\n- Conexiune prin SO MAC sau Linux"
+
+msgid "IDS_ST_BODY_MARUBERI_JPN_DCM"
+msgstr "Maruberi"
+
+msgid "IDS_ST_BODY_LTE_WCDMA_GSM_NHAUTO_CONNECT"
+msgstr "LTE/WCDMA/GSM\n(conectare automată)"
+
+msgid "IDS_ST_BODY_LOCK_SCREEN_OPTIONS"
+msgstr "Opţiuni ecran de blocare"
+
+msgid "IDS_ST_BODY_LIST_VIEW"
+msgstr "Vizualizare tip listă"
+
+msgid "IDS_ST_BODY_LIMIT_BACKGROUND_PROCESSES"
+msgstr "Limitare procese de fundal"
+
+msgid "IDS_ST_BODY_LICENCE"
+msgstr "Licenţă"
+
+msgid "IDS_ST_BODY_LED_INDICATOR"
+msgstr "Indicator LED"
+
+msgid "IDS_ST_BODY_LEDOT_LOW_BATTERY"
+msgstr "Baterie descărcată"
+
+msgid "IDS_ST_BODY_LAUNCH_BY_DEFAULT"
+msgstr "Lansare implicită"
+
+msgid "IDS_ST_BODY_LANGUAGE_AND_REGION_ABB"
+msgstr "Limbă şi regiune"
+
+msgid "IDS_ST_BODY_LANGUAGE_AND_KEYBOARD"
+msgstr "Limbă şi tastatură"
+
+msgid "IDS_ST_BODY_KEYBOARD"
+msgstr "Tastatură"
+
+msgid "IDS_ST_BODY_KEEPS_THE_STATUS_BAR_TIDY_TAP_THE_REPRESENTATIVE_ICON_TO_SHOW_ALL_THE_ICONS"
+msgstr "Păstrează ordonată bara de stare. Atingeţi pictograma reprezentativă pentru a afişa toate pictogramele."
+
+msgid "IDS_ST_BODY_KB"
+msgstr "KO"
+
+msgid "IDS_ST_BODY_INTRODUCTION_TO_SMART_SCREEN_ABB"
+msgstr "Prezentarea ecranului intelig."
+
+msgid "IDS_ST_BODY_INTERNET_CONNECTION"
+msgstr "Conexiune la Internet"
+
+msgid "IDS_ST_BODY_INSTALTAB_FINISH"
+msgstr "Terminare"
+
+msgid "IDS_ST_BODY_INSTALLED_APPLICATIONS"
+msgstr "Aplicaţii instalate"
+
+msgid "IDS_ST_BODY_INSTALLATION_SETTINGS"
+msgstr "Setări instalare"
+
+msgid "IDS_ST_BODY_INSERT_SD_CARD"
+msgstr "Introduceţi cartela SD."
+
+msgid "IDS_ST_BODY_INCORRECT_PIN_E"
+msgstr "PIN incorect"
+
+msgid "IDS_ST_BODY_INCORRECT_PASSWORD_TRY_AGAIN"
+msgstr "Parolă incorectă. Încercaţi din nou"
+
+msgid "IDS_ST_BODY_INCOMING_CALLS_AND_NEW_NOTIFICATIONS_WILL_BE_READ_OUT_AUTOMATICALLY"
+msgstr "Apelurile de intrare şi noile notificări vor fi citite în mod automat."
+
+msgid "IDS_ST_BODY_INCOMING_CALL"
+msgstr "Apel de intrare"
+
+msgid "IDS_ST_BODY_IMEI"
+msgstr "IMEI"
+
+msgid "IDS_ST_BODY_IF_YOU_SELECT_THIS_OPTION_ONLY_USED_MEMORY_SPACE_WILL_BE_ENCRYPTED"
+msgstr "Dacă selectaţi această opţiune, se va cripta numai spaţiul de memorie utilizat."
+
+msgid "IDS_ST_BODY_IF_YOU_FORGET_YOUR_PERSONAL_MODE_PASSWORD_YOU_WILL_NOT_BE_ABLE_TO_RECOVER_IT_FOR_SECURITY_MSG"
+msgstr "Dacă uitaţi parola pentru modul Personal, nu o veţi putea recupera. Pentru securitate, trebuie să resetaţi modul Personal. Resetarea va restabili setările implicite şi va şterge conţinutul personal."
+
+msgid "IDS_ST_BODY_IF_YOU_DONT_WANT_TO_SEE_A_NUMBER_APPEAR_ON_THE_APP_ICON_FOR_EACH_NEW_EVENT_DISABLE_BADGE"
+msgstr "Dacă nu doriţi să vedeţi un număr care să apară în pictograma aplicaţiei pentru fiecare eveniment nou, dezactivaţi insigna."
+
+msgid "IDS_ST_BODY_ICON_SHOWS_THAT_SMART_SCREEN_IS_ENABLED"
+msgstr "Pictograma arată că ecranul inteligent este activat."
+
+msgid "IDS_ST_BODY_HOME_URL"
+msgstr "URL pagină de pornire"
+
+msgid "IDS_ST_BODY_HOME_AND_LOCK_SCREEN"
+msgstr "Ecran de pornire şi de blocare"
+
+msgid "IDS_ST_BODY_HELVETICA_NEUE_M_FONT_NAME"
+msgstr "Helvetica Neue"
+
+msgid "IDS_ST_BODY_HARDWARE"
+msgstr "Hardware"
+
+msgid "IDS_ST_BODY_GSM"
+msgstr "GSM"
+
+msgid "IDS_ST_BODY_GRID_VIEW"
+msgstr "Vizualizare tip grilă"
+
+msgid "IDS_ST_BODY_GLOVE_MODE_ABB"
+msgstr "Modul Mănuşă"
+
+msgid "IDS_ST_BODY_GESTURES"
+msgstr "Gesturi"
+
+msgid "IDS_ST_BODY_GB"
+msgstr "GB"
+
+msgid "IDS_ST_BODY_FROM_M_TIME"
+msgstr "De la"
+
+msgid "IDS_ST_BODY_FREQUENTLY_USED"
+msgstr "Utilizate frecvent"
+
+msgid "IDS_ST_BODY_FORMAT_USB_OTG_STORAGE"
+msgstr "Formatare spaţiu de stocare USB OTG"
+
+msgid "IDS_ST_BODY_FORMAT_SD_CARD"
+msgstr "Formatare cartelă SD"
+
+msgid "IDS_ST_BODY_FORMATTING_USB_OTG_STORAGE_WILL_DELETE_ALL_DATA_DATA_CANNOT_BE_RECOVERED_CONTINUE_Q"
+msgstr "Formatarea spaţiului de stocare USB OTG va şterge toate datele. Datele nu pot fi recuperate. Continuaţi?"
+
+msgid "IDS_ST_BODY_FORMATTING_SD_CARD_WILL_DELETE_ALL_DATA_DATA_CANNOT_BE_RECOVERED_CONTINUE_Q"
+msgstr "Formatarea cartelei SD va şterge toate datele. Datele nu pot fi recuperate. Continuaţi?"
+
+msgid "IDS_ST_BODY_FORGOT_PASSWORD_SWA"
+msgstr "Forgot password"
+
+msgid "IDS_ST_BODY_FORBIDDEN_NETWORK"
+msgstr "Reţea interzisă"
+
+msgid "IDS_ST_BODY_FONT_TYPE"
+msgstr "Tip font"
+
+msgid "IDS_ST_BODY_FONTSTYLE_ROSEMARY"
+msgstr "Rosemary"
+
+msgid "IDS_ST_BODY_FLIGHT_MODE_MSG"
+msgstr "Modul Avion vă permite să dezactivaţi funcţiile pentru apeluri, mesagerie şi reţeaua de date. De asemenea, dezactivează funcţiile de conectivitate, cum ar fi Wi-Fi şi Bluetooth. Pentru a utiliza Wi-Fi şi Bluetooth, activaţi-le din Setări sau din panoul de notificare."
+
+msgid "IDS_ST_BODY_FLIGHT_MODE_HAS_BEEN_ENABLED_NETWORK_SETTINGS_WILL_CLOSE"
+msgstr "Modul Avion a fost activat. Setările de reţea se vor închide."
+
+msgid "IDS_ST_BODY_FLIGHT_MODE"
+msgstr "Mod Avion"
+
+msgid "IDS_ST_BODY_FIXED_DIALLING_MODE"
+msgstr "FDN"
+
+msgid "IDS_ST_BODY_FIREWALL_ENABLED_ABB"
+msgstr "Firewall activat"
+
+msgid "IDS_ST_BODY_FIREWALL"
+msgstr "Firewall"
+
+msgid "IDS_ST_BODY_FEATURES"
+msgstr "Funcţii"
+
+msgid "IDS_ST_BODY_FAST_ENCRYPTION"
+msgstr "Criptare rapidă"
+
+msgid "IDS_ST_BODY_FAILED_TO_SELECT_NETWORK"
+msgstr "Selectarea reţelei nu a reuşit."
+
+msgid "IDS_ST_BODY_FACE_AND_VOICE"
+msgstr "Faţă şi voce"
+
+msgid "IDS_ST_BODY_FACEBOOK"
+msgstr "Facebook"
+
+msgid "IDS_ST_BODY_EXPLANATION_FOR_TRANSACTION_TRACKING_MENU_VODA"
+msgstr "Informaţiile de recomandare sunt trimise de asemenea cu fişierul transferat"
+
+msgid "IDS_ST_BODY_EXPLANATION_FOR_EXPIRY_REMINDER_MENU"
+msgstr "Primiţi un memento înainte de expirarea licenţei unui fişier în uz, precum o imagine de fundal."
+
+msgid "IDS_ST_BODY_ESTIMATED_MAX_STANDBY_TIME_ABB"
+msgstr "Timp estimat\nmax. în aştept."
+
+msgid "IDS_ST_BODY_ENTER_PASSWORD_AGAIN_AFTER_PD_SECONDS"
+msgstr "Introduceţi din nou parola după %d secunde."
+
+msgid "IDS_ST_BODY_ENTER_PASSWORD_AGAIN"
+msgstr "Introduceţi parola din nou"
+
+msgid "IDS_ST_BODY_ENTER_PASSWORD"
+msgstr "Introduceţi parola."
+
+msgid "IDS_ST_BODY_ENTER_NEW_PASSWORD"
+msgstr "Introduceţi parola nouă."
+
+msgid "IDS_ST_BODY_ENTER_CURRENT_PASSWORD"
+msgstr "Introduceţi parola actuală."
+
+msgid "IDS_ST_BODY_ENCRYPT_DEVICE_Q_WARNING_MSG"
+msgstr "Criptaţi dispozitivul? Această operaţie este ireversibilă şi, dacă o întrerupeţi, veţi pierde date. Criptarea necesită cel puţin o oră, timp în care dispozitivul va reporni de mai multe ori şi nu poate fi utilizat."
+
+msgid "IDS_ST_BODY_ENCRYPT_DEVICE_Q_OPERATION_IS_IRREVERSIBLE_AND_IF_YOU_INTERRUPT_IT_YOU_WILL_LOSE_DATA"
+msgstr "Criptaţi dispozitivul? Operaţiunea este ireversibilă şi, dacă o întrerupeţi, veţi pierde datele"
+
+msgid "IDS_ST_BODY_ENCRYPT_ACCOUNTS_SETTINGS_DOWNLOADED_APPLICATIONS_AND_THEIR_DATA_MEDIA_AND_OTHER_FILES"
+msgstr "Criptaţi conturi, setări, aplicaţii descărcate şi datele acestora, conţinutul media şi alte fişiere."
+
+msgid "IDS_ST_BODY_ENCRYPTION_WILL_TAKE_AT_LEAST_AN_HOUR"
+msgstr "Este necesară cel puţin o oră pentru criptare."
+
+msgid "IDS_ST_BODY_ENCRYPTING_ING"
+msgstr "Se criptează..."
+
+msgid "IDS_ST_BODY_ENABLE_DATA_ACCESS_OVER_MOBILE_NETWORK"
+msgstr "Activare acces de date prin reţeaua mobilă"
+
+msgid "IDS_ST_BODY_EMPTY"
+msgstr "Liber"
+
+msgid "IDS_ST_BODY_EMERGENCY_MODE_ABB"
+msgstr "Modul Urgenţă"
+
+msgid "IDS_ST_BODY_EMAIL"
+msgstr "E-mail"
+
+msgid "IDS_ST_BODY_EDIT"
+msgstr "Editare"
+
+msgid "IDS_ST_BODY_EASY_MODE"
+msgstr "Mod Simplu"
+
+msgid "IDS_ST_BODY_DYNAMIC_T_DISPLAY_EFFECT"
+msgstr "Dinamic"
+
+msgid "IDS_ST_BODY_DYNAMIC_STATUS_BAR"
+msgstr "Bara de stare dinamică"
+
+msgid "IDS_ST_BODY_DRIVING_MODE"
+msgstr "Mod la volan"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Nu se mai afişează"
+
+msgid "IDS_ST_BODY_DOWNLOADS"
+msgstr "Descărcări"
+
+msgid "IDS_ST_BODY_DOWNLOAD"
+msgstr "Descărcare"
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_MENU_T_TTS"
+msgstr "Atingeţi de două ori pentru a deschide meniul."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "Atingeţi de două ori pentru a edita acest câmp."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_MENU_T_TTS"
+msgstr "Atingeţi de două ori pentru a închide meniul."
+
+msgid "IDS_ST_BODY_DOCOMO_JPN_DCM"
+msgstr "docomo"
+
+msgid "IDS_ST_BODY_DIVX_REGISTRATION"
+msgstr "Înregistrare DivX"
+
+msgid "IDS_ST_BODY_DIVX_DEREGISTRATION"
+msgstr "Anulare înregistrare DivX"
+
+msgid "IDS_ST_BODY_DISPLAY_CONTENTS"
+msgstr "Afişare conţinut"
+
+msgid "IDS_ST_BODY_DISPLAY_BATTERY_PERCENTAGE_ABB"
+msgstr "Afişare procentaj baterie"
+
+msgid "IDS_ST_BODY_DISABLING_ING"
+msgstr "Se dezactivează..."
+
+msgid "IDS_ST_BODY_DE_REGISTRATION_CODE_NOT_FOUND"
+msgstr "Codul de anulare a înregistrării nu a fost găsit."
+
+msgid "IDS_ST_BODY_DEVICE_MEMORY"
+msgstr "Memorie dispozitiv"
+
+msgid "IDS_ST_BODY_DEVICE_INFO"
+msgstr "Informaţii dispozitiv"
+
+msgid "IDS_ST_BODY_DEVICE_ENCRYPTION_HELP_MSG"
+msgstr "Puteţi cripta conturi, setări, aplicaţii descărcate şi datele acestora, conţinut media şi alte fişiere. Odată dispozitivul criptat, va fi necesară o parolă pentru a-l decripta la fiecare pornire.\n\nCriptarea durează cel puţin o oră. Începeţi având bateria încărcată şi menţineţi dispozitivul conectat până la finalizarea criptării. Dacă o întrerupeţi, este posibil să pierdeţi parţial sau total datele."
+
+msgid "IDS_ST_BODY_DEVICE_ENCRYPTED"
+msgstr "Dispozitiv criptat"
+
+msgid "IDS_ST_BODY_DEVICE"
+msgstr "Dispozitiv"
+
+msgid "IDS_ST_BODY_DEVELOPER_OPTIONS"
+msgstr "Opţiuni dezvoltator"
+
+msgid "IDS_ST_BODY_DEFAULT_STORAGE"
+msgstr "Stocare implicită"
+
+msgid "IDS_ST_BODY_DEFAULT_RENDERING_ENGINE"
+msgstr "Motor implicit de redare"
+
+msgid "IDS_ST_BODY_DEFAULT_FONT"
+msgstr "Font prestabilit"
+
+msgid "IDS_ST_BODY_DECRYPT_DEVICE_Q_WARNING_MSG"
+msgstr "Decriptaţi dispozitivul? Această operaţie este ireversibilă şi, dacă o întrerupeţi, veţi pierde date. Decriptarea necesită cel puţin o oră, timp în care dispozitivul va reporni de mai multe ori şi nu poate fi utilizat."
+
+msgid "IDS_ST_BODY_DECRYPT_DEVICE"
+msgstr "Decriptare dispozitiv"
+
+msgid "IDS_ST_BODY_DECRYPTING_ING"
+msgstr "Se decriptează..."
+
+msgid "IDS_ST_BODY_DEBUGGING_MODE_LAUNCHES_WHEN_USB_IS_CONNECTED"
+msgstr "Se lansează modul de depanare la conectarea unui USB."
+
+msgid "IDS_ST_BODY_DDMMYYYY_DOT"
+msgstr "ZZ/LL/AAAA"
+
+msgid "IDS_ST_BODY_DATE_AND_TIME"
+msgstr "Dată şi oră"
+
+msgid "IDS_ST_BODY_DATE"
+msgstr "Dată"
+
+msgid "IDS_ST_BODY_DATA_ROAMING"
+msgstr "Roaming date"
+
+msgid "IDS_ST_BODY_DATA"
+msgstr "Date"
+
+msgid "IDS_ST_BODY_CUSTOM_M_DEVICE_STATUS"
+msgstr "Personalizat"
+
+msgid "IDS_ST_BODY_CURRENT"
+msgstr "Curent"
+
+msgid "IDS_ST_BODY_CRASH_VIEWER"
+msgstr "Vizualizare erori"
+
+msgid "IDS_ST_BODY_CPU_USAGE"
+msgstr "Utilizare CPU"
+
+msgid "IDS_ST_BODY_COUNTRY_CODE"
+msgstr "Cod ţară"
+
+msgid "IDS_ST_BODY_COOL_JAZZ"
+msgstr "Cool jazz"
+
+msgid "IDS_ST_BODY_CONTENT_FROM_GALLERY_VIDEO_MUSIC_VOICE_RECORDER_AND_MY_FILES_CAN_BE_HIDDEN_IN_PERSONAL_MODE"
+msgstr "Conţinutul din Galerie, Video, Muzică, Înregistrare voce şi Fişierele mele poate fi ascuns în modul Personal."
+
+msgid "IDS_ST_BODY_CONNECTIONSETTINGS_PROXY_ADDRESS"
+msgstr "Adresă proxy"
+
+msgid "IDS_ST_BODY_CONNECTIONSETTINGS_INTERNET"
+msgstr "Internet"
+
+msgid "IDS_ST_BODY_CONNECTIONS"
+msgstr "Conexiuni"
+
+msgid "IDS_ST_BODY_CONNECTION"
+msgstr "Conexiune"
+
+msgid "IDS_ST_BODY_CONFIRM_NEW_PIN2"
+msgstr "Confirmare PIN2 nou"
+
+msgid "IDS_ST_BODY_CONFIRM_NEW_PIN1"
+msgstr "Confirmaţi noul cod PIN1."
+
+msgid "IDS_ST_BODY_CONFIRM_NEW_PIN"
+msgstr "Confirmare PIN nou"
+
+msgid "IDS_ST_BODY_CONFIRM_DECRYPTION"
+msgstr "Confirmare decriptare"
+
+msgid "IDS_ST_BODY_CONFIRM"
+msgstr "Confirmare"
+
+msgid "IDS_ST_BODY_CONFIGURE_FIREWALL_SETTINGS"
+msgstr "Configurare setări firewall"
+
+msgid "IDS_ST_BODY_COMPUTING_ING"
+msgstr "Se calculează..."
+
+msgid "IDS_ST_BODY_CLEAR_DEFAULTS"
+msgstr "Ştergere valori implicite"
+
+msgid "IDS_ST_BODY_CHOCO_COOKY"
+msgstr "Choco cooky"
+
+msgid "IDS_ST_BODY_CHECK_FOR_UPDATES_AUTOMATICALLY_ABB"
+msgstr "Verificare automată actualizări"
+
+msgid "IDS_ST_BODY_CHECK_FOR_UPDATES_ABB"
+msgstr "Verificare actualizări"
+
+msgid "IDS_ST_BODY_CHECK_FOR_UPDATES"
+msgstr "Verificare actualizări"
+
+msgid "IDS_ST_BODY_CHARGE_BATTERY_TO_ABOVE_80P_AND_TRY_AGAIN"
+msgstr "Încărcaţi bateria la peste 80% din capacitate şi încercaţi din nou."
+
+msgid "IDS_ST_BODY_CHANGING_THE_FONT_SIZE_IN_ACCESSIBILITY_SETTINGS_WILL_OVERRIDE_THE_FONT_SIZE_IN_EACH_APPLICATION"
+msgstr "Modificarea dimensiunii fontului în setările de accesibilitate va înlocui dimensiunea fontului din fiecare aplicaţie."
+
+msgid "IDS_ST_BODY_CHANGING_THE_COLOUR_OF_THE_SCREEN_TO_GREYSCALE"
+msgstr "Se schimbă culoarea ecranului la tonuri de gri."
+
+msgid "IDS_ST_BODY_CHANGE_TEXT_SIZE_IN_CONTACTS_CALENDAR_MEMO_MESSAGES_EMAIL_AND_IM"
+msgstr "Modificare dimensiune text în Contacte, Calendar, Note, Mesaje, E-mail şi IM"
+
+msgid "IDS_ST_BODY_CHANGE_PIN2"
+msgstr "Modificare PIN2"
+
+msgid "IDS_ST_BODY_CALL_SETTINGS"
+msgstr "Setări apeluri"
+
+msgid "IDS_ST_BODY_CALL"
+msgstr "Apel"
+
+msgid "IDS_ST_BODY_CACHE"
+msgstr "Cache"
+
+msgid "IDS_ST_BODY_BLOCK_URL"
+msgstr "Blocare adresă URL"
+
+msgid "IDS_ST_BODY_BLOCK_UDP"
+msgstr "Blocare UDP"
+
+msgid "IDS_ST_BODY_BLOCK_TCP"
+msgstr "Blocare TCP"
+
+msgid "IDS_ST_BODY_BLOCK_PORT"
+msgstr "Blocare port"
+
+msgid "IDS_ST_BODY_BLOCK_IP"
+msgstr "Blocare IP"
+
+msgid "IDS_ST_BODY_BLOCKING_MODE_IS_ENABLED"
+msgstr "Modul Blocare este activat."
+
+msgid "IDS_ST_BODY_BLOCKING_MODE"
+msgstr "Mod Blocare"
+
+msgid "IDS_ST_BODY_BLOCKED_URL_LIST"
+msgstr "Listă adrese URL blocate"
+
+msgid "IDS_ST_BODY_BLOCKED_PORT_LIST"
+msgstr "Lista de porturi blocate"
+
+msgid "IDS_ST_BODY_BLOCKED_IP_LIST"
+msgstr "Listă IP-uri blocate"
+
+msgid "IDS_ST_BODY_BATTERY_PERCENTAGE_ABB"
+msgstr "Procentaj baterie"
+
+msgid "IDS_ST_BODY_BATTERY"
+msgstr "Baterie"
+
+msgid "IDS_ST_BODY_BACKUP_AND_RESET"
+msgstr "Creare copii de rezervă şi resetare"
+
+msgid "IDS_ST_BODY_BACKLIGHT_TIME"
+msgstr "Durată lumină fundal"
+
+msgid "IDS_ST_BODY_A_PERSON_YOU_HAVE_GRANTED_AUTHORITY_TO_IS_TRYING_TO_REMOTELY_ENABLE_EMERGENCY_MODE_ON_THIS_DEVICE_MSG"
+msgstr "O persoană căreia i-aţi acordat această autorizare încearcă să activeze de la distanţă modul Urgenţă pe acest dispozitiv. Informaţiile dvs. vor fi trimise către server în 60 de secunde şi modul Urgenţă va fi activat. Atingeţi Anulare pentru a opri procesul."
+
+msgid "IDS_ST_BODY_A_PASSWORD_WILL_BE_REQUIRED_TO_DECRYPT_YOUR_DEVICE_EVERY_TIME_YOU_POWER_IT_ON"
+msgstr "Se va solicita o parolă pentru a decripta dispozitivul de fiecare dată când îl porniţi."
+
+msgid "IDS_ST_BODY_AVAILABLE_SPACE"
+msgstr "Spaţiu disponibil"
+
+msgid "IDS_ST_BODY_AVAILABLE"
+msgstr "Disponibil"
+
+msgid "IDS_ST_BODY_AUTO_DOWNLOAD"
+msgstr "Descărcare automată"
+
+msgid "IDS_ST_BODY_AUTH_TYPE"
+msgstr "Tip autentificare"
+
+msgid "IDS_ST_BODY_APP_OPENING_IMAGE"
+msgstr "Imagine deschidere aplicaţie"
+
+msgid "IDS_ST_BODY_APP_OPENING_EFFECT"
+msgstr "Efect deschidere aplicaţie"
+
+msgid "IDS_ST_BODY_APPLICATION_SETTINGS"
+msgstr "Setări aplicaţie"
+
+msgid "IDS_ST_BODY_APPLICATION_MANAGER"
+msgstr "Manager de aplicaţii"
+
+msgid "IDS_ST_BODY_APPLICATION_INFO"
+msgstr "Informaţii aplicaţie"
+
+msgid "IDS_ST_BODY_APPLICATION"
+msgstr "Aplicaţie"
+
+msgid "IDS_ST_BODY_ANTIVIRUS_SOFTWARE_ABB"
+msgstr "Software antivirus"
+
+msgid "IDS_ST_BODY_AM"
+msgstr "AM"
+
+msgid "IDS_ST_BODY_ALWAYS_REJECT"
+msgstr "Se respinge întotdeauna"
+
+msgid "IDS_ST_BODY_ALWAYS_ON"
+msgstr "Întotdeauna pornit"
+
+msgid "IDS_ST_BODY_ALWAYS_OFF"
+msgstr "Întotdeauna dezactivat"
+
+msgid "IDS_ST_BODY_ALARM"
+msgstr "Alarmă"
+
+msgid "IDS_ST_BODY_AFTER_YOU_DOWNLOAD_AND_INSTALL_APPLICATIONS_APPLICATIONS_WILL_BE_SHOWN_HERE"
+msgstr "După ce descărcaţi şi instalaţi aplicaţii, acestea se vor afişa aici"
+
+msgid "IDS_ST_BODY_AFTER_RESETTING_PHONE_WILL_RESTART_AUTOMATICALLY"
+msgstr "După resetare, telefonul va reporni automat."
+
+msgid "IDS_ST_BODY_ADJUST_BRIGHTNESS_LEVEL"
+msgstr "Reglare nivel luminozitate"
+
+msgid "IDS_ST_BODY_ADJUST_AUTOMATIC_BRIGHTNESS"
+msgstr "Reglare luminozitate automată"
+
+msgid "IDS_ST_BODY_ACCESS_NAME"
+msgstr "Nume acces"
+
+msgid "IDS_ST_BODY_ACCESSIBILITY"
+msgstr "Accesibilitate"
+
+msgid "IDS_ST_BODY_ABOUT_DEVICE"
+msgstr "Despre dispozitiv"
+
+msgid "IDS_QCP_HEADER_QUICK_COMMAND"
+msgstr "Comandă rapidă"
+
+msgid "IDS_ECON_BODY_EASY_CONNECT_M_SHARING_ABB"
+msgstr "Conec. simplă"
+
+msgid "IDS_SCR_POP_SCREEN_READER_IS_NOT_SUPPORTED_BY_PS_PRESS_THE_BACK_KEY_TO_RETURN_TO_THE_PREVIOUS_SCREEN"
+msgstr "Cititorul de ecran nu este acceptat de %s. Apăsaţi butonul înapoi pentru a reveni la ecranul anterior."
+
+msgid "IDS_KEEPIT_HEADER_KEEPIT_M_APPLICATION_NAME"
+msgstr "KeepIt"
+
+msgid "IDS_CALL_POP_UNAVAILABLE_T_DIAL"
+msgstr "Indisponibil"
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Numai apeluri de urgenţă"
+
+msgid "IDS_JAVA_OPT_SIM_SETTINGS"
+msgstr "Setări SIM"
+
+msgid "IDS_TASK_BODY_NO_RUNNING_APPLICATION"
+msgstr "Nu se execută nicio aplicaţie"
+
+msgid "IDS_VC_MBODY_NOTIFICATION_READ_OUT"
+msgstr "Citire notificare"
+
+msgid "IDS_VC_HEADER_VOICE_RECOGNITION"
+msgstr "Recunoaştere vocală"
+
+msgid "IDS_SSEARCH_POP_SEARCHED"
+msgstr "A fost căutat."
+
+msgid "IDS_WIFI_BODY_DOT"
+msgstr "."
+
+msgid "IDS_DLNA_BODY_ACCESS_POINT_NAME"
+msgstr "Nume punct de acces"
+
+msgid "IDS_SKM_BODY_ASK_M_IDEA_SKETCH"
+msgstr "A întreba"
+
+msgid "IDS_HELP_POP_THE_FRONT_CAMERA_IS_NOT_BEING_USED_BY_ANOTHER_APPLICATION"
+msgstr "Camera foto frontală nu este utilizată de altă aplicaţie."
+
+msgid "IDS_HELP_POP_THE_DEVICE_IS_IN_WELL_LIT_CONDITIONS_BUT_THE_SCREEN_IS_NOT_IN_DIRECT_LIGHT"
+msgstr "Dispozitivul se află la lumină suficientă, dar ecranul nu este expus la lumină directă."
+
+msgid "IDS_HELP_POP_THE_DEVICE_IS_HELD_STEADY_AND_UPRIGHT"
+msgstr "Dispozitivul este ţinut fix şi îndreptat în sus."
+
+msgid "IDS_HELP_BODY_THE_DEVICE_REACTS_INTELLIGENTLY_BY_ADAPTING_THE_SCREEN_WHEN_IT_DETECTS_YOUR_FACE"
+msgstr "Dispozitivul reacţionează inteligent adaptând ecranul când detectează faţa dvs."
+
+msgid "IDS_HELP_BODY_SMART_SCREEN_WORKS_BEST_UNDER_THE_FOLLOWING_CONDITIONS_C"
+msgstr "Ecranul inteligent funcţionează cel mai bine în următoarele condiţii:"
+
+msgid "IDS_HELP_BODY_SMART_ROTATION_DISABLES_AUTO_SCREEN_ROTATION_BY_CHECKING_THE_ORIENTATION_OF_YOUR_FACE_AND_THE_DEVICE_BY_ITS_FRONT_CAMERA"
+msgstr "Rotirea inteligentă dezactivează rotirea automată a ecranului, verificând orientarea feţei dvs. şi a dispozitivului prin intermediul camerei foto frontale."
+
+msgid "IDS_LBS_HEADER_LOCATION"
+msgstr "Locaţie"
+
+msgid "IDS_LBS_BODY_DESTINATION"
+msgstr "Destinaţie"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Nu"
+
+msgid "IDS_HELP_BODY_SMART_STAY_DETECTS_YOUR_EYES_WITH_THE_FRONT_CAMERA_SO_THAT_THE_SCREEN_STAYS_ON_WHEN_YOU_ARE_LOOKING_AT_IT"
+msgstr "Funcţia ecran activ inteligent detectează ochii cu ajutorul camerei frontale, astfel încât ecranul rămâne activ atunci când îl priviţi."
+
+msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_NOTI_MSG"
+msgstr "Nu veţi mai putea utiliza aplicaţii precum Internetul, E-mailul sau YouTube prin intermediul reţelelor mobile. Continuaţi?"
+
+msgid "IDS_ST_BODY_10_MINUTES"
+msgstr "10 minute"
+
+msgid "IDS_ST_BODY_15SEC"
+msgstr "15 secunde"
+
+msgid "IDS_ST_BODY_24_HOURS"
+msgstr "24 ore"
+
+msgid "IDS_ST_BODY_2_MINUTES"
+msgstr "2 minute"
+
+msgid "IDS_ST_BODY_30SEC"
+msgstr "30 secunde"
+
+msgid "IDS_ST_BODY_5_MINUTES"
+msgstr "5 minute"
+
+msgid "IDS_ST_BODY_APPLICATIONS"
+msgstr "Aplicaţii"
+
+msgid "IDS_ST_BODY_DONT_ASK_AGAIN"
+msgstr "Nu se întreabă din nou"
+
+msgid "IDS_ST_BODY_P1SS_IS_CURRENTLY_P2SS_T_TTS"
+msgstr "%1$s este în prezent %2$s."
+
+msgid "IDS_ST_BODY_PASSWORDS_MUST_CONSIST_OF_AT_LEAST_4_ALPHANUMERIC_CHARACTERS_ALSO_INCLUDING_AT_LEAST_1_ALPHABETICAL_CHARACTER"
+msgstr "Parolele trebuie să conţină cel puţin 4 caractere alfanumerice şi să includă cel puţin 1 caracter alfabetic."
+
+msgid "IDS_ST_BODY_PUK1_BLOCKED"
+msgstr "Codul PUK1 a fost blocat."
+
+msgid "IDS_ST_BODY_PUK1_CODE"
+msgstr "Cod PUK1"
+
+msgid "IDS_ST_BODY_PUK2"
+msgstr "Cod PUK2"
+
+msgid "IDS_ST_BUTTON2_POWER_SAVING_MODE_ABB"
+msgstr "Mod econ. Energie"
+
+msgid "IDS_ST_BUTTON_CANCEL_ABB2"
+msgstr "Anulare"
+
+msgid "IDS_ST_HEADER_1_PROCESS_AT_MOST_ABB"
+msgstr "Cel mult 1 proces"
+
+msgid "IDS_ST_HEADER_2_PROCESSES_AT_MOST_ABB"
+msgstr "Cel mult 2 procese"
+
+msgid "IDS_ST_HEADER_3_PROCESSES_AT_MOST_ABB"
+msgstr "Cel mult 3 procese"
+
+msgid "IDS_ST_HEADER_4_PROCESSES_AT_MOST_ABB"
+msgstr "Cel mult 4 procese"
+
+msgid "IDS_ST_HEADER_ENTER_PIN_ABB3"
+msgstr "Introduceţi PIN-ul"
+
+msgid "IDS_ST_OPT_2G_ONLY"
+msgstr "Numai 2G"
+
+msgid "IDS_ST_OPT_3G_2G_HAUTO_CONNECT"
+msgstr "3G/2G (conectare automată)"
+
+msgid "IDS_ST_OPT_4G_3G_2G_HAUTO_CONNECT"
+msgstr "4G/3G/2G (conectare automată)"
+
+msgid "IDS_ST_POP_EMERGENCY_MODE_SAVES_BATTERY_POWER_BY_C_MSG"
+msgstr "Modul Urgenţă economiseşte energia bateriei în următoarele moduri:\n\n- Schimbă culoarea ecranului la tonuri de gri.\n- Limitează numărul de aplicaţii care se pot utiliza.\n- Dezactivează Datele mobile când este oprit ecranul.\n- Dezactivează caracteristicile de conectivitate, de exemplu, Wi-Fi şi Bluetooth.\n\nUnele caracteristici, cum ar fi Cititorul de ecran şi S View Cover, nu vor fi disponibile.\nEste posibil ca unele dintre casetele Dynamic Box din ecranul acasă să nu fie afişate şi să trebuiască reconfigurate."
+
+msgid "IDS_ST_POP_INCORRECT_PUK1_CODE"
+msgstr "Codul PUK1 este incorect"
+
+msgid "IDS_ST_POP_INCORRECT_PUK1_PD_ATTEMPTS_LEFT"
+msgstr "Cod PUK1 incorect. Au mai rămas %d încercări."
+
+msgid "IDS_ST_POP_INCORRECT_PUK2"
+msgstr "PUK2 greşit"
+
+msgid "IDS_ST_POP_INCORRECT_PUK2_PD_ATTEMPTS_LEFT"
+msgstr "Cod PUK2 incorect. Au mai rămas %d încercări."
+
+msgid "IDS_ST_POP_PIN_CHANGED"
+msgstr "PIN schimbat"
+
+msgid "IDS_TASKMGR_BUTTON_CLEAR_CACHE"
+msgstr "Golire cache"
+
+msgid "IDS_ST_BODY_3G_ONLY"
+msgstr "Numai 3G"
+
+msgid "IDS_ST_HEADER_ADD"
+msgstr "Adăugare"
+
+msgid "IDS_ST_BODY_SECONDS"
+msgstr "Secunde"
+
+msgid "IDS_ST_BUTTON_CANCEL"
+msgstr "Anulare"
+
+msgid "IDS_ST_BODY_1_5_SECONDS"
+msgstr "1.5 secunde"
+
+msgid "IDS_MSG_ACBUTTON_CANCEL_ABB"
+msgstr "ANULARE"
+
+msgid "IDS_MSG_ACBUTTON_DONE_ABB"
+msgstr "EFECTUAT"
+
+msgid "IDS_ST_HEADER_ENABLE_DATA_ROAMING"
+msgstr "Activare Roaming date"
+
+msgid "IDS_ST_HEADER_TURN_ON_MOBILE_DATA"
+msgstr "Activare date mobile"
+
+msgid "IDS_ST_HEADER_UNABLE_TO_PLAY_SAMPLE_ABB"
+msgstr "Mostra nu poate fi redată"
+
+msgid "IDS_ST_POP_SAMPLES_CANNOT_BE_PLAYED_DURING_CALLS"
+msgstr "Mostrele nu pot fi redate în timpul apelurilor."
+
+msgid "IDS_ST_HEADER_DEVICE_NAME"
+msgstr "Nume dispozitiv"
+
+msgid "IDS_ST_HEADER_DELETE_ITEMS_ABB2"
+msgstr "Ştergere elemente"
+
+msgid "IDS_ST_HEADER_FEEDBACK"
+msgstr "Feedback"
+
+msgid "IDS_ST_BODY_SELECT_ALL"
+msgstr "Selectare toate"
+
+msgid "IDS_ST_BODY_TOTAL"
+msgstr "Total"
+
+msgid "IDS_ST_HEADER_MANAGE_CERTIFICATES_ABB"
+msgstr "Gestionare certificate"
+
+msgid "IDS_ST_BODY_INCORRECT_PASSWORD"
+msgstr "Parolă incorectă"
+
+msgid "IDS_ST_HEADER_TURN_OFF_MOBILE_DATA"
+msgstr "Dezactivare date mobile"
+
+msgid "IDS_ST_BODY_FLIGHT_MODE_DISABLES_CALLING_AND_MESSAGING_FUNCTIONS_AND_TURNS_OFF_MOBILE_DATA_AND_CONNECTIVITY_FUNCTIONS_MSG"
+msgstr "Modul Avion dezactivează funcţiile de apelare, de mesagerie, precum şi cele de Date mobile şi conectivitate, cum ar fi Wi-Fi şi Bluetooth. Pentru a utiliza Wi-Fi şi Bluetooth în modul Avion, activaţi-le din Setări sau din panoul de notificare. Modul Avion va fi activat."
+
+msgid "IDS_ST_BODY_TYPE"
+msgstr "Tip"
+
+msgid "IDS_ST_BODY_PERSONAL"
+msgstr "Personal"
+
+msgid "IDS_ST_HEADER_LOCK_SCREEN_AND_SECURITY_ABB"
+msgstr "Ecran blocare şi securit."
+
+msgid "IDS_ST_HEADER_PRIVACY_AND_SAFETY_ABB"
+msgstr "Confid. şi siguranţă"
+
+msgid "IDS_ST_BODY_MOBILE_NETWORKS"
+msgstr "Reţele mobile"
+
+msgid "IDS_ST_HEADER_MORE_CONNECTION_SETTINGS"
+msgstr "Mai multe setări de conexiune"
+
+msgid "IDS_ST_MBODY_LEGAL_INFORMATION_ABB"
+msgstr "Informaţii juridice"
+
+msgid "IDS_ST_BODY_DEVICE_INFORMATION"
+msgstr "Informaţii despre dispozitiv"
+
+msgid "IDS_ST_BODY_PHONE_NUMBER"
+msgstr "Număr telefon"
+
+msgid "IDS_ST_BODY_MODEL_NUMBER"
+msgstr "Număr model"
+
+msgid "IDS_ST_MBODY_TIZEN_VERSION"
+msgstr "Versiune Tizen"
+
+msgid "IDS_ST_MBODY_BLUETOOTH_ADDRESS"
+msgstr "Adresă Bluetooth"
+
+msgid "IDS_ST_BODY_WI_FI_MAC_ADDRESS"
+msgstr "Adresă Wi-Fi MAC"
+
+msgid "IDS_ST_BUTTON_BATTERY_POWER_ABB"
+msgstr "Nivel baterie"
+
+msgid "IDS_ST_TMBODY_SECURITY_STATUS"
+msgstr "Stare de securitate"
+
+msgid "IDS_ST_SBODY_SHOW_THE_TIME_IN_24_HOUR_FORMAT_INSTEAD_OF_12_HOUR_HAM_PM_FORMAT"
+msgstr "Afişaţi ora în format de 24 de ore, în locul formatului de 12 ore (AM/PM)."
+
+msgid "IDS_ST_MBODY_AUTO_UPDATE"
+msgstr "Actualizare automată"
+
+msgid "IDS_ST_MBODY_24_HOUR_CLOCK"
+msgstr "Ceas 24 de ore"
+
+msgid "IDS_ST_BODY_MAGNIFIER"
+msgstr "Lupă"
+
+msgid "IDS_ST_TMBODY_CACHE"
+msgstr "Cache"
+
+msgid "IDS_ST_HEADER_CLEAR_CACHE_ABB"
+msgstr "Golire cache"
+
+msgid "IDS_ST_POP_THERE_IS_NO_CACHE_DATA_TO_CLEAR"
+msgstr "Nu există date din memoria cache care trebuie eliminate."
+
+msgid "IDS_ST_POP_ALL_THE_CACHE_DATA_WILL_BE_CLEARED"
+msgstr "Toate datele din memoria cache vor fi şterse."
+
+msgid "IDS_ST_BUTTON_CLEAR_CACHE_ABB"
+msgstr "Golire cache"
+
+msgid "IDS_ST_BODY_12_HOURS"
+msgstr "12 ore"
+
+msgid "IDS_ST_BODY_1MINUTE"
+msgstr "1 minut"
+
+msgid "IDS_ST_BODY_ACCOUNTS"
+msgstr "Conturi"
+
+msgid "IDS_ST_HEADER_ALLSHARE"
+msgstr "AllShare"
+
+msgid "IDS_ST_BODY_ANSWERINGMODE_AUTOMATIC"
+msgstr "Automat"
+
+msgid "IDS_ST_BUTTON_BACK"
+msgstr "Înapoi"
+
+msgid "IDS_ST_BODY_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BODY_ADVANCEDOPTIONS_CERTIFICATES"
+msgstr "Certificate"
+
+msgid "IDS_ST_BODY_CONTACTS"
+msgstr "Contacte"
+
+msgid "IDS_ST_BODY_MYTHEME_CREATE"
+msgstr "Creare"
+
+msgid "IDS_ST_BODY_CALLERID_DEFAULT"
+msgstr "Implicit"
+
+msgid "IDS_ST_BODY_FM_RADIO"
+msgstr "Radio FM"
+
+msgid "IDS_ST_BODY_FONT"
+msgstr "Font"
+
+msgid "IDS_ST_BODY_GALLERY"
+msgstr "Galerie"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Ajutor"
+
+msgid "IDS_ST_BODY_MANUAL"
+msgstr "Manual"
+
+msgid "IDS_ST_BODY_APPLICATIONSETTINGS_MESSAGE"
+msgstr "Mesaj"
+
+msgid "IDS_ST_BODY_MUSIC"
+msgstr "Muzică"
+
+msgid "IDS_ST_BODY_NFC"
+msgstr "NFC"
+
+msgid "IDS_ST_BODY_ALERTTYPE_OFF"
+msgstr "Oprit"
+
+msgid "IDS_ST_BODY_ON"
+msgstr "Pornit"
+
+msgid "IDS_ST_BODY_MEMORYSTATUS_OTHERS"
+msgstr "Altele"
+
+msgid "IDS_ST_BODY_PIN_LOCK"
+msgstr "Blocare cod PIN"
+
+msgid "IDS_ST_BODY_RESET"
+msgstr "Reiniţializare"
+
+msgid "IDS_ST_POP_NETWORKSERVICES_SEARCHING"
+msgstr "Căutare..."
+
+msgid "IDS_ST_BODY_SIZE"
+msgstr "Dimensiune"
+
+msgid "IDS_ST_HEADER_SYNCHRONISE"
+msgstr "Sincronizare"
+
+msgid "IDS_ST_BODY_SYSTEM"
+msgstr "Sistem"
+
+msgid "IDS_ST_BUTTON2_S_PLANNER"
+msgstr "Planificator S"
+
+msgid "IDS_ST_BODY_TWITTER"
+msgstr "Twitter"
+
+msgid "IDS_ST_BODY_USERNAME"
+msgstr "Utilizator"
+
+msgid "IDS_ST_BODY_VOICE"
+msgstr "Voce"
+
+msgid "IDS_ST_BODY_DEFAULTMEMORY_VOICE_RECORDER"
+msgstr "Înregistrare voce"
+
+msgid "IDS_ST_BODY_WI_FI"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BODY_YYYY_MM_DD_DOT"
+msgstr "AAAA/LL/ZZ"
+
+msgid "IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING"
+msgstr "Luminozitate"
+
+msgid "IDS_ST_HEADER_SORT_BY"
+msgstr "Sortare după"
+
+msgid "IDS_ST_BODY_DELETED"
+msgstr "Şters"
+
+msgid "IDS_ST_POP_ERROR"
+msgstr "Eroare"
+
+msgid "IDS_ST_TPOP_MAXIMUM_NUMBER_OF_CHARACTERS_REACHED"
+msgstr "A fost atins numărul maxim de caractere."
+
+msgid "IDS_ST_TPOP_TRY_AGAIN"
+msgstr "Încercaţi din nou."
+
+msgid "IDS_ST_BODY_VERSION"
+msgstr "Versiune"
+
+msgid "IDS_ST_BODY_DELETE"
+msgstr "Ştergere"
+
+msgid "IDS_ST_SK_SET_LITE"
+msgstr "Afiş."
+
+msgid "IDS_ST_SK_YES"
+msgstr "Da"
+
+msgid "IDS_SAPPS_SK_TRY_ABB"
+msgstr "Înc."
+
+msgid "IDS_ST_BODY_PLAY_A_SOUND_WHEN_BUTTONS_ICONS_AND_MENU_ITEMS_ARE_TAPPED"
+msgstr "Redaţi un sunet la atingerea butoanelor, a pictogramelor şi a elementelor de meniu."
+
+msgid "IDS_ST_MBODY_KEYBOARD_SOUND"
+msgstr "Sunet tastatură"
+
+msgid "IDS_ST_MBODY_RINGTONE"
+msgstr "Ton apel"
+
+msgid "IDS_ST_MBODY_TOUCH_SOUND"
+msgstr "Sunet atingere"
+
+msgid "IDS_ST_SBODY_PLAY_A_SOUND_WHEN_THE_SAMSUNG_KEYBOARD_IS_TAPPED"
+msgstr "Configuraţi redarea unui sunet la atingerea tastaturii Samsung."
+
+msgid "IDS_ST_POP_MOUNTING_SD_CARD_ING"
+msgstr "Se instalează cardul SD..."
+
+msgid "IDS_ST_BODY_SET_DATE"
+msgstr "Setare dată"
+
+msgid "IDS_ST_BODY_ALL"
+msgstr "Toate"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "Serviciu amplasare"
+
+msgid "IDS_ST_BODY_VPN"
+msgstr "VPN"
+
+msgid "IDS_ST_SK_OPTIONS_LITE"
+msgstr "Opţ."
+
+msgid "IDS_ST_BODY_TTS"
+msgstr "TTS"
+
+msgid "IDS_ST_BODY_VOICE_CONTROL"
+msgstr "Controlul vocal"
+
+msgid "IDS_ST_BODY_ALLOW_OR_BLOCK_NOTIFICATIONS_FROM_INDIVIDUAL_APPLICATIONS"
+msgstr "Permiteţi sau blocaţi toate notificările de la aplicaţii individuale."
+
+msgid "IDS_ST_MBODY_DO_NOT_DISTURB_ABB"
+msgstr "Nu deranjaţi"
+
+msgid "IDS_ST_MBODY_APP_NOTIFICATIONS"
+msgstr "Notificări aplicaţii"
+
+msgid "IDS_ST_HEADER_DEFAULT_APPLICATIONS_ABB"
+msgstr "Aplicaţii implicite"
+
+msgid "IDS_ST_BODY_HOME"
+msgstr "Acasă"
+
+msgid "IDS_ST_BODY_SET_TIME"
+msgstr "Setare oră"
+
+msgid "IDS_ST_BODY_UNABLE_TO_SCAN_FOR_NETWORKS"
+msgstr "Imposibil de căutat reţele"
+
+msgid "IDS_ST_BODY_LOCK_SCREEN"
+msgstr "Blocare ecran"
+
+msgid "IDS_ST_HEADER_VISION"
+msgstr "Vedere"
+
+msgid "IDS_ST_BODY_OFF"
+msgstr "Oprit"
+
+msgid "IDS_ST_BODY_SIGNAL_STRENGTH"
+msgstr "Putere semnal"
+
+msgid "IDS_ST_POP_MOBILE_DATA_WILL_BE_TURNED_ON_CONNECTING_TO_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_DEPENDING_ON_YOUR_PAYMENT_PLAN"
+msgstr "Datele mobile vor fi activate. Conectarea la reţele mobile poate genera costuri suplimentare, în funcţie de planul tarifar."
+
+msgid "IDS_ST_POP_UNLESS_YOU_CONNECT_TO_A_WI_FI_NETWORK_YOU_WILL_NOT_BE_ABLE_TO_USE_THE_INTERNET_EMAIL_OR_OTHER_APPS_MSG"
+msgstr "Dacă nu vă conectaţi la o reţea Wi-Fi, nu veţi putea să utilizaţi Internetul, Emailul sau alte aplicaţii care necesită o conexiune de date."
+
+msgid "IDS_SCR_BODY_PD_UNREAD_NOTIFICATIONS"
+msgstr "Notificări necitite"
+
+msgid "IDS_ACCS_OPT_OTHER_FEEDBACK_TTS"
+msgstr "Alt tip de feedback"
+
+msgid "IDS_ACCS_TMBODY_STATUS_BAR_INFORMATION"
+msgstr "Informaţii bară de stare"
+
+msgid "IDS_ACCS_SBODY_SELECT_WHICH_INFORMATION_FROM_INDICATORS_SHOWN_ON_THE_STATUS_BAR_WILL_BE_READ_OUT_WHEN_YOU_TRIPLE_TAP_THE_SCREEN_WITH_TWO_FINGERS_MSG"
+msgstr "Selectaţi informaţiile de pe indicatorii afişaţi pe bara de stare care vor fi citite atunci când atingeţi de trei ori ecranul folosind două degete, de exemplu, ora şi data, puterea semnalului, conexiunile Wi-Fi şi Bluetooth şi energia bateriei dispozitivului."
+

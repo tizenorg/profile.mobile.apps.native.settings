@@ -262,7 +262,7 @@ static int setting_ringtone_create(void *cb)
 
 	Eina_List *l;
 	fileNodeInfo *pNode;
-	Elm_Object_Item *cur_item;
+	Elm_Object_Item *cur_item = NULL;
 	Setting_GenGroupItem_Data *item_data = NULL;
 	int cnt = 0;
 	int cur_pos = -1; /*current selected item */

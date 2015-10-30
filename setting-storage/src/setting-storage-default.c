@@ -259,7 +259,7 @@ static void storageUg_default_main_item_sel(void *data, Evas_Object *obj,
 
 	Evas_Object *scroller = NULL;
 	ad->popup = setting_create_popup_with_list(&scroller, ad, ad->win,
-	                                           data_parentItem->keyStr, NULL, 0, 0);
+	                                           data_parentItem->keyStr, NULL, 0, false, false, 0);
 	_P(ad->popup);
 
 
@@ -288,7 +288,6 @@ static void storageUg_default_main_item_sel(void *data, Evas_Object *obj,
 		                                            STORAGEUG_STR_INTERNAL_STORAGE,
 		                                            NULL);
 		setting_retm_if(NULL == phone, "phone is NULL");
-		setting_genlist_item_groupstyle_set(phone, SETTING_GROUP_STYLE_CENTER);
 		phone->disableflag = EINA_FALSE;
 
 		/*memory_card = setting_create_Gendial_exp_sub_field(scroller,
@@ -303,12 +302,6 @@ static void storageUg_default_main_item_sel(void *data, Evas_Object *obj,
 		                                                  STORAGEUG_STR_SD_CARD,
 		                                                  storageUg_default_radio_change);
 		retm_if(NULL == memory_card, "setting_create_Gendial_exp_sub_field() Fail");
-		if (data_parentItem == ad->data_wifidirect
-		    || data_parentItem == ad->data_installapp) {
-			setting_genlist_item_groupstyle_set(memory_card, SETTING_GROUP_STYLE_BOTTOM);
-		} else {
-			setting_genlist_item_groupstyle_set(memory_card, SETTING_GROUP_STYLE_CENTER);
-		}
 
 		memory_card->disableflag = EINA_FALSE;
 
@@ -340,7 +333,6 @@ static int storageUg_default_create(void *data)
 	                                     STORAGEUG_STR_DEF_STORAGE, STORAGEUG_STR_BACK, NULL,
 	                                     (setting_call_back_func)storageUg_default_back_cb,
 	                                     NULL, ad, &genlist, ad->navi);
-//	elm_genlist_realization_mode_set(genlist, EINA_FALSE);
 
 	/*Shared contents */
 	setting_create_Gendial_field_titleItem(genlist, &itc_group_item,
@@ -358,31 +350,10 @@ static int storageUg_default_create(void *data)
 	} else {
 		SETTING_TRACE_ERROR("ad->data_bt is NULL");
 	}
-#if 0
-	/* NFC */
-
-	cur_storage = storageUg_default_cur_storage_get(ad->mmc_status,
-	                                                INT_SLP_SETTING_DEFAULT_MEM_NFC);
-	ad->data_nfc = setting_create_Gendial_exp_parent_field(genlist,
-	                                                       &itc_2text_3_parent, NULL, NULL, SWALLOW_Type_INVALID,
-	                                                       STORAGEUG_STR_NFC, (char *)cur_storage, SETTING_GROUP_STYLE_CENTER,
-	                                                       SETTING_GROUP_STYLE_CENTER);
-	if (ad->data_nfc) {
-		ad->data_nfc->int_slp_setting_binded = INT_SLP_SETTING_DEFAULT_MEM_NFC;
-	} else {
-		SETTING_TRACE_ERROR("ad->data_dload is NULL");
-	}
-
-#endif
 
 	/* Wifi Direct */
 	cur_storage = storageUg_default_cur_storage_get(ad->mmc_status,
 	                                                INT_SLP_SETTING_DEFAULT_MEM_WIFIDIRECT);
-	/*sub_text = setting_customize_text(_(cur_storage), 0, BLUE_SUBTEXT_COLOR, NULL); */
-	/*ad->data_wifidirect= setting_create_Gendial_exp_parent_field(genlist,
-			&itc_2text_3_parent, NULL, NULL, SWALLOW_Type_INVALID,
-			STORAGEUG_STR_WIFI, sub_text, SETTING_GROUP_STYLE_CENTER,
-			SETTING_GROUP_STYLE_BOTTOM);*/
 	ad->data_wifidirect = setting_create_Gendial_field_def(genlist, &(itc_2text), storageUg_default_main_item_sel,
 	                                                       ad, SWALLOW_Type_INVALID, NULL,
 	                                                       NULL, 0, STORAGEUG_STR_WIFI, (char *)cur_storage, NULL);
@@ -431,10 +402,13 @@ static int storageUg_default_destroy(void *data)
 {
 	int ret;
 
+	SettingStorageUG *ad = (SettingStorageUG *) data;
+
 	ret = vconf_ignore_key_changed(storageUg_MMC_stat, storageUg_default_mmc_changed_cb);
 	warn_if(ret, "vconf_ignore_key_changed(%s) Fail(%d)", storageUg_MMC_stat, ret);
 
 	setting_view_storage_default.is_create = 0;
+	elm_naviframe_item_pop(ad->navi);
 
 	return SETTING_RETURN_SUCCESS;
 }

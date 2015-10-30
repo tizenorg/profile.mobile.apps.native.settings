@@ -48,8 +48,8 @@ static void *setting_moreconnections_ug_on_create(ui_gadget_h ug,
 	setting_view_node_table_register(&setting_view_moreconnections_main, NULL);
 
 	/*  creating a view. */
-	setting_create_Gendial_itc("2line.top", &(moreconnectionsUG->itc_2text_2));
-	setting_create_Gendial_itc("1line", &(moreconnectionsUG->itc_1text));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(moreconnectionsUG->itc_2text_2));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(moreconnectionsUG->itc_1text));
 
 	setting_view_node_set_cur_view(&setting_view_moreconnections_main);
 	setting_view_create(&setting_view_moreconnections_main, (void *)moreconnectionsUG);
@@ -94,6 +94,12 @@ static void setting_moreconnections_ug_on_destroy(ui_gadget_h ug, app_control_h 
                                                   void *priv)
 {
 	SETTING_TRACE_BEGIN;
+	SettingMoreConnectionsUG *moreconnectionsUG = priv;
+
+
+	/*  called when this shared gadget is terminated. similar with app_exit */
+    setting_view_destroy(&setting_view_moreconnections_main, moreconnectionsUG);
+
 	SETTING_TRACE_END;
 }
 

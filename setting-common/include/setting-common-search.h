@@ -65,7 +65,6 @@ typedef struct _ListItemObject {
 	char *fieldname;
 	char *icon_path;
 	void *data;
-	setting_group_style group_style;
 	void **pBack; /*for pointer safety */
 
 	Elm_Object_Item *item;

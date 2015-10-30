@@ -33,6 +33,7 @@ static void setting_applications_defaultapp_click_softkey_cancel_cb(void *data, 
 static void setting_applications_defaultapp_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj, void *event_info);
 
 static gboolean setting_applications_create_homescreen_setting_ug(void *data);
+static char *setting_application_get_defaultapp_name(const char *appid);
 
 setting_view setting_view_applications_defaultapp = {
 	.create = setting_applications_defaultapp_create,
@@ -45,9 +46,35 @@ setting_view setting_view_applications_defaultapp = {
  *basic func
  *
  ***************************************************/
-static void _indicator_free(char *str)
+static char *setting_application_get_defaultapp_name(const char *appid)
 {
-	free(str);
+	SETTING_TRACE_BEGIN;
+	int ret = PMINFO_R_ERROR;
+	char *name = NULL;
+	char *ret_name = NULL;
+	pkgmgrinfo_appinfo_h handle;
+	if (!appid) {
+		SETTING_TRACE_ERROR("invalid appid");
+		return NULL;
+	}
+	ret = pkgmgrinfo_appinfo_get_appinfo(appid, &handle);
+	if (ret != PMINFO_R_OK) {
+		SETTING_TRACE_ERROR("Failed[%d] ail_get_appinfo(%s)", ret, appid);
+		return NULL;
+	}
+	ret = pkgmgrinfo_appinfo_get_label(handle, &name);
+	if (ret != PMINFO_R_OK) {
+		SETTING_TRACE_ERROR("Failed ail_appinfo_get_str(%s) : %d", appid, ret);
+		pkgmgrinfo_appinfo_destroy_appinfo(handle);
+		return NULL;
+	}
+	if (!name) {
+		pkgmgrinfo_appinfo_destroy_appinfo(handle);
+		return NULL;
+	}
+	ret_name = strdup(name);
+	pkgmgrinfo_appinfo_destroy_appinfo(handle);
+	return ret_name;
 }
 
 void construct_defaultapp(void *data, Evas_Object *genlist)
@@ -56,36 +83,20 @@ void construct_defaultapp(void *data, Evas_Object *genlist)
 	ret_if(data == NULL);
 	SettingApplicationsUG *ad = (SettingApplicationsUG *) data;
 
+	char *appid = vconf_get_str(VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME);
+	char *sub_desc = setting_application_get_defaultapp_name(appid);
 	ad->data_home =
 	    setting_create_Gendial_field_def(genlist, &(ad->itc_2text_2),
 	                                     setting_applications_defaultapp_mouse_up_Gendial_list_cb,
 	                                     ad, SWALLOW_Type_INVALID, NULL,
-	                                     NULL, 0, "Home",
-	                                     "Tizen home", NULL);
+	                                     NULL, 0, KeyStr_Home,
+	                                     sub_desc, NULL);
 	if (ad->data_home) {
 		ad->data_home->userdata = ad;
-		ad->data_home->group_style = SETTING_GROUP_STYLE_TOP;
 		__BACK_POINTER_SET(ad->data_home);
 	} else {
 		SETTING_TRACE_ERROR("ad->data_home is NULL");
 	}
-
-
-	ad->data_message =
-	    setting_create_Gendial_field_def(genlist, &(ad->itc_2text_2),
-	                                     setting_applications_defaultapp_mouse_up_Gendial_list_cb,
-	                                     ad, SWALLOW_Type_INVALID, NULL,
-	                                     NULL, 0, "Messages",
-	                                     "Messages", NULL);
-	if (ad->data_message) {
-		ad->data_message->userdata = ad;
-		ad->data_message->group_style = SETTING_GROUP_STYLE_TOP;
-		__BACK_POINTER_SET(ad->data_message);
-	} else {
-		SETTING_TRACE_ERROR("ad->data_message is NULL");
-	}
-
-
 }
 
 void destruct_defaultapp(void *data)
@@ -101,6 +112,34 @@ void destruct_defaultapp(void *data)
 #endif
 }
 
+static void setting_applications_defaultapp_vconf_change_cb(keynode_t *key, void *data)
+{
+	ret_if(data == NULL);
+
+	SettingApplicationsUG *ad = data;
+	int status = 0;
+
+	//status = vconf_keynode_get_string(key);
+	char *vconf_name = vconf_keynode_get_name(key);
+	//SETTING_TRACE("status:%d", status);
+
+	if (!safeStrCmp(vconf_name, VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME)) {
+		if (ad->data_home) {
+			G_FREE(ad->data_home->sub_desc);
+			//ad->data_home->sub_desc = get_pa_backlight_time_value_str();
+			char* pkgname = vconf_get_str(VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME);
+
+			// pkgname --> label
+			char * label = setting_application_get_defaultapp_name(pkgname);
+			ad->data_home->sub_desc = label;
+			elm_object_item_data_set(ad->data_home->item, ad->data_home);
+			elm_genlist_item_update(ad->data_home->item);
+		}
+	}
+}
+
+
+
 static int setting_applications_defaultapp_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
@@ -109,11 +148,10 @@ static int setting_applications_defaultapp_create(void *cb)
 	SettingApplicationsUG *ad = (SettingApplicationsUG *) cb;
 	Evas_Object *genlist = elm_genlist_add(ad->win_main_layout);
 	retvm_if(genlist == NULL, SETTING_RETURN_FAIL, "Cannot set scroller object as contento of layout");
-	/*elm_object_style_set(genlist, "dialogue"); */
-	//elm_genlist_realization_mode_set(genlist, EINA_TRUE);
+	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
 	elm_genlist_clear(genlist);	/* first to clear list */
 
-	setting_push_layout_navi_bar("Default Applications",
+	setting_push_layout_navi_bar(KeyStr_DefaultApplications,
 	                             _("IDS_ST_BUTTON_BACK"), NULL, NULL,
 	                             setting_applications_defaultapp_click_softkey_cancel_cb,
 	                             NULL,
@@ -123,7 +161,13 @@ static int setting_applications_defaultapp_create(void *cb)
 	evas_object_smart_callback_add(genlist, "realized", __gl_realized_cb, ad);
 
 	construct_defaultapp(ad, genlist);/*------- */
+	// ad->data_home
+	int ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME,
+	                               setting_applications_defaultapp_vconf_change_cb, ad);
 
+	// org.tizen.homescreen-efl : homescreen-efl
+	// org.tizen.homescreen     : Homescreen
+	// org.tizen.menu-screen : Simple Menu-screen
 
 	setting_view_applications_defaultapp.is_create = 1;
 	return SETTING_RETURN_SUCCESS;
@@ -140,6 +184,10 @@ static int setting_applications_defaultapp_destroy(void *cb)
 	destruct_defaultapp(cb);/*------- */
 
 	SettingApplicationsUG *ad = (SettingApplicationsUG *) cb;
+
+
+	vconf_ignore_key_changed(VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME,
+	                               setting_applications_defaultapp_vconf_change_cb);
 
 	setting_view_applications_defaultapp.is_create = 0;
 	elm_naviframe_item_pop(ad->navi_bar);
@@ -205,11 +253,9 @@ void setting_applications_defaultapp_mouse_up_Gendial_list_cb(void *data, Evas_O
 
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 	/*SETTING_TRACE("chk_status[%d]", list_item->chk_status); */
-	if (!strcmp(_(list_item->keyStr), "Home")) {
+	if (!safeStrCmp(KeyStr_Home, list_item->keyStr)) {
 		SETTING_TRACE("click Home and run UG");
 		setting_applications_create_homescreen_setting_ug(ad);
-	} else if (!strcmp(_(list_item->keyStr), "Messages")) {
-		SETTING_TRACE("click Home and run Message logic - do nothing now.");
 	}
 }
 

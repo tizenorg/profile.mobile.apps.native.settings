@@ -21,7 +21,6 @@
 #include <setting-common-draw-widget.h>
 #include <glib.h>
 #include <efl_extension.h>
-#include <efl_assist.h>
 
 /**
 * Get searchbar text and register redraw_cb by idler.
@@ -109,40 +108,6 @@ static void __searchbar_activated_cb(void *data, Evas_Object *obj, void *event_i
 	elm_object_focus_set(entry, EINA_FALSE);
 }
 
-#if 0
-static void __searchbar_eraser_clicked_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
-{
-	ret_if(!data);
-	Evas_Object *entry = data;
-	elm_entry_entry_set(entry, "");
-}
-#endif
-
-#if 0
-static void __searchbar_bg_clicked_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
-{
-	ret_if(!data);
-	Evas_Object *entry = data;
-	elm_object_focus_set(entry, EINA_TRUE);
-}
-#endif
-
-#if 0
-static void __searchbar_cancel_clicked_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	ret_if(!data || !obj);
-	evas_object_hide(obj);
-	Evas_Object *searchbar_layout = data;
-	/*elm_object_signal_emit(searchbar_layout, "cancel,out", ""); */
-	Evas_Object *entry = elm_object_part_content_get(searchbar_layout, "elm.swallow.content");
-	ret_if(!entry);
-	const char *text = elm_entry_entry_get(entry);
-	if (text != NULL && strlen(text) > 0)
-		elm_entry_entry_set(entry, NULL);
-	elm_object_focus_set(entry, EINA_FALSE);
-}
-#endif
-
 static void __searchbar_searchsymbol_clicked_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
 	ret_if(!data);
@@ -167,23 +132,67 @@ static void ___searchbar_input_panel_event_cb(void *data, Ecore_IMF_Context *ctx
 }
 
 
+
+static void
+_popup_block_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	elm_popup_dismiss(obj);
+}
+
+static void
+_popup_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	Evas_Object *popup = data;
+	elm_popup_dismiss(popup);
+}
+
+static void
+_popup_hide_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	elm_popup_dismiss(obj);
+}
+
+static void
+_popup_timeout_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	evas_object_del(obj);
+}
+
+static void
+_popup_hide_finished_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	evas_object_del(obj);
+}
+
+
+
 static void __searchbar_entry_max_len_reached(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	/*retm_if(data == NULL, "Data parameter is NULL"); */
 	retm_if(!elm_object_focus_get(obj), "Entry is not focused");/*notify only when entry is being focused on. */
-	setting_create_indicator_notification(_(EXCEED_LIMITATION_STR));
+
+	Evas_Object *parent = (Evas_Object *)data;
+
+	Evas_Object *popup = NULL;
+	popup = elm_popup_add(parent);
+	elm_object_style_set(popup, "toast");
+	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_object_text_set(popup, _(IDS_ST_TPOP_MAXIMUM_NUMBER_OF_CHARACTERS_REACHED));
+
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, _popup_hide_cb, NULL);
+	evas_object_smart_callback_add(popup, "dismissed", _popup_hide_finished_cb, NULL);
+	evas_object_smart_callback_add(popup, "block,clicked", _popup_block_clicked_cb, NULL);
+
+	elm_popup_timeout_set(popup, 2.0);
+	evas_object_smart_callback_add(popup, "timeout", _popup_timeout_cb, NULL);
+
+	evas_object_show(popup);
 }
 
 
 
 /**
 * Create searchar, register change cb and cancel cb.
-*
-* @param[in] data
-* @param[in] parent
-* @param[in] change_cb
-* @param[in] cancel_cb
 */
 EXPORT_PUBLIC
 Evas_Object *setting_create_searchbar(void *data, Evas_Object *parent,
@@ -196,8 +205,7 @@ Evas_Object *setting_create_searchbar(void *data, Evas_Object *parent,
 
 	elm_layout_file_set(searchbar_layout, SETTING_THEME_EDJ_NAME, "region_searchbar");
 	elm_object_part_content_set(parent, "searchbar", searchbar_layout);
-#if 0
-	Evas_Object *entry = ea_editfield_add(searchbar_layout, EA_EDITFIELD_SEARCHBAR_FIXED_SIZE);
+	Evas_Object *entry = elm_entry_add(searchbar_layout);
 
 	if (change_cb) {
 		evas_object_smart_callback_add(entry, "changed", change_cb, data);
@@ -214,41 +222,18 @@ Evas_Object *setting_create_searchbar(void *data, Evas_Object *parent,
 	elm_object_part_content_set(searchbar_layout, "elm.swallow.content", entry);
 	elm_object_part_text_set(entry, "elm.guide", _("IDS_ST_BODY_SEARCH"));
 	elm_entry_input_panel_return_key_type_set(entry, ELM_INPUT_PANEL_RETURN_KEY_TYPE_SEARCH);
-#endif
-	Evas_Object *icon = setting_create_icon(searchbar_layout, SETTING_ICON_PATH_CFG"A01-1_title_icon_search.png",
-	                                        NULL, NULL, NULL, NULL);
-	setting_decorate_image_RGBA(icon, 14, 41, 73, 255);
 
-	elm_object_part_content_set(searchbar_layout, "elm.swallow.search.icon", icon);
-	/*"elm.swallow.search.icon" */
-
-#if 0
-	/* is this required ? */
-	elm_object_signal_callback_add(searchbar_layout, "elm,eraser,clicked", "elm", __searchbar_eraser_clicked_cb, entry);
-	elm_object_signal_callback_add(searchbar_layout, "elm,bg,clicked", "elm", __searchbar_bg_clicked_cb, entry);
 	evas_object_size_hint_weight_set(searchbar_layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(searchbar_layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
-
 
 	Elm_Entry_Filter_Limit_Size *limit_filter_data = calloc(1, sizeof(Elm_Entry_Filter_Limit_Size));
 	if (limit_filter_data) {
 		limit_filter_data->max_char_count = 0;
 		limit_filter_data->max_byte_count = 20;
 		elm_entry_markup_filter_append(entry, elm_entry_filter_limit_size, limit_filter_data);
-		evas_object_smart_callback_add(entry, "maxlength,reached", __searchbar_entry_max_len_reached, NULL);
+		evas_object_smart_callback_add(entry, "maxlength,reached", __searchbar_entry_max_len_reached, parent);
 	}
 
-	/*Evas_Object *cancel_btn = elm_button_add(searchbar_layout);
-	elm_object_part_content_set(searchbar_layout, "button_cancel", cancel_btn);
-	elm_object_style_set(cancel_btn, "searchbar/default");
-	elm_object_text_set(cancel_btn, _("IDS_ST_BUTTON_CANCEL_ABB"));
-	elm_object_focus_allow_set(cancel_btn, EINA_FALSE);
-	elm_object_signal_emit(searchbar_layout, "cancel,show", "");
-
-	if (!cancel_cb){
-		cancel_cb = __searchbar_cancel_clicked_cb;
-	}
-	evas_object_smart_callback_add(cancel_btn, "clicked", cancel_cb, searchbar_layout);*/
 	evas_object_data_set(searchbar_layout, "entry", entry);
 	elm_object_signal_callback_add(searchbar_layout, "elm,action,click", "", __searchbar_searchsymbol_clicked_cb, entry);
 
@@ -263,6 +248,5 @@ Evas_Object *setting_create_searchbar(void *data, Evas_Object *parent,
 		SETTING_TRACE_ERROR("FAILED TO get imf_context -- elm_entry_imf_context_get");
 	}
 
-#endif
 	return searchbar_layout;
 }

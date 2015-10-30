@@ -81,9 +81,6 @@ static int setting_phone_license_main_create(void *cb)
 	                                             ad, SWALLOW_Type_INVALID, NULL, NULL,
 	                                             0, "IDS_ST_BODY_OPEN_SOURCE_LICENCES",
 	                                             NULL, NULL);
-	if (itme_data) {
-		setting_genlist_item_groupstyle_set(itme_data, SETTING_GROUP_STYLE_TOP);
-	}
 
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
@@ -245,7 +242,7 @@ static void __main_license_clicked(void *data)
 
 	ad->ug_loading = setting_ug_create(ad->ug, "setting-fileview-efl", UG_MODE_FULLVIEW, svc, cbs);
 	if (NULL == ad->ug_loading) {	/* error handling */
-		setting_create_simple_popup(ad, ad->win_get, NULL, _(UNSUPPORTED_FUNCTION));
+		setting_create_popup(ad, ad->win_get, NULL, _(UNSUPPORTED_FUNCTION), NULL, 0, false, false, 0);
 	}
 
 	app_control_destroy(svc);

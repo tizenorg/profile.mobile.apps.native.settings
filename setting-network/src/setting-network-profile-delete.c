@@ -24,10 +24,12 @@ static int setting_network_profile_delete_create(void *cb);
 static int setting_network_profile_delete_destroy(void *cb);
 static int setting_network_profile_delete_update(void *cb);
 static int setting_network_profile_delete_cleanup(void *cb);
+
 setting_view setting_view_network_profile_delete = {
 	.create = setting_network_profile_delete_create,
 	.destroy = setting_network_profile_delete_destroy,
-	.update = setting_network_profile_delete_update,
+	//.update = setting_network_profile_delete_update,
+	.update = NULL,
 	.cleanup = setting_network_profile_delete_cleanup,
 };
 
@@ -61,6 +63,10 @@ static void __profile_delete_list_draw(SettingNetworkUG *ad)
 	Setting_GenGroupItem_Data *item_data = NULL;
 
 	setting_network_reget_profile_list(ad);
+
+	// CREATE GENLIST 'Select All'
+
+	// CREATE GENLIST
 	SETTING_TRACE("ad->profile_list:%p", ad->profile_list);
 	EINA_LIST_FOREACH(ad->profile_list, elist, profile_h) {
 		SETTING_TRACE("profile_h:%p", profile_h);
@@ -91,53 +97,37 @@ static void __profile_delete_list_draw(SettingNetworkUG *ad)
 			return;
 		}
 		item_data->keyStr = (char *)g_strdup(name);
-		item_data->swallow_type = SWALLOW_Type_1CHECK;
+		item_data->swallow_type = SWALLOW_Type_1CHECK_RIGHT;
 		item_data->r_swallow_path = (char *)g_strdup("reveal/extended");
-		/*item_data->chk_status = 0; */
 		item_data->chk_change_cb = setting_network_profile_delete_check_cb;
 		item_data->userdata = ad;
 		item_data->sub_desc = (char *)g_strdup(apn);
 		item_data->belongs_to = (int) profile_h;
-		if (idx == 0) {
-			item_data->group_style = SETTING_GROUP_STYLE_TOP;
-		} else
-			item_data->group_style = SETTING_GROUP_STYLE_CENTER;
 
 		item_data->item =
 		    elm_genlist_item_append(ad->gl_profile_del, &(itc_2text_1icon_2), item_data, NULL,
 		                            ELM_GENLIST_ITEM_NONE,
 		                            setting_network_profile_delete_mouse_up_cb, ad);
-		if (idx == 0)
-			setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_TOP);
-		else
-			setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_CENTER);
 		ad->profile_del_list =
 		    eina_list_append(ad->profile_del_list, item_data);
 
 		idx++;
 	}
-	setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_BOTTOM);
 
 	Evas_Object *toolbar = elm_object_item_part_content_get(ad->navi_it_profile_del_list, "toolbar");
 	Evas_Object *allbtn = elm_object_item_part_content_get(ad->navi_it_profile_del_list, "title_left_btn");
 	SETTING_TRACE("idx:%d", idx);
 	if (idx == 1) {
-		setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_NONE);
-		/*if (button) elm_object_disabled_set(button, EINA_FALSE); */
 		if (allbtn) elm_object_disabled_set(allbtn, EINA_FALSE);
 	} else if (idx > 1) {
-		setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_BOTTOM);
-		/*if (button) elm_object_disabled_set(button, EINA_FALSE); */
 		if (allbtn) elm_object_disabled_set(allbtn, EINA_FALSE);
 	} else {
-		/*all are invalid,to delete directly */
 		if (ad->profile_list != NULL) {
 			eina_list_free(ad->profile_list);
 			ad->profile_list = NULL;
 		}
 		SETTING_TRACE("To disable");
 		elm_object_item_disabled_set(elm_toolbar_last_item_get(toolbar), EINA_TRUE);
-		/*if (button) elm_object_disabled_set(button, EINA_TRUE); */
 		if (allbtn) elm_object_disabled_set(allbtn, EINA_TRUE);
 		SETTING_TRACE("To disable");
 	}
@@ -148,6 +138,108 @@ static void __profile_delete_list_draw(SettingNetworkUG *ad)
 	return;
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+static Evas_Object* ctxpopup;
+
+static void
+ctxpopup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	evas_object_del(ctxpopup);
+	ctxpopup = NULL;
+}
+
+static void
+move_more_ctxpopup(Evas_Object *ctxpopup)
+{
+	SETTING_TRACE_BEGIN;
+	Evas_Object *win;
+	Evas_Coord w, h;
+	int pos = -1;
+
+	/* We convince the top widget is a window */
+	win = elm_object_top_widget_get(ctxpopup);
+	elm_win_screen_size_get(win, NULL, NULL, &w, &h);
+	pos = elm_win_rotation_get(win);
+
+	switch (pos) {
+		case 0:
+		case 180:
+			evas_object_move(ctxpopup, (w / 2), h);
+			break;
+		case 90:
+			evas_object_move(ctxpopup,  (h / 2), w);
+			break;
+		case 270:
+			evas_object_move(ctxpopup, (h / 2), w);
+			break;
+	}
+}
+
+static void
+naviframe_resize_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	Evas_Object *ctxpopup = data;
+	move_more_ctxpopup(ctxpopup);
+}
+
+static void
+more_ctxpopup_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	Evas_Object *nf = data;
+	evas_object_event_callback_del_full(nf, EVAS_CALLBACK_RESIZE, naviframe_resize_cb, ctxpopup);
+}
+
+static void
+win_rotation_changed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	Evas_Object *ctxpopup = data;
+	move_more_ctxpopup(ctxpopup);
+}
+
+/* Icon + Text (More button style : Naviframe Toolbar) */
+static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	Evas_Object *it_obj;
+	Evas_Object *nf = ad->navi_bar;
+	Evas_Object *win;
+	Elm_Object_Item *it;
+
+	if (ctxpopup != NULL) {
+		evas_object_del(ctxpopup);
+	}
+
+	ctxpopup = elm_ctxpopup_add(nf);
+	elm_ctxpopup_auto_hide_disabled_set(ctxpopup, EINA_TRUE);
+	elm_object_style_set(ctxpopup, "more/default");
+	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_BACK, eext_ctxpopup_back_cb, NULL);
+	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_MORE, eext_ctxpopup_back_cb, NULL);
+	evas_object_smart_callback_add(ctxpopup, "dismissed", ctxpopup_dismissed_cb, NULL);
+	evas_object_event_callback_add(ctxpopup, EVAS_CALLBACK_DEL, more_ctxpopup_del_cb, nf);
+	evas_object_event_callback_add(nf, EVAS_CALLBACK_RESIZE, naviframe_resize_cb, ctxpopup);
+
+	/* We convince the top widget is a window */
+	win = elm_object_top_widget_get(nf);
+	evas_object_smart_callback_add(win, "rotation,changed", win_rotation_changed_cb, ctxpopup);
+
+	//---------------------------------------------------------------------------------------------
+	elm_ctxpopup_item_append(ctxpopup, _("IDS_ST_BUTTON_CANCEL_ABB"), NULL, setting_network_profile_delete_click_softkey_cancel_cb, ad);
+	elm_ctxpopup_item_append(ctxpopup, _("IDS_ST_BODY_DELETE"), NULL, setting_network_profile_delete_click_softkey_delete_cb, ad);
+	//---------------------------------------------------------------------------------------------
+
+	elm_ctxpopup_direction_priority_set(ctxpopup, ELM_CTXPOPUP_DIRECTION_UP, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN);
+	move_more_ctxpopup(ctxpopup);
+	evas_object_show(ctxpopup);
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 static int setting_network_profile_delete_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
@@ -156,16 +248,15 @@ static int setting_network_profile_delete_create(void *cb)
 	Evas_Object *scroller = elm_genlist_add(ad->win_main_layout);
 	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
 	         "Cannot set scroller object  as contento of layout");
-	//elm_genlist_realization_mode_set(scroller, EINA_TRUE);
 	elm_object_style_set(scroller, "dialogue");
 	elm_genlist_clear(scroller);	/* first to clear list */
 	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb, NULL);
 	ad->gl_profile_del = scroller;
 
-	ad->navi_it_profile_del_list = setting_push_layout_navi_bar(_("IDS_ST_BODY_DELETE"),
-	                                                            dgettext("sys_string", "IDS_ST_BUTTON_BACK"),
-	                                                            dgettext("sys_string", "IDS_ST_BODY_DELETE"),
-	                                                            _("IDS_ST_BUTTON_CANCEL_ABB"),
+	ad->navi_it_profile_del_list = setting_push_layout_navi_bar(_(IDS_ST_BODY_DELETE),
+	                                                            NULL,
+	                                                            _(IDS_ST_BODY_DELETE),
+	                                                            _(IDS_ST_BUTTON_CANCEL_ABB),
 	                                                            setting_network_profile_delete_click_softkey_cancel_cb,
 	                                                            setting_network_profile_delete_click_softkey_delete_cb,
 	                                                            setting_network_profile_delete_click_softkey_cancel_cb,
@@ -176,21 +267,40 @@ static int setting_network_profile_delete_create(void *cb)
 	elm_object_item_disabled_set(it, EINA_TRUE);
 
 	Evas_Object *allbtn = elm_button_add(ad->navi_bar);
+	evas_object_size_hint_weight_set(allbtn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(allbtn, EVAS_HINT_FILL, 0.5);
 
-	elm_object_style_set(allbtn, "naviframe/title_icon");
-	Evas_Object *icon = elm_icon_add(allbtn);
 	elm_object_text_set(allbtn, _("IDS_ST_OPT_ALL"));
-	/*elm_image_file_set(icon, EDJ_NAME, "icon.select_all"); */
-	elm_image_file_set(icon, SETTING_ICON_PATH_CFG"select_all.png", NULL);
-
-	/*evas_object_size_hint_aspect_set(icon, EVAS_ASPECT_CONTROL_VERTICAL, 1 , 1); */
-	/*elm_image_resizable_set(icon, EINA_TRUE, EINA_TRUE); */
-	elm_object_content_set(allbtn, icon);
-	elm_object_focus_allow_set(allbtn, EINA_FALSE);
-	evas_object_propagate_events_set(allbtn, EINA_FALSE);
 	evas_object_smart_callback_add(allbtn, "clicked", setting_network_profile_delete_click_softkey_select_all_cb, ad);
 	evas_object_show(allbtn);
-	elm_object_item_part_content_set(ad->navi_it_profile_del_list, "title_left_btn", allbtn);
+	elm_object_item_part_content_set(ad->navi_it_profile_del_list, "title_right_btn", allbtn);
+
+	if (ad->navi_it_profile_del_list) {
+		elm_object_item_domain_text_translatable_set(ad->navi_it_profile_del_list, SETTING_PACKAGE, EINA_TRUE);
+		elm_naviframe_item_pop_cb_set(ad->navi_it_profile_del_list, setting_network_profile_delete_click_softkey_cancel_cb, ad);
+	}
+
+	// Add ctx popup handler
+	Evas_Object* morebtn = elm_button_add(ad->navi_bar);
+	elm_object_style_set(morebtn, "naviframe/more/default");
+	evas_object_smart_callback_add(morebtn, "clicked", create_ctxpopup_more_button_cb, ad);
+	elm_object_item_part_content_set(ad->navi_it_profile_del_list, "toolbar_more_btn", morebtn);
+
+#if 0
+	// ADD 'SELECT ALL'
+	ad->data_delete_all = setting_create_Gendial_field_1radio(ad->gl_profile_del, &(ad->itc_1icon_1text_sub),
+	                                                              __screen_timeout_cb, ad,
+	                                                              SWALLOW_Type_1RADIO_RIGHT,
+	                                                              rdg, 4, KeyStr_Backlight_5_MIN_STR,
+	                                                              NULL);
+	if (ad->data_delete_all) {
+		ad->data_delete_all->userdata = ad;
+		__BACK_POINTER_SET(ad->data_delete_all);
+	} else {
+		SETTING_TRACE_ERROR("ad->data_delete_all is NULL");
+	}
+#endif
+
 	__profile_delete_list_draw(ad);
 	ADD_GL_SEPARATOR(scroller);
 	setting_view_network_profile_delete.is_create = 1;
@@ -202,8 +312,9 @@ static int setting_network_profile_delete_destroy(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	SettingNetworkUG *ad = (SettingNetworkUG *) cb;
-	if (!setting_view_network_profile_delete.is_create)
+	if (!setting_view_network_profile_delete.is_create) {
 		return SETTING_RETURN_SUCCESS;
+	}
 
 	/* free data */
 	if (ad->profile_del_list != NULL) {
@@ -212,8 +323,8 @@ static int setting_network_profile_delete_destroy(void *cb)
 	}
 	ad->gl_profile_del = NULL;
 	ad->navi_it_profile_del_list = NULL;
-	setting_view_network_profile_delete.is_create = 0;
 	elm_naviframe_item_pop(ad->navi_bar);
+	setting_view_network_profile_delete.is_create = 0;
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -229,7 +340,9 @@ static int setting_network_profile_delete_update(void *cb)
 
 static int setting_network_profile_delete_cleanup(void *cb)
 {
-	return setting_network_profile_delete_destroy(cb);
+	SETTING_TRACE_BEGIN;
+	 setting_network_profile_delete_destroy(cb);
+	return SETTING_RETURN_SUCCESS;
 }
 
 /* ***************************************************
@@ -307,18 +420,20 @@ setting_network_profile_delete_mouse_up_cb(void *data,
  *call back func
  *
  ***************************************************/
-static void
-setting_network_profile_delete_click_softkey_cancel_cb(void *data,
-                                                       Evas_Object *
-                                                       obj, void
-                                                       *event_info)
+static Eina_Bool setting_network_profile_delete_click_softkey_cancel_cb(void *data, Elm_Object_Item *it)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
-	retm_if(data == NULL, "Data parameter is NULL");
+	retvm_if(data == NULL, FALSE, "Data parameter is NULL");
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
 	setting_view_change(&setting_view_network_profile_delete,
 	                    &setting_view_network_con_list, ad);
+
+	if (ctxpopup != NULL) {
+		evas_object_del(ctxpopup);
+		ctxpopup = NULL;
+	}
+	return EINA_TRUE;
 }
 
 static void __popup_deleted_response_cb(void *data, Evas_Object *obj,
@@ -385,7 +500,6 @@ setting_network_profile_delete_click_softkey_delete_cb(void *data,
 		}
 		if ((err = connection_remove_profile(ad->connection, profile_h)) != CONNECTION_ERROR_NONE) {
 			SETTING_TRACE_ERROR("*** [ERR] connection_add_profile. err=%d ***", err);
-			/*setting_create_simple_popup(ad, ad->win_get, NULL, _("IDS_CST_POP_FAILED")); */
 			G_FREE(name);
 			connection_profile_get_name(profile_h, &name);
 			SETTING_TRACE("name:%s", name);
@@ -399,8 +513,6 @@ setting_network_profile_delete_click_softkey_delete_cb(void *data,
 		} else {
 			ok_cnt++;
 			if (is_default) {
-				/*setting_create_simple_popup(ad, ad->win_get, NULL, _("Deleting default profile")); */
-
 				if (first_valid_item) {
 					connection_profile_h first_profile_h = (connection_profile_h)(first_valid_item->belongs_to);
 					(void)connection_set_default_cellular_service_profile(ad->connection,
@@ -421,7 +533,7 @@ setting_network_profile_delete_click_softkey_delete_cb(void *data,
 	if (!result) {
 		g_strlcat(speciliztion, _(": "), MAX_SPECIALIZITION_LEN);
 		g_strlcat(speciliztion, _("IDS_COM_POP_DELETE_FAILED"), MAX_SPECIALIZITION_LEN);
-		setting_create_simple_popup(ad, ad->win_get, NULL, _(speciliztion));
+		setting_create_popup(ad, ad->win_get, NULL, _(speciliztion), NULL, 0, false, false, 0);
 
 		if (ad->navi_it_profile_del_list)
 			elm_object_item_text_set(ad->navi_it_profile_del_list, _("IDS_ST_BODY_DELETE"));
@@ -435,15 +547,18 @@ setting_network_profile_delete_click_softkey_delete_cb(void *data,
 	}
 
 	if (result) {
-		/*setting_create_simple_popup(ad, ad->win_get, NULL, _("IDS_IM_BODY_SUCCESSFULLY_COMPLETED")); */
-		setting_create_popup_without_btn(ad, ad->win_get, NULL, _("IDS_ST_BODY_DELETED"), __popup_deleted_response_cb, 1, FALSE, FALSE);
-		/*setting_create_popup_without_btn(ad, ad->win_get, NULL, _("IDS_ST_BODY_DELETED"), __popup_deleted_response_cb, 0.5, FALSE, FALSE); */
+		setting_create_popup(ad, ad->win_get, NULL, "IDS_ST_BODY_DELETED", __popup_deleted_response_cb, 1, FALSE, FALSE, 0);
 	}
 
 	if (def_profile) {
 		G_FREE(def_apn);
 		G_FREE(def_name);
 		G_FREE(def_id);
+	}
+
+	if (ctxpopup != NULL) {
+		evas_object_del(ctxpopup);
+		ctxpopup = NULL;
 	}
 }
 

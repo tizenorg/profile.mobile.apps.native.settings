@@ -27,6 +27,8 @@
 #include <setting-locktype.h>
 #include <efl_extension.h>
 
+#include <security-server.h>
+
 #define Max_Passwd_View_Type_Len	64
 #ifndef UG_MODULE_API
 #define UG_MODULE_API __attribute__ ((visibility("default")))
@@ -59,13 +61,13 @@ int pwd_handler_sec_pw_passwd(SettingLocktypeUG *data, void *arg)
 	SettingLocktypeUG *ad = (SettingLocktypeUG *)data;
 
 	if (vconf_set_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, SETTING_SCREEN_LOCK_TYPE_PASSWORD) == 0) {
-		/*/* set radio * / */
+		/* set radio */
 		if (ad->lock_type_rd)
 			elm_radio_value_set(ad->lock_type_rd, SETTING_SCREEN_LOCK_TYPE_PASSWORD);
 
-		ad->save_popup = setting_create_popup_without_btn(ad, ad->win_get, NULL, _("IDS_ST_POP_NEW_PASSWD_SAVED"),
-		                                                  setting_locktype_ug_popup_resp_cb,
-		                                                  POPUP_INTERVAL, FALSE, FALSE);
+		ad->save_popup = setting_create_popup(ad, ad->win_get, NULL, "IDS_ST_POP_NEW_PASSWD_SAVED",
+		                                      setting_locktype_ug_popup_resp_cb,
+		                                      POPUP_INTERVAL, FALSE, FALSE, 0);
 	} else {
 		SETTING_TRACE_ERROR("setting vconf value failed : screen_lock_type");
 	}
@@ -82,13 +84,13 @@ int pwd_handler_sec_pw_simple_passwd(SettingLocktypeUG *data, void *arg)
 	/*'face and voice ' and 'simple password' share the same PASSWD_TYPE and callback function */
 	int lock_type = SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD;
 	if (vconf_set_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, lock_type) == 0) {
-		/*/* set radio * / */
+		/* set radio */
 		if (ad->lock_type_rd)
 			elm_radio_value_set(ad->lock_type_rd, lock_type);
 
-		ad->save_popup = setting_create_popup_without_btn(ad, ad->win_get, NULL, _("IDS_ST_POP_NEW_PASSWD_SAVED"),
-		                                                  setting_locktype_ug_popup_resp_cb,
-		                                                  POPUP_INTERVAL, FALSE, FALSE);
+		ad->save_popup = setting_create_popup(ad, ad->win_get, NULL, "IDS_ST_POP_NEW_PASSWD_SAVED",
+		                                      setting_locktype_ug_popup_resp_cb,
+		                                      POPUP_INTERVAL, FALSE, FALSE, 0);
 	} else {
 		SETTING_TRACE_ERROR("setting vconf value failed : screen_lock_type");
 	}
@@ -155,10 +157,8 @@ static void *setting_locktype_ug_on_create(ui_gadget_h ug,
 	} else if (locktypeUG->caller && !safeStrCmp(locktypeUG->caller, "lockscreen")) {
 		locktypeUG->viewtype = SETTING_LOCKTYPE_VIEWTYPE_RECOVERY;
 		vconf_set_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, SETTING_SCREEN_LOCK_TYPE_SWIPE);
-#if SECURITY_SERVER
 		int result = security_server_reset_pwd("0000", 0, 0);
 		SETTING_TRACE_DEBUG("reset_pwd result : %d", result);
-#endif
 	} else {
 		locktypeUG->viewtype = SETTING_LOCKTYPE_VIEWTYPE_MAIN;
 	}

@@ -93,8 +93,9 @@ void appmgrUg_fail_popup(char *str, SettingAppMgrUG *ad)
 		ad->popup = NULL;
 	}
 
-	ad->popup = setting_create_popup_with_btn(ad, ad->win, NULL,
-	                                          str, appmgrUg_popup_del, 0, 1, MGRAPP_STR_OK);
+	ad->popup = setting_create_popup(ad, ad->win, NULL,
+									 str, appmgrUg_popup_del, 0, FALSE, FALSE,
+									 1, MGRAPP_STR_OK);
 }
 
 static void appmgrUg_update_listinfos(SettingAppMgrUG *ad)
@@ -148,9 +149,9 @@ static int appmgrUg_pkgmgr_changed_cb(int req_id, const char *pkg_type,
 
 				if (ad->popup)
 					evas_object_del(ad->popup);
-				ad->popup = setting_create_popup_with_btn(ad, ad->win, NULL,
-				                                          MGRAPP_STR_UNINSTALL_COMPLETE, appmgrUg_popup_del, 0,
-				                                          1, MGRAPP_STR_OK);
+				ad->popup = setting_create_popup(ad, ad->win, NULL,
+												 MGRAPP_STR_UNINSTALL_COMPLETE, appmgrUg_popup_del, 0, FALSE, FALSE,
+												 1, MGRAPP_STR_OK);
 
 				ad->pkg_request = APPMGRUG_PKG_REQUEST_NONE;
 			} else if (APPMGRUG_PKG_REQUEST_MOVE == ad->pkg_request) {
@@ -249,7 +250,6 @@ Elm_Object_Item *appmgrUg_append_separator(Evas_Object *genlist,
 	item = elm_genlist_item_append(genlist, &ad->itc_sep, NULL, NULL,
 	                               ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-
 	return item;
 }
 
@@ -457,7 +457,7 @@ static int appmgrUg_get_all_pkg_size(int req_id, const char *pkg_type,
 			ad->size_idler = ecore_idler_add(appmgrUg_get_all_pkg_sizesort, ad);
 		} else {
 			if (info->item)
-				elm_genlist_item_fields_update(info->item, "elm.text.sub.left.bottom", ELM_GENLIST_ITEM_FIELD_TEXT);
+				elm_genlist_item_fields_update(info->item, "elm.text.sub", ELM_GENLIST_ITEM_FIELD_TEXT);
 		}
 	}
 
@@ -913,9 +913,9 @@ char *appmgrUg_info_title_gl_label_get(void *data, Evas_Object *obj,
 
 	retv_if(data == NULL, NULL);
 
-	if (0 == strcmp(part, "elm.text.main.left.top")) {
+	if (0 == strcmp(part, "elm.text")) {
 		label = SAFE_STRDUP(ad->sel_label);
-	} else if (0 == strcmp(part, "elm.text.sub.left.bottom")) {
+	} else if (0 == strcmp(part, "elm.text.sub")) {
 		char desc[APPMGRUG_MAX_STR_LEN] = {0};
 
 		if (APPMGRUG_TAB_RUNNING == ad->tabtype) {
@@ -982,7 +982,7 @@ int appmgrUg_reset_app_settings(SettingAppMgrUG *ad)
 		evas_object_del(ad->popup);
 	/* do not show popup
 	ad->popup = setting_create_popup_with_progressbar(ad, ad->win, PROGRESSBAR_STYLE,
-			NULL, NULL, appmgrUg_popup_del, 0, TRUE, TRUE);
+			NULL, NULL, appmgrUg_popup_del, 0, TRUE, TRUE, 0);
 	*/
 	ad->pkg_request = APPMGRUG_PKG_REQUEST_RESET;
 

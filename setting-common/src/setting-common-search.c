@@ -602,6 +602,7 @@ int __setting_init_search_index_module()
 		"setting-palmmotion-efl",				/* NO CODE !!! */
 		"setting-time-efl",						/* NO CODE !!! */
 		"setting-accessory-efl",				/* NO CODE !!! */
+		"setting-powersaving-efl",				/* NO CODE !!! */
 		"setting-storage-efl",					/* NO CODE !!! */
 		"setting-security-efl",					/* NO CODE !!! */
 		"setting-privacy-efl",					/* NO CODE !!! */
@@ -609,6 +610,7 @@ int __setting_init_search_index_module()
 		"setting-developeroption-efl",			/* NO CODE !!! */
 		"setting-about-efl",						/* NO CODE !!! */
 		"setting-network-efl",				/*finish */
+		"setting-datausage-efl",
 		"setting-fingerscanner-efl",
 		"setting-vpn-efl",
 	};

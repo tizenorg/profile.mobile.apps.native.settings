@@ -150,16 +150,14 @@ static void setting_phone_display_language_close_popup_ex(void *data)
 				char temp[32] = {0,};
 				snprintf(temp, 32, "%s.UTF-8", pnode->locale);
 				/* [control] set vconf language */
-				set_language_helper(temp);
-				/*vconf_set_str(VCONFKEY_LANGSET, temp); */
+				set_language_helper(pnode->locale);
 				elm_language_set(temp);
 
 				int region_automatic = 1;
 				vconf_get_bool(VCONFKEY_SETAPPL_REGION_AUTOMATIC_BOOL, &region_automatic);
 				if (region_automatic == 1) {
 					/* [control] region format set - if 'automatic region' */
-					set_regionformat_helper(temp);
-					/*vconf_set_str(VCONFKEY_REGIONFORMAT, temp); */
+					set_regionformat_helper(pnode->locale);
 
 					int ret = setting_phone_region_format_set_dateformat(pnode->locale, ad);
 					if (ret == SETTING_RETURN_FAIL) {
@@ -224,9 +222,9 @@ static void setting_phone_display_language_close_popup_ex(void *data)
 		FREE(caller);
 
 	} else {
-		ad->pop_progress_lang = setting_create_popup_with_progressbar_withobject(ad, ad->pop_progress_lang, ad->ly_language,
+		ad->pop_progress_lang = setting_create_popup_with_progressbar(ad, ad->ly_language,
 		                                                                         PROGRESSBAR_STYLE,
-		                                                                         NULL, KeyStr_Loading, setting_phone_display_language_done_popup_resp_cb, 3/*0*/, TRUE, TRUE);	/* 3 seconds to wait in maximum */
+		                                                                         NULL, KeyStr_Loading, setting_phone_display_language_done_popup_resp_cb, 3/*0*/, TRUE, TRUE, 0);	/* 3 seconds to wait in maximum */
 	}
 
 	FREE(pa_lang);
@@ -310,7 +308,7 @@ static int setting_phone_display_language_create(void *cb)
 		Elm_Object_Item *navi_it = setting_push_layout_navi_bar_genlist(ad->win_main_layout, ad->win_get,
 		                                                                title, "IDS_ST_BUTTON_BACK",
 		                                                                NULL,
-		                                                                NULL,
+		                                                                setting_phone_display_language_click_softkey_cancel_cb,
 		                                                                NULL, ad, &scroller, ad->navi_bar);
 		elm_naviframe_item_pop_cb_set(navi_it, setting_phone_display_language_click_softkey_cancel_cb, ad);
 		gl_sel_cb = setting_phone_display_language_mouse_up_Gendial_list_radio_cb;
@@ -320,12 +318,6 @@ static int setting_phone_display_language_create(void *cb)
 	elm_scroller_policy_set(scroller, ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_AUTO);
 
 	evas_object_smart_callback_add(ad->gl_lang, "realized", __gl_realized_cb, NULL);
-
-	Elm_Object_Item *item = NULL;
-	item =
-	    elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
-	                            ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	/* scroller is a genlist */
 	ad->chk_lang = elm_radio_add(scroller);
@@ -354,23 +346,6 @@ static int setting_phone_display_language_create(void *cb)
 		                                     pnode->title, NULL, NULL);
 		if (item_data) {
 			item_data->userdata = ad;
-			if (item_idx == 0) {
-				item_data->group_style = SETTING_GROUP_STYLE_TOP;
-			} else {
-				item_data->group_style = SETTING_GROUP_STYLE_CENTER;
-			}
-
-			if (item_data->item) {
-				if (item_data->group_style == SETTING_GROUP_STYLE_TOP) {
-					elm_object_item_signal_emit(item_data->item, "elm,state,top", "");
-				} else if (item_data->group_style == SETTING_GROUP_STYLE_BOTTOM) {
-					elm_object_item_signal_emit(item_data->item, "elm,state,bottom", "");
-				} else if (item_data->group_style == SETTING_GROUP_STYLE_CENTER) {
-					elm_object_item_signal_emit(item_data->item, "elm,state,center", "");
-				} else {
-					elm_object_item_signal_emit(item_data->item, "elm,state,normal", "");
-				}
-			}
 			item_idx++;
 			last_item = item_data;
 		} else {
@@ -378,13 +353,6 @@ static int setting_phone_display_language_create(void *cb)
 		}
 		idx++;
 	}
-	if (last_item) {
-		last_item->group_style = SETTING_GROUP_STYLE_BOTTOM;
-	}
-
-	/*item = elm_genlist_item_append(scroller, &itc_bottom_seperator, NULL, NULL,
-				ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
 
 	setting_view_phone_display_language.is_create = 1;
 

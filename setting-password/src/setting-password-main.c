@@ -30,9 +30,6 @@
 #include <Ecore_IMF.h>
 #include <Ecore_IMF_Evas.h>
 #include <Ecore.h>
-#if SUPPORT_LIBEAS
-#include <eas-svc.h>
-#endif
 #include <time.h>
 #include <notification.h>
 
@@ -103,7 +100,7 @@ Eina_Bool __rotate_cb(void *data)
 
 	SettingPasswordUG *ad = (SettingPasswordUG *) data;
 
-	//SETTING_TRACE_DEBUG("category : 0x%x", pw_its[ad->view_type].category);
+	/*SETTING_TRACE_DEBUG("category : 0x%x", pw_its[ad->view_type].category);*/
 
 	/* it can manage the cursor self */
 	if (ad->ed_pw1 && ad->ed_pw1->eo_check) {
@@ -137,28 +134,48 @@ static int setting_password_main_create(void *cb)
 
 	ad->navi_it = elm_naviframe_top_item_get(ad->navi_bar);
 
-	ad->bottom_btn = elm_button_add(ad->navi_bar);
-	elm_object_style_set(ad->bottom_btn, "bottom");
-	elm_object_item_part_content_set(ad->navi_it, "toolbar", ad->bottom_btn);
+	ad->bottom_btn = elm_box_add(ad->navi_bar);
+	elm_box_padding_set(ad->bottom_btn, ELM_SCALE_SIZE(10), ELM_SCALE_SIZE(10));
+	elm_box_horizontal_set(ad->bottom_btn, EINA_TRUE);
+	evas_object_size_hint_weight_set(ad->bottom_btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(ad->bottom_btn, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_show(ad->bottom_btn);
+	elm_box_pack_end(ad->navi_bar, ad->bottom_btn);
 
+	/* button 1 */
+	Evas_Object *btn = elm_button_add(ad->bottom_btn);
+	elm_object_style_set(btn, "bottom");
+	elm_object_text_set(btn, _("IDS_ST_BUTTON_CANCEL"));
+	evas_object_smart_callback_add(btn, "clicked", setting_password_main_click_softkey_cancel_cb, ad);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 0.5);
+	evas_object_show(btn);
+	elm_box_pack_end(ad->bottom_btn, btn);
+
+	/* button 2 */
+	ad->bottom_btn1 = elm_button_add(ad->bottom_btn);
+	elm_object_style_set(ad->bottom_btn1, "bottom");
 	if (ad->view_type == SETTING_PW_TYPE_SET_PASSWORD) {
-		elm_object_text_set(ad->bottom_btn, _("IDS_ST_BUTTON_CONTINUE"));
-		evas_object_smart_callback_add(ad->bottom_btn, "clicked", setting_password_main_click_softkey_continue_cb, ad);
+		elm_object_text_set(ad->bottom_btn1, _("IDS_ST_BUTTON_CONTINUE"));
+		evas_object_smart_callback_add(ad->bottom_btn1, "clicked", setting_password_main_click_softkey_continue_cb, ad);
 	} else {
-		elm_object_text_set(ad->bottom_btn, _("IDS_SA_BUTTON_DONE_ABB"));
-		evas_object_smart_callback_add(ad->bottom_btn, "clicked", setting_password_main_click_softkey_done_cb, ad);
+		elm_object_text_set(ad->bottom_btn1, _("IDS_SA_BUTTON_DONE_ABB"));
+		evas_object_smart_callback_add(ad->bottom_btn1, "clicked", setting_password_main_click_softkey_done_cb, ad);
 	}
+	evas_object_size_hint_weight_set(ad->bottom_btn1, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(ad->bottom_btn1, EVAS_HINT_FILL, 0.5);
+	evas_object_show(ad->bottom_btn1);
+	elm_box_pack_end(ad->bottom_btn, ad->bottom_btn1);
 
-	/*elm_genlist_realization_mode_set(ad->scroller, EINA_FALSE); */
-	/*elm_genlist_mode_set(ad->scroller, ELM_LIST_COMPRESS); */
+	elm_object_item_part_content_set(ad->navi_it, "toolbar", ad->bottom_btn);
 	ADD_GL_SEPARATOR(ad->scroller)
 
 	ad->cur_step = 1;
 	setting_password_main_draw_1line_password(ad, NULL);
 
 	/* Disable Done button if exist */
-	elm_object_disabled_set(ad->bottom_btn, EINA_TRUE);
-	elm_object_focus_allow_set(ad->bottom_btn, EINA_FALSE);
+	elm_object_disabled_set(ad->bottom_btn1, EINA_TRUE);
+	elm_object_focus_allow_set(ad->bottom_btn1, EINA_FALSE);
 
 	ad->focus_timer = ecore_timer_add(0.5, __rotate_cb, ad);
 
@@ -256,16 +273,9 @@ setting_password_main_entry_changed_cb(void *data, Evas_Object *obj,
 			entry_str = ad->ed_pw1->sub_desc;
 			if (NULL == entry_str || '\0' == entry_str[0]) {
 				isFoundEmptyEntry = TRUE;
-				/*char *guide_text = elm_object_part_text_get(obj, "elm.guide"); */
-				/*if(isEmptyStr(guide_text)) */
-				/*{ */
-				/*	SETTING_TRACE("guide is empty"); */
-				/*	elm_object_part_text_set(obj, "elm.guide", _("IDS_ST_BODY_ENTER_PASSWORD")); */
-				/*} */
 				elm_object_item_signal_emit(ad->ed_pw1->item, "elm,state,eraser,hide", "");
 				break;
 			} else {
-				/*elm_object_part_text_set(obj, "elm.guide", ""); */
 				elm_object_item_signal_emit(ad->ed_pw1->item, "elm,state,eraser,show", "");
 				break;
 			}
@@ -283,10 +293,10 @@ setting_password_main_entry_changed_cb(void *data, Evas_Object *obj,
 
 #if SUPPORT_BOTTOM_BTNS
 	if (disableFlag) {
-		elm_object_disabled_set(ad->bottom_btn, EINA_TRUE);
+		elm_object_disabled_set(ad->bottom_btn1, EINA_TRUE);
 		elm_entry_input_panel_return_key_disabled_set(obj, EINA_TRUE);
 	} else {
-		elm_object_disabled_set(ad->bottom_btn, EINA_FALSE);
+		elm_object_disabled_set(ad->bottom_btn1, EINA_FALSE);
 		elm_entry_input_panel_return_key_disabled_set(obj, EINA_FALSE);
 	}
 #else
@@ -321,7 +331,7 @@ static void __entry_activated_cb(void *data, Evas_Object *obj, void *event_info)
 	SettingPasswordUG *ad = (SettingPasswordUG *) list_item->userdata;
 
 	if (ad->bottom_btn) {
-		if (elm_object_disabled_get(ad->bottom_btn) == EINA_FALSE) {
+		if (elm_object_disabled_get(ad->bottom_btn1) == EINA_FALSE) {
 			/* call done cb. */
 			if (ad->view_type == SETTING_PW_TYPE_SET_PASSWORD && ad->cur_step == 1) {
 				/* Save first input */
@@ -351,9 +361,9 @@ static void __entry_activated_cb(void *data, Evas_Object *obj, void *event_info)
 
 
 				/* Change button */
-				elm_object_text_set(ad->bottom_btn, _("IDS_SA_BUTTON_DONE_ABB"));
-				evas_object_smart_callback_add(ad->bottom_btn, "clicked", setting_password_main_click_softkey_done_cb, ad);
-				elm_object_disabled_set(ad->bottom_btn, EINA_TRUE);
+				elm_object_text_set(ad->bottom_btn1, _("IDS_SA_BUTTON_DONE_ABB"));
+				evas_object_smart_callback_add(ad->bottom_btn1, "clicked", setting_password_main_click_softkey_done_cb, ad);
+				elm_object_disabled_set(ad->bottom_btn1, EINA_TRUE);
 				elm_entry_input_panel_return_key_disabled_set(obj, EINA_TRUE);
 				ad->cur_step++;
 			} else {
@@ -418,6 +428,13 @@ int setting_password_main_draw_1line_password(void *data, void *cb)
 			                                           TRUE, TRUE,
 			                                           SETTING_PW_UG_NORMAL_PASSWORD_MAX_LENGTH,
 			                                           0, NULL, NULL);
+			/* change return key type */
+			if (ad->ed_pw1) {
+				ad->ed_pw1->return_key_type = ELM_INPUT_PANEL_RETURN_KEY_TYPE_DONE;
+				elm_entry_input_panel_return_key_type_set(ad->ed_pw1->eo_check, ELM_INPUT_PANEL_RETURN_KEY_TYPE_DONE);
+				elm_object_focus_set(ad->ed_pw1->eo_check, EINA_TRUE);
+			}
+
 			break;
 		case SETTING_PW_TYPE_SET_PASSWORD:
 			ad->ed_pw1 =
@@ -442,6 +459,14 @@ int setting_password_main_draw_1line_password(void *data, void *cb)
 			                   &(itc_multiline_text),
 			                   SWALLOW_Type_LAYOUT_SPECIALIZTION_X,
 			                   PW_NORMAL_AND_CONTAIN_ALPHANUMER_DESC);
+
+			/* change return key type */
+			if (ad->ed_pw1) {
+				ad->ed_pw1->return_key_type = ELM_INPUT_PANEL_RETURN_KEY_TYPE_NEXT;
+				elm_entry_input_panel_return_key_type_set(ad->ed_pw1->eo_check, ELM_INPUT_PANEL_RETURN_KEY_TYPE_NEXT);
+				elm_object_focus_set(ad->ed_pw1->eo_check, EINA_TRUE);
+			}
+
 			break;
 		default:
 			break;
@@ -557,8 +582,10 @@ int setting_password_main_check_1line_password(void *data)
 		setting_password_main_warning_entry_added_byte_popup(ad,
 		                                                     SETTING_PW_UG_NORMAL_PASSWORD_MIN_LENGTH,
 		                                                     SETTING_PW_UG_NORMAL_PASSWORD_MAX_LENGTH);
+		FREE(entry_str);
 		return SETTING_ENTRY_REQUIRED_CORRECT_DIGIT_PW;
 	}
+	FREE(entry_str);
 	return SETTING_RETURN_SUCCESS;
 }
 
@@ -596,6 +623,8 @@ int setting_password_main_check_2line_password(void *data)
 	if (0 != safeStrCmp(entry_str1_mk, entry_str2_mk)) {
 		setting_password_main_clear_1line_password(ad);
 		setting_password_ug_display_desc(ad, _("IDS_ST_POP_PASSWORDS_DO_NOT_MATCH"), FALSE);
+		FREE(entry_str1_mk);
+		FREE(entry_str2_mk);
 		return SETTING_ENTRY_NOT_MATCH_NEW_CONF_PW;
 	}
 
@@ -606,9 +635,13 @@ int setting_password_main_check_2line_password(void *data)
 		setting_password_main_warning_entry_added_byte_popup(ad,
 		                                                     SETTING_PW_UG_NORMAL_PASSWORD_MIN_LENGTH,
 		                                                     SETTING_PW_UG_NORMAL_PASSWORD_MAX_LENGTH);
+		FREE(entry_str1_mk);
+		FREE(entry_str2_mk);
 		return SETTING_ENTRY_REQUIRED_CORRECT_DIGIT_PW;
 	}
 
+	FREE(entry_str1_mk);
+	FREE(entry_str2_mk);
 	return SETTING_RETURN_SUCCESS;
 }
 
@@ -816,14 +849,15 @@ void setting_password_main_click_softkey_continue_cb(void *data, Evas_Object *ob
 	/* Save first input */
 	ad->step1_str = (char *)strdup(ad->ed_pw1->sub_desc);
 
-
 	/* Check step1_str : more than 4, not all digits */
 	int letter = 0;
 	int digit = 0;
 	int symbol = 0;
 	char *plain_str = elm_entry_markup_to_utf8(ad->step1_str);
 	__count_string(plain_str, &letter, &digit, &symbol);
-	if (safeStrLen(plain_str) != digit) {
+
+	if (safeStrLen(plain_str) == digit) {
+		setting_password_main_clear_1line_password(ad);
 		__add_help_of_password_fails(SETTING_PW_ERROR_INCLUDE_NO_LETTER, ad);
 		FREE(ad->step1_str);
 		FREE(plain_str);
@@ -841,12 +875,44 @@ void setting_password_main_click_softkey_continue_cb(void *data, Evas_Object *ob
 	ad->ed_pw1->keyStr = (char *)strdup(PW_SHORT_GUIDE_CONFIRM);
 	elm_genlist_item_fields_update(ad->ed_pw1->item, "elm.text.main", ELM_GENLIST_ITEM_FIELD_TEXT);
 
+	/* change return key type */
+	ad->ed_pw1->return_key_type = ELM_INPUT_PANEL_RETURN_KEY_TYPE_DONE;
+	elm_entry_input_panel_return_key_type_set(ad->ed_pw1->eo_check, ELM_INPUT_PANEL_RETURN_KEY_TYPE_DONE);
+	elm_object_focus_set(ad->ed_pw1->eo_check, EINA_TRUE);
 
 	/* Change button */
 	if (ad->bottom_btn) {
-		elm_object_text_set(ad->bottom_btn, _("IDS_SA_BUTTON_DONE_ABB"));
-		evas_object_smart_callback_add(ad->bottom_btn, "clicked", setting_password_main_click_softkey_done_cb, ad);
-		elm_object_disabled_set(ad->bottom_btn, EINA_TRUE);
+		ad->bottom_btn = elm_box_add(ad->navi_bar);
+		elm_box_padding_set(ad->bottom_btn, ELM_SCALE_SIZE(10), ELM_SCALE_SIZE(10));
+		elm_box_horizontal_set(ad->bottom_btn, EINA_TRUE);
+		evas_object_size_hint_weight_set(ad->bottom_btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+		evas_object_size_hint_align_set(ad->bottom_btn, EVAS_HINT_FILL, EVAS_HINT_FILL);
+		evas_object_show(ad->bottom_btn);
+		elm_box_pack_end(ad->navi_bar, ad->bottom_btn);
+
+		/* button 1 */
+		Evas_Object *btn = elm_button_add(ad->bottom_btn);
+		elm_object_style_set(btn, "bottom");
+		elm_object_text_set(btn, _("IDS_ST_BUTTON_CANCEL"));
+		evas_object_smart_callback_add(btn, "clicked", setting_password_main_click_softkey_cancel_cb, ad);
+		evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+		evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 0.5);
+		evas_object_show(btn);
+		elm_box_pack_end(ad->bottom_btn, btn);
+		elm_object_disabled_set(btn, EINA_FALSE);
+
+		/* button 2 */
+		ad->bottom_btn1 = elm_button_add(ad->bottom_btn);
+		elm_object_style_set(ad->bottom_btn1, "bottom");
+		elm_object_text_set(ad->bottom_btn1, _("IDS_SA_BUTTON_DONE_ABB"));
+		evas_object_smart_callback_del(ad->bottom_btn1, "clicked", setting_password_main_click_softkey_continue_cb);
+		evas_object_smart_callback_add(ad->bottom_btn1, "clicked", setting_password_main_click_softkey_done_cb, ad);
+		elm_object_disabled_set(ad->bottom_btn1, EINA_TRUE);
+		evas_object_size_hint_weight_set(ad->bottom_btn1, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+		evas_object_size_hint_align_set(ad->bottom_btn1, EVAS_HINT_FILL, 0.5);
+		evas_object_show(ad->bottom_btn1);
+		elm_box_pack_end(ad->bottom_btn, ad->bottom_btn1);
+		elm_object_item_part_content_set(ad->navi_it, "toolbar", ad->bottom_btn);
 	}
 
 	ad->cur_step++;

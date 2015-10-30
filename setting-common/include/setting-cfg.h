@@ -31,6 +31,7 @@
 #include <json-glib/json-glib.h>
 #include <setting-common-resource.h>
 #include <app.h>
+#include <app_common.h>
 
 #define EXPORT_PUBLIC __attribute__ ((visibility ("default")))
 
@@ -127,7 +128,7 @@ typedef struct {
 	void *data;						/** Setting_GenGroupItem_Data type ptr */
 	char *sub_index;				/** sub_index */
 	cfg_func_table *tfunc;
-	char *uuid;					/** primary key */
+	char *uuid;						/** primary key */
 	int last_clicked;				/** the time of last clicked*/
 	char *shortcut_appid;			/** appid to add shortcut */
 } Setting_Cfg_Node_T;
