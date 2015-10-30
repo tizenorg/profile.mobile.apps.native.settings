@@ -86,7 +86,6 @@ struct _SettingTimeUG {
 	Setting_GenGroupItem_Data *data_time;
 	Setting_GenGroupItem_Data *data_time_fmt;
 	Setting_GenGroupItem_Data *data_date_fmt;
-	Setting_GenGroupItem_Data *data_firstday_week_fmt;
 
 	/*Evas_Object *chk_dst; */
 	/*Evas_Object *chk_auto; */

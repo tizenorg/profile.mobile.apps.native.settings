@@ -31,6 +31,7 @@
 #include <glib-object.h>
 #include <net_connection.h>
 
+#include <efl_extension.h>
 
 #include <setting-common-draw-widget.h>
 #include <setting-common-view.h>
@@ -41,6 +42,14 @@
 #include <ITapiSim.h>
 
 #include <Ecore_IMF.h>
+
+#include <eventsystem.h>
+#include <bundle_internal.h>
+#include <system_settings.h>
+
+
+#define UI_NETWORK_MODE
+
 
 /*#include <tethering.h> */
 
@@ -69,6 +78,8 @@
 #define SETTING_NETWORK_USE_PACKET_DATA_OFF_DESC "IDS_ST_BODY_USING_MOBILE_DATA_MAY_RESULT_IN_ADDITIONAL_CHARGES_CONTINUE_Q"
 #define SETTING_NETWORK_USE_PACKET_DATA_ON_DESC "IDS_ST_POP_ROAMING_WILL_INCUR_EXTRA_CHARGES_CONTINUE_Q"
 
+
+/* Unable to search networks during data service activated. Do you want to disconnect the data service and search available network? */
 #define SETTING_NETWORK_SEARCH_3G_ON_DESC "IDS_ST_POP_UNABLE_TO_SEARCH_NETWORKS_DURING_DATA_SERVICE_ACTIVATED_DO_YOU_WANT_TO_DISCONNECT_THE_DATA_SERVICE_AND_SEARCH_AVAILABLE_NETWORK_Q"
 #define SETTING_NETWORK_CHANGE_3G_ON_DESC "IDS_ST_POP_UNABLE_TO_CHANGE_NETWORKS_WHILE_DATA_SERVICE_IN_USE_STOP_USING_CURRENT_DATA_SERVICE_AND_SELECT_ANOTHER_AVAILABLE_NETWORK_Q"
 
@@ -172,12 +183,16 @@ struct _SettingNetworkUG {
 	Evas_Object *win_get;
 	Evas_Object *navi_bar;
 
+	Evas_Object* network_mode_popup;
+
 	Evas_Object *popup_concreate;
 	Evas_Object *popup_conlist;
 	Evas_Object *popup_conreset;
+	Evas_Object *popup_conreset_complete;
 	Evas_Object *popup;
 	Evas_Object *popup_chk;
 
+	Evas_Object *popup_auth_type;
 	Evas_Object *popup_data_on;
 	Evas_Object *popup_data_off;
 
@@ -186,6 +201,10 @@ struct _SettingNetworkUG {
 	Elm_Object_Item *navi_it_con_list;
 	Elm_Object_Item *navi_it_profile_del_list;
 	Evas_Object *bottom_btn;
+
+	/*connection-create */
+	Evas_Object *con_create_gl;  /* connection create */
+
 	/*Evas_Object *conformant; */
 	Evas_Object *back_btn;
 	Evas_Object *l_button;
@@ -206,7 +225,6 @@ struct _SettingNetworkUG {
 	char *view_type_string;
 
 	Evas_Object *ly_main;
-	/*Evas_Object *ly_search; // select network - view */
 	unsigned int subs_id_net[SETTING_NETWORK_SUBS_ID_NET_LEN];
 
 	Evas_Point        point_down;
@@ -223,11 +241,11 @@ struct _SettingNetworkUG {
 	bool b_restore_roaming_status;
 
 	Setting_GenGroupItem_Data *data_sel_net;
-#ifdef NETWORK_MODE
+#ifdef UI_NETWORK_MODE
 	Setting_GenGroupItem_Data *data_net_mode;
 #endif
 	Setting_GenGroupItem_Data *data_connection;
-	Setting_GenGroupItem_Data *data_use_packet;
+	Setting_GenGroupItem_Data *data_mobile_data;
 	Setting_GenGroupItem_Data *data_roaming;
 	Setting_GenGroupItem_Data *data_srv_type;
 	Setting_GenGroupItem_Data *internet_conn;
@@ -247,7 +265,7 @@ struct _SettingNetworkUG {
 	int sel_net;		/**< like vconf key:VCONFKEY_SETAPPL_SELECT_NETWORK_INT */
 	int sel_act;		/**< like vconf key:VCONFKEY_SETAPPL_SELECT_OLD_NT_ACT */
 	char *sel_network;
-#ifdef NETWORK_MODE
+#ifdef UI_NETWORK_MODE
 	int net_mode;		/* like vconf key */
 #endif
 
@@ -272,6 +290,7 @@ struct _SettingNetworkUG {
 	bool is_editable;
 	Elm_Object_Item *item_above_user_name;
 	Elm_Object_Item *item_above_proxy_add;
+
 	Setting_GenGroupItem_Data *data_user_name;
 	Setting_GenGroupItem_Data *data_pwd;
 	Setting_GenGroupItem_Data *data_acs_name;
@@ -286,45 +305,22 @@ struct _SettingNetworkUG {
 
 	Evas_Object *scl_edit;
 
-	/* Preferred network common */
-	TelNetworkPreferredPlmnList_t pref_list;
-	int sel_pref_idx;
-	setting_network_preferred_network_operation_type_t op_type;
-
-	Ecore_Idler *add_view_timer;
-	char search_text[MAX_SEARCH_STR_LEN + 1];
-	Evas_Object *nw_search_bar;
-
-	Evas_Object *scl_pref;
-	Evas_Object *chk_new_type;
-	Setting_GenGroupItem_Data *data_edit_mcc;
-	Setting_GenGroupItem_Data *data_edit_mnc;
-	Setting_GenGroupItem_Data *data_new_mcc;
-	Setting_GenGroupItem_Data *data_new_mnc;
-	Evas_Object *chk_edit_type;
-	Evas_Object *scl_pref_del;
-	Evas_Object *gl_sel_all;
 	Evas_Object *gl_profile_del;
 	Eina_List *profile_list;
 	Eina_List *profile_del_list;
 
-	Evas_Object *popup_label;
-	int deleted_number;
-	Eina_List *checked_data_list;
-	Eina_List *item_check_list;
-
 	/* Preferred network network list for genlist */
 	Evas_Object *gl_network;
 	Elm_Genlist_Item_Class itc;
-	struct gl_network_data *cur_sel_mem;
-	int cur_sel_index;
 
-	Setting_GenGroupItem_Data *data_cl_select_all;
-	Evas_Object *sub_clear_layout;
 	Evas_Object *selInfoPop;
 	Evas_Object *selInfoPop_layout;
 	Evas_Object *rdg;
 
+
+	/* Delete */
+	Setting_GenGroupItem_Data *data_delete_all;
+	/**********************************************/
 	setting_view *view_to_load;
 	Ecore_Timer *timer;
 
@@ -344,25 +340,15 @@ struct _SettingNetworkUG {
 
 extern setting_view setting_view_network_main;
 extern setting_view setting_view_network_select_network;
-extern setting_view setting_view_network_main_help;
 extern setting_view setting_view_network_con;
 extern setting_view setting_view_network_con_list;
 extern setting_view setting_view_network_connection_create;
-extern setting_view setting_view_network_3gcon;
-
-extern setting_view setting_view_network_preferred_network;
-extern setting_view setting_view_network_preferred_network_new;
-extern setting_view setting_view_network_preferred_network_list;
-extern setting_view setting_view_network_preferred_network_edit;
-extern setting_view setting_view_network_preferred_network_delete;
 extern setting_view setting_view_network_profile_delete;
 
 const char *setting_network_get_act_str(TelNetworkSystemType_t type);
 void setting_network_update_sel_network(void *data);
 bool setting_network_equal_profile(connection_profile_h pf1, connection_profile_h pf2);
 void setting_network_reget_profile_list(void *cb);
-void setting_tapi_get_preferred_plmn_cb(TapiHandle *handle, int result, void *data, void *user_data);
-void setting_tapi_set_preferred_plmn_cb(TapiHandle *handle, int result, void *data, void *user_data);
 
 void setting_tapi_cancel_manual_search_cb(TapiHandle *handle, int result, void *data, void *user_data);
 void setting_tapi_search_network_cb(TapiHandle *handle, int result, void *data, void *user_data);
@@ -381,6 +367,12 @@ int is_lte_on_feature(void *data);
 char *__get_profile_name(int conType, void *data);
 
 void	setting_network_searching_network(Setting_GenGroupItem_Data *list_item);
+
+void setting_network_set_state_mobile_data(ButtonState state);
+int setting_network_get_state_mobile_data();
+
+void setting_network_set_state_data_roaming(ButtonState state);
+int setting_network_get_state_data_roaming(int* value);
 
 
 #endif				/* __SETTING_NETWORK_H__ */

@@ -74,19 +74,48 @@ static void setting_moreconnections_main_mouse_up_Gendial_list_cb(void *data,
 	}
 }
 
+/**
+ * @brief aboutUG vconf changed callback
+ *
+ * @param key the changed vconf key node.
+ * @param data application data
+ * @param event_info event type
+ */
+static void __setting_moreconnections_main_vconf_changed_cb(keynode_t *key, void *data)
+{
+	SETTING_TRACE_BEGIN;
+	setting_retm_if(NULL == key, "key is NULL");
+	setting_retm_if(NULL == data, "data is NULL");
+	SettingMoreConnectionsUG *ad = (SettingMoreConnectionsUG *) data;
+
+	int status = vconf_keynode_get_int(key);
+	char *vconf_name = vconf_keynode_get_name(key);
+
+	if (!safeStrCmp(vconf_name, VCONFKEY_LOCATION_USE_MY_LOCATION)) {
+		SETTING_TRACE("status: %d", status);
+		char *sub_desc = setting_location_is_enable(data);
+		ad->location_service->sub_desc = (char *)strdup(sub_desc);
+		elm_object_item_data_set(ad->location_service->item, ad->location_service);
+		elm_genlist_item_update(ad->location_service->item);
+	} else {
+		SETTING_TRACE_ERROR("vconf_name is error");
+	}
+}
+
 char *setting_location_is_enable(void *data)
 {
-	int is_enable;
+	SETTING_TRACE_BEGIN;
 
-	if (0 != vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &is_enable))
-		SETTING_TRACE_ERROR("Fail to get vconf");
+	bool is_enabled = FALSE;
+	int ret = location_manager_is_enabled_method(LOCATIONS_METHOD_HYBRID, &is_enabled);
+	SETTING_TRACE("hybrid: %d, ", is_enabled);
 
-	if (1 == is_enable)
+	if (true == is_enabled)
 		return KeyStr_On;
-	else if (0 == is_enable)
+	else if (false == is_enabled)
 		return KeyStr_Off;
 	else
-		setting_retvm_if(data == NULL, SETTING_VCONF_ERR_RETURN_STR_NULL, "vconf error");
+		return SETTING_VCONF_ERR_RETURN_STR_NULL;
 }
 
 /**************************************************
@@ -105,6 +134,7 @@ int setting_moreconnections_main_generate_genlist(void *data)
 	Setting_GenGroupItem_Data *item_data = NULL;
 
 	char *sub_desc = setting_location_is_enable(data);
+
 	ad->location_service = setting_create_Gendial_field_def(scroller, &(ad->itc_2text_2),
 	                                                        setting_moreconnections_main_mouse_up_Gendial_list_cb,
 	                                                        ad, SWALLOW_Type_INVALID,
@@ -117,6 +147,7 @@ int setting_moreconnections_main_generate_genlist(void *data)
 		SETTING_TRACE_ERROR("ad->location_service is NULL");
 	}
 
+#if 0
 	/* VPN */
 	ad->VPN = setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
 	                                           setting_moreconnections_main_mouse_up_Gendial_list_cb,
@@ -128,8 +159,10 @@ int setting_moreconnections_main_generate_genlist(void *data)
 	} else {
 		SETTING_TRACE_ERROR("ad->VPN is NULL");
 	}
+#endif
 
 	SETTING_TRACE_END;
+	return SETTING_RETURN_SUCCESS;
 }
 
 /***************************************************
@@ -146,7 +179,7 @@ static int setting_moreconnections_main_create(void *cb)
 	Evas_Object *scroller = elm_genlist_add(ad->win_main_layout);
 	setting_retvm_if(NULL == scroller, SETTING_DRAW_ERR_FAIL_SCROLLER,
 	                 "Scroller is NULL");
-	//elm_genlist_realization_mode_set(scroller, EINA_TRUE);
+	elm_genlist_realization_mode_set(scroller, EINA_TRUE);
 	elm_object_style_set(scroller, "dialogue");
 	elm_genlist_clear(scroller);
 
@@ -155,7 +188,7 @@ static int setting_moreconnections_main_create(void *cb)
 	    setting_create_layout_navi_bar_genlist(ad->win_main_layout,
 	                                           ad->win_get,
 	                                           KeyStr_MoreConnectionSetting,
-	                                           KeyStr_Back,
+	                                           NULL,/* Arrow Back button */
 	                                           NULL,
 	                                           (setting_call_back_func)setting_moreconnections_main_click_softkey_back_cb,
 	                                           NULL, ad, &scroller,
@@ -163,6 +196,14 @@ static int setting_moreconnections_main_create(void *cb)
 	ad->genlist = scroller;
 
 	setting_moreconnections_main_generate_genlist((void *)ad);
+
+	int ret = vconf_notify_key_changed(VCONFKEY_LOCATION_USE_MY_LOCATION, __setting_moreconnections_main_vconf_changed_cb, ad);
+	if (ret != 0) {
+		SETTING_TRACE_ERROR(" >>>>>>>>>>>>>> call vconf_notify_key_changed failed");
+	} else {
+		SETTING_TRACE_ERROR(" >>>>>>>>>>>>>> call vconf_notify_key_changed succeeded");
+	}
+
 	setting_view_moreconnections_main.is_create = 1;
 	SETTING_TRACE_END;
 	return SETTING_RETURN_SUCCESS;
@@ -176,12 +217,21 @@ static int setting_moreconnections_main_destroy(void *cb)
 	retv_if(!(setting_view_moreconnections_main.is_create), SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
 	SettingMoreConnectionsUG *ad = (SettingMoreConnectionsUG *) cb;
-	setting_view_moreconnections_main.is_create = 0;
+
+	int ret = vconf_ignore_key_changed(VCONFKEY_LOCATION_USE_MY_LOCATION, __setting_moreconnections_main_vconf_changed_cb);
+	if (ret != 0) {
+		SETTING_TRACE_ERROR(" >>>>>>>>>>>>>> call vconf_ignore_key_changed failed");
+	} else {
+		SETTING_TRACE_ERROR(" >>>>>>>>>>>>>> call vconf_ignore_key_changed succeeded");
+	}
 
 	if (ad->ly_main != NULL) {
 		evas_object_del(ad->ly_main);
 		ad->ly_main = NULL;
 	}
+
+
+	setting_view_moreconnections_main.is_create = 0;
 
 	SETTING_TRACE_END;
 	return SETTING_RETURN_SUCCESS;

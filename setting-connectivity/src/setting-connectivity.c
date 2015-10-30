@@ -127,13 +127,13 @@ static void *setting_connective_ug_on_create(ui_gadget_h ug,
 	                                 &setting_view_connectivity_usb);
 
 	/*  creating a view. */
-	setting_create_Gendial_itc("groupindex", &(connectiveUG->itc_title));
-	setting_create_Gendial_itc("1line", &(connectiveUG->itc_1text));
-	setting_create_Gendial_itc("1line", &(connectiveUG->itc_1text_1icon));
-	setting_create_Gendial_itc("1line", &(connectiveUG->itc_1text_1icon_gen));	/* toggle */
+	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE, &(connectiveUG->itc_title));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(connectiveUG->itc_1text));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(connectiveUG->itc_1text_1icon));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(connectiveUG->itc_1text_1icon_gen));	/* toggle */
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(connectiveUG->itc_1icon_1text_sub));
 	setting_create_Gendial_itc("dialogue/2text.3", &(connectiveUG->itc_2text_3));
-	setting_create_Gendial_itc("2line.top", &(connectiveUG->itc_2text_3_parent));
-	setting_create_Gendial_itc("1line", &(connectiveUG->itc_1icon_1text_sub));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(connectiveUG->itc_2text_3_parent));
 	setting_create_Gendial_itc("multiline_sub", &(connectiveUG->itc_help_style));
 
 	connectiveUG->view_to_load = __get_connective_view_to_load(service);

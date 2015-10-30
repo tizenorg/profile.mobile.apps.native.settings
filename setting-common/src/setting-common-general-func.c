@@ -35,7 +35,6 @@
 
 #include <pkgmgr-info.h>
 
-#include <sys/statvfs.h>
 #include <sys/stat.h>
 #include <sys/mount.h>
 
@@ -1089,7 +1088,6 @@ bool isSpaceStr(const char *str)
 	return TRUE;
 }
 
-
 int  EXPORT_PUBLIC safeStrCmp(const char *s1, const char *s2)
 {
 	/*  Check NULL value first */
@@ -1517,6 +1515,7 @@ int get_popup_btn_response_type(Evas_Object *obj)
 		    || 0 == safeStrCmp(btn_str, _("IDS_ST_BODY_TURN_OFF"))
 		    || 0 == safeStrCmp(btn_str, _("IDS_CLD_BUTTON_EXPORT"))
 		    || 0 == safeStrCmp(btn_str, _("IDS_SMEMO_BUTTON_IMPORT"))
+		    || 0 == safeStrCmp(btn_str, _("IDS_ST_HEADER_CLEAR_CACHE_ABB"))
 		    || 0 == safeStrCmp(btn_str, _("IDS_MTTRL_BUTTON_ENABLE_MOTION"))) {
 			rsp_type = POPUP_RESPONSE_OK;
 		} else { /*for others, */
@@ -1692,7 +1691,7 @@ EXPORT_PUBLIC void font_config_set(char *font_name)
 
 	elm_config_font_overlay_apply();
 	elm_config_all_flush();
-	elm_config_engine_set("software_x11");
+	/*	elm_config_engine_set("software_x11"); //deprecated API */
 	elm_config_save();
 	elm_config_text_classes_list_free(text_classes);
 	text_classes = NULL;
@@ -1797,7 +1796,7 @@ void font_size_set()
 	}
 
 	elm_config_all_flush();
-	elm_config_engine_set("software_x11");
+	/* elm_config_engine_set("software_x11"); //deprecated API */
 	elm_config_save();
 	elm_config_text_classes_list_free(text_classes);
 	text_classes = NULL;
@@ -1900,8 +1899,6 @@ EXPORT_PUBLIC int app_launcher(const char *pkg_name)
 		/*get no bundle from ug args */
 		app_control_create(&service);
 	}
-	/*service_set_operation(service, SERVICE_OPERATION_DEFAULT); */
-	/*service_set_package(service, pkg_name); */
 
 	app_control_set_operation(service, APP_CONTROL_OPERATION_PICK);
 	/*service_set_operation(service, SERVICE_OPERATION_DEFAULT); */
@@ -1928,32 +1925,51 @@ EXPORT_PUBLIC int app_launcher(const char *pkg_name)
 	return ret;
 }
 
+EXPORT_PUBLIC int app_group_launcher(const char *pkg_name)
+{
+	int ret = -1;
+	char *path = NULL;
+	path = get_ug_path_from_ug_args((void *)pkg_name);
+	app_control_h service = get_bundle_from_ug_args((void *)pkg_name);
+	if (!service) {
+		/*get no bundle from ug args */
+		app_control_create(&service);
+	}
+
+	app_control_set_operation(service, APP_CONTROL_OPERATION_PICK);
+	app_control_set_launch_mode(service, APP_CONTROL_LAUNCH_MODE_GROUP);
+	/*service_set_operation(service, SERVICE_OPERATION_DEFAULT); */
+	if (path)
+		app_control_set_app_id(service, path);
+	app_control_set_window(service, elm_win_xwindow_get(ug_get_window()));
+
+	int launch_ret = app_control_send_launch_request(service, NULL, NULL);
+	SETTING_TRACE("after app_service_create - %s : %d ", pkg_name, launch_ret);
+	if (launch_ret == APP_CONTROL_ERROR_NONE) {
+		/* on success */
+		SETTING_TRACE("on success");
+		ret = 0;
+	} else {
+		/* on error */
+		SETTING_TRACE("on error");
+		ret = -1;
+	}
+	app_control_destroy(service);
+	service = NULL;
+
+	FREE(path);
+
+	return ret;
+}
+
+
+
 EXPORT_PUBLIC char *substring(const char *str, size_t begin, size_t len)
 {
 	if (str == 0 || strlen(str) == 0 || strlen(str) < begin || strlen(str) < (begin + len))
 		return 0;
 
 	return strndup(str + begin, len);
-}
-
-EXPORT_PUBLIC int get_storage_fs_status(double *total, double *avail, const char *path)
-{
-	/*SETTING_TRACE_BEGIN; */
-	*total = *avail = 0;/*intial */
-	setting_retvm_if(NULL == total || NULL == avail, SETTING_RETURN_FAIL, "Null output parameters");
-
-	struct statvfs s;
-
-	if (!statvfs(path, &s)) {
-		/*SETTING_TRACE("f_bsize = %ld f_blocks = %ld f_bavail = %ld f_frsize = %ld", */
-		/*     s.f_bsize, s.f_blocks, s.f_bavail, s.f_frsize); */
-		*total = (double)s.f_frsize * s.f_blocks;
-		*avail = (double)s.f_bsize * s.f_bavail;
-	} else {
-		return SETTING_RETURN_FAIL;
-	}
-
-	return SETTING_RETURN_SUCCESS;
 }
 
 EXPORT_PUBLIC bool get_tethering_status()

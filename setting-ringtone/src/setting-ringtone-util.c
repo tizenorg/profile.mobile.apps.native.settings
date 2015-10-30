@@ -63,7 +63,8 @@ char *get_media_basename(const char *dir_path, const char *name)
 			ret = metadata_extractor_get_metadata(metadata, METADATA_TITLE, &title);
 			metadata_extractor_destroy(metadata);
 			if (title)
-				return (char *)g_strdup(title);
+				/*return (char *)g_strdup(title);*/
+				return (char *)title;
 			else
 				return g_strdup(name);
 		} else {
@@ -93,7 +94,7 @@ int get_filelist_from_dir_path(char *path, Eina_List **file_list)
 	while ((ent = readdir(pDir)) != NULL) {
 		fileNodeInfo *pNode = NULL;
 
-		if (ent->d_name == NULL || strncmp(ent->d_name, ".", 1) == 0 || strcmp(ent->d_name, "..") == 0) {
+		if (strncmp(ent->d_name, ".", 1) == 0 || strcmp(ent->d_name, "..") == 0) {
 			continue;
 		}
 

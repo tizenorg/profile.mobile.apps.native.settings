@@ -829,13 +829,6 @@ int setting_password_sim_draw_2line_entry(void *data, void *cb)
 			break;
 	}
 
-	if (ad->ed_pw1) {
-		ad->ed_pw1->group_style = SETTING_GROUP_STYLE_TOP;
-	}
-	if (ad->ed_pw2) {
-		ad->ed_pw2->group_style = SETTING_GROUP_STYLE_BOTTOM;
-	}
-
 	ad->ed_pw3 = NULL;
 	return 0;
 }
@@ -1646,6 +1639,7 @@ static void setting_password_sim_done(void *data)
 			return;
 	}
 
+#if SUPPORT_FDN
 	app_control_add_extra_data(svc, "result", ad->view_type_string);
 	ug_send_result(ad->ug, svc);
 	SETTING_TRACE("Send Result : %s\n", ad->view_type_string);
@@ -1653,6 +1647,7 @@ static void setting_password_sim_done(void *data)
 	app_control_destroy(svc);
 	/* Send destroy request */
 	ug_destroy_me(ad->ug);
+#endif
 }
 
 void setting_password_sim_click_softkey_done_cb(void *data, Evas_Object *obj,

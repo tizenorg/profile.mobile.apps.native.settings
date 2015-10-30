@@ -85,8 +85,6 @@ static int setting_display_backlight_create(void *cb)
 
 		if (ad->data_backlight_always_on) {
 			ad->data_backlight_always_on->userdata = ad;
-			/*ad->data_backlight_always_on->group_style = SETTING_GROUP_STYLE_CENTER; */
-			setting_genlist_item_groupstyle_set(ad->data_backlight_always_on, SETTING_GROUP_STYLE_TOP);
 			__BACK_POINTER_SET(ad->data_backlight_always_on);
 		} else {
 			SETTING_TRACE_ERROR("ad->data_backlight_always_on is NULL");
@@ -101,7 +99,6 @@ static int setting_display_backlight_create(void *cb)
 	                                                               SETTING_DISPLAY_TIME_15_SEC_STR, NULL);
 	if (ad->data_backlight_15sec) {
 		ad->data_backlight_15sec->userdata = ad;
-		setting_genlist_item_groupstyle_set(ad->data_backlight_15sec, (is_emul_bin ? SETTING_GROUP_STYLE_CENTER : SETTING_GROUP_STYLE_TOP));
 		__BACK_POINTER_SET(ad->data_backlight_15sec);
 	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_15sec is NULL");
@@ -115,7 +112,6 @@ static int setting_display_backlight_create(void *cb)
 	                                                               SETTING_DISPLAY_TIME_30_SEC_STR, NULL);
 	if (ad->data_backlight_30sec) {
 		ad->data_backlight_30sec->userdata = ad;
-		setting_genlist_item_groupstyle_set(ad->data_backlight_30sec, SETTING_GROUP_STYLE_CENTER);
 		__BACK_POINTER_SET(ad->data_backlight_30sec);
 	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_30sec is NULL");
@@ -129,7 +125,6 @@ static int setting_display_backlight_create(void *cb)
 	                                                              SETTING_DISPLAY_TIME_1_MIN_STR, NULL);
 	if (ad->data_backlight_1min) {
 		ad->data_backlight_1min->userdata = ad;
-		setting_genlist_item_groupstyle_set(ad->data_backlight_1min, SETTING_GROUP_STYLE_CENTER);
 		__BACK_POINTER_SET(ad->data_backlight_1min);
 	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_1min is NULL");
@@ -143,7 +138,6 @@ static int setting_display_backlight_create(void *cb)
 	                                                              SETTING_DISPLAY_TIME_2_MIN_STR, NULL);
 	if (ad->data_backlight_2min) {
 		ad->data_backlight_2min->userdata = ad;
-		setting_genlist_item_groupstyle_set(ad->data_backlight_2min, SETTING_GROUP_STYLE_CENTER);
 		__BACK_POINTER_SET(ad->data_backlight_2min);
 	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_2min is NULL");
@@ -157,7 +151,6 @@ static int setting_display_backlight_create(void *cb)
 	                                                              SETTING_DISPLAY_TIME_5_MIN_STR, NULL);
 	if (ad->data_backlight_5min) {
 		ad->data_backlight_5min->userdata = ad;
-		setting_genlist_item_groupstyle_set(ad->data_backlight_5min, SETTING_GROUP_STYLE_CENTER);
 		__BACK_POINTER_SET(ad->data_backlight_5min);
 	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_5min is NULL");
@@ -171,7 +164,6 @@ static int setting_display_backlight_create(void *cb)
 	                                                               SETTING_DISPLAY_TIME_10_MIN_STR, NULL);
 	if (ad->data_backlight_10min) {
 		ad->data_backlight_10min->userdata = ad;
-		setting_genlist_item_groupstyle_set(ad->data_backlight_10min, SETTING_GROUP_STYLE_BOTTOM);
 		__BACK_POINTER_SET(ad->data_backlight_10min);
 	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_10min is NULL");

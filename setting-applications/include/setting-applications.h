@@ -35,8 +35,9 @@
 #include <device.h>
 #include <dd-display.h>
 #include <dd-deviced.h>
-#include <dbus/dbus.h>
 /*#include <devman.h> */
+
+#include <pkgmgr-info.h>
 
 #define Keystr_Dynamic		"IDS_ST_BODY_DYNAMIC_T_DISPLAY_EFFECT"
 #define Keystr_Standard		"IDS_ST_BODY_STANDARD_T_DISPLAY_EFFECT"
@@ -66,17 +67,9 @@
 #define KeyStr_ScreenCapture_Ask "IDS_SKM_BODY_ASK_M_IDEA_SKETCH"
 #define KeyStr_ScreenCapture_Gallery "IDS_ST_BODY_GALLERY"
 #define KeyStr_ScreenCapture_KeepIt "IDS_KEEPIT_HEADER_KEEPIT_M_APPLICATION_NAME"
-#define KeyStr_ScreenCapture_Help "IDS_ST_MBODY_SELECT_WHERE_CAPTURED_IMAGES_WILL_BE_SAVED"
 #define KeyStr_ScreenCapture_Edit "IDS_ST_MBODY_EDIT_AFTER_SCREEN_CAPTURE"
 #define KeyStr_Dynamic_Status_Bar "IDS_ST_BODY_DYNAMIC_STATUS_BAR"
-#define KeyStr_Dynamic_Status_Bar_Help "IDS_ST_BODY_KEEPS_THE_STATUS_BAR_TIDY_TAP_THE_REPRESENTATIVE_ICON_TO_SHOW_ALL_THE_ICONS"
 
-
-#define URI_SMART_STAY "tizen-help://org.tizen.setting/smartstay"
-#define URI_SMART_ROTATION "tizen-help://org.tizen.setting/smartrotation"
-
-#define SETTING_DISPLAY_SMART_SCREEN_TURN_ON_SMART_ROATION_POPUP "IDS_ST_POP_ENABLE_SMART_ROTATION_TO_TRY_IT_T_HELP"
-#define SETTING_DISPLAY_SMART_SCREEN_TURN_ON_SMART_STAY_POPUP "IDS_ST_POP_ENABLE_SMART_STAY_TO_TRY_IT_T_HELP"
 #define POPUP_TURN_ON_STR "IDS_ST_BUTTON_ENABLE"
 
 #define SAMRT_SCREEN_TRY_IT_IAMGE_PORTRAIT_H 2636
@@ -144,12 +137,10 @@ struct _SettingApplicationsUG {
 
 
 	Setting_GenGroupItem_Data *data_home;
-	Setting_GenGroupItem_Data *data_message;
 
 	Setting_GenGroupItem_Data *data_screen_mode;
 	Setting_GenGroupItem_Data *data_br;
 	Setting_GenGroupItem_Data *data_back;
-	Setting_GenGroupItem_Data *data_touchkey_light_duration;
 	Setting_GenGroupItem_Data *data_br_auto;
 	Setting_GenGroupItem_Data *data_br_sli;
 	Setting_GenGroupItem_Data *data_adjust;
@@ -157,7 +148,6 @@ struct _SettingApplicationsUG {
 
 	Setting_GenGroupItem_Data *data_br_adjustment;
 
-	Setting_GenGroupItem_Data *data_battery;
 	Setting_GenGroupItem_Data *data_auto_rotate;
 	Setting_GenGroupItem_Data *data_tts;
 
@@ -165,7 +155,6 @@ struct _SettingApplicationsUG {
 	Setting_GenGroupItem_Data *data_smart_stay;
 	Setting_GenGroupItem_Data *data_smart_rotation;
 	Setting_GenGroupItem_Data *data_auto_adjust_scrn_tone;
-	Setting_GenGroupItem_Data *data_high_touch_sensitivity;
 	Setting_GenGroupItem_Data *data_dynamic;
 
 
@@ -177,7 +166,6 @@ struct _SettingApplicationsUG {
 	Setting_GenGroupItem_Data *smart_scroll_speed;
 	Setting_GenGroupItem_Data *visual_feedback_display;
 	Setting_GenGroupItem_Data *scroll_speed_slider;
-	Setting_GenGroupItem_Data *smart_screen_help;
 	Setting_GenGroupItem_Data *try_tilting_head;
 	Setting_GenGroupItem_Data *try_tilting_device;
 	Setting_GenGroupItem_Data *data_smart_screen_image;
@@ -205,7 +193,6 @@ struct _SettingApplicationsUG {
 	Elm_Genlist_Item_Class itc_1icon_1text_sub_back;
 	Elm_Genlist_Item_Class itc_1icon_1text_sub_touch;
 	Elm_Genlist_Item_Class itc_multiline_text;
-	Elm_Genlist_Item_Class itc_multiline_text_help;
 	Elm_Genlist_Item_Class itc_multiline_overheating;
 
 
@@ -227,8 +214,6 @@ struct _SettingApplicationsUG {
 	Evas_Object *genlist;
 
 	DBusConnection *bus;
-	Ecore_Event_Handler *help_event_handler;
-	Evas_Object *help_popup;
 	char *uri;
 
 	/*for brightness*/
@@ -259,6 +244,5 @@ Eina_Bool __show_smartrotation_guide_popup(void *data);
 
 extern void destruct_brightness(void *data);
 extern void construct_brightness(void *data, Evas_Object *genlist);
-
 
 #endif				/* __SETTING_DISPLAY_H__ */

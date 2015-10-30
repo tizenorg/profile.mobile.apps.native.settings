@@ -1,0 +1,2634 @@
+msgid "IDS_ST_BODY_1_MINUTE"
+msgstr "1 minuut"
+
+msgid "IDS_ST_POP_SAVING"
+msgstr "Opslaan..."
+
+msgid "IDS_CAM_POP_MODEL"
+msgstr "Model"
+
+msgid "IDS_EMAIL_BODY_INVALID_PORT_NUMBER"
+msgstr "Ongeldig poortnummer."
+
+msgid "IDS_HEALTH_OPT_ACCESSORIES"
+msgstr "Accessoires"
+
+msgid "IDS_HS_HEADER_USB_DEBUGGING_CONNECTED"
+msgstr "USB-foutopsporing aangesloten."
+
+msgid "IDS_MSG_OPT_6_SECONDS"
+msgstr "6 seconden"
+
+msgid "IDS_PB_POP_PS_ALREADY_EXISTS"
+msgstr "%s bestaat al."
+
+msgid "IDS_SAPPS_OPT_BADGE_ABB"
+msgstr "Badge"
+
+msgid "IDS_ST_BODY_DISCONNECTED"
+msgstr "Verbinding verbroken."
+
+msgid "IDS_ST_BODY_MEDIA"
+msgstr "Media"
+
+msgid "IDS_ST_BODY_SELECT_AUTOMATICALLY"
+msgstr "Automatisch selecteren"
+
+msgid "IDS_ST_HEADER_AUDIO"
+msgstr "Audio"
+
+msgid "IDS_ST_HEADER_FORMAT_MVERB_ABB"
+msgstr "Indeling"
+
+msgid "IDS_ST_HEADER_INSTANT_MESSENGER"
+msgstr "Instant Messenger"
+
+msgid "IDS_ST_HEADER_TIME"
+msgstr "Tijd"
+
+msgid "IDS_ST_MBODY_DAYS_M_WEEKDAY"
+msgstr "Dagen"
+
+msgid "IDS_ST_POP_ROAMING_WILL_INCUR_EXTRA_CHARGES_CONTINUE_Q"
+msgstr "Bij roaming betaalt u extra kosten. Doorgaan?"
+
+msgid "IDS_WIFI_BODY_IP"
+msgstr "IP"
+
+msgid "IDS_BT_POP_OPERATION_FAILED"
+msgstr "Bewerking is mislukt."
+
+msgid "IDS_CLD_OPT_MINUTE"
+msgstr "Minuut"
+
+msgid "IDS_CLD_OPT_MINUTES_LC_ABB"
+msgstr "minuten"
+
+msgid "IDS_CST_BUTTON_CLOSE"
+msgstr "Sluiten"
+
+msgid "IDS_CST_POP_FAILED"
+msgstr "Mislukt."
+
+msgid "IDS_IM_BODY_SUCCESSFULLY_COMPLETED"
+msgstr "Voltooid."
+
+msgid "IDS_IM_POP_UNEXPECTED_ERROR"
+msgstr "Onverwachte fout."
+
+msgid "IDS_PB_BODY_INFO"
+msgstr "Info"
+
+msgid "IDS_PB_BUTTON_CONTACT"
+msgstr "Contact"
+
+msgid "IDS_SIM_BODY_INVALID_SIM_CARD"
+msgstr "Ongeldige SIM-kaart."
+
+msgid "IDS_ST_BUTTON2_PROCESSING_ING"
+msgstr "Verwerken..."
+
+msgid "IDS_ST_POP_DELETE_Q"
+msgstr "Verwijderen?"
+
+msgid "IDS_VR_POP_NO_FILES"
+msgstr "Geen bestanden"
+
+msgid "IDS_WGT_BUTTON3_KIES_VIA_WI_FI"
+msgstr "Kies via Wi-Fi"
+
+msgid "IDS_TPLATFORM_OPT_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_OPT_SETTINGS"
+msgstr "Instellingen"
+
+msgid "IDS_ST_BODY_GENERAL"
+msgstr "Algemeen"
+
+msgid "IDS_ST_HEADER_PRIVACY"
+msgstr "Privacy"
+
+msgid "IDS_BR_OPT_SCREEN"
+msgstr "Scherm"
+
+msgid "IDS_BR_OPT_LTE_GSM_WCDMA_HAUTO_CONNECT"
+msgstr "LTE/GSM/WCDMA (automatisch verbinden)"
+
+msgid "IDS_BR_HEADER_MULTI_WINDOW"
+msgstr "Multi window"
+
+msgid "IDS_BR_BODY_WEBSITE_SETTINGS"
+msgstr "Website-instellingen"
+
+msgid "IDS_CLD_HEADER_EVENT_NOTIFICATION"
+msgstr "Melding agenda-item"
+
+msgid "IDS_CLD_BUTTON_LIST_VIEW"
+msgstr "Lijstweergave"
+
+msgid "IDS_CLD_BUTTON_EXPORT"
+msgstr "Exporteren"
+
+msgid "IDS_CLD_BODY_FIRST_DAY_OF_WEEK"
+msgstr "Eerste dag van de week"
+
+msgid "IDS_CAM_BODY_SHOWING_PD_ITEMS_T_TTS"
+msgstr "%d items weergeven"
+
+msgid "IDS_COM_POP_FLIGHT_MODE_WILL_BE_DISABLED"
+msgstr "Vliegtuigstand wordt uitgeschakeld."
+
+msgid "IDS_COM_POP_CHECKING"
+msgstr "Controleren..."
+
+msgid "IDS_COM_OPT_CONTINUE_Q"
+msgstr "Doorgaan?"
+
+msgid "IDS_COM_INCORRECT_PASSWORD_ENTERED_5_TIMES"
+msgstr "Vijf keer onjuist wachtwoord ingevoerd."
+
+msgid "IDS_COM_BODY_YOUR_SIM_CARD_DOES_NOT_ALLOW_A_CONNECTION_TO_THIS_NETWORK"
+msgstr "Uw SIM-kaart staat verbinding met dit netwerk niet toe."
+
+msgid "IDS_COM_BODY_TYPE_A_PIN_THAT_IS_4_TO_8_NUMBERS"
+msgstr "Typ een PIN bestaande uit 4 tot 8 cijfers"
+
+msgid "IDS_COM_BODY_NETWORK_OPERATORS"
+msgstr "Netwerkoperators"
+
+msgid "IDS_COM_BODY_FORMATTING_SD_CARD_ING"
+msgstr "SD-kaart formatteren..."
+
+msgid "IDS_COM_BODY_ENTER_PROXY_EMPTY"
+msgstr "Proxy-adres invoeren"
+
+msgid "IDS_COM_BODY_CONNECT_TO_DATA_SERVICES_WHEN_ROAMING"
+msgstr "Verbinden met gegevensservices bij roaming"
+
+msgid "IDS_ASEML_POP_PASSWORD_EXPIRED"
+msgstr "Wachtwoord verlopen."
+
+msgid "IDS_ASEML_POP_ENTER_ANOTHER_PASSWORD"
+msgstr "Ander wachtwoord ingeven"
+
+msgid "IDS_ASEML_BODY_DEVICE_ENCRYPTION"
+msgstr "Apparaatcodering"
+
+msgid "IDS_CST_POP_UNKNOWN_OPERATION"
+msgstr "Onbekende bewerking."
+
+msgid "IDS_CST_POP_OPERATION_NOT_ALLOWED_DURING_CALLS"
+msgstr "Bewerking niet toegestaan tijdens oproepen."
+
+msgid "IDS_CST_OPT_GSM_WCDMA_HAUTO_CONNECT"
+msgstr "GSM/WCDMA (automatisch verbinden)"
+
+msgid "IDS_CST_BODY_UNBLOCK_PIN2"
+msgstr "PIN2 deblokkeren"
+
+msgid "IDS_MTTRL_MBODY_PALM_MOTION"
+msgstr "Handpalmbeweging"
+
+msgid "IDS_MTTRL_BUTTON_ENABLE_MOTION"
+msgstr "Beweging aan"
+
+msgid "IDS_MTTRL_BODY_SMART_ALERT"
+msgstr "Slim melden"
+
+msgid "IDS_NFC_OPT_S_BEAM"
+msgstr "S Beam"
+
+msgid "IDS_STU_BODY_SMART_STAY_DETECTS_YOUR_EYES_WITH_THE_FRONT_CAMERA_SO_THAT_THE_SCREEN_STAYS_ON_WHEN_YOU_ARE_LOOKING_AT_IT"
+msgstr "Slim sluimeren detecteert uw ogen met de voorste camera zodat het scherm aan blijft zolang u ernaar kijkt."
+
+msgid "IDS_IDLE_BODY_NEW_PIN_AND_CONFIRM_PIN_DO_NOT_MATCH"
+msgstr "Nieuwe pincode en pincode voor bevestiging komen niet overeen."
+
+msgid "IDS_MOBILEAP_POP_TURNING_ON_WI_FI_WILL_DISABLE_MOBILE_HOTSPOT_CONTINUE_Q_VZW"
+msgstr "Als u Wi-Fi inschakelt, wordt Mobiele hotspot uitgeschakeld. Doorgaan?"
+
+msgid "IDS_MOBILEAP_MBODY_DATA_USAGE"
+msgstr "Gegevensgebruik"
+
+msgid "IDS_MOBILEAP_BODY_TETHERING"
+msgstr "Tethering"
+
+msgid "IDS_IM_POP_THIS_FEATURE_IS_NOT_AVAILABLE_WHILE_FLIGHT_MODE_IS_ON"
+msgstr "Deze functie is niet beschikbaar terwijl vliegtuigstand is ingeschakeld."
+
+msgid "IDS_EMAIL_POP_SECURITY_UPDATE_ABB"
+msgstr "Beveiligingsupdate"
+
+msgid "IDS_EMAIL_POP_GIANT_M_TEXTSIZE"
+msgstr "Enorm"
+
+msgid "IDS_EMAIL_POP_FAILED_TO_MOVE"
+msgstr "Kan niet verplaatsen."
+
+msgid "IDS_EMAIL_OPT_HUGE_M_TEXTSIZE"
+msgstr "Extra groot"
+
+msgid "IDS_QP_POP_NETWORK_RESTRICTION_MODE_WILL_BE_DISABLED_JPN"
+msgstr "Network restriction mode will be disabled."
+
+msgid "IDS_QP_POP_IN_NETWORK_RESTRICTION_MODE_YOU_CAN_USE_ALL_YOUR_APPLICATIONS_WITHOUT_CONNECTING_TO_THE_NETWORK_YOU_CAN_ALSO_RECEIVE_CALLS_AND_SMS_MESSAGES_MSG_JPN"
+msgstr "In Network restriction mode, you can use all your applications without connecting to the network. You can also receive calls and SMS messages. Network restriction mode will be enabled."
+
+msgid "IDS_TASKMGR_BODY_ACTIVE_APPLICATIONS_C_PD"
+msgstr "Actieve applicaties: %d"
+
+msgid "IDS_USB_POP_UNABLE_TO_CONNECT_TO_KIES_VIA_WI_FI_WHEN_CONNECTED_TO_KIES_VIA_USB"
+msgstr "Kan niet verbinden met Kies via Wi-Fi bij verbinding met Kies via USB."
+
+msgid "IDS_MSGC_POP_YOUR_SD_CARD_IS_FULL"
+msgstr "Uw SD-kaart is vol."
+
+msgid "IDS_MSGC_BODY_NOT_ENOUGH_MEMORY_IN_PHONE_MEMORY_DELETE_SOME_ITEMS_AND_TRY_AGAIN"
+msgstr "Onvoldoende ruimte in telefoongeheugen. Verwijder een aantal items en probeer het opnieuw."
+
+msgid "IDS_KW_POP_BE_CAREFUL_WHEN_TRANSMITTING_INFORMATION_ON_AN_UNSECURED_WI_FI_NETWORK_MSG"
+msgstr "Wees voorzichtig met het verzenden via een niet-beveiligd Wi-Fi-netwerk aangezien de informatie zichtbaar kan zijn voor anderen in het netwerk."
+
+msgid "IDS_DN_BODY_ENCRYPT_SD_CARD"
+msgstr "SD-kaart coderen"
+
+msgid "IDS_MSGF_POP_UNSUPPORTED"
+msgstr "Niet ondersteund."
+
+msgid "IDS_MSGF_BODY_SERVICE_TYPE"
+msgstr "Servicetype"
+
+msgid "IDS_MF_POP_FORMAT_COMPLETED"
+msgstr "Formatteren voltooid."
+
+msgid "IDS_MF_OPT_NAME_HZ_TO_A"
+msgstr "Naam (Z tot A)"
+
+msgid "IDS_MF_OPT_NAME_HA_TO_Z"
+msgstr "Naam (A tot Z)"
+
+msgid "IDS_MF_BODY_SCREEN_CAPTURE_M_NOUN"
+msgstr "Schermafbeelding"
+
+msgid "IDS_XTAG_POP_RESET_ALL_SETTINGS_FOR_C_DEFAULT_APPS_BACKGROUND_DATA_RESTRICTIONS_YOUR_EXISTING_DATA_WILL_NOT_BE_LOST"
+msgstr "Reset alle instellingen voor:<br><br>Standaardapps<br>Restricties voor achtergrondgegevens<br><br>Er gaan geen bestaande gegevens verloren"
+
+msgid "IDS_PB_POP_MOVE_COMPLETED"
+msgstr "Verplaatsen voltooid."
+
+msgid "IDS_PB_BODY_MOVING_ING"
+msgstr "Verplaatsen..."
+
+msgid "IDS_SMEMO_BUTTON_IMPORT"
+msgstr "Importeren"
+
+msgid "IDS_LCKSCN_BODY_WALLPAPERS"
+msgstr "Achtergrond"
+
+msgid "IDS_LCKSCN_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_TO_UNLOCK_IT_MSG"
+msgstr "Tik en houd het scherm vast, en kantel het apparaat naar u toe om het te ontgrendelen. Als het scherm niet kan worden ontgrendeld, kantelt u het apparaat nog verder. Wanneer beweging ontgrendelen is ingesteld, wordt beweging automatisch ingeschakeld in Instellingen."
+
+msgid "IDS_SA_BUTTON_DONE_ABB"
+msgstr "Ger."
+
+msgid "IDS_FP_BODY_NO_APPLICATIONS"
+msgstr "Geen applicaties"
+
+msgid "IDS_ST_TZTAB4_MOST_USED_M_APP"
+msgstr "Meest gebrkt"
+
+msgid "IDS_ST_TPOP_PERSONAL_MODE_ENABLED_ABB"
+msgstr "Persoonlijke stand ingeschakeld."
+
+msgid "IDS_ST_TPOP_PERSONAL_MODE_DISABLED_ABB"
+msgstr "Persoonlijke stand uitgeschakeld."
+
+msgid "IDS_ST_TPOP_FAILED_TO_ENABLE_PERSONAL_MODE_TRY_AGAIN_ABB"
+msgstr "Kan Persoonl.stand niet inschak. Probeer opn."
+
+msgid "IDS_ST_TPOP_FAILED_TO_DISABLE_PERSONAL_MODE_TRY_AGAIN_ABB"
+msgstr "Kan Persoonl.stand niet uitsch. Probeer opn."
+
+msgid "IDS_ST_TPOP_ENABLING_ULTRA_POWER_SAVING_MODE_ING"
+msgstr "Extra energiebesparende stand inschakelen..."
+
+msgid "IDS_ST_SK_FORMAT_ABB"
+msgstr "Format."
+
+msgid "IDS_ST_SK3_DONE"
+msgstr "Gereed"
+
+msgid "IDS_ST_SK2_PLEASE_WAIT"
+msgstr "Een ogenblik geduld"
+
+msgid "IDS_ST_SBODY_POWER_SAVING"
+msgstr "Energiebesparing"
+
+msgid "IDS_ST_SBODY_ONLY_UPDATE_THE_SECURITY_POLICY_AUTOMATICALLY_WHEN_YOUR_DEVICE_IS_CONNECTED_TO_A_WI_FI_NETWORK"
+msgstr "Werk het beveiligingsbeleid alleen automatisch bij wanneer uw apparaat verbinding heeft met een Wi-Fi-netwerk."
+
+msgid "IDS_ST_SBODY_INCREASE_THE_SENSITIVITY_OF_THE_TOUCH_SCREEN_SBODY_MSG"
+msgstr "Verhoog de gevoeligheid van het aanraakscherm zodat u het apparaat kunt bedienen terwijl u handschoenen draagt."
+
+msgid "IDS_ST_SBODY_DISABLED"
+msgstr "Uitgeschakeld"
+
+msgid "IDS_ST_SBODY_AUTOMATICALLY_CHECK_FOR_CHANGES_TO_THE_SECURITY_POLICY_MSG"
+msgstr "Zoek automatisch naar wijzigingen in het beveiligingsbeleid en download updates om de beveiliging en de service te verbeteren."
+
+msgid "IDS_ST_POP_YOU_MUST_ENTER_A_DEVICE_NAME"
+msgstr "U moet een apparaatnaam invoeren."
+
+msgid "IDS_ST_POP_YOUR_PERSONAL_MODE_SECURITY_SETTINGS_WILL_BE_RESET_AND_YOUR_PERSONAL_CONTENT_WILL_BE_DELETED_RESET_PERSONAL_MODE_Q"
+msgstr "Uw beveiligingsinstellingen van Persoonlijke stand worden gereset en uw persoonlijke inhoud wordt verwijderd. Persoonlijke stand resetten?"
+
+msgid "IDS_ST_POP_USE_2D_HARDWARE_OR_SOFTWARE_ACCELERATION_IN_APPLICATIONS"
+msgstr "2D-hardware- of softwareversnelling gebruiken in applicaties."
+
+msgid "IDS_ST_POP_URL_REMOVED"
+msgstr "URL verwijderd."
+
+msgid "IDS_ST_POP_URLS_REMOVED"
+msgstr "URL´s verwijderd."
+
+msgid "IDS_ST_POP_UNMOUNTING_USB_OTG_STORAGE_WILL_STOP_SOME_APPLICATIONS_MSG"
+msgstr "Als u de USB OTG-opslag loskoppelt, worden bepaalde applicaties gestopt. Mogelijk zijn ze pas weer beschikbaar als u de USB OTG-opslag weer aansluit."
+
+msgid "IDS_ST_POP_UNMOUNTING_SD_CARD_ING_ABB"
+msgstr "SD-kaart ontkoppelen..."
+
+msgid "IDS_ST_POP_UNMOUNTING_ING_ABB"
+msgstr "Ontkoppelen..."
+
+msgid "IDS_ST_POP_UNINSTALL_Q"
+msgstr "Verwijderen?"
+
+msgid "IDS_ST_POP_UNINSTALLING_ING"
+msgstr "Verwijderen..."
+
+msgid "IDS_ST_POP_UNABLE_TO_TURN_ON_FLIGHT_MODE_VODA"
+msgstr "Kan de vliegtuigstand niet inschakelen"
+
+msgid "IDS_ST_POP_UNABLE_TO_SEARCH_NETWORKS_DURING_DATA_SERVICE_ACTIVATED_DO_YOU_WANT_TO_DISCONNECT_THE_DATA_SERVICE_AND_SEARCH_AVAILABLE_NETWORK_Q"
+msgstr "Kan geen netwerken zoeken als gegevensservice is geactiveerd. Wilt u de verbinding met de gegevensservice verbreken en beschikbare netwerken zoeken?"
+
+msgid "IDS_ST_POP_UNABLE_TO_CHANGE_NETWORKS_WHILE_DATA_SERVICE_IN_USE_STOP_USING_CURRENT_DATA_SERVICE_AND_SELECT_ANOTHER_AVAILABLE_NETWORK_Q"
+msgstr "Kan netwerken niet wijzigen als gegevensservice wordt gebruikt. Gebruik huidige gegevensservice stoppen en ander beschikbaar netwerk selecteren?"
+
+msgid "IDS_ST_POP_ULTRA_POWER_SAVING_MODE_WILL_BE_DISABLED"
+msgstr "Extra energiebesparende stand wordt uitgeschakeld."
+
+msgid "IDS_ST_POP_TO_USE_PERSONAL_MODE_YOU_MUST_REGISTER_AN_UNLOCK_METHOD"
+msgstr "Als u Persoonlijke stand wilt gebruiken, moet u een ontgrendelingsmethode registreren."
+
+msgid "IDS_ST_POP_TO_ENABLE_HANDS_FREE_MODE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Schakel ten minste één relevante functie in om de Handsfreestand in te schakelen."
+
+msgid "IDS_ST_POP_THE_SCREEN_WILL_NOT_TURN_OFF_WHILE_YOU_KEEP_LOOKING_AT_IT"
+msgstr "Het scherm wordt niet uitgeschakeld wanneer u ernaar blijft kijken."
+
+msgid "IDS_ST_POP_THE_MAXIMUM_NUMBERS_OF_CHARACTERS_FOR_YOUR_DEVICE_NAME_HPD_HAS_BEEN_EXCEEDED"
+msgstr "Het maximumaantal tekens voor uw apparaatnaam (%d) is overschreden."
+
+msgid "IDS_ST_POP_THE_APP_HAS_BEEN_UNINSTALLED"
+msgstr "De app is verwijderd."
+
+msgid "IDS_ST_POP_TAP_OK"
+msgstr "Tik op OK"
+
+msgid "IDS_ST_POP_SEARCHING_NETWORK_ING"
+msgstr "Netwerk zoeken..."
+
+msgid "IDS_ST_POP_RESTART_PHONE_TO_USE_AUTOMATIC_UPDATE_Q"
+msgstr "Telefoon opnieuw starten met Automatisch bijwerken?"
+
+msgid "IDS_ST_POP_RESET_TO_DEFAULT_Q"
+msgstr "Standaardinstellingen terugzetten?"
+
+msgid "IDS_ST_POP_RESET_ALL_SETTINGS_AND_DELETE_ALL_DATA_THIS_CANNOT_BE_STOPPED_ONCE_STARTED"
+msgstr "Alle instellingen terugzetten en alle gegevens wissen. Deze functie kan niet worden gestopt nadat deze is gestart."
+
+msgid "IDS_ST_POP_REMOVE_DEFAULT_APPS_Q"
+msgstr "Standaardapps verwijderen?"
+
+msgid "IDS_ST_POP_REGISTRATION_CODE_NOT_FOUND"
+msgstr "Registratiecode niet gevonden."
+
+msgid "IDS_ST_POP_REGISTERING_ING"
+msgstr "Registreren..."
+
+msgid "IDS_ST_POP_REGISTERED"
+msgstr "Geregistreerd."
+
+msgid "IDS_ST_POP_PUK2_VERIFIED"
+msgstr "PUK2 geverifieerd."
+
+msgid "IDS_ST_POP_PUK1_VERIFIED"
+msgstr "PUK1 geverifieerd."
+
+msgid "IDS_ST_POP_PORT_REMOVED"
+msgstr "Poort verwijderd."
+
+msgid "IDS_ST_POP_PORTS_REMOVED"
+msgstr "Poorten verwijderd."
+
+msgid "IDS_ST_POP_PIN_UNBLOCKED"
+msgstr "PIN gedeblokkeerd."
+
+msgid "IDS_ST_POP_PIN2_UNBLOCKED"
+msgstr "PIN2 gedeblokkeerd."
+
+msgid "IDS_ST_POP_PIN2_CHANGED"
+msgstr "PIN2 gewijzigd."
+
+msgid "IDS_ST_POP_PIN2_BLOCKED"
+msgstr "PIN2 geblokkeerd."
+
+msgid "IDS_ST_POP_PIN1_CHANGED"
+msgstr "PIN1-code gewijzigd."
+
+msgid "IDS_ST_POP_PIN1_BLOCKED"
+msgstr "PIN1-code vergrendeld."
+
+msgid "IDS_ST_POP_PD_ATTEMPT_LEFT"
+msgstr "%d poging over."
+
+msgid "IDS_ST_POP_PD_ATTEMPTS_LEFT"
+msgstr "%d pogingen over."
+
+msgid "IDS_ST_POP_PASSWORD_MUST_CONTAIN_AT_LEAST_PD_ALPHANUMERIC_CHARACTERS"
+msgstr "Wachtwoord moet ten minste %d alfanumerieke tekens bevatten."
+
+msgid "IDS_ST_POP_PASSWORD_MUST_BE_MORE_THAN_P1SD_CHARACTERS_AND_LESS_THAN_P2SD"
+msgstr "Wachtwoord moet langer zijn dan %1$d tekens en korter dan %2$d tekens."
+
+msgid "IDS_ST_POP_PASSWORDS_DO_NOT_MATCH"
+msgstr "Wachtwoorden komen niet overeen."
+
+msgid "IDS_ST_POP_NO_SD_CARD_IS_INSERTED_DISABLE_ENCRYPT_SD_CARD_ANYWAY_Q"
+msgstr "Er is geen SD-kaart geplaatst. SD-kaart coderen toch uitschakelen?"
+
+msgid "IDS_ST_POP_NO_SD_CARD_HAS_BEEN_INSERTED_ENCRYPTION_WILL_START_AUTOMATICALLY_WHEN_YOU_INSERT_AN_SD_CARD"
+msgstr "Er is geen SD-kaart geplaatst. Codering wordt automatisch gestart wanneer u een SD-kaart plaatst."
+
+msgid "IDS_ST_POP_NO_ITEM_SELECTED"
+msgstr "Geen items geselecteerd."
+
+msgid "IDS_ST_POP_NEW_PASSWD_SAVED"
+msgstr "Nieuw wachtwoord opgeslagen."
+
+msgid "IDS_ST_POP_NETWORK_SEARCH_FAILED"
+msgstr "Netwerk zoeken mislukt."
+
+msgid "IDS_ST_POP_MOBILE_DATA_HAS_BEEN_DISABLED_MSG"
+msgstr "Mobiele gegevens zijn uitgeschakeld. U kunt geen MMS-berichten verzenden of ontvangen. Maak verbinding via Wi-Fi-netwerk om gegevens te synchroniseren met de server."
+
+msgid "IDS_ST_POP_MOBILE_DATA_ENABLED_CONNECTING_TO_MOBILE_NETWORKS_MAY_INCUR_EXTRA_CHARGES_DEPENDING_ON_YOUR_DATA_PLAN_CONTINUE_Q"
+msgstr "Mobiele gegevens ingeschakeld. Voor verbindingen met mobiele netwerken kunnen afhankelijk van uw abonnement extra kosten gelden. Doorgaan?"
+
+msgid "IDS_ST_POP_LOADING_ING"
+msgstr "Laden..."
+
+msgid "IDS_ST_POP_IP_ADDRESS_REMOVED"
+msgstr "IP-adres verwijderd."
+
+msgid "IDS_ST_POP_INVALID_URL_OR_NETWORK_CONNECTION_FAILED"
+msgstr "Ongeldige URL of netwerkverbinding mislukt."
+
+msgid "IDS_ST_POP_INVALID_IP_ADDRESS_OR_NETWORK_CONNECTION_FAILED"
+msgstr "Ongeldig IP-adres of netwerkverbinding mislukt."
+
+msgid "IDS_ST_POP_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"
+msgstr "Plaats de SIM-kaart voor netwerkdiensten."
+
+msgid "IDS_ST_POP_INCORRECT_PUK"
+msgstr "Onjuiste PUK."
+
+msgid "IDS_ST_POP_INCORRECT_PIN_PD_ATTEMPTS_LEFT"
+msgstr "Onjuiste PIN. %d pogingen over."
+
+msgid "IDS_ST_POP_INCORRECT_PIN2"
+msgstr "Onjuiste PIN2."
+
+msgid "IDS_ST_POP_INCORRECT_PIN1_ATTEMPT_LEFT"
+msgstr "Onjuiste PIN. 1 poging over."
+
+msgid "IDS_ST_POP_INCORRECT_PASSWORD"
+msgstr "Onjuist wachtwoord."
+
+msgid "IDS_ST_POP_IF_YOU_RESET_YOUR_DEVICE_TO_FACTORY_DEFAULTS_YOU_WILL_NOT_BE_ABLE_TO_USE_ENCRYPTED_FILES_ON_THE_SD_CARD_MSG"
+msgstr "Als u uw apparaat terugzet op de standaardinstellingen, kunt u geen gecodeerde bestanden op de SD-kaart gebruiken, maar u kunt nog wel niet-gecodeerde bestanden gebruiken."
+
+msgid "IDS_ST_POP_FORMATTING_WILL_ERASE_ALL_DATA_FORMAT_Q"
+msgstr "Bij formatteren worden alle gegevens verwijderd. Formatteren?"
+
+msgid "IDS_ST_POP_FORMATTING_ING"
+msgstr "Formatteren..."
+
+msgid "IDS_ST_POP_FAILED_TO_UNINSTALL_THE_APP"
+msgstr "Kan de app niet verwijderen."
+
+msgid "IDS_ST_POP_ENTER_PS"
+msgstr "%s ingeven"
+
+msgid "IDS_ST_POP_ENCRYPT_SD_CARD_Q_OPERATION_IS_IRREVERSIBLE_AND_IF_YOU_INTERRUPT_IT_YOU_WILL_LOSE_DATA"
+msgstr "SD-kaart coderen? De bewerking kan niet ongedaan worden gemaakt en u raakt gegevens kwijt als u deze onderbreekt."
+
+msgid "IDS_ST_POP_ENABLING_EMERGENCY_MODE_ING"
+msgstr "Alarmstand inschakelen..."
+
+msgid "IDS_ST_POP_ENABLING_AUTO_UPDATE_MEANS_YOUR_DEVICE_WILL_CHECK_FOR_SECURITY_UPDATES_AUTOMATICALLY_NOTI_MSG"
+msgstr "Als u automatisch bijwerken inschakelt, controleert uw apparaat automatisch op beveiligingsupdates. Het controleren via mobiele netwerken kan voor extra kosten zorgen."
+
+msgid "IDS_ST_POP_ENABLE_SMART_STAY_TO_TRY_IT_T_HELP"
+msgstr "Schakel Slim sluimeren in om het uit te proberen."
+
+msgid "IDS_ST_POP_ENABLE_SMART_ROTATION_TO_TRY_IT_T_HELP"
+msgstr "Schakel Slim roteren in om het uit te proberen."
+
+msgid "IDS_ST_POP_ENABLE_FLIGHT_MODE"
+msgstr "Schakel Vliegtuigstand in."
+
+msgid "IDS_ST_POP_EMERGENCY_MODE_WILL_BE_DISABLED"
+msgstr "Alarmstand wordt uitgeschakeld."
+
+msgid "IDS_ST_POP_DO_NOT_ASK_AGAIN"
+msgstr "Niet nogmaals vragen"
+
+msgid "IDS_ST_POP_DISABLING_AUTO_UPDATE_MEANS_YOU_HAVE_TO_CHECK_FOR_SECURITY_UPDATES_MANUALLY_NOTI_MSG"
+msgstr "Als u automatisch bijwerken uitschakelt, moet u handmatig op beveiligingsupdates controleren. Als u uw apparaat wilt beveiligen, raden wij aan om automatisch bijwerken in te schakelen."
+
+msgid "IDS_ST_POP_DISABLE_TETHERING_Q"
+msgstr "Tethering uitschakelen?"
+
+msgid "IDS_ST_POP_DEVICE_WILL_RESTART"
+msgstr "Apparaat wordt opnieuw gestart."
+
+msgid "IDS_ST_POP_DEVICE_WILL_BE_RESET_ALL_SETTINGS_AND_DATA_WILL_BE_ERASED_THIS_CANNOT_BE_STOPPED_ONCE_STARTED"
+msgstr "Het apparaat wordt gereset. Alle instellingen en gegevens worden gewist. Dit kan niet worden gestopt als het eenmaal is gestart."
+
+msgid "IDS_ST_POP_CONNECTING_TO_THE_SERVER_ING"
+msgstr "Verbinden met de server..."
+
+msgid "IDS_ST_POP_CHECK_FOR_SECURITY_UPDATES_AND_DOWNLOAD_NEW_UPDATES_Q_NOTI_MSG"
+msgstr "Controleren op beveiligingsupdates en nieuwe updates downloaden? Het downloaden via mobiele netwerken kan extra kosten met zich meebrengen. Download indien mogelijk via een Wi-Fi-netwerk. U kunt uw apparaat gebruiken tijdens het downloaden."
+
+msgid "IDS_ST_POP_CHAP"
+msgstr "CHAP"
+
+msgid "IDS_ST_POP_CHANGE_YOUR_POSITION_IN_RELATION_TO_THE_SCREEN_AND_SEE_HOW_IT_ADJUSTS_AUTOMATICALLY"
+msgstr "Wijzig uw positie ten opzichte van het scherm en bekijk hoe het automatisch wordt aangepast."
+
+msgid "IDS_ST_POP_AUTO_TIME_UPDATE_UNAVAILABLE_CHOOSE_ALTERNATIVE_TIME_SET_MODE_JPN_SBM"
+msgstr "Auto time update unavailable. Choose alternative time set mode."
+
+msgid "IDS_ST_POP_ANY_PERSONAL_CONTENT_WILL_NOT_BE_ACCESSIBLE_IN_NORMAL_MODE"
+msgstr "Geen toegang tot persoonlijke inhoud in Normale stand."
+
+msgid "IDS_ST_OPT_WCDMA_GSM_HAUTO_CONNECT"
+msgstr "WCDMA/GSM (automatisch verbinden)"
+
+msgid "IDS_ST_OPT_UNTITLED_NETWORK"
+msgstr "Naamloos netwerk"
+
+msgid "IDS_ST_OPT_TAB_VIEW"
+msgstr "Tabbladweergave"
+
+msgid "IDS_ST_OPT_SELECTED"
+msgstr "Geselecteerd"
+
+msgid "IDS_ST_OPT_SELECT"
+msgstr "Selecteren"
+
+msgid "IDS_ST_OPT_RESET_APP_SETTINGS_ABB"
+msgstr "Appinstell. resetten"
+
+msgid "IDS_ST_OPT_NETWORK_LIST"
+msgstr "Lijst met netwerken"
+
+msgid "IDS_ST_OPT_MASS_STORAGE_ABB"
+msgstr "Massaopslag"
+
+msgid "IDS_ST_OPT_LTE_WCDMA_GSM_HAUTO_CONNECT"
+msgstr "LTE/WCDMA/GSM (automatisch verbinden)"
+
+msgid "IDS_ST_OPT_EDIT_QUICK_SETTINGS"
+msgstr "Snelle instellingen bewerken"
+
+msgid "IDS_ST_OPT_DEFAULT_RINGTONE"
+msgstr "Standaardbeltoon"
+
+msgid "IDS_ST_OPT_CUSTOM_MODE_ABB"
+msgstr "Aangepaste stand"
+
+msgid "IDS_ST_OPT_BLOCK_WI_FI"
+msgstr "Wi-Fi blokkeren"
+
+msgid "IDS_ST_OPT_BLOCK_MOBILE_NETWORKS"
+msgstr "Mobiele netwerken blokkeren"
+
+msgid "IDS_ST_OPT_BLOCK_ALL"
+msgstr "Alles blokkeren"
+
+msgid "IDS_ST_OPT_AUTO_UPDATE_ABB"
+msgstr "Automat. update"
+
+msgid "IDS_ST_OPT_ALLOW_ALL"
+msgstr "Alles toestaan"
+
+msgid "IDS_ST_OPT_ALL"
+msgstr "Alles"
+
+msgid "IDS_ST_MBODY_ZOOM"
+msgstr "In-/uitzoomen"
+
+msgid "IDS_ST_MBODY_WCDMA_ONLY"
+msgstr "Alleen WCDMA"
+
+msgid "IDS_ST_MBODY_VIA_WI_FI_ONLY"
+msgstr "Alleen via Wi-Fi"
+
+msgid "IDS_ST_MBODY_UNLOCK_METHOD"
+msgstr "Ontgrendelmethode"
+
+msgid "IDS_ST_MBODY_TOUCH_SENSITIVITY_ABB"
+msgstr "Tikgevoeligheid"
+
+msgid "IDS_ST_MBODY_SWIPE"
+msgstr "Vegen"
+
+msgid "IDS_ST_MBODY_SOFTWARE_UPDATE"
+msgstr "Software-update"
+
+msgid "IDS_ST_MBODY_SMART_STAY"
+msgstr "Slim sluimeren"
+
+msgid "IDS_ST_MBODY_SMART_SCREEN"
+msgstr "Slim scherm"
+
+msgid "IDS_ST_MBODY_SMART_ROTATION"
+msgstr "Slim roteren"
+
+msgid "IDS_ST_MBODY_SIM_CARD_PROFILE_SETTINGS"
+msgstr "Profielinstell. SIM-kaart"
+
+msgid "IDS_ST_MBODY_SHOW_CPU_USAGE"
+msgstr "CPU-gebruik tonen"
+
+msgid "IDS_ST_MBODY_SELECT_WHERE_CAPTURED_IMAGES_WILL_BE_SAVED"
+msgstr "Selecteer waar vastgelegde afbeeldingen worden opgeslagen"
+
+msgid "IDS_ST_MBODY_SCREEN_ROTATION"
+msgstr "Schermrotatie"
+
+msgid "IDS_ST_MBODY_SCREEN_READER_HTTS"
+msgstr "Schermlezer (TTS)"
+
+msgid "IDS_ST_MBODY_REGISTER"
+msgstr "Registreren"
+
+msgid "IDS_ST_MBODY_PAP"
+msgstr "PAP"
+
+msgid "IDS_ST_MBODY_NONE"
+msgstr "Geen"
+
+msgid "IDS_ST_MBODY_MOTIONS_AND_GESTURES"
+msgstr "Bewegingen en gebaren"
+
+msgid "IDS_ST_MBODY_MOBILE_DATA"
+msgstr "Mobiele gegevens"
+
+msgid "IDS_ST_MBODY_HELP"
+msgstr "Help"
+
+msgid "IDS_ST_MBODY_HANDS_FREE_MODE"
+msgstr "Handsfreestand"
+
+msgid "IDS_ST_MBODY_GSM_ONLY"
+msgstr "Alleen GSM"
+
+msgid "IDS_ST_MBODY_FONT_SIZE"
+msgstr "Tekstgrootte"
+
+msgid "IDS_ST_MBODY_FACTORY_RESET"
+msgstr "Fabrieksinst. herstellen"
+
+msgid "IDS_ST_MBODY_EDIT_AFTER_SCREEN_CAPTURE"
+msgstr "Bewerken na maken schermafbeelding"
+
+msgid "IDS_ST_MBODY_DIALLING_KEYPAD_TONE"
+msgstr "Toon kiestoetsenblok"
+
+msgid "IDS_ST_MBODY_DEVICE_STATUS"
+msgstr "Apparaatstatus"
+
+msgid "IDS_ST_MBODY_DEREGISTER"
+msgstr "Afmelden"
+
+msgid "IDS_ST_MBODY_COLOUR_THEME"
+msgstr "Kleurenthema"
+
+msgid "IDS_ST_MBODY_CHARGING"
+msgstr "Opladen"
+
+msgid "IDS_ST_MBODY_CALL_SETTINGS"
+msgstr "Oproepinstellingen"
+
+msgid "IDS_ST_MBODY_AUTO_ADJUST_SCREEN_TONE"
+msgstr "Schermtint auto-aanpassen"
+
+msgid "IDS_ST_MBODY_ACTIVE_APPLICATION"
+msgstr "Actieve applicatie"
+
+msgid "IDS_ST_MBODY_ACCOUNTS_AND_BACKUP"
+msgstr "Accounts en back-up"
+
+msgid "IDS_ST_ITAB4_CONTROLS_M_INPUT_AND_CONTROL"
+msgstr "Bediening"
+
+msgid "IDS_ST_HEADER_WI_FI_DIRECT"
+msgstr "Wi-Fi Direct"
+
+msgid "IDS_ST_HEADER_WI_FI"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_HEADER_USER_SETTINGS_ABB"
+msgstr "Gebruikerinstellingen"
+
+msgid "IDS_ST_HEADER_USER_AND_BACKUP_M_CATEGORY"
+msgstr "Gebruiker en back-up"
+
+msgid "IDS_ST_HEADER_USB_UTILITIES"
+msgstr "USB-hulpprogramma’s"
+
+msgid "IDS_ST_HEADER_UNLOCK_DEVICE_USING_MOTION_ABB"
+msgstr "Apparaat ontgr. met beweging"
+
+msgid "IDS_ST_HEADER_UNAVAILABLE"
+msgstr "Niet beschikbaar"
+
+msgid "IDS_ST_HEADER_ULTRA_POWER_SAVING_MODE"
+msgstr "Extra energiebesparende stand"
+
+msgid "IDS_ST_HEADER_TOUCH_KEY_LIGHT_DURATION"
+msgstr "Duur verlichting tiptoetsen"
+
+msgid "IDS_ST_HEADER_TEXT_TO_SPEECH"
+msgstr "Tekst naar spraak"
+
+msgid "IDS_ST_HEADER_STANDARD_LIMIT_ABB"
+msgstr "Standaardlimiet"
+
+msgid "IDS_ST_HEADER_SOUND"
+msgstr "Geluid"
+
+msgid "IDS_ST_HEADER_SIM_CARD_MANAGER"
+msgstr "SIM-kaartbeheer"
+
+msgid "IDS_ST_HEADER_SHARED_CONTENT"
+msgstr "Gedeelde inhoud"
+
+msgid "IDS_ST_HEADER_SELECT_VIBRATION_PATTERNS_ABB"
+msgstr "Trilpatronen selecteren"
+
+msgid "IDS_ST_HEADER_SCREEN_MIRRORING"
+msgstr "Screen Mirroring"
+
+msgid "IDS_ST_HEADER_SAMSUNG_KIES"
+msgstr "Samsung Kies"
+
+msgid "IDS_ST_HEADER_SAMSUNG_APPS"
+msgstr "Samsung Apps"
+
+msgid "IDS_ST_HEADER_RINGTONES"
+msgstr "Beltonen"
+
+msgid "IDS_ST_HEADER_RESET_RESULTS"
+msgstr "Resultaten terugzetten"
+
+msgid "IDS_ST_HEADER_RESET"
+msgstr "Resetten"
+
+msgid "IDS_ST_HEADER_PRIVILEGES"
+msgstr "Privileges"
+
+msgid "IDS_ST_HEADER_PRIVATE_MODE"
+msgstr "Privéstand"
+
+msgid "IDS_ST_HEADER_PORT"
+msgstr "Poort"
+
+msgid "IDS_ST_HEADER_PLEASE_WAIT"
+msgstr "Even geduld."
+
+msgid "IDS_ST_HEADER_PERSONAL_MODE"
+msgstr "Persoonlijke stand"
+
+msgid "IDS_ST_HEADER_PERSONALISATION"
+msgstr "Aanpassen"
+
+msgid "IDS_ST_HEADER_PD_SELECTED_ABB"
+msgstr "%d geselecteerd"
+
+msgid "IDS_ST_HEADER_PD_SELECTED"
+msgstr "%d geselecteerd"
+
+msgid "IDS_ST_HEADER_NO_BACKGROUND_PROCESSES_ABB"
+msgstr "Geen achtergrondprocessen"
+
+msgid "IDS_ST_HEADER_NEW_NETWORK"
+msgstr "Nieuw netwerk"
+
+msgid "IDS_ST_HEADER_NETWORK_RESTRICTION_MODE_ABB_JPN"
+msgstr "Network restriction mode"
+
+msgid "IDS_ST_HEADER_MOTION_UNLOCK"
+msgstr "Ontgrendelen met beweging"
+
+msgid "IDS_ST_HEADER_MORE_DISPLAY_SETTINGS_ABB"
+msgstr "Meer display-instellingen"
+
+msgid "IDS_ST_HEADER_LOCK_SCREEN"
+msgstr "Vergrendelscherm"
+
+msgid "IDS_ST_HEADER_LANGUAGE_AND_INPUT"
+msgstr "Taal en invoer"
+
+msgid "IDS_ST_HEADER_INSTALLED_APPLICATIONS"
+msgstr "Geïnstalleerde applicaties"
+
+msgid "IDS_ST_HEADER_INPUT_AND_MOTION"
+msgstr "Invoer en beweging"
+
+msgid "IDS_ST_HEADER_HOME_SCREEN_ABB"
+msgstr "Startscherm"
+
+msgid "IDS_ST_HEADER_FINGER_SCANNER_ABB"
+msgstr "Vingerscanner"
+
+msgid "IDS_ST_HEADER_ENTER_VALID_DEVICE_NAME_ABB"
+msgstr "Geldige apparaatnaam inv."
+
+msgid "IDS_ST_HEADER_ENCRYPT_DEVICE"
+msgstr "Apparaat coderen"
+
+msgid "IDS_ST_HEADER_DIVX_VOD"
+msgstr "DivX® VOD"
+
+msgid "IDS_ST_HEADER_DISPLAY_LANGUAGE"
+msgstr "Schermtaal"
+
+msgid "IDS_ST_HEADER_DISPLAY"
+msgstr "Display"
+
+msgid "IDS_ST_HEADER_DISABLE_EMERGENCY_MODE_ABB"
+msgstr "Alarmstand uitschakelen"
+
+msgid "IDS_ST_HEADER_DEVICE_MANAGER"
+msgstr "Apparaatbeheer"
+
+msgid "IDS_ST_HEADER_CREATE_CONNECTION"
+msgstr "Verbinding maken"
+
+msgid "IDS_ST_HEADER_CONNECT_AND_SHARE"
+msgstr "Verbinden en delen"
+
+msgid "IDS_ST_HEADER_CONFIRM_ENCRYPTION"
+msgstr "Codering bevestigen"
+
+msgid "IDS_ST_HEADER_CHANGE_PIN_ABB"
+msgstr "Pincode wijzigen"
+
+msgid "IDS_ST_HEADER_AUTO_ROTATE_SCREEN_ABB"
+msgstr "Scherm automatisch draaien"
+
+msgid "IDS_ST_HEADER_ALLOW_USB_DEBUGGING_Q_ABB"
+msgstr "USB-foutopsporing?"
+
+msgid "IDS_ST_HEADER_ADD_URL"
+msgstr "URL toevoegen"
+
+msgid "IDS_ST_HEADER_ADD_PORT"
+msgstr "Poort toevoegen"
+
+msgid "IDS_ST_HEADER_ADD_IP"
+msgstr "IP toevoegen"
+
+msgid "IDS_ST_BUTTON_UNINSTALL_UPDATES"
+msgstr "Updates verwijderen"
+
+msgid "IDS_ST_BUTTON_UNINSTALL"
+msgstr "Verwijderen"
+
+msgid "IDS_ST_BUTTON_TRY_IT"
+msgstr "Probeer het"
+
+msgid "IDS_ST_BUTTON_STOP"
+msgstr "Stop"
+
+msgid "IDS_ST_BUTTON_SET_SCREEN_LOCK_TYPE"
+msgstr "Type schermvergrend. instellen"
+
+msgid "IDS_ST_BUTTON_RESET_APPS_ABB"
+msgstr "Apps resetten"
+
+msgid "IDS_ST_BUTTON_RESET"
+msgstr "Resetten"
+
+msgid "IDS_ST_BUTTON_REMOVE_DEFAULT_APPS_ABB"
+msgstr "Standaardapps verwijderen"
+
+msgid "IDS_ST_BUTTON_ONLY_VIBRATE"
+msgstr "Alln trillen"
+
+msgid "IDS_ST_BUTTON_OK_ABB"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON_MOVE_TO_SD_ABB"
+msgstr "Verpl. naar SD"
+
+msgid "IDS_ST_BUTTON_MOVE_TO_PHONE"
+msgstr "Verpl. naar telefoon"
+
+msgid "IDS_ST_BUTTON_FORCE_STOP"
+msgstr "Gedwongen stoppen"
+
+msgid "IDS_ST_BUTTON_ENABLE"
+msgstr "Aanzetten"
+
+msgid "IDS_ST_BUTTON_DISCONNECT"
+msgstr "Verbreek verbinding"
+
+msgid "IDS_ST_BUTTON_DISABLE"
+msgstr "Uitzetten"
+
+msgid "IDS_ST_BUTTON_CONTINUE"
+msgstr "Doorgaan"
+
+msgid "IDS_ST_BUTTON_CANCEL_ABB"
+msgstr "Annuleren"
+
+msgid "IDS_ST_BODY_YYYY_DD_MM_DOT"
+msgstr "JJJJ/DD/MM"
+
+msgid "IDS_ST_BODY_YOU_HAVE_SELECTED_TO_LAUNCH_THIS_APPLICATION_BY_DEFAULT_FOR_SOME_ACTIONS"
+msgstr "Deze app wordt standaard geopend bij bepaalde acties."
+
+msgid "IDS_ST_BODY_YOU_CAN_DECRYPT_ACCOUNTS_SETTINGS_DOWNLOADED_APPLICATIONS_AND_THEIR_DATA_MEDIA_AND_OTHER_FILES_DECRYPTION_WARNING_MSG"
+msgstr "U kunt accounts, instellingen, gedownloade applicaties en hun gegevens, media en andere bestanden decoderen. Het decoderen duurt een uur of langer. Begin met een geladen batterij en laat het apparaat aangesloten op de voeding totdat de decodering is voltooid. Bij een onderbreking van het decodeerproces gaan enkele of alle gegevens verloren."
+
+msgid "IDS_ST_BODY_YOUR_DEVICE_REGISTRATION_CODE_C_PS"
+msgstr "De registratiecode voor het apparaat: %s"
+
+msgid "IDS_ST_BODY_YOUR_CHANGES_ARE_BEING_MADE_T_TTS"
+msgstr "Uw wijzigingen worden aangebracht."
+
+msgid "IDS_ST_BODY_WINSET"
+msgstr "Winset"
+
+msgid "IDS_ST_BODY_WHEN_THE_SOURCE_OF_LIGHT_IS_BEHIND_YOU_OR_WHEN_USING_DEVICE_IN_THE_DARK"
+msgstr "Wanneer de lichtbron zich achter u bevindt of bij gebruik in het donker"
+
+msgid "IDS_ST_BODY_WHEN_LEARN_ABOUT_TILT_OR_MOTION_UNLOCK_ARE_SET_MOTION_ACTIVATION_WILL_BE_AUTOMATICALLY_ENABLED_IN_SETTINGS"
+msgstr "Wanneer leren over ontgrendelen door kantelen of bewegen is ingesteld, wordt bewegingactivering automatisch ingeschakeld in Instellingen."
+
+msgid "IDS_ST_BODY_WHEN_FRONT_CAMERA_IS_USED_FOR_THE_APPLICATION"
+msgstr "Als de camera aan de voorkant gebruikt wordt in de applicatie"
+
+msgid "IDS_ST_BODY_WHEN_FRONT_CAMERA_FAILS_TO_DETECT_FACE_AND_EYES"
+msgstr "Als voorste camera geen gezicht en ogen kan detecteren"
+
+msgid "IDS_ST_BODY_WHEN_DATA_ROAMING_IS_DISABLED_APPLICATIONS_THAT_USE_THE_DATA_CONNECTION_MAY_NOT_WORK"
+msgstr "Als gegevensroaming is uitgeschakeld, werken applicaties die de gegevensverbinding gebruiken, mogelijk niet correct."
+
+msgid "IDS_ST_BODY_WEB_APPLICATIONS"
+msgstr "Webapplicaties"
+
+msgid "IDS_ST_BODY_WCDMA_GSM_NHAUTO_CONNECT"
+msgstr "WCDMA/GSM\n(automatisch verbinden)"
+
+msgid "IDS_ST_BODY_WAIT_WHILE_DEVICE_IS_ENCRYPTED_PDP_COMPLETE"
+msgstr "Wacht terwijl het apparaat wordt gecodeerd. %d% voltooid."
+
+msgid "IDS_ST_BODY_WAIT_WHILE_DEVICE_IS_DECRYPTED_PDP_COMPLETE"
+msgstr "Wacht terwijl het apparaat wordt gedecodeerd. %d% voltooid."
+
+msgid "IDS_ST_BODY_WAITING_FOR_RESPONSE_FROM_SIM_CARD_ING"
+msgstr "Wachten op reactie van SIM-kaart..."
+
+msgid "IDS_ST_BODY_VOLUME"
+msgstr "Volume"
+
+msgid "IDS_ST_BODY_VOICE_RECORDING"
+msgstr "Spraakopname"
+
+msgid "IDS_ST_BODY_VIBRATE_WHEN_RINGING"
+msgstr "Trillen bij overgaan"
+
+msgid "IDS_ST_BODY_VERSION_PS"
+msgstr "Versie %s"
+
+msgid "IDS_ST_BODY_USING_MOBILE_DATA_MAY_RESULT_IN_ADDITIONAL_CHARGES_CONTINUE_Q"
+msgstr "Als u mobiele gegevens gebruikt, kan dat extra kosten met zich meebrengen. Doorgaan?"
+
+msgid "IDS_ST_BODY_USE_TIME_PROVIDED_BY_NETWORK"
+msgstr "Door netwerk aangeleverde tijd gebruiken."
+
+msgid "IDS_ST_BODY_USE_MOTION"
+msgstr "Beweging gebruiken"
+
+msgid "IDS_ST_BODY_USER_ID"
+msgstr "Gebruikersnaam"
+
+msgid "IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_URL_MSG"
+msgstr "Gebruiker kan een specifieke URL blokkeren. Als een URL is geblokkeerd, worden inkomende en uitgaande gegevens genegeerd."
+
+msgid "IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_PORT_MSG"
+msgstr "Gebruiker kan een specifieke poort blokkeren. Als een poort is geblokkeerd, worden inkomende en uitgaande gegevens genegeerd."
+
+msgid "IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_IP_ADDRESS_MSG"
+msgstr "Gebruiker kan een specifiek IP-adres blokkeren. Als een IP-adres is geblokkeerd, worden inkomende en uitgaande gegevens genegeerd."
+
+msgid "IDS_ST_BODY_USED"
+msgstr "Gebruikt"
+
+msgid "IDS_ST_BODY_USB_OTG_STORAGE"
+msgstr "USB OTG-opslag"
+
+msgid "IDS_ST_BODY_USB_DEBUGGING_IS_INTENDED_FOR_DEVELOPMENT_PURPOSES_ONLY_MSG"
+msgstr "USB-foutopsporing is alleen bedoeld voor ontwikkelingsdoeleinden. Hiermee kunt u gegevens kopiëren tussen uw computer en uw apparaat, applicaties op uw apparaat installeren zonder kennisgeving en loggegevens lezen."
+
+msgid "IDS_ST_BODY_USB_DEBUGGING"
+msgstr "USB-foutopsporing"
+
+msgid "IDS_ST_BODY_USB_ASK_ON_CONNECTION"
+msgstr "Vragen bij verbinden"
+
+msgid "IDS_ST_BODY_URL"
+msgstr "URL"
+
+msgid "IDS_ST_BODY_UNMOUNT_USB_OTG_STORAGE"
+msgstr "USB OTG-opslag loskoppelen"
+
+msgid "IDS_ST_BODY_UNMOUNT_SD_CARD"
+msgstr "SD-kaart afmelden"
+
+msgid "IDS_ST_BODY_UNMOUNTING_THE_SD_CARD_WILL_STOP_SOME_APPLICATIONS_FROM_FUNCTIONING_UNTIL_YOU_MOUNT_THE_SD_CARD_AGAIN_MSG"
+msgstr "Als u de SD-kaart ontkoppelt, wordt de werking van een aantal applicaties gestopt. Deze applicaties zijn mogelijk pas weer beschikbaar als de SD-kaart weer wordt gekoppeld."
+
+msgid "IDS_ST_BODY_UNABLE_TO_USE_CURRENT_PASSWORD"
+msgstr "Kan huidig wachtwoord niet gebruiken."
+
+msgid "IDS_ST_BODY_UMTS_MODE_ONLY_WORKS_INSIDE_3G_COVERAGE_AREA"
+msgstr "UMTS-modus werkt alleen in gebied met 3G-dekking."
+
+msgid "IDS_ST_BODY_UDRGOTHICM_JPN"
+msgstr "UDRGothicM"
+
+msgid "IDS_ST_BODY_UDMINCHO_JPN"
+msgstr "UDMincho"
+
+msgid "IDS_ST_BODY_UDGOTHIC_M_FONT"
+msgstr "UDGothic"
+
+msgid "IDS_ST_BODY_TURN_OFF"
+msgstr "Uitschakelen"
+
+msgid "IDS_ST_BODY_TURNING_OFF_MOBILE_DATA_WHEN_THE_SCREEN_IS_OFF"
+msgstr "Mobiele gegevens worden uitgeschakeld terwijl het scherm uit is."
+
+msgid "IDS_ST_BODY_TURNING_OFF_CONNECTIVITY_FEATURES_SUCH_AS_WI_FI_AND_BLUETOOTH"
+msgstr "Verbindingsfuncties, zoals Wi-Fi en Bluetooth, worden uitgeschakeld."
+
+msgid "IDS_ST_BODY_TO_USE_PERSONAL_MODE_SCREEN_LOCK_TYPE_SHOULD_BE_SET_TO_SIMPLE_PASSWORD_OR_PASSWORD"
+msgstr "Als u de Persoonlijke stand wilt gebruiken, moet het type schermvergrendeling zijn ingesteld op eenvoudig wachtwoord of wachtwoord."
+
+msgid "IDS_ST_BODY_TO_PROTECT_YOUR_DATA_DISABLE_PERSONAL_MODE_AFTER_YOU_USE_IT_ALSO_USING_A_SECURE_SCREEN_LOCK_WILL_PROVIDE_BETTER_PROTECTION"
+msgstr "Als u uw gegevens wilt beveiligen, schakelt u Persoonlijke stand uit nadat u deze hebt gebruikt. Ook het gebruik van een veilige schermvergrendeling zorgt voor betere bescherming."
+
+msgid "IDS_ST_BODY_TO_OPEN_THE_MENU_DOUBLE_TAP_IT_T_TTS"
+msgstr "Tik tweemaal op het menu om het te openen."
+
+msgid "IDS_ST_BODY_TO_M_PERIOD"
+msgstr "Tot"
+
+msgid "IDS_ST_BODY_TO_ENABLE_THIS_FEATURE_ENABLE_AT_LEAST_ONE_RELEVANT_FUNCTION"
+msgstr "Schakel ten minste één relevante functie in om deze functie in te schakelen."
+
+msgid "IDS_ST_BODY_TO_ENABLE_POWER_SAVING_MODE_ENABLE_AT_LEAST_ONE_FUNCTION"
+msgstr "Schakel ten minste één functie in om de spaarstand in te schakelen."
+
+msgid "IDS_ST_BODY_TO_ENABLE_BLOCKING_MODE_ENABLE_AT_LEAST_ONE_OPTION"
+msgstr "Schakel ten minste één optie in om de Blokkeerstand in te schakelen."
+
+msgid "IDS_ST_BODY_TO_AVOID_OVERHEATING_MAXIMUM_BRIGHTNESS_HAS_BEEN_REDUCED"
+msgstr "Om oververhitting te voorkomen is de maximale helderheid verminderd."
+
+msgid "IDS_ST_BODY_TOUCH"
+msgstr "Aanraken"
+
+msgid "IDS_ST_BODY_TOTAL_SPACE"
+msgstr "Totale ruimte"
+
+msgid "IDS_ST_BODY_TOGGLE_THE_BUTTON_TO_ENABLE_OR_DISABLE_SCREEN_READER_OR_DOUBLE_TAP_TO_OPEN_THE_MENU_T_TTS"
+msgstr "Tik op de knop om schermlezer in of uit te schakelen, of tik tweemaal om het menu te openen."
+
+msgid "IDS_ST_BODY_TIME_ZONE"
+msgstr "Tijdzone"
+
+msgid "IDS_ST_BODY_THIS_BAND_MAY_NOT_WORK_OUTSIDE_THE_USA_AND_CANADA"
+msgstr "Deze band werkt mogelijk niet buiten de VS en Canada."
+
+msgid "IDS_ST_BODY_THIS_ACTION_WILL_ERASE_THE_SD_CARD_IN_THE_PHONE_YOU_WILL_LOSE_ALL_DATA_ON_THE_CARD_E"
+msgstr "Met deze actie wist u de gegevens op de SD-kaart in de telefoon. ALLE gegevens op de kaart gaan verloren!"
+
+msgid "IDS_ST_BODY_THE_SD_CARD_IS_CURRENTLY_IN_USE_THIS_ACTION_WILL_ERASE_ALL_DATA_ON_THE_SD_CARD_INCLUDING_THE_DATA_THAT_IS_CURRENTLY_BEING_USED"
+msgstr "De SD-kaart is momenteel in gebruik. Deze actie wist alle gegevens op de SD-kaart inclusief de gegevens die momenteel worden gebruikt."
+
+msgid "IDS_ST_BODY_THE_RED_LED_LIGHTS_UP_WHEN_YOU_CHARGE_YOUR_DEVICE_WHILE_THE_SCREEN_IS_OFF"
+msgstr "De rode LED gaat aan als u het apparaat oplaadt terwijl het scherm is uitgeschakeld."
+
+msgid "IDS_ST_BODY_THE_RED_LED_BLINKS_WHEN_THE_BATTERY_POWER_IS_LOW_WHILE_THE_SCREEN_IS_OFF"
+msgstr "De rode led knippert als de batterij bijna leeg is terwijl het scherm is uitgeschakeld."
+
+msgid "IDS_ST_BODY_THE_PASSWORD_MUST_NOT_CONTAIN_A_SIMPLE_SEQUENCE_HEG_1111_OR_1234"
+msgstr "Het wachtwoord mag geen eenvoudige reeks bevatten (zoals 1111 of 1234)"
+
+msgid "IDS_ST_BODY_THE_NAME_FIELD_CANNOT_BE_EMPTY"
+msgstr "Naamveld kan niet leeg zijn."
+
+msgid "IDS_ST_BODY_THE_BLUE_LED_BLINKS_WHEN_YOU_RECORD_VOICE_WHILE_THE_SCREEN_IS_OFF"
+msgstr "De blauwe led knippert als u spraak opneemt terwijl het scherm is uitgeschakeld."
+
+msgid "IDS_ST_BODY_THE_BLUE_LED_BLINKS_WHEN_YOU_HAVE_MISSED_CALLS_MESSAGES_OR_APP_NOTIFICATIONS_WHILE_THE_SCREEN_IS_OFF"
+msgstr "De blauwe LED knippert als u gemiste oproepen, berichten of app-meldingen hebt terwijl het scherm is uitgeschakeld."
+
+msgid "IDS_ST_BODY_THE_APPLICATIONS_BELOW_WERE_STARTED_BY_PS_STOPPING_THESE_APPLICATIONS_MAY_CAUSE_PS_TO_FAIL"
+msgstr "De applicaties hieronder zijn gestart door %s. Als u deze applicaties stopt, werkt %s mogelijk niet correct."
+
+msgid "IDS_ST_BODY_THERE_ARE_NO_NETWORKS_NEARBY"
+msgstr "Er zijn geen netwerken in de buurt."
+
+msgid "IDS_ST_BODY_TEXTSTYLE_LARGE"
+msgstr "Groot"
+
+msgid "IDS_ST_BODY_TASK_SWITCHER"
+msgstr "Taak afwisselen"
+
+msgid "IDS_ST_BODY_TAP_TO_INSERT"
+msgstr "Tik om in te voegen."
+
+msgid "IDS_ST_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_TO_UNLOCK_IT_IF_THE_SCREEN_DOES_NOT_UNLOCK_TRY_TILTING_THE_DEVICE_MORE"
+msgstr "Tik en houd het scherm vast, en kantel het apparaat naar u toe om het te ontgrendelen. Als het scherm niet worden ontgrendeld, kantelt u het apparaat nog verder."
+
+msgid "IDS_ST_BODY_SYSTEM_MEMORY"
+msgstr "Systeemgeheugen"
+
+msgid "IDS_ST_BODY_SUNDAY"
+msgstr "Zondag"
+
+msgid "IDS_ST_BODY_STORAGE"
+msgstr "Opslag"
+
+msgid "IDS_ST_BODY_STANDARD_T_DISPLAY_EFFECT"
+msgstr "Standaard"
+
+msgid "IDS_ST_BODY_SPEECH"
+msgstr "Spraak"
+
+msgid "IDS_ST_BODY_SOUND_N_DISPLAY"
+msgstr "Geluid en display"
+
+msgid "IDS_ST_BODY_SOFTWARE"
+msgstr "Software"
+
+msgid "IDS_ST_BODY_SOCIAL_NETWORK_PROFILES"
+msgstr "Sociale netwerkprofielen"
+
+msgid "IDS_ST_BODY_SMART_STAY_MAY_NOT_WORK_IN_THESE_SITUATIONS"
+msgstr "Slim sluimeren werkt mogelijk niet in deze situatie."
+
+msgid "IDS_ST_BODY_SMART_ROTATION_MAY_NOT_WORK_IN_THESE_SITUATIONS"
+msgstr "Slim roteren werkt mogelijk niet in deze situaties."
+
+msgid "IDS_ST_BODY_SMART_ROTATION_DESCRIPTION_MSG"
+msgstr "Slim roteren schakelt automatische schermrotatie uit, gebruikt de camera aan de voorkant om de richting van uw gezicht vast te stellen en draait het scherm overeenkomstig die richting."
+
+msgid "IDS_ST_BODY_SMALL_M_TEXTSIZE"
+msgstr "Klein"
+
+msgid "IDS_ST_BODY_SIM_PASSWORD"
+msgstr "SIM-wachtwoord"
+
+msgid "IDS_ST_BODY_SIMPLE_PASSWORD"
+msgstr "Eenvoudig wachtwoord"
+
+msgid "IDS_ST_BODY_SHOWS_BATTERY_PERCENTAGE_ON_INDICATOR"
+msgstr "Geeft batterijpercentage weer op indicator."
+
+msgid "IDS_ST_BODY_SET_THE_DEFAULT_LOCATION_FOR_INSTALLING_APPLICATIONS_MSG"
+msgstr "Stel de standaardlocatie in voor het installeren van applicaties. Applicaties kunnen op verschillende locaties worden geïnstalleerd, afhankelijk van het type applicatie en de beschikbaarheid van de locatie."
+
+msgid "IDS_ST_BODY_SET_FONT_AS_PS_Q"
+msgstr "Lettertype instellen als %s?"
+
+msgid "IDS_ST_BODY_SET_AN_UNLOCK_PASSWORD_OF_AT_LEAST_6_CHARACTERS_CONTAINING_AT_LEAST_1_NUMBER"
+msgstr "Stel een ontgrendelwachtwoord in van minimaal 6 tekens, waaronder ten minste 1 cijfer."
+
+msgid "IDS_ST_BODY_SERIAL_NUMBER"
+msgstr "Serienummer"
+
+msgid "IDS_ST_BODY_SECURITY_ENGINE"
+msgstr "Beveiligingsengine"
+
+msgid "IDS_ST_BODY_SECURITY"
+msgstr "Beveiliging"
+
+msgid "IDS_ST_BODY_SEARCH"
+msgstr "Zoeken"
+
+msgid "IDS_ST_BODY_SD_CARD"
+msgstr "SD-kaart"
+
+msgid "IDS_ST_BODY_SCREEN_TIMEOUT_ABB2"
+msgstr "Schermtime-out"
+
+msgid "IDS_ST_BODY_SCREEN_STAYS_ON_AS_LONG_AS_YOU_ARE_LOOKING_AT_IT"
+msgstr "Scherm blijft aan zolang u ernaar kijkt."
+
+msgid "IDS_ST_BODY_SCREEN_ROTATION_CAN_BE_SLOWER_IF_SMART_ROTATION_ENABLED"
+msgstr "Schermrotatie kan trager zijn als slim roteren is ingeschakeld"
+
+msgid "IDS_ST_BODY_SCREEN_OVERLAY_SHOWING_CURRENT_CPU_USAGE_ABB"
+msgstr "Schermoverlay geeft huidig CPU-gebruik weer."
+
+msgid "IDS_ST_BODY_SCREEN_ORIENTATION_ADJUSTS_TO_YOUR_ANGLE_OF_SIGHT"
+msgstr "De schermstand wordt aangepast aan uw gezichtshoek."
+
+msgid "IDS_ST_BODY_SCREEN_MODE"
+msgstr "Scherm-modus"
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_TYPE_CANNOT_BE_CHANGED_WHILE_ENCRYPTING_THE_SD_CARD"
+msgstr "Type schermvergrendeling kan niet worden gewijzigd tijdens het coderen van de SD-kaart."
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_TYPE_CANNOT_BE_CHANGED_WHILE_ENCRYPTING_THE_DEVICE"
+msgstr "Type schermvergrendeling kan niet worden gewijzigd tijdens het coderen van het apparaat."
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_TYPE"
+msgstr "Type schermvergrendeling"
+
+msgid "IDS_ST_BODY_SCREEN_LOCK_SOUND"
+msgstr "Geluid schermvergrendeling"
+
+msgid "IDS_ST_BODY_SCHEDULE"
+msgstr "Afspraak"
+
+msgid "IDS_ST_BODY_SAVE_POWER_BY_ADJUSTING_SCREEN_TONE_ACCORDING_TO_ANALYSIS_OF_IMAGES"
+msgstr "Energie besparen door schermtint aan te passen aan analyse van afbeeldingen."
+
+msgid "IDS_ST_BODY_SAVES_POWER_BY_LIMITING_THE_MAXIMUM_PERFORMANCE_OF_THE_DEVICE"
+msgstr "Bespaart voeding door de maximale prestaties van het apparaat te beperken."
+
+msgid "IDS_ST_BODY_SAVED"
+msgstr "Opgeslagen."
+
+msgid "IDS_ST_BODY_SAVE"
+msgstr "Opslaan"
+
+msgid "IDS_ST_BODY_SAMSUNG_LEGAL"
+msgstr "Samsung juridisch"
+
+msgid "IDS_ST_BODY_SAMSUNG_KIES_CONNECTION_CONNECTING_USB_HELP_MSG"
+msgstr "Als Samsung Kies (pc-programma) of de juiste stuurprogramma´s niet zijn geïnstalleerd, worden deze geïnstalleerd in Microsoft Windows.\nNa installatie van de pc-software kunt u het volgende doen:\n– Telefoongegevens synchroniseren\n– Telefoonsoftware bijwerken\n– Delen via internet (telefoon werkt als modem voor internettoegang via notebook of pc)\n– Gekochte muziek/video’s (Microsoft Windows Media DRM) of normale bestanden kopiëren naar uw telefoon."
+
+msgid "IDS_ST_BODY_RUNNING"
+msgstr "Actief"
+
+msgid "IDS_ST_BODY_RESTRICTING_APPLICATION_USAGE_TO_ONLY_ESSENTIAL_APPLICATIONS_AND_THOSE_SELECTED_BY_YOU"
+msgstr "Het applicatiegebruik wordt beperkt tot essentiële applicaties en de applicaties die door u zijn geselecteerd."
+
+msgid "IDS_ST_BODY_RESET_TO_DEFAULT"
+msgstr "Standaardinstellingen"
+
+msgid "IDS_ST_BODY_RESET_SETTINGS"
+msgstr "Instellingen resetten"
+
+msgid "IDS_ST_BODY_RESET_PERSONAL_MODE_SECURITY_SETTINGS_AND_DELETE_PERSONAL_CONTENT"
+msgstr "Beveiligingsinstellingen van Persoonlijke stand resetten en persoonlijke inhoud verwijderen"
+
+msgid "IDS_ST_BODY_RESET_PERSONAL_MODE"
+msgstr "Persoonlijke stand resetten"
+
+msgid "IDS_ST_BODY_RESET_ALL"
+msgstr "Alles opnieuw instellen"
+
+msgid "IDS_ST_BODY_REMOVE_LICENCE"
+msgstr "Licentie verwijderen"
+
+msgid "IDS_ST_BODY_REGULATORY_INFORMATION_ABB"
+msgstr "Voorschriften"
+
+msgid "IDS_ST_BODY_REGISTER_AT"
+msgstr "Aanmelden om"
+
+msgid "IDS_ST_BODY_REGIONAL_EXAMPLE"
+msgstr "Regionaal voorbeeld"
+
+msgid "IDS_ST_BODY_REGION"
+msgstr "Regio"
+
+msgid "IDS_ST_BODY_PUK"
+msgstr "PUK"
+
+msgid "IDS_ST_BODY_PROXY_PORT"
+msgstr "Poort proxy"
+
+msgid "IDS_ST_BODY_PROTOCOL_TYPE"
+msgstr "Protocoltype"
+
+msgid "IDS_ST_BODY_PROTECT_YOUR_DEVICE_FROM_HARMFUL_VIRUSES_AND_MALWARE"
+msgstr "Bescherm uw apparaat tegen schadelijke virussen en malware."
+
+msgid "IDS_ST_BODY_PROFILE_NAME"
+msgstr "Profielnaam"
+
+msgid "IDS_ST_BODY_PROFILE"
+msgstr "Profiel"
+
+msgid "IDS_ST_BODY_PREPARING_THIS_COULD_TAKE_OVER_10_MINUTES_ING"
+msgstr "Bezig met voorbereiden. Dit kan meer dan 10 minuten duren..."
+
+msgid "IDS_ST_BODY_PREFERRED_NETWORKS"
+msgstr "Voorkeursnetwerken"
+
+msgid "IDS_ST_BODY_POP_JPN_DCM"
+msgstr "POP"
+
+msgid "IDS_ST_BODY_PM"
+msgstr "PM"
+
+msgid "IDS_ST_BODY_PLUG_IN_CHARGER_AND_TRY_AGAIN"
+msgstr "Sluit oplader aan en probeer het opnieuw."
+
+msgid "IDS_ST_BODY_PLAY_TONE_WHEN_THE_DIALLING_KEYPAD_IS_TAPPED"
+msgstr "Toon afspelen wanneer op het kiestoetsenblok wordt getikt."
+
+msgid "IDS_ST_BODY_PLAY_SOUNDS_WHEN_LOCKING_AND_UNLOCKING_SCREEN"
+msgstr "Geluiden afspelen bij ver-/ontgrendelen scherm"
+
+msgid "IDS_ST_BODY_PIN_BLOCKED_ENTER_PUK_TO_CONTINUE_JPN_DCM"
+msgstr "PIN blocked. Enter PUK to continue."
+
+msgid "IDS_ST_BODY_PIN"
+msgstr "Geef PIN-code in"
+
+msgid "IDS_ST_BODY_PICTURES_VIDEOS"
+msgstr "Foto´s, video´s"
+
+msgid "IDS_ST_BODY_PHOTO_UPLOAD_SETTINGS"
+msgstr "Foto upload-instellingen"
+
+msgid "IDS_ST_BODY_PHONEPROFILES_SILENT"
+msgstr "Stil"
+
+msgid "IDS_ST_BODY_PERSONAL_MODE_CAN_BE_USED_TO_HIDE_CONTENT_THAT_YOU_WANT_TO_KEEP_PRIVATE_MSG"
+msgstr "Persoonlijke stand kan worden gebruikt voor het verbergen van inhoud die u niet openbaar wilt maken. Als u Persoonlijke stand wilt gebruiken, schakelt u deze in via Instellingen of houdt u de aan/uit-toets ingedrukt en selecteert u vervolgens Persoonlijke stand. Voer uw pincode of wachtwoord in. Het pictogram van de Persoonlijke stand wordt weergegeven op de statusbalk. Als u uw gegevens wilt beveiligen, schakelt u Persoonlijke stand uit nadat u deze hebt gebruikt. Ook het gebruik van een veilige schermvergrendeling zorgt voor betere bescherming."
+
+msgid "IDS_ST_BODY_PD_ATTEMPTS_REMAINING_JPN_DCM"
+msgstr "%d attempts remaining"
+
+msgid "IDS_ST_BODY_PASSWORD_REQUIRED_TO_DECRYPT_DEVICE_EACH_TIME_YOU_TURN_IT_ON"
+msgstr "Wachtwoord vereist om uw apparaat elke keer dat u dit inschakelt, te coderen."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_NO_MORE_THAN_PD_CHARACTERS_ABB"
+msgstr "Wachtwoord mag niet meer dan %d tekens bevatten."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_PD_CHARACTERS_ABB"
+msgstr "Wachtwoord moet ten minste %d tekens bevatten."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_1_NUMBER"
+msgstr "Wachtwoord moet ten minste 1 cijfer bevatten."
+
+msgid "IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_1_LETTER"
+msgstr "Wachtwoord moet ten minste 1 letter bevatten."
+
+msgid "IDS_ST_BODY_PASSWORD_EMPTY"
+msgstr "Wachtwoord leeg."
+
+msgid "IDS_ST_BODY_PASSWORD_CONTAINS_INVALID_CHARACTER_ABB"
+msgstr "Wachtwoord bevat ongeldig teken."
+
+msgid "IDS_ST_BODY_PASSWORD"
+msgstr "Wachtwoord"
+
+msgid "IDS_ST_BODY_OPEN_SOURCE_LICENCES"
+msgstr "Open source-licenties"
+
+msgid "IDS_ST_BODY_ON_M_STATUS"
+msgstr "Aan"
+
+msgid "IDS_ST_BODY_OFFICIAL_M_DEVICE_STATUS"
+msgstr "Officieel"
+
+msgid "IDS_ST_BODY_NUMBER"
+msgstr "Nummer"
+
+msgid "IDS_ST_BODY_NO_RESULTS_FOUND"
+msgstr "Geen resultaten gevonden."
+
+msgid "IDS_ST_BODY_NO_DEFAULTS_SET"
+msgstr "Geen standaardinstellingen."
+
+msgid "IDS_ST_BODY_NOT_ASSIGNED"
+msgstr "Niet toegewezen"
+
+msgid "IDS_ST_BODY_NOTIFICATION_PANEL"
+msgstr "Meldingenvenster"
+
+msgid "IDS_ST_BODY_NOTIFICATIONS"
+msgstr "Meldingen"
+
+msgid "IDS_ST_BODY_NOTIFICATION"
+msgstr "Melding"
+
+msgid "IDS_ST_BODY_NOSERVICE"
+msgstr "Geen netwerk"
+
+msgid "IDS_ST_BODY_NORMAL_T_PROFILE"
+msgstr "Normaal"
+
+msgid "IDS_ST_BODY_NONE"
+msgstr "Geen"
+
+msgid "IDS_ST_BODY_NEW_PIN2_AND_CONFIRM_PIN2_DO_NOT_MATCH"
+msgstr "Nieuwe pincode2 en pincode2 voor bevestiging komen niet overeen"
+
+msgid "IDS_ST_BODY_NEW_PIN2"
+msgstr "Nieuwe PIN2"
+
+msgid "IDS_ST_BODY_NEW_PIN1"
+msgstr "Nieuwe PIN1-code"
+
+msgid "IDS_ST_BODY_NEW"
+msgstr "Nieuw"
+
+msgid "IDS_ST_BODY_NETWORK_TYPE"
+msgstr "Netwerktype"
+
+msgid "IDS_ST_BODY_NETWORK_MODE"
+msgstr "Netwerkmodus"
+
+msgid "IDS_ST_BODY_NETWORK_LIST"
+msgstr "Lijst met netwerken"
+
+msgid "IDS_ST_BODY_NETWORK_CONNECTIONS"
+msgstr "Netwerkverbindingen"
+
+msgid "IDS_ST_BODY_NETWORK_CODE"
+msgstr "Netwerkcode"
+
+msgid "IDS_ST_BODY_NETWORK"
+msgstr "Netwerk"
+
+msgid "IDS_ST_BODY_NATURAL_T_DISPLAY_EFFECT"
+msgstr "Natuurlijk"
+
+msgid "IDS_ST_BODY_NAME"
+msgstr "Naam"
+
+msgid "IDS_ST_BODY_MY_NUMBER"
+msgstr "Mijn nummer"
+
+msgid "IDS_ST_BODY_MSG_TIME_FORMAT"
+msgstr "Tijdnotatie"
+
+msgid "IDS_ST_BODY_MOVIE_T_DISPLAY_EFFECT"
+msgstr "Film"
+
+msgid "IDS_ST_BODY_MOUNT_USB_OTG_STORAGE"
+msgstr "USB OTG-opslag bevestigen"
+
+msgid "IDS_ST_BODY_MOUNT_SD_CARD"
+msgstr "SD-kaart aanmelden"
+
+msgid "IDS_ST_BODY_MOTION"
+msgstr "Beweging"
+
+msgid "IDS_ST_BODY_MORE_SYSTEM_SETTINGS"
+msgstr "Meer systeeminstellingen"
+
+msgid "IDS_ST_BODY_MORE_CONNECTIVITY_SETTINGS"
+msgstr "Meer verbindingsinstellingen"
+
+msgid "IDS_ST_BODY_MONDAY"
+msgstr "Maandag"
+
+msgid "IDS_ST_BODY_MODE"
+msgstr "Stand"
+
+msgid "IDS_ST_BODY_MOBILE_DATA_WILL_BE_USED_IF_YOU_DOWNLOAD_OR_UPLOAD_DATA_WITHOUT_WI_FI_CONNECTION"
+msgstr "Mobiele gegevens worden gebruikt als u gegevens downloadt of uploadt zonder Wi-Fi-verbinding."
+
+msgid "IDS_ST_BODY_MM_DD_YYYY_DOT"
+msgstr "MM.DD.JJJJ"
+
+msgid "IDS_ST_BODY_MMS_CONNECTIONS"
+msgstr "MMS-verbindingen"
+
+msgid "IDS_ST_BODY_MISCELLANEOUS_FILES"
+msgstr "Diverse bestanden"
+
+msgid "IDS_ST_BODY_MESSAGE"
+msgstr "Bericht"
+
+msgid "IDS_ST_BODY_MENU_AND_WIDGETS"
+msgstr "Menu en widgets"
+
+msgid "IDS_ST_BODY_MEMORY"
+msgstr "Geheugen"
+
+msgid "IDS_ST_BODY_MEDIUM"
+msgstr "Middel"
+
+msgid "IDS_ST_BODY_MB"
+msgstr "MB"
+
+msgid "IDS_ST_BODY_MASS_STORAGE_HELP_MSG"
+msgstr "U kunt de volgende taken uitvoeren:\n- Bestanden snel kopiëren\n- Aansluiten via MAC of Linux OS."
+
+msgid "IDS_ST_BODY_MARUBERI_JPN_DCM"
+msgstr "Maruberi"
+
+msgid "IDS_ST_BODY_LTE_WCDMA_GSM_NHAUTO_CONNECT"
+msgstr "LTE/WCDMA/GSM\n(automatisch verbinden)"
+
+msgid "IDS_ST_BODY_LOCK_SCREEN_OPTIONS"
+msgstr "Vergendelscherm opties"
+
+msgid "IDS_ST_BODY_LIST_VIEW"
+msgstr "Lijstweergave"
+
+msgid "IDS_ST_BODY_LIMIT_BACKGROUND_PROCESSES"
+msgstr "Achtergrondprocessen beperken"
+
+msgid "IDS_ST_BODY_LICENCE"
+msgstr "Licentie"
+
+msgid "IDS_ST_BODY_LED_INDICATOR"
+msgstr "LED-indicator"
+
+msgid "IDS_ST_BODY_LEDOT_LOW_BATTERY"
+msgstr "Batterij bijna leeg"
+
+msgid "IDS_ST_BODY_LAUNCH_BY_DEFAULT"
+msgstr "Standaard starten"
+
+msgid "IDS_ST_BODY_LANGUAGE_AND_REGION_ABB"
+msgstr "Taal en regio"
+
+msgid "IDS_ST_BODY_LANGUAGE_AND_KEYBOARD"
+msgstr "Taal en toetsenbord"
+
+msgid "IDS_ST_BODY_KEYBOARD"
+msgstr "Toetsenbord"
+
+msgid "IDS_ST_BODY_KEEPS_THE_STATUS_BAR_TIDY_TAP_THE_REPRESENTATIVE_ICON_TO_SHOW_ALL_THE_ICONS"
+msgstr "Houdt de statusbalk netjes. Tik op het representatieve pictogram om alle pictogrammen weer te geven."
+
+msgid "IDS_ST_BODY_KB"
+msgstr "KB"
+
+msgid "IDS_ST_BODY_INTRODUCTION_TO_SMART_SCREEN_ABB"
+msgstr "Informatie over slim scherm"
+
+msgid "IDS_ST_BODY_INTERNET_CONNECTION"
+msgstr "Internetverbinding"
+
+msgid "IDS_ST_BODY_INSTALTAB_FINISH"
+msgstr "Voltooien"
+
+msgid "IDS_ST_BODY_INSTALLED_APPLICATIONS"
+msgstr "Geïnstalleerde applicaties"
+
+msgid "IDS_ST_BODY_INSTALLATION_SETTINGS"
+msgstr "Installatie-instellingen"
+
+msgid "IDS_ST_BODY_INSERT_SD_CARD"
+msgstr "SD-kaart plaatsen."
+
+msgid "IDS_ST_BODY_INCORRECT_PIN_E"
+msgstr "Onjuiste PIN."
+
+msgid "IDS_ST_BODY_INCORRECT_PASSWORD_TRY_AGAIN"
+msgstr "Onjuist wachtwoord. Probeer het opnieuw."
+
+msgid "IDS_ST_BODY_INCOMING_CALLS_AND_NEW_NOTIFICATIONS_WILL_BE_READ_OUT_AUTOMATICALLY"
+msgstr "Inkomende oproepen en nieuwe meldingen worden automatisch opgelezen."
+
+msgid "IDS_ST_BODY_INCOMING_CALL"
+msgstr "Inkomende oproep"
+
+msgid "IDS_ST_BODY_IMEI"
+msgstr "IMEI"
+
+msgid "IDS_ST_BODY_IF_YOU_SELECT_THIS_OPTION_ONLY_USED_MEMORY_SPACE_WILL_BE_ENCRYPTED"
+msgstr "Als u deze optie selecteert, wordt alleen gebruikte geheugenruimte gecodeerd."
+
+msgid "IDS_ST_BODY_IF_YOU_FORGET_YOUR_PERSONAL_MODE_PASSWORD_YOU_WILL_NOT_BE_ABLE_TO_RECOVER_IT_FOR_SECURITY_MSG"
+msgstr "Als u uw wachtwoord voor Persoonlijke stand vergeet, kunt u deze niet opvragen. Ter beveiliging moet u Persoonlijke stand resetten. Hierdoor worden de standaardinstellingen hersteld en al uw persoonlijke inhoud verwijderd."
+
+msgid "IDS_ST_BODY_IF_YOU_DONT_WANT_TO_SEE_A_NUMBER_APPEAR_ON_THE_APP_ICON_FOR_EACH_NEW_EVENT_DISABLE_BADGE"
+msgstr "Als u niet voor elk nieuw item een nummer wilt weergeven op het apppictogram, schakelt u badge uit."
+
+msgid "IDS_ST_BODY_ICON_SHOWS_THAT_SMART_SCREEN_IS_ENABLED"
+msgstr "Pictogram laat zien dat slim scherm is ingeschakeld."
+
+msgid "IDS_ST_BODY_HOME_URL"
+msgstr "URL startpagina"
+
+msgid "IDS_ST_BODY_HOME_AND_LOCK_SCREEN"
+msgstr "Start- en vergrendelscherm"
+
+msgid "IDS_ST_BODY_HELVETICA_NEUE_M_FONT_NAME"
+msgstr "Helvetica Neue"
+
+msgid "IDS_ST_BODY_HARDWARE"
+msgstr "Hardware"
+
+msgid "IDS_ST_BODY_GSM"
+msgstr "GSM"
+
+msgid "IDS_ST_BODY_GRID_VIEW"
+msgstr "Rasterweergave"
+
+msgid "IDS_ST_BODY_GLOVE_MODE_ABB"
+msgstr "Handschoenstand"
+
+msgid "IDS_ST_BODY_GESTURES"
+msgstr "Gebaren"
+
+msgid "IDS_ST_BODY_GB"
+msgstr "GB"
+
+msgid "IDS_ST_BODY_FROM_M_TIME"
+msgstr "Van"
+
+msgid "IDS_ST_BODY_FREQUENTLY_USED"
+msgstr "Vaak gebruikt"
+
+msgid "IDS_ST_BODY_FORMAT_USB_OTG_STORAGE"
+msgstr "USB OTG-opslag formatteren"
+
+msgid "IDS_ST_BODY_FORMAT_SD_CARD"
+msgstr "SD-kaart formatteren"
+
+msgid "IDS_ST_BODY_FORMATTING_USB_OTG_STORAGE_WILL_DELETE_ALL_DATA_DATA_CANNOT_BE_RECOVERED_CONTINUE_Q"
+msgstr "Door formatteren van de USB OTG-opslag worden alle gegevens verwijderd. Gegevens kunnen niet worden hersteld. Doorgaan?"
+
+msgid "IDS_ST_BODY_FORMATTING_SD_CARD_WILL_DELETE_ALL_DATA_DATA_CANNOT_BE_RECOVERED_CONTINUE_Q"
+msgstr "Door formatteren SD-kaart worden alle gegevens verwijderd. Gegevens kunnen niet worden hersteld. Doorgaan?"
+
+msgid "IDS_ST_BODY_FORGOT_PASSWORD_SWA"
+msgstr "Forgot password"
+
+msgid "IDS_ST_BODY_FORBIDDEN_NETWORK"
+msgstr "Verboden netwerk"
+
+msgid "IDS_ST_BODY_FONT_TYPE"
+msgstr "Lettertype"
+
+msgid "IDS_ST_BODY_FONTSTYLE_ROSEMARY"
+msgstr "Rosemary"
+
+msgid "IDS_ST_BODY_FLIGHT_MODE_MSG"
+msgstr "Met de vliegtuigstand kunt u oproepen, berichten en gegevensverwerkings-\nfuncties uitschakelen. Hiermee schakelt u ook verbindingsfuncties zoals Wi-Fi en Bluetooth uit. Als u Wi-Fi en Bluetooth wilt gebruiken, kunt u dat inschakelen in Instellingen of het meldingenvenster."
+
+msgid "IDS_ST_BODY_FLIGHT_MODE_HAS_BEEN_ENABLED_NETWORK_SETTINGS_WILL_CLOSE"
+msgstr "Vliegtuigstand is ingeschakeld. Netwerkinstellingen worden gesloten."
+
+msgid "IDS_ST_BODY_FLIGHT_MODE"
+msgstr "Vliegtuigstand"
+
+msgid "IDS_ST_BODY_FIXED_DIALLING_MODE"
+msgstr "FDN-modus"
+
+msgid "IDS_ST_BODY_FIREWALL_ENABLED_ABB"
+msgstr "Firewall ingeschakeld"
+
+msgid "IDS_ST_BODY_FIREWALL"
+msgstr "Firewall"
+
+msgid "IDS_ST_BODY_FEATURES"
+msgstr "Functies"
+
+msgid "IDS_ST_BODY_FAST_ENCRYPTION"
+msgstr "Snelle codering"
+
+msgid "IDS_ST_BODY_FAILED_TO_SELECT_NETWORK"
+msgstr "Kan netwerk niet selecteren."
+
+msgid "IDS_ST_BODY_FACE_AND_VOICE"
+msgstr "Gezicht en stem"
+
+msgid "IDS_ST_BODY_FACEBOOK"
+msgstr "Facebook"
+
+msgid "IDS_ST_BODY_EXPLANATION_FOR_TRANSACTION_TRACKING_MENU_VODA"
+msgstr "De aanbeveling wordt meegezonden met het overgebrachte bestand"
+
+msgid "IDS_ST_BODY_EXPLANATION_FOR_EXPIRY_REMINDER_MENU"
+msgstr "Een herinnering ontvangen voordat de licentie voor een gebruikt bestand verloopt, zoals voor een achtergrondafbeelding."
+
+msgid "IDS_ST_BODY_ESTIMATED_MAX_STANDBY_TIME_ABB"
+msgstr "Geschatte max.\nstand-bytijd"
+
+msgid "IDS_ST_BODY_ENTER_PASSWORD_AGAIN_AFTER_PD_SECONDS"
+msgstr "Geef wachtwoord nogmaals in na %d seconden."
+
+msgid "IDS_ST_BODY_ENTER_PASSWORD_AGAIN"
+msgstr "Wachtwoord nogmaals invoeren"
+
+msgid "IDS_ST_BODY_ENTER_PASSWORD"
+msgstr "Wachtwoord invoeren"
+
+msgid "IDS_ST_BODY_ENTER_NEW_PASSWORD"
+msgstr "Nieuw wachtwoord invoeren"
+
+msgid "IDS_ST_BODY_ENTER_CURRENT_PASSWORD"
+msgstr "Huidig wachtwoord ingeven"
+
+msgid "IDS_ST_BODY_ENCRYPT_DEVICE_Q_WARNING_MSG"
+msgstr "Apparaat coderen? De bewerking kan niet ongedaan worden gemaakt en als u deze onderbreekt, gaan er gegevens verloren. Het coderen kan meer dan een uur duren en u kunt het apparaat niet gebruiken."
+
+msgid "IDS_ST_BODY_ENCRYPT_DEVICE_Q_OPERATION_IS_IRREVERSIBLE_AND_IF_YOU_INTERRUPT_IT_YOU_WILL_LOSE_DATA"
+msgstr "Apparaat coderen? De bewerking kan niet ongedaan worden gemaakt en u raakt gegevens kwijt als u deze onderbreekt."
+
+msgid "IDS_ST_BODY_ENCRYPT_ACCOUNTS_SETTINGS_DOWNLOADED_APPLICATIONS_AND_THEIR_DATA_MEDIA_AND_OTHER_FILES"
+msgstr "Codeer accounts, instellingen, gedownloade applicaties en hun gegevens, media en andere bestanden."
+
+msgid "IDS_ST_BODY_ENCRYPTION_WILL_TAKE_AT_LEAST_AN_HOUR"
+msgstr "Codering duurt ten minste een uur."
+
+msgid "IDS_ST_BODY_ENCRYPTING_ING"
+msgstr "Coderen..."
+
+msgid "IDS_ST_BODY_ENABLE_DATA_ACCESS_OVER_MOBILE_NETWORK"
+msgstr "Gegevenstoegang via mobiel netwerk inschakelen."
+
+msgid "IDS_ST_BODY_EMPTY"
+msgstr "Leeg"
+
+msgid "IDS_ST_BODY_EMERGENCY_MODE_ABB"
+msgstr "Alarmstand"
+
+msgid "IDS_ST_BODY_EMAIL"
+msgstr "E-mail"
+
+msgid "IDS_ST_BODY_EDIT"
+msgstr "Bewerken"
+
+msgid "IDS_ST_BODY_EASY_MODE"
+msgstr "Eenvoudige stand"
+
+msgid "IDS_ST_BODY_DYNAMIC_T_DISPLAY_EFFECT"
+msgstr "Dynamisch"
+
+msgid "IDS_ST_BODY_DYNAMIC_STATUS_BAR"
+msgstr "Dynamische statusbalk"
+
+msgid "IDS_ST_BODY_DRIVING_MODE"
+msgstr "Autostand"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Niet meer tonen"
+
+msgid "IDS_ST_BODY_DOWNLOADS"
+msgstr "Downloads"
+
+msgid "IDS_ST_BODY_DOWNLOAD"
+msgstr "Downloaden"
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_OPEN_THE_MENU_T_TTS"
+msgstr "Tik tweemaal om het menu te openen."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_EDIT_THIS_FIELD_T_TTS"
+msgstr "Tik tweemaal om dit veld te bewerken."
+
+msgid "IDS_ST_BODY_DOUBLE_TAP_TO_CLOSE_THE_MENU_T_TTS"
+msgstr "Tik tweemaal om het menu te sluiten."
+
+msgid "IDS_ST_BODY_DOCOMO_JPN_DCM"
+msgstr "docomo"
+
+msgid "IDS_ST_BODY_DIVX_REGISTRATION"
+msgstr "DivX®-registratie"
+
+msgid "IDS_ST_BODY_DIVX_DEREGISTRATION"
+msgstr "DivX®-afmelding"
+
+msgid "IDS_ST_BODY_DISPLAY_CONTENTS"
+msgstr "Inhoud weergeven"
+
+msgid "IDS_ST_BODY_DISPLAY_BATTERY_PERCENTAGE_ABB"
+msgstr "Batterijpercentage weergeven"
+
+msgid "IDS_ST_BODY_DISABLING_ING"
+msgstr "Uitschakelen..."
+
+msgid "IDS_ST_BODY_DE_REGISTRATION_CODE_NOT_FOUND"
+msgstr "Afmeldcode niet gevonden."
+
+msgid "IDS_ST_BODY_DEVICE_MEMORY"
+msgstr "Apparaatgeheugen"
+
+msgid "IDS_ST_BODY_DEVICE_INFO"
+msgstr "Apparaatinfo"
+
+msgid "IDS_ST_BODY_DEVICE_ENCRYPTION_HELP_MSG"
+msgstr "U kunt accounts, instellingen, gedownloade applicaties en hun gegevens, media en andere bestanden coderen. Als u uw apparaat codeert, moet u elke keer dat u het apparaat inschakelt, een wachtwoord ingeven om het te decoderen.\n\nHet coderen duurt een uur of langer. Begin met een geladen batterij en laat het apparaat aangesloten op de voeding totdat de codering is voltooid. Bij een onderbreking gaan enkele of alle gegevens verloren."
+
+msgid "IDS_ST_BODY_DEVICE_ENCRYPTED"
+msgstr "Apparaat gecodeerd."
+
+msgid "IDS_ST_BODY_DEVICE"
+msgstr "Apparaat"
+
+msgid "IDS_ST_BODY_DEVELOPER_OPTIONS"
+msgstr "Ontwikkelaarsopties"
+
+msgid "IDS_ST_BODY_DEFAULT_STORAGE"
+msgstr "Standaardopslag"
+
+msgid "IDS_ST_BODY_DEFAULT_RENDERING_ENGINE"
+msgstr "Standaard renderingengine"
+
+msgid "IDS_ST_BODY_DEFAULT_FONT"
+msgstr "Standaardlettertype"
+
+msgid "IDS_ST_BODY_DECRYPT_DEVICE_Q_WARNING_MSG"
+msgstr "Apparaat decoderen? De bewerking kan niet ongedaan worden gemaakt en als u deze onderbreekt, gaan er gegevens verloren. Het decoderen kan meer dan een uur duren en u kunt het apparaat niet gebruiken."
+
+msgid "IDS_ST_BODY_DECRYPT_DEVICE"
+msgstr "Apparaat decoderen"
+
+msgid "IDS_ST_BODY_DECRYPTING_ING"
+msgstr "Decoderen..."
+
+msgid "IDS_ST_BODY_DEBUGGING_MODE_LAUNCHES_WHEN_USB_IS_CONNECTED"
+msgstr "Foutopsporing wordt gestart wanneer USB wordt aangesloten."
+
+msgid "IDS_ST_BODY_DDMMYYYY_DOT"
+msgstr "DD/MM/JJJJ"
+
+msgid "IDS_ST_BODY_DATE_AND_TIME"
+msgstr "Datum en tijd"
+
+msgid "IDS_ST_BODY_DATE"
+msgstr "Datum"
+
+msgid "IDS_ST_BODY_DATA_ROAMING"
+msgstr "Roaming"
+
+msgid "IDS_ST_BODY_DATA"
+msgstr "Gegevens"
+
+msgid "IDS_ST_BODY_CUSTOM_M_DEVICE_STATUS"
+msgstr "Aangepast"
+
+msgid "IDS_ST_BODY_CURRENT"
+msgstr "Huidig"
+
+msgid "IDS_ST_BODY_CRASH_VIEWER"
+msgstr "Crash-viewer"
+
+msgid "IDS_ST_BODY_CPU_USAGE"
+msgstr "CPU-gebruik"
+
+msgid "IDS_ST_BODY_COUNTRY_CODE"
+msgstr "Landcode"
+
+msgid "IDS_ST_BODY_COOL_JAZZ"
+msgstr "Cool jazz"
+
+msgid "IDS_ST_BODY_CONTENT_FROM_GALLERY_VIDEO_MUSIC_VOICE_RECORDER_AND_MY_FILES_CAN_BE_HIDDEN_IN_PERSONAL_MODE"
+msgstr "Inhoud van Galerij, Video, Muziek, Spraakrecorder en Mijn bestanden kunnen verborgen worden in Persoonlijke stand."
+
+msgid "IDS_ST_BODY_CONNECTIONSETTINGS_PROXY_ADDRESS"
+msgstr "Proxyadres"
+
+msgid "IDS_ST_BODY_CONNECTIONSETTINGS_INTERNET"
+msgstr "Internet"
+
+msgid "IDS_ST_BODY_CONNECTIONS"
+msgstr "Verbindingen"
+
+msgid "IDS_ST_BODY_CONNECTION"
+msgstr "Verbinding"
+
+msgid "IDS_ST_BODY_CONFIRM_NEW_PIN2"
+msgstr "Nieuwe PIN2 bevestigen"
+
+msgid "IDS_ST_BODY_CONFIRM_NEW_PIN1"
+msgstr "Nieuwe PIN1-code bevestigen"
+
+msgid "IDS_ST_BODY_CONFIRM_NEW_PIN"
+msgstr "Nieuwe PIN bevestigen"
+
+msgid "IDS_ST_BODY_CONFIRM_DECRYPTION"
+msgstr "Decodering bevestigen"
+
+msgid "IDS_ST_BODY_CONFIRM"
+msgstr "Bevestigen"
+
+msgid "IDS_ST_BODY_CONFIGURE_FIREWALL_SETTINGS"
+msgstr "Instellingen firewall configureren"
+
+msgid "IDS_ST_BODY_COMPUTING_ING"
+msgstr "Berekenen..."
+
+msgid "IDS_ST_BODY_CLEAR_DEFAULTS"
+msgstr "Standaard-instellingen wissen"
+
+msgid "IDS_ST_BODY_CHOCO_COOKY"
+msgstr "Choco cooky"
+
+msgid "IDS_ST_BODY_CHECK_FOR_UPDATES_AUTOMATICALLY_ABB"
+msgstr "Autom. controleren op updates."
+
+msgid "IDS_ST_BODY_CHECK_FOR_UPDATES_ABB"
+msgstr "Controleren op updates"
+
+msgid "IDS_ST_BODY_CHECK_FOR_UPDATES"
+msgstr "Controleren op updates"
+
+msgid "IDS_ST_BODY_CHARGE_BATTERY_TO_ABOVE_80P_AND_TRY_AGAIN"
+msgstr "Laad de batterij op tot boven 80% en probeer het opnieuw."
+
+msgid "IDS_ST_BODY_CHANGING_THE_FONT_SIZE_IN_ACCESSIBILITY_SETTINGS_WILL_OVERRIDE_THE_FONT_SIZE_IN_EACH_APPLICATION"
+msgstr "Als u de lettergrootte wijzigt in de toegankelijkheidsinstellingen, wordt de lettergrootte in elke applicatie aangepast."
+
+msgid "IDS_ST_BODY_CHANGING_THE_COLOUR_OF_THE_SCREEN_TO_GREYSCALE"
+msgstr "Wijzig de kleur van het scherm in grijstinten."
+
+msgid "IDS_ST_BODY_CHANGE_TEXT_SIZE_IN_CONTACTS_CALENDAR_MEMO_MESSAGES_EMAIL_AND_IM"
+msgstr "Tekstgrootte wijzigen in Contacten, Agenda, Notities, Berichten, E-mails en IM"
+
+msgid "IDS_ST_BODY_CHANGE_PIN2"
+msgstr "PIN2 wijzigen"
+
+msgid "IDS_ST_BODY_CALL_SETTINGS"
+msgstr "Oproep-instellingen"
+
+msgid "IDS_ST_BODY_CALL"
+msgstr "Oproepen"
+
+msgid "IDS_ST_BODY_CACHE"
+msgstr "Buffer"
+
+msgid "IDS_ST_BODY_BLOCK_URL"
+msgstr "URL blokkeren"
+
+msgid "IDS_ST_BODY_BLOCK_UDP"
+msgstr "UDP blokkeren"
+
+msgid "IDS_ST_BODY_BLOCK_TCP"
+msgstr "TCP blokkeren"
+
+msgid "IDS_ST_BODY_BLOCK_PORT"
+msgstr "Poort blokkeren"
+
+msgid "IDS_ST_BODY_BLOCK_IP"
+msgstr "IP blokkeren"
+
+msgid "IDS_ST_BODY_BLOCKING_MODE_IS_ENABLED"
+msgstr "Blokkeerstand ingeschakeld."
+
+msgid "IDS_ST_BODY_BLOCKING_MODE"
+msgstr "Blokkeerstand"
+
+msgid "IDS_ST_BODY_BLOCKED_URL_LIST"
+msgstr "URL-blokkeringslijst"
+
+msgid "IDS_ST_BODY_BLOCKED_PORT_LIST"
+msgstr "Poortblokkeringslijst"
+
+msgid "IDS_ST_BODY_BLOCKED_IP_LIST"
+msgstr "IP-blokkeringslijst"
+
+msgid "IDS_ST_BODY_BATTERY_PERCENTAGE_ABB"
+msgstr "Batterijpercentage"
+
+msgid "IDS_ST_BODY_BATTERY"
+msgstr "Batterij"
+
+msgid "IDS_ST_BODY_BACKUP_AND_RESET"
+msgstr "Back-up maken en terugzetten"
+
+msgid "IDS_ST_BODY_BACKLIGHT_TIME"
+msgstr "Verlichtingstijd"
+
+msgid "IDS_ST_BODY_A_PERSON_YOU_HAVE_GRANTED_AUTHORITY_TO_IS_TRYING_TO_REMOTELY_ENABLE_EMERGENCY_MODE_ON_THIS_DEVICE_MSG"
+msgstr "Een persoon aan wie u toestemming hebt gegeven, probeert op afstand de Alarmstand op dit apparaat in te schakelen. Uw gegevens worden binnen 60 seconden naar de server verzonden en de Alarmstand wordt ingeschakeld. Tik op Annuleren om dit proces te stoppen."
+
+msgid "IDS_ST_BODY_A_PASSWORD_WILL_BE_REQUIRED_TO_DECRYPT_YOUR_DEVICE_EVERY_TIME_YOU_POWER_IT_ON"
+msgstr "Er is een wachtwoord vereist voor het decoderen van uw apparaat, elke keer dat u deze inschakelt."
+
+msgid "IDS_ST_BODY_AVAILABLE_SPACE"
+msgstr "Beschikbare ruimte"
+
+msgid "IDS_ST_BODY_AVAILABLE"
+msgstr "Beschikbaar"
+
+msgid "IDS_ST_BODY_AUTO_DOWNLOAD"
+msgstr "Automatisch downloaden"
+
+msgid "IDS_ST_BODY_AUTH_TYPE"
+msgstr "Verificatietype"
+
+msgid "IDS_ST_BODY_APP_OPENING_IMAGE"
+msgstr "Openingsafbeelding app"
+
+msgid "IDS_ST_BODY_APP_OPENING_EFFECT"
+msgstr "Openingseffect app"
+
+msgid "IDS_ST_BODY_APPLICATION_SETTINGS"
+msgstr "Applicaties"
+
+msgid "IDS_ST_BODY_APPLICATION_MANAGER"
+msgstr "Applicatiebeheer"
+
+msgid "IDS_ST_BODY_APPLICATION_INFO"
+msgstr "Applicatie-info"
+
+msgid "IDS_ST_BODY_APPLICATION"
+msgstr "Applicatie"
+
+msgid "IDS_ST_BODY_ANTIVIRUS_SOFTWARE_ABB"
+msgstr "Antivirussoftware"
+
+msgid "IDS_ST_BODY_AM"
+msgstr "AM"
+
+msgid "IDS_ST_BODY_ALWAYS_REJECT"
+msgstr "Altijd weigeren"
+
+msgid "IDS_ST_BODY_ALWAYS_ON"
+msgstr "Altijd aan"
+
+msgid "IDS_ST_BODY_ALWAYS_OFF"
+msgstr "Altijd uit"
+
+msgid "IDS_ST_BODY_ALARM"
+msgstr "Alarm"
+
+msgid "IDS_ST_BODY_AFTER_YOU_DOWNLOAD_AND_INSTALL_APPLICATIONS_APPLICATIONS_WILL_BE_SHOWN_HERE"
+msgstr "Nadat u applicaties hebt gedownload en geïnstalleerd, worden ze hier weergegeven"
+
+msgid "IDS_ST_BODY_AFTER_RESETTING_PHONE_WILL_RESTART_AUTOMATICALLY"
+msgstr "Na opnieuw instellen wordt telefoon automatisch opnieuw gestart."
+
+msgid "IDS_ST_BODY_ADJUST_BRIGHTNESS_LEVEL"
+msgstr "Helderheidsniveau aanpassen"
+
+msgid "IDS_ST_BODY_ADJUST_AUTOMATIC_BRIGHTNESS"
+msgstr "Automatische helderheid aanpassen"
+
+msgid "IDS_ST_BODY_ACCESS_NAME"
+msgstr "Toegangsnaam"
+
+msgid "IDS_ST_BODY_ACCESSIBILITY"
+msgstr "Toegankelijkheid"
+
+msgid "IDS_ST_BODY_ABOUT_DEVICE"
+msgstr "Toestel-info"
+
+msgid "IDS_QCP_HEADER_QUICK_COMMAND"
+msgstr "Quick Command"
+
+msgid "IDS_ECON_BODY_EASY_CONNECT_M_SHARING_ABB"
+msgstr "Eenv. verb."
+
+msgid "IDS_SCR_POP_SCREEN_READER_IS_NOT_SUPPORTED_BY_PS_PRESS_THE_BACK_KEY_TO_RETURN_TO_THE_PREVIOUS_SCREEN"
+msgstr "Schermlezer wordt niet ondersteund door %s. Druk op de toets Terug om terug te gaan naar het vorige scherm."
+
+msgid "IDS_KEEPIT_HEADER_KEEPIT_M_APPLICATION_NAME"
+msgstr "KeepIt"
+
+msgid "IDS_CALL_POP_UNAVAILABLE_T_DIAL"
+msgstr "Niet beschikbaar."
+
+msgid "IDS_CALL_POP_CALLING_EMERG_ONLY"
+msgstr "Alleen noodoproepen."
+
+msgid "IDS_JAVA_OPT_SIM_SETTINGS"
+msgstr "SIM-instellingen"
+
+msgid "IDS_TASK_BODY_NO_RUNNING_APPLICATION"
+msgstr "Geen actieve applicatie"
+
+msgid "IDS_VC_MBODY_NOTIFICATION_READ_OUT"
+msgstr "Melding voorlezen"
+
+msgid "IDS_VC_HEADER_VOICE_RECOGNITION"
+msgstr "Spraakherkenning"
+
+msgid "IDS_SSEARCH_POP_SEARCHED"
+msgstr "Gezocht."
+
+msgid "IDS_WIFI_BODY_DOT"
+msgstr "."
+
+msgid "IDS_DLNA_BODY_ACCESS_POINT_NAME"
+msgstr "Naam toegangspunt"
+
+msgid "IDS_SKM_BODY_ASK_M_IDEA_SKETCH"
+msgstr "Vragen"
+
+msgid "IDS_HELP_POP_THE_FRONT_CAMERA_IS_NOT_BEING_USED_BY_ANOTHER_APPLICATION"
+msgstr "De voorste camera wordt niet gebruikt door een andere applicatie."
+
+msgid "IDS_HELP_POP_THE_DEVICE_IS_IN_WELL_LIT_CONDITIONS_BUT_THE_SCREEN_IS_NOT_IN_DIRECT_LIGHT"
+msgstr "Het apparaat is in een goed verlichte omgeving maar het scherm bevindt zich niet in direct licht."
+
+msgid "IDS_HELP_POP_THE_DEVICE_IS_HELD_STEADY_AND_UPRIGHT"
+msgstr "Het apparaat wordt stabiel en rechtop gehouden."
+
+msgid "IDS_HELP_BODY_THE_DEVICE_REACTS_INTELLIGENTLY_BY_ADAPTING_THE_SCREEN_WHEN_IT_DETECTS_YOUR_FACE"
+msgstr "Het apparaat reageert slim door het scherm aan te passen wanneer het uw gezicht detecteert."
+
+msgid "IDS_HELP_BODY_SMART_SCREEN_WORKS_BEST_UNDER_THE_FOLLOWING_CONDITIONS_C"
+msgstr "Slim scherm werkt beter onder de volgende omstandigheden:"
+
+msgid "IDS_HELP_BODY_SMART_ROTATION_DISABLES_AUTO_SCREEN_ROTATION_BY_CHECKING_THE_ORIENTATION_OF_YOUR_FACE_AND_THE_DEVICE_BY_ITS_FRONT_CAMERA"
+msgstr "Slim roteren schakelt automatische schermrotatie uit door de richting van uw gezicht en het apparaat te controleren met de camera voor."
+
+msgid "IDS_LBS_HEADER_LOCATION"
+msgstr "Locatie"
+
+msgid "IDS_LBS_BODY_DESTINATION"
+msgstr "Bestemming"
+
+msgid "IDS_ST_SK_NO"
+msgstr "Nee"
+
+msgid "IDS_HELP_BODY_SMART_STAY_DETECTS_YOUR_EYES_WITH_THE_FRONT_CAMERA_SO_THAT_THE_SCREEN_STAYS_ON_WHEN_YOU_ARE_LOOKING_AT_IT"
+msgstr "Slim sluimeren detecteert uw ogen met de voorste camera zodat het scherm aan blijft zolang u ernaar kijkt."
+
+msgid "IDS_QP_POP_YOU_WILL_NO_LONGER_BE_ABLE_TO_USE_APPLICATIONS_NOTI_MSG"
+msgstr "U kunt niet langer applicaties als internet, E-mail en YouTube gebruiken via mobiele netwerken. Doorgaan?"
+
+msgid "IDS_ST_BODY_10_MINUTES"
+msgstr "10 minuten"
+
+msgid "IDS_ST_BODY_15SEC"
+msgstr "15 seconden"
+
+msgid "IDS_ST_BODY_24_HOURS"
+msgstr "24 uur"
+
+msgid "IDS_ST_BODY_2_MINUTES"
+msgstr "2 minuten"
+
+msgid "IDS_ST_BODY_30SEC"
+msgstr "30 seconden"
+
+msgid "IDS_ST_BODY_5_MINUTES"
+msgstr "5 minuten"
+
+msgid "IDS_ST_BODY_APPLICATIONS"
+msgstr "Apps"
+
+msgid "IDS_ST_BODY_DONT_ASK_AGAIN"
+msgstr "Niet meer vragen"
+
+msgid "IDS_ST_BODY_P1SS_IS_CURRENTLY_P2SS_T_TTS"
+msgstr "%1$s is momenteel %2$s."
+
+msgid "IDS_ST_BODY_PASSWORDS_MUST_CONSIST_OF_AT_LEAST_4_ALPHANUMERIC_CHARACTERS_ALSO_INCLUDING_AT_LEAST_1_ALPHABETICAL_CHARACTER"
+msgstr "Wachtwoord moet bestaan uit ten minste 4 alfanumerieke tekens waaronder ten minste 1 alfabetisch teken."
+
+msgid "IDS_ST_BODY_PUK1_BLOCKED"
+msgstr "PUK1 vergrendeld."
+
+msgid "IDS_ST_BODY_PUK1_CODE"
+msgstr "PUK1-code"
+
+msgid "IDS_ST_BODY_PUK2"
+msgstr "PUK2"
+
+msgid "IDS_ST_BUTTON2_POWER_SAVING_MODE_ABB"
+msgstr "Spaarstand"
+
+msgid "IDS_ST_BUTTON_CANCEL_ABB2"
+msgstr "Annul."
+
+msgid "IDS_ST_HEADER_1_PROCESS_AT_MOST_ABB"
+msgstr "Hoogstens 1 proces"
+
+msgid "IDS_ST_HEADER_2_PROCESSES_AT_MOST_ABB"
+msgstr "Hoogstens 2 processen"
+
+msgid "IDS_ST_HEADER_3_PROCESSES_AT_MOST_ABB"
+msgstr "Hoogstens 3 processen"
+
+msgid "IDS_ST_HEADER_4_PROCESSES_AT_MOST_ABB"
+msgstr "Hoogstens 4 processen"
+
+msgid "IDS_ST_HEADER_ENTER_PIN_ABB3"
+msgstr "Pincode invoeren"
+
+msgid "IDS_ST_OPT_2G_ONLY"
+msgstr "Alleen 2G"
+
+msgid "IDS_ST_OPT_3G_2G_HAUTO_CONNECT"
+msgstr "3G/2G (automatisch verbinden)"
+
+msgid "IDS_ST_OPT_4G_3G_2G_HAUTO_CONNECT"
+msgstr "4G/3G/2G (automatisch verbinden)"
+
+msgid "IDS_ST_POP_EMERGENCY_MODE_SAVES_BATTERY_POWER_BY_C_MSG"
+msgstr "Met Alarmstand bespaart u als volgt batterijvoeding:\n\n- De kleur van het scherm wordt gewijzigd in grijstinten.\n- Het aantal beschikbare applicaties wordt beperkt.\n- Mobiele gegevens worden uitgeschakeld als het scherm uit is.\n- Connectiviteitsvoorzieningen als Wi-Fi en Bluetooth worden uitgeschakeld.\n\nSommige voorzieningen als Schermlezer en S View Cover zijn niet beschikbaar.\nSommige Dynamic Boxen op uw startscherm worden mogelijk niet weergegeven en moeten opnieuw worden geconfigureerd."
+
+msgid "IDS_ST_POP_INCORRECT_PUK1_CODE"
+msgstr "Onjuiste PUK1-code."
+
+msgid "IDS_ST_POP_INCORRECT_PUK1_PD_ATTEMPTS_LEFT"
+msgstr "Ongeldige PUK1. %d pogingen over."
+
+msgid "IDS_ST_POP_INCORRECT_PUK2"
+msgstr "Onjuiste PUK2."
+
+msgid "IDS_ST_POP_INCORRECT_PUK2_PD_ATTEMPTS_LEFT"
+msgstr "Ongeldige PUK2. %d pogingen over."
+
+msgid "IDS_ST_POP_PIN_CHANGED"
+msgstr "PIN gewijzigd."
+
+msgid "IDS_TASKMGR_BUTTON_CLEAR_CACHE"
+msgstr "Cache legen"
+
+msgid "IDS_ST_BODY_3G_ONLY"
+msgstr "Alleen 3G"
+
+msgid "IDS_ST_HEADER_ADD"
+msgstr "Toevoegen"
+
+msgid "IDS_ST_BODY_SECONDS"
+msgstr "seconden"
+
+msgid "IDS_ST_BUTTON_CANCEL"
+msgstr "Annuleer"
+
+msgid "IDS_ST_BODY_1_5_SECONDS"
+msgstr "1,5 seconde"
+
+msgid "IDS_MSG_ACBUTTON_CANCEL_ABB"
+msgstr "ANNULEREN"
+
+msgid "IDS_MSG_ACBUTTON_DONE_ABB"
+msgstr "GEREED"
+
+msgid "IDS_ST_HEADER_ENABLE_DATA_ROAMING"
+msgstr "Gegevensroaming inschakelen"
+
+msgid "IDS_ST_HEADER_TURN_ON_MOBILE_DATA"
+msgstr "Mobiele gegevens inschakelen"
+
+msgid "IDS_ST_HEADER_UNABLE_TO_PLAY_SAMPLE_ABB"
+msgstr "Kan voorbeeld niet afspelen"
+
+msgid "IDS_ST_POP_SAMPLES_CANNOT_BE_PLAYED_DURING_CALLS"
+msgstr "Voorbeelden kunnen niet worden afgespeeld tijdens oproepen."
+
+msgid "IDS_ST_HEADER_DEVICE_NAME"
+msgstr "Naam apparaat"
+
+msgid "IDS_ST_HEADER_DELETE_ITEMS_ABB2"
+msgstr "Items verwijderen"
+
+msgid "IDS_ST_HEADER_FEEDBACK"
+msgstr "Feedback"
+
+msgid "IDS_ST_BODY_SELECT_ALL"
+msgstr "Alles selecteren"
+
+msgid "IDS_ST_BODY_TOTAL"
+msgstr "Totaal"
+
+msgid "IDS_ST_HEADER_MANAGE_CERTIFICATES_ABB"
+msgstr "Certificaten beheren"
+
+msgid "IDS_ST_BODY_INCORRECT_PASSWORD"
+msgstr "Onjuist wachtwoord."
+
+msgid "IDS_ST_HEADER_TURN_OFF_MOBILE_DATA"
+msgstr "Mobiele gegevens uitschakelen"
+
+msgid "IDS_ST_BODY_FLIGHT_MODE_DISABLES_CALLING_AND_MESSAGING_FUNCTIONS_AND_TURNS_OFF_MOBILE_DATA_AND_CONNECTIVITY_FUNCTIONS_MSG"
+msgstr "Vliegtuigstand schakelt oproep- en berichtfuncties uit. Mobiele gegevens en verbindingsfuncties zoals Wi-Fi en Bluetooth worden ook uitgeschakeld. Als u Wi-Fi en Bluetooth in Vliegtuigstand wilt gebruiken, schakelt u ze in via Instellingen of het meldingenvenster. Vliegtuigstand wordt ingeschakeld."
+
+msgid "IDS_ST_BODY_TYPE"
+msgstr "Type"
+
+msgid "IDS_ST_BODY_PERSONAL"
+msgstr "Persoonlijk"
+
+msgid "IDS_ST_HEADER_LOCK_SCREEN_AND_SECURITY_ABB"
+msgstr "Schermvergr. en beveilig."
+
+msgid "IDS_ST_HEADER_PRIVACY_AND_SAFETY_ABB"
+msgstr "Privacy en veiligheid"
+
+msgid "IDS_ST_BODY_MOBILE_NETWORKS"
+msgstr "Mobiele netwerken"
+
+msgid "IDS_ST_HEADER_MORE_CONNECTION_SETTINGS"
+msgstr "Meer verbindingsinstellingen"
+
+msgid "IDS_ST_MBODY_LEGAL_INFORMATION_ABB"
+msgstr "Juridische informatie"
+
+msgid "IDS_ST_BODY_DEVICE_INFORMATION"
+msgstr "Informatie apparaat"
+
+msgid "IDS_ST_BODY_PHONE_NUMBER"
+msgstr "Telefoonnr."
+
+msgid "IDS_ST_BODY_MODEL_NUMBER"
+msgstr "Modelnummer"
+
+msgid "IDS_ST_MBODY_TIZEN_VERSION"
+msgstr "Tizen-versie"
+
+msgid "IDS_ST_MBODY_BLUETOOTH_ADDRESS"
+msgstr "Bluetooth-adres"
+
+msgid "IDS_ST_BODY_WI_FI_MAC_ADDRESS"
+msgstr "Wi-Fi MAC-adres"
+
+msgid "IDS_ST_BUTTON_BATTERY_POWER_ABB"
+msgstr "Batterijvoeding"
+
+msgid "IDS_ST_TMBODY_SECURITY_STATUS"
+msgstr "Beveiligingsstatus"
+
+msgid "IDS_ST_SBODY_SHOW_THE_TIME_IN_24_HOUR_FORMAT_INSTEAD_OF_12_HOUR_HAM_PM_FORMAT"
+msgstr "Geef de tijd weer in 24-uursindeling in plaats van in 12-uursindeling (AM/PM)."
+
+msgid "IDS_ST_MBODY_AUTO_UPDATE"
+msgstr "Automatische update"
+
+msgid "IDS_ST_MBODY_24_HOUR_CLOCK"
+msgstr "24-uursklok"
+
+msgid "IDS_ST_BODY_MAGNIFIER"
+msgstr "Vergrootglas"
+
+msgid "IDS_ST_TMBODY_CACHE"
+msgstr "Cache"
+
+msgid "IDS_ST_HEADER_CLEAR_CACHE_ABB"
+msgstr "Cache legen"
+
+msgid "IDS_ST_POP_THERE_IS_NO_CACHE_DATA_TO_CLEAR"
+msgstr "Er zijn geen cachegegevens om te verwijderen."
+
+msgid "IDS_ST_POP_ALL_THE_CACHE_DATA_WILL_BE_CLEARED"
+msgstr "Alle cachegegevens worden gewist."
+
+msgid "IDS_ST_BUTTON_CLEAR_CACHE_ABB"
+msgstr "Cache legen"
+
+msgid "IDS_ST_BODY_12_HOURS"
+msgstr "12 uur"
+
+msgid "IDS_ST_BODY_1MINUTE"
+msgstr "1 minuut"
+
+msgid "IDS_ST_BODY_ACCOUNTS"
+msgstr "Accounts"
+
+msgid "IDS_ST_HEADER_ALLSHARE"
+msgstr "AllShare"
+
+msgid "IDS_ST_BODY_ANSWERINGMODE_AUTOMATIC"
+msgstr "Automatisch"
+
+msgid "IDS_ST_BUTTON_BACK"
+msgstr "Vorige"
+
+msgid "IDS_ST_BODY_BLUETOOTH"
+msgstr "Bluetooth"
+
+msgid "IDS_ST_BODY_ADVANCEDOPTIONS_CERTIFICATES"
+msgstr "Certificaten"
+
+msgid "IDS_ST_BODY_CONTACTS"
+msgstr "Contacten"
+
+msgid "IDS_ST_BODY_MYTHEME_CREATE"
+msgstr "Nieuw"
+
+msgid "IDS_ST_BODY_CALLERID_DEFAULT"
+msgstr "Standaard"
+
+msgid "IDS_ST_BODY_FM_RADIO"
+msgstr "FM-radio"
+
+msgid "IDS_ST_BODY_FONT"
+msgstr "Lettertype"
+
+msgid "IDS_ST_BODY_GALLERY"
+msgstr "Galerij"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Help"
+
+msgid "IDS_ST_BODY_MANUAL"
+msgstr "Handmatig"
+
+msgid "IDS_ST_BODY_APPLICATIONSETTINGS_MESSAGE"
+msgstr "Bericht"
+
+msgid "IDS_ST_BODY_MUSIC"
+msgstr "Muziek"
+
+msgid "IDS_ST_BODY_NFC"
+msgstr "NFC"
+
+msgid "IDS_ST_BODY_ALERTTYPE_OFF"
+msgstr "Uit"
+
+msgid "IDS_ST_BODY_ON"
+msgstr "Aan"
+
+msgid "IDS_ST_BODY_MEMORYSTATUS_OTHERS"
+msgstr "Overige"
+
+msgid "IDS_ST_BODY_PIN_LOCK"
+msgstr "PIN-blokkering"
+
+msgid "IDS_ST_BODY_RESET"
+msgstr "Resetten"
+
+msgid "IDS_ST_POP_NETWORKSERVICES_SEARCHING"
+msgstr "Zoeken..."
+
+msgid "IDS_ST_BODY_SIZE"
+msgstr "Grootte"
+
+msgid "IDS_ST_HEADER_SYNCHRONISE"
+msgstr "Synchroniseren"
+
+msgid "IDS_ST_BODY_SYSTEM"
+msgstr "Systeem"
+
+msgid "IDS_ST_BUTTON2_S_PLANNER"
+msgstr "S Planner"
+
+msgid "IDS_ST_BODY_TWITTER"
+msgstr "Twitter"
+
+msgid "IDS_ST_BODY_USERNAME"
+msgstr "Gebruikersnaam"
+
+msgid "IDS_ST_BODY_VOICE"
+msgstr "Spraak"
+
+msgid "IDS_ST_BODY_DEFAULTMEMORY_VOICE_RECORDER"
+msgstr "Spraak recorder"
+
+msgid "IDS_ST_BODY_WI_FI"
+msgstr "Wi-Fi"
+
+msgid "IDS_ST_BODY_YYYY_MM_DD_DOT"
+msgstr "JJJJ/MM/DD"
+
+msgid "IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING"
+msgstr "Helderheid"
+
+msgid "IDS_ST_HEADER_SORT_BY"
+msgstr "Sorteren op"
+
+msgid "IDS_ST_BODY_DELETED"
+msgstr "Verwijderd."
+
+msgid "IDS_ST_POP_ERROR"
+msgstr "Fout."
+
+msgid "IDS_ST_TPOP_MAXIMUM_NUMBER_OF_CHARACTERS_REACHED"
+msgstr "Maximumaantal tekens bereikt."
+
+msgid "IDS_ST_TPOP_TRY_AGAIN"
+msgstr "Probeer het opnieuw."
+
+msgid "IDS_ST_BODY_VERSION"
+msgstr "Versie"
+
+msgid "IDS_ST_BODY_DELETE"
+msgstr "Verwijderen"
+
+msgid "IDS_ST_SK_SET_LITE"
+msgstr "Instell."
+
+msgid "IDS_ST_SK_YES"
+msgstr "Ja"
+
+msgid "IDS_SAPPS_SK_TRY_ABB"
+msgstr "Probeer"
+
+msgid "IDS_ST_BODY_PLAY_A_SOUND_WHEN_BUTTONS_ICONS_AND_MENU_ITEMS_ARE_TAPPED"
+msgstr "Speel een geluid af wanneer op knoppen, pictogrammen en menu-items wordt getikt."
+
+msgid "IDS_ST_MBODY_KEYBOARD_SOUND"
+msgstr "Toetsenbordgeluid"
+
+msgid "IDS_ST_MBODY_RINGTONE"
+msgstr "Beltoon"
+
+msgid "IDS_ST_MBODY_TOUCH_SOUND"
+msgstr "Aanraakgeluid"
+
+msgid "IDS_ST_SBODY_PLAY_A_SOUND_WHEN_THE_SAMSUNG_KEYBOARD_IS_TAPPED"
+msgstr "Speel een geluid af wanneer op het Samsung-toetsenbord wordt getikt."
+
+msgid "IDS_ST_POP_MOUNTING_SD_CARD_ING"
+msgstr "SD-kaart koppelen..."
+
+msgid "IDS_ST_BODY_SET_DATE"
+msgstr "Datum instellen"
+
+msgid "IDS_ST_BODY_ALL"
+msgstr "Alles"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "GPS-service"
+
+msgid "IDS_ST_BODY_VPN"
+msgstr "VPN"
+
+msgid "IDS_ST_SK_OPTIONS_LITE"
+msgstr "Opties"
+
+msgid "IDS_ST_BODY_TTS"
+msgstr "TTS"
+
+msgid "IDS_ST_BODY_VOICE_CONTROL"
+msgstr "Spraakopdracht"
+
+msgid "IDS_ST_BODY_ALLOW_OR_BLOCK_NOTIFICATIONS_FROM_INDIVIDUAL_APPLICATIONS"
+msgstr "Sta meldingen van afzonderlijke applicaties toe of blokkeer ze."
+
+msgid "IDS_ST_MBODY_DO_NOT_DISTURB_ABB"
+msgstr "Niet storen"
+
+msgid "IDS_ST_MBODY_APP_NOTIFICATIONS"
+msgstr "App-meldingen"
+
+msgid "IDS_ST_HEADER_DEFAULT_APPLICATIONS_ABB"
+msgstr "Standaardapplicaties"
+
+msgid "IDS_ST_BODY_HOME"
+msgstr "Privé"
+
+msgid "IDS_ST_BODY_SET_TIME"
+msgstr "Tijd instellen"
+
+msgid "IDS_ST_BODY_UNABLE_TO_SCAN_FOR_NETWORKS"
+msgstr "Kan niet scannen op netwerken."
+
+msgid "IDS_ST_BODY_LOCK_SCREEN"
+msgstr "Vergrendelscherm"
+
+msgid "IDS_ST_HEADER_VISION"
+msgstr "Zicht"
+
+msgid "IDS_ST_BODY_OFF"
+msgstr "Uit"
+
+msgid "IDS_ST_BODY_SIGNAL_STRENGTH"
+msgstr "Signaalsterkte"
+
+msgid "IDS_ST_POP_MOBILE_DATA_WILL_BE_TURNED_ON_CONNECTING_TO_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_DEPENDING_ON_YOUR_PAYMENT_PLAN"
+msgstr "Mobiele gegevens worden ingeschakeld. Voor verbindingen met mobiele netwerken kunnen afhankelijk van uw abonnement extra kosten gelden."
+
+msgid "IDS_ST_POP_UNLESS_YOU_CONNECT_TO_A_WI_FI_NETWORK_YOU_WILL_NOT_BE_ABLE_TO_USE_THE_INTERNET_EMAIL_OR_OTHER_APPS_MSG"
+msgstr "Tenzij u verbonden bent met een Wi-Fi-netwerk, kunt u geen gebruikmaken van internet, e-mail of andere apps die een gegevensverbinding gebruiken."
+
+msgid "IDS_SCR_BODY_PD_UNREAD_NOTIFICATIONS"
+msgstr "Ongelezen meldingen"
+
+msgid "IDS_ACCS_OPT_OTHER_FEEDBACK_TTS"
+msgstr "Overige feedback"
+
+msgid "IDS_ACCS_TMBODY_STATUS_BAR_INFORMATION"
+msgstr "Statusbalkgegevens"
+
+msgid "IDS_ACCS_SBODY_SELECT_WHICH_INFORMATION_FROM_INDICATORS_SHOWN_ON_THE_STATUS_BAR_WILL_BE_READ_OUT_WHEN_YOU_TRIPLE_TAP_THE_SCREEN_WITH_TWO_FINGERS_MSG"
+msgstr "Selecteer welke informatie van statusbalkindicatoren wordt voorgelezen wanneer u met twee vingers drie keer op het scherm tikt, zoals de tijd en datum, de signaalsterkte van het apparaat, Wi-Fi- en Bluetooth-verbindingen en batterijvoeding."
+

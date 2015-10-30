@@ -5,7 +5,7 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${SETTING_COMMON}/include)
 INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_phone REQUIRED evas eina ecore elementary appcore-common iniparser vconf
 appcore-efl deviced tapi ui-gadget-1 capi-appfw-application appsvc libxml-2.0 badge
-json-glib-1.0 ail eventsystem)
+json-glib-1.0 ail eventsystem capi-system-system-settings)
 
 FOREACH(flag ${pkgs_phone_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")

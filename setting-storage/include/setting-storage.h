@@ -147,20 +147,26 @@ struct _SettingStorageUG {
 	Setting_GenGroupItem_Data *data_installapp;
 
 	/* miscellaneous files list */
+	int misc_view_mode;				/** 0 : default 1 : delete layout */
+
 	Elm_Object_Item *main_misces_navi_it;
-	Evas_Object *main_gl_misces;
-	Evas_Object *main_misces_lo_noitem;
 	Elm_Object_Item *misces_navi_it;
-	Evas_Object *gl_misces;
+
+	Evas_Object *gl_misces;			/** genlist for misc list */
 	Evas_Object *misces_lo_noitem;
+
 	Eina_Bool misces_is_select_all;
 	Eina_List *misces_list;
 	Eina_List *misces_sel_list;
 	int misces_sz_all;
 	int misces_checked;
 	int misces_deleted;
+	bool misces_ctx_popup_selected;
 	void *del_worker;
-	Evas_Object *select_all_layout;
+
+	Evas_Object *ly_select_all;		/** misc > 'select all' layout */
+	Evas_Object* ly_default;
+
 	Evas_Object *title_left_btn;
 	Evas_Object *title_right_btn;
 

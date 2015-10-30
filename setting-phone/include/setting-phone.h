@@ -105,7 +105,8 @@ struct _SettingPhoneUG {
 	Evas_Object *ly_language;
 	Evas_Object *ly_ticker;
 	Evas_Object *ly_license;
-
+	Evas_Object *nocontents;
+	Evas_Object *ly_sub_region;
 
 	/* [UI] notification details */
 	Setting_GenGroupItem_Data *data_details_notification;
@@ -238,7 +239,7 @@ extern char *setting_phone_lang_str_to_utf8(const UChar *unichars);
 
 
 /* event system */
-void set_language_helper(char *lang);
+int set_language_helper(char *lang);
 int set_regionformat_helper(char *region);
 
 #endif				/* __SETTING_PHONE_H__ */

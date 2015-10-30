@@ -35,7 +35,6 @@
 #include <device.h>
 #include <dd-display.h>
 #include <dd-deviced.h>
-#include <dbus/dbus.h>
 /*#include <devman.h> */
 
 #define Keystr_Dynamic		"IDS_ST_BODY_DYNAMIC_T_DISPLAY_EFFECT"
@@ -46,43 +45,19 @@
 #define LAUNCH_EFFECT_STR "IDS_ST_BODY_APP_OPENING_EFFECT"
 #define LAUNCH_IMAGE_STR  "IDS_ST_BODY_APP_OPENING_IMAGE"
 
-#define KeyStr_AdjustScreenTone_Dsc "IDS_ST_BODY_SAVE_POWER_BY_ADJUSTING_SCREEN_TONE_ACCORDING_TO_ANALYSIS_OF_IMAGES"
-#define KeyStr_HighTouchSensitivity_Dsc "IDS_ST_SBODY_INCREASE_THE_SENSITIVITY_OF_THE_TOUCH_SCREEN_SBODY_MSG"
-
 #define LAUNCH_BATTERY_DESC  "IDS_ST_BODY_SHOWS_BATTERY_PERCENTAGE_ON_INDICATOR" /*"Increase the screen's sensitivity so you can touch it while wearing gloves" */
 
 #define SETTING_DISPLAY_TIME_15_SEC_STR "IDS_ST_BODY_15SEC"
 #define SETTING_DISPLAY_TIME_30_SEC_STR "IDS_ST_BODY_30SEC"
 #define SETTING_DISPLAY_TIME_1_MIN_STR "IDS_ST_BODY_1MINUTE"
-
 #define SETTING_DISPLAY_TIME_2_MIN_STR "IDS_ST_BODY_2_MINUTES"
 #define SETTING_DISPLAY_TIME_5_MIN_STR "IDS_ST_BODY_5_MINUTES"
 #define SETTING_DISPLAY_TIME_10_MIN_STR "IDS_ST_BODY_10_MINUTES"
-#define SMART_SCREEN_TRY_IT_IMAGE_L  SETTING_ICON_PATH_CFG"air_jump_try_full_h.png"
-#define SMART_SCREEN_TRY_IT_IMAGE_P  SETTING_ICON_PATH_CFG"air_jump_try_full.png"
-
-#define KeyStr_ScreenCapture "IDS_MF_BODY_SCREEN_CAPTURE_M_NOUN"
-#define KeyStr_ScreenCapture_Destination "IDS_LBS_BODY_DESTINATION"
-#define KeyStr_ScreenCapture_Ask "IDS_SKM_BODY_ASK_M_IDEA_SKETCH"
-#define KeyStr_ScreenCapture_Gallery "IDS_ST_BODY_GALLERY"
-#define KeyStr_ScreenCapture_KeepIt "IDS_KEEPIT_HEADER_KEEPIT_M_APPLICATION_NAME"
-#define KeyStr_ScreenCapture_Help "IDS_ST_MBODY_SELECT_WHERE_CAPTURED_IMAGES_WILL_BE_SAVED"
-#define KeyStr_ScreenCapture_Edit "IDS_ST_MBODY_EDIT_AFTER_SCREEN_CAPTURE"
-#define KeyStr_Dynamic_Status_Bar "IDS_ST_BODY_DYNAMIC_STATUS_BAR"
-#define KeyStr_Dynamic_Status_Bar_Help "IDS_ST_BODY_KEEPS_THE_STATUS_BAR_TIDY_TAP_THE_REPRESENTATIVE_ICON_TO_SHOW_ALL_THE_ICONS"
 
 
 #define URI_SMART_STAY "tizen-help://org.tizen.setting/smartstay"
 #define URI_SMART_ROTATION "tizen-help://org.tizen.setting/smartrotation"
 
-#define SETTING_DISPLAY_SMART_SCREEN_TURN_ON_SMART_ROATION_POPUP "IDS_ST_POP_ENABLE_SMART_ROTATION_TO_TRY_IT_T_HELP"
-#define SETTING_DISPLAY_SMART_SCREEN_TURN_ON_SMART_STAY_POPUP "IDS_ST_POP_ENABLE_SMART_STAY_TO_TRY_IT_T_HELP"
-#define POPUP_TURN_ON_STR "IDS_ST_BUTTON_ENABLE"
-
-#define SAMRT_SCREEN_TRY_IT_IAMGE_PORTRAIT_H 2636
-#define SAMRT_SCREEN_TRY_IT_IAMGE_PORTRAIT_W 720
-#define SAMRT_SCREEN_TRY_IT_IAMGE_LANDSCAPE_H 2055
-#define SAMRT_SCREEN_TRY_IT_IAMGE_LANDSCAPE_W 1280
 #define SETTING_DISPLAY_ICON_PATH 12
 
 typedef enum {
@@ -148,7 +123,7 @@ struct _SettingDisplayUG {
 	Setting_GenGroupItem_Data *data_br;
 	Setting_GenGroupItem_Data *data_font;
 	Setting_GenGroupItem_Data *data_back;
-	Setting_GenGroupItem_Data *data_touchkey_light_duration;
+	//Setting_GenGroupItem_Data *data_touchkey_light_duration;
 	Setting_GenGroupItem_Data *data_br_auto;
 	Setting_GenGroupItem_Data *data_br_sli;
 	Setting_GenGroupItem_Data *data_adjust;
@@ -156,14 +131,12 @@ struct _SettingDisplayUG {
 
 	Setting_GenGroupItem_Data *data_br_adjustment;
 
-	Setting_GenGroupItem_Data *data_battery;
 	Setting_GenGroupItem_Data *data_auto_rotate;
 
 	/* smart screen */
 	Setting_GenGroupItem_Data *data_smart_stay;
 	Setting_GenGroupItem_Data *data_smart_rotation;
 	Setting_GenGroupItem_Data *data_auto_adjust_scrn_tone;
-	Setting_GenGroupItem_Data *data_high_touch_sensitivity;
 	Setting_GenGroupItem_Data *data_dynamic;
 
 
@@ -189,22 +162,11 @@ struct _SettingDisplayUG {
 	Evas_Object *popup_chk;
 	Evas_Object *popup;
 
-	Elm_Genlist_Item_Class itc_2text_2;
 	Elm_Genlist_Item_Class itc_1text_1icon;
-	Elm_Genlist_Item_Class itc_1icon_1text_sub;
 	Elm_Genlist_Item_Class itc_1text;
 	Elm_Genlist_Item_Class itc_screen_mode;
 	Elm_Genlist_Item_Class itc_2text_3;
-	Elm_Genlist_Item_Class itc_1text_1icon_divider;
 	Elm_Genlist_Item_Class itc_1icon;
-	Elm_Genlist_Item_Class itc_variable_height;
-	Elm_Genlist_Item_Class itc_2text_3_parent_backlight;
-	Elm_Genlist_Item_Class itc_2text_3_parent_touch_duration;
-	Elm_Genlist_Item_Class itc_1icon_1text_sub_back;
-	Elm_Genlist_Item_Class itc_1icon_1text_sub_touch;
-	Elm_Genlist_Item_Class itc_multiline_text;
-	Elm_Genlist_Item_Class itc_multiline_text_help;
-	Elm_Genlist_Item_Class itc_multiline_overheating;
 
 
 	ui_gadget_h ug_gallery;
@@ -247,14 +209,6 @@ struct _SettingDisplayUG {
 
 extern setting_view setting_view_display_main;
 extern setting_view setting_view_display_brightness;
-/*extern setting_view setting_view_display_screen_mode; */
-/*extern setting_view setting_view_display_smart_screen; */
-/*extern setting_view setting_view_display_smart_screen_smart_stay; */
-/*extern setting_view setting_view_display_smart_screen_smart_rotation; */
-/*extern setting_view setting_view_display_smart_screen_help; */
-
-
-
 extern setting_view setting_view_display_backlight;
 
 void setting_display_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,

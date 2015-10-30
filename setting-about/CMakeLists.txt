@@ -5,8 +5,8 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${SETTING_COMMON}/include)
 
 INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_about REQUIRED
-	elementary appcore-common appcore-efl efl-extension efl-assist
-	ui-gadget-1
+	elementary appcore-common appcore-efl
+	ui-gadget-1 efl-extension
 	capi-appfw-application capi-appfw-app-manager evas ecore
 	tapi capi-system-info capi-system-system-settings capi-network-bluetooth
 	notification capi-network-wifi json-glib-1.0 capi-telephony)

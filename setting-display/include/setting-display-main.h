@@ -25,7 +25,6 @@
 #include <setting-display-brightness.h>
 /** @todo need to i18n string registration */
 
-static void setting_display_main_auto_adjust_chk_btn_cb(void *data, Evas_Object *obj, void *event_info);
 static void setting_display_main_auto_rotate_chk_btn_cb(void *data, Evas_Object *obj, void *event_info);
 
 static void setting_display_main_mouse_up_Gendial_list_cb(void *data,

@@ -42,6 +42,7 @@
 
 #include <eventsystem.h>
 #include <bundle_internal.h>
+#include <system_settings.h>
 
 #define ONE_MINUTE 60
 #define PROGRESS_POPUP_SHOW 0
@@ -60,6 +61,8 @@ static char *get_timezone_displayname();
 static char *s_result;
 static int query_callback(void *NotUsed, int argc, char **argv, char **azColName);
 static bool setting_update_timezone(SettingTimeUG *ad);
+static void __setting_update_datefield_cb(void *cb);
+
 
 static int setting_time_main_create(void *cb);
 static int setting_time_main_destroy(void *cb);
@@ -73,10 +76,6 @@ setting_view setting_view_time_main = {
 	.cleanup = setting_time_main_cleanup,
 };
 
-#if UN_SUPPORT_TIME_DYNAMIC_UPDATE
-static void setting_time_reboot_resp_cb(void *data, Evas_Object *obj,
-                                        void *event_info);
-#endif
 
 bool __update_timezone_idler(SettingTimeUG *ad)
 {
@@ -138,7 +137,7 @@ void time_changed_callback(keynode_t *key, void *data)
 		ecore_idler_del(ad->refresh_time_idler);
 		ad->refresh_time_idler = NULL;
 	}
-	ad->refresh_time_idler = ecore_idler_add(setting_update_datefield, ad);
+	ad->refresh_time_idler = ecore_idler_add(setting_update_datefield_cb, ad);
 }
 
 void setting_time_update_time_date_format_string(SettingTimeUG *ad)
@@ -232,10 +231,15 @@ static void setting_time_main_int_vconf_change_cb(keynode_t *key, void *data)
 		static char time_arr[DEF_BUF_SIZE];
 		char *pa_time_format = get_pa_time_format_str();
 		setting_retm_if(NULL == pa_time_format, "pa_time_format is NULL");
+
+		char* lang = NULL;
+		int err = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, &lang);
+		char *date = __setting_phone_lang_get_by_pattern(lang, "MMM/d/yyyy");
+
 		if (!strncmp(pa_time_format, "IDS_ST_BODY_12_HOURS", strlen("IDS_ST_BODY_12_HOURS")))
-			time = __setting_phone_lang_get_by_pattern("en_US", "hhmm");
+			time = __setting_phone_lang_get_by_pattern(lang, "hhmm");
 		else
-			time = __setting_phone_lang_get_by_pattern("en_US", "Hm");
+			time = __setting_phone_lang_get_by_pattern(lang, "Hm");
 
 		strncpy(time_arr, time, DEF_BUF_SIZE);
 		time_arr[DEF_BUF_SIZE - 1] = '\0';
@@ -284,8 +288,6 @@ static void __update_time_via_sim_card(void *data)
 	ret += vconf_get_int(VCONFKEY_TELEPHONY_NITZ_EVENT_GMT, &t_offset);
 	char *tzpath = vconf_get_str(VCONFKEY_TELEPHONY_NITZ_ZONE);
 	if (ret != 0 || isEmptyStr(tzpath)) {
-		/*setting_create_simple_popup(ad, ad->ly_main, */
-		/*			    NULL, _(NOT_SUPPORT_AUTO_UPDATE_DESC)); */
 		return;
 	}
 	ret = 0;/*reset.. */
@@ -379,15 +381,6 @@ static void setting_time_main_bool_vconf_change_cb(keynode_t *key, void *data)
 
 
 			} else {
-#if UN_SUPPORT_TIME_DYNAMIC_UPDATE
-				ad->pop =
-				    setting_create_popup_with_btn(ad, ad->win_get, NULL,
-				                                  _("IDS_ST_POP_RESTART_PHONE_TO_USE_AUTOMATIC_UPDATE_Q"),
-				                                  setting_time_reboot_resp_cb,
-				                                  0, 2,
-				                                  dgettext("sys_string", "IDS_ST_BUTTON_OK"),
-				                                  _("IDS_ST_BUTTON_CANCEL_ABB"));
-#else
 				if (ad->data_tz) {
 					setting_disable_genlist_item(ad->data_tz->item);
 				}
@@ -401,7 +394,6 @@ static void setting_time_main_bool_vconf_change_cb(keynode_t *key, void *data)
 				}
 
 				__update_time_via_sim_card(ad);
-#endif
 			}
 		}
 	}
@@ -560,22 +552,10 @@ static void setting_time_main_datefield_set_cb(void *data, Evas_Object *object, 
 #ifdef USE_TIMER_UPDATE_TIME_IN_TIME_VIEW
 Eina_Bool __refresh_date_timer(void *data)
 {
-	/*SETTING_TRACE_BEGIN; */
+	SETTING_TRACE_BEGIN;
 	SettingTimeUG *ad = data;
-	if (ad->data_time) {
-		time_t ctime = time(NULL);
-		struct tm ts_ret;
-		struct tm *ts = localtime_r(&ctime, &ts_ret);
-		retv_if(!ts, 1);
 
-		struct tm ui_time;
-		elm_datetime_value_get(ad->data_time->eo_check, &ui_time);
-		if ((ctime / ONE_MINUTE) != (mktime(&ui_time) / ONE_MINUTE)) {
-			SETTING_TRACE("To refresh the UI element after 1 minute passed.\t in %s", __FUNCTION__);
-			elm_datetime_value_set(ad->data_time->eo_check, &ts_ret);
-			setting_update_timezone(ad);
-		}
-	}
+	__setting_update_datefield_cb(ad);
 	return 1;
 }
 #endif
@@ -598,7 +578,6 @@ static int setting_time_main_create(void *cb)
 
 	SettingTimeUG *ad = (SettingTimeUG *) cb;
 
-	char *l_btn = NULL;
 	char *title = _(DATE_TIME_STR_DATE_AND_TIME);
 	char *caller = NULL;
 	ad->is_datefield_selected = EINA_FALSE;
@@ -612,7 +591,6 @@ static int setting_time_main_create(void *cb)
 
 	ad->caller = caller;
 
-	l_btn = _("IDS_ST_BUTTON_BACK");
 	title = DATE_TIME_STR_DATE_AND_TIME;
 	gchar *title_str = NULL;
 
@@ -622,7 +600,8 @@ static int setting_time_main_create(void *cb)
 	ad->ly_main =
 	    setting_create_layout_navi_bar_genlist(ad->win_main_layout,
 	                                           ad->win_get, title_str,
-	                                           l_btn, NULL,
+	                                           NULL,
+											   NULL,
 	                                           setting_time_main_click_softkey_left_cb,
 	                                           NULL, ad, &scroller,
 	                                           &ad->navi_bar);
@@ -756,7 +735,6 @@ static int setting_time_main_create(void *cb)
 		              timezone_str, displayTimezone, _(str_buf));
 		ret = snprintf(time_zone_sub_str, CITY_BUF_SIZE + GMT_BUF_SIZE + 2, "%s, GMT %s",
 		               displayTimezone, _(str_buf));
-
 		FREE(timezone_str);
 		retv_if(ret < 0, 0);
 	} else {
@@ -808,8 +786,7 @@ static int setting_time_main_create(void *cb)
 	                                                            setting_time_main_mouse_up_Gendial_list_cb,
 	                                                            ad, SWALLOW_Type_INVALID,
 	                                                            DATE_TIME_STR_TIME_FORMAT,
-	                                                            pa_time_format, SETTING_GROUP_STYLE_CENTER,
-	                                                            SETTING_GROUP_STYLE_CENTER);
+	                                                            pa_time_format);
 	if (ad->data_date_fmt) {
 		ad->data_date_fmt->int_slp_setting_binded =
 		    INT_SLP_SETTING_DATE_FORMAT;
@@ -817,37 +794,6 @@ static int setting_time_main_create(void *cb)
 		SETTING_TRACE_ERROR("ad->data_date_fmt is NULL");
 	}
 	G_FREE(pa_date_format);
-#endif
-
-#if APPLIED_DATATIME_FIRSTDAY_WEEK
-	char *pa_week = get_pa_week_format_str();
-	ad->data_firstday_week_fmt =
-	    setting_create_Gendial_exp_parent_field(scroller,
-	                                            &(ad->itc_2text_3_parent),
-	                                            setting_time_main_mouse_up_Gendial_list_cb,
-	                                            ad, SWALLOW_Type_INVALID,
-	                                            "IDS_CLD_BODY_FIRST_DAY_OF_WEEK",
-	                                            pa_week, SETTING_GROUP_STYLE_CENTER,
-	                                            SETTING_GROUP_STYLE_BOTTOM);
-	if (ad->data_firstday_week_fmt) {
-		ad->data_firstday_week_fmt->int_slp_setting_binded =
-		    INT_SLP_SETTING_WEEK_FORMAT;
-	} else {
-		SETTING_TRACE_ERROR("ad->data_firstday_week_fmt is NULL");
-	}
-	G_FREE(pa_week);
-#endif
-
-	/*item = elm_genlist_item_append(scroller, &itc_bottom_seperator, NULL, NULL, */
-	/*			    ELM_GENLIST_ITEM_NONE, NULL, NULL); */
-	/*elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY); */
-
-#if 0
-	if (!enable_automatic) {
-		if (ad->data_auto) {
-			setting_disable_genlist_item(ad->data_auto->item);
-		}
-	}
 #endif
 
 	if (auto_flag) {
@@ -975,7 +921,7 @@ static int setting_time_main_update(void *cb)
 			ecore_idler_del(ad->refresh_time_idler);
 			ad->refresh_time_idler = NULL;
 		}
-		ad->refresh_time_idler = ecore_idler_add(setting_update_datefield, ad);
+		ad->refresh_time_idler = ecore_idler_add(setting_update_datefield_cb, ad);
 	}
 	return SETTING_RETURN_SUCCESS;
 }
@@ -1041,6 +987,7 @@ setting_time_main_launch_worldclock_result_ug_cb(ui_gadget_h ug,
 
 	if (!tzpath) {
 		SETTING_TRACE("tzpath from worldclock UG is null.");
+		setting_update_timezone(ad);
 		return;
 	} else {
 		SETTING_TRACE("tzpath : %s", tzpath);
@@ -1103,11 +1050,6 @@ void setting_time_main_launch_worldclock_destroy_ug_cb(ui_gadget_h ug,
 	}
 	Elm_Object_Item *navi_it = elm_naviframe_top_item_get(ad->navi_bar);
 	ret_if(!navi_it);
-	Evas_Object *back_btn = elm_object_item_part_content_get(navi_it, "prev_btn");
-
-	if (back_btn != NULL) {
-		elm_object_style_set(back_btn, NAVI_BACK_BUTTON_STYLE);	/* take into effect */
-	}
 
 	elm_object_tree_focus_allow_set(ad->ly_main, EINA_TRUE);
 }
@@ -1167,8 +1109,7 @@ void setting_time_main_launch_worldclock_sg(void *data)
 	return;
 }
 
-
-Eina_Bool setting_update_datefield(void *cb)
+static void __setting_update_datefield_cb(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	retvm_if(cb == NULL, EINA_FALSE, "Data parameter is NULL");
@@ -1180,22 +1121,19 @@ Eina_Bool setting_update_datefield(void *cb)
 		struct tm *ts = localtime_r(&cctime, &ts_ret);
 		SETTING_TRACE("year : %d, month : %d, day : %d, hour : %d, min : %d",
 		              ts_ret.tm_year, ts_ret.tm_mon, ts_ret.tm_mday, ts_ret.tm_hour, ts_ret.tm_min);
-		SETTING_TRACE("time : %s", ctime(&cctime));
 		if (ts) {
-#if 0
-			if (ad->data_time->eo_check)
-				elm_datetime_value_set(ad->data_time->eo_check, &ts_ret);
-#endif
 
-			char *date = __setting_phone_lang_get_by_pattern("en_US", "MMM/d/yyyy");
+			char* region = NULL;
+			int err = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, &region );
+			char *date = __setting_phone_lang_get_by_pattern(region, "MMM/d/yyyy");
 			char *time;
 			static char date_arr[DEF_BUF_SIZE], time_arr[DEF_BUF_SIZE];
 			char *pa_time_format = get_pa_time_format_str();
 			setting_retvm_if(NULL == pa_time_format, FALSE, "pa_time_format is NULL");
 			if (!strncmp(pa_time_format, "IDS_ST_BODY_12_HOURS", strlen("IDS_ST_BODY_12_HOURS")))
-				time = __setting_phone_lang_get_by_pattern("en_US", "hhmm");
+				time = __setting_phone_lang_get_by_pattern(region, "hhmm");
 			else
-				time = __setting_phone_lang_get_by_pattern("en_US", "Hm");
+				time = __setting_phone_lang_get_by_pattern(region, "Hm");
 
 			strncpy(date_arr, date, DEF_BUF_SIZE);
 			strncpy(time_arr, time, DEF_BUF_SIZE);
@@ -1203,18 +1141,34 @@ Eina_Bool setting_update_datefield(void *cb)
 			date_arr[DEF_BUF_SIZE - 1] = '\0';
 			time_arr[DEF_BUF_SIZE - 1] = '\0';
 
-			elm_object_text_set(ad->data_time->btn_left, date_arr);
-			evas_object_resize(ad->data_time->btn_left, 300, -1);
-			elm_object_text_set(ad->data_time->btn_right, time_arr);
-			evas_object_resize(ad->data_time->btn_right, 270, -1);
+			if (ad->data_time->btn_left)
+				elm_object_text_set(ad->data_time->btn_left, date_arr);
+			else {
+				SETTING_TRACE_ERROR("ad->data_time->btn_left is NULL");
+			}
+			if (ad->data_time->btn_right)
+				elm_object_text_set(ad->data_time->btn_right, time_arr);
+			else {
+				SETTING_TRACE_ERROR("ad->data_time->btn_right is NULL");
+			}
+			SETTING_TRACE_BEGIN;
 			FREE(pa_time_format);
 		}
 	}
-	if (ad->refresh_time_idler) {
-		ecore_idler_del(ad->refresh_time_idler);
-		ad->refresh_time_idler = NULL;
-	}
-	return 0;
+}
+
+Eina_Bool setting_update_datefield_cb(void *data)
+{
+	SETTING_TRACE_BEGIN;
+	/* error check */
+	retvm_if(data == NULL, FALSE, "Data parameter is NULL");
+
+	SettingTimeUG *ad = (SettingTimeUG *) data;
+
+	__setting_update_datefield_cb(ad);
+
+	ad->refresh_time_idler = NULL;
+	return ECORE_CALLBACK_CANCEL;
 }
 
 /* ***************************************************
@@ -1294,25 +1248,6 @@ setting_time_main_click_softkey_caller_exist_right_cb(void *data,
 	ug_destroy_me(ad->ug);
 }
 
-#if UN_SUPPORT_TIME_DYNAMIC_UPDATE
-static void setting_time_reboot_resp_cb(void *data, Evas_Object *obj,
-                                        void *event_info)
-{
-	SETTING_TRACE_BEGIN;
-	int response_type = btn_type(obj);
-	if (POPUP_RESPONSE_OK == response_type) {
-		setting_time_main_btn_update_ok_cb(data);
-	} else if (POPUP_RESPONSE_CANCEL == response_type) {
-		setting_time_main_btn_update_cancel_cb(data);
-	}
-
-	SettingTimeUG *ad = data;
-	if (ad->pop) {
-		evas_object_del(ad->pop);
-		ad->pop = NULL;
-	}
-}
-#endif
 
 static void __time_auto_update(void *data)
 {
@@ -1377,21 +1312,25 @@ setting_time_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 				setting_enable_genlist_item(ad->data_time->item);
 			}
 		} else {
-#if UN_SUPPORT_TIME_DYNAMIC_UPDATE
-			ad->pop =
-			    setting_create_popup_with_btn(ad, ad->win_get, NULL,
-			                                  _("IDS_ST_POP_RESTART_PHONE_TO_USE_AUTOMATIC_UPDATE_Q"),
-			                                  setting_time_reboot_resp_cb,
-			                                  0, 2,
-			                                  dgettext("sys_string",
-			                                           "IDS_ST_BUTTON_OK"),
-			                                  _("IDS_ST_BUTTON_CANCEL_ABB"));
-#else
 			__time_auto_update(ad);
-#endif
 		}
 	}
 
+
+
+//#define FUNCTION_SYSTEM_SETTING 1
+#if FUNCTION_SYSTEM_SETTING
+	/* Time format */
+	if (ad->data_time_fmt == list_item) {
+		int err = 0;
+		int value = VCONFKEY_TIME_FORMAT_12;
+		if (list_item->chk_status) {
+			err = system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR, true);
+		} else {
+			err = system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR, false);
+		}
+	}
+#else
 	/* Time format */
 	if (ad->data_time_fmt == list_item) {
 		int err = 0;
@@ -1404,7 +1343,7 @@ setting_time_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 		}
 		setting_set_int_slp_key(INT_SLP_SETTING_REGIONFORMAT_TIME1224, value, &err);
 	}
-
+#endif
 	SETTING_TRACE_END;
 }
 
@@ -1425,17 +1364,10 @@ static void setting_time_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *
 	SettingTimeUG *ad = (SettingTimeUG *) data;
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 
-#if 0
-	if (ad->data_time && ad->data_time != list_item) {
-		elm_object_focus_set(ad->data_time->eo_check, EINA_FALSE);
-	}
-#endif
-
 	if (ad->data_tz == list_item) {
 		ad->is_datefield_selected = EINA_FALSE;
 		if (1 == setting_time_check_automatic_time_update_state()) {
-			setting_create_simple_popup(ad, ad->win_get,
-			                            NULL, _(AUTO_TIME_UPDATE_ON));
+			setting_create_popup(ad, ad->win_get, NULL, _(AUTO_TIME_UPDATE_ON), NULL, 0, false, false, 0);
 		} else {
 			setting_time_main_launch_worldclock_sg(ad);
 		}
@@ -1443,8 +1375,7 @@ static void setting_time_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *
 	} else if (ad->data_time == list_item) {
 		ad->is_datefield_selected = EINA_TRUE;
 		if (1 == setting_time_check_automatic_time_update_state()) {
-			setting_create_simple_popup(ad, ad->win_get,
-			                            NULL, _(AUTO_TIME_UPDATE_ON));
+			setting_create_popup(ad, ad->win_get, NULL, _(AUTO_TIME_UPDATE_ON), NULL, 0, false, false, 0);
 		} else {
 			/* setting_view_change(&setting_view_time_main, &setting_view_time_time, ad); */
 		}
@@ -1471,25 +1402,15 @@ static void setting_time_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *
 			}
 
 		} else {
-#if UN_SUPPORT_TIME_DYNAMIC_UPDATE
-			ad->pop =
-			    setting_create_popup_with_btn(ad, ad->win_get, NULL,
-			                                  _("IDS_ST_POP_RESTART_PHONE_TO_USE_AUTOMATIC_UPDATE_Q"),
-			                                  setting_time_reboot_resp_cb,
-			                                  0, 2,
-			                                  dgettext("sys_string", "IDS_ST_BUTTON_OK"),
-			                                  _("IDS_ST_BUTTON_CANCEL_ABB"));
-#else
 			__time_auto_update(ad);
-#endif
 		}
-
-	} else if (ad->data_time_fmt == list_item
-	           || ad->data_date_fmt == list_item
-	           || ad->data_firstday_week_fmt == list_item) {
-		ad->is_datefield_selected = EINA_FALSE;
-		bool status = !elm_genlist_item_expanded_get(item);
-		elm_genlist_item_expanded_set(item, status);
+	} else if (ad->data_time_fmt == list_item)	{
+		int err = 0;
+		setting_update_gl_item_chk_status(list_item, !list_item->chk_status);
+		int value = VCONFKEY_TIME_FORMAT_12;
+		if (list_item->chk_status)
+			value = VCONFKEY_TIME_FORMAT_24;
+		setting_set_int_slp_key(INT_SLP_SETTING_REGIONFORMAT_TIME1224, value, &err);
 	}
 }
 
@@ -1543,14 +1464,16 @@ static void ICU_set_timezone(const char *timezone)
 	UErrorCode ec = U_ZERO_ERROR;
 	UChar *str = uastrcpy(timezone);
 
-	ucal_setDefaultTimeZone(str, &ec);
-	if (U_SUCCESS(ec)) {
-		SETTING_TRACE("ucal_setDefaultTimeZone() SUCCESS ");
-	} else {
-		SETTING_TRACE("ucal_setDefaultTimeZone() FAILED : %s ",
-		              u_errorName(ec));
+	if (str) {
+		ucal_setDefaultTimeZone(str, &ec);
+		if (U_SUCCESS(ec)) {
+			SETTING_TRACE("ucal_setDefaultTimeZone() SUCCESS ");
+		} else {
+			SETTING_TRACE("ucal_setDefaultTimeZone() FAILED : %s ",
+					u_errorName(ec));
+		}
+		FREE(str);
 	}
-	FREE(str);
 }
 
 /**
@@ -1669,10 +1592,12 @@ static char *get_timezone_displayname()
 
 	/* get timezone display name (check dst) */
 	if (cal) {
-		if (data->tm_isdst)
-			ucal_getTimeZoneDisplayName(cal, UCAL_DST, localeID, displayName, SETTING_STR_SLP_LEN, &status);
-		else
-			ucal_getTimeZoneDisplayName(cal, UCAL_STANDARD, localeID, displayName, SETTING_STR_SLP_LEN, &status);
+		if (data) {
+			if (data->tm_isdst)
+				ucal_getTimeZoneDisplayName(cal, UCAL_DST, localeID, displayName, SETTING_STR_SLP_LEN, &status);
+			else
+				ucal_getTimeZoneDisplayName(cal, UCAL_STANDARD, localeID, displayName, SETTING_STR_SLP_LEN, &status);
+		}
 
 		if (U_FAILURE(status)) {
 			SETTING_TRACE_ERROR("ucal_getTimeZoneDisplayName got an error : %s, %d", displayName, status);

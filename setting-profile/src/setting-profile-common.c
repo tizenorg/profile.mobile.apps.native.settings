@@ -23,11 +23,9 @@
 #include <sys/stat.h>
 #include <dirent.h>
 #include <iniparser.h>
-//#include <utilX.h>
 #include <app_manager.h>
 #include <metadata_extractor.h>
 #include <player.h>
-#include <efl_extension.h>
 #include <sound_manager_internal.h>
 
 #define PLAY_FEEDBACK(f_type, f_pattern) {\
@@ -127,6 +125,81 @@ char *setting_media_basename(char *path)
 		return setting_file_basename(path);
 	}
 }
+
+// -------------------------------------------------------------------------------------------
+// |                  | elm.swallow.icon.0 | elm.text | elm.swallow.icon.1 |                 |
+// | elm.swallow.icon |----------------------------------------------------| elm.swallow.end |
+// |                  |         elm.text.sub          | elm.text.sub.end   |                 |
+// -------------------------------------------------------------------------------------------
+static Evas_Object *__sound_slider_new_icon_get(void *data, Evas_Object *obj, const char *part)
+{
+	SETTING_TRACE_BEGIN;
+	/*appcore_measure_start(); */
+	retv_if(data == NULL, NULL);
+
+	SETTING_TRACE(" -----------------> EDC part [%s]", part);
+	if (! safeStrCmp(part, "elm.swallow.content")) {
+
+		Evas_Object *layout;
+		// Set custom layout style
+		layout = elm_layout_add(obj);
+
+		Setting_GenGroupItem_Data *item_data = (Setting_GenGroupItem_Data *)data;
+		Evas_Object *slider = setting_create_slider(obj, item_data->evas,
+													item_data->l_swallow_path,
+													item_data->r_swallow_path,
+													item_data->chk_status,
+													item_data->isIndicatorVisible,
+													item_data->slider_min,
+													item_data->slider_max,
+													item_data->chk_change_cb,
+													item_data->start_change_cb,
+													item_data->stop_change_cb,
+													item_data);
+
+		if (slider == NULL)
+			return NULL;
+
+		char* gl_style = "gl_custom_item";
+		elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME, gl_style);
+		evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
+		evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+
+		if (0 == safeStrCmp(item_data->keyStr, "IDS_ST_BODY_MEDIA")) {
+			elm_object_style_set(slider, "warning");
+
+			Edje_Message_Float_Set *msg = alloca(sizeof(Edje_Message_Float_Set) + (sizeof(double)));
+			msg->count = 1;
+			/* Warning area point has to be calculated considering rounding off.
+			 * For example, value 10's area will be 9.5~10.4.
+			 * So, if warning area has to be started at 10, we need to calculate the start point with 9.5.
+			 * Warning start point = (Warning min value - 0.5) / (Max_Value - Min_Value) */
+			msg->val[0] = 0.633333;
+			edje_object_message_send(_EDJ(slider), EDJE_MESSAGE_FLOAT_SET, 0, msg);
+			elm_slider_indicator_format_set(slider, "%1.0f");
+			elm_slider_indicator_show_set(slider, 1);
+		}
+
+		item_data->eo_check = slider;
+
+		evas_object_pass_events_set(slider, EINA_TRUE);
+		evas_object_propagate_events_set(slider, EINA_FALSE);
+
+		if (item_data->userdata == NULL)
+			return NULL;
+
+		/* Set text into layout */
+		//if (0 == safeStrCmp(item_data->keyStr, "IDS_ST_BODY_MEDIA")
+		//	|| 0 == safeStrCmp(item_data->keyStr, "IDS_ST_BODY_SYSTEM")) {
+			elm_object_part_text_set(layout, "elm.text", _(item_data->keyStr));
+		//}
+		elm_object_part_content_set(layout, "elm.swallow.content", slider);
+		return layout;
+	}
+	return NULL;
+}
+
+
 
 static Evas_Object *__sound_slider_icon_get(void *data, Evas_Object *obj, const char *part)
 {
@@ -387,7 +460,6 @@ static void ___sound_vconf_change_cb(keynode_t *key, void *data)
 			__disable_sound_menu(ad);
 		}
 
-
 		setting_sound_update_slider_icon(ad->data_call_volume, SND_SLIDER_CALL);
 		/*FIX P141016-02659 Only In sound mode should enable "vibrate when ringing" */
 		setting_genlist_item_disabled_set(ad->data_sound_when_ring, !status);
@@ -614,7 +686,6 @@ static Eina_Bool __volume_down_timer_cb(void *data)
 	return EINA_TRUE;
 }
 
-#if 0
 static Eina_Bool __volume_key_up_cb(void *data, int type, void *event)
 {
 	SETTING_TRACE_BEGIN;
@@ -626,7 +697,7 @@ static Eina_Bool __volume_key_up_cb(void *data, int type, void *event)
 	if (!key)
 		return EINA_TRUE;
 
-	if (!safeStrCmp(key, KEY_VOLUMEUP) || !safeStrCmp(key, KEY_VOLUMEDOWN)) {
+	if (!safeStrCmp(key, "XF86AudioRaiseVolume") || !safeStrCmp(key, "XF86AudioLowerVolume")) {
 		ad->is_pressing = FALSE;
 		if (ad->updown_timer) {
 			ecore_timer_del(ad->updown_timer);
@@ -635,9 +706,7 @@ static Eina_Bool __volume_key_up_cb(void *data, int type, void *event)
 	}
 	return EINA_TRUE;
 }
-#endif
 
-#if 0
 static Eina_Bool __volume_key_down_cb(void *data, int type, void *event)
 {
 	SETTING_TRACE_BEGIN;
@@ -653,7 +722,7 @@ static Eina_Bool __volume_key_down_cb(void *data, int type, void *event)
 	sound_type_e sound_type;
 	int volume = 0;
 
-	if (!safeStrCmp(key, KEY_VOLUMEUP)) {
+	if (!safeStrCmp(key, "XF86AudioRaiseVolume")) {
 		SETTING_TRACE("Press KEY_VOLUMEUP");
 		/*
 		 * S5 concept:
@@ -742,7 +811,7 @@ static Eina_Bool __volume_key_down_cb(void *data, int type, void *event)
 			}
 		}
 		ad->updown_timer = ecore_timer_add(0.5, __volume_up_timer_cb, ad);
-	} else if (!safeStrCmp(key, KEY_VOLUMEDOWN)) {
+	} else if (!safeStrCmp(key, "XF86AudioLowerVolume")) {
 		SETTING_TRACE("Press KEY_VOLUMEDOWN");
 		/*
 		 * S5 concept:
@@ -815,24 +884,32 @@ static Eina_Bool __volume_key_down_cb(void *data, int type, void *event)
 			}
 		}
 		ad->updown_timer = ecore_timer_add(0.5, __volume_down_timer_cb, ad);
-	}
-	#if 0
-	else if (!safeStrCmp(key, KEY_MENU)) {
+	} else if (!safeStrCmp(key, "XF86Menu")) {
 		SETTING_TRACE("KEY_MENU CLICK.");
-	} else if (!safeStrCmp(key, KEY_HOME)) { /*XF86Phone*/
+	} else if (!safeStrCmp(key, "XF86Home")) { /*XF86Phone*/
 		SETTING_TRACE("KEY_HOME is pressed");
 		if (!safeStrCmp(ad->viewtype, "org.tizen.volume"))
 			ug_destroy_me(ad->ug);
+	} else if (!safeStrCmp(key, "XF86Back")) { /*Back hard key*/
+		SETTING_TRACE(" Back is pressed");
+		/*SETTING_TRACE(" ad->viewtype %s", ad->viewtype);*/
+		/*if (!safeStrCmp(ad->viewtype, "org.tizen.volume"))*/
+		if (!safeStrCmp(ad->viewtype, "org.tizen.setting.volume")) {
+			/*ug_destroy_me(ad->ug);*/
+			elm_exit();
+		}
 	}
-	#endif
 
 	return EINA_TRUE;
 }
-#endif
 
 void __setting_sound_ug_key_grab(SettingProfileUG *ad)
 {
 	SETTING_TRACE_BEGIN;
+#ifdef ECORE_X
+	Ecore_X_Window xwin = 0;
+	Ecore_X_Display *disp = NULL;
+#endif
 
 	int ret = 0;
 
@@ -842,17 +919,16 @@ void __setting_sound_ug_key_grab(SettingProfileUG *ad)
 	/* To prevent conflict with volume app */
 	vconf_set_int(VCONFKEY_STARTER_USE_VOLUME_KEY, 2);
 
-#if 0
-	Ecore_X_Window xwin = 0;
-	Ecore_X_Display *disp = NULL;
+#ifdef ECORE_X
 	disp = ecore_x_display_get();
+#endif
 	xwin = elm_win_xwindow_get(ad->win_get);
 
-	ret = utilx_grab_key(disp, xwin, KEY_VOLUMEUP, TOP_POSITION_GRAB);
+	ret = eext_win_keygrab_set(xwin, "XF86AudioRaiseVolume");
 	if (ret) {
 		SETTING_TRACE_DEBUG("KEY_VOLUMEUP grab failed");
 	}
-	ret = utilx_grab_key(disp, xwin, KEY_VOLUMEDOWN, TOP_POSITION_GRAB);
+	ret = eext_win_keygrab_set(xwin, "XF86AudioLowerVolume");
 	if (ret) {
 		SETTING_TRACE_DEBUG("KEY_VOLUMEDOWN grab failed");
 	}
@@ -872,13 +948,16 @@ void __setting_sound_ug_key_grab(SettingProfileUG *ad)
 	if (!ad->keyup_handler)
 		SETTING_TRACE_DEBUG("ecore_event_handler_add() failed");
 
-#endif
 	SETTING_TRACE_END;
 }
 
 void __setting_sound_ug_key_ungrab(SettingProfileUG *ad)
 {
 	SETTING_TRACE_BEGIN;
+#ifdef ECORE_X
+	Ecore_X_Window xwin = 0;
+	Ecore_X_Display *disp = NULL;
+#endif
 
 	int ret = 0;
 
@@ -887,18 +966,17 @@ void __setting_sound_ug_key_ungrab(SettingProfileUG *ad)
 
 	/* To prevent conflict with volume app */
 	vconf_set_int(VCONFKEY_STARTER_USE_VOLUME_KEY, 0);
-#if 0
-	Ecore_X_Window xwin = 0;
-	Ecore_X_Display *disp = NULL;
 
+#ifdef ECORE_X
 	disp = ecore_x_display_get();
+#endif
 	xwin = elm_win_xwindow_get(ad->win_get);
 
-	ret = utilx_ungrab_key(disp, xwin, KEY_VOLUMEUP);
+	ret = eext_win_keygrab_unset(xwin, "XF86AudioRaiseVolume");
 	if (ret) {
 		SETTING_TRACE_DEBUG("KEY_VOLUMEUP ungrab failed");
 	}
-	ret = utilx_ungrab_key(disp, xwin, KEY_VOLUMEDOWN);
+	ret = eext_win_keygrab_unset(xwin, "XF86AudioLowerVolume");
 	if (ret) {
 		SETTING_TRACE_DEBUG("KEY_VOLUMEDOWN ungrab failed");
 	}
@@ -915,7 +993,6 @@ void __setting_sound_ug_key_ungrab(SettingProfileUG *ad)
 		ecore_event_handler_del(ad->keyup_handler);
 		ad->keyup_handler = NULL;
 	}
-#endif
 }
 
 Evas_Object *setting_sound_init(void *data)
@@ -927,11 +1004,21 @@ Evas_Object *setting_sound_init(void *data)
 
 	bindtextdomain(SETTING_PACKAGE, SETTING_LOCALEDIR);
 
-	setting_create_Gendial_itc("slider.main", &(ad->itc_layout));
-	ad->itc_layout.func.content_get = __sound_slider_icon_get;
+	setting_create_Gendial_itc(SETTING_GENLIST_LEFT_ICON_CONTENT_ICON_STYLE, &(ad->itc_layout));
 
-	setting_create_Gendial_itc("1icon", &(ad->itc_layout_1icon));
+	#ifdef OLD_GENLIST_STYLE
+	ad->itc_layout.func.content_get = __sound_slider_icon_get;
+	#else
+	ad->itc_layout.func.content_get = __sound_slider_new_icon_get;
+	#endif
+
+	setting_create_Gendial_itc(SETTING_GENLIST_LEFT_ICON_CONTENT_ICON_STYLE, &(ad->itc_layout_1icon));
+
+	#ifdef OLD_GENLIST_STYLE
 	ad->itc_layout_1icon.func.content_get = __sound_slider_icon_get;
+	#else
+	ad->itc_layout_1icon.func.content_get = __sound_slider_new_icon_get;
+	#endif
 
 	/* register view node table */
 	setting_view_node_table_intialize();
@@ -1009,16 +1096,20 @@ void setting_sound_create_warning_popup_during_call(void *data)
 	ret_if(data == NULL);
 	SettingProfileUG *ad = (SettingProfileUG *) data;
 
-	int call_state = 0;
-	vconf_get_int(VCONFKEY_CALL_STATE, &call_state);
-	if (call_state != VCONFKEY_CALL_OFF) {
-		SETTING_TRACE("Call status is not OFF (%d)", call_state);
+	int call_status = CM_CALL_STATUS_IDLE;
+	cm_client_h cm_handle = NULL;
+	cm_init(&cm_handle);
+	cm_get_call_status(cm_handle, &call_status);
+	cm_deinit(cm_handle);
+	if (CM_CALL_STATUS_IDLE != call_status) {
+		SETTING_TRACE("Call status is not OFF (%d)", call_status);
 		if (!ad->calling_popup) {
-			ad->calling_popup = setting_create_popup_with_btn(ad, ad->win_get,
-			                                                  "IDS_ST_HEADER_UNABLE_TO_PLAY_SAMPLE_ABB",
-			                                                  "IDS_ST_POP_SAMPLES_CANNOT_BE_PLAYED_DURING_CALLS",
-			                                                  __calling_popup_cb, 0,
-			                                                  1, "IDS_ST_BUTTON_OK");
+			ad->calling_popup = setting_create_popup(ad, ad->win_get,
+			                                         "IDS_ST_HEADER_UNABLE_TO_PLAY_SAMPLE_ABB",
+			                                         "IDS_ST_POP_SAMPLES_CANNOT_BE_PLAYED_DURING_CALLS",
+			                                         __calling_popup_cb, 0,
+													 false, false,
+			                                         1, "IDS_ST_BUTTON_OK");
 		}
 	}
 }
@@ -1126,7 +1217,8 @@ static void __mm_player_prepared_cb(void *user_data)
 	SettingProfileUG *ad = (SettingProfileUG *)user_data;
 
 	/* Do not call mm API in mm cb : Add timer to avoid it */
-	ecore_timer_add(0.0, (Ecore_Task_Cb)__play_timer_cb, ad);
+	/* ecore_timer_add(0.0, (Ecore_Task_Cb)__play_timer_cb, ad); */
+	__play_timer_cb(ad);
 
 	/* wake main thread up for timer to work well */
 	Ecore_Pipe *pipe;
