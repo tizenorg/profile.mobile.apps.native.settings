@@ -1,0 +1,33 @@
+msgid "IDS_ST_HEADER_VISION"
+msgstr "Хараа"
+
+msgid "IDS_ST_BODY_SPEECH"
+msgstr "Яриа"
+
+msgid "IDS_ST_BODY_ON"
+msgstr "Асаах"
+
+msgid "IDS_ST_BODY_OFF"
+msgstr "Унтраах"
+
+msgid "IDS_ST_OPT_SETTINGS"
+msgstr "Тохиргоо"
+
+msgid "IDS_SCR_BODY_PD_UNREAD_NOTIFICATIONS"
+msgstr "Уншаагүй мэдэгдлүүд"
+
+msgid "IDS_ACCS_OPT_OTHER_FEEDBACK_TTS"
+msgstr "Бусад хариу үйлдэл"
+
+msgid "IDS_ACCS_TMBODY_STATUS_BAR_INFORMATION"
+msgstr "Төлөвийн мөрний мэдээлэл"
+
+msgid "IDS_ACCS_SBODY_SELECT_WHICH_INFORMATION_FROM_INDICATORS_SHOWN_ON_THE_STATUS_BAR_WILL_BE_READ_OUT_WHEN_YOU_TRIPLE_TAP_THE_SCREEN_WITH_TWO_FINGERS_MSG"
+msgstr "Дэлгэцийг хоёр хуруугаар товшиход төлөвийн мөрт үзүүлж буй индикаторуудаас ямар мэдээлллийг чанга унших эсэхийг сонго. Жишээлбэл: огноо, цаг, төхөөрөмжид авч буй дохионы түвшин, Wi-Fi ба Bluetooth холболт, зайн цэнэг."
+
+msgid "IDS_SCR_BODY_PD_UNREAD_NOTIFICATIONS"
+msgstr "Уншаагүй мэдэгдлүүд"
+
+
+
+

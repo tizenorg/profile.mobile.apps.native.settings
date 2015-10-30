@@ -25,7 +25,7 @@ SET(CMAKE_EXE_LINKER_FLAGS "-Wl,--as-needed -Wl,--rpath=/usr/lib")
 
 ADD_LIBRARY(${SETTING_DEVELOPEROPTION_UG} SHARED
 	./src/setting-connectivity.c
-	./src/setting-connectivity-usb.c
+#	./src/setting-connectivity-usb.c
 	./src/setting-connectivity-usb-help.c
 	)
 

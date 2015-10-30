@@ -138,17 +138,18 @@ collections
 		style
 		{
 			name: "textblock_blue_style";
-			base: "font=Tizen:style=Roman font_size=24 align=left color=#ffffff color_class=T027 wrap=word text_class=T027";
+			//base: "font=Tizen:style=Roman font_size=24 align=left color=#ffffff color_class=T027 wrap=word text_class=T027";
+			base: "font=Tizen:style=Roman font_size=32 align=left color=#000000 wrap=word";
 			tag:  "br" "\n";
 			tag:  "hilight" "+ font=Tizen:style=Regular";
 			tag:  "b" "+ font=Tizen:style=Regular";
-			tag:  "whitecolor" "+ color=#ffffff";
+			tag:  "whitecolor" "+ color=#000000";
 			tag:  "tab" "\t";
 		}
 		style
 		{
 			name: "textblock_gray_style";
-			base: "font=Tizen:style=Roman font_size=30 align=left color=#808080 wrap=word";
+			base: "font=Tizen:style=Roman font_size=32 align=left color=#808080 wrap=word";
 			tag:  "br" "\n";
 			tag:  "hilight" "+ font=Tizen:style=Regular";
 			tag:  "b" "+ font=Tizen:style=Regular";
@@ -188,7 +189,7 @@ collections
 		style
 	        {
 	            name: "description_style";
-	            base: "font=Tizen:style=Roman font_size=24 align=left color=#ff0000 wrap=mixed";
+	            base: "font=Tizen:style=Roman font_size=24 align=left color=#000000 wrap=mixed";
 	            tag:  "br" "\n";
 	            tag:  "hilight" "+ font=Tizen:style=Regular";
 	            tag:  "b" "+ font=Tizen:style=Regular";
@@ -5675,7 +5676,7 @@ collections
 				type: RECT;
 				scale: 1;
 				description {
-					min: 0 414;
+					min: 0 514;
 					align: 0.5 0.5;
 					visible: 0;
 					state: "default" 0.0;
@@ -5688,9 +5689,10 @@ collections
 				type: TEXTBLOCK;
 				scale: 1;
 				description {
-					min: 0 60;
  					state: "default" 0.0;
 					align: 0 0;
+					min: 0 60;
+					fixed: 0 1;
 					rel1 { relative: 0  0; to: "background";}
 					rel2 { relative: 1  0; to: "background";}
 
@@ -5869,6 +5871,114 @@ collections
 	}
 
 	group {
+		name: "storage_edge";
+		parts {
+			part {
+				name: "color_edge";
+				type: RECT;
+				scale: 1;
+				description {
+					state: "default" 0.0;
+					min: 40 50;
+					align: 0.5 0.5;
+					//max: 10 10;
+					visible: 0;
+					rel1 { relative: 0.0 0.0;}
+					rel2 { relative: 1.0 1.0;}
+					//color: 255 0 0 255;
+				}
+				description {
+					state: "color_system" 0.0;
+					inherit: "default" 0.0;
+					color: 153 66 194 255;
+					visible: 1;
+				}
+				description {
+					state: "color_app" 0.0;
+					inherit: "default" 0.0;
+					color: 255 189 8 255;
+					visible: 1;
+				}
+				description {
+					state: "color_pic" 0.0;
+					inherit: "default" 0.0;
+					color: 119 222 60 255;
+					visible: 1;
+				}
+				description {
+					state: "color_audio" 0.0;
+					inherit: "default" 0.0;
+					color: 28 140 252 255;
+					visible: 1;
+				}
+				description {
+					state: "color_misc" 0.0;
+					inherit: "default" 0.0;
+					color: 52 220 250 255;
+					visible: 1;
+				}
+				description {
+					state: "color_cache" 0.0;
+					inherit: "default" 0.0;
+					color: 26 49 125 255;
+					visible: 1;
+				}
+				description {
+					state: "color_avail" 0.0;
+					inherit: "default" 0.0;
+					color: 230 226 218 255;
+					visible: 1;
+				}
+			}
+		}
+		programs {
+			program { name: "show_color_system";
+				signal: "elm,state,show,system";
+				source: "elm";
+				action: STATE_SET "color_system" 0.0;
+				target: "color_edge";
+			}
+			program { name: "show_color_app";
+				signal: "elm,state,show,app";
+				source: "elm";
+				action: STATE_SET "color_app" 0.0;
+				target: "color_edge";
+			}
+			program { name: "show_color_pic";
+				signal: "elm,state,show,pic";
+				source: "elm";
+				action: STATE_SET "color_pic" 0.0;
+				target: "color_edge";
+			}
+			program { name: "show_color_audio";
+				signal: "elm,state,show,audio";
+				source: "elm";
+				action: STATE_SET "color_audio" 0.0;
+				target: "color_edge";
+			}
+			program { name: "show_color_misc";
+				signal: "elm,state,show,misc";
+				source: "elm";
+				action: STATE_SET "color_misc" 0.0;
+				target: "color_edge";
+			}
+			program { name: "show_color_cache";
+				signal: "elm,state,show,cache";
+				source: "elm";
+				action: STATE_SET "color_cache" 0.0;
+				target: "color_edge";
+			}
+			program { name: "show_color_avail";
+				signal: "elm,state,show,avail";
+				source: "elm";
+				action: STATE_SET "color_avail" 0.0;
+				target: "color_edge";
+			}
+		}
+
+	}
+
+	group {
 		name: "storage_elem";
 		parts {
 			part {
@@ -5877,11 +5987,12 @@ collections
 				scale: 1;
 				description {
 					state: "default" 0.0;
-					min: 6 0;
-					max: 6 -1;
+					//min: 6 0;
+					//max: 6 -1;
 					visible: 0;
 					rel1 { relative: 0.0 0.0;}
 					rel2 { relative: 1.0 1.0;}
+					color: 255 0 0 255;
 				}
 			}
 			part {
@@ -5889,8 +6000,9 @@ collections
 				type: RECT;
 				scale: 1;
 				description {
-					min: 6 0;
-					max: 6 -1;
+					fixed: 1 1;
+					//min: 6 0;
+					//max: 6 -1;
 					align: 0.5 0;
 					state: "default" 0.0;
 					rel1 { relative: 0.5 0.0; to: bg;}
@@ -5898,8 +6010,9 @@ collections
 					color: 153 66 194 255;
 				}
 				description {
-					min: 6 0;
-					max: 6 -1;
+					fixed: 1 1;
+					//min: 6 0;
+					//max: 6 -1;
 					align: 0.5 0;
 					state: "color_2" 0.0;
 					rel1 { relative: 0.5 0.0; to: bg;}
@@ -5907,8 +6020,9 @@ collections
 					color: 255 189 8 255;
 				}
 				description {
-					min: 6 0;
-					max: 6 -1;
+					fixed: 1 1;
+					//min: 6 0;
+					//max: 6 -1;
 					align: 0.5 0;
 					state: "color_3" 0.0;
 					rel1 { relative: 0.5 0.0; to: bg;}
@@ -5916,8 +6030,9 @@ collections
 					color: 119 222 60 255;
 				}
 				description {
-					min: 6 0;
-					max: 6 -1;
+					fixed: 1 1;
+					//min: 6 0;
+					//max: 6 -1;
 					align: 0.5 0;
 					state: "color_4" 0.0;
 					rel1 { relative: 0.5 0.0; to: bg;}
@@ -5925,8 +6040,9 @@ collections
 					color: 28 140 252 255;
 				}
 				description {
-					min: 6 0;
-					max: 6 -1;
+					fixed: 1 1;
+					//min: 6 0;
+					//max: 6 -1;
 					align: 0.5 0;
 					state: "color_5" 0.0;
 					rel1 { relative: 0.5 0.0; to: bg;}
@@ -5934,13 +6050,23 @@ collections
 					color: 52 220 250 255;
 				}
 				description {
-					min: 6 0;
-					max: 6 -1;
+					fixed: 1 1;
+					//min: 6 0;
+					//max: 6 -1;
 					align: 0.5 0;
 					state: "color_6" 0.0;
 					rel1 { relative: 0.5 0.0; to: bg;}
 					rel2 { relative: 0.5 1.0; to: bg;}
-					color: 235 235 235 255;
+					color: 26 49 125 255;
+				}
+				description {
+					//min: 9 0;
+					//max: 9 -1;
+					align: 0.5 0;
+					state: "color_7" 0.0;
+					rel1 { relative: 0.5 0.0; to: bg;}
+					rel2 { relative: 0.5 1.0; to: bg;}
+					color: 230 226 218 255;
 				}
 			}
 		}
@@ -5970,9 +6096,15 @@ collections
 				target: "color_elem";
 			}
 			program { name: "show_color_6";
-				signal: "elm,state,show,avail";
+				signal: "elm,state,show,cache";
 				source: "elm";
 				action: STATE_SET "color_6" 0.0;
+				target: "color_elem";
+			}
+			program { name: "show_color_7";
+				signal: "elm,state,show,avail";
+				source: "elm";
+				action: STATE_SET "color_7" 0.0;
 				target: "color_elem";
 			}
 		}
@@ -8124,6 +8256,11 @@ collections
 					rel2 { relative: 1.0 1.0; offset: 0 0;}
 					color: 8 8 8 8;
 				}
+				description {
+					inherit: "default" 0.0;
+					state: "default_size_giant";
+					min: 0 166;
+				}
 			}
 			part { name: "searchbar_bg";
 				    type: RECT;
@@ -8134,7 +8271,7 @@ collections
 				       fixed: 0 1;
 				       align: 0.0 0.0;
 				       rel1 { relative: 0.0 0.0; offset: 0 2; to: "bg"; }
-				       rel2 { relative: 1.0 0.0; offset: 0 25; to: "bg"; }
+				       rel2 { relative: 1.0 1.0; offset: 0 25; to: "bg"; }
 				       //color: 8 8 8 8;
 				       color_class: "B041";
 				    }
@@ -8167,6 +8304,22 @@ collections
 					rel1 { relative: 0.0 0.0; offset: 40 18; to: "bg"; }
 					rel2 { relative: 1.0 0.0; offset: -16 -12; to: "bg"; }
 				}
+			}
+		}
+		programs {
+			program {
+				name: "show_normal";
+				signal: "set,show,normal";
+				source: "*";
+				action: STATE_SET "default" 0.0;
+				target: "bg";
+			}
+			program {
+				name: "show_giant";
+				signal: "set,show,giant";
+				source: "*";
+				action: STATE_SET "default_size_giant" 0.0;
+				target: "bg";
 			}
 		}
 	}
@@ -8767,161 +8920,282 @@ collections
 	   }
 	}
 
+	group {
+		name: "date_time_layout";
+		parts
+		{
+			part
+			{
+				name: "bg";
+				type: RECT;
+				mouse_events: 1;
+				description {
+						state: "default" 0.0;
+						fixed: 1 1;
+						rel1 { relative: 0.0 0.0;}
+						rel2 { relative: 1.0 1.0;}
+				}
+			}
+			part
+			{
+				name: "padding_left";
+				type: RECT;
+				mouse_events: 1;
+				description {
+						state: "default" 0.0;
+						fixed: 1 1;
+						rel1 { relative: 0.0 0.2;}
+						rel2 { relative: 0.1 0.8;}
+				}
+			}
+			part
+			{
+				name: "date_field";
+				type: SWALLOW;
+				mouse_events: 1;
+				description {
+						state: "default" 0.0;
+						fixed: 1 1;
+						rel1 { relative: 0.1 0.2;}
+						rel2 { relative: 0.5 0.8;}
+				}
+			}
+			part
+			{
+				name: "padding_between";
+				type: RECT;
+				mouse_events: 1;
+				description {
+						state: "default" 0.0;
+						fixed: 1 1;
+						rel1 { relative: 0.5 0.2;}
+						rel2 { relative: 0.55 0.8;}
+				}
+			}
+			part
+			{
+				name: "time_field";
+				type: SWALLOW;
+				mouse_events: 1;
+				description {
+						state: "default" 0.0;
+						fixed: 1 1;
+						rel1 { relative: 0.55 0.2;}
+						rel2 { relative: 0.9 0.8;}
+				}
+			}
+			part
+			{
+				name: "padding_right";
+				type: RECT;
+				mouse_events: 1;
+				description {
+						state: "default" 0.0;
+						fixed: 1 1;
+						rel1 { relative: 0.9 0.2;}
+						rel2 { relative: 0.1 0.8;}
+				}
+			}
 
-	group { name: "vpn_connected_popup";
+		}
+	}
+
+	group { name: "gl_custom_item_no_title";
 	   parts {
 		  part { name: "base";
 			 type: SPACER;
 			 scale: 1;
 			 description { state: "default" 0.0;
-				min: 0 130;
-				fixed: 1 0;
 			 }
 		  }
-		  part {
-			name: "elm.padding.top";
-			type: SPACER;
-			scale: 1;
-			description {
-				state: "default" 0.0;
+		  part { name: "left_padding";
+			 type: SPACER;
+			 scale: 1;
+			 description { state: "default" 0.0;
+				min: 32 0;
+				align: 0.0 0.0;
+				rel1 { to: "base"; relative: 0.0 0.0; }
+				rel2 { to: "base"; relative: 0.0 1.0; }
+			 }
+		  }
+		  part { name: "right_padding";
+			 type: SPACER;
+			 scale: 1;
+			 description { state: "default" 0.0;
+				min: 32 0;
+				align: 1.0 0.0;
+				rel1 { to: "base"; relative: 1.0 0.0; }
+				rel2 { to: "base"; relative: 1.0 1.0; }
+			 }
+		  }
+		  part { name: "top_padding";
+			 type: SPACER;
+			 scale: 1;
+			 description { state: "default" 0.0;
 				min: 0 24;
-				fixed: 0 1;
-				rel2.relative: 1.0 0.0;
 				align: 0.0 0.0;
-			}
-		  }
-		  part {
-			name: "elm.padding.bottom";
-			type: SPACER;
-			scale: 1;
-			description {
-				state: "default" 0.0;
-				min: 0 20;
-				fixed: 0 1;
-				rel2.relative: 0.0 1.0;
-				align: 0.0 1.0;
-			}
-		  }
-		  part {
-				name: "elm.padding.left";
-				type: SPACER;
-				scale: 1;
-				description {
-					state: "default" 0.0;
-					min: 26 0;
-					fixed: 1 0;
-					rel2.relative: 0.0 1.0;
-					align: 0.0 0.0;
-				}
-			}
-			part {
-				name: "elm.padding.right";
-				type: SPACER;
-				scale: 1;
-				description {
-					state: "default" 0.0;
-					min: 26 0;
-					fixed: 1 0;
-					rel1.relative: 594/620 0.0;
-					align: 1.0 0.0;
-				}
-			}
-		  part {
-			 name: "elm.swallow.session";
-			 type: SWALLOW;
-			 scale: 1;
-			 ignore_flags: ON_HOLD;
-			 description { state: "default" 0.0;
-				min: 0 32;
-				rel1 {
-					to_x: "elm.padding.left";
-					to_y: "elm.padding.top";
-					relative: 1.0 1.0;
-					offset: 0 0;
-				}
-				rel2 {
-					to_x: "elm.padding.right";
-					to_y: "elm.padding.bottom";
-					relative: 0.0 0.0;
-					offset: 0 0;
-				}
-				align: 0.0 0.0;
-				fixed: 1 0;
+				rel1 { to_x: "left_padding"; to_y: "base"; relative: 1.0 0.0; }
+				rel2 { to_x: "right_padding"; to_y: "base"; relative: 0.0 0.0; }
 			 }
 		  }
 
-		  part {
-			 name: "elm.swallow.duration";
+		  part { name: "elm.swallow.content";
 			 type: SWALLOW;
 			 scale: 1;
-			 ignore_flags: ON_HOLD;
 			 description { state: "default" 0.0;
-				min: 0 32;
-				rel1 {
-					to_x: "elm.padding.left";
-					to_y: "elm.swallow.session";
-					relative: 1.0 1.0;
-					offset: 0 0;
-				}
-				rel2 {
-					to_x: "elm.padding.right";
-					to_y: "elm.padding.bottom";
-					relative: 0.0 0.0;
-					offset: 0 0;
-				}
-				align: 0.0 0.0;
-				fixed: 1 0;
+				align: 0.5 0.0;
+				rel1 { to: "right_padding"; relative: 0.0 1.0; }
+				rel2 { to: "bottom_padding"; relative: 1.0 0.0; }
 			 }
 		  }
-
-		  part {
-			 name: "elm.swallow.sent";
-			 type: SWALLOW;
+		  part { name: "bottom_padding";
+			 type: SPACER;
 			 scale: 1;
-			 ignore_flags: ON_HOLD;
 			 description { state: "default" 0.0;
-				min: 0 32;
-				rel1 {
-					to_x: "elm.padding.left";
-					to_y: "elm.swallow.duration";
-					relative: 1.0 1.0;
-					offset: 0 0;
-				}
-				rel2 {
-					to_x: "elm.padding.right";
-					to_y: "elm.padding.bottom";
-					relative: 0.0 0.0;
-					offset: 0 0;
-				}
-				align: 0.0 0.0;
-				fixed: 1 0;
-			 }
-		  }
-
-		  part {
-			 name: "elm.swallow.received";
-			 type: SWALLOW;
-			 scale: 1;
-			 ignore_flags: ON_HOLD;
-			 description { state: "default" 0.0;
-				min: 0 32;
-				rel1 {
-					to_x: "elm.padding.left";
-					to_y: "elm.swallow.sent";
-					relative: 1.0 1.0;
-					offset: 0 0;
-				}
-				rel2 {
-					to_x: "elm.padding.right";
-					to_y: "elm.padding.bottom";
-					relative: 0.0 0.0;
-					offset: 0 0;
-				}
-				align: 0.0 0.0;
-				fixed: 1 0;
+				min: 0 24;
+				align: 0.5 1.0;
+				rel1 { to: "base"; relative: 0.0 1.0; }
+				rel2 { to: "base"; relative: 1.0 1.0; }
 			 }
 		  }
 	   }
+	}
+
+	group { name: "gl_custom_item";
+	   styles{
+		  style { name: "text_style";
+			 base: "color=#000000FF font=Tizen:style=Regular font_size=30 ellipsis=1.0";
+			 tag:  "br" "\n";
+			 tag:  "ps" "ps";
+			 tag:  "tab" "\t";
+			 tag:  "b" "+ font_weight=Bold";
+		  }
+	   }
+	   parts {
+		  part { name: "base";
+			 type: SPACER;
+			 scale: 1;
+			 description { state: "default" 0.0;
+			 }
+		  }
+		  part { name: "left_padding";
+			 type: SPACER;
+			 scale: 1;
+			 description { state: "default" 0.0;
+				min: 32 0;
+				align: 0.0 0.0;
+				rel1 { to: "base"; relative: 0.0 0.0; }
+				rel2 { to: "base"; relative: 0.0 1.0; }
+			 }
+		  }
+		  part { name: "right_padding";
+			 type: SPACER;
+			 scale: 1;
+			 description { state: "default" 0.0;
+				min: 32 0;
+				align: 1.0 0.0;
+				rel1 { to: "base"; relative: 1.0 0.0; }
+				rel2 { to: "base"; relative: 1.0 1.0; }
+			 }
+		  }
+		  part { name: "top_padding";
+			 type: SPACER;
+			 scale: 1;
+			 description { state: "default" 0.0;
+				min: 0 24;
+				align: 0.0 0.0;
+				rel1 { to_x: "left_padding"; to_y: "base"; relative: 1.0 0.0; }
+				rel2 { to_x: "right_padding"; to_y: "base"; relative: 0.0 0.0; }
+			 }
+		  }
+		  part { name: "elm.text";
+			 type: TEXTBLOCK;
+			 scale: 1;
+			 mouse_events: 0;
+			 description { state: "default" 0.0;
+				min: 0 41;
+				align: 0.0 0.0;
+				rel1 { to: "top_padding"; relative: 0.0 1.0; }
+				rel2 { to: "top_padding"; relative: 1.0 1.0; }
+				text.style: "text_style";
+				text.min: 0 1;
+			 }
+		  }
+		  part { name: "text_content_padding";
+			 type: SPACER;
+			 scale: 1;
+			 description { state: "default" 0.0;
+				min: 0 10;
+				align: 0.0 0.0;
+				rel1 { to: "elm.text"; relative: 0.0 1.0; }
+				rel2 { to: "elm.text"; relative: 1.0 1.0; }
+			 }
+		  }
+		  part { name: "elm.swallow.content";
+			 type: SWALLOW;
+			 scale: 1;
+			 description { state: "default" 0.0;
+				align: 0.5 0.0;
+				rel1 { to: "text_content_padding"; relative: 0.0 1.0; }
+				rel2 { to: "bottom_padding"; relative: 1.0 0.0; }
+			 }
+		  }
+		  part { name: "bottom_padding";
+			 type: SPACER;
+			 scale: 1;
+			 description { state: "default" 0.0;
+				min: 0 24;
+				align: 0.5 1.0;
+				rel1 { to: "base"; relative: 0.0 1.0; }
+				rel2 { to: "base"; relative: 1.0 1.0; }
+			 }
+		  }
+	   }
+	}
+
+	group {
+		name: "entry_layout";
+		parts
+		{
+			part
+			{
+				name: "bg";
+				type: RECT;
+				mouse_events: 1;
+				description {
+						state: "default" 0.0;
+						fixed: 1 1;
+						rel1 { relative: 0.0 0.0;}
+						rel2 { relative: 1.0 1.0;}
+				}
+			}
+			part
+			{
+				name: "padding_left";
+				type: RECT;
+				mouse_events: 1;
+				description {
+						state: "default" 0.0;
+						fixed: 1 1;
+						rel1 { relative: 0.0 0.0;offset: 20 0; to: "bg";}
+						rel2 { relative: 1.0 1.0;offset: 20 0; to: "bg";}
+				}
+			}
+			part
+			{
+				name: "elm.swallow.content";
+				type: SWALLOW;
+				mouse_events: 1;
+				description {
+						state: "default" 0.0;
+						fixed: 1 1;
+						//rel1 { relative: 0.0 0.0; offset: 20 0;to: "padding_left";}
+						//rel2 { relative: 1.0 1.0; offset: 20 0;to: "padding_left";}
+						rel1 { relative: 0.0 0.0; offset: 0 0;to: "padding_left";}
+						rel2 { relative: 1.0 1.0; offset: 0 0;to: "padding_left";}
+				}
+			}
+		}
 	}
 
 }

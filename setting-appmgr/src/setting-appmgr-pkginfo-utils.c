@@ -20,7 +20,6 @@
 #include <privilege_info.h>
 #include <app2ext_interface.h>
 
-#include <pkgmgr-info.h>
 #include <package_manager.h>
 
 #include "setting-appmgr-utils.h"
@@ -29,6 +28,7 @@
 static int appmgrUg_pkg_get_privileges_help(const char *privilege,
                                             void *user_data)
 {
+	SETTING_TRACE_BEGIN;
 	int ret;
 	gchar *desc;
 	appmgr_pkginfo *info;
@@ -54,22 +54,50 @@ static int appmgrUg_pkg_get_privileges_help(const char *privilege,
 		return 0;
 	}
 
+	//SETTING_TRACE("-------------------------------------------------------------------------");
+	//SETTING_TRACE("NAME: %s", name);
+	//SETTING_TRACE("DESC: %s", help);
+	//SETTING_TRACE("-------------------------------------------------------------------------");
+
 	desc = g_strconcat("<font_size=28><B>", name, "</B></font_size><br>",
-	                   help, "<br>", NULL);
+	                   help, "<br><br>", NULL);
 	free(help);
 	free(name);
 
+#if 0
 	appmgrUg_append_separator(info->gl_prv, ad);
-
+#endif
 	setting_create_Gendial_field_titleItem(info->gl_prv, &ad->itc_multiline, desc, NULL);
 
 	g_free(desc);
 	return 0;
 }
 
+/**
+ * @brief Callback of cancel button
+ *
+ * @param data The view data passed between all callbacks
+ * @param it Naviframe item
+ */
+static Eina_Bool appmgrUg_pkg_privilege_info_softkey_cancel_cb(void *data, Elm_Object_Item *it)
+{
+	SETTING_TRACE_BEGIN;
+
+	SettingAppMgrUG *ad = (SettingAppMgrUG*) data;
+
+	retvm_if(data == NULL, FALSE, "[Setting > Application Manager > Pkg info ] Data parameter is NULL");
+
+	if (ad->navi)
+		elm_naviframe_item_pop(ad->navi);
+
+	return EINA_TRUE;
+}
+
 static void appmgrUg_pkg_privilege_info_view(void *data, Evas_Object *obj,
                                              void *event_info)
 {
+	SETTING_TRACE_BEGIN;
+
 	char *grp = data;
 	SettingAppMgrUG *ad;
 	appmgr_pkginfo *info;
@@ -90,8 +118,9 @@ static void appmgrUg_pkg_privilege_info_view(void *data, Evas_Object *obj,
 
 	privilege_info_get_privilege_group_display_name(grp, &grp_name);
 
-	setting_push_layout_navi_bar_genlist(ad->lo_parent, ad->win, grp_name,
-	                                     NULL, NULL, NULL, NULL, NULL, &info->gl_prv, ad->navi);
+	Elm_Object_Item *navi_it = setting_push_layout_navi_bar_genlist(ad->lo_parent, ad->win, grp_name,
+	                                     NULL, NULL,/* here */appmgrUg_pkg_privilege_info_softkey_cancel_cb, NULL, ad, &info->gl_prv, ad->navi);
+	elm_naviframe_item_pop_cb_set(navi_it, appmgrUg_pkg_privilege_info_softkey_cancel_cb, ad);
 	elm_genlist_mode_set(info->gl_prv, ELM_LIST_COMPRESS);
 
 	privilege_info_foreach_privilege_list_by_pkgid_and_privilege_group(info->pkgid, grp,
@@ -167,9 +196,6 @@ int appmgrUg_pkg_get_privileges_grp_iter(const char *grp, void *user_data)
 
 		if (NULL == info->first_prv) {
 			info->first_prv = info->last_prv;
-			info->first_prv->group_style = SETTING_GROUP_STYLE_TOP;
-		} else {
-			info->last_prv->group_style = SETTING_GROUP_STYLE_CENTER;
 		}
 	}
 
@@ -239,19 +265,19 @@ static inline void appmgrUg_pkg_update_size(appmgr_pkginfo *info)
 	appmgrUg_size_to_str(info->sz_total, desc, sizeof(desc));
 	g_free(info->total_size->sub_desc);
 	info->total_size->sub_desc = (char *)g_strdup(desc);
-	elm_genlist_item_fields_update(info->total_size->item, "elm.text.sub.left.bottom",
+	elm_genlist_item_fields_update(info->total_size->item, "elm.text.sub",
 	                               ELM_GENLIST_ITEM_FIELD_TEXT);
 
 	appmgrUg_size_to_str(info->sz_data, desc, sizeof(desc));
 	g_free(info->data_size->sub_desc);
 	info->data_size->sub_desc = (char *)g_strdup(desc);
-	elm_genlist_item_fields_update(info->data_size->item, "elm.text.sub.left.bottom",
+	elm_genlist_item_fields_update(info->data_size->item, "elm.text.sub",
 	                               ELM_GENLIST_ITEM_FIELD_TEXT);
 
 	appmgrUg_size_to_str(info->sz_total - info->sz_data, desc, sizeof(desc));
 	g_free(info->app_size->sub_desc);
 	info->app_size->sub_desc = (char *)g_strdup(desc);
-	elm_genlist_item_fields_update(info->app_size->item, "elm.text.sub.left.bottom",
+	elm_genlist_item_fields_update(info->app_size->item, "elm.text.sub",
 	                               ELM_GENLIST_ITEM_FIELD_TEXT);
 }
 
@@ -269,7 +295,7 @@ void appmgrUg_pkg_update_cache_size(void *data)
 
 	if (ad->cache_size && ad->cache_size->item) {
 		ad->cache_size->sub_desc = (char *)g_strdup(desc);
-		elm_genlist_item_fields_update(ad->cache_size->item, "elm.text.sub.left.bottom",
+		elm_genlist_item_fields_update(ad->cache_size->item, "elm.text.sub",
 		                               ELM_GENLIST_ITEM_FIELD_TEXT);
 	}
 
@@ -315,7 +341,7 @@ static inline void appmgrUg_pkg_get_pkg_size(appmgr_pkginfo *info)
 	warn_if(ret, "pkgmgr_client_get_size(%s) Fail(%d)", info->pkgid, ret);
 }
 
-static void _get_cache_cb(const char *package_id, const pkg_size_info_t *size_info, void *data)
+static void _get_cache_cb(const char *package_id, const package_size_info_h size_info, void *data)
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "data == NULL");
@@ -323,8 +349,15 @@ static void _get_cache_cb(const char *package_id, const pkg_size_info_t *size_in
 	appmgr_pkginfo *info = ad->pkginfo;
 	retm_if(info == NULL, "info == NULL");
 
+#if 0
 	info->sz_cache = (int)size_info->cache_size;
 	SETTING_TRACE("cache size: %lld", size_info->cache_size);
+#else
+	long long cachesize = 0;
+	package_size_info_get_cache_size(size_info, &cachesize);
+	SETTING_TRACE("cache size: %lld", cachesize);
+	info->sz_cache = cachesize;
+#endif
 	appmgrUg_pkg_update_cache_size(ad);
 }
 
@@ -521,8 +554,9 @@ void appmgrUg_pkg_moveto_worker_finish(SettingAppMgrUG *ad)
 			if (ad->popup)
 				evas_object_del(ad->popup);
 
-			ad->popup = setting_create_popup_with_btn(ad, ad->win, NULL,
-			                                          MGRAPP_STR_MOVE_COMPLETED, appmgrUg_popup_del, 0, 1, MGRAPP_STR_OK);
+			ad->popup = setting_create_popup(ad, ad->win, NULL,
+											 MGRAPP_STR_MOVE_COMPLETED, appmgrUg_popup_del,
+											 0, FALSE, FALSE, 1, MGRAPP_STR_OK);
 			setting_view_update(ad->pkginfo_view, ad);
 			break;
 		case APP2EXT_ERROR_MMC_STATUS:
@@ -642,7 +676,6 @@ void appmgrUg_pkg_webapp_ug(void *data, Evas_Object *obj, void *event_info)
 
 void appmgrUg_pkg_clear_default(void *data, Evas_Object *obj, void *event_info)
 {
-#if 0
 	GList *cur;
 	appmgr_pkginfo *info;
 	SettingAppMgrUG *ad = data;
@@ -690,7 +723,6 @@ void appmgrUg_pkg_clear_default(void *data, Evas_Object *obj, void *event_info)
 	elm_object_item_del(next);
 
 	setting_view_update(ad->main_view, ad);
-#endif
 }
 
 char *appmgrUg_pkg_size_gl_label_get(void *data, Evas_Object *obj,
@@ -703,16 +735,13 @@ char *appmgrUg_pkg_size_gl_label_get(void *data, Evas_Object *obj,
 
 	retv_if(data == NULL, NULL);
 
-	if (0 == strcmp(part, "elm.text.sub.left.bottom"))
+	if (0 == strcmp(part, "elm.text.sub"))
 		label = SAFE_STRDUP(_(item_data->sub_desc));
-	else if (0 == strcmp(part, "elm.text.main.left.top"))
+	else if (0 == strcmp(part, "elm.text"))
 		label = SAFE_STRDUP(_(item_data->keyStr));
 
 	if (item_data->keyStr && item_data->sub_desc)
 		snprintf(desc, sizeof(desc), "%s,%s", _(item_data->keyStr), _(item_data->sub_desc));
-
-	ao = elm_object_item_access_object_get(item_data->item);
-	setting_set_tts_info(ao, desc, "", "", "");
 
 	return label;
 }

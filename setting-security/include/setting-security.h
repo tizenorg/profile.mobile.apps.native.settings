@@ -195,10 +195,6 @@ struct _BlockList_Info {
 #define Keystr_Security_Engine_Desc      "IDS_ST_BODY_PROTECT_YOUR_DEVICE_FROM_HARMFUL_VIRUSES_AND_MALWARE"
 #define Keystr_Firewall_dimm_desc "IDS_IM_POP_THIS_FEATURE_IS_NOT_AVAILABLE_WHILE_FLIGHT_MODE_IS_ON"
 
-#if SUPPORT_PARENTAL_MODE
-#define Keystr_ParentalMode				"Parental mode"
-#endif
-
 typedef struct _SettingSecurityUG SettingSecurityUG;
 
 struct _security_item {

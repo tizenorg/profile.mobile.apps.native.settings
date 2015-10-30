@@ -139,11 +139,11 @@ static void setting_password_forgot_password_mouse_up_Gendial_list_cb(void *data
 		}
 
 		/* draw popup */
-		ad->reset_personal_popup = setting_create_popup_with_btn(ad, ad->win_get,
-		                                                         PW_ST_RESET_PERSONAL_MODE,
-		                                                         PW_ST_RESET_PERSONAL_MODE_POPUP_Q,
-		                                                         __reset_personal_popup_resp_cb, 0,
-		                                                         2, PW_ST_RESET, PW_ST_CANCEL);
+		ad->reset_personal_popup = setting_create_popup(ad, ad->win_get,
+														PW_ST_RESET_PERSONAL_MODE,
+														PW_ST_RESET_PERSONAL_MODE_POPUP_Q,
+														__reset_personal_popup_resp_cb, 0, FALSE, FALSE,
+														2, PW_ST_RESET, PW_ST_CANCEL);
 	}
 }
 

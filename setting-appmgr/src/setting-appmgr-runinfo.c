@@ -117,7 +117,7 @@ static int appmgrUg_get_running_list_iter(const aul_app_info *info, void *data)
 
 		if (runinfo) {
 			runinfo->appid = strdup(info->appid);
-			runinfo->label = tmp_info.label;
+			runinfo->label = strdup(tmp_info.label);
 			runinfo->can_kill = tmp_info.can_kill;
 			listinfo->runinfos = g_list_append(listinfo->runinfos, runinfo);
 		} else {
@@ -127,6 +127,7 @@ static int appmgrUg_get_running_list_iter(const aul_app_info *info, void *data)
 	}
 
 	free(pkgid);
+	free(tmp_info.label);
 	return 0;
 }
 
@@ -201,7 +202,7 @@ static void appmgrUg_run_append_run_apps(SettingAppMgrUG *ad)
 		}
 
 		d_item = setting_create_Gendial_field_def(ad->gl_run, &ad->itc_1txt_1ic_2, NULL,
-		                                          NULL, SWALLOW_Type_INVALID, (char *)ad->sel_icon, NULL, 0, info->label,
+		                                          NULL, SWALLOW_Type_1ICON_SMALL_ICON, (char *)ad->sel_icon, NULL, 0, info->label,
 		                                          NULL, NULL);
 		if (NULL == d_item) {
 			SETTING_TRACE_ERROR("setting_create_Gendial_field_def() Fail");
@@ -209,20 +210,9 @@ static void appmgrUg_run_append_run_apps(SettingAppMgrUG *ad)
 		}
 		elm_genlist_item_select_mode_set(d_item->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
-		if (0 == cnt)
-			d_item->group_style = SETTING_GROUP_STYLE_TOP;
-		else
-			d_item->group_style = SETTING_GROUP_STYLE_CENTER;
-
 		cnt++;
 	}
-
 	retm_if(NULL == d_item, "No item");
-
-	if (1 == cnt)
-		d_item->group_style = SETTING_GROUP_STYLE_NONE;
-	else
-		d_item->group_style = SETTING_GROUP_STYLE_BOTTOM;
 }
 
 static int appmgrUg_run_create(void *data)
@@ -236,20 +226,20 @@ static int appmgrUg_run_create(void *data)
 
 	Elm_Object_Item *navi_item = setting_push_layout_navi_bar_genlist(ad->lo_parent, ad->win,
 	                                                                  MGRAPP_STR_ACTIVE_APP, NULL, NULL,
-	                                                                  NULL,
+	                                                                  appmgrUg_run_back_cb,
 	                                                                  NULL, ad, &ad->gl_run, ad->navi);
 	elm_naviframe_item_pop_cb_set(navi_item, appmgrUg_run_back_cb, ad);
 
 	elm_genlist_mode_set(ad->gl_run, ELM_LIST_COMPRESS);
 
-	appmgrUg_append_separator(ad->gl_run, ad);
+	//appmgrUg_append_separator(ad->gl_run, ad);
 
 	/* Title (pkg name, process N) */
 	item = elm_genlist_item_append(ad->gl_run, &ad->itc_info_title, ad, NULL,
 	                               ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
-	appmgrUg_append_separator(ad->gl_run, ad);
+	//appmgrUg_append_separator(ad->gl_run, ad);
 
 	/* notice */
 	snprintf(msg, sizeof(msg), _(MGRAPP_STR_APP_STOP_MSG), ad->sel_label, ad->sel_label);
@@ -259,7 +249,7 @@ static int appmgrUg_run_create(void *data)
 	elm_genlist_item_append(ad->gl_run, &ad->itc_1ic, ad, NULL, ELM_GENLIST_ITEM_NONE,
 	                        NULL, NULL);
 
-	appmgrUg_append_separator(ad->gl_run, ad);
+	//appmgrUg_append_separator(ad->gl_run, ad);
 
 	/* group title(applications) */
 	setting_create_Gendial_field_titleItem(ad->gl_run, &ad->itc_grp_title,
@@ -267,7 +257,7 @@ static int appmgrUg_run_create(void *data)
 
 	appmgrUg_run_append_run_apps(ad);
 
-	appmgrUg_append_separator(ad->gl_run, ad);
+	//appmgrUg_append_separator(ad->gl_run, ad);
 
 	setting_view_appmgr_runinfo.is_create = 1;
 
@@ -280,6 +270,7 @@ static int appmgrUg_run_destroy(void *data)
 	SettingAppMgrUG *ad = data;
 
 	setting_view_appmgr_runinfo.is_create = 0;
+	elm_naviframe_item_pop(ad->navi);
 
 	retv_if(NULL == data, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 

@@ -103,11 +103,11 @@ static void setting_flightmode_main_tapi_event_cb(TapiHandle *handle, int result
 				                "*** [ERR] tel_set_flight_mode(TAPI_POWER_FLIGHT_MODE_LEAVE) ***");
 				ad->b_fm_requesting = TRUE;
 			} else { /*Current requset is the last one, Setting needs to notify user */
-				setting_create_popup_without_btn(ad, ad->win_get,
-				                                 _("IDS_ST_POP_ERROR"),
-				                                 _("IDS_ST_POP_UNABLE_TO_TURN_ON_FLIGHT_MODE_VODA"),
-				                                 NULL, POPUP_INTERVAL,
-				                                 FALSE, FALSE);
+				setting_create_popup(ad, ad->win_get,
+									 "IDS_ST_POP_ERROR",
+									 "IDS_ST_POP_UNABLE_TO_TURN_ON_FLIGHT_MODE_VODA",
+									 NULL, POPUP_INTERVAL,
+									 FALSE, FALSE, 0);
 
 				/*It is need to rollback the status, */
 				setting_update_gl_item_chk_status(ad->data_flightmode, !(ad->data_flightmode->chk_status));
@@ -120,10 +120,10 @@ static void setting_flightmode_main_tapi_event_cb(TapiHandle *handle, int result
 			break;
 
 		case TAPI_POWER_FLIGHT_MODE_RESP_MAX:
-			setting_create_popup_without_btn(ad, ad->win_get,
-			                                 _("IDS_ST_POP_ERROR"),
-			                                 _("IDS_IM_POP_UNEXPECTED_ERROR"),
-			                                 NULL, POPUP_INTERVAL, FALSE, FALSE);
+			setting_create_popup(ad, ad->win_get,
+								 "IDS_ST_POP_ERROR",
+								 "IDS_IM_POP_UNEXPECTED_ERROR",
+								 NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
 
 			/*It is need to rollback the status, */
 			setting_update_gl_item_chk_status(ad->data_flightmode, !(ad->data_flightmode->chk_status));
@@ -207,7 +207,7 @@ static int setting_flightmode_main_create(void *cb)
 	ad->handle = tel_init(NULL);
 	if (!ad->handle) {
 		SETTING_TRACE_ERROR("*** [ERR] tel_init failed ***");
-		setting_create_simple_popup(ad, ad->win_main_layout, _("IDS_ST_BODY_FLIGHT_MODE"), _("tel_init() failed"));
+		setting_create_popup(ad, ad->win_main_layout, _("IDS_ST_BODY_FLIGHT_MODE"), _("tel_init() failed"), NULL, 0, false, false, 0);
 		/*return SETTING_RETURN_FAIL; */
 	} else {
 		SETTING_TRACE("tel_init ok[handle:%p]", ad->handle);
@@ -238,9 +238,8 @@ static int setting_flightmode_main_create(void *cb)
 	}
 
 	/* create flightmode_mode */
-	ad->data_flightmode = setting_create_Gendial_field_groupitem(genlist,
+	ad->data_flightmode = setting_create_Gendial_field_def(genlist,
 	                                                             &(itc_1text_1icon),
-	                                                             NULL,
 	                                                             setting_flightmode_main_list_Gendial_mouse_up_cb,
 	                                                             ad,
 	                                                             SWALLOW_Type_1ICON_1RADIO,
@@ -326,17 +325,17 @@ static int setting_flightmode_main_cleanup(void *cb)
  **call back func
  **
  ****************************************************/
-static void setting_flightmode_main_click_softkey_back_cb(void *data, Evas_Object *obj,
-                                                          void *event_info)
+static Eina_Bool setting_flightmode_main_click_softkey_back_cb(void *data, Elm_Object_Item *it)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
-	retm_if(data == NULL, "Data parameter is NULL");
+	retvm_if(data == NULL, FALSE, "Data parameter is NULL");
 	SettingFlightModeUG *ad = (SettingFlightModeUG *) data;
 
 	/* Send destroy request */
 	ug_destroy_me(ad->ug);
 	SETTING_TRACE_END;
+	return EINA_FALSE;
 }
 
 static void setting_flightmode_main_list_Gendial_mouse_up_cb(void *data, Evas_Object *obj,

@@ -29,6 +29,7 @@
 #include <setting-common-view.h>
 #include <setting-common-data-type.h>
 #include <setting-cfg.h>
+//#include <locations.h>
 
 #define KeyStr_On				"IDS_ST_BODY_ON"
 #define KeyStr_Off				"IDS_ST_BODY_ALERTTYPE_OFF"
