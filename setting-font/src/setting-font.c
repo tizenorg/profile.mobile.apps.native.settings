@@ -85,16 +85,14 @@ setting_view *__app_control_get_operation_handler(void *data, app_control_h serv
 
 	if (ret == APP_CONTROL_ERROR_NONE) {
 		/*SETTING_TRACE(" >>>>>>>>>>>>>>>>>>> (%s) ", output_url); */
-		if (0 == safeStrCmp(output_url, "http://tizen.org/appcontrol/operation/configure/font/type")
-		    || 0 == safeStrCmp(output_url, "http://samsung.com/appcontrol/operation/configure/font/type")) {
+		if (0 == safeStrCmp(output_url, "http://tizen.org/appcontrol/operation/configure/font/type")) {
 			fontUG->viewmode = FONT_SEL_VIEW_APPCONTROL;
 			setting_view_node_table_register(&setting_view_font_font_size, &setting_view_font_main);
 			setting_view_node_table_register(&setting_view_font_main, NULL);
 
 			FREE(output_url);
 			return &setting_view_font_main;
-		} else if (0 == safeStrCmp(output_url, "http://tizen.org/appcontrol/operation/configure/font/size")
-		           || 0 == safeStrCmp(output_url, "http://tizen.org/appcontrol/operation/configure/font/size")) {
+		} else if (0 == safeStrCmp(output_url, "http://tizen.org/appcontrol/operation/configure/font/size")) {
 			fontUG->viewmode = FONT_SIZE_VIEW_APPCONTROL;
 			setting_view_node_table_register(&setting_view_font_font_size, NULL);
 
@@ -135,8 +133,7 @@ setting_view *__get_font_view_to_load(void *data, app_control_h service)
 
 	/* service OK, but there's no argument */
 	if ((ret == APP_CONTROL_ERROR_NONE)
-	    && (0 == safeStrCmp(output_url, "http://tizen.org/appcontrol/operation/default")
-	        || 0 == safeStrCmp(output_url, "http://samsung.com/appcontrol/operation/default"))) {
+	    && (0 == safeStrCmp(output_url, "http://tizen.org/appcontrol/operation/default"))) {
 		FREE(output_url);
 		return __default_view_state(fontUG, service);
 
@@ -177,11 +174,11 @@ static void *setting_font_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	setting_retvm_if(fontUG->win_main_layout == NULL, NULL,
 	                 "cannot get main window ");
 
-	setting_create_Gendial_itc("2line.top", &(fontUG->itc_2text_3_parent));
-	setting_create_Gendial_itc("2line.top", &(fontUG->itc_1icon_1text_sub));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(fontUG->itc_2text_3_parent));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(fontUG->itc_1icon_1text_sub));
 	/*setting_create_Gendial_itc("dialogue/2text.3", &(fontUG->itc_2text_2)); */
-	setting_create_Gendial_itc("2line.top", &(fontUG->itc_2text_2));
-	setting_create_Gendial_itc("groupindex", &(fontUG->itc_group_item));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(fontUG->itc_2text_2));
+	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE, &(fontUG->itc_group_item));
 	setting_create_Gendial_itc("1icon", &(fontUG->itc_1icon));
 
 	/* view type checking */

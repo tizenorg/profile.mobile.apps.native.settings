@@ -52,6 +52,7 @@ BuildRequires:  pkgconfig(evas)
 BuildRequires:  pkgconfig(edje)
 BuildRequires:  pkgconfig(mm-player)
 BuildRequires:  pkgconfig(capi-network-connection)
+BuildRequires:  pkgconfig(security-server)
 BuildRequires:  pkgconfig(feedback)
 BuildRequires:  pkgconfig(appsvc)
 BuildRequires:  pkgconfig(libxml-2.0)
@@ -66,14 +67,12 @@ BuildRequires:  pkgconfig(capi-system-device)
 BuildRequires:  pkgconfig(capi-appfw-application)
 BuildRequires:  pkgconfig(capi-appfw-app-manager)
 BuildRequires:  pkgconfig(capi-appfw-preference)
-BuildRequires:  pkgconfig(capi-appfw-package-manager)
 BuildRequires:  pkgconfig(capi-system-sensor)
 BuildRequires:  pkgconfig(capi-system-info)
 BuildRequires:  pkgconfig(capi-system-system-settings)
 BuildRequires:  pkgconfig(capi-network-wifi)
 BuildRequires:  pkgconfig(capi-network-bluetooth)
 BuildRequires:  pkgconfig(capi-media-metadata-extractor)
-BuildRequires:  pkgconfig(capi-appfw-app-common)
 BuildRequires:  pkgconfig(shortcut)
 BuildRequires:  pkgconfig(ecore-evas)
 BuildRequires:  pkgconfig(pkgmgr)
@@ -86,36 +85,29 @@ BuildRequires:  pkgconfig(contacts-service2)
 BuildRequires:  pkgconfig(deviced)
 BuildRequires:  pkgconfig(badge)
 BuildRequires:  pkgconfig(efl-extension)
-BuildRequires:  pkgconfig(efl-assist)
 BuildRequires:  pkgconfig(sqlite3)
 BuildRequires:  pkgconfig(capi-media-camera)
 BuildRequires:  pkgconfig(notification)
-BuildRequires:  pkgconfig(syspopup)
-BuildRequires:  pkgconfig(syspopup-caller)
 BuildRequires:	pkgconfig(app2sd)
 BuildRequires:	pkgconfig(capi-media-image-util)
+BuildRequires:  pkgconfig(capi-appfw-package-manager)
 BuildRequires:  pkgconfig(capi-telephony)
 BuildRequires:  pkgconfig(eventsystem)
 BuildRequires:  pkgconfig(bundle)
+BuildRequires:  pkgconfig(notification)
+BuildRequires:  pkgconfig(callmgr_client)
+#BuildRequires:	pkgconfig(capi-location-manager)
 BuildRequires:  libcap-devel
 BuildRequires:  cmake
 BuildRequires:  edje-tools
 BuildRequires:  gettext-tools
-BuildRequires:  efl-assist-devel
-BuildRequires:  capi-security-privilege-manager-devel
+#BuildRequires:  capi-security-privilege-manager-devel
 BuildRequires:  hash-signer
-BuildRequires: pkgconfig(libtzplatform-config)
 #BuildRequires:  system-resource-devel-meta
-#BuildRequires: model-build-features
 
 #Requires: libeas-common
-Requires: tzdata
 Requires: capi-security-privilege-manager
 Requires(post): attr
-#Requires(post): /sbin/ldconfig
-#Requires(postun): /sbin/ldconfig
-
-# ls: cannot access %{_datadir}/settings: No such file or directory
 
 %description
 Setting application
@@ -281,12 +273,12 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %{_sysconfdir}/opt/upgrade/210.org.tizen.setting.patch.sh
 
 %defattr(-,root,root,-)
-%{_prefix}/apps/org.tizen.mode-syspopup/res/locale/*
+#%{_prefix}/apps/org.tizen.mode-syspopup/res/locale/*
 
 %{PREFIX}/bin/setting
 %{CONFIGDIR}/*
 %{PREFIX}/bin/setting_conf_util
-%{PREFIX}/bin/setting_turnoff_light
+#%{PREFIX}/bin/setting_turnoff_light
 %{PREFIX}/bin/setting_volume_popup
 
 %attr(0755,root,root) %{PREFIX}/bin/setting_help_ringtone

@@ -123,6 +123,8 @@ struct _SettingFontUG {
 
 	FontChangStatus font_change_status;
 	FontExpandState font_expand_state;
+
+	int rotate_angle;
 };
 
 extern setting_view setting_view_font_main;

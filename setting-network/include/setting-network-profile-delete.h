@@ -28,11 +28,9 @@ static void setting_network_profile_delete_mouse_up_cb(void *data,
 static void setting_network_profile_delete_check_cb(void *data,
                                                     Evas_Object *obj,
                                                     void *event_info);
-static void
-setting_network_profile_delete_click_softkey_cancel_cb(void *data,
-                                                       Evas_Object *
-                                                       obj, void
-                                                       *event_info);
+
+static Eina_Bool setting_network_profile_delete_click_softkey_cancel_cb(void *data, Elm_Object_Item *it);
+
 static void
 setting_network_profile_delete_click_softkey_delete_cb(void *data,
                                                        Evas_Object *

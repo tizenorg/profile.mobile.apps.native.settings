@@ -8,6 +8,7 @@
   <language id="el_GR" string="Ελληνικά" lang="Greek" mcc="202"/>
   <language id="de_DE" string="Deutsch" lang="German" mcc="262"/>
   <language id="en_PH" string="English (Philippines)" lang="English(Philippines)" mcc=""/>
+  <language id="en_GB" string="English (United Kingdom)" lang="English(UK)" mcc="234,235"/>
   <language id="en_US" string="English (United States)" lang="English(US)" mcc="310,311,313,316"/>
   <language id="es_ES" string="Español" lang="Spanish" mcc=""/>
   <language id="es_US" string="Español (Estados Unidos)" lang="Spanish(Latin)" mcc="334"/>

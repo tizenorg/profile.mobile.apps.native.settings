@@ -24,7 +24,6 @@
 #include <Eina.h>
 
 #include <setting-cfg.h>
-#include <dbus/dbus.h>
 
 #define SETTING_BRIGHTNESS_DEFAULT_LEVEL 60
 
@@ -50,15 +49,7 @@ setting_view *__get_display_view_to_load(void *data, app_control_h service)
 	ret = app_control_get_uri(service, &uri);
 	if (!ret && uri) {
 		SETTING_TRACE("uri:%s", uri);
-		if (!safeStrCmp(uri, URI_SMART_STAY)) {
-			/*setting_view_node_table_register(&setting_view_display_smart_screen_smart_stay, NULL); */
-			FREE(uri);
-			return NULL;
-		} else if (!safeStrCmp(uri, URI_SMART_ROTATION)) {
-			/*setting_view_node_table_register(&setting_view_display_smart_screen_smart_rotation, NULL); */
-			FREE(uri);
-			return NULL;
-		}
+		/* DO NOTHING NOW */
 	} else {
 		app_control_get_extra_data(service, "viewtype", &viewtype);
 		if (!viewtype) {
@@ -75,18 +66,6 @@ setting_view *__get_display_view_to_load(void *data, app_control_h service)
 			setting_view_node_table_register(&setting_view_display_backlight, NULL);
 			FREE(viewtype);
 			return &setting_view_display_backlight;
-#if SUPPORT_SMARTSCREEN
-		} else if (!safeStrCmp(viewtype, "smartscreen")) {
-			setting_view_node_table_register(&setting_view_display_smart_screen, NULL);
-			setting_view_node_table_register(&setting_view_display_smart_screen_help,
-			                                 &setting_view_display_smart_screen);
-			FREE(viewtype);
-			return &setting_view_display_smart_screen;
-		} else if (!safeStrCmp(viewtype, "screenmode")) {
-			setting_view_node_table_register(&setting_view_display_screen_mode, NULL);
-			FREE(viewtype);
-			return &setting_view_display_screen_mode;
-#endif
 		} else {
 			if (!safeStrCmp(viewtype, "frontpage_backlight")) {
 				displayUG->display_expand_state = DISPLAY_EXPAND_BACKLIGHT;
@@ -98,16 +77,6 @@ setting_view *__get_display_view_to_load(void *data, app_control_h service)
 			setting_view_node_table_register(&setting_view_display_main, NULL);
 			setting_view_node_table_register(&setting_view_display_brightness,
 			                                 &setting_view_display_main);
-#if SUPPORT_SMARTSCREEN
-			setting_view_node_table_register(&setting_view_display_screen_mode,
-			                                 &setting_view_display_main);
-			setting_view_node_table_register(&setting_view_display_smart_screen,
-			                                 &setting_view_display_main);
-			setting_view_node_table_register(&setting_view_display_smart_screen_smart_stay,
-			                                 &setting_view_display_smart_screen);
-			setting_view_node_table_register(&setting_view_display_smart_screen_smart_rotation,
-			                                 &setting_view_display_smart_screen);
-#endif
 			FREE(viewtype);
 			return &setting_view_display_main;
 		}
@@ -196,24 +165,6 @@ __help_popup_on_resp_cb(void *data, Evas_Object *obj, void *event_info)
 	/*const char *btnstr = elm_entry_markup_to_utf8(elm_object_text_get(obj)); */
 
 	if (POPUP_RESPONSE_OK == response_type) {	/*need set vconf */
-#if SUPPORT_SMARTSCREEN
-		SETTING_TRACE("need to set vconf");
-		int ret = 0;
-		if (!safeStrCmp(ad->uri, URI_SMART_STAY)) {
-			ret += vconf_set_int(VCONFKEY_SETAPPL_SMARTSCREEN_SMARTSTAY_STATUS, 1);
-			SETTING_TRACE("ret:%d", ret);
-			if (ad->smart_stay_sublayout) {
-				elm_object_signal_emit(ad->smart_stay_sublayout, "elm,state,top,show", "elm");
-				ad->timer_show_guide = ecore_timer_add(3, (Ecore_Task_Cb)__show_smartstay_guide_popup, ad);
-			}
-		} else if (!safeStrCmp(ad->uri, URI_SMART_ROTATION)) {
-			ret += vconf_set_bool(VCONFKEY_SETAPPL_SMARTSCREEN_SMART_ROTATION, TRUE);
-			if (ad->smart_rotation_sublayout) {
-				elm_object_signal_emit(ad->smart_rotation_sublayout, "elm,state,top,show", "elm");
-				ad->timer_show_guide = ecore_timer_add(3, (Ecore_Task_Cb)__show_smartrotation_guide_popup, ad);
-			}
-		}
-#endif
 		if (ad->help_popup) {
 			evas_object_del(ad->help_popup);
 			ad->help_popup = NULL;
@@ -223,78 +174,6 @@ __help_popup_on_resp_cb(void *data, Evas_Object *obj, void *event_info)
 		SETTING_TRACE("ad->ug:%p", ad->ug);
 		ug_destroy_me(ad->ug);
 	}
-}
-
-static Eina_Bool __help_key_press_cb(void *data, int type, void *event)
-{
-	SETTING_TRACE_BEGIN;
-	Evas_Event_Key_Down *ev = event;
-	if (!ev || !data) {
-		SETTING_TRACE("Invalid event object");
-		return ECORE_CALLBACK_RENEW;
-	}
-	SETTING_TRACE("Pressed %s", ev->keyname);
-	SettingDisplayUG *ad = (SettingDisplayUG *) data;
-
-	#if 0
-	if (!strcmp(ev->keyname, KEY_BACK)) {
-		/*evas_object_hide(obj); // you can call evas_object_del(obj); to remove popup if you want */
-		if (ad->help_popup) {
-			popup_handle_hardkey(ad, ad->help_popup);
-		}
-	}
-	#endif
-
-	return ECORE_CALLBACK_RENEW;
-}
-
-static void *___help_popup_view(ui_gadget_h ug,
-                                enum ug_mode mode, app_control_h service,
-                                void *priv)
-
-{
-	SETTING_TRACE_BEGIN;
-	SettingDisplayUG *ad = priv;
-	int sub_value = 0;
-
-	char buf[MAX_COMMON_BUFFER_LEN] = {0,};
-
-	int ret = app_control_get_uri(service, &ad->uri);
-	if (!ret && ad->uri) {
-#if SUPPORT_SMARTSCREEN
-		if (!safeStrCmp(ad->uri, URI_SMART_STAY)) {
-			vconf_get_int(VCONFKEY_SETAPPL_SMARTSCREEN_SMARTSTAY_STATUS, &sub_value);
-			snprintf(buf, sizeof(buf) , "%s", SETTING_DISPLAY_SMART_SCREEN_TURN_ON_SMART_STAY_POPUP);
-		} else if (!safeStrCmp(ad->uri, URI_SMART_ROTATION)) {
-			vconf_get_bool(VCONFKEY_SETAPPL_SMARTSCREEN_SMART_ROTATION, &sub_value);
-			snprintf(buf, sizeof(buf) , "%s", SETTING_DISPLAY_SMART_SCREEN_TURN_ON_SMART_ROATION_POPUP);
-		}
-#endif
-
-		ad->help_event_handler = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, __help_key_press_cb, ad);
-
-		if (!sub_value) {
-			SETTING_TRACE("uri:%s", ad->uri);
-			if (ad->help_popup) {
-				evas_object_del(ad->help_popup);
-				ad->help_popup = NULL;
-			}
-
-			ad->help_popup =
-			    setting_create_popup_with_btn(ad, ad->win_main_layout,
-			                                  NULL, buf,
-			                                  __help_popup_on_resp_cb, 0,
-			                                  2, POPUP_TURN_ON_STR, "IDS_ST_BUTTON_CANCEL_ABB");
-			/*evas_object_data_set(ad->popup, "text0", MOTION_DISABLED_DSC); */
-			/*evas_object_data_set(ad->popup, "text", USE_MOTION_TO_TRY_TUTORIAL); */
-
-			return ad->help_popup;
-		} else {
-
-		}
-	}
-
-	return NULL;
 }
 
 static void *setting_display_ug_on_create(ui_gadget_h ug,
@@ -317,18 +196,13 @@ static void *setting_display_ug_on_create(ui_gadget_h ug,
 	setting_retvm_if(displayUG->win_main_layout == NULL, NULL,
 	                 "cannot get main window ");
 
-	(void)___help_popup_view(ug, mode, service, priv);
 	/* register view node table */
 	setting_view_node_table_intialize();
 
 	setting_create_Gendial_itc("1line.top", &(displayUG->itc_1text));
-	setting_create_Gendial_itc("1line", &(displayUG->itc_1text_1icon));
-
-	setting_create_Gendial_itc("1line", &(displayUG->itc_1icon_1text_sub));
-
-	setting_create_Gendial_itc("1line", &(displayUG->itc_1text));
-	setting_create_Gendial_itc("1line", &(displayUG->itc_2text_3));
-	setting_create_Gendial_itc("1line", &(displayUG->itc_1text_1icon_divider));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(displayUG->itc_1text_1icon));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(displayUG->itc_1text));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(displayUG->itc_2text_3));
 
 	/*  creating a view. */
 	displayUG->view_to_load = __get_display_view_to_load(displayUG, service);
@@ -380,29 +254,11 @@ static void setting_display_ug_on_destroy(ui_gadget_h ug, app_control_h service,
 	/*  called when this shared gadget is terminated. similar with app_exit */
 	if (&setting_view_display_main == displayUG->view_to_load) {
 		setting_view_destroy(&setting_view_display_brightness, displayUG);
-#if SUPPORT_SMARTSCREEN
-		setting_view_destroy(&setting_view_display_smart_screen_smart_rotation, displayUG);
-		setting_view_destroy(&setting_view_display_smart_screen_smart_stay, displayUG);
-		setting_view_destroy(&setting_view_display_screen_mode, displayUG);
-		setting_view_destroy(&setting_view_display_smart_screen, displayUG);
-#endif
 		setting_view_destroy(&setting_view_display_main, displayUG);
 	} else if (&setting_view_display_brightness == displayUG->view_to_load) {
 		setting_view_destroy(&setting_view_display_brightness, displayUG);
 	} else if (&setting_view_display_backlight == displayUG->view_to_load) {
 		setting_view_destroy(&setting_view_display_backlight, displayUG);
-#if SUPPORT_SMARTSCREEN
-	} else if (&setting_view_display_screen_mode == displayUG->view_to_load) {
-		setting_view_destroy(&setting_view_display_screen_mode, displayUG);
-	} else if (&setting_view_display_smart_screen == displayUG->view_to_load) {
-		setting_view_destroy(&setting_view_display_smart_screen_smart_rotation, displayUG);
-		setting_view_destroy(&setting_view_display_smart_screen_smart_stay, displayUG);
-		setting_view_destroy(&setting_view_display_smart_screen, displayUG);
-	} else if (&setting_view_display_smart_screen_smart_stay == displayUG->view_to_load) {
-		setting_view_destroy(&setting_view_display_smart_screen_smart_stay, displayUG);
-	} else if (&setting_view_display_smart_screen_smart_rotation == displayUG->view_to_load) {
-		setting_view_destroy(&setting_view_display_smart_screen_smart_rotation, displayUG);
-#endif
 	}
 
 	if (NULL != ug_get_layout(displayUG->ug)) {
@@ -435,89 +291,10 @@ static void setting_display_ug_on_event(ui_gadget_h ug,
 			setting_navi_items_update(ad->navi_bar);
 			break;
 		case UG_EVENT_ROTATE_PORTRAIT:
-		case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN: {
-
-				int h = 0;
-				int w = 0;
-#if 0
-				app_device_orientation_e m = elm_win_rotation_get(ad->win_get);
-
-				if (APP_DEVICE_ORIENTATION_90 == m || APP_DEVICE_ORIENTATION_270 == m) {
-					ecore_x_window_size_get(ecore_x_window_root_first_get(), &h, &w);
-
-				} else {
-					ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
-					h = h - 60;
-				}
-				SETTING_TRACE("m:%d", m);
-#endif
-				h = SAMRT_SCREEN_TRY_IT_IAMGE_PORTRAIT_H;
-				w = SAMRT_SCREEN_TRY_IT_IAMGE_PORTRAIT_W;
-				if (ad->smart_rotation_image) {
-					elm_win_indicator_opacity_set(ad->win_get, ELM_WIN_INDICATOR_TRANSPARENT);
-					/*elm_win_indicator_mode_set(ad->win_get,ELM_WIN_INDICATOR_HIDE); */
-					SETTING_TRACE("indicator is in TRANSPARENT mode");
-					evas_object_image_file_set(ad->smart_rotation_image, SMART_SCREEN_TRY_IT_IMAGE_P, NULL);
-					evas_object_size_hint_weight_set(ad->smart_rotation_image, 0.0, EVAS_HINT_EXPAND);
-					evas_object_image_fill_set(ad->smart_rotation_image, 0, 0, w, h);
-					evas_object_image_border_set(ad->smart_rotation_image, 16, 16, 16, 16); /*for round corner */
-					evas_object_image_filled_set(ad->smart_rotation_image, 1); /*to full fill */
-					evas_object_size_hint_min_set(ad->smart_rotation_image, ELM_SCALE_SIZE(w), ELM_SCALE_SIZE(h));
-					evas_object_size_hint_max_set(ad->smart_rotation_image, w, h);
-				}
-				if (ad->smart_stay_image) {
-					SETTING_TRACE("indicator is in TRANSPARENT mode");
-					elm_win_indicator_opacity_set(ad->win_get, ELM_WIN_INDICATOR_TRANSPARENT);
-					/*elm_win_indicator_mode_set(ad->win_get,ELM_WIN_INDICATOR_HIDE); */
-					evas_object_image_file_set(ad->smart_stay_image, SMART_SCREEN_TRY_IT_IMAGE_P, NULL);
-					evas_object_size_hint_weight_set(ad->smart_stay_image, 0.0, EVAS_HINT_EXPAND);
-					evas_object_image_fill_set(ad->smart_stay_image, 0, 0, w, h);
-					evas_object_image_border_set(ad->smart_stay_image, 16, 16, 16, 16); /*for round corner */
-					evas_object_image_filled_set(ad->smart_stay_image, 1); /*to full fill */
-					evas_object_size_hint_min_set(ad->smart_stay_image, ELM_SCALE_SIZE(w), ELM_SCALE_SIZE(h));
-					evas_object_size_hint_max_set(ad->smart_stay_image, w, h);
-				}
-			}
+		case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
 			break;
 		case UG_EVENT_ROTATE_LANDSCAPE:
-		case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN: {
-				int h = 0;
-				int w = 0;
-#if 0
-				app_device_orientation_e m = elm_win_rotation_get(ad->win_get);
-
-				if (APP_DEVICE_ORIENTATION_90 == m || APP_DEVICE_ORIENTATION_270 == m) {
-					ecore_x_window_size_get(ecore_x_window_root_first_get(), &h, &w);
-
-				} else {
-					ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
-
-				}
-				SETTING_TRACE("m:%d", m);
-#endif
-				h = SAMRT_SCREEN_TRY_IT_IAMGE_LANDSCAPE_H;
-				w = SAMRT_SCREEN_TRY_IT_IAMGE_LANDSCAPE_W;
-				if (ad->smart_rotation_image) {
-					/*elm_win_indicator_opacity_set(win, ELM_WIN_INDICATOR_OPAQUE) */
-					evas_object_image_file_set(ad->smart_rotation_image, SMART_SCREEN_TRY_IT_IMAGE_L, NULL);
-					evas_object_size_hint_weight_set(ad->smart_rotation_image, 0.0, EVAS_HINT_EXPAND);
-					evas_object_image_fill_set(ad->smart_rotation_image, 0, 0, w, h);
-					evas_object_image_border_set(ad->smart_rotation_image, 16, 16, 16, 16); /*for round corner */
-					evas_object_image_filled_set(ad->smart_rotation_image, 1); /*to full fill */
-					evas_object_size_hint_min_set(ad->smart_rotation_image, ELM_SCALE_SIZE(w), ELM_SCALE_SIZE(h));
-					evas_object_size_hint_max_set(ad->smart_rotation_image, w, h);
-				}
-				if (ad->smart_stay_image) {
-					evas_object_image_file_set(ad->smart_stay_image, SMART_SCREEN_TRY_IT_IMAGE_L, NULL);
-					evas_object_size_hint_weight_set(ad->smart_stay_image, 0.0, EVAS_HINT_EXPAND);
-					evas_object_image_fill_set(ad->smart_stay_image, 0, 0, w, h);
-					evas_object_image_border_set(ad->smart_stay_image, 16, 16, 16, 16); /*for round corner */
-					evas_object_image_filled_set(ad->smart_stay_image, 1); /*to full fill */
-					evas_object_size_hint_min_set(ad->smart_stay_image, ELM_SCALE_SIZE(w), ELM_SCALE_SIZE(h));
-					evas_object_size_hint_max_set(ad->smart_stay_image, w, h);
-				}
-
-			}
+		case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
 			break;
 		case UG_EVENT_REGION_CHANGE:
 			break;
@@ -693,7 +470,7 @@ int setting_display_set_auto_adjust_tone(int value)
 	msg = __invoke_dbus_method(BUS_NAME, DEVICED_PATH_DISPLAY, DEVICED_INTERFACE_DISPLAY, "setautotone", "i", arr);
 	if (msg) {
 		if (!dbus_message_get_args(msg, &err, DBUS_TYPE_INT32, &state, DBUS_TYPE_INVALID)) {
-			//SETTING_TRACE_DEBUG("no message : [%s:%s]", err.name, err.message);
+			SETTING_TRACE_DEBUG("no message : [%s:%s]", err.name, err.message);
 			ret = SETTING_RETURN_FAIL;
 		} else {
 			SETTING_TRACE_DEBUG("%s-%s : %d", DEVICED_INTERFACE_DISPLAY, "setautotone", state);
@@ -757,34 +534,6 @@ static int setting_reset_display_backlight(void)
 	}
 #endif
 	SETTING_TRACE_END;
-	return ret;
-}
-
-/*  NESTED*/
-/** @todo setting_display_main_effect_set_value work? */
-static int setting_reset_display_main(void)
-{
-	SETTING_TRACE_BEGIN;
-	int ret = 0;
-#if 0
-	ret += setting_reset_display_backlight();
-#if !SUPPOR_SEPARATE_BRIGHTNESS
-	ret += setting_reset_display_brightness();
-#endif
-
-	ret += vconf_set_bool(VCONFKEY_SETAPPL_AUTO_ROTATE_SCREEN_BOOL, TRUE);
-#if SUPPORT_SMARTSCREEN
-	/* smart screen */
-	ret += vconf_set_int(VCONFKEY_SETAPPL_SMARTSCREEN_SMARTSTAY_STATUS, 0);
-	ret += vconf_set_bool(VCONFKEY_SETAPPL_SMARTSCREEN_SMART_ROTATION, FALSE);
-#endif
-	/* screen mode */
-	ret += vconf_set_str(VCONFKEY_SETAPPL_SCREENMODE_SELNAME, "Dynamic");
-	display_set_image_enhance(ENHANCE_MODE, MODE_DYNAMIC);	/* 0 => Dynamic */
-
-	/*touch key light duration */
-	ret += vconf_set_int(VCONFKEY_SETAPPL_TOUCHKEY_LIGHT_DURATION, 90);
-#endif
 	return ret;
 }
 

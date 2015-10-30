@@ -51,6 +51,37 @@ setting_view setting_view_font_main = {
 };
 
 
+static void setting_font_rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	SettingFontUG *ad = (SettingFontUG *) data;
+	if (ad == NULL || ad->win_get == NULL) {
+		return;
+	}
+	int change_ang = elm_win_rotation_get(ad->win_get);
+	enum ug_event event = UG_EVENT_ROTATE_PORTRAIT;
+	switch (change_ang) {
+		case APP_DEVICE_ORIENTATION_0:
+			//SETTING_TRACE("change_ang : 0");
+			ad->rotate_angle = 0;
+			break;
+		case APP_DEVICE_ORIENTATION_180:
+			//SETTING_TRACE("change_ang : 180");
+			ad->rotate_angle = 180;
+			break;
+		case APP_DEVICE_ORIENTATION_270:
+			//SETTING_TRACE("change_ang : 270");
+			ad->rotate_angle = 270;
+			break;
+		case APP_DEVICE_ORIENTATION_90:
+			//SETTING_TRACE("change_ang : 90");
+			ad->rotate_angle = 90;
+			break;
+		default:
+			return;
+	}
+}
+
 char *get_example_style_text(const char *font_size, const char *font_type)
 {
 	char default_example_str[MAX_COMMON_BUFFER_LEN + 1] = {0, };
@@ -64,7 +95,7 @@ char *get_example_style_text(const char *font_size, const char *font_type)
 	return (char *)g_strdup(default_example_str);
 
 }
-static int format_font_name_by_id(char *font_data, char *font_name_id, char *temp, int bufsize)
+static int _format_font_name_by_id(char *font_data, char *font_name_id, char *temp, int bufsize)
 {
 	retvm_if(font_data == NULL, 0, "Invalid argument: event info is NULL");
 
@@ -73,7 +104,6 @@ static int format_font_name_by_id(char *font_data, char *font_name_id, char *tem
 	int i = 0;
 	int count = 0;
 	while (*pos != '\0') {
-		/*SETTING_TRACE(">>>  %c", *pos); */
 		if (*pos == ' ') {
 			SETTING_TRACE(">>>  empty ' ' ");
 			new_name[count] = '\\';
@@ -95,18 +125,6 @@ static int format_font_name_by_id(char *font_data, char *font_name_id, char *tem
 		snprintf(trans_font_type_name, bufsize, "%s", _("IDS_ST_BODY_COOL_JAZZ"));
 	} else if (safeStrCmp(font_name_id, "IDS_ST_BODY_FONTSTYLE_ROSEMARY") == 0) {
 		snprintf(trans_font_type_name, bufsize, "%s", _("IDS_ST_BODY_FONTSTYLE_ROSEMARY"));
-	} else if (safeStrCmp(font_name_id, "IDS_ST_BODY_HELVETICA_NEUE_M_FONT_NAME") == 0) {
-		snprintf(trans_font_type_name, bufsize, "%s", _("IDS_ST_BODY_HELVETICA_NEUE_M_FONT_NAME"));
-	} else if (safeStrCmp(font_name_id, "IDS_ST_BODY_MARUBERI_JPN_DCM") == 0) {
-		snprintf(trans_font_type_name, bufsize, "%s", _("IDS_ST_BODY_MARUBERI_JPN_DCM"));
-	} else if (safeStrCmp(font_name_id, "IDS_ST_BODY_POP_JPN_DCM") == 0) {
-		snprintf(trans_font_type_name, bufsize, "%s", _("IDS_ST_BODY_POP_JPN_DCM"));
-	} else if (safeStrCmp(font_name_id, "IDS_ST_BODY_UDMINCHO_JPN") == 0) {
-		snprintf(trans_font_type_name, bufsize, "%s", _("IDS_ST_BODY_UDMINCHO_JPN"));
-	} else if (safeStrCmp(font_name_id, "IDS_ST_BODY_UDRGOTHICM_JPN") == 0) {
-		snprintf(trans_font_type_name, bufsize, "%s", _("IDS_ST_BODY_UDRGOTHICM_JPN"));
-	} else if (safeStrCmp(font_name_id, "IDS_ST_BODY_UDGOTHIC_M_FONT") == 0) {
-		snprintf(trans_font_type_name, bufsize, "%s", _("IDS_ST_BODY_UDGOTHIC_M_FONT"));
 	} else if (safeStrCmp(font_name_id, "IDS_ST_BODY_DEFAULT_FONT") == 0) {
 		snprintf(trans_font_type_name, bufsize, "%s", _("IDS_ST_BODY_DEFAULT_FONT"));
 	} else {
@@ -121,11 +139,12 @@ char *_item_text_keystr2_get(void *data, Evas_Object *obj, const char *part)
 	setting_retvm_if(data == NULL, NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *item_data = (Setting_GenGroupItem_Data *) data;
 	char *ret_str = NULL;
-	if (!strcmp(part, "elm.text.main.left")) {
+
+	if (!safeStrCmp(part, "elm.text")) {
 		if (item_data->keyStr2) {
 			char temp[FONT_BUF_SIZE] = {0,};
 
-			int ret = format_font_name_by_id(item_data->sub_desc, item_data->keyStr2, temp, FONT_BUF_SIZE);
+			int ret = _format_font_name_by_id(item_data->sub_desc, item_data->keyStr2, temp, FONT_BUF_SIZE);
 
 			if (ret == 0) { /* error condition */
 				SETTING_TRACE_ERROR("Error condition font");
@@ -150,7 +169,6 @@ static Evas_Object *_font_size_slider_get(void *data, Evas_Object *obj,
 	SETTING_TRACE(" --------------------> part:%s", part);
 
 	if (!safeStrCmp(part, "elm.icon")) { /* CENTER WHOLE */
-		/*SETTING_TRACE("item_data->swallow_type:%d", item_data->swallow_type); */
 		if (SWALLOW_Type_LAYOUT_5STEP_SLIDER == item_data->swallow_type) {
 			SETTING_TRACE("Add 5Step Slider");
 
@@ -188,7 +206,6 @@ static Evas_Object *_font_size_slider_get(void *data, Evas_Object *obj,
 			item_data->mouse_up_cb = _slider_mouse_cb;
 			evas_object_event_callback_add(li_slider, EVAS_CALLBACK_MOUSE_UP, _slider_mouse_cb, item_data);
 
-			/*evas_object_size_hint_max_set(li_slider, 360, 6); */
 			elm_object_part_content_set(layout, "slider", li_slider);
 			return layout;
 		} else {
@@ -329,26 +346,12 @@ static Eina_List *__setting_font_main_available_list_get()
 int get_font_name_id(char *font_data, char *temp, int bufsize)
 {
 	/*SETTING_TRACE("font data : %s", (char*)font_data); */
-	/*char trans_font_type_name[FONT_BUF_SIZE] = {0,}; */
-	/*SETTING_TRACE(">>> new_name length : %d : string : %s", count, (char*)new_name); */
 	if (safeStrCmp(font_data, "Choco cooky") == 0) {
 		snprintf(temp, bufsize, "%s", "IDS_ST_BODY_CHOCO_COOKY");
 	} else if (safeStrCmp(font_data, "Cool jazz") == 0) {
 		snprintf(temp, bufsize, "%s", "IDS_ST_BODY_COOL_JAZZ");
 	} else if (safeStrCmp(font_data, "Rosemary") == 0) {
 		snprintf(temp, bufsize, "%s", "IDS_ST_BODY_FONTSTYLE_ROSEMARY");
-	} else if (safeStrCmp(font_data, "HelveticaNeue") == 0) {
-		snprintf(temp, bufsize, "%s", "IDS_ST_BODY_HELVETICA_NEUE_M_FONT_NAME");
-	} else if (safeStrCmp(font_data, "Maruberi") == 0) {
-		snprintf(temp, bufsize, "%s", "IDS_ST_BODY_MARUBERI_JPN_DCM");
-	} else if (safeStrCmp(font_data, "POP") == 0) {
-		snprintf(temp, bufsize, "%s", "IDS_ST_BODY_POP_JPN_DCM");
-	} else if (safeStrCmp(font_data, "UDMincho") == 0) {
-		snprintf(temp, bufsize, "%s", "IDS_ST_BODY_UDMINCHO_JPN");
-	} else if (safeStrCmp(font_data, "UDRGothic") == 0) {
-		snprintf(temp, bufsize, "%s", "IDS_ST_BODY_UDRGOTHICM_JPN");
-	} else if (safeStrCmp(font_data, "UDGothic") == 0) {
-		snprintf(temp, bufsize, "%s", "IDS_ST_BODY_UDGOTHIC_M_FONT");
 	} else {
 		snprintf(temp, bufsize, "%s", font_data);
 	}
@@ -367,21 +370,6 @@ int get_font_name_str(char *font_type_name, char *trans_font_type_name, int bufs
 		/*SETTING_TRACE("%s", trans_font_type_name); */
 	} else if (safeStrCmp(font_type_name, "Rosemary") == 0) {
 		snprintf(trans_font_type_name, bufsize, "%s", _("IDS_ST_BODY_FONTSTYLE_ROSEMARY"));
-		/*SETTING_TRACE("%s", trans_font_type_name); */
-	} else if (safeStrCmp(font_type_name, "HelveticaNeue") == 0) {
-		snprintf(trans_font_type_name, bufsize, "%s", _("IDS_ST_BODY_HELVETICA_NEUE_M_FONT_NAME"));
-		/*SETTING_TRACE("%s", trans_font_type_name); */
-	} else if (safeStrCmp(font_type_name, "Maruberi") == 0) {
-		snprintf(trans_font_type_name, bufsize, "%s", _("IDS_ST_BODY_MARUBERI_JPN_DCM"));
-		/*SETTING_TRACE("%s", trans_font_type_name); */
-	} else if (safeStrCmp(font_type_name, "POP") == 0) {
-		snprintf(trans_font_type_name, bufsize, "%s", _("IDS_ST_BODY_POP_JPN_DCM"));
-		/*SETTING_TRACE("%s", trans_font_type_name); */
-	} else if (safeStrCmp(font_type_name, "UDMincho") == 0) {
-		snprintf(trans_font_type_name, bufsize, "%s", _("IDS_ST_BODY_UDMINCHO_JPN"));
-		/*SETTING_TRACE("%s", trans_font_type_name); */
-	} else if (safeStrCmp(font_type_name, "UDRGothic") == 0) {
-		snprintf(trans_font_type_name, bufsize, "%s", _("IDS_ST_BODY_UDRGOTHICM_JPN"));
 		/*SETTING_TRACE("%s", trans_font_type_name); */
 	} else {
 		snprintf(trans_font_type_name, bufsize, "%s", font_type_name);
@@ -409,47 +397,8 @@ static void _event_set_font_type_helper(char *font_name)
 	int ret = system_settings_set_value_string(SYSTEM_SETTINGS_KEY_FONT_TYPE, font_name);
 	if (ret == SYSTEM_SETTINGS_ERROR_NONE) {
 		/* on success */
-		/* set event system */
-		setting_set_event_system(SYS_EVENT_FONT_SET,
-		                         EVT_KEY_FONT_SET,
-		                         font_name);
+		SETTING_TRACE("SYSTEM_SETTINGS_KEY_FONT_TYPE is OK : %s", font_name);
 	}
-}
-
-static Eina_Bool __font_type_change_call(void *data)
-{
-	SETTING_TRACE_BEGIN;
-	SettingFontUG *ad = (SettingFontUG *) data;
-
-	/* logic */
-	/*system_settings_set_value_string(SYSTEM_SETTINGS_KEY_FONT_TYPE, ad->font_name); */
-	_event_set_font_type_helper(ad->font_name);
-
-	/* finalize */
-	ad->font_type_timer = NULL;
-	return ECORE_CALLBACK_CANCEL;
-}
-
-static Eina_Bool __font_size_change_call(void *data)
-{
-	SETTING_TRACE_BEGIN;
-	SettingFontUG *ad = (SettingFontUG *) data;
-
-	ad->size_popup = setting_create_popup_with_progressbar(ad, ad->win_get,
-	                                                       PROGRESSBAR_STYLE,
-	                                                       NULL, KeyStr_Loading, NULL, 3/*0*/, TRUE, TRUE);
-	_P(ad->size_popup);
-
-	/* logic */
-	int ret;
-	ret = system_settings_set_value_int(SYSTEM_SETTINGS_KEY_FONT_SIZE, ad->ret_font_size);
-	if (ret != 0) {
-		SETTING_TRACE_ERROR("system call failed with error code %d", ret);
-	}
-
-	/* finalize */
-	ad->font_size_idler = NULL;
-	return ECORE_CALLBACK_CANCEL;
 }
 
 static Eina_Bool __slide_timer(void *data)
@@ -633,35 +582,67 @@ static void __font_vconf_change_cb(keynode_t *key, void *data)
 
 #define SLIDER_MAX_VALUE 4
 
-#define SLIDER_START_POINT_X _slider_startpoint_x()
-#define SLIDER_END_POINT_X (_slider_get_width() - SLIDER_START_POINT_X)
-#define SLIDER_LENGTH (SLIDER_END_POINT_X - SLIDER_START_POINT_X)
+#define SLIDER_START_POINT_X( ad )  _slider_startpoint_x(ad)
+#define SLIDER_END_POINT_X( ad ) (_slider_get_width(ad) - SLIDER_START_POINT_X(ad))
+#define SLIDER_LENGTH(ad) (SLIDER_END_POINT_X(ad) - SLIDER_START_POINT_X(ad))
 
-static int _slider_get_width()
+
+static int _slider_get_width(void* data)
 {
-	int w, h;
-	//ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
+	SETTING_TRACE_BEGIN;
+	SettingFontUG *ad = (SettingFontUG *)data;
 
+	int x, y, w, h;
+	elm_win_screen_size_get	(ad->win_get, &x, &y, &w, &h);
+	SETTING_TRACE("-------> x : %d ", x);
+	SETTING_TRACE("-------> y : %d ", y);
+	SETTING_TRACE("-------> w : %d ", w);
+	SETTING_TRACE("-------> h : %d ", h);
+
+	switch (ad->rotate_angle)
+	{
+	case 0:
+	case 360:
+		return w;
+		break;
+	case 90:
+	case 270:
+		return h;
+		break;
+	default:
+		return w;
+	}
 	return w;
 }
 
 
+// 720, 1280
 static int _slider_endpoint_x()
 {
-	if (_slider_get_width() == 720)		/* M0 */
-		return 47;
-	else 								/* KIRAN */
-		return 36;
-}
-
-static int _slider_startpoint_x()
-{
+#ifdef ECORE_X
 	int w, h;
-	//ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
-
+	ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
 	return w;
+#endif
 }
 
+
+/**
+ * ad->rotate_angle = 90;	// do it
+ * ad->rotate_angle = 270;  // do it
+ */
+static int _slider_startpoint_x(void* data)
+{
+	SETTING_TRACE_BEGIN;
+	SettingFontUG *ad = (SettingFontUG *)data;
+	int width = 47;
+	#if 0
+	if (_slider_get_width(ad) == 720)		/* M0 */
+		return 47;
+	else
+	#endif
+	return width;
+}
 
 static void _slider_mouse_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
@@ -677,15 +658,15 @@ static void _slider_mouse_cb(void *data, Evas *e, Evas_Object *obj, void *event_
 
 	int val = 0;
 	int max_vol = SLIDER_MAX_VALUE;
-	int start_x = SLIDER_START_POINT_X;
+	int start_x = SLIDER_START_POINT_X(ad);
 	double current = 0.0;
 
 	{
 		current = ev->canvas.x - start_x;
 		SETTING_TRACE("ev->canvas.x %d ", ev->canvas.x);
 
-		double dval = current * max_vol / SLIDER_LENGTH;
-		val = current * max_vol / SLIDER_LENGTH;
+		double dval = current * max_vol / SLIDER_LENGTH(ad);
+		val = current * max_vol / SLIDER_LENGTH(ad);
 
 		SETTING_TRACE("dval = %lf, val = %d, dval-val=%lf ", dval, val, (dval - val));
 		if ((dval - val) > 0.5)
@@ -747,7 +728,7 @@ static void setting_font_done_click_cb(void *data, Evas_Object *obj, void *event
 		ad->font_change_status = SELECTED_FONT_CHANGE_IN_PROCESS;
 		ad->main_popup = setting_create_popup_with_progressbar(ad, ad->win_get,
 		                                                       PROGRESSBAR_STYLE,
-		                                                       NULL, KeyStr_Loading, __setting_progress_popup_cb, 3/*0*/, TRUE, TRUE);	/* 3 seconds to wait in maximum */
+		                                                       NULL, KeyStr_Loading, __setting_progress_popup_cb, 3/*0*/, TRUE, TRUE, 0);	/* 3 seconds to wait in maximum */
 
 		/* ecore timer for change actual font */
 		ad->font_type_timer = ecore_timer_add(1, (Ecore_Task_Cb)__font_change_call, ad);
@@ -839,7 +820,9 @@ static int setting_font_main_create(void *cb)
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
 	SettingFontUG *ad = (SettingFontUG *) cb;
-	setting_create_Gendial_itc("1line", &(ad->itc_1text_1icon_2));
+
+
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(ad->itc_1text_1icon_2));
 	ad->itc_1text_1icon_2.func.text_get = _item_text_keystr2_get;
 
 	setting_create_Gendial_itc("1icon", &(ad->itc_bg_1icon));
@@ -957,7 +940,6 @@ static int setting_font_main_create(void *cb)
 	if (NULL != default_font_name) {
 		/*char font_name_dispaly[FONT_BUF_SIZE] = {0,}; */
 		SETTING_TRACE_DEBUG("default_font_name:%s", default_font_name);
-		/*format_default_font(SETTING_DEFAULT_FONT_TYPE, font_name_dispaly,FONT_BUF_SIZE, default_font_name); */
 		Setting_GenGroupItem_Data *item_data = (Setting_GenGroupItem_Data *) calloc(1, sizeof(Setting_GenGroupItem_Data));
 		setting_retvm_if(!item_data, SETTING_RETURN_SUCCESS, "calloc failed");
 		item_data->keyStr2 = (char *)g_strdup(SETTING_DEFAULT_FONT_TYPE);/*for display */
@@ -966,12 +948,10 @@ static int setting_font_main_create(void *cb)
 		item_data->chk_status = i;
 		item_data->rgd = rgd;
 		item_data->chk_change_cb = NULL;
-		item_data->group_style = SETTING_GROUP_STYLE_CENTER;
 		item_data->sub_desc = strdup(default_font_name); /*the real font type value */
 		item_data->item = elm_genlist_item_append(ad->genlist, &(ad->itc_1text_1icon_2), item_data, NULL, ELM_GENLIST_ITEM_NONE, setting_font_main_list_sel_cb, ad);
 
 		if (item_data) {
-			setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_CENTER);
 			item_data->userdata = ad;
 			if (!safeStrCmp(ad->font_name, (const char *)item_data->sub_desc)) {
 				matched_font = i;
@@ -1001,7 +981,6 @@ static int setting_font_main_create(void *cb)
 			item_data->chk_status = i;
 			item_data->rgd = rgd;
 			item_data->chk_change_cb = NULL;
-			item_data->group_style = SETTING_GROUP_STYLE_CENTER;
 			item_data->sub_desc = strdup((char *)font_data);
 			item_data->item = elm_genlist_item_append(ad->genlist, &(ad->itc_1text_1icon_2), item_data, NULL, ELM_GENLIST_ITEM_NONE, setting_font_main_list_sel_cb, ad);
 
@@ -1043,9 +1022,9 @@ static int setting_font_main_create(void *cb)
 
 	evas_font_reinit();
 
-	int w, h;
-	ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
-	SETTING_TRACE(" w = %d h = %d <------------------------- ", w, h);
+	//------------------------------------------------------------------------------------
+	evas_object_smart_callback_add(ad->win_get, "wm,rotation,changed", setting_font_rot_changed_cb, ad);
+
 
 	setting_view_font_main.is_create = 1;
 	return SETTING_RETURN_SUCCESS;

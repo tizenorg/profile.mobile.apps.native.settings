@@ -127,7 +127,7 @@ typedef struct {
 	void *data;						/** Setting_GenGroupItem_Data type ptr */
 	char *sub_index;				/** sub_index */
 	cfg_func_table *tfunc;
-	char *uuid;					/** primary key */
+	char *uuid;						/** primary key */
 	int last_clicked;				/** the time of last clicked*/
 	char *shortcut_appid;			/** appid to add shortcut */
 } Setting_Cfg_Node_T;

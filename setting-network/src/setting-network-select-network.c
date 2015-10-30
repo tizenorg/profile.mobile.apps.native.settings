@@ -186,10 +186,9 @@ static int setting_network_select_network_create(void *cb)
 	if (TAPI_NETWORK_SELECTIONMODE_AUTOMATIC == ad->sel_net) {
 		ad->data_auto_network_item = setting_create_Gendial_field_1radio(
 		                                 ad->genlist_sel_network,
-		                                 /*&(itc_2text_1icon_7), */
 		                                 &(itc_1text_1icon),
 		                                 setting_network_Gendial_select_plmn_cb,
-		                                 ad, SWALLOW_Type_1TOGGLE,
+		                                 ad, SWALLOW_Type_1ICON_1RADIO,
 		                                 NULL, TRUE,
 		                                 "IDS_ST_BODY_SELECT_AUTOMATICALLY",
 		                                 setting_network_select_network_chk_changed);
@@ -199,29 +198,14 @@ static int setting_network_select_network_create(void *cb)
 		ad->data_auto_network_item->sub_desc = (char *)g_strdup(sub_text);
 		FREE(sub_text);
 		ad->data_auto_network_item->userdata = ad;
-		/*setting_genlist_item_groupstyle_set(ad->data_auto_network_item, SETTING_GROUP_STYLE_TOP); */
 
 	} else if (TAPI_NETWORK_SELECTIONMODE_MANUAL == ad->sel_net) {
 
-		/* searching list
-		int tapi_ret;
-
-		tapi_ret = tel_search_network(ad->handle, setting_tapi_search_network_cb, ad); //ASYNC API - TAPI_EVENT_NETWORK_SEARCH_CNF
-		if(tapi_ret != TAPI_API_SUCCESS) { // error handling..
-			SETTING_TRACE_DEBUG("%s*** [ERR] tel_search_network. tapi_ret=%d ***%s", SETTING_FONT_RED, tapi_ret, SETTING_FONT_BLACK);
-			setting_create_popup_without_btn(ad, ad->win_get, NULL, _(STR_SETTING_OPERATION_FAILED), NULL, POPUP_INTERVAL, FALSE, FALSE);
-			// put error handler on the end of this function.
-			goto err_handle;
-		}
-		ad->b_searching_network = TRUE;
-		*/
-
 		ad->data_auto_network_item  = setting_create_Gendial_field_1radio(
 		                                  ad->genlist_sel_network,
-		                                  /*&(itc_2text_1icon_7), */
 		                                  &(itc_1text_1icon),
 		                                  setting_network_Gendial_select_plmn_cb,
-		                                  ad, SWALLOW_Type_1TOGGLE,
+		                                  ad, SWALLOW_Type_1ICON_1RADIO,
 		                                  NULL, FALSE, "IDS_ST_BODY_SELECT_AUTOMATICALLY",
 		                                  setting_network_select_network_chk_changed);
 
@@ -229,7 +213,6 @@ static int setting_network_select_network_create(void *cb)
 		/*ad->data_auto_network_item->sub_desc = (char *)g_strdup(ad->sel_network);//just a simple display */
 		char *sub_text = setting_customize_text(_(ad->sel_network), 0, GRAY_COLOR, NULL);
 		ad->data_auto_network_item->sub_desc = (char *)g_strdup(sub_text);
-		setting_genlist_item_groupstyle_set(ad->data_auto_network_item, SETTING_GROUP_STYLE_TOP);
 		FREE(sub_text);
 		ad->data_auto_network_item->userdata = ad;
 
@@ -246,7 +229,6 @@ static int setting_network_select_network_create(void *cb)
 						ad->chk_sel, -1, NULL, NULL);
 		__BACK_POINTER_SET(ad->data_search_network_item);
 		elm_genlist_item_select_mode_set(ad->data_search_network_item->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-		setting_genlist_item_groupstyle_set(ad->data_search_network_item, SETTING_GROUP_STYLE_BOTTOM);
 		*/
 
 		/*
@@ -269,7 +251,6 @@ static int setting_network_select_network_create(void *cb)
 							ad->chk_sel, -1, NULL, NULL);
 			__BACK_POINTER_SET(ad->data_search_network_item);
 			elm_genlist_item_select_mode_set(ad->data_search_network_item->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-			setting_genlist_item_groupstyle_set(ad->data_search_network_item, SETTING_GROUP_STYLE_BOTTOM);
 		}
 		else
 		{
@@ -289,7 +270,6 @@ static int setting_network_select_network_create(void *cb)
 							setting_network_select_network_chk_changed);
 			setting_retvm_if(NULL == item_Data, SETTING_RETURN_FAIL, "Failed to calloc memory");
 			item_Data->userdata = ad;
-			setting_genlist_item_groupstyle_set(item_Data, SETTING_GROUP_STYLE_CENTER);
 
 			ad->data_search_network_item = setting_create_Gendial_field_1radio(
 							ad->genlist_sel_network,
@@ -299,7 +279,6 @@ static int setting_network_select_network_create(void *cb)
 							ad->chk_sel, -1, NULL, NULL);
 			__BACK_POINTER_SET(ad->data_search_network_item);
 			elm_genlist_item_select_mode_set(ad->data_search_network_item->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-			setting_genlist_item_groupstyle_set(ad->data_search_network_item, SETTING_GROUP_STYLE_BOTTOM);
 			elm_radio_value_set(ad->chk_sel, TAPI_NETWORK_SELECTIONMODE_MANUAL);
 
 		}

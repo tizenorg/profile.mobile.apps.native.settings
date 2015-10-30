@@ -24,7 +24,6 @@
 #include <Eina.h>
 
 #include <setting-cfg.h>
-#include <dbus/dbus.h>
 
 #define SETTING_BRIGHTNESS_DEFAULT_LEVEL 60
 
@@ -72,152 +71,6 @@ static void setting_applications_ug_cb_resize(void *data, Evas *e,
 	SettingApplicationsUG *ad = (SettingApplicationsUG *) data;
 	setting_view_update(ad->view_to_load, ad);
 }
-/*help smart scren popup*/
-Eina_Bool __show_smartstay_guide_popup(void *data)
-{
-	SETTING_TRACE_BEGIN;
-	/* error check */
-	setting_retvm_if(data == NULL, ECORE_CALLBACK_CANCEL,
-	                 "[Setting > Applications] Data parameter is NULL");
-
-	SettingApplicationsUG *ad = (SettingApplicationsUG *) data;
-	setting_retvm_if(ad->smart_stay_sublayout == NULL, ECORE_CALLBACK_CANCEL,
-	                 "[Setting > Applications] Dad->smart_stay_sublayout parameter is NULL");
-
-	/*hide top popup*/
-	elm_object_signal_emit(ad->smart_stay_sublayout, "elm,state,top,hide", "elm");
-	/*show center popup*/
-	elm_object_signal_emit(ad->smart_stay_sublayout, "elm,state,center,show", "elm");
-	return ECORE_CALLBACK_CANCEL;
-}
-Eina_Bool __show_smartrotation_guide_popup(void *data)
-{
-	SETTING_TRACE_BEGIN;
-	/* error check */
-	setting_retvm_if(data == NULL, ECORE_CALLBACK_CANCEL,
-	                 "[Setting > Applications] Data parameter is NULL");
-
-	SettingApplicationsUG *ad = (SettingApplicationsUG *) data;
-	setting_retvm_if(ad->smart_rotation_sublayout == NULL, ECORE_CALLBACK_CANCEL,
-	                 "[Setting > Applications] ad->smart_rotation_sublayout parameter is NULL");
-	/*hide top popup*/
-	elm_object_signal_emit(ad->smart_rotation_sublayout, "elm,state,top,hide", "elm");
-	/*show center popup*/
-	elm_object_signal_emit(ad->smart_rotation_sublayout, "elm,state,center,show", "elm");
-	return ECORE_CALLBACK_CANCEL;
-}
-
-static void
-__help_popup_on_resp_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	SETTING_TRACE_BEGIN;
-	int response_type = btn_type(obj);
-	SettingApplicationsUG *ad = (SettingApplicationsUG *) data;
-
-	/* prevent CID35750 (by sunyeop.hwang@20131109) */
-	/*const char *btnstr = elm_entry_markup_to_utf8(elm_object_text_get(obj)); */
-
-	if (POPUP_RESPONSE_OK == response_type) {	/*need set vconf */
-#if SUPPORT_SMARTSCREEN
-		SETTING_TRACE("need to set vconf");
-		int ret = 0;
-		if (!safeStrCmp(ad->uri, URI_SMART_STAY)) {
-			ret += vconf_set_int(VCONFKEY_SETAPPL_SMARTSCREEN_SMARTSTAY_STATUS, 1);
-			SETTING_TRACE("ret:%d", ret);
-			if (ad->smart_stay_sublayout) {
-				elm_object_signal_emit(ad->smart_stay_sublayout, "elm,state,top,show", "elm");
-				ad->timer_show_guide = ecore_timer_add(3, (Ecore_Task_Cb)__show_smartstay_guide_popup, ad);
-			}
-		} else if (!safeStrCmp(ad->uri, URI_SMART_ROTATION)) {
-			ret += vconf_set_bool(VCONFKEY_SETAPPL_SMARTSCREEN_SMART_ROTATION, TRUE);
-			if (ad->smart_rotation_sublayout) {
-				elm_object_signal_emit(ad->smart_rotation_sublayout, "elm,state,top,show", "elm");
-				ad->timer_show_guide = ecore_timer_add(3, (Ecore_Task_Cb)__show_smartrotation_guide_popup, ad);
-			}
-		}
-#endif
-		if (ad->help_popup) {
-			evas_object_del(ad->help_popup);
-			ad->help_popup = NULL;
-		}
-	} else if (POPUP_RESPONSE_CANCEL == response_type) {	/*need rollback */
-		evas_object_hide(ad->help_popup);
-		SETTING_TRACE("ad->ug:%p", ad->ug);
-		ug_destroy_me(ad->ug);
-	}
-}
-
-static Eina_Bool __help_key_press_cb(void *data, int type, void *event)
-{
-	SETTING_TRACE_BEGIN;
-	Evas_Event_Key_Down *ev = event;
-	if (!ev || !data) {
-		SETTING_TRACE("Invalid event object");
-		return ECORE_CALLBACK_RENEW;
-	}
-	SETTING_TRACE("Pressed %s", ev->keyname);
-	SettingApplicationsUG *ad = (SettingApplicationsUG *) data;
-
-	#if 0
-	if (!strcmp(ev->keyname, KEY_BACK)) {
-		/*evas_object_hide(obj); // you can call evas_object_del(obj); to remove popup if you want */
-		if (ad->help_popup) {
-			popup_handle_hardkey(ad, ad->help_popup);
-		}
-	}
-	#endif
-
-	return ECORE_CALLBACK_RENEW;
-}
-
-static void *___help_popup_view(ui_gadget_h ug,
-                                enum ug_mode mode, app_control_h service,
-                                void *priv)
-
-{
-	SETTING_TRACE_BEGIN;
-	SettingApplicationsUG *ad = priv;
-	int sub_value = 0;
-
-	char buf[MAX_COMMON_BUFFER_LEN] = {0,};
-
-	int ret = app_control_get_uri(service, &ad->uri);
-	if (!ret && ad->uri) {
-#if SUPPORT_SMARTSCREEN
-		if (!safeStrCmp(ad->uri, URI_SMART_STAY)) {
-			vconf_get_int(VCONFKEY_SETAPPL_SMARTSCREEN_SMARTSTAY_STATUS, &sub_value);
-			snprintf(buf, sizeof(buf) , "%s", SETTING_DISPLAY_SMART_SCREEN_TURN_ON_SMART_STAY_POPUP);
-		} else if (!safeStrCmp(ad->uri, URI_SMART_ROTATION)) {
-			vconf_get_bool(VCONFKEY_SETAPPL_SMARTSCREEN_SMART_ROTATION, &sub_value);
-			snprintf(buf, sizeof(buf) , "%s", SETTING_DISPLAY_SMART_SCREEN_TURN_ON_SMART_ROATION_POPUP);
-		}
-#endif
-
-		ad->help_event_handler = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, __help_key_press_cb, ad);
-
-		if (!sub_value) {
-			SETTING_TRACE("uri:%s", ad->uri);
-			if (ad->help_popup) {
-				evas_object_del(ad->help_popup);
-				ad->help_popup = NULL;
-			}
-
-			ad->help_popup =
-			    setting_create_popup_with_btn(ad, ad->win_main_layout,
-			                                  NULL, buf,
-			                                  __help_popup_on_resp_cb, 0,
-			                                  2, POPUP_TURN_ON_STR, "IDS_ST_BUTTON_CANCEL_ABB");
-			/*evas_object_data_set(ad->popup, "text0", MOTION_DISABLED_DSC); */
-			/*evas_object_data_set(ad->popup, "text", USE_MOTION_TO_TRY_TUTORIAL); */
-
-			return ad->help_popup;
-		} else {
-
-		}
-	}
-
-	return NULL;
-}
 
 static void *setting_applications_ug_on_create(ui_gadget_h ug,
                                                enum ug_mode mode, app_control_h service,
@@ -239,18 +92,17 @@ static void *setting_applications_ug_on_create(ui_gadget_h ug,
 	setting_retvm_if(applicationsUG->win_main_layout == NULL, NULL,
 	                 "cannot get main window ");
 
-	(void)___help_popup_view(ug, mode, service, priv);
 	/* register view node table */
 	setting_view_node_table_intialize();
 
-	setting_create_Gendial_itc("2line.top", &(applicationsUG->itc_2text_2));
-	setting_create_Gendial_itc("1line", &(applicationsUG->itc_1text_1icon));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(applicationsUG->itc_2text_2));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(applicationsUG->itc_1text_1icon));
 
-	setting_create_Gendial_itc("1line", &(applicationsUG->itc_1icon_1text_sub));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(applicationsUG->itc_1icon_1text_sub));
 
-	setting_create_Gendial_itc("1line", &(applicationsUG->itc_1text));
-	setting_create_Gendial_itc("1line", &(applicationsUG->itc_2text_3));
-	setting_create_Gendial_itc("1line", &(applicationsUG->itc_1text_1icon_divider));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(applicationsUG->itc_1text));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(applicationsUG->itc_2text_3));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(applicationsUG->itc_1text_1icon_divider));
 
 	/*  creating a view. */
 	applicationsUG->view_to_load = __get_applications_view_to_load(applicationsUG, service);
@@ -280,6 +132,22 @@ static void setting_applications_ug_on_pause(ui_gadget_h ug, app_control_h servi
 static void setting_applications_ug_on_resume(ui_gadget_h ug, app_control_h service,
                                               void *priv)
 {
+	SETTING_TRACE_BEGIN;
+	setting_retvm_if((!priv), NULL, "!priv");
+
+	SettingApplicationsUG *applicationsUG = priv;
+
+#if 0
+	if (applicationsUG->data_home) {
+		char *appid = vconf_get_str(VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME);
+		char *sub_desc = setting_application_get_defaultapp_name(appid);
+		if (sub_desc)
+			applicationsUG->data_home->sub_desc = (char *)strdup(sub_desc);
+		elm_object_item_data_set(applicationsUG->data_home->item, applicationsUG->data_home);
+		elm_genlist_item_update(applicationsUG->data_home->item);
+		free(sub_desc);
+	}
+#endif
 }
 
 static void setting_applications_ug_on_destroy(ui_gadget_h ug, app_control_h service,
@@ -294,10 +162,6 @@ static void setting_applications_ug_on_destroy(ui_gadget_h ug, app_control_h ser
 	applicationsUG->ug = ug;
 
 	FREE(applicationsUG->uri);
-	if (applicationsUG->help_popup) {
-		evas_object_del(applicationsUG->help_popup);
-		applicationsUG->help_popup = NULL;
-	}
 
 	/*  called when this shared gadget is terminated. similar with app_exit */
 	if (&setting_view_applications_main == applicationsUG->view_to_load) {
@@ -336,89 +200,9 @@ static void setting_applications_ug_on_event(ui_gadget_h ug,
 			setting_navi_items_update(ad->navi_bar);
 			break;
 		case UG_EVENT_ROTATE_PORTRAIT:
-		case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN: {
-
-				int h = 0;
-				int w = 0;
-#if 0
-				app_device_orientation_e m = elm_win_rotation_get(ad->win_get);
-
-				if (APP_DEVICE_ORIENTATION_90 == m || APP_DEVICE_ORIENTATION_270 == m) {
-					ecore_x_window_size_get(ecore_x_window_root_first_get(), &h, &w);
-
-				} else {
-					ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
-					h = h - 60;
-				}
-				SETTING_TRACE("m:%d", m);
-#endif
-				h = SAMRT_SCREEN_TRY_IT_IAMGE_PORTRAIT_H;
-				w = SAMRT_SCREEN_TRY_IT_IAMGE_PORTRAIT_W;
-				if (ad->smart_rotation_image) {
-					elm_win_indicator_opacity_set(ad->win_get, ELM_WIN_INDICATOR_TRANSPARENT);
-					/*elm_win_indicator_mode_set(ad->win_get,ELM_WIN_INDICATOR_HIDE); */
-					SETTING_TRACE("indicator is in TRANSPARENT mode");
-					evas_object_image_file_set(ad->smart_rotation_image, SMART_SCREEN_TRY_IT_IMAGE_P, NULL);
-					evas_object_size_hint_weight_set(ad->smart_rotation_image, 0.0, EVAS_HINT_EXPAND);
-					evas_object_image_fill_set(ad->smart_rotation_image, 0, 0, w, h);
-					evas_object_image_border_set(ad->smart_rotation_image, 16, 16, 16, 16); /*for round corner */
-					evas_object_image_filled_set(ad->smart_rotation_image, 1); /*to full fill */
-					evas_object_size_hint_min_set(ad->smart_rotation_image, ELM_SCALE_SIZE(w), ELM_SCALE_SIZE(h));
-					evas_object_size_hint_max_set(ad->smart_rotation_image, w, h);
-				}
-				if (ad->smart_stay_image) {
-					SETTING_TRACE("indicator is in TRANSPARENT mode");
-					elm_win_indicator_opacity_set(ad->win_get, ELM_WIN_INDICATOR_TRANSPARENT);
-					/*elm_win_indicator_mode_set(ad->win_get,ELM_WIN_INDICATOR_HIDE); */
-					evas_object_image_file_set(ad->smart_stay_image, SMART_SCREEN_TRY_IT_IMAGE_P, NULL);
-					evas_object_size_hint_weight_set(ad->smart_stay_image, 0.0, EVAS_HINT_EXPAND);
-					evas_object_image_fill_set(ad->smart_stay_image, 0, 0, w, h);
-					evas_object_image_border_set(ad->smart_stay_image, 16, 16, 16, 16); /*for round corner */
-					evas_object_image_filled_set(ad->smart_stay_image, 1); /*to full fill */
-					evas_object_size_hint_min_set(ad->smart_stay_image, ELM_SCALE_SIZE(w), ELM_SCALE_SIZE(h));
-					evas_object_size_hint_max_set(ad->smart_stay_image, w, h);
-				}
-			}
 			break;
 		case UG_EVENT_ROTATE_LANDSCAPE:
-		case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN: {
-				int h = 0;
-				int w = 0;
-#if 0
-				app_device_orientation_e m = elm_win_rotation_get(ad->win_get);
-
-				if (APP_DEVICE_ORIENTATION_90 == m || APP_DEVICE_ORIENTATION_270 == m) {
-					ecore_x_window_size_get(ecore_x_window_root_first_get(), &h, &w);
-
-				} else {
-					ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
-
-				}
-				SETTING_TRACE("m:%d", m);
-#endif
-				h = SAMRT_SCREEN_TRY_IT_IAMGE_LANDSCAPE_H;
-				w = SAMRT_SCREEN_TRY_IT_IAMGE_LANDSCAPE_W;
-				if (ad->smart_rotation_image) {
-					/*elm_win_indicator_opacity_set(win, ELM_WIN_INDICATOR_OPAQUE) */
-					evas_object_image_file_set(ad->smart_rotation_image, SMART_SCREEN_TRY_IT_IMAGE_L, NULL);
-					evas_object_size_hint_weight_set(ad->smart_rotation_image, 0.0, EVAS_HINT_EXPAND);
-					evas_object_image_fill_set(ad->smart_rotation_image, 0, 0, w, h);
-					evas_object_image_border_set(ad->smart_rotation_image, 16, 16, 16, 16); /*for round corner */
-					evas_object_image_filled_set(ad->smart_rotation_image, 1); /*to full fill */
-					evas_object_size_hint_min_set(ad->smart_rotation_image, ELM_SCALE_SIZE(w), ELM_SCALE_SIZE(h));
-					evas_object_size_hint_max_set(ad->smart_rotation_image, w, h);
-				}
-				if (ad->smart_stay_image) {
-					evas_object_image_file_set(ad->smart_stay_image, SMART_SCREEN_TRY_IT_IMAGE_L, NULL);
-					evas_object_size_hint_weight_set(ad->smart_stay_image, 0.0, EVAS_HINT_EXPAND);
-					evas_object_image_fill_set(ad->smart_stay_image, 0, 0, w, h);
-					evas_object_image_border_set(ad->smart_stay_image, 16, 16, 16, 16); /*for round corner */
-					evas_object_image_filled_set(ad->smart_stay_image, 1); /*to full fill */
-					evas_object_size_hint_min_set(ad->smart_stay_image, ELM_SCALE_SIZE(w), ELM_SCALE_SIZE(h));
-					evas_object_size_hint_max_set(ad->smart_stay_image, w, h);
-				}
-
-			}
+		case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
 			break;
 		case UG_EVENT_REGION_CHANGE:
 			break;

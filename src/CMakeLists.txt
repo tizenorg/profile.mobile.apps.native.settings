@@ -24,11 +24,11 @@ pkg_check_modules(pkgs_main REQUIRED
 					  notification
 					  capi-appfw-app-manager
 					  pkgmgr-info
-					  efl-extension
-					  efl-assist
 					  sqlite3
 					  accounts-svc
 					  capi-media-image-util
+					  efl-extension
+					  callmgr_client
 				  )
 
 FOREACH(flag ${pkgs_main_CFLAGS})
@@ -81,17 +81,7 @@ INSTALL(TARGETS ${SETTING_CONFUTIL} DESTINATION /usr/apps/${SETTING_PKG_NAME}/bi
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} -L${CMAKE_BINARY_DIR}/${SETTING_COMMON} -lsetting-common)
 
 
-# util to turn off assistive light
-SET(SETTING_TURNOFF_LIGHT setting_turnoff_light)
-ADD_EXECUTABLE(${SETTING_TURNOFF_LIGHT}
-	./assistive_light_util/setting_turnoff_light.c
-	)
-TARGET_LINK_LIBRARIES(${SETTING_TURNOFF_LIGHT} -L${CMAKE_BINARY_DIR}/${SETTING_COMMON} -lsetting-common)
-TARGET_LINK_LIBRARIES(${SETTING_TURNOFF_LIGHT} ${pkgs_main_LDFLAGS} "-pie")
-INSTALL(TARGETS ${SETTING_TURNOFF_LIGHT} DESTINATION /usr/apps/${SETTING_PKG_NAME}/bin)
-
 # dmalloc
-#TARGET_LINK_LIBRARIES(${PROJECT_NAME} -ldmalloc)
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${pkgs_main_LDFLAGS} "-pie")
 
 INSTALL(TARGETS ${PROJECT_NAME} DESTINATION /usr/apps/${SETTING_PKG_NAME}/bin)
@@ -126,6 +116,16 @@ ADD_CUSTOM_TARGET(setting-theme.edj
 ADD_DEPENDENCIES(${PROJECT_NAME} setting-theme.edj)
 
 INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-theme.edj DESTINATION /usr/apps/${SETTING_PKG_NAME}/res/edje/)
+
+# make settings.edj
+ADD_CUSTOM_TARGET(settings.edj
+		COMMAND edje_cc -id ${CMAKE_SOURCE_DIR}/resource/images -id ${CMAKE_SOURCE_DIR}/resource/icons -sd ${CMAKE_SOURCE_DIR}/resource/sounds
+		${CMAKE_SOURCE_DIR}/resource/settings.edc ${CMAKE_BINARY_DIR}/settings.edj
+		DEPENDS ${CMAKE_SOURCE_DIR}/resource/settings.edc
+)
+ADD_DEPENDENCIES(${PROJECT_NAME} settings.edj)
+
+INSTALL(FILES ${CMAKE_BINARY_DIR}/settings.edj DESTINATION /usr/apps/${SETTING_PKG_NAME}/res/edje/)
 
 # make setting-newux.edj
 ADD_CUSTOM_TARGET(setting-newux.edj
@@ -166,16 +166,6 @@ ADD_CUSTOM_TARGET(setting-proc.edj
 
 ADD_DEPENDENCIES(${PROJECT_NAME} setting-proc.edj)
 INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-proc.edj DESTINATION /usr/apps/${SETTING_PKG_NAME}/res/edje/)
-
-# make setting-spinner.edj
-ADD_CUSTOM_TARGET(setting-spinner.edj
-		COMMAND edje_cc
-		${CMAKE_SOURCE_DIR}/resource/setting-spinner.edc ${CMAKE_BINARY_DIR}/setting-spinner.edj
-		DEPENDS ${CMAKE_SOURCE_DIR}/resource/setting-spinner.edc
-)
-
-ADD_DEPENDENCIES(${PROJECT_NAME} setting-spinner.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-spinner.edj DESTINATION /usr/apps/${SETTING_PKG_NAME}/res/edje/)
 
 # make setting-slider.edj
 ADD_CUSTOM_TARGET(setting-slider.edj
@@ -219,16 +209,6 @@ ADD_CUSTOM_TARGET(setting-custompopup.edj
 ADD_DEPENDENCIES(${PROJECT_NAME} setting-custompopup.edj)
 INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-custompopup.edj DESTINATION /usr/apps/${SETTING_PKG_NAME}/res/edje/)
 
-# make setting-batt.edj
-ADD_CUSTOM_TARGET(setting-batt.edj
-		COMMAND edje_cc -id ${CMAKE_SOURCE_DIR}/resource/images -id ${CMAKE_SOURCE_DIR}/resource/icons
-		${CMAKE_SOURCE_DIR}/resource/setting-proc.edc ${CMAKE_BINARY_DIR}/setting-batt.edj
-		DEPENDS ${CMAKE_SOURCE_DIR}/resource/setting-proc.edc
-)
-
-ADD_DEPENDENCIES(${PROJECT_NAME} setting-batt.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-batt.edj DESTINATION /usr/apps/${SETTING_PKG_NAME}/res/edje/)
-
 INSTALL(FILES ${CMAKE_SOURCE_DIR}/resource/langlist.xml DESTINATION /usr/apps/${SETTING_PKG_NAME}/def_config)
 #------------------------------------------------------------------------------------------
 
@@ -259,8 +239,6 @@ INSTALL(FILES ${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting.xml DEST
 
 INSTALL(FILES ${CMAKE_SOURCE_DIR}/mime.setting.xml DESTINATION /usr/share/mime/packages)
 
-#add sub directory
-ADD_SUBDIRECTORY(po)
 
 #------------------------------------------------------------------
 #add setting-sfinder-plugin

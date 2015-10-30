@@ -22,6 +22,7 @@
 #define __SETTING_NETWORK_MAIN_H__
 
 #include <setting-network.h>
+#include <call-manager.h>
 
 void setting_network_get_preferred_network_list(void);
 

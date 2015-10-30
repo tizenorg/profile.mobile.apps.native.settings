@@ -28,7 +28,6 @@
 #endif
 
 #include <appcore-efl.h>
-#include <app_control.h>
 
 #define EXPORT_PUBLIC __attribute__ ((visibility ("default")))
 
@@ -40,7 +39,6 @@
 
 #include <setting-common-data-type.h>
 #include <aul.h>
-#include <ui-gadget.h>
 #include <ui-gadget-module.h>
 #include <regex.h>
 
@@ -133,11 +131,11 @@ extern int setting_set_i18n(char *pkgname, char *localedir);
 extern int setting_set_i18n_force(char *pkgname, char *localedir);
 
 extern int app_launcher(const char *pkg_name);
+extern int app_group_launcher(const char *pkg_name);
 extern char *substring(const char *str, size_t begin, size_t len);
 extern bool check_blockingmode_sub_item();
 extern int get_datausage_current_month_info(bool bisroaming, char *szUsed);
 extern int get_current_datausage_this_month(double *total, double *szUsed);
-extern int get_storage_fs_status(double *total, double *avail, const char *path);
 extern bool get_tethering_status();
 extern char *__get_font_size_str(int value);
 extern char *format_backlight_time_str(char *backligt_time);

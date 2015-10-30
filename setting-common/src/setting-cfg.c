@@ -28,29 +28,17 @@
 #include <setting-common-data-slp-setting.h>
 #include <unistd.h>
 #include <vconf.h>
-#include <app_common.h>
 
-#define CFG_FILE_DIR_PATH	setting_cfg_get_dir_path()
-#define CFG_FILE_PATH		setting_cfg_get_path()
+#define CFG_FILE_DIR_PATH	"/opt/usr/apps/org.tizen.setting/data/"
+#define CFG_FILE_PATH		CFG_FILE_DIR_PATH"setting.cfg"
 
 JsonParser *parser;
 JsonNode   *root; /* category_list */
 
 EXPORT_PUBLIC
-char *setting_cfg_get_dir_path()
-{
-	return app_get_data_path();
-}
-
-
-// /home/owner/apps_rw/org.tizen.setting/data/setting.cfg!
-EXPORT_PUBLIC
 char *setting_cfg_get_path()
 {
-	char* path = app_get_data_path();
-	char string[1024];
-	sprintf(string, "%s%s", path, "setting.cfg");
-	return strdup(string);
+	return CFG_FILE_PATH;
 }
 
 int setting_cfg_file_write(JsonNode *node);
@@ -177,19 +165,21 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 	{KeyStr_Connections, NULL, "move://Tab2.top", Cfg_Item_Pos_Level0, 0, 0, Cfg_Item_Title_Node, NULL, NULL, NULL, uuid_Connectivity, 0, NULL},
 	{KeyStr_WiFi, IMG_WiFi, "wifi-efl-ug", Cfg_Item_Pos_Level0, Cfg_Item_Resetable,   0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Connections, &wifi_tfunc, uuid_WiFi, 0, "wifi-efl-ug"},
 	{KeyStr_Bluetooth, IMG_Bluetooth, "ug-bluetooth-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable,  0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Connections, &bluetooth_tfunc, uuid_Bluetooth, 0, "ug-bluetooth-efl"},
+#ifdef TIZEN_BUILD_TARGET
 	{KeyStr_FlightMode, IMG_FlightMode, "setting-flightmode-efl", Cfg_Item_Pos_Level0, Cfg_Item_unResetable,  0, Cfg_Item_Ui_Node_Toggle, NULL, KeyStr_Connections, &flightmode_tfunc, uuid_FlightMode, 0, NULL},
+#endif
 #ifdef TIZEN_BUILD_TARGET
 	{KeyStr_MobileAP, IMG_MobileAP, "setting-mobileap-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable,  0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Connections, NULL, uuid_MobileAP, 0, NULL},
-	{KeyStr_WiFiDirect, IMG_WiFiDirect, "setting-wifidirect-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Connections, NULL, uuid_WiFiDirect, 0, NULL},
-#ifndef _Z1
+#ifdef _M0
 	{KeyStr_NFC, IMG_NFC, "setting-nfc-efl|type:nfc", Cfg_Item_Pos_Level0, Cfg_Item_unResetable,  0, Cfg_Item_Ug_Node_Toggle, NULL, KeyStr_Connections, &nfc_tfunc, uuid_NFC, 0, "setting-nfc-efl"},
 #endif
 #endif
 #ifdef TIZEN_BUILD_TARGET
 	{KeyStr_MobileNetworks, IMG_Network, "setting-network-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0,  Cfg_Item_Ug_Node, NULL, KeyStr_Connections, NULL, uuid_Network, 0, NULL},
 	/*More connections */
-	{KeyStr_MoreConnections, IMG_More_Connections, "setting-moreconnections-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0,  Cfg_Item_Ug_Node, NULL, KeyStr_Connections, NULL, uuid_Network, 0, NULL},
 #endif
+	{KeyStr_MoreConnections, IMG_More_Connections, "setting-moreconnections-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0,  Cfg_Item_Ug_Node, NULL, KeyStr_Connections, NULL, uuid_Network, 0, NULL},
+
 	/* Group:Device */
 	{KeyStr_Device, NULL, "move://Tab3.top", Cfg_Item_Pos_Level0, 0, 0, Cfg_Item_Title_Node, NULL, NULL, NULL, uuid_SoundDisplay, 0, NULL},
 	{KeyStr_Sounds, IMG_Sounds, "setting-profile-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_Device, NULL, uuid_SoundDisplay, 0, NULL},
@@ -200,24 +190,24 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 	{KeyStr_Personal, NULL, "move://Tab3.top", Cfg_Item_Pos_Level0, 0, 0, Cfg_Item_Title_Node, NULL, NULL, NULL, uuid_Personal, 0, NULL},
 	{KeyStr_Wallpaper, IMG_Wallpaper, "org.tizen.wallpaper-ui-service", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Personal, NULL, uuid_HomeAndLockscreen, 0, "org.tizen.setting.wallpaper-ui-service"},
 	{KeyStr_LockScreen, IMG_LockedScreen, "setting-security-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Personal, NULL, uuid_LockedScreen, 0, "ug-lockscreen-options-efl"},
-	/*Privacy and safety */
-	{KeyStr_PrivacySafety, IMG_PrivacySafety, NULL, Cfg_Item_Pos_Level0, Cfg_Item_unResetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_Personal, NULL, uuid_Accounts, 0, NULL},
-	/*Accessbility */
+#if 0
+	/*Accessbility - not supported since 2015.8.12 */
 	{KeyStr_Accessibility, IMG_Accessibility, "setting-accessibility-efl", Cfg_Item_Pos_Level0, Cfg_Item_unResetable, 0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Personal, NULL, uuid_Accounts, 0, "setting-accessibility-efl"},
-	{KeyStr_Accounts, IMG_Accounts, "setting-myaccount-efl|mode:account_list", Cfg_Item_Pos_Level0, Cfg_Item_unResetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_Personal, NULL, uuid_Accounts, 0, "setting-myaccount-efl"},
+#endif
+	{KeyStr_Accounts, IMG_Accounts, "setting-myaccount-efl|mode:account_list", Cfg_Item_Pos_Level0, Cfg_Item_unResetable, 0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Personal, NULL, uuid_Accounts, 0, "setting-myaccount-efl"},
 
 	/* Group: System */
 	{KeyStr_System, NULL, "move://Tab4.top", Cfg_Item_Pos_Level0, 0, 0, Cfg_Item_Title_Node, NULL, NULL, NULL, uuid_DeviceMange, 0,  NULL},
-	{KeyStr_LanguageInput, IMG_LanguageInput, "setting-phone-efl|viewtype:language", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_System, NULL, uuid_LanguageKeyboard, 0, "org.tizen.setting.language"},
+	{KeyStr_LanguageInput, IMG_LanguageInput, "setting-phone-efl|viewtype:language", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_System, NULL, uuid_LanguageKeyboard, 0, "org.tizen.setting.language"},
 #if SUPPORT_STORAGE
-	{KeyStr_Storage, IMG_Storage, "setting-storage-efl|caller:setting", Cfg_Item_Pos_Level0, Cfg_Item_unResetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_System, NULL, uuid_Storage, 0, "setting-storage-efl"},
+	{KeyStr_Storage, IMG_Storage, "setting-storage-efl|caller:setting", Cfg_Item_Pos_Level0, Cfg_Item_unResetable, 0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_System, NULL, uuid_Storage, 0, "setting-storage-efl"},
 #endif
 	{KeyStr_DateTime, IMG_DateTime, "setting-time-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_System, NULL, uuid_DateTime, 0, NULL},
+	//{KeyStr_DeveloperOption, IMG_USBconnection, "setting-developeroption-efl|viewtype:usb", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_DeviceMange, NULL, uuid_DeveloperOption, 0, "org.tizen.setting.developeroptions"},
 	{KeyStr_AboutDevice, IMG_AboutDevice, "setting-about-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_System, NULL, uuid_AboutPhone, 0, NULL},
 
 #if 0
 	{KeyStr_Security, IMG_Security, "setting-security-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_DeviceMange, NULL, uuid_Security, 0,  NULL},
-	{KeyStr_DeveloperOption, IMG_USBconnection, "setting-developeroption-efl|viewtype:usb", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_DeviceMange, NULL, uuid_DeveloperOption, 0, "org.tizen.setting.developeroptions"},
 	/* Downloaded App */
 	{KeyStr_DownloadedAPPs, NULL, "move://Tab6.top", Cfg_Item_Pos_Level0, 0, 0, Cfg_Item_Title_Node, NULL, NULL, NULL, uuid_APP, 0, NULL},
 #endif
@@ -229,7 +219,16 @@ EXPORT_PUBLIC Setting_Cfg_Node_T *get_cfg_node_by_keystr(const char *keystr)
 
 	int i;
 	for (i = 0; i < size; i++) {
-		if (0 == safeStrCmp(keystr, _(s_cfg_node_array[i].key_name))) {
+		#if 0
+		SETTING_TRACE("keystr: %s",keystr);
+		SETTING_TRACE("s_cfg_node_array[i].key_name: %s",s_cfg_node_array[i].key_name);
+		SETTING_TRACE("---------> _(keystr): %s",_(keystr));
+		SETTING_TRACE("---------> _(s_cfg_node_array[i].key_name): %s",_(s_cfg_node_array[i].key_name));
+		#endif
+		if (0 == safeStrCmp(_(keystr), _(s_cfg_node_array[i].key_name))) {
+		#if 0
+			SETTING_TRACE("MATCH !!!!!!!!!!!!!!");
+		#endif
 			return &(s_cfg_node_array[i]);
 		}
 	}
@@ -496,8 +495,6 @@ int setting_cfg_file_write(JsonNode *node)
 EXPORT_PUBLIC
 int setting_cfg_init(void)
 {
-	//g_type_init();
-
 	if (!access(CFG_FILE_PATH, R_OK | W_OK | F_OK)) { /* succeed to access */
 		if (!setting_cfg_file_read()) { /* return FALSE */
 			if (remove(CFG_FILE_PATH)) {
@@ -1241,20 +1238,6 @@ int drivingmode_toggle_get_state(Cfg_Item_State *stat, void *data)
 }
 
 EXPORT_PUBLIC
-int glove_toggle_get_state(Cfg_Item_State *stat, void *data)
-{
-	SETTING_TRACE_BEGIN;
-	int value = -1;
-	int ret = vconf_get_bool(VCONFKEY_SETAPPL_ENHANCED_TOUCH, &value);
-	if (value == 1)
-		*stat = Cfg_Item_On;
-	else
-		*stat = Cfg_Item_Off;
-
-	return ret;
-}
-
-EXPORT_PUBLIC
 int network_restriction_mode_toggle_get_state(Cfg_Item_State *stat, void *data)
 {
 	SETTING_TRACE_BEGIN;
@@ -1310,4 +1293,3 @@ int nfc_toggle_get_state(Cfg_Item_State *stat, void *data)
 
 	return err;
 }
-

@@ -27,7 +27,6 @@
 #include <setting-security-main.h>
 #include <setting-debug.h>
 #include <app.h>
-#include <efl_extension.h>
 
 static int setting_view_security_update_create(void *cb);
 static int setting_view_security_update_destroy(void *cb);
@@ -553,8 +552,7 @@ static void __ask_create_manual_update_pop_cb(void *data, Evas_Object *obj,
 
 		/*POP_UP */
 		ad->pop_progress = elm_popup_add(ad->win_get);
-		eext_object_event_callback_add(ad->pop_progress, EEXT_CALLBACK_BACK, eext_popup_back_cb_2, NULL);
-		setting_add_hardkey_features(ad->pop_progress, ad);
+		eext_object_event_callback_add(ad->pop_progress, EEXT_CALLBACK_BACK, setting_popup_del_cb, NULL);
 		evas_object_size_hint_weight_set(ad->pop_progress, EVAS_HINT_EXPAND,
 		                                 EVAS_HINT_EXPAND);
 		Evas_Object *box = NULL;
@@ -624,28 +622,31 @@ setting_security_update_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 			SETTING_TRACE_DEBUG("set auto update state to 0");
 			/* TOGGLE OFF */
 			SETTING_TRACE_DEBUG("There is auto update toggle on->off");
-			ad->pop_auto_update_off = setting_create_popup_with_btn(ad,
+			ad->pop_auto_update_off = setting_create_popup(ad,
 			                                                        ad->win_get,
-			                                                        NULL, _(SECURITY_UPDATE_TOGGLE_OFF),
+			                                                        NULL, SECURITY_UPDATE_TOGGLE_OFF,
 			                                                        __ask_create_auto_update_pop_off_cb,
-			                                                        0, 2, _("IDS_ST_BODY_TURN_OFF"), _("IDS_ST_BUTTON_CANCEL_ABB"));
+			                                                        0, FALSE, FALSE,
+																	2, "IDS_ST_BODY_TURN_OFF", "IDS_ST_BUTTON_CANCEL_ABB");
 		} else {
 			SETTING_TRACE_DEBUG("set auto update state to 1");
 			/* TOGGLE ON */
 			SETTING_TRACE_DEBUG("There is auto update toggle off->on");
-			ad->pop_auto_update_on = setting_create_popup_with_btn(ad,
+			ad->pop_auto_update_on = setting_create_popup(ad,
 			                                                       ad->win_get,
-			                                                       NULL, _(SECURITY_UPDATE_TOGGLE_ON),
+			                                                       NULL, SECURITY_UPDATE_TOGGLE_ON,
 			                                                       __ask_create_auto_update_pop_on_cb,
-			                                                       0, 2, _("IDS_ST_BUTTON_OK"), _("IDS_ST_BUTTON_CANCEL_ABB"));
+			                                                       0, FALSE, FALSE,
+																   2, "IDS_ST_BUTTON_OK", "IDS_ST_BUTTON_CANCEL_ABB");
 		}
 	} else if (!safeStrCmp(_(UPDATE_TEXT), list_item->keyStr)) {
 		SETTING_TRACE_DEBUG("There is manual update");
-		ad->pop_manual_update = setting_create_popup_with_btn(ad,
+		ad->pop_manual_update = setting_create_popup(ad,
 		                                                      ad->win_get,
-		                                                      NULL, _(SECURITY_MANUAL_UPDATE_TEXT),
+		                                                      NULL, SECURITY_MANUAL_UPDATE_TEXT,
 		                                                      __ask_create_manual_update_pop_cb,
-		                                                      0, 2, _("IDS_ST_BUTTON_OK"), _("IDS_ST_BUTTON_CANCEL_ABB"));
+		                                                      0, FALSE, FALSE,
+															  2, "IDS_ST_BUTTON_OK", "IDS_ST_BUTTON_CANCEL_ABB");
 	} else if (!safeStrCmp(_(SECURITY_VIA_WIFI), list_item->keyStr)) {
 		int ret = 0;
 		app_control_h service = NULL;
@@ -686,19 +687,21 @@ static void __setting_security_update_toggle_automatic_chk(void *data, int chk_s
 	if (chk_status) {
 		/* TOGGLE ON */
 		SETTING_TRACE_DEBUG("There is auto update toggle off->on");
-		ad->pop_auto_update_on = setting_create_popup_with_btn(ad,
+		ad->pop_auto_update_on = setting_create_popup(ad,
 		                                                       ad->win_get,
-		                                                       NULL, _(SECURITY_UPDATE_TOGGLE_ON),
+		                                                       NULL, SECURITY_UPDATE_TOGGLE_ON,
 		                                                       __ask_create_auto_update_pop_on_cb,
-		                                                       0, 2, _("IDS_ST_BUTTON_OK"), _("IDS_ST_BUTTON_CANCEL_ABB"));
+		                                                       0, FALSE, FALSE,
+															   2, "IDS_ST_BUTTON_OK", "IDS_ST_BUTTON_CANCEL_ABB");
 	} else {
 		/* TOGGLE OFF */
 		SETTING_TRACE_DEBUG("There is auto update toggle on->off");
-		ad->pop_auto_update_off = setting_create_popup_with_btn(ad,
+		ad->pop_auto_update_off = setting_create_popup(ad,
 		                                                        ad->win_get,
-		                                                        NULL, _(SECURITY_UPDATE_TOGGLE_OFF),
+		                                                        NULL, SECURITY_UPDATE_TOGGLE_OFF,
 		                                                        __ask_create_auto_update_pop_off_cb,
-		                                                        0, 2, _("IDS_ST_BODY_TURN_OFF"), _("IDS_ST_BUTTON_CANCEL_ABB"));
+		                                                        0, FALSE, FALSE,
+																2, "IDS_ST_BODY_TURN_OFF", "IDS_ST_BUTTON_CANCEL_ABB");
 	}
 	return;
 }

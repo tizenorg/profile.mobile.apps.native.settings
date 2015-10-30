@@ -46,17 +46,19 @@ static Evas_Object *vp_create_win(const char *name, bool transparent)
 		if (transparent) {
 			elm_win_alpha_set(eo, EINA_TRUE);
 
-			#if 0
 			unsigned int opaqueVal = 1;
+#ifdef ECORE_X
 			Ecore_X_Atom opaqueAtom = ecore_x_atom_get("_E_ILLUME_WINDOW_REGION_OPAQUE");
 			Ecore_X_Window xwin = elm_win_xwindow_get(eo);
 			ecore_x_window_prop_card32_set(xwin, opaqueAtom, &opaqueVal, 1);
-			#endif
+#endif
 		}
 
 		evas_object_smart_callback_add(eo, "delete,request", vp_del_win, NULL);
-		//ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
-		//evas_object_resize(eo, w, h);
+#ifdef ECORE_X
+		ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
+#endif
+		evas_object_resize(eo, w, h);
 		/*elm_win_screen_size_get(eo, NULL, NULL, &w, &h); */
 		/*evas_object_resize(eo, 100, 100); */
 

@@ -80,7 +80,6 @@ static int setting_security_sim_settings_create(void *cb)
 	                                                   ad->pin1_status, "IDS_ST_BODY_PIN_LOCK", NULL, setting_security_sim_settings_chk_btn_cb);
 	if (ad->data_pin_lk) {
 		ad->data_pin_lk->userdata = ad;
-		ad->data_pin_lk->group_style = SETTING_GROUP_STYLE_TOP;
 	}
 	/* h. change pin1 */
 	ad->data_change_pin1 = setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
@@ -90,7 +89,7 @@ static int setting_security_sim_settings_create(void *cb)
 	                                                        0, "IDS_ST_HEADER_CHANGE_PIN_ABB", NULL, NULL);
 
 	if (ad->data_change_pin1) {
-		ad->data_change_pin1->group_style = SETTING_GROUP_STYLE_CENTER;
+		ad->data_change_pin1->userdata = ad;
 	}
 
 	if (!ad->pin1_status) {
@@ -115,7 +114,7 @@ static int setting_security_sim_settings_create(void *cb)
 	}
 
 	if (ad->data_change_pin2) {
-		ad->data_change_pin2->group_style = SETTING_GROUP_STYLE_BOTTOM;
+		ad->data_change_pin2->userdata = ad;
 	}
 
 #if SUPPORT_FDN
@@ -241,8 +240,8 @@ static void get_pin_lock_info_cb(TapiHandle *handle, int result, void *data, voi
 		SETTING_TRACE("Current status of PIN Lock is Blocked");
 		ad->pw_type = SETTING_SEC_PW_PIN1_BLOCKED;
 	} else if (lock->lock_status == 5) { /* Blocked */
-		setting_create_simple_popup(NULL, ad->win_get,
-		                            NULL, _("PUK is blocked. Can't use PIN Lock"));
+		setting_create_popup(NULL, ad->win_get,
+		                            NULL, _("PUK is blocked. Can't use PIN Lock"), NULL, 0, false, false, 0);
 		return;
 	}
 
@@ -257,10 +256,10 @@ static Eina_Bool _check_tapi_async_cb_is_called(void *data)
 	SettingSecurityUG *ad = (SettingSecurityUG *)data;
 
 	if (!ad->enter_tapi_async_cb_flag) {
-		ad->sim_popup = setting_create_popup_without_btn(ad, ad->win_get,
-		                                                 NULL, _(KeyStr_Security_Waiting_Sim),
+		ad->sim_popup = setting_create_popup(ad, ad->win_get,
+		                                                 NULL, KeyStr_Security_Waiting_Sim,
 		                                                 NULL,
-		                                                 0, TRUE, TRUE);
+		                                                 0, TRUE, TRUE, 0);
 	}
 	ad->tapi_async_cb_check_timer = NULL;
 
@@ -300,8 +299,8 @@ void _draw_pin_onoff_status(void *data, Evas_Object *check)
 		SETTING_TRACE_DEBUG
 		("%s*** [ERR] tel_get_sim_type. sim_card=%d ***%s",
 		 SETTING_FONT_RED, sim_card, SETTING_FONT_BLACK);
-		setting_create_simple_popup(NULL, ad->win_get,
-		                            NULL, _("IDS_SIM_BODY_INVALID_SIM_CARD"));
+		setting_create_popup(NULL, ad->win_get,
+		                            NULL, _("IDS_SIM_BODY_INVALID_SIM_CARD"), NULL, 0, false, false, 0);
 		return;
 	}
 
@@ -342,8 +341,8 @@ static void get_sim_lock_info_cb(TapiHandle *handle, int result, void *data, voi
 	SETTING_TRACE_DEBUG("sec_ret[%d], lock_type[%d], lock_status[%d], retry_count[%d]", sec_rt, lock->lock_type, lock->lock_status, lock->retry_count);
 
 	if (lock->lock_status == 5) { /* Blocked */
-		setting_create_simple_popup(NULL, ad->win_get,
-		                            NULL, _("SIM is blocked. Can't use SIM Lock"));
+		setting_create_popup(NULL, ad->win_get,
+		                            NULL, _("SIM is blocked. Can't use SIM Lock"), NULL, 0, false, false, 0);
 		return;
 	}
 
@@ -369,10 +368,10 @@ void _draw_sim_onoff_status(void *data, Evas_Object *check)
 		evas_object_del(ad->sim_popup);
 		ad->sim_popup = NULL;
 	}
-	ad->sim_popup = setting_create_popup_without_btn(ad, ad->win_get,
-	                                                 NULL, _(KeyStr_Security_Waiting_Sim),
+	ad->sim_popup = setting_create_popup(ad, ad->win_get,
+	                                                 NULL, KeyStr_Security_Waiting_Sim,
 	                                                 NULL,
-	                                                 0, FALSE, FALSE);
+	                                                 0, FALSE, FALSE, 0);
 
 	if (tel_get_sim_lock_info(ad->handle, TAPI_SIM_LOCK_PS, get_sim_lock_info_cb, ad) != 0) {
 		SETTING_TRACE_ERROR("failed to call tel_get_sim_lock_info()");
@@ -403,8 +402,8 @@ static void get_change_pin_info_cb(TapiHandle *handle, int result, void *data, v
 	           (lock->lock_status == TAPI_SIM_LOCK_KEY_NOT_NEED || lock->lock_status == TAPI_SIM_LOCK_KEY_PIN2)) { /* PIN2 required : 0x00, 0x03 */
 		ad->pw_type = SETTING_SEC_PW_CHANGE_PIN2;
 	} else if (lock->lock_status == TAPI_SIM_LOCK_PERM_BLOCKED) { /* Blocked : 0x05 */
-		setting_create_simple_popup(NULL, ad->win_get,
-		                            NULL, _("Permanent block SIM"));
+		setting_create_popup(NULL, ad->win_get,
+		                            NULL, _("Permanent block SIM"), NULL, 0, false, false, 0);
 		return;
 	}
 
@@ -428,8 +427,8 @@ void _mouse_up_change_pin(void *data, int sel_item)
 		case VCONFKEY_TELEPHONY_SIM_INSERTED:
 			break;
 		case VCONFKEY_TELEPHONY_SIM_NOT_PRESENT:
-			setting_create_simple_popup(NULL, ad->win_get,
-			                            NULL, _(SECURITY_SIM_NOT_PRESENT_MSG));
+			setting_create_popup(NULL, ad->win_get,
+			                            NULL, _(SECURITY_SIM_NOT_PRESENT_MSG), NULL, 0, false, false, 0);
 			SETTING_TRACE_DEBUG
 			("%s*** [ERR] INCORRECTED SIM. sim_slot_type=%d ***%s",
 			 SETTING_FONT_RED, value, SETTING_FONT_BLACK);
@@ -437,8 +436,8 @@ void _mouse_up_change_pin(void *data, int sel_item)
 			break;
 		case VCONFKEY_TELEPHONY_SIM_CARD_ERROR:
 		case VCONFKEY_TELEPHONY_SIM_UNKNOWN:
-			setting_create_simple_popup(NULL, ad->win_get,
-			                            NULL, _("IDS_SIM_BODY_INVALID_SIM_CARD"));
+			setting_create_popup(NULL, ad->win_get,
+			                            NULL, _("IDS_SIM_BODY_INVALID_SIM_CARD"), NULL, 0, false, false, 0);
 			SETTING_TRACE_DEBUG
 			("%s*** [ERR] INCORRECTED SIM. sim_slot_type=%d ***%s",
 			 SETTING_FONT_RED, value, SETTING_FONT_BLACK);
@@ -461,8 +460,8 @@ void _mouse_up_change_pin(void *data, int sel_item)
 		SETTING_TRACE_DEBUG
 		("%s*** [ERR] tel_get_sim_type. sim_card=%d ***%s",
 		 SETTING_FONT_RED, sim_card, SETTING_FONT_BLACK);
-		setting_create_simple_popup(NULL, ad->win_get,
-		                            NULL, _("IDS_SIM_BODY_INVALID_SIM_CARD"));
+		setting_create_popup(NULL, ad->win_get,
+		                            NULL, _("IDS_SIM_BODY_INVALID_SIM_CARD"), NULL, 0, false, false, 0);
 		return;
 	}
 	if (sel_item == 1 && (ad->pin1_status == TAPI_SIM_FACILITY_ENABLED)) {
@@ -497,7 +496,6 @@ setting_security_sim_settings_mouse_up_Gendial_list_cb(void *data, Evas_Object *
 
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 	if (!safeStrCmp("IDS_ST_BODY_PIN_LOCK", list_item->keyStr)) {
-		/*it invokes async TAPIs to enable/disable, so don't change the status at first to avoid rollback */
 		_draw_pin_onoff_status(ad, list_item->eo_check);
 
 	} else if (!safeStrCmp("IDS_ST_HEADER_CHANGE_PIN_ABB", list_item->keyStr)) {

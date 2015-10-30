@@ -33,125 +33,106 @@ setting_view setting_view_network_con_list = {
 	.cleanup = setting_network_con_list_cleanup,
 };
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+static Evas_Object* ctxpopup;
 
-/**
- *  3
- */
-#if SUPPORT_TETHERING
-static int __get_naviframe_depth_con_list(void *data)
-{
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-
-	Eina_List *list = elm_naviframe_items_get(ad->navi_bar);
-	/*Object_Drawer *list_item = NULL; */
-
-	int index = 0;
-	while (list) {
-		Elm_Object_Item *item = (Elm_Object_Item *) eina_list_data_get(list);
-		if (NULL == item)
-			continue;
-
-		SETTING_TRACE("ad->navi_bar : %x ---  %d --- address of the item = %x", ad->navi_bar, index, item);
-		index += 1;
-
-		/*if not matched,to check next node. */
-		list = eina_list_next(list);
-		item = NULL;
-	}
-	return index;
-}
-
-static void __popup_cb(void *data, Evas_Object *obj, void *event_info)
+static void
+ctxpopup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	setting_retm_if(NULL == data, "NULL == data");
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-	int response_type = POPUP_RESPONSE_CANCEL;
-	if (0 == safeStrCmp(elm_object_text_get(obj), "OK")) {
-		response_type = POPUP_RESPONSE_OK;
-	}
-	evas_object_del(ad->popup_conlist);
-	ad->popup_conlist = NULL;
-
-	if (POPUP_RESPONSE_OK == response_type) {
-		setting_view_destroy(&setting_view_network_con_list, ad);
-		setting_view_destroy(&setting_view_network_con, ad);
-	}
+	evas_object_del(ctxpopup);
+	ctxpopup = NULL;
 }
-/**
- * HERE
- */
 
-static void __enabled_tethering(void *data)
+static void
+move_more_ctxpopup(Evas_Object *ctxpopup)
 {
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-	SETTING_TRACE("Tethering is enabled -- callback\n");
+	SETTING_TRACE_BEGIN;
+	Evas_Object *win;
+	Evas_Coord w, h;
+	int pos = -1;
 
-	int frames =  __get_naviframe_depth_con_list(ad);
-	if (frames == 3) {
-		/* create a popup */
-		ad->popup_conlist = setting_create_popup_with_btn(ad, ad->win_get,
-		                                                  NULL, _(SETTING_NETWORK_NOT_ALLOWED_WITH_TETHERING),
-		                                                  __popup_cb, 0, 1, "OK");
+	/* We convince the top widget is a window */
+	win = elm_object_top_widget_get(ctxpopup);
+	elm_win_screen_size_get(win, NULL, NULL, &w, &h);
+	pos = elm_win_rotation_get(win);
+
+	switch (pos) {
+		case 0:
+		case 180:
+			evas_object_move(ctxpopup, (w / 2), h);
+			break;
+		case 90:
+			evas_object_move(ctxpopup,  (h / 2), w);
+			break;
+		case 270:
+			evas_object_move(ctxpopup, (h / 2), w);
+			break;
 	}
 }
 
-static void __disabled_tethering(void *data)
+static void
+naviframe_resize_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-	SETTING_TRACE("Tethering is disabled -- callback\n");
-	/*setting_enable_genlist_item(ad->data_connection->item); */
+	SETTING_TRACE_BEGIN;
+	Evas_Object *ctxpopup = data;
+	move_more_ctxpopup(ctxpopup);
 }
 
-static void __enabled_cb(tethering_error_e error, tethering_type_e type, bool is_requested, void *data)
+static void
+more_ctxpopup_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	Evas_Object *nf = data;
+	evas_object_event_callback_del_full(nf, EVAS_CALLBACK_RESIZE, naviframe_resize_cb, ctxpopup);
+}
+
+static void
+win_rotation_changed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	Evas_Object *ctxpopup = data;
+	move_more_ctxpopup(ctxpopup);
+}
+
+/* Icon + Text (More button style : Naviframe Toolbar) */
+static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-	SETTING_TRACE("Tethering is enabled -- callback\n");
-	__enabled_tethering(ad);
-}
+	Evas_Object *it_obj;
+	Evas_Object *nf = ad->navi_bar;
+	Evas_Object *win;
+	Elm_Object_Item *it;
 
-static void __disabled_cb(tethering_error_e error, tethering_type_e type, tethering_disabled_cause_e code, void *data)
-{
-	SETTING_TRACE_BEGIN;
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-	SETTING_TRACE("Tethering is disabled -- callback\n");
-	__disabled_tethering(ad);
-}
-
-/**
- * DOCOMO required
- * if tethering is ON, 'connection' should be inactivated.
- */
-static bool is_tethering_enabled(void *data)
-{
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-
-	bool ret = false;
-	tethering_h th = NULL;
-	(void) tethering_create(&th);
-
-	ad->th_conlists = th;
-
-	tethering_set_enabled_cb(th, TETHERING_TYPE_ALL, __enabled_cb, data);
-	tethering_set_disabled_cb(th, TETHERING_TYPE_ALL, __disabled_cb, data);
-
-	if (tethering_is_enabled(th, TETHERING_TYPE_WIFI) == true ||
-	    tethering_is_enabled(th, TETHERING_TYPE_USB) == true ||
-	    tethering_is_enabled(th, TETHERING_TYPE_BT) == true) {
-
-		SETTING_TRACE("Tethering is enabled\n");
-		__enabled_tethering(ad);
-		ret = true;
-	} else {
-		SETTING_TRACE("Tethering is not enabled\n");
-		__disabled_tethering(ad);
-		ret = false;;
+	if (ctxpopup != NULL) {
+		evas_object_del(ctxpopup);
 	}
 
-	/*tethering_destroy(th); */
-	return ret;
+	ctxpopup = elm_ctxpopup_add(nf);
+	elm_ctxpopup_auto_hide_disabled_set(ctxpopup, EINA_TRUE);
+	elm_object_style_set(ctxpopup, "more/default");
+	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_BACK, eext_ctxpopup_back_cb, NULL);
+	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_MORE, eext_ctxpopup_back_cb, NULL);
+	evas_object_smart_callback_add(ctxpopup, "dismissed", ctxpopup_dismissed_cb, NULL);
+	evas_object_event_callback_add(ctxpopup, EVAS_CALLBACK_DEL, more_ctxpopup_del_cb, nf);
+	evas_object_event_callback_add(nf, EVAS_CALLBACK_RESIZE, naviframe_resize_cb, ctxpopup);
+
+	/* We convince the top widget is a window */
+	win = elm_object_top_widget_get(nf);
+	evas_object_smart_callback_add(win, "rotation,changed", win_rotation_changed_cb, ctxpopup);
+
+	//---------------------------------------------------------------------------------------------
+	elm_ctxpopup_item_append(ctxpopup, _("IDS_ST_BODY_MYTHEME_CREATE"), NULL, setting_network_con_list_click_softkey_create_cb, ad);
+	elm_ctxpopup_item_append(ctxpopup, _("IDS_ST_BODY_DELETE"), NULL, setting_network_con_list_click_softkey_delete_cb, ad);
+	//---------------------------------------------------------------------------------------------
+
+	elm_ctxpopup_direction_priority_set(ctxpopup, ELM_CTXPOPUP_DIRECTION_UP, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN);
+	move_more_ctxpopup(ctxpopup);
+	evas_object_show(ctxpopup);
 }
-#endif
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 /* ***************************************************
  *
@@ -172,13 +153,13 @@ static int __con_list_recreate(void *cb)
 	                                     ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	elm_genlist_item_select_mode_set(first_item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
-	Evas_Object *radio;
+	Evas_Object *radio_group;
 	Setting_GenGroupItem_Data *item_data = NULL;
 
-	radio = elm_radio_add(scroller);
-	elm_radio_state_value_set(radio, -1);
-	ad->rdg = radio;
-	setting_disable_evas_object(radio);
+	radio_group = elm_radio_add(scroller);
+	elm_radio_state_value_set(radio_group, -1);
+	ad->rdg = radio_group;
+	//setting_disable_evas_object(radio_group);
 
 	int srvType = ad->profile_service_type;
 
@@ -187,9 +168,14 @@ static int __con_list_recreate(void *cb)
 	char *def_id = NULL;
 	connection_profile_h def_profile = NULL;
 	(void) connection_get_default_cellular_service_profile(ad->connection, srvType, &def_profile);
-	if (def_profile) connection_profile_get_cellular_apn(def_profile, &def_apn);
-	if (def_profile) connection_profile_get_name(def_profile, &def_name);
-	if (def_profile) connection_profile_get_id(def_profile, &def_id);
+
+	if (def_profile)
+		connection_profile_get_cellular_apn(def_profile, &def_apn);
+	if (def_profile)
+		connection_profile_get_name(def_profile, &def_name);
+	if (def_profile)
+		connection_profile_get_id(def_profile, &def_id);
+
 	SETTING_TRACE("Default profile:%p, def_apn[%s], def_name[%s], def_id[%s]", def_profile, def_apn, def_name, def_id);
 
 	setting_network_reget_profile_list(ad);
@@ -213,36 +199,40 @@ static int __con_list_recreate(void *cb)
 		item_data = (Setting_GenGroupItem_Data *) calloc(1, sizeof(Setting_GenGroupItem_Data));
 		setting_retvm_if(!item_data, SETTING_RETURN_FAIL, "calloc failed");
 		item_data->keyStr = (char *)g_strdup(name);
-		item_data->swallow_type = SWALLOW_Type_1RADIO_1BTN;
+		item_data->swallow_type = SWALLOW_TYPE_1RADIO_RIGHT_PROPAGATE_EVENTS_SET;
+
 		item_data->r_swallow_path = (char *)g_strdup("reveal/extended");
 		item_data->chk_status = idx;
 		item_data->chk_change_cb = setting_network_con_list_chk_changed;
 		item_data->stop_change_cb = setting_network_con_list_go_button_cb;
-		item_data->rgd = radio;
+		item_data->rgd = radio_group;
 		item_data->userdata = ad;
 		item_data->sub_desc = (char *)g_strdup(apn);
 		item_data->keyStr2 = (char *)g_strdup(id);
+
 		if (idx == 0) {
 			ad->selected_profile = item_data; /*defaulty,it the first item */
-			item_data->group_style = SETTING_GROUP_STYLE_TOP;
-		} else
-			item_data->group_style = SETTING_GROUP_STYLE_CENTER;
+		}
 
 		item_data->item =
 		    elm_genlist_item_append(scroller, &(itc_2text_2icon_3), item_data, NULL,
 		                            ELM_GENLIST_ITEM_NONE,
 		                            setting_network_con_list_item_Gendial_mouse_up_cb, ad);
-		if (idx == 0)
-			setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_TOP);
-		else
-			setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_CENTER);
+
+		SETTING_TRACE_ERROR(">>>> chk_status : <%d>, state_value_get for %s ---> (%d) value_get[%d], ptr : %x, org(%x)",
+						item_data->chk_status, 
+						item_data->keyStr, 
+						elm_radio_state_value_get(item_data->eo_check), 
+						elm_radio_value_get(item_data->eo_check),
+						item_data->chk_change_cb,
+						(void*)setting_network_con_list_chk_changed);
 
 		SETTING_TRACE("profile_h:%p, apn:%s, id:%s", profile_h, apn, id);
 		if (!safeStrCmp(def_apn, apn) && !safeStrCmp(def_name, name) && !safeStrCmp(def_id, id)) {
 			SETTING_TRACE("Matched [idx:%d, apn:%s, id:%s]!", idx, apn, id);
 			if (srvType == CONNECTION_CELLULAR_SERVICE_TYPE_INTERNET) {
 				ad->selected_profile = item_data; /*the selected item */
-				elm_radio_value_set(radio, idx);
+				elm_radio_value_set(radio_group, idx);
 				if (ad->internet_conn) {
 					G_FREE(ad->internet_conn->sub_desc);
 					FREE(ad->apn_internet);
@@ -262,15 +252,12 @@ static int __con_list_recreate(void *cb)
 	}
 	ADD_GL_SEPARATOR(scroller);
 
-	setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_BOTTOM);
 	SETTING_TRACE("idx:%d", idx);
 	Evas_Object *toolbar = elm_object_item_part_content_get(ad->navi_it_con_list, "toolbar");
 	SETTING_TRACE("elm_object_text_get(del_btn):%s", elm_object_item_text_get(elm_toolbar_last_item_get(toolbar)));
 	if (idx == 1) {
-		setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_NONE);
 		elm_object_item_disabled_set(elm_toolbar_last_item_get(toolbar), EINA_FALSE);
 	} else if (idx > 1) {
-		setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_BOTTOM);
 		elm_object_item_disabled_set(elm_toolbar_last_item_get(toolbar), EINA_FALSE);
 	} else {
 		FREE(ad->apn_internet);
@@ -278,7 +265,7 @@ static int __con_list_recreate(void *cb)
 		elm_object_item_disabled_set(elm_toolbar_last_item_get(toolbar), EINA_TRUE);
 	}
 	if (srvType == CONNECTION_CELLULAR_SERVICE_TYPE_MMS) {
-		if (idx > 0) elm_radio_value_set(radio, 0);/*the first one */
+		if (idx > 0) elm_radio_value_set(radio_group, 0);/*the first one */
 		if (ad->selected_profile && !isEmptyStr(ad->selected_profile->keyStr) && ad->mms_conn) {
 			SETTING_TRACE("ad->selected_profile->keyStr:%s", ad->selected_profile->keyStr);
 			G_FREE(ad->mms_conn->sub_desc);
@@ -289,8 +276,6 @@ static int __con_list_recreate(void *cb)
 		}
 	}
 	ad->cur_profile_num = idx;
-	/*if (0 == idx) */
-	/*	setting_create_simple_popup(ad, ad->navi_bar,NULL, "There is no avaiable profile,you can create one."); */
 
 	SETTING_TRACE_END;
 	G_FREE(def_id);
@@ -309,8 +294,8 @@ static int setting_network_con_list_create(void *cb)
 	Evas_Object *scroller = elm_genlist_add(ad->win_main_layout);
 	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
 	         "Cannot set scroller object  as contento of layout");
-	//elm_genlist_realization_mode_set(scroller, EINA_TRUE);
-	elm_object_style_set(scroller, "dialogue");
+	elm_genlist_realization_mode_set(scroller, EINA_TRUE);
+	//elm_object_style_set(scroller, "dialogue");
 
 	const char *title = NULL;
 	switch (ad->profile_service_type) {
@@ -325,12 +310,14 @@ static int setting_network_con_list_create(void *cb)
 			break;
 	}
 
+	/* [UI] Internet connection */
+	/* [UI] MMS connection */
 	ad->navi_it_con_list =
 	    setting_push_layout_navi_bar(_(title),
-	                                 _("IDS_ST_BUTTON_BACK"),
+	                                 NULL, /* ARROW STYLE */
 	                                 _("IDS_ST_BODY_DELETE"),
 	                                 _("IDS_ST_BODY_MYTHEME_CREATE"),
-	                                 NULL,
+	                                 setting_network_con_list_click_softkey_cancel_cb,
 	                                 setting_network_con_list_click_softkey_delete_cb,
 	                                 setting_network_con_list_click_softkey_create_cb,
 	                                 ad, scroller, ad->navi_bar, NULL);
@@ -338,12 +325,19 @@ static int setting_network_con_list_create(void *cb)
 	elm_naviframe_item_pop_cb_set(ad->navi_it_con_list,
 	                              setting_network_con_list_click_softkey_cancel_cb, ad);
 	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb, NULL);
+
+
+	// Add ctx popup handler
+	Evas_Object* btn = elm_button_add(ad->navi_bar);
+	elm_object_style_set(btn, "naviframe/more/default");
+	evas_object_smart_callback_add(btn, "clicked", create_ctxpopup_more_button_cb, ad);
+	elm_object_item_part_content_set(ad->navi_it_con_list, "toolbar_more_btn", btn);
+
 	ad->con_list_gl = scroller;
+	elm_genlist_mode_set(ad->con_list_gl, ELM_LIST_COMPRESS);	/* TNEF-4143 */
+
 	__con_list_recreate(ad);
 
-#if SUPPORT_TETHERING
-	is_tethering_enabled(ad);
-#endif
 	setting_view_network_con_list.is_create = 1;
 	SETTING_TRACE_END;
 	return SETTING_RETURN_SUCCESS;
@@ -358,13 +352,6 @@ static int setting_network_con_list_destroy(void *cb)
 	SettingNetworkUG *ad = (SettingNetworkUG *) cb;
 	if (setting_view_network_con_list.is_create) {
 		/*ad->connections_gl = NULL; */
-#if SUPPORT_TETHERING
-		if (ad->th_conlists) {
-			SETTING_TRACE("tethering destruction ");
-			tethering_destroy(ad->th_conlists);
-			ad->th_conlists = NULL;
-		}
-#endif
 		setting_view_network_con_list.is_create = 0;
 		ad->selected_profile = NULL;
 		ad->navi_it_con_list = NULL;
@@ -530,8 +517,7 @@ void __set_default_profile(void *data)
 		if (0 == safeStrCmp(profile_id, list_item->keyStr2)) {
 
 			if (CONNECTION_CELLULAR_SERVICE_TYPE_MMS == srvType) {
-				setting_create_simple_popup(ad, ad->win_get, NULL, _("IDS_MSGF_POP_UNSUPPORTED"));
-				/*elm_radio_value_set(list_item->eo_check, old_type); */
+				setting_create_popup(ad, ad->win_get, NULL, _("IDS_MSGF_POP_UNSUPPORTED"), NULL, 0, false, false, 0);
 				if (ad->selected_profile)
 					elm_radio_value_set(list_item->eo_check, ad->selected_profile->chk_status);
 				break;
@@ -548,15 +534,15 @@ void __set_default_profile(void *data)
 					if (ad->selected_profile)
 						elm_radio_value_set(list_item->eo_check, ad->selected_profile->chk_status);
 
-					setting_create_popup_without_btn(list_item, ad->win_get, NULL,
-					                                 _("IDS_CST_POP_FAILED"), NULL,
-					                                 2.0, FALSE, FALSE);
+					setting_create_popup(list_item, ad->win_get, NULL,
+		                                 _("IDS_CST_POP_FAILED"), NULL,
+		                                 2.0, FALSE, FALSE, 0);
 					return;
 				}
 
-				setting_create_popup_without_btn(list_item, ad->win_get, NULL,
-				                                 _("IDS_ST_BUTTON2_PROCESSING_ING"), __set_default_response_cb,
-				                                 2.0, TRUE, FALSE);
+				setting_create_popup(list_item, ad->win_get, NULL,
+	                                 _("IDS_ST_BUTTON2_PROCESSING_ING"), __set_default_response_cb,
+	                                 2.0, TRUE, FALSE, 0);
 			}
 			break;
 		}
@@ -579,15 +565,11 @@ static void setting_network_con_list_item_Gendial_mouse_up_cb(void *data, Evas_O
 	    (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
 	setting_retm_if(NULL == list_item, "list_item is NULL");
 
-	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
-	if (list_item->chk_status == elm_radio_value_get(list_item->eo_check)) {
-		SettingNetworkUG *ad = data;
-		elm_genlist_realized_items_update(ad->con_list_gl);
-		return;
-	}
 
-	elm_radio_value_set(list_item->eo_check, list_item->chk_status);
-	__set_default_profile(list_item);
+	SettingNetworkUG *ad = list_item->userdata;
+	FREE(ad->access_name);
+	ad->access_name = strdup(list_item->keyStr2);
+	setting_view_change(&setting_view_network_con_list, &setting_view_network_connection_create, ad);
 }
 void setting_network_con_list_chk_changed(void *data, Evas_Object *obj, void *event_info)
 {
@@ -607,6 +589,10 @@ static void setting_network_con_list_click_softkey_delete_cb(void *data, Evas_Ob
 
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
 	setting_view_change(&setting_view_network_con_list, &setting_view_network_profile_delete, ad);
+	if (ctxpopup != NULL) {
+		evas_object_del(ctxpopup);
+		ctxpopup = NULL;
+	}
 }
 
 static void setting_network_con_list_click_softkey_create_cb(void *data, Evas_Object *obj, void *event_info)
@@ -617,23 +603,18 @@ static void setting_network_con_list_click_softkey_create_cb(void *data, Evas_Ob
 
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
 
-	/*setting_create_simple_popup(ad, ad->win_get, NULL, _("UX Undefined")); */
-	/*return; */
-
-	/*to add a new connection */
-	/*ad->con_type = -1; */
-	/*FREE(ad->con_name); */
-	/*ad->need_check_srvtype = FALSE; */
-	/*ad->con_name = strdup(STR_SETTING_NEW_CONNECTIONS); */
 	FREE(ad->access_name);
 	setting_view_change(&setting_view_network_con_list, &setting_view_network_connection_create, ad);
+	if (ctxpopup != NULL) {
+		evas_object_del(ctxpopup);
+		ctxpopup = NULL;
+	}
 }
 
 static Eina_Bool
 setting_network_con_list_click_softkey_cancel_cb(void *data, Elm_Object_Item *it)
 {
 	SETTING_TRACE_BEGIN;
-	SETTING_TRACE_ERROR("TTT");
 	/* error check */
 	retvm_if(data == NULL, EINA_FALSE, "Data parameter is NULL");
 

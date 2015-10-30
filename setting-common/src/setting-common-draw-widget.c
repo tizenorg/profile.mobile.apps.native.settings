@@ -22,9 +22,6 @@
 #include <glib.h>
 #include <efl_extension.h>
 
-#if SUPPORT_HELPUI
-#include <libhelpui.h>
-#endif
 /**
  * Hide the input pannel
  *
@@ -72,6 +69,10 @@ Evas_Object *setting_create_button(Evas_Object *parent, const char *btn_str,
 
 		evas_object_size_hint_weight_set(button, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 		evas_object_size_hint_align_set(button, EVAS_HINT_FILL, 0.5);
+	}
+	else
+	{ /*is '<-' button */
+		elm_atspi_accessible_name_set(button, _("IDS_ST_BUTTON_NAVIGATE_BACK"));
 	}
 
 	if (btn_click_cb) {
@@ -179,7 +180,7 @@ EXPORT_PUBLIC Evas_Object *setting_create_slider(Evas_Object *parent, Evas *evas
 	} else {
 		/* for brightness slider */
 		elm_slider_indicator_show_set(slider, 0);
-		elm_object_style_set(slider, "tap_to_drag");
+		/*elm_object_style_set(slider, "tap_to_drag");*/
 	}
 
 	evas_object_size_hint_weight_set(slider, EVAS_HINT_EXPAND, 0.0);
@@ -560,9 +561,11 @@ Evas_Object *setting_create_blank_rect(Evas_Object *layout)
 /**
 * The API to Create an editfiled object
 * @return an editfiled object
+*
+* multi-line is default, use elm_editfield_entry_single_line_set(ef, EINA_TRUE) to set single-line
 */
 EXPORT_PUBLIC
-Evas_Object *			/* multi-line is default, use elm_editfield_entry_single_line_set(ef, EINA_TRUE) to set single-line */
+Evas_Object *
 setting_create_editfiled(Evas_Object *win_main, char *title, char *def_str, char *guide_text)
 {
 	Evas_Object *layout = NULL;
@@ -962,30 +965,6 @@ char *setting_customize_text(const char *input_str, const int font_size,
 	return (char *)strdup(speciliztion);;
 }
 
-/*if pass traits=" ",means make tts omit the traits-reading */
-EXPORT_PUBLIC
-void setting_set_tts_info(Evas_Object *obj, const char *label,
-                          const char *traits, const char *state,
-                          const char *guide)
-{
-	/*ret_if(!obj); */
-	if (!obj) {
-		return;
-	}
-	/*SETTING_TRACE("label:%s,traits:%s,state:%s,guide:%s", label, traits,state,guide); */
-	if (label)
-		elm_access_info_set(obj, ELM_ACCESS_INFO, label);
-
-	if (traits)/* && isEmptyStr(elm_access_info_get(obj, ELM_ACCESS_TYPE))) */
-		elm_access_info_set(obj, ELM_ACCESS_TYPE, traits);
-
-	if (state)
-		elm_access_info_set(obj, ELM_ACCESS_STATE, state);
-	if (guide) {
-		elm_access_info_set(obj, ELM_ACCESS_CONTEXT_INFO, NULL);
-		elm_access_info_set(obj, ELM_ACCESS_CONTEXT_INFO, guide);
-	}
-}
 
 EXPORT_PUBLIC
 void __toogle_gl_sel(void *data, Evas_Object *obj, void *event_info)
@@ -1066,89 +1045,6 @@ EXPORT_PUBLIC Evas_Object *setting_create_navibar_title_text_btn(Evas_Object *pa
 	}
 	return btn;
 }
-
-#if SUPPORT_HELPUI
-EXPORT_PUBLIC void setting_help_popup_circle_block_create(Evas_Object *win, Evas_Object *parent, Evas_Object **circle,
-                                                          Evas_Object **popup, char *string_id, int x, int y, Evas_Coord_Rectangle *rect)
-{
-	helpui_set_block_win(win);
-	setting_help_popup_circle_unblock_create(parent, circle, popup, string_id, x, y);
-	helpui_set_unblock_rect(win, rect);
-}
-
-EXPORT_PUBLIC void setting_help_popup_circle_block_move(Evas_Object *win, Evas_Object *circle, Evas_Object *popup, int x,
-                                                        int y, Evas_Coord_Rectangle *rect)
-{
-	helpui_set_unblock_win(win);
-	helpui_set_block_win(win);
-	evas_object_move(circle, x, y);
-	evas_object_move(popup, x, y + 10);
-	helpui_set_unblock_rect(win, rect);
-}
-
-static void __help_popup_language_change_cb(void *data, Evas_Object *obj, void *source)
-{
-	char *string_id = (char *)data;
-	char *message = _(string_id);
-	helpui_set_popup_text(obj, message);
-}
-
-EXPORT_PUBLIC void setting_help_popup_circle_unblock_create(Evas_Object *parent, Evas_Object **circle,
-                                                            Evas_Object **popup, char *string_id, int x, int y)
-{
-	*circle = helpui_add_circle(parent, HELP_CIRCLE_BIG);
-	evas_object_move(*circle, x, y);
-	char *message = _(string_id);
-	*popup = helpui_add_popup(parent, message, HELP_POPUP_WITH_ARROW, NULL, NULL);
-	helpui_set_popup_language_changed_cb(*popup, __help_popup_language_change_cb,
-	                                     string_id);
-	evas_object_move(*popup, x, y + 8);
-}
-
-EXPORT_PUBLIC void setting_help_popup_circle_block_delete(Evas_Object *win, Evas_Object **circle, Evas_Object **popup)
-{
-	helpui_set_unblock_win(win);
-	if (*circle) {
-		evas_object_del(*circle);
-		*circle = NULL;
-	}
-	if (*popup) {
-		evas_object_del(*popup);
-		*popup = NULL;
-	}
-}
-
-EXPORT_PUBLIC void setting_help_popup_block_create(Evas_Object *win, Evas_Object *parent,
-                                                   Evas_Object **popup, char *string_id, int x, int y, Evas_Coord_Rectangle *rect)
-{
-	helpui_set_block_win(win);
-	setting_help_popup_unblock_create(parent, popup, string_id, x, y);
-	if (rect != NULL) {
-		helpui_set_unblock_rect(win, rect);
-	}
-}
-
-EXPORT_PUBLIC void setting_help_popup_block_move(Evas_Object *win, Evas_Object *popup, int x, int y,
-                                                 Evas_Coord_Rectangle *rect)
-{
-	helpui_set_unblock_win(win);
-	helpui_set_block_win(win);
-	evas_object_move(popup, x, y);
-	if (rect != NULL) {
-		helpui_set_unblock_rect(win, rect);
-	}
-}
-
-EXPORT_PUBLIC void setting_help_popup_unblock_create(Evas_Object *parent,
-                                                     Evas_Object **popup, char *string_id, int x, int y)
-{
-	char *message = _(string_id);
-	*popup = helpui_add_popup(parent, message, HELP_POPUP_WITHOUT_ARROW, NULL, NULL);
-	helpui_set_popup_language_changed_cb(*popup, __help_popup_language_change_cb,
-	                                     string_id);
-	evas_object_move(*popup, x, y);
-}
-#endif
 
 #define MIN_SWIP_DISTANCE_X 300
 #define MIN_SWIP_DISTANCE_Y 75
@@ -1259,33 +1155,6 @@ EXPORT_PUBLIC void setting_tabbar_disable_swip_effect(Evas_Object *ly_main, Evas
 		evas_object_event_callback_del(ly_main, EVAS_CALLBACK_DEL, __tabbar_btn_del_cb);
 		/* evas_object_event_callback_del(Evas_Object *obj, Evas_Callback_Type type, Evas_Object_Event_Cb func) */
 	}
-}
-
-static void __obj_listen_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
-
-{
-	ret_if(!obj);
-	const char *vconf = (const char *)evas_object_data_get(obj, "vconf");
-	vconf_callback_fn cb = (vconf_callback_fn)evas_object_data_get(obj, "cb");
-	(void)vconf_ignore_key_changed(vconf, cb);
-
-	evas_object_data_set(obj, "vconf", NULL);
-	evas_object_data_set(obj, "cb", NULL);
-	evas_object_data_set(obj, "data", NULL);
-}
-
-EXPORT_PUBLIC void
-setting_obj_listen_on(Evas_Object *obj, const char *vconf, vconf_callback_fn cb, void *data)
-{
-	/*Bind the life of obj and vconf listen */
-	evas_object_data_set(obj, "vconf", vconf);
-	\
-	evas_object_data_set(obj, "cb", cb);
-	\
-	evas_object_data_set(obj, "data", data);
-	\
-	vconf_notify_key_changed(vconf, cb, data);
-	evas_object_event_callback_add(obj, EVAS_CALLBACK_DEL, __obj_listen_del_cb, NULL);
 }
 
 EXPORT_PUBLIC void

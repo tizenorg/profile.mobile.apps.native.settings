@@ -21,7 +21,6 @@
 #include <setting-debug.h>
 #include <app.h>
 #include <ui-gadget.h>
-#include <ui-gadget-module.h>
 #include <Elementary.h>
 #include <Evas.h>
 #include <appcore-efl.h>
@@ -102,8 +101,11 @@ static Evas_Object *support_display_create_win(const char *name)
 		elm_win_borderless_set(eo, EINA_TRUE);
 		evas_object_smart_callback_add(eo, "delete,request",
 		                               support_display_del_win, NULL);
-		//ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
-		//evas_object_resize(eo, w, h);
+#ifdef ECORE_X
+		ecore_x_window_size_get(ecore_x_window_root_first_get(),
+		                        &w, &h);
+#endif
+		evas_object_resize(eo, w, h);
 	}
 
 	return eo;
@@ -119,7 +121,7 @@ static Eina_Bool __key_press_cb(void *data, int type, void *event)
 
 	support_display_appdata *ad = data;
 
-	if (strcmp(ev->keyname, KEY_HOME) == 0) {
+	if (strcmp(ev->keyname, "XF86Home") == 0) {
 		setting_ug_destroy(ad->ug);
 	}
 	return ECORE_CALLBACK_RENEW;
