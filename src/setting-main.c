@@ -96,27 +96,8 @@ static void __all_gl_group_clicked_cb(void *data, Evas_Object *obj, void *event_
 	else
 		elm_object_item_signal_emit(data_parentItem->item, "elm,state,expanded", "elm");
 
-	int group_idx = data_parentItem->chk_status;
-
-	SETTING_TRACE("view_type:%d, group_idx:%d", view_type, group_idx);
-	start_item = ad->gl_data_item[view_type][group_idx]->item;
-	SETTING_TRACE("START:%s", _(ad->gl_data_item[view_type][group_idx]->keyStr));
-	if (group_idx != GL_Group_Apps) {
-		end_item = ad->gl_data_item[view_type][group_idx + 1]->item;
-		SETTING_TRACE("END:%s", _(ad->gl_data_item[view_type][group_idx + 1]->keyStr));
-	}
 	if (!start_item) {
 		SETTING_TRACE_ERROR(" ------------------> start_item IS NULL");
-	} else {
-		for (it = elm_genlist_item_next_get(start_item);
-		     it && it != end_item; it = elm_genlist_item_next_get(it)) {
-			Setting_GenGroupItem_Data *data_parentItem = (Setting_GenGroupItem_Data *)elm_object_item_data_get(it);
-			if (data_parentItem && data_parentItem->keyStr) SETTING_TRACE("data_parentItem:%s", data_parentItem->keyStr);
-			//elm_genlist_item_hide_set(it, hide_flag);
-			if (!hide_flag && group_idx == GL_Group_Apps) {
-				elm_genlist_item_bring_in(it, ELM_GENLIST_ITEM_SCROLLTO_IN);
-			}
-		}
 	}
 }
 
@@ -137,8 +118,8 @@ Evas_Object *_view_list_geter(void *data)
 	retvm_if(genlist == NULL, NULL, "Cannot set genlist object as contento of layout");
 
 	ad->sc_gl[SC_All_List] = genlist;
-	//elm_genlist_realization_mode_set(genlist, EINA_TRUE);
-	elm_object_style_set(genlist, "dialogue");
+	elm_genlist_block_count_set(genlist, 2);
+	//elm_object_style_set(genlist, "dialogue");
 	elm_genlist_clear(genlist);	/* first to clear list */
 	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);	/* resolve abnormal height issue */
 	evas_object_smart_callback_add(genlist, "realized", __all_gl_realized_cb, ad);
@@ -147,7 +128,6 @@ Evas_Object *_view_list_geter(void *data)
 	Setting_GenGroupItem_Data *item_data = NULL;
 	Elm_Object_Item *item = NULL;
 	int group_dx = GL_Group_Connection;
-	setting_main_genlist_handler_reset(ad);
 	/*---------------------------------------------------------------------------------------- */
 	/* 2.category name loop */
 	/*---------------------------------------------------------------------------------------- */
@@ -155,18 +135,16 @@ Evas_Object *_view_list_geter(void *data)
 	char *keyStr = NULL;
 	char *icon_path = NULL;
 	char *ug_args = NULL;
-
 	char *group_name = NULL;
 	int index = 0;
 	for (i = 0; i < setting_cfg_get_category_length(); i++) {
 		group_name = setting_cfg_get_category_name(i);
 		group_dx++;/*from the first */
-		item_data = setting_create_Gendial_field_groupitem(
+		item_data = setting_create_Gendial_field_def(
 		                genlist,
-		                &(ad->itc[GENDIAL_Type_expandable_proc]),
-		                NULL,
+		                &(ad->itc_table[GENDIAL_Type_expandable_proc]),
 		                __all_gl_group_clicked_cb,
-		                (void *)VIEW_All_List,
+		                (void *)NULL,
 		                SWALLOW_Type_INVALID,
 		                NULL, /* l_icon */
 		                NULL, /* r_icon */
@@ -177,9 +155,6 @@ Evas_Object *_view_list_geter(void *data)
 		if (item_data) {
 			item_data->isPlaying = TRUE;/*expandable ? */
 			item_data->chk_status = group_dx;/*keep the group idx */
-
-			ad->gl_data_item[VIEW_All_List][group_dx] = item_data;
-			__BACK_POINTER_SET(ad->gl_data_item[VIEW_All_List][group_dx]);
 		}
 
 		index = 0;
@@ -219,14 +194,10 @@ Evas_Object *_view_list_geter(void *data)
 			if (item_data && item_data->item) {
 
 				set_node_pointer(keyStr, item_data->item);
-				setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_CENTER);
 				index++;
 			}
 		}
-		setting_genlist_item_groupstyle_set(item_data, index == 1 ? SETTING_GROUP_STYLE_NONE : SETTING_GROUP_STYLE_BOTTOM);
 	}
-	setting_main_genlist_handler_set(ad, VIEW_All_List);
-	setting_main_genlist_handler_reset(ad);
 	return genlist;
 }
 
@@ -245,22 +216,19 @@ static Eina_Bool _navibar_back_pop_cb(void *data, Elm_Object_Item *it)
 }
 
 
+/**
+ *
+ * old : 1line -----------> new : type1
+ * old : groupindex ------> new : group_index
+ */
 void _setting_genlist_itc_init(void *cb)
 {
 	setting_main_appdata *ad = (setting_main_appdata *) cb;
 
 	/* [UI] create structures for genlist style */
-	setting_create_Gendial_itc("1line", &(ad->itc[GENDIAL_Type_1text_1icon_2]));
-	setting_create_Gendial_itc("1line", &(ad->itc[GENDIAL_Type_1text_2icon]));
-	setting_create_Gendial_itc("1line", &(ad->itc[GENDIAL_Type_1icon_2text]));
-	setting_create_Gendial_itc("1line", &(ad->itc[GENDIAL_Type_1text_2icon_divider]));
-	setting_create_Gendial_itc("dialogue/1text.1icon.2", &(ad->itc[GENDIAL_Type_1text_2icon_2]));
-	setting_create_Gendial_itc("dialogue/2text.2icon.3", &(ad->itc[GENDIAL_Type_2text_2icon_3]));
-	setting_create_Gendial_itc("groupindex", &(ad->itc[GENDIAL_Type_group_item]));
-	setting_create_Gendial_itc("searchbar", &(ad->itc[GENDIAL_Type_sel_all]));
-	setting_create_Gendial_itc("dialogue/2text", &(ad->itc[GENDIAL_Type_2text_3]));
-
-	setting_create_Gendial_itc("groupindex", &(ad->itc[GENDIAL_Type_expandable_proc]));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(ad->itc_table[GENDIAL_Type_1text_1icon_2]));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(ad->itc_table[GENDIAL_Type_1icon_2text]));
+	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE, &(ad->itc_table[GENDIAL_Type_expandable_proc]));
 }
 
 static void _setting_tapi_init(void *cb)
@@ -439,13 +407,11 @@ static int setting_main_create(void *cb)
 	/* push a view to the naviframe */
 	Elm_Object_Item *navi_it = elm_naviframe_item_push(ad->navibar_main, "IDS_ST_OPT_SETTINGS", NULL, NULL, view_layout, NULL);
 	elm_naviframe_item_title_enabled_set(navi_it, EINA_TRUE, EINA_TRUE);
-	ad->main_navi_it = navi_it;
+	ad->navibar_main_it = navi_it;
 	elm_object_item_domain_text_translatable_set(navi_it, SETTING_PACKAGE, EINA_TRUE);
 	elm_naviframe_item_pop_cb_set(navi_it, _navibar_back_pop_cb, ad);
 
 	if (!is_searchmode_app(ad->is_searchmode)) {
-		ad->view_type = SETTING_TAB_VIEW_CONNECTION;
-		SETTING_TRACE("ad->view_type:%d", ad->view_type);
 
 		Evas_Object *all_list = NULL;
 
@@ -482,90 +448,13 @@ static int setting_main_destroy(void *cb)
 		ecore_timer_del(ad->event_freeze_timer);
 		ad->event_freeze_timer = NULL;
 	}
-	evas_object_smart_callback_del(ad->main_genlist, "realized", __gl_realized_cb);
-	if (ad->save_idler) {
-		ecore_timer_del(ad->save_idler);
-		ad->save_idler = NULL;
-	}
-
-	if (ad->update_idler) {
-		ecore_timer_del(ad->update_idler);
-		ad->update_idler = NULL;
-	}
-
-	if (ad->bt_timer) {
-		ecore_timer_del(ad->bt_timer);
-		ad->bt_timer = NULL;
-	}
-	if (ad->wifi_timer) {
-		ecore_timer_del(ad->wifi_timer);
-		ad->wifi_timer = NULL;
-	}
-	if (ad->nfc_timer) {
-		ecore_timer_del(ad->nfc_timer);
-		ad->nfc_timer = NULL;
-	}
-
-	if (ad->update_font_idler) {
-		ecore_idler_del(ad->update_font_idler);
-		ad->update_font_idler = NULL;
-	}
-
-	if (ad->driving_mode_popup) {
-		evas_object_del(ad->driving_mode_popup);
-		ad->driving_mode_popup = NULL;
-	}
+	//evas_object_smart_callback_del(ad->main_genlist, "realized", __gl_realized_cb);
 
 	elm_object_part_content_unset(ad->view_layout, "elm.swallow.content");
-	elm_object_item_part_content_unset(ad->main_navi_it, "tabbar");
+	elm_object_item_part_content_unset(ad->navibar_main_it, "tabbar");
 	if (ad->sc_gl[SC_All_List]) {
 		evas_object_del(ad->sc_gl[SC_All_List]);
 		ad->sc_gl[SC_All_List] = NULL;
-	}
-	if (ad->sc_gl[SC_All_Grid]) {
-		evas_object_del(ad->sc_gl[SC_All_Grid]);
-		ad->sc_gl[SC_All_Grid] = NULL;
-	}
-
-	if (ad->ctrl_bar) {
-		evas_object_del(ad->ctrl_bar);
-		ad->ctrl_bar = NULL;
-	}
-#if 0
-	int i = SETTING_TAB_VIEW_QUICK_SETTINGS;
-	for (; i < SETTING_TAB_VIEW_MAX; i++) {
-		if (ad->sub_view[i]) {
-			evas_object_del(ad->sub_view[i]);
-			ad->sub_view[i] = NULL;
-		}
-	}
-#endif
-	if (ad->save_idler) {
-		ecore_timer_del(ad->save_idler);
-		ad->save_idler = NULL;
-	}
-
-	if (ad->update_idler) {
-		ecore_timer_del(ad->update_idler);
-		ad->update_idler = NULL;
-	}
-
-	if (ad->bt_timer) {
-		ecore_timer_del(ad->bt_timer);
-		ad->bt_timer = NULL;
-	}
-	if (ad->wifi_timer) {
-		ecore_timer_del(ad->wifi_timer);
-		ad->wifi_timer = NULL;
-	}
-	if (ad->nfc_timer) {
-		ecore_timer_del(ad->nfc_timer);
-		ad->nfc_timer = NULL;
-	}
-
-	if (ad->update_font_idler) {
-		ecore_idler_del(ad->update_font_idler);
-		ad->update_font_idler = NULL;
 	}
 
 	/* sound */
@@ -576,14 +465,6 @@ static int setting_main_destroy(void *cb)
 		evas_object_del(ad->ly_main);
 		ad->ly_main = NULL;
 	}
-
-
-	/*
-	int ret = vconf_ignore_key_changed(VCONFKEY_TELEPHONY_FLIGHT_MODE, __vconf_change_cb);
-	if (ret != 0) {
-		SETTING_TRACE_ERROR("call vconf_ignore_key_changed failed");
-	}
-	*/
 
 	setting_view_main.is_create = 0;
 	SETTING_TRACE_END;

@@ -42,6 +42,9 @@
 
 /*#define LAUNCHING_DEBUG_LOG */
 
+
+#define USE_TIMER_UPDATE_TIME_IN_TIME_VIEW
+
 /* launching */
 #ifdef LAUNCHING_DEBUG_LOG
 #define LAUNCH_SETTING_IN(fmt, arg...)  LOG(LOG_DEBUG, "LAUNCH", "[setting:Application:%s:IN]" fmt, __FUNCTION__, ##arg)
@@ -62,67 +65,40 @@
 #define SUPPORT_BOTTOM_BTNS 1
 #define SUPPORT_DRI 1
 
-
 /*macros to control program flow*/
-#define SUPPORT_MORE_ITEM_FUNCTION 1
 
-#define SETTING_SEARCH 1
-
-#if SETTING_SEARCH
-/* do nothing */
-#else
-#define USE_RECENTLY_USED
+/* Genlist Update is in progress. */
+#if 0
+#define OLD_GENLIST_STYLE
 #endif
 
-#define SUPPORT_LIBEAS			0
-#define SUPPORT_FINGERPRINT		0
-#define SUPPORT_TTS				0
+#define FUNCTION_SYSTEM_SETTING 1
+#define SETTING_SEARCH 1
+
 /*##menu options##*/
-#define SUPPORT_AllShare_Memory			0
-#define SUPPORT_FMradio				0
 #define SUPPORT_FONT				1
 #define SUPPORT_WALLPAPER			0
 #define SUPPOR_SEPARATE_BRIGHTNESS		0
-#define SUPPORT_LEDINDICATOR			1
-#define SUPPORT_SPLIT_DISPLAY			0
-#define SUPPORT_HELPUI 0
 
 #define SUPPORT_ACCESSIBILITY			1
 
-/**
- * @todo SUPPORT_PSMODE and SUPPORT_POWERSAVING is working exclusively.
- * need to do refactoring
- */
-#define SUPPORT_PSMODE 1
-
-#define SUPPORT_RUN_SYSTEM_COMMAND		0
 #define SUPPORT_STORAGE				1
 #define SUPPORT_WIFI_DIRECT                     1
-#define SUPPORT_READY_TO_SHARE                     1
 #define SUPPORT_DATA_USAGE                      1
-#define SUPPORT_SCREEN_CAPTURE	1
-#define SUPPORT_POWER_USAGE_INFO 0
 #define SUPPORT_TETHERING	0
-#define SUPPORT_NETWORK_RESTRICTION	1
-#define SUPPORT_SMARTSCREEN	0
 
 /*#endif*/
 
 #define SUPPORT_APP_ROATION			1
-#define SUPPORT_LCD_TIMEOUT_KEEPING		0
-#define USE_DEVICE_SET_DISPLAY_BRT 		1
 
 #define  LOW_BATTERY_DO_NOTHING			1	/**< 1 : turn the low batter handlding off */
 
-#define APPLIED_DATATIME_FIRSTDAY_WEEK		0
-#define SUPPORT_DATEFIELD_DATE_FORMAT_AUTOSET	0
 
 #define SUPPORT_SIMLOCK 0
 #define SUPPORT_FDN 0
 #define SUPPORT_ENCRYPTION 0
 #define SUPPORT_SD_ENCRYPTION 0
 #define SUPPORT_SCREEN_SECURITY 1
-#define SUPPORT_PARENTAL_MODE 0
 
 #define SUPPORT_SECURITY_FIREWALL 1
 #define SUPPORT_PRIVACY 1

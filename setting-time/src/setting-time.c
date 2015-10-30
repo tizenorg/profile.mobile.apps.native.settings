@@ -77,11 +77,11 @@ static void *setting_time_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	setting_view_node_table_intialize();
 	setting_view_node_table_register(&setting_view_time_main, NULL);
 
-	setting_create_Gendial_itc("2line.top", &(timeUG->itc_2text_2));
-	setting_create_Gendial_itc("1line", &(timeUG->itc_1text_1icon));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(timeUG->itc_1text_1icon));
 	setting_create_Gendial_itc("entry.main", &(timeUG->itc_layout));
-	setting_create_Gendial_itc("2line.top", &(timeUG->itc_2text_3_parent));
-	setting_create_Gendial_itc("2line.top", &(timeUG->itc_1icon_1text_sub));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(timeUG->itc_2text_2));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(timeUG->itc_2text_3_parent));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(timeUG->itc_1icon_1text_sub));
 
 	timeUG->is_expand_time_format_list = 0;
 

@@ -99,7 +99,7 @@ static inline void storageUg_init_itcs(SettingStorageUG *ad)
 	setting_create_Gendial_itc("dialogue/1text.1icon/expandable2",
 	                           &(ad->itc_1icon_1text_sub));
 	setting_create_Gendial_itc("dialogue/2text.3", &(ad->itc_2text_2));
-	setting_create_Gendial_itc("groupindex", &(ad->itc_group_item));
+	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE, &(ad->itc_group_item));
 	setting_create_Gendial_itc("2line.top.4", &(ad->itc_2text_1icon_3));
 	setting_create_Gendial_itc("dialogue/1text", &(ad->itc_1text));
 	setting_create_Gendial_itc("1text.1icon.3", &(ad->itc_1text_1icon));
@@ -110,7 +110,7 @@ static inline void storageUg_init_itcs(SettingStorageUG *ad)
 	ad->itc_notice.func.content_get = storageUg_default_notice_get_icon;
 	ad->itc_notice.func.del = NULL;
 
-	setting_create_Gendial_itc("2line.top", &(ad->itc_color_item));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(ad->itc_color_item));
 	ad->itc_color_item.func.content_get = storageUg_color_item_content_get;
 	ad->itc_color_item.func.del = NULL;
 }
@@ -138,7 +138,7 @@ static inline Evas_Object *storageUg_create_navi(Evas_Object *parent,
 	elm_naviframe_prev_btn_auto_pushed_set(navi, EINA_FALSE);
 
 	eext_object_event_callback_add(navi, EEXT_CALLBACK_BACK, storageUg_navi_back, ad);
-	/*eext_object_event_callback_add(navi, EEXT_CALLBACK_MORE, eext_naviframe_more_cb, NULL); */
+	eext_object_event_callback_add(navi, EEXT_CALLBACK_MORE, eext_naviframe_more_cb, ad);
 
 	evas_object_show(navi);
 	return navi;
@@ -202,12 +202,16 @@ static inline void storageUg_move_view(STORAGEUG_KEYWORD keynum,
 static void *setting_storageUg_on_create(ui_gadget_h ug, enum ug_mode mode,
                                          app_control_h service, void *priv)
 {
+	SETTING_TRACE_BEGIN;
 	int ret;
 	char *caller = NULL;
 	SettingStorageUG *ad = priv;
 	char *search_keyword = NULL;
 	const char *GENLIST_edj = EDJDIR"/setting-genlist.edj";
 	STORAGEUG_KEYWORD keyword_val = STORAGEUG_KEYWORD_NONE;
+
+	SETTING_TRACE(" -----> [TIME-1] before ");
+	appcore_measure_start();
 
 	retvm_if(NULL == ug || NULL == priv, NULL, "ug=%p, priv=%p is Invalid", ug, priv);
 
@@ -244,7 +248,7 @@ static void *setting_storageUg_on_create(ui_gadget_h ug, enum ug_mode mode,
 
 	storageUg_init_itcs(ad);
 
-	ad->lo_main = setting_create_win_layout(ad->lo_parent, ad->win);
+	ad->lo_main = setting_create_win_layout(ad->win);
 	ad->navi = storageUg_create_navi(ad->lo_main, ad);
 	if (NULL == ad->navi) {
 		SETTING_TRACE_ERROR("calloc() Fail");
@@ -266,12 +270,16 @@ static void *setting_storageUg_on_create(ui_gadget_h ug, enum ug_mode mode,
 	free(caller);
 	free(search_keyword);
 
+	SETTING_TRACE(" -----> [TIME-2] it took %d msec ", appcore_measure_time());
+	appcore_measure_start();
+
 	return ad->lo_main;
 }
 
 static void setting_storageUg_on_destroy(ui_gadget_h ug, app_control_h service,
                                          void *priv)
 {
+	SETTING_TRACE_BEGIN;
 	int ret;
 	SettingStorageUG *storageUG = priv;
 
@@ -298,18 +306,22 @@ static void setting_storageUg_on_destroy(ui_gadget_h ug, app_control_h service,
 static void setting_storageUg_on_resume(ui_gadget_h ug, app_control_h service,
                                         void *priv)
 {
+	SETTING_TRACE_BEGIN;
 	SettingStorageUG *storageUG = priv;
 
 	retm_if(NULL == ug || NULL == priv, "ug=%p, priv=%p is Invalid", ug, priv);
 
 	if (storageUG->main_view->is_create)
 		setting_view_update(storageUG->main_view, storageUG);
+
+
 }
 
 
 static void setting_storageUg_on_event(ui_gadget_h ug, enum ug_event event,
                                        app_control_h service, void *priv)
 {
+	SETTING_TRACE_BEGIN;
 	SettingStorageUG *storageUG = priv;
 
 	retm_if(NULL == ug || NULL == priv, "ug=%p, priv=%p is Invalid", ug, priv);
@@ -354,6 +366,16 @@ static void setting_storageUg_on_key_event(ui_gadget_h ug,
 	}
 }
 
+static void setting_storageUg_on_start(ui_gadget_h ug, app_control_h app_control, void *priv)
+{
+	SETTING_TRACE_BEGIN;
+	SettingStorageUG *storageUG = priv;
+
+	retm_if(NULL == ug || NULL == priv, "ug=%p, priv=%p is Invalid", ug, priv);
+
+	SETTING_TRACE(" -----> [TIME-3] it took %d msec to finish on_Start ", appcore_measure_time());
+}
+
 UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
 {
 	SettingStorageUG *storageUG;
@@ -367,7 +389,7 @@ UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
 	}
 
 	ops->create = setting_storageUg_on_create;
-	ops->start = NULL;
+	ops->start = setting_storageUg_on_start;
 	ops->pause = NULL;
 	ops->resume = setting_storageUg_on_resume;
 	ops->destroy = setting_storageUg_on_destroy;
@@ -385,12 +407,7 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 {
 	ret_if(NULL == ops);
 
-	SETTING_TRACE_BEGIN;
-	SettingStorageUG *storageUG = NULL;
-	setting_retm_if(!ops, "ops == NULL");
-
-	storageUG = ops->priv;
-	FREE(storageUG);
+	FREE(ops->priv);
 }
 
 UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,

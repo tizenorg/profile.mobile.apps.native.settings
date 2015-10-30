@@ -206,6 +206,7 @@ typedef struct _SettingPasswordUG {
 	int step;
 
 	Evas_Object *bottom_btn;	/* Instead of Toolbar btn */
+	Evas_Object *bottom_btn1;	/* Instead of Toolbar btn */
 	Setting_GenGroupItem_Data *ed_pw1;
 	Setting_GenGroupItem_Data *ed_pw2;
 	Setting_GenGroupItem_Data *ed_pw3;

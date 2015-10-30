@@ -70,7 +70,7 @@ collections {
                image {
                   normal: "core_slider_handle_normal.png";
                }
-               color_class: "W0641";	// color should follow latest winset GUI
+				color: 61 185 204 255;
             }
          }
          part { name: "button0_press";
@@ -83,7 +83,7 @@ collections {
                image {
                   normal: "core_slider_handle_press.png";
                }
-	       color_class: "W0641P"; // need check more with latest winst GUI
+				color: 61 185 204 255;
                visible: 0;
             }
             description { state: "pressed" 0.0;
@@ -203,6 +203,7 @@ group { name: "elm/slider/horizontal/music/soundalive";
                      to_x: "bar_image_left_padding";
                      to_y: "bg";
                   }
+				color: 61 185 204 255;
                }
                description { state: "visible" 0.0;
                   inherit: "default" 0.0;
@@ -249,7 +250,7 @@ group { name: "elm/slider/horizontal/music/soundalive";
                   }
                   fixed: 0 1;
                   image.normal: "core_progress_bar.#.png";
-                  color_class: "W062L1";
+                    color: 181 173 181 255;
                }
             }
             part { name: "drag_base";
@@ -291,8 +292,7 @@ group { name: "elm/slider/horizontal/music/soundalive";
                   min: 0 SLIDER_BASE_HEIGHT_INC;
                   max: -1 SLIDER_BASE_HEIGHT_INC;
                   image.normal: "core_progress_bar.#.png";
-		  			color_class: "W062L1";
-					//color:255 0 0 255;
+			      color: 61 185 204 255;
                }
             }
             part { name: "level2";
@@ -313,7 +313,7 @@ group { name: "elm/slider/horizontal/music/soundalive";
                      relative: 0.0 1.0;
                   }
                   image.normal: "core_progress_bar.#.png";
-		  color_class: "W062L1";
+			      color: 61 185 204 255;
                }
             }
             part {
@@ -340,7 +340,7 @@ group { name: "elm/slider/horizontal/music/soundalive";
                scale: 1;
                type: RECT;
                description { state: "default" 0.0;
-                  color_class: "W0661";
+			   color: 61 185 204 255;
 		}
             }
             part { name: "elm.swallow.bar";

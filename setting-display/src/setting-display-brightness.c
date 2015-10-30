@@ -377,8 +377,8 @@ static Eina_Bool __disable_on_idle(void *data)
 		evas_object_del(ad->popup);
 		ad->popup = NULL;
 	}
-	ad->popup = setting_create_popup_without_btn(ad, ad->win_get, NULL, _(LOW_BATTERY_NOTIFY),
-	                                             __low_battery_on_resp_cb, POPUP_INTERVAL, FALSE, FALSE);
+	ad->popup = setting_create_popup(ad, ad->win_get, NULL, LOW_BATTERY_NOTIFY,
+	                                 __low_battery_on_resp_cb, POPUP_INTERVAL, FALSE, FALSE, 0);
 	if (ad->data_br_sli && ad->data_br_sli->item)
 		setting_disable_genlist_item(ad->data_br_sli->item);
 	if (ad->data_br_auto && ad->data_br_auto->item)
@@ -604,8 +604,8 @@ void __display_int_vconf_cb(keynode_t *key, void *data)
 			err = display_set_brightness_with_setting(val);
 			if (err != DEVICE_ERROR_NONE) {
 				SETTING_TRACE(" device_display_set_brightness : failed[ret=%d]", err);
-				setting_create_popup_without_btn(ad, ad->win_get, NULL, _("IDS_CST_POP_FAILED"),
-				                                 NULL, POPUP_INTERVAL, FALSE, FALSE);
+				setting_create_popup(ad, ad->win_get, NULL, "IDS_CST_POP_FAILED",
+				                                 NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
 			}
 #endif
 
@@ -814,11 +814,9 @@ void construct_brightness(void *data, Evas_Object *genlist)
 		} else {
 			ad->data_br_sli->slider_min = BRIGHTNESS_MIN;
 			ad->data_br_sli->slider_max = display_get_max_brightness();
-			/*device_display_get_max_brightness(0, (int*)&ad->data_br_sli->slider_max); */
 			ad->data_br_sli->isIndicatorVisible = 0;
 		}
 		ad->data_br_sli->userdata = ad;
-		setting_genlist_item_groupstyle_set(ad->data_br_sli, SETTING_GROUP_STYLE_BOTTOM);
 
 		__BACK_POINTER_SET(ad->data_br_sli);
 	} else {
@@ -874,7 +872,6 @@ static int setting_display_brightness_create(void *cb)
 	Evas_Object *genlist = elm_genlist_add(ad->win_main_layout);
 	retvm_if(genlist == NULL, SETTING_RETURN_FAIL, "Cannot set scroller object as contento of layout");
 	/*elm_object_style_set(genlist, "dialogue"); */
-	//elm_genlist_realization_mode_set(genlist, EINA_TRUE);
 	elm_genlist_clear(genlist);	/* first to clear list */
 
 	/* add basic layout */
@@ -884,9 +881,8 @@ static int setting_display_brightness_create(void *cb)
 		                                   ad->win_get,
 		                                   "IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING",
 		                                   _("IDS_ST_BUTTON_BACK"),
-		                                   NULL, NULL,
 		                                   setting_display_brightness_click_softkey_cancel_cb,
-		                                   NULL, NULL, ad,
+		                                   ad,
 		                                   genlist,
 		                                   &ad->navi_bar, NULL);
 	} else {
@@ -894,7 +890,7 @@ static int setting_display_brightness_create(void *cb)
 		                             _("IDS_ST_BUTTON_BACK"), NULL, NULL,
 		                             setting_display_brightness_click_softkey_cancel_cb,
 		                             NULL,
-		                             NULL, ad, genlist, ad->navi_bar, NULL);;
+		                             NULL, ad, genlist, ad->navi_bar, NULL);
 	}
 	/*ad->genlist = genlist; */
 	evas_object_smart_callback_add(genlist, "realized", __gl_realized_cb, ad);
@@ -1010,15 +1006,6 @@ static void setting_display_set_slider_value(void *data, Evas_Object *obj, doubl
 		if (ret == DEVICE_ERROR_NONE) {
 			ad->data_br_sli->chk_status = (int)value;
 			SETTING_TRACE("value:%f", value);
-			/*ret = setting_set_int_slp_key(INT_SLP_SETTING_LCD_BRIGHTNESS, value, &err); */
-			/*ret = vconf_set_int(VCONFKEY_SETAPPL_LCD_BRIGHTNESS, value); */
-			/*setting_display_set_slider_value(ad, obj, value); */
-			/*elm_slider_value_set(obj, value); */
-			/*add error handle.. */
-			/*if (0 != ret) { */
-			/*	setting_create_popup_without_btn(ad, ad->win_get, NULL, _("IDS_CST_POP_FAILED"), */
-			/*				NULL, POPUP_INTERVAL, FALSE, FALSE); */
-			/*} */
 		} else {
 			SETTING_TRACE(" device_display_set_brightness : failed[ret=%d]", ret);
 			/*rollback.. */
@@ -1026,15 +1013,15 @@ static void setting_display_set_slider_value(void *data, Evas_Object *obj, doubl
 			setting_get_int_slp_key(INT_SLP_SETTING_LCD_BRIGHTNESS, &tmp, &err);
 			vconf_get_int(VCONFKEY_SETAPPL_LCD_BRIGHTNESS, &tmp);
 			elm_slider_value_set(obj, tmp);
-			setting_create_popup_without_btn(ad, ad->win_get, NULL, _("IDS_CST_POP_FAILED"),
-			                                 NULL, POPUP_INTERVAL, FALSE, FALSE);
+			setting_create_popup(ad, ad->win_get, NULL, "IDS_CST_POP_FAILED",
+			                                 NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
 		}
 	} else {
 		int ret = vconf_set_int(VCONFKEY_SETAPPL_LCD_AUTOMATIC_BRIGHTNESS, value);
 		/*add error handle.. */
 		if (0 != ret) {
-			setting_create_popup_without_btn(ad, ad->win_get, NULL, _("IDS_CST_POP_FAILED"),
-			                                 NULL, POPUP_INTERVAL, FALSE, FALSE);
+			setting_create_popup(ad, ad->win_get, NULL, "IDS_CST_POP_FAILED",
+			                                 NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
 		}
 	}
 }

@@ -29,10 +29,10 @@
 #define LANGLIST_FILE_PATH		"/usr/apps/org.tizen.setting/def_config/langlist.xml"
 #define LANGLIST_ALL_FILE_PATH	"/opt/usr/apps/org.tizen.setting/data/langlist_all.xml"
 
+
 #define SETTING_STR_SLP_LEN 256
 #define VCONFKEY_SETAPPL_USE_PACKET_DATA_BOOL				   VCONFKEY_SETAPPL_PREFIX"/use_packet_data"
 
-#define VCONFKEY_SETAPPL_ENHANCED_TOUCH	"memory/setting/enhanced_touch"
 
 
 #ifndef VCONFKEY_SETAPPL_SIM_LANGUAGE_STR

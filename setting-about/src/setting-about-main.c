@@ -28,18 +28,10 @@
 
 #include <bluetooth.h>
 #include <wifi.h>
-#include <dbus/dbus.h>
 
 #include <app_manager.h>
-#include <efl_assist_events.h>
 #include <efl_extension.h>
 #include <ITapiModem.h>
-
-
-#ifndef KEY_BACK
-#define KEY_BACK "X86Back_MOCK"
-#endif
-
 
 #define MAX_DEVICE_NAME_LEN		32
 
@@ -83,54 +75,9 @@ void __setting_about_gl_realized_cb(void *data, Evas_Object *obj, void *event_in
 	Elm_Object_Item *item = (Elm_Object_Item *)event_info;
 	/*Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *)elm_object_item_data_get(item); */
 
-	#if 0
-	if (elm_config_access_get()) {
-		/* ===== Accessibility ==== */
-		const Elm_Genlist_Item_Class *itc = elm_genlist_item_item_class_get(item);
-		if (itc && itc->item_style && !safeStrCmp(itc->item_style, "dialogue/editfield/title")) {
-			/* Register bg_dialogue image instead whole item */
-			Evas_Object *acc = elm_object_item_part_access_register(item, "bg_dialogue");
-		}
-	}
-	#endif
 
 }
 
-#if 0
-static void __setting_about_main_remove_noti(void *data)
-{
-	SETTING_TRACE_BEGIN;
-	setting_retm_if(data == NULL, "Invalid argument: data is NULL");
-	SettingAboutUG *ad = (SettingAboutUG *) data;
-	notification_h noti = NULL;
-	notification_error_e ret = NOTIFICATION_ERROR_NONE;
-
-	if (ad->noti_id) {
-		noti = notification_load(APP_NAME, ad->noti_id);
-		if (noti == NULL) {
-			SETTING_TRACE("Notification can be deleted already");
-		} else {
-			ret = notification_delete(noti);
-			if (ret != NOTIFICATION_ERROR_NONE) {
-				SETTING_TRACE_ERROR("Fail to notification_delete [%d]", ret);
-
-				ret = notification_free(noti);
-				if (ret != NOTIFICATION_ERROR_NONE) {
-					SETTING_TRACE_ERROR("Fail to notification_free [%d]", ret);
-				}
-				return;
-			}
-
-			ret = notification_free(noti);
-			if (ret != NOTIFICATION_ERROR_NONE) {
-				SETTING_TRACE_ERROR("Fail to notification_free [%d]", ret);
-				return;
-			}
-		}
-		ad->noti_id = 0;
-	}
-}
-#endif
 
 /**
  * @brief popup response callback fuc.
@@ -239,10 +186,10 @@ static Eina_Bool __setting_about_popup_show_delay(void *data)
 
 	if (NULL == ad->popup) {
 		ad->popup_showed_flag = true;
-		ad->popup = setting_create_popup_with_btn(ad, ad->win_get, "IDS_ST_HEADER_ENTER_VALID_DEVICE_NAME_ABB",
-		                                          _("IDS_ST_POP_YOU_MUST_ENTER_A_DEVICE_NAME"),
-		                                          __setting_about_popup_rsp_cb, 0,
-		                                          1, _("IDS_ST_BUTTON_OK_ABB"));
+		ad->popup = setting_create_popup(ad, ad->win_get, "IDS_ST_HEADER_ENTER_VALID_DEVICE_NAME_ABB",
+										 "IDS_ST_POP_YOU_MUST_ENTER_A_DEVICE_NAME",
+										 __setting_about_popup_rsp_cb, 0, FALSE, FALSE,
+										 1, "IDS_ST_BUTTON_OK_ABB");
 		evas_object_event_callback_add(ad->popup, EVAS_CALLBACK_DEL, __setting_about_popup_del_cb, ad);
 	}
 
@@ -267,19 +214,6 @@ static void __setting_about_popup_mobile_ap_turn_off_ask_resp_cb(void *data,
 
 	if (POPUP_RESPONSE_OK == response_type) {
 		/* disable tehering*/
-#if SUPPORT_TETHERING
-		tethering_h th = NULL;
-		tethering_error_e ret = TETHERING_ERROR_NONE;
-
-		ret = tethering_create(&th);
-		if (ret != TETHERING_ERROR_NONE) {
-			return;
-		}
-		if (tethering_is_enabled(NULL, TETHERING_TYPE_WIFI) == TRUE) {
-			tethering_disable(th, TETHERING_TYPE_WIFI);
-		}
-		tethering_destroy(th);
-#endif
 		if (ad->item_dev_name && ad->item_dev_name->eo_check) {
 			elm_object_focus_allow_set(ad->item_dev_name->eo_check, EINA_TRUE);
 			elm_object_focus_set(ad->item_dev_name->eo_check, EINA_TRUE);
@@ -426,8 +360,11 @@ void setting_about_main_get_sw_version(char *szStr, int nSize)
 		return;
 	}
 
+#if 0
 	snprintf(szStr, nSize, "TIZEN %s (%s)", version, build_info);
-
+#else
+	snprintf(szStr, nSize, "TIZEN %s", version);
+#endif
 	FREE(version);
 	FREE(build_info);
 }
@@ -458,10 +395,17 @@ void setting_about_main_get_wifi_mac_address_string(char *str, int size)
 		free(mac_addr);
 	}
 
-
 	SETTING_TRACE_DEBUG("get_wifi_mac_address : %s", str);
 
-	if ((status != WIFI_ERROR_NONE) || (safeStrLen(str) == 0)) {
+	int state = 0;
+	int ret = vconf_get_int(VCONFKEY_WIFI_STATE, &state);
+	if ( 0 != ret) {
+		SETTING_TRACE_ERROR("Failed to get wifi state");
+	} else {
+		SETTING_TRACE("get wifi state: %d", state);
+	}
+
+	if ((status != WIFI_ERROR_NONE) || (safeStrLen(str) == 0) || 0 == state) {
 		snprintf(str, size, "%s", _("IDS_ST_HEADER_UNAVAILABLE"));
 	}
 }
@@ -604,9 +548,12 @@ void setting_about_main_get_bluetooth_address_string(char *str, int size)
 	char *local_address = NULL;
 	ret = bt_adapter_get_address(&local_address);
 
+	bt_adapter_state_e state;
+	ret = bt_adapter_get_state(&state);
+
 	bt_deinitialize();
 
-	if (ret < 0) {
+	if (ret < 0 || BT_ADAPTER_DISABLED == state) {
 		snprintf(str, size, "%s", _("IDS_ST_HEADER_UNAVAILABLE"));
 		SETTING_TRACE_DEBUG("bt address : %s failed get bt address with error code:%d", str, ret);
 	} else {
@@ -1032,8 +979,6 @@ static void __setting_about_entry_unfocus_cb(void *data, Evas_Object *obj, void 
 	Setting_GenGroupItem_Data *item_dev_name = data;
 	SettingAboutUG *ad = item_dev_name->userdata;
 
-
-
 	if (isSpaceStr(entry_str)) {
 		if (!ad->empty_flag) {
 			ad->empty_flag = TRUE;
@@ -1044,15 +989,24 @@ static void __setting_about_entry_unfocus_cb(void *data, Evas_Object *obj, void 
 		}
 	}
 
+	if (item_dev_name->enterKeyPressFlag == TRUE)
+	{
+		char* name_value = vconf_get_str(VCONFKEY_SETAPPL_DEVICE_NAME_STR);
+		if (!ad->empty_flag && safeStrCmp(name_value, entry_str_utf8) != 0) {
+			if (0 != vconf_set_str(VCONFKEY_SETAPPL_DEVICE_NAME_STR, entry_str_utf8)) {
+				SETTING_TRACE_ERROR("Set vconf[%s] failed", VCONFKEY_SETAPPL_DEVICE_NAME_STR);
+			}
+		}
+		if (EINA_TRUE == elm_object_focus_get(ad->item_dev_name->eo_check)) {
+			elm_object_focus_set(ad->item_dev_name->eo_check, EINA_FALSE);
+		}
+		FREE(name_value);
+	}
 	setting_hide_input_pannel_cb(item_dev_name->eo_check);
-
-
 
 	FREE(entry_str_utf8);
 	elm_entry_select_none(obj);
-
 	SETTING_TRACE_END;
-
 }
 
 
@@ -1081,8 +1035,9 @@ static void __setting_about_entry_max_len_reached(void *data, Evas_Object *obj, 
 			snprintf(strMax, BUF_SIZE, _("IDS_ST_POP_THE_MAXIMUM_NUMBERS_OF_CHARACTERS_FOR_YOUR_DEVICE_NAME_HPD_HAS_BEEN_EXCEEDED"),
 			         MAX_DEVICE_NAME_LEN);
 
-			ad->popup_space = setting_create_popup_with_btn(ad, ad->win_get, "IDS_ST_HEADER_ENTER_VALID_DEVICE_NAME_ABB",
-			                                                strMax, __setting_about_main_popup_cb, 0, 1, _("IDS_ST_BUTTON_OK_ABB"));
+			ad->popup_space = setting_create_popup(ad, ad->win_get, "IDS_ST_HEADER_ENTER_VALID_DEVICE_NAME_ABB",
+												   strMax, __setting_about_main_popup_cb, 0, FALSE, FALSE,
+												   1, "IDS_ST_BUTTON_OK_ABB");
 		}
 	}
 }
@@ -1150,6 +1105,16 @@ static void __setting_about_main_vconf_change_cb(keynode_t *key, void *data)
 			ad->item_data_wifi->sub_desc = (char *)g_strdup(str);
 			elm_object_item_data_set(ad->item_data_wifi->item, ad->item_data_wifi);
 			elm_genlist_item_update(ad->item_data_wifi->item);
+		}
+	} else if (!safeStrCmp(vconf_name, VCONFKEY_BT_STATUS)) {
+		SETTING_TRACE("status:%d", status);
+		char str[MAX_DISPLAY_STR_LEN_ON_PHONE_INFO] = {0,};
+		setting_about_main_get_bluetooth_address_string(str, sizeof(str));
+		if (ad->item_data_bt) {
+			G_FREE(ad->item_data_bt->sub_desc);
+			ad->item_data_bt->sub_desc = (char *)g_strdup(str);
+			elm_object_item_data_set(ad->item_data_bt->item, ad->item_data_bt);
+			elm_genlist_item_update(ad->item_data_bt->item);
 		}
 	} else if (!safeStrCmp(vconf_name, VCONFKEY_SETAPPL_DEVICE_NAME_STR)) {
 		char *name_value = NULL;
@@ -1412,17 +1377,6 @@ setting_about_main_click_softkey_back_cb(void *data, Evas_Object *obj,
 	setting_retvm_if(data == NULL, EINA_FALSE, "Data parameter is NULL");
 	SettingAboutUG *ad = (SettingAboutUG *) data;
 	if (ad->empty_flag) {
-#if 0
-		if (ad->popup) {
-			evas_object_del(ad->popup);
-			ad->popup = NULL;
-		}
-		ad->popup = setting_create_popup_without_btn(ad, ad->win_get, NULL, _(EMPTY_LIMITATION_STR),
-		                                             __setting_about_popup_rsp_cb, POPUP_INTERVAL, FALSE, FALSE);
-		if (ad->item_dev_name) {
-			elm_object_focus_set(ad->item_dev_name->eo_check, EINA_TRUE);
-		}
-#endif
 		return EINA_FALSE;
 	}
 
@@ -1448,17 +1402,6 @@ static Eina_Bool __setting_about_child_view_back_cb(void *data, Elm_Object_Item 
 
 	SettingAboutUG *ad =  data;
 	if (ad->empty_flag) {
-#if 0
-		if (ad->popup) {
-			evas_object_del(ad->popup);
-			ad->popup = NULL;
-		}
-		ad->popup = setting_create_popup_without_btn(ad, ad->win_get, NULL, _(EMPTY_LIMITATION_STR),
-		                                             __setting_about_popup_rsp_cb, POPUP_INTERVAL, FALSE, FALSE);
-		if (ad->item_dev_name) {
-			elm_object_focus_set(ad->item_dev_name->eo_check, EINA_TRUE);
-		}
-#endif
 		return EINA_FALSE;
 	} else {
 		if (ad->event_handler) {
@@ -1482,13 +1425,11 @@ static Eina_Bool __setting_about_name_view_key_down(void *data, int type, void *
 		return ECORE_CALLBACK_RENEW;
 	}
 
-#if 0
 	SettingAboutUG *ad = data;
-	if (!strcmp(ev->keyname, KEY_BACK)) {
+	if (!strcmp(ev->keyname, "XF86Back")) {
 		setting_about_naviframe_btn_cancel_cb(ad, NULL, NULL);
 	}
 	return ECORE_CALLBACK_RENEW;
-#endif
 }
 static Eina_Bool setting_about_name_focus_update_cb(const void *data)
 {
@@ -1522,8 +1463,6 @@ static void __setting_about_main_creat_name_view(data)
 	Evas_Object *scroller = NULL;
 	scroller = elm_genlist_add(ad->navi_bar);
 	setting_retm_if(scroller == NULL, "Cannot set scroller object  as contento of layout");
-	//elm_genlist_realization_mode_set(scroller, EINA_TRUE);
-	/*elm_object_style_set(scroller, "dialogue"); */
 	elm_genlist_clear(scroller);	/* first to clear list */
 	elm_genlist_mode_set(scroller, ELM_LIST_COMPRESS);
 	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb, NULL);
@@ -1550,15 +1489,15 @@ static void __setting_about_main_creat_name_view(data)
 	item_data->chk_status = 0;
 	item_data->chk_change_cb = __setting_about_entry_device_name_changed_cb;
 	item_data->userdata = ad;
-	item_data->isSinglelineFlag = FALSE;
+	//item_data->isSinglelineFlag = FALSE;
+	item_data->isSinglelineFlag = TRUE;
 	item_data->stop_change_cb = __setting_about_entry_unfocus_cb;
 	item_data->maxlength_reached_cb = __setting_about_entry_max_len_reached;
 	item_data->focus_cb = __setting_about_entry_focused;
 	item_data->x_callback_cb = __setting_about_entry_input_panel_event_cb;
 	item_data->guide_text = (char *)g_strdup(EMPTY_LIMITATION_STR);
-	item_data->isGroupStyleTOP = TRUE;
 	item_data->focus_unallowed = get_tethering_status();
-	/*item_data->entry_auto_focus = TRUE; */
+	item_data->return_key_type = ELM_INPUT_PANEL_RETURN_KEY_TYPE_DONE;
 
 	item_data->limit_filter_data = calloc(1, sizeof(Elm_Entry_Filter_Limit_Size));
 	if (item_data->limit_filter_data) {
@@ -1586,8 +1525,6 @@ static void __setting_about_main_creat_name_view(data)
 	if (ad->item_dev_name) {
 		__BACK_POINTER_SET(ad->item_dev_name);
 		elm_genlist_item_select_mode_set(ad->item_dev_name->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-		/*ad->item_dev_name->group_style = SETTING_GROUP_STYLE_TOP; */
-		/*setting_genlist_item_groupstyle_set(ad->item_dev_name, SETTING_GROUP_STYLE_TOP); */
 	} else {
 		SETTING_TRACE_ERROR("ad->item_dev_name is NULL");
 	}
@@ -1718,10 +1655,11 @@ setting_about_main_gl_mouse_up(void *data, Evas *e, Evas_Object *obj, void *even
 					ad->popup = NULL;
 				}
 
-				ad->popup = setting_create_popup_with_btn(ad, ad->win_get,
-				                                          NULL, _(SETTING_ABOUT_MOBILE_AP_TURNED_OFF),
-				                                          __setting_about_popup_mobile_ap_turn_off_ask_resp_cb, 0,
-				                                          2, _("IDS_ST_BODY_TURN_OFF"), _("IDS_ST_BUTTON_CANCEL_ABB2"));
+				ad->popup = setting_create_popup(ad, ad->win_get,
+												 NULL, SETTING_ABOUT_MOBILE_AP_TURNED_OFF,
+												 __setting_about_popup_mobile_ap_turn_off_ask_resp_cb, 0,
+												 FALSE, FALSE,
+												 2, "IDS_ST_BODY_TURN_OFF", "IDS_ST_BUTTON_CANCEL_ABB2");
 			} else {
 				elm_object_focus_set(ad->item_dev_name->eo_check, EINA_TRUE);
 				elm_entry_cursor_end_set(ad->item_dev_name->eo_check);
@@ -1827,7 +1765,6 @@ int setting_about_main_generate_genlist(void *data)
 					NULL, NULL);
 			if (item_data) {
 				item_data->userdata = ad;
-				setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_TOP);
 			} else {
 				SETTING_TRACE_ERROR("item_data is NULL");
 			}
@@ -1841,7 +1778,6 @@ int setting_about_main_generate_genlist(void *data)
 			ad, SWALLOW_Type_INVALID, NULL, NULL,
 			0, "IDS_ST_HEADER_MANAGE_CERTIFICATES_ABB", NULL, NULL);
 	if (item_data) {
-		setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_BOTTOM);
 	} else {
 		SETTING_TRACE_ERROR("item_data is NULL");
 	}
@@ -1850,7 +1786,7 @@ int setting_about_main_generate_genlist(void *data)
 			ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
-	/* [UI] Licence */
+	/* [UI] Legal Information */
 	setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
 			setting_about_main_mouse_up_Gendial_list_cb,
 			ad, SWALLOW_Type_INVALID, NULL, NULL,
@@ -1877,11 +1813,10 @@ int setting_about_main_generate_genlist(void *data)
 	}
 	/* [UI] Name */
 	ad->item_dev_name_main = item_data =
-		setting_create_Gendial_field_def(scroller, &(itc_2text_2), setting_about_main_mouse_up_Gendial_list_cb,
+		setting_create_Gendial_field_def(scroller, &(ad->itc_2text_2), setting_about_main_mouse_up_Gendial_list_cb,
 				ad, SWALLOW_Type_INVALID, NULL,
 				NULL, 0, SETTING_ABOUT_DEVICE_NAME_STR, pa_sub_desc, NULL);
 	if (item_data) {
-		setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_TOP);
 		__BACK_POINTER_SET(ad->item_dev_name_main);
 	} else {
 		SETTING_TRACE_ERROR("item_data is NULL");
@@ -1918,7 +1853,6 @@ int setting_about_main_generate_genlist(void *data)
 		if (item_data) {
 			elm_object_item_disabled_set(item_data->item, EINA_TRUE);
 			elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-			setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_CENTER);
 		} else {
 			SETTING_TRACE_ERROR("item_data is NULL");
 		}
@@ -1936,7 +1870,6 @@ int setting_about_main_generate_genlist(void *data)
 	if (item_data) {
 		elm_object_item_disabled_set(item_data->item, EINA_TRUE);
 		elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-		setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_CENTER);
 	} else {
 		SETTING_TRACE_ERROR("item_data is NULL");
 	}
@@ -1952,7 +1885,6 @@ int setting_about_main_generate_genlist(void *data)
 	if (item_data) {
 		elm_object_item_disabled_set(item_data->item, EINA_TRUE);
 		elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-		setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_CENTER);
 	} else {
 		SETTING_TRACE_ERROR("item_data is NULL");
 	}
@@ -1976,7 +1908,6 @@ int setting_about_main_generate_genlist(void *data)
 		if (item_data) {
 			elm_object_item_disabled_set(item_data->item, EINA_TRUE);
 			elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-			setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_CENTER);
 		} else {
 			SETTING_TRACE_ERROR("item_data is NULL");
 		}
@@ -2000,7 +1931,6 @@ int setting_about_main_generate_genlist(void *data)
 		if (ad->item_data_bt) {
 			elm_object_item_disabled_set(ad->item_data_bt->item, EINA_TRUE);
 			elm_genlist_item_select_mode_set(ad->item_data_bt->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-			setting_genlist_item_groupstyle_set(ad->item_data_bt, SETTING_GROUP_STYLE_CENTER);
 			__BACK_POINTER_SET(ad->item_data_bt);
 		} else {
 			SETTING_TRACE_ERROR("item_data is NULL");
@@ -2020,7 +1950,6 @@ int setting_about_main_generate_genlist(void *data)
 	if (ad->item_data_wifi) {
 		elm_object_item_disabled_set(ad->item_data_wifi->item, EINA_TRUE);
 		elm_genlist_item_select_mode_set(ad->item_data_wifi->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-		setting_genlist_item_groupstyle_set(ad->item_data_wifi, SETTING_GROUP_STYLE_CENTER);
 		__BACK_POINTER_SET(ad->item_data_wifi);
 	} else {
 		SETTING_TRACE_ERROR("item_data is NULL");
@@ -2036,7 +1965,6 @@ int setting_about_main_generate_genlist(void *data)
 	if (item_data) {
 		elm_object_item_disabled_set(item_data->item, EINA_TRUE);
 		elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-		setting_genlist_item_groupstyle_set(item_data, SETTING_GROUP_STYLE_CENTER);
 	} else {
 		SETTING_TRACE_ERROR("item_data is NULL");
 	}
@@ -2053,7 +1981,6 @@ int setting_about_main_generate_genlist(void *data)
 		elm_object_item_disabled_set(item_data->item, EINA_TRUE);
 		elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 		ad->item_data_battery = item_data;
-		setting_genlist_item_groupstyle_set(ad->item_data_battery, SETTING_GROUP_STYLE_CENTER);
 		__BACK_POINTER_SET(ad->item_data_battery);
 	} else {
 		SETTING_TRACE_ERROR("item_data is NULL");
@@ -2076,7 +2003,6 @@ int setting_about_main_generate_genlist(void *data)
 	if (ad->item_data_cpu) {
 		elm_object_item_disabled_set(ad->item_data_cpu->item, EINA_TRUE);
 		elm_genlist_item_select_mode_set(ad->item_data_cpu->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-		setting_genlist_item_groupstyle_set(ad->item_data_cpu, SETTING_GROUP_STYLE_BOTTOM);
 		__BACK_POINTER_SET(ad->item_data_cpu);
 	} else {
 		SETTING_TRACE_ERROR("item_data is NULL");
@@ -2096,229 +2022,232 @@ int setting_about_main_generate_genlist(void *data)
 		}
 	}
 #else
-		char *security_status = (char *)g_strdup("IDS_ST_HEADER_UNAVAILABLE");
+	char *security_status = (char *)g_strdup("IDS_ST_HEADER_UNAVAILABLE");
 #endif
-		item_data =
-			setting_create_Gendial_field_def(scroller, &(ad->itc_2text_2), NULL,
-					NULL, SWALLOW_Type_INVALID, NULL,
-					NULL, 0, "IDS_ST_TMBODY_SECURITY_STATUS", security_status, NULL);
-		if (item_data) {
-			elm_object_item_disabled_set(item_data->item, EINA_TRUE);
-			elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+	item_data =
+		setting_create_Gendial_field_def(scroller, &(ad->itc_2text_2), NULL,
+				NULL, SWALLOW_Type_INVALID, NULL,
+				NULL, 0, "IDS_ST_TMBODY_SECURITY_STATUS", security_status, NULL);
+	if (item_data) {
+		elm_object_item_disabled_set(item_data->item, EINA_TRUE);
+		elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+	} else {
+		SETTING_TRACE_ERROR("item_data is NULL");
+	}
+	G_FREE(security_status);
+
+	if (app_info) {
+		app_info_destroy(app_info);
+	}
+
+	ad->update_timer =
+		ecore_timer_add(1, (Ecore_Task_Cb) setting_about_main_timer_update_cb, ad);
+
+	return SETTING_RETURN_SUCCESS;
+}
+
+
+/**
+ * @brief TAPI response callback,get the SIM LOCK data
+ *
+ * @param handle the changed vconf key node.
+ * @param result application data
+ * @param data it is struct TelSimLockInfo_t,store SIM lock info
+ * @param user_data application data
+ *
+ * @see tel_get_sim_lock_info
+ */
+static void __on_pin_getlock_info(TapiHandle *handle, int result, void *data, void *user_data)
+{
+	SETTING_TRACE_BEGIN;
+	ret_if(data == NULL || user_data == NULL);
+	TelSimPinOperationResult_t sec_rt = result;
+	TelSimLockInfo_t *lock = data;
+	SettingAboutUG *ad = (SettingAboutUG *)user_data;
+
+	/*lock->lock_status = TAPI_SIM_LOCK_PERM_BLOCKED; //for UT */
+	SETTING_TRACE_DEBUG("sec_ret[%d]", sec_rt);
+	SETTING_TRACE_DEBUG("lock_status:%d", lock->lock_status);
+	if (TAPI_SIM_LOCK_PERM_BLOCKED == lock->lock_status) {
+		/*update sub description with "PUK is locked" */
+		if (ad->item_data_my_phone_number) {
+			G_FREE(ad->item_data_my_phone_number->sub_desc);
+			ad->item_data_my_phone_number->sub_desc = (char *)g_strdup(SETTING_ABOUT_PUK_LOCKED);
+			elm_object_item_data_set(ad->item_data_my_phone_number->item, ad->item_data_my_phone_number);
+			elm_genlist_item_update(ad->item_data_my_phone_number->item);
 		} else {
-			SETTING_TRACE_ERROR("item_data is NULL");
-		}
-		G_FREE(security_status);
-
-		if (app_info) {
-			app_info_destroy(app_info);
-		}
-
-		ad->update_timer =
-			ecore_timer_add(1, (Ecore_Task_Cb) setting_about_main_timer_update_cb, ad);
-
-		return SETTING_RETURN_SUCCESS;
-	}
-
-
-	/**
-	 * @brief TAPI response callback,get the SIM LOCK data
-	 *
-	 * @param handle the changed vconf key node.
-	 * @param result application data
-	 * @param data it is struct TelSimLockInfo_t,store SIM lock info
-	 * @param user_data application data
-	 *
-	 * @see tel_get_sim_lock_info
-	 */
-	static void __on_pin_getlock_info(TapiHandle *handle, int result, void *data, void *user_data)
-	{
-		SETTING_TRACE_BEGIN;
-		ret_if(data == NULL || user_data == NULL);
-		TelSimPinOperationResult_t sec_rt = result;
-		TelSimLockInfo_t *lock = data;
-		SettingAboutUG *ad = (SettingAboutUG *)user_data;
-
-		/*lock->lock_status = TAPI_SIM_LOCK_PERM_BLOCKED; //for UT */
-		SETTING_TRACE_DEBUG("sec_ret[%d]", sec_rt);
-		SETTING_TRACE_DEBUG("lock_status:%d", lock->lock_status);
-		if (TAPI_SIM_LOCK_PERM_BLOCKED == lock->lock_status) {
-			/*update sub description with "PUK is locked" */
-			if (ad->item_data_my_phone_number) {
-				G_FREE(ad->item_data_my_phone_number->sub_desc);
-				ad->item_data_my_phone_number->sub_desc = (char *)g_strdup(SETTING_ABOUT_PUK_LOCKED);
-				elm_object_item_data_set(ad->item_data_my_phone_number->item, ad->item_data_my_phone_number);
-				elm_genlist_item_update(ad->item_data_my_phone_number->item);
-			} else {
-				ad->need_update = TRUE;
-			}
+			ad->need_update = TRUE;
 		}
 	}
+}
 
-	/**
-	 * @brief create aboutUG main view layout
-	 *
-	 * @param cb aboutUG data
-	 * @return 1 for success
-	 */
-	static int setting_about_main_create(void *cb)
-	{
-		SETTING_TRACE_BEGIN;
-		/* error check */
-		retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+/**
+ * @brief create aboutUG main view layout
+ *
+ * @param cb aboutUG data
+ * @return 1 for success
+ */
+static int setting_about_main_create(void *cb)
+{
+	SETTING_TRACE_BEGIN;
+	/* error check */
+	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-		SettingAboutUG *ad = (SettingAboutUG *) cb;
+	SettingAboutUG *ad = (SettingAboutUG *) cb;
 
-		Evas_Object *scroller = elm_genlist_add(ad->win_main_layout);
-		retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
-				"Cannot set scroller object  as contento of layout");
-		//elm_genlist_realization_mode_set(scroller, EINA_TRUE);
-		elm_object_style_set(scroller, "dialogue");
-		elm_genlist_clear(scroller);	/* first to clear list */
-		ad->genlsit = scroller;
-		evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb, NULL);
-		evas_object_smart_callback_add(scroller, "realized", __setting_about_gl_realized_cb, NULL);
+	Evas_Object *scroller = elm_genlist_add(ad->win_main_layout);
+	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
+			"Cannot set scroller object  as contento of layout");
+	elm_genlist_mode_set(scroller, ELM_LIST_COMPRESS);
+	elm_genlist_clear(scroller);	/* first to clear list */
+	ad->genlsit = scroller;
+	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb, NULL);
+	evas_object_smart_callback_add(scroller, "realized", __setting_about_gl_realized_cb, NULL);
 
-		ad->ly_main =
-			setting_create_layout_navi_bar(ad->win_main_layout, ad->win_get,
-					KeyStr_AboutDevice,
-					_("IDS_ST_BUTTON_BACK"), NULL, NULL,
-					(setting_call_back_func)setting_about_main_click_softkey_back_cb,
-					NULL, NULL, ad, scroller,
-					&ad->navi_bar, NULL);
+	ad->ly_main =
+		setting_create_layout_navi_bar(ad->win_main_layout, ad->win_get,
+				KeyStr_AboutDevice,
+				NULL,
+				(setting_call_back_func)setting_about_main_click_softkey_back_cb,
+				ad, scroller,
+				&ad->navi_bar, NULL);
 
-		ad->btn_done = setting_about_naviframe_btn_create(ad->navi_bar, _("IDS_SA_BUTTON_DONE_ABB"), setting_about_naviframe_btn_done_cb, ad);
-		/*Title Text Right Button */
-		ad->btn_cancel = setting_about_naviframe_btn_create(ad->navi_bar, _("IDS_ST_BUTTON_CANCEL_ABB"), setting_about_naviframe_btn_cancel_cb, ad);
-		ad->genlsit = scroller;
+	ad->btn_done = setting_about_naviframe_btn_create(ad->navi_bar, _("IDS_SA_BUTTON_DONE_ABB"), setting_about_naviframe_btn_done_cb, ad);
+	/*Title Text Right Button */
+	ad->btn_cancel = setting_about_naviframe_btn_create(ad->navi_bar, _("IDS_ST_BUTTON_CANCEL_ABB"), setting_about_naviframe_btn_cancel_cb, ad);
+	ad->genlsit = scroller;
 
-		evas_object_smart_callback_add(scroller, "drag", setting_about_main_gl_drag, ad);
+	evas_object_smart_callback_add(scroller, "drag", setting_about_main_gl_drag, ad);
 
-		evas_object_event_callback_add(scroller, EVAS_CALLBACK_MOUSE_UP, setting_about_main_gl_mouse_up, ad);
+	evas_object_event_callback_add(scroller, EVAS_CALLBACK_MOUSE_UP, setting_about_main_gl_mouse_up, ad);
 
-		ad->navi_item = elm_naviframe_top_item_get(ad->navi_bar);
+	ad->navi_item = elm_naviframe_top_item_get(ad->navi_bar);
 
-		setting_about_main_generate_genlist((void *)ad);
+	setting_about_main_generate_genlist((void *)ad);
 
-		int ret = vconf_notify_key_changed(VCONFKEY_WIFI_STATE,
-				__setting_about_main_vconf_change_cb, ad);
-		if (ret != 0) {
-			SETTING_TRACE_ERROR("call vconf_notify_key_changed failed");
-		}
-		ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_DEVICE_NAME_STR,
-				__setting_about_main_vconf_change_cb, ad);
-		if (ret != 0) {
-			SETTING_TRACE_ERROR("call vconf_notify_key_changed failed");
-		}
-
-		setting_view_about_main.is_create = 1;
-		SETTING_TRACE_END;
-		return SETTING_RETURN_SUCCESS;
+	int ret = vconf_notify_key_changed(VCONFKEY_WIFI_STATE,
+			__setting_about_main_vconf_change_cb, ad);
+	if (ret != 0) {
+		SETTING_TRACE_ERROR("call vconf_notify_key_changed failed");
+	}
+	ret = vconf_notify_key_changed(VCONFKEY_BT_STATUS,
+			__setting_about_main_vconf_change_cb, ad);
+	if (ret != 0) {
+		SETTING_TRACE_ERROR("call vconf_notify_key_changed failed");
+	}
+	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_DEVICE_NAME_STR,
+			__setting_about_main_vconf_change_cb, ad);
+	if (ret != 0) {
+		SETTING_TRACE_ERROR("call vconf_notify_key_changed failed");
 	}
 
-	/**
-	 * @brief destroy aboutUG main view layout
-	 *
-	 * @param cb aboutUG data
-	 * @return 1 for success
-	 */
-	static int setting_about_main_destroy(void *cb)
-	{
-		SETTING_TRACE_BEGIN;
-		/* error check */
-		retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+	setting_view_about_main.is_create = 1;
+	SETTING_TRACE_END;
+	return SETTING_RETURN_SUCCESS;
+}
 
-		SettingAboutUG *ad = (SettingAboutUG *) cb;
+/**
+ * @brief destroy aboutUG main view layout
+ *
+ * @param cb aboutUG data
+ * @return 1 for success
+ */
+static int setting_about_main_destroy(void *cb)
+{
+	SETTING_TRACE_BEGIN;
+	/* error check */
+	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-		evas_object_smart_callback_del(ad->genlsit, "realized", __gl_realized_cb);
+	SettingAboutUG *ad = (SettingAboutUG *) cb;
 
-		int ret = vconf_ignore_key_changed(VCONFKEY_WIFI_STATE,
-				__setting_about_main_vconf_change_cb);
-		if (ret != 0) {
-			SETTING_TRACE_ERROR("call vconf_ignore_key_changed failed");
-		}
-		ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_DEVICE_NAME_STR,
-				__setting_about_main_vconf_change_cb);
-		if (ret != 0) {
-			SETTING_TRACE_ERROR("call vconf_ignore_key_changed failed");
-		}
+	evas_object_smart_callback_del(ad->genlsit, "realized", __gl_realized_cb);
 
-		//__setting_about_main_remove_noti(ad);
-
-
-		if (ad->update_timer) {
-			ecore_timer_del(ad->update_timer);
-			ad->update_timer = NULL;
-		}
-		if (ad->update_idler) {
-			ecore_idler_del(ad->update_idler);
-			ad->update_idler = NULL;
-		}
-		if (ad->idler_add_popup) {
-			ecore_idler_del(ad->idler_add_popup);
-			ad->idler_add_popup = NULL;
-		}
-		if (ad->idler_remove_popup) {
-			ecore_idler_del(ad->idler_remove_popup);
-			ad->idler_remove_popup = NULL;
-		}
-		if (ad->idler_remove_space_popup) {
-			ecore_idler_del(ad->idler_remove_space_popup);
-			ad->idler_remove_space_popup = NULL;
-		}
-		if (ad->popup) {
-			evas_object_del(ad->popup);
-			ad->popup = NULL;
-		}
-		if (ad->popup_space) {
-			evas_object_del(ad->popup_space);
-			ad->popup_space = NULL;
-		}
-
-		if (ad->ly_main != NULL) {
-			evas_object_del(ad->ly_main);
-			ad->ly_main = NULL;
-		}
-
-		if (ad->event_handler) {
-			ecore_event_handler_del(ad->event_handler);
-			ad->event_handler = NULL;
-		}
-		if (ad->name_update_idler) {
-			ecore_idler_del(ad->name_update_idler);
-			ad->name_update_idler = NULL;
-		}
-		setting_view_about_main.is_create = 0;
-		return SETTING_RETURN_SUCCESS;
+	int ret = vconf_ignore_key_changed(VCONFKEY_WIFI_STATE,
+			__setting_about_main_vconf_change_cb);
+	if (ret != 0) {
+		SETTING_TRACE_ERROR("call vconf_ignore_key_changed failed");
+	}
+	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_DEVICE_NAME_STR,
+			__setting_about_main_vconf_change_cb);
+	if (ret != 0) {
+		SETTING_TRACE_ERROR("call vconf_ignore_key_changed failed");
 	}
 
-	/**
-	 * @brief update aboutUG main view
-	 *
-	 * @param cb aboutUG data
-	 * @return 1 for success
-	 */
-	static int setting_about_main_update(void *cb)
-	{
-		SETTING_TRACE_BEGIN;
-		/* error check */
-		retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+	/*__setting_about_main_remove_noti(ad);*/
 
-		SettingAboutUG *ad = (SettingAboutUG *) cb;
 
-		if (ad->item_dev_name) {
-			ad->is_dev_name_focus = elm_object_focus_get(ad->item_dev_name->eo_check);
-			ad->cursor_pos = elm_entry_cursor_pos_get(ad->item_dev_name->eo_check);
+	if (ad->update_timer) {
+		ecore_timer_del(ad->update_timer);
+		ad->update_timer = NULL;
+	}
+	if (ad->update_idler) {
+		ecore_idler_del(ad->update_idler);
+		ad->update_idler = NULL;
+	}
+	if (ad->idler_add_popup) {
+		ecore_idler_del(ad->idler_add_popup);
+		ad->idler_add_popup = NULL;
+	}
+	if (ad->idler_remove_popup) {
+		ecore_idler_del(ad->idler_remove_popup);
+		ad->idler_remove_popup = NULL;
+	}
+	if (ad->idler_remove_space_popup) {
+		ecore_idler_del(ad->idler_remove_space_popup);
+		ad->idler_remove_space_popup = NULL;
+	}
+	if (ad->popup) {
+		evas_object_del(ad->popup);
+		ad->popup = NULL;
+	}
+	if (ad->popup_space) {
+		evas_object_del(ad->popup_space);
+		ad->popup_space = NULL;
+	}
 
-			SETTING_TRACE("elm_object_focus_get(ad->item_dev_name->eo_check):%d", elm_object_focus_get(ad->item_dev_name->eo_check));
+	if (ad->ly_main != NULL) {
+		evas_object_del(ad->ly_main);
+		ad->ly_main = NULL;
+	}
 
-			SETTING_TRACE("ad->is_dev_name_focus:%d", ad->is_dev_name_focus);
-			/*elm_object_focus_set(ad->item_dev_name->eo_check, EINA_TRUE);
-			  Ecore_IMF_Context *imf_context = (Ecore_IMF_Context *)elm_entry_imf_context_get(ad->item_dev_name->eo_check);
-			  if (imf_context) {
-			  ecore_imf_context_input_panel_show(imf_context);
-			  }*/
-			/*} */
+	if (ad->event_handler) {
+		ecore_event_handler_del(ad->event_handler);
+		ad->event_handler = NULL;
+	}
+	if (ad->name_update_idler) {
+		ecore_idler_del(ad->name_update_idler);
+		ad->name_update_idler = NULL;
+	}
+	setting_view_about_main.is_create = 0;
+	return SETTING_RETURN_SUCCESS;
+}
+
+/**
+ * @brief update aboutUG main view
+ *
+ * @param cb aboutUG data
+ * @return 1 for success
+ */
+static int setting_about_main_update(void *cb)
+{
+	SETTING_TRACE_BEGIN;
+	/* error check */
+	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+
+	SettingAboutUG *ad = (SettingAboutUG *) cb;
+
+	if (ad->item_dev_name) {
+		ad->is_dev_name_focus = elm_object_focus_get(ad->item_dev_name->eo_check);
+		ad->cursor_pos = elm_entry_cursor_pos_get(ad->item_dev_name->eo_check);
+
+		SETTING_TRACE("elm_object_focus_get(ad->item_dev_name->eo_check):%d", elm_object_focus_get(ad->item_dev_name->eo_check));
+
+		SETTING_TRACE("ad->is_dev_name_focus:%d", ad->is_dev_name_focus);
+		/*elm_object_focus_set(ad->item_dev_name->eo_check, EINA_TRUE);
+		  Ecore_IMF_Context *imf_context = (Ecore_IMF_Context *)elm_entry_imf_context_get(ad->item_dev_name->eo_check);
+		  if (imf_context) {
+		  ecore_imf_context_input_panel_show(imf_context);
+		  }*/
 	}
 
 	if (ad->ly_main != NULL) {

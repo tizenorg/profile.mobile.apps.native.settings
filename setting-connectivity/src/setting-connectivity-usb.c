@@ -31,8 +31,14 @@
 #define DEBUG_MODE_POPUP_TITLE					"IDS_ST_HEADER_ALLOW_USB_DEBUGGING_Q_ABB"
 #define DEBUG_MODE_POPUP_TEXT					"IDS_ST_BODY_USB_DEBUGGING_IS_INTENDED_FOR_DEVELOPMENT_PURPOSES_ONLY_MSG"
 #define DEFAULT_RENDERING_ENGINE_STR				"IDS_ST_BODY_DEFAULT_RENDERING_ENGINE"
+#if 0
 #define SOFTWARE_STR								"IDS_ST_BODY_SOFTWARE"
 #define HARDWARE_STR								"IDS_ST_BODY_HARDWARE"
+#else
+#define NONE_STR									"NONE"	/* -1 */
+#define SOFTWARE_STR								"OFF"	/*  0 */
+#define HARDWARE_STR								"ON"	/*  1 */
+#endif
 #define CONNECTTIVITY_SELECT_INFO_POPUP_STR		"IDS_HS_HEADER_USB_DEBUGGING_CONNECTED"
 
 static char *bgprocess_list[] = {
@@ -89,10 +95,10 @@ static void __setting_processes_sub_list_sel_cb(void *data, Evas_Object *obj, vo
 	elm_object_item_data_set(data_parentItem->item, data_parentItem);
 	elm_genlist_item_update(data_parentItem->item);
 	elm_object_item_signal_emit(data_parentItem->item, "elm,state,top", "");
-	data_parentItem->group_style = SETTING_GROUP_STYLE_TOP;
 	elm_genlist_item_expanded_set(parentItem, EINA_FALSE);
 }
 
+#if 1
 static void __setting_devoptions_main_sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
@@ -106,25 +112,51 @@ static void __setting_devoptions_main_sub_list_sel_cb(void *data, Evas_Object *o
 	ret_if(NULL == data_subItem || NULL == data_parentItem);
 
 	elm_radio_value_set(data_subItem->rgd, data_subItem->chk_status);
-
 	SETTING_TRACE("data_subItem->chk_status = %d", data_subItem->chk_status);
-	if (data_subItem->chk_status == 0) { /* software */
-		elm_config_engine_set("software_x11");
-		vconf_set_int(VCONFKEY_SETAPPL_DEFAULT_RENDERING_ENGINE_TYPE_INT, SETTING_RENDERING_ENGINE_SW);
+
+	if (data_subItem->chk_status == 0) { /* none */
+		vconf_set_int(VCONFKEY_SETAPPL_APP_HW_ACCELERATION, SETTING_HW_ACCELERATION_NONE);
+	} else if (data_subItem->chk_status == 1) { /* software */
+		elm_config_engine_set("software_x11"); /*deprecated API*/
+		vconf_set_int(VCONFKEY_SETAPPL_APP_HW_ACCELERATION, SETTING_RENDERING_ENGINE_SW);
 		elm_config_save();
-	} else if (data_subItem->chk_status == 1) { /* hardware */
-		elm_config_engine_set("opengl_x11");
-		vconf_set_int(VCONFKEY_SETAPPL_DEFAULT_RENDERING_ENGINE_TYPE_INT, SETTING_RENDERING_ENGINE_HW);
+	} else if (data_subItem->chk_status == 2) { /* hardware */
+		elm_config_engine_set("opengl_x11"); /*deprecated API*/
+		vconf_set_int(VCONFKEY_SETAPPL_APP_HW_ACCELERATION, SETTING_RENDERING_ENGINE_HW);
 		elm_config_save();
 	}
-
 	data_parentItem->sub_desc = (char *)g_strdup(_(data_subItem->keyStr));
 	elm_object_item_data_set(data_parentItem->item, data_parentItem);
 	elm_genlist_item_update(data_parentItem->item);
 	elm_object_item_signal_emit(data_parentItem->item, "elm,state,top", "");
-	data_parentItem->group_style = SETTING_GROUP_STYLE_TOP;
 	elm_genlist_item_expanded_set(parentItem, EINA_FALSE);
 }
+#endif
+
+static char* _get_graphic_engine()
+{
+	/* Get GPU Rendering state */
+	const char *engine_str = NULL;
+	engine_str = elm_config_engine_get(); /*deprecated API*/
+	char *render_engine = NULL;
+	if (engine_str) {
+		SETTING_TRACE("engine_str is %s", engine_str);
+		if (0 == safeStrCmp(engine_str, "opengl_x11")) {
+			render_engine = HARDWARE_STR;
+		} else if (0 == safeStrCmp(engine_str, "software_x11")) {
+			render_engine = SOFTWARE_STR;
+		} else {
+			SETTING_TRACE_ERROR("engine_str is wrong");
+			render_engine = NONE_STR;
+		}
+		return strdup(render_engine);
+	} else {
+		SETTING_TRACE_ERROR("engine_str is NULL");
+		return NULL;
+	}
+}
+
+
 
 static void __setting_devoptions_main_exp_cb(void *data, Evas_Object *obj, void *event_info)
 {
@@ -144,42 +176,42 @@ static void __setting_devoptions_main_exp_cb(void *data, Evas_Object *obj, void 
 			rgd = elm_radio_add(scroller);
 			elm_radio_value_set(rgd, -1);
 
-			setting_create_Gendial_exp_sub_field_with_group_style(scroller,
-			                                                      &itc_1text_1icon,
-			                                                      __setting_processes_sub_list_sel_cb, ad, parentItem,
-			                                                      SWALLOW_Type_1RADIO, rgd,
-			                                                      0, _(bgprocess_list[0]),
-			                                                      NULL, SETTING_GROUP_STYLE_CENTER);
-			setting_create_Gendial_exp_sub_field_with_group_style(scroller,
-			                                                      &itc_1text_1icon,
-			                                                      __setting_processes_sub_list_sel_cb, ad, parentItem,
-			                                                      SWALLOW_Type_1RADIO, rgd,
-			                                                      1, _(bgprocess_list[1]),
-			                                                      NULL, SETTING_GROUP_STYLE_CENTER);
-			setting_create_Gendial_exp_sub_field_with_group_style(scroller,
-			                                                      &itc_1text_1icon,
-			                                                      __setting_processes_sub_list_sel_cb, ad, parentItem,
-			                                                      SWALLOW_Type_1RADIO, rgd,
-			                                                      2, _(bgprocess_list[2]),
-			                                                      NULL, SETTING_GROUP_STYLE_CENTER);
-			setting_create_Gendial_exp_sub_field_with_group_style(scroller,
-			                                                      &itc_1text_1icon,
-			                                                      __setting_processes_sub_list_sel_cb, ad, parentItem,
-			                                                      SWALLOW_Type_1RADIO, rgd,
-			                                                      3, _(bgprocess_list[3]),
-			                                                      NULL, SETTING_GROUP_STYLE_CENTER);
-			setting_create_Gendial_exp_sub_field_with_group_style(scroller,
-			                                                      &itc_1text_1icon,
-			                                                      __setting_processes_sub_list_sel_cb, ad, parentItem,
-			                                                      SWALLOW_Type_1RADIO, rgd,
-			                                                      4, _(bgprocess_list[4]),
-			                                                      NULL, SETTING_GROUP_STYLE_CENTER);
-			setting_create_Gendial_exp_sub_field_with_group_style(scroller,
-			                                                      &itc_1text_1icon,
-			                                                      __setting_processes_sub_list_sel_cb, ad, parentItem,
-			                                                      SWALLOW_Type_1RADIO, rgd,
-			                                                      5, _(bgprocess_list[5]),
-			                                                      NULL, SETTING_GROUP_STYLE_BOTTOM);
+			setting_create_Gendial_exp_sub_field(scroller,
+					&itc_1text_1icon,
+					__setting_processes_sub_list_sel_cb, ad, parentItem,
+					SWALLOW_Type_1RADIO, rgd,
+					0, _(bgprocess_list[0]),
+					NULL);
+			setting_create_Gendial_exp_sub_field(scroller,
+					&itc_1text_1icon,
+					__setting_processes_sub_list_sel_cb, ad, parentItem,
+					SWALLOW_Type_1RADIO, rgd,
+					1, _(bgprocess_list[1]),
+					NULL);
+			setting_create_Gendial_exp_sub_field(scroller,
+					&itc_1text_1icon,
+					__setting_processes_sub_list_sel_cb, ad, parentItem,
+					SWALLOW_Type_1RADIO, rgd,
+					2, _(bgprocess_list[2]),
+					NULL);
+			setting_create_Gendial_exp_sub_field(scroller,
+					&itc_1text_1icon,
+					__setting_processes_sub_list_sel_cb, ad, parentItem,
+					SWALLOW_Type_1RADIO, rgd,
+					3, _(bgprocess_list[3]),
+					NULL);
+			setting_create_Gendial_exp_sub_field(scroller,
+					&itc_1text_1icon,
+					__setting_processes_sub_list_sel_cb, ad, parentItem,
+					SWALLOW_Type_1RADIO, rgd,
+					4, _(bgprocess_list[4]),
+					NULL);
+			setting_create_Gendial_exp_sub_field(scroller,
+					&itc_1text_1icon,
+					__setting_processes_sub_list_sel_cb, ad, parentItem,
+					SWALLOW_Type_1RADIO, rgd,
+					5, _(bgprocess_list[5]),
+					NULL);
 
 			setting_update_chk_status(rgd, data_parentItem->int_slp_setting_binded);
 		} else if (data_parentItem == ad->gpu_render) {
@@ -187,33 +219,39 @@ static void __setting_devoptions_main_exp_cb(void *data, Evas_Object *obj, void 
 			rgd = elm_radio_add(scroller);
 			elm_radio_value_set(rgd, -1);
 
-			setting_create_Gendial_exp_sub_field_with_group_style(scroller,
-			                                                      &itc_1text_1icon,
-			                                                      __setting_devoptions_main_sub_list_sel_cb, ad, parentItem,
-			                                                      SWALLOW_Type_1RADIO, rgd,
-			                                                      0, _(SOFTWARE_STR),
-			                                                      NULL, SETTING_GROUP_STYLE_CENTER);
-			setting_create_Gendial_exp_sub_field_with_group_style(scroller,
-			                                                      &itc_1text_1icon,
-			                                                      __setting_devoptions_main_sub_list_sel_cb, ad, parentItem,
-			                                                      SWALLOW_Type_1RADIO, rgd,
-			                                                      1, _(HARDWARE_STR),
-			                                                      NULL, SETTING_GROUP_STYLE_BOTTOM);
+			setting_create_Gendial_exp_sub_field(scroller,
+					&itc_1text_1icon,
+					__setting_devoptions_main_sub_list_sel_cb, ad, parentItem,
+					SWALLOW_Type_1RADIO, rgd,
+					/*NONE*/0, "NONE",
+					NULL);
 
-			setting_update_chk_status(rgd, data_parentItem->int_slp_setting_binded);
-			const char *engine_str = NULL;
-			engine_str = elm_config_engine_get();
-			if (engine_str) {
-				if (0 == safeStrCmp(engine_str, "software_x11")) {
-					elm_radio_value_set(rgd, 0);
-				} else if (0 == safeStrCmp(engine_str, "opengl_x11")) {
-					elm_radio_value_set(rgd, 1);
-				} else {
-					SETTING_TRACE_ERROR("engine_str is wrong");
-				}
+			setting_create_Gendial_exp_sub_field(scroller,
+					&itc_1text_1icon,
+					__setting_devoptions_main_sub_list_sel_cb, ad, parentItem,
+					SWALLOW_Type_1RADIO, rgd,
+					/*SOFTWARE*/1, "OFF",
+					NULL);
+			setting_create_Gendial_exp_sub_field(scroller,
+					&itc_1text_1icon,
+					__setting_devoptions_main_sub_list_sel_cb, ad, parentItem,
+					SWALLOW_Type_1RADIO, rgd,
+					/*HARDWARE*/2, "ON",
+					NULL);
+			const char *render_engine = _get_graphic_engine(); // on, off, none
+			if (!safeStrCmp("NONE", render_engine)) {
+				vconf_set_int(ad->bg_processes->int_slp_setting_binded, SETTING_HW_ACCELERATION_NONE);
+				elm_radio_value_set(rgd, 0);
+			} else if (!safeStrCmp("OFF", render_engine)) {
+				vconf_set_int(ad->bg_processes->int_slp_setting_binded, SETTING_HW_ACCELERATION_OFF);
+				elm_radio_value_set(rgd, 1);
+			} else if (!safeStrCmp("ON", render_engine)) {
+				vconf_set_int(ad->bg_processes->int_slp_setting_binded, SETTING_HW_ACCELERATION_ON);
+				elm_radio_value_set(rgd, 2);
 			} else {
-				SETTING_TRACE_ERROR("engine_str is NULL");
+				SETTING_TRACE_ERROR("ERROR here for selection of render_engine");
 			}
+			FREE(render_engine);
 		}
 	}
 }
@@ -240,9 +278,8 @@ static int setting_connectivity_change_debug_mode_toggle(SettingConnectivityUG *
 				SETTING_TRACE("FAIL: vconf_set_bool(VCONFKEY_SETAPPL_USB_DEBUG_MODE_BOOL)");
 				return -1;
 			}
-
-			setting_create_select_info_popup(&ad->selectioninfo_popup, ad->view_layout, 3.0,
-			                                 _(CONNECTTIVITY_SELECT_INFO_POPUP_STR), "center_text");
+			setting_create_popup(ad, ad->view_layout, NULL, CONNECTTIVITY_SELECT_INFO_POPUP_STR,
+								NULL, 3, false, false, 0);
 		} else {
 			load_usb_connection_popup(ad);
 		}
@@ -359,7 +396,6 @@ static void setting_connectivity_usb_mouse_up_Gendial_CPU_usage_cb(void *data, E
 			vconf_set_bool("db/setting/show_cpu_info", 0);
 		}
 	}
-	/*setting_create_simple_popup(NULL, ad->win_get, NULL, "NOT IMPLMENTED YET"); */
 	/*app_launcher("org.tizen.dispcpuinfo"); */
 	SETTING_TRACE_END;
 }
@@ -440,9 +476,9 @@ static int setting_connectivity_usb_create(void *cb)
 	ad->ly_usb =
 	    setting_create_layout_navi_bar(ad->win_main_layout, ad->win_get,
 	                                   KeyStr_DeveloperOption,
-	                                   _("IDS_ST_BUTTON_BACK"), NULL, NULL,
+	                                   _("IDS_ST_BUTTON_BACK"),
 	                                   setting_connectivity_usb_click_softkey_cancel_cb,
-	                                   NULL, NULL, ad, view_layout,
+	                                   ad, view_layout,
 	                                   &ad->navi_bar, NULL);
 #endif
 
@@ -451,7 +487,6 @@ static int setting_connectivity_usb_create(void *cb)
 	scroller = elm_genlist_add(ad->win_main_layout);
 	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
 	         "Cannot set scroller object  as contento of layout");
-	//elm_genlist_realization_mode_set(scroller, EINA_TRUE);
 	elm_object_style_set(scroller, "dialogue");
 	elm_genlist_clear(scroller);	/* first to clear list */
 	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb, NULL);
@@ -532,41 +567,29 @@ static int setting_connectivity_usb_create(void *cb)
 		/* [UI] help text */
 		ADD_GL_HELP(scroller, "IDS_ST_BODY_SCREEN_OVERLAY_SHOWING_CURRENT_CPU_USAGE_ABB");
 
+#if 1
 		/* Get GPU Rendering state */
-		const char *engine_str = NULL;
-		engine_str = elm_config_engine_get();
-		char *render_engine = NULL;
-		if (engine_str) {
-			SETTING_TRACE("engine_str is %s", engine_str);
-			if (0 == safeStrCmp(engine_str, "opengl_x11")) {
-				render_engine = HARDWARE_STR;
-			} else if (0 == safeStrCmp(engine_str, "software_x11")) {
-				render_engine = SOFTWARE_STR;
-			} else {
-				SETTING_TRACE_ERROR("engine_str is wrong");
-			}
-		} else {
-			SETTING_TRACE_ERROR("engine_str is NULL");
-		}
+
+		const char *render_engine =  _get_graphic_engine();
 
 		/* [UI] Force GPU rendering */
 		ad->gpu_render = setting_create_Gendial_exp_parent_field(scroller,
 		                                                         &(ad->itc_2text_3_parent),
 		                                                         NULL, NULL, SWALLOW_Type_INVALID,
-		                                                         DEFAULT_RENDERING_ENGINE_STR, _(render_engine),
-		                                                         SETTING_GROUP_STYLE_TOP, SETTING_GROUP_STYLE_NONE);
+		                                                         DEFAULT_RENDERING_ENGINE_STR, _(render_engine));
 		if (ad->gpu_render) {
 			__BACK_POINTER_SET(ad->gpu_render);
 			ad->gpu_render->userdata = ad;
+			ad->gpu_render->int_slp_setting_binded = INT_SLP_SETTING_DEVOPTION_BGPROCESS;
 			/*setting_disable_genlist_item(ad->gpu_render->item); */
 		} else {
 			SETTING_TRACE_ERROR("ad->gpu_render is NULL");
 			return SETTING_RETURN_FAIL;
 		}
-
+		FREE(render_engine);
 		/* [UI] help text */
 		ADD_GL_HELP(scroller, "IDS_ST_POP_USE_2D_HARDWARE_OR_SOFTWARE_ACCELERATION_IN_APPLICATIONS");
-
+#endif
 		/* NEWCODE: */
 
 		/* [UI] expandble list - Automatic answering */
@@ -577,14 +600,13 @@ static int setting_connectivity_usb_create(void *cb)
 		                                            NULL, NULL,
 		                                            SWALLOW_Type_INVALID,
 		                                            "IDS_ST_BODY_LIMIT_BACKGROUND_PROCESSES",
-		                                            bgproc,
-		                                            SETTING_GROUP_STYLE_TOP, SETTING_GROUP_STYLE_NONE);
+		                                            bgproc);
 
 		/* [UI] Limit background processes */
 		if (ad->bg_processes) {
 			__BACK_POINTER_SET(ad->bg_processes);
 			ad->bg_processes->userdata = ad;
-			ad->bg_processes->int_slp_setting_binded = INT_SLP_SETTING_DEVOPTION_BGPROCESS;
+			ad->bg_processes->int_slp_setting_binded = VCONFKEY_SETAPPL_APP_HW_ACCELERATION;
 		} else {
 			SETTING_TRACE_ERROR("ad->bg_processes is NULL");
 			return SETTING_RETURN_FAIL;
@@ -892,9 +914,9 @@ static void debug_mode_resp_cb(void *data, Evas_Object *obj, void *event_info)
 			SETTING_TRACE("FAIL: vconf_set_bool(VCONFKEY_SETAPPL_USB_DEBUG_MODE_BOOL)");
 			return;
 		}
-
-		setting_create_select_info_popup(&ad->selectioninfo_popup, ad->view_layout, 3.0,
-		                                 _(CONNECTTIVITY_SELECT_INFO_POPUP_STR), "center_text");
+		setting_create_popup(ad, ad->view_layout, NULL,
+							CONNECTTIVITY_SELECT_INFO_POPUP_STR, NULL,
+							3, false, false, 0);
 	} else if (resp_type == POPUP_RESPONSE_CANCEL) {
 		/* rollback */
 		/*setting_update_gl_item_chk_status(ad->debug_mode, 0); */
@@ -918,15 +940,13 @@ void load_usb_connection_popup(void *data)
 	SettingConnectivityUG *ad = (SettingConnectivityUG *)data;
 
 	unload_popup(ad);
-	ad->pop = setting_create_popup_with_label_and_reverse_btn(ad,
-	                                                          ad->win_get,
-	                                                          NULL,
-	                                                          _(DEBUG_MODE_POPUP_TEXT),
-	                                                          debug_mode_resp_cb,
-	                                                          0, 2,
-	                                                          _("IDS_ST_BUTTON_CANCEL_ABB"), _("IDS_ST_BUTTON_ENABLE"));
+	ad->pop = setting_create_popup(ad, ad->win_get, NULL,
+                                   _(DEBUG_MODE_POPUP_TEXT),
+                                   debug_mode_resp_cb,
+                                   0, false, false, 2,
+                                   _("IDS_ST_BUTTON_CANCEL_ABB"), _("IDS_ST_BUTTON_ENABLE"));
 
-	if (!(ad->pop)) SETTING_TRACE("FAIL: setting_create_popup_with_btn()");
+	if (!(ad->pop)) SETTING_TRACE("FAIL: setting_create_popup()");
 
 	SETTING_TRACE_END;
 }

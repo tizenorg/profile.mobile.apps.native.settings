@@ -38,21 +38,24 @@ void storageUg_get_internal_storage_status(double *total, double *avail)
 	int ret;
 	double tmp_total;
 	struct statvfs s;
-	const double sz_32G = 32. * 1073741824;
-	const double sz_16G = 16. * 1073741824;
-	const double sz_8G = 8. * 1073741824;
+	const unsigned int GB = (1024 * 1024) * 1024;
+	const double sz_32G = 32. * GB;
+	const double sz_16G = 16. * GB;
+	const double sz_8G = 8. * GB;
 
 	ret_if(NULL == total);
 	ret_if(NULL == avail);
 
-	/*ret = storage_get_internal_memory_size(&s); */
-	ret = statvfs("/opt/usr", &s);
+	ret = storage_get_internal_memory_size(&s);
 	if (0 == ret) {
-		SETTING_TRACE("Total = %ld, Available = %ld", s.f_frsize * s.f_blocks,
-		              s.f_bsize * s.f_bavail);
+		SETTING_TRACE("Total = %lu, Available = %lu", (s.f_frsize * s.f_blocks),
+		              (s.f_bsize * s.f_bavail));
 		tmp_total = (double)s.f_frsize * s.f_blocks;
+		#if 0
+		*avail = (double)s.f_bfree * s.f_frsize;
+		#else
 		*avail = (double)s.f_bsize * s.f_bavail;
-
+		#endif
 		if (sz_16G < tmp_total)
 			*total = sz_32G;
 		else if (sz_8G < tmp_total)
@@ -84,11 +87,16 @@ void storageUg_get_external_storage_status(const char *path, double *total,
 	ret_if(NULL == total);
 	ret_if(NULL == avail);
 
-	if (!statvfs(path, &s)) {
+	if (!storage_get_external_memory_size(&s)) {
 		SETTING_TRACE("f_frsize = %ld f_blocks = %ld f_bsize = %ld f_bavail = %ld ",
 		              s.f_frsize, s.f_blocks, s.f_bsize, s.f_bavail);
 		*total = (double)s.f_frsize * s.f_blocks;
+		#if 0
 		*avail = (double)s.f_bsize * s.f_bavail;
+		#else
+		*avail = (double)s.f_bfree * s.f_frsize;
+		SETTING_TRACE("NEW STYLE, %ld", *avail);
+		#endif
 	}
 }
 
@@ -96,8 +104,8 @@ void storageUg_size_to_str(double size, char *desc, int desc_size)
 {
 	double tmp_size = 0.0;
 	const int KILOBYTE_VALUE = 1024;
-	const int MEGABYTE_VALUE = 1048576;
-	const int GIGABYTE_VALUE = 1073741824;
+	const int MEGABYTE_VALUE = KILOBYTE_VALUE * 1024;
+	const int GIGABYTE_VALUE = MEGABYTE_VALUE * 1024;
 
 	if (size < MEGABYTE_VALUE) {	/* size < 1MB: show x.xKB */
 		tmp_size = size / KILOBYTE_VALUE;
@@ -155,9 +163,9 @@ void storageUg_fail_popup(SettingStorageUG *ad)
 		ad->popup = NULL;
 	}
 
-	ad->popup = setting_create_popup_without_btn(ad, ad->win, NULL,
-	                                             STORAGEUG_STR_FAIL, storageUg_popup_del,
-	                                             SETTING_STORAGE_POPUP_TIMER, FALSE, FALSE);
+	ad->popup = setting_create_popup(ad, ad->win, NULL,
+									 STORAGEUG_STR_FAIL, storageUg_popup_del,
+									 SETTING_STORAGE_POPUP_TIMER, FALSE, FALSE, 0);
 }
 
 void storageUg_manage_app_ug(SettingStorageUG *ad)
@@ -208,6 +216,7 @@ static bool storageUg_get_misces_item(media_info_h media, void *data)
 	}
 	media_info_get_size(media, &size);
 	sizes->misces_total += size;
+	FREE(file_path);
 
 	return true;
 }
@@ -260,7 +269,11 @@ void storageug_genlist_text_update(Setting_GenGroupItem_Data *item_data,
 
 	G_FREE(item_data->sub_desc);
 	item_data->sub_desc = (char *)g_strdup(desc);
-	elm_genlist_item_fields_update(item_data->item, "elm.text.sub.left.bottom", ELM_GENLIST_ITEM_FIELD_TEXT);
+	#if OLD_GENLIST_STYLE
+		elm_genlist_item_fields_update(item_data->item, "elm.text.sub.left.bottom", ELM_GENLIST_ITEM_FIELD_TEXT);
+	#else
+		elm_genlist_item_fields_update(item_data->item, "elm.text.sub", ELM_GENLIST_ITEM_FIELD_TEXT);
+	#endif
 }
 
 void storageUg_get_internal_detail_cb(int fn_result, SettingStorageUG *ad)

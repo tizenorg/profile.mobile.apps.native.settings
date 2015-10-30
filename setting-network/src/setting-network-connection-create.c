@@ -50,178 +50,6 @@ SettingNetworkUG *g_networkUG = NULL;
  *
  ***************************************************/
 
-#if SUPPORT_TETHERING
-static int __get_naviframe_depth(void *data)
-{
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-
-	Eina_List *list = elm_naviframe_items_get(ad->navi_bar);
-	/*Object_Drawer *list_item = NULL; */
-
-	int index = 0;
-	while (list) {
-		Elm_Object_Item *item = (Elm_Object_Item *) eina_list_data_get(list);
-		if (NULL == item)
-			continue;
-
-		SETTING_TRACE("ad->navi_bar : %x ---  %d --- address of the item = %x", ad->navi_bar, index, item);
-		index += 1;
-
-		/*if not matched,to check next node. */
-		list = eina_list_next(list);
-		item = NULL;
-	}
-	return index;
-}
-
-static void __popup_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	SETTING_TRACE_BEGIN;
-	setting_retm_if(NULL == data, "NULL == data");
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-	int response_type = POPUP_RESPONSE_CANCEL;
-	if (0 == safeStrCmp(elm_object_text_get(obj), "OK")) {
-		response_type = POPUP_RESPONSE_OK;
-		SETTING_TRACE("OK button is clicked");
-	}
-	evas_object_del(ad->popup_concreate);
-	ad->popup_concreate = NULL;
-
-	ad->viewtype = ERROR_STATE;
-
-	if (POPUP_RESPONSE_OK == response_type) {
-		SETTING_TRACE("OK button is clicked - catched");
-		/* YES */
-		int frames = __get_naviframe_depth(ad);
-		SETTING_TRACE(" -------> frames == (%d) ", frames);
-		if (frames == 3) {
-			ad->viewtype = CREATE_CONNECTIONS_MAIN;
-			SETTING_TRACE(" destroy --> setting-network-connection-create");
-			SETTING_TRACE(" destroy --> setting-network-connections");
-			SETTING_TRACE(" goto --> setting-network-main");
-			setting_view_destroy(&setting_view_network_connection_create, ad);
-			setting_view_destroy(&setting_view_network_con, ad);
-
-		} else if (frames == 4) {
-			ad->viewtype = CREATE_CONLIST_CONNECTIONS_MAIN;
-			SETTING_TRACE(" destroy --> setting-network-connection-create");
-			SETTING_TRACE(" destroy --> setting-network-con-list");
-			SETTING_TRACE(" destroy --> setting-network-connections");
-			SETTING_TRACE(" goto --> setting-network-main");
-
-			setting_view_destroy(&setting_view_network_connection_create, ad);
-			setting_view_destroy(&setting_view_network_con_list, ad);
-			setting_view_destroy(&setting_view_network_con, ad);
-		} else {
-			SETTING_TRACE(" THINK MORE !!!!! OOPS ");
-			ad->viewtype = ERROR_STATE;
-		}
-	}
-
-}
-
-static void __enabled_tethering(void *data)
-{
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-	SETTING_TRACE("Tethering is enabled -- callback\n");
-	/* back, back */
-
-	/* create a popup */
-	ad->popup_concreate = setting_create_popup_with_btn(ad, ad->win_get,
-	                                                    NULL, _(SETTING_NETWORK_NOT_ALLOWED_WITH_TETHERING),
-	                                                    __popup_cb, 0, 1, "OK");
-}
-
-static void __disabled_tethering(void *data)
-{
-	SETTING_TRACE("Tethering is disabled -- callback\n");
-}
-
-static void __enabled_cb(tethering_error_e error, tethering_type_e type, bool is_requested, void *data)
-{
-	SETTING_TRACE_BEGIN;
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-	SETTING_TRACE("Tethering is enabled -- callback\n");
-	__enabled_tethering(ad);
-}
-
-static void __disabled_cb(tethering_error_e error, tethering_type_e type, tethering_disabled_cause_e code, void *data)
-{
-	SETTING_TRACE_BEGIN;
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-	SETTING_TRACE("Tethering is disabled -- callback\n");
-	__disabled_tethering(ad);
-}
-
-/**
- * DOCOMO required
- * if tethering is ON, 'connection' should be inactivated.
- */
-static bool is_tethering_enabled(void *data)
-{
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-
-	bool ret = false;
-	tethering_h th = NULL;
-	(void)tethering_create(&th);
-
-	ad->th_concreate = th;
-
-	tethering_set_enabled_cb(th, TETHERING_TYPE_ALL, __enabled_cb, data);
-	tethering_set_disabled_cb(th, TETHERING_TYPE_ALL, __disabled_cb, data);
-
-	if (tethering_is_enabled(th, TETHERING_TYPE_WIFI) == true ||
-	    tethering_is_enabled(th, TETHERING_TYPE_USB) == true ||
-	    tethering_is_enabled(th, TETHERING_TYPE_BT) == true) {
-
-		SETTING_TRACE("Tethering is enabled\n");
-		__enabled_tethering(ad);
-		ret = true;
-	} else {
-		SETTING_TRACE("Tethering is not enabled\n");
-		__disabled_tethering(ad);
-		ret = false;;
-	}
-
-	/*tethering_destroy(th); */
-	return ret;
-}
-#endif
-
-#if 0
-static void
-__connection_gl_mouse_up(void *data, Evas *e, Evas_Object *obj,
-                         void *event)
-{
-	ret_if(!data);
-	SETTING_TRACE_BEGIN;
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-	if (ad->data_profile_name) {
-		setting_hide_input_pannel_cb(ad->data_profile_name->eo_check);
-	}
-
-	if (ad->data_acs_name) {
-		setting_hide_input_pannel_cb(ad->data_acs_name->eo_check);
-	}
-	if (ad->data_user_name) {
-		setting_hide_input_pannel_cb(ad->data_user_name->eo_check);
-	}
-	if (ad->data_pwd) {
-		setting_hide_input_pannel_cb(ad->data_pwd->eo_check);
-	}
-	if (ad->data_pxy_addr) {
-		setting_hide_input_pannel_cb(ad->data_pxy_addr->eo_check);
-	}
-	if (ad->data_pxy_port) {
-		setting_hide_input_pannel_cb(ad->data_pxy_port->eo_check);
-	}
-	if (ad->data_hm_url) {
-		setting_hide_input_pannel_cb(ad->data_hm_url->eo_check);
-	}
-
-}
-#endif
-
 void __sub_list_rd_change(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
@@ -267,6 +95,7 @@ void __sub_list_rd_change(void *data, Evas_Object *obj, void *event_info)
 				if (ad->data_hm_url) {
 					ad->data_hm_url->userdata = ad;
 					ad->data_hm_url->input_type = ELM_INPUT_PANEL_LAYOUT_URL;
+					ad->data_hm_url->isSinglelineFlag = TRUE;
 					ad->data_hm_url->limit_filter_data = calloc(1, sizeof(Elm_Entry_Filter_Accept_Set));
 					if (ad->data_hm_url->limit_filter_data) {
 						ad->data_hm_url->limit_filter_data->max_byte_count = MAX_HOME_URL_LEN_MAX - 1;
@@ -294,30 +123,43 @@ void __sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 	Elm_Object_Item *subitem = (Elm_Object_Item *) event_info;
 	Elm_Object_Item *parentItem = elm_genlist_item_parent_get(subitem);
 	elm_genlist_item_selected_set(subitem, 0);
-	Setting_GenGroupItem_Data *data_subItem =
-	    elm_object_item_data_get(subitem);
-	Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(parentItem);	/* parent data */
+
+	Setting_GenGroupItem_Data *data_subItem = elm_object_item_data_get(subitem);
+	Setting_GenGroupItem_Data *data_parentItem = (Setting_GenGroupItem_Data *)data;
 	ret_if(NULL == data_subItem || NULL == data_parentItem);
 
-	elm_radio_value_set(data_subItem->rgd, data_subItem->chk_status);
+	SettingNetworkUG *ad = data_parentItem->userdata;
+	ret_if(NULL == ad);
+
+	int chk_status = data_subItem->chk_status;
+	elm_radio_value_set(data_subItem->rgd, chk_status);
 
 	data_parentItem->sub_desc = (char *)g_strdup(_(data_subItem->keyStr));
 	elm_object_item_data_set(data_parentItem->item, data_parentItem);
-	/*elm_genlist_item_update(data_parentItem->item); */
-	elm_genlist_item_fields_update(data_parentItem->item, "*", ELM_GENLIST_ITEM_FIELD_TEXT);
+//	elm_genlist_item_fields_update(data_parentItem->item, "*", ELM_GENLIST_ITEM_FIELD_TEXT);
 
-	SettingNetworkUG *ad = data_parentItem->userdata;
-	if (data_parentItem == ad->data_auth_type) {
-		elm_genlist_item_expanded_set(ad->data_auth_type->item, FALSE);
-		elm_genlist_item_update(ad->data_auth_type->item);
+	if (data_parentItem == ad->data_auth_type)
+	{
+		elm_genlist_item_expanded_set( ad->data_auth_type->item, FALSE );
+		elm_genlist_item_update( ad->data_auth_type->item );
 
-		setting_network_connection_display_auth_type(data, data_subItem->chk_status);
-	} else if (data_parentItem == ad->data_srv_type) {
+		setting_network_connection_display_auth_type(ad, chk_status);
+
+		//remove network mode popup
+		if (ad->popup_auth_type) {
+			evas_object_del(ad->popup_auth_type);
+			ad->popup_auth_type = NULL;
+		}
+	}
+	else if (data_parentItem == ad->data_srv_type)
+	{
 		if (ad->srvType != data_subItem->chk_status)
 			ad->srvType = data_subItem->chk_status;
-		if (ad->srvType != CONNECTION_CELLULAR_SERVICE_TYPE_INTERNET) {
-			if (!ad->data_hm_url) {
-				/*need home url */
+		if( ad->srvType != CONNECTION_CELLULAR_SERVICE_TYPE_INTERNET)
+		{
+			if (!ad->data_hm_url)
+			{
+				//need home url
 				ad->data_hm_url =
 				    setting_create_Gendial_field_def(obj,
 				                                     &itc_editfield,
@@ -350,6 +192,114 @@ void __sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 	}
 }
 
+void __auth_type_popup_del(void *data, Evas_Object *obj, void *event_info)
+{
+	SettingNetworkUG *ad = data;
+
+	ret_if(data == NULL);
+
+	evas_object_del(ad->popup_auth_type);
+	ad->popup_auth_type = NULL;
+}
+
+static void __create_auth_type_popup(void *data, Evas_Object *obj,
+						void *event_info)
+{
+	ret_if(NULL == data || NULL == event_info);
+	SETTING_TRACE_BEGIN;
+	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	Elm_Object_Item *parentItem = event_info;	/* parent item */
+	elm_genlist_item_selected_set(parentItem, 0);
+	Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(parentItem);	/* parent data */
+
+	/* create popup */
+	if(ad->popup_auth_type) {
+		evas_object_del(ad->popup_auth_type);
+		ad->popup_auth_type = NULL;
+	}
+	Evas_Object *scroller = NULL;
+	ad->popup_auth_type = setting_create_popup_with_list(&scroller, ad, ad->win_get,
+													     data_parentItem->keyStr,
+														 __auth_type_popup_del,
+														 0, false, false, 0);
+	_P(ad->popup_auth_type);
+
+	Evas_Object *rgd;
+
+	Setting_GenGroupItem_Data *list_item = NULL;
+	if (data_parentItem == ad->data_auth_type) {
+		rgd = elm_radio_add(scroller);
+		elm_radio_value_set(rgd, -1);
+
+		list_item = setting_create_Gendial_field_1radio(scroller,
+						     &itc_multiline_1text_1icon,
+						     __sub_list_sel_cb, data_parentItem,
+						     SWALLOW_Type_1RADIO_RIGHT, rgd,
+						     CONNECTION_CELLULAR_AUTH_TYPE_PAP,
+						     "IDS_ST_MBODY_PAP",
+						     NULL);
+
+		list_item = setting_create_Gendial_field_1radio(scroller,
+						     &itc_multiline_1text_1icon,
+						     __sub_list_sel_cb, data_parentItem,
+						     SWALLOW_Type_1RADIO_RIGHT, rgd,
+						     CONNECTION_CELLULAR_AUTH_TYPE_CHAP,
+						     "IDS_ST_POP_CHAP",
+						     NULL);
+
+		list_item = setting_create_Gendial_field_1radio(scroller,
+						     &itc_multiline_1text_1icon,
+						     __sub_list_sel_cb, data_parentItem,
+						     SWALLOW_Type_1RADIO_RIGHT, rgd,
+						     CONNECTION_CELLULAR_AUTH_TYPE_NONE,
+						     "IDS_ST_BODY_NONE",
+						     NULL);
+
+		elm_radio_value_set(rgd, ad->chkType);
+		elm_object_signal_emit(rgd, "elm,event,pass,enabled", "elm");
+	}
+	else if (data_parentItem == ad->data_srv_type) {
+		rgd = elm_radio_add(scroller);
+		elm_radio_value_set(rgd, -1);
+
+		list_item = setting_create_Gendial_exp_sub_field(scroller,
+						     &itc_1icon_1text_sub,
+						     __sub_list_sel_cb, ad,
+						     parentItem,
+						     SWALLOW_Type_1RADIO_RIGHT, rgd,
+						     CONNECTION_CELLULAR_SERVICE_TYPE_INTERNET,
+						     "IDS_ST_BODY_INTERNET_CONNECTION",
+						     __sub_list_rd_change);
+
+		list_item = setting_create_Gendial_exp_sub_field(scroller,
+						     &itc_1icon_1text_sub,
+						     __sub_list_sel_cb, ad,
+						     parentItem,
+						     SWALLOW_Type_1RADIO_RIGHT, rgd,
+						     CONNECTION_CELLULAR_SERVICE_TYPE_MMS,
+						     STR_SETTING_MMS_CONNECTIONS,
+						     __sub_list_rd_change);
+
+		int r = 0;
+		char tmp_str[SETTING_STR_SLP_LEN + 1] = {0,};
+		r = snprintf(tmp_str, SETTING_STR_SLP_LEN, "%s %s", _(INTERNET), PLUS_MMS);
+		if(r < 0)
+			SETTING_TRACE("snprintf failed");
+
+		list_item = setting_create_Gendial_exp_sub_field(scroller,
+						     &itc_1icon_1text_sub,
+						     __sub_list_sel_cb, ad,
+						     parentItem,
+						     SWALLOW_Type_1RADIO_RIGHT, rgd,
+						     CONNECTION_CELLULAR_SERVICE_TYPE_APPLICATION,
+						     tmp_str,
+						     __sub_list_rd_change);
+
+		elm_radio_value_set(rgd, ad->srvType);
+		elm_object_signal_emit(rgd, "elm,event,pass,enabled", "elm");
+	}
+}
+
 static void __setting_network_connection_exp_cb(void *data, Evas_Object *obj,
                                                 void *event_info)
 {
@@ -362,41 +312,44 @@ static void __setting_network_connection_exp_cb(void *data, Evas_Object *obj,
 
 	Evas_Object *rgd;
 
-	setting_genlist_item_groupstyle_set(data_parentItem, SETTING_GROUP_STYLE_TOP);
 	Setting_GenGroupItem_Data *list_item = NULL;
 	if (data_parentItem == ad->data_auth_type) {
 		rgd = elm_radio_add(scroller);
+		//elm_object_style_set(rgd, "list");
 		elm_radio_value_set(rgd, -1);
 
-		list_item = setting_create_Gendial_exp_sub_field(scroller,
-		                                                 &itc_1icon_1text_sub,
-		                                                 __sub_list_sel_cb, ad,
-		                                                 parentItem,
-		                                                 SWALLOW_Type_1RADIO, rgd,
-		                                                 CONNECTION_CELLULAR_AUTH_TYPE_PAP,
-		                                                 "IDS_ST_MBODY_PAP",
-		                                                 __sub_list_rd_change);
-		setting_genlist_item_groupstyle_set(list_item, SETTING_GROUP_STYLE_CENTER);
+		SETTING_TRACE("CONNECTION_CELLULAR_AUTH_TYPE_NONE : %d: ", CONNECTION_CELLULAR_AUTH_TYPE_NONE);
+		SETTING_TRACE("CONNECTION_CELLULAR_AUTH_TYPE_PAP : %d: ", CONNECTION_CELLULAR_AUTH_TYPE_PAP);
+		SETTING_TRACE("CONNECTION_CELLULAR_AUTH_TYPE_CHAP : %d: ", CONNECTION_CELLULAR_AUTH_TYPE_CHAP);
 
 		list_item = setting_create_Gendial_exp_sub_field(scroller,
 		                                                 &itc_1icon_1text_sub,
 		                                                 __sub_list_sel_cb, ad,
 		                                                 parentItem,
-		                                                 SWALLOW_Type_1RADIO, rgd,
-		                                                 CONNECTION_CELLULAR_AUTH_TYPE_CHAP,
-		                                                 "IDS_ST_POP_CHAP",
-		                                                 __sub_list_rd_change);
-		setting_genlist_item_groupstyle_set(list_item, SETTING_GROUP_STYLE_CENTER);
-
-		list_item = setting_create_Gendial_exp_sub_field(scroller,
-		                                                 &itc_1icon_1text_sub,
-		                                                 __sub_list_sel_cb, ad,
-		                                                 parentItem,
-		                                                 SWALLOW_Type_1RADIO, rgd,
+		                                                 SWALLOW_Type_1RADIO_RIGHT, rgd,
 		                                                 CONNECTION_CELLULAR_AUTH_TYPE_NONE,
-		                                                 "IDS_ST_BODY_NONE",
+		                                                 IDS_ST_BODY_NONE,
 		                                                 __sub_list_rd_change);
-		setting_genlist_item_groupstyle_set(list_item, SETTING_GROUP_STYLE_BOTTOM);
+
+		list_item = setting_create_Gendial_exp_sub_field(scroller,
+		                                                 &itc_1icon_1text_sub,
+		                                                 __sub_list_sel_cb, ad,
+		                                                 parentItem,
+		                                                 SWALLOW_Type_1RADIO_RIGHT, rgd,
+		                                                 CONNECTION_CELLULAR_AUTH_TYPE_PAP,
+		                                                 IDS_ST_MBODY_PAP,
+		                                                 __sub_list_rd_change);
+
+		list_item = setting_create_Gendial_exp_sub_field(scroller,
+		                                                 &itc_1icon_1text_sub,
+		                                                 __sub_list_sel_cb, ad,
+		                                                 parentItem,
+		                                                 SWALLOW_Type_1RADIO_RIGHT, rgd,
+		                                                 CONNECTION_CELLULAR_AUTH_TYPE_CHAP,
+		                                                 IDS_ST_POP_CHAP,
+		                                                 __sub_list_rd_change);
+
+		SETTING_TRACE(" ----------------------------->>> ad->chkType : %d ",ad->chkType);
 
 		elm_radio_value_set(rgd, ad->chkType);
 	} else if (data_parentItem == ad->data_srv_type) {
@@ -407,21 +360,19 @@ static void __setting_network_connection_exp_cb(void *data, Evas_Object *obj,
 		                                                 &itc_1icon_1text_sub,
 		                                                 __sub_list_sel_cb, ad,
 		                                                 parentItem,
-		                                                 SWALLOW_Type_1RADIO, rgd,
+		                                                 SWALLOW_Type_1RADIO_RIGHT, rgd,
 		                                                 CONNECTION_CELLULAR_SERVICE_TYPE_INTERNET,
 		                                                 "IDS_ST_BODY_INTERNET_CONNECTION",
 		                                                 __sub_list_rd_change);
-		setting_genlist_item_groupstyle_set(list_item, SETTING_GROUP_STYLE_CENTER);
 
 		list_item = setting_create_Gendial_exp_sub_field(scroller,
 		                                                 &itc_1icon_1text_sub,
 		                                                 __sub_list_sel_cb, ad,
 		                                                 parentItem,
-		                                                 SWALLOW_Type_1RADIO, rgd,
+		                                                 SWALLOW_Type_1RADIO_RIGHT, rgd,
 		                                                 CONNECTION_CELLULAR_SERVICE_TYPE_MMS,
 		                                                 STR_SETTING_MMS_CONNECTIONS,
 		                                                 __sub_list_rd_change);
-		setting_genlist_item_groupstyle_set(list_item, SETTING_GROUP_STYLE_CENTER);
 
 		int r = 0;
 		char tmp_str[SETTING_STR_SLP_LEN + 1] = {0,};
@@ -433,11 +384,10 @@ static void __setting_network_connection_exp_cb(void *data, Evas_Object *obj,
 		                                                 &itc_1icon_1text_sub,
 		                                                 __sub_list_sel_cb, ad,
 		                                                 parentItem,
-		                                                 SWALLOW_Type_1RADIO, rgd,
+		                                                 SWALLOW_Type_1RADIO_RIGHT, rgd,
 		                                                 CONNECTION_CELLULAR_SERVICE_TYPE_APPLICATION,
 		                                                 tmp_str,
 		                                                 __sub_list_rd_change);
-		setting_genlist_item_groupstyle_set(list_item, SETTING_GROUP_STYLE_CENTER);
 
 		elm_radio_value_set(rgd, ad->srvType);
 	}
@@ -570,27 +520,25 @@ void __get_connection_info(void *cb)
 		SETTING_TRACE("ad->is_editable:%d", ad->is_editable);
 
 		/* load access name */
-		/*ad->ed_acs_name_desc = ad->prof_list[ad->prof_sel_idx].ProfileInfo.Pdp.Apn; */
 		connection_profile_get_cellular_apn(ad->sel_profile_h, &(ad->ed_acs_name_desc));
-		/*ad->ed_user_name_desc =
-		    ad->prof_list[ad->prof_sel_idx].ProfileInfo.Pdp.AuthInfo.UserName;
-		ad->chkType =
-		    ad->prof_list[ad->prof_sel_idx].ProfileInfo.Pdp.AuthInfo.AuthType;
-		ad->ed_pwd_desc =
-		    ad->prof_list[ad->prof_sel_idx].ProfileInfo.Pdp.AuthInfo.Password;*/
 		connection_cellular_auth_type_e auth_type = CONNECTION_CELLULAR_AUTH_TYPE_NONE;
 		connection_profile_get_cellular_auth_info(ad->sel_profile_h, &auth_type, &(ad->ed_user_name_desc), &(ad->ed_pwd_desc));
+		SETTING_TRACE(" ----> auth_type: (%d)", auth_type);
+
 		ad->chkType = auth_type;
+		/*SETTING_TRACE("-----> radio button state: %d", elm_radio_value_get(ad->chk_type));*/
+		SETTING_TRACE("----------------------> connection_profile_get_cellular_auth_info: %d", auth_type);
+		elm_radio_value_set(ad->chk_type, ad->chkType);
 
 		switch (ad->chkType) {
+			case CONNECTION_CELLULAR_AUTH_TYPE_NONE:
+				ad->ed_auth_type_desc = _("IDS_ST_BODY_NONE");
+				break;
 			case CONNECTION_CELLULAR_AUTH_TYPE_PAP:
 				ad->ed_auth_type_desc = _("IDS_ST_MBODY_PAP");
 				break;
 			case CONNECTION_CELLULAR_AUTH_TYPE_CHAP:
 				ad->ed_auth_type_desc = _("IDS_ST_POP_CHAP");
-				break;
-			case CONNECTION_CELLULAR_AUTH_TYPE_NONE:
-				ad->ed_auth_type_desc = _("IDS_ST_BODY_NONE");
 				break;
 			default:
 				ad->chkType = CONNECTION_CELLULAR_AUTH_TYPE_NONE;
@@ -655,73 +603,6 @@ void __get_connection_info(void *cb)
 	/*G_FREE(profile_name); */
 	return;
 }
-void __update_genlist_info(void *cb)
-{
-	SETTING_TRACE_BEGIN;
-	ret_if(cb == NULL);
-	SettingNetworkUG *ad = (SettingNetworkUG *) cb;
-	if (ad->data_profile_name) {
-		ad->data_profile_name->sub_desc = g_strdup(ad->ed_profile_name_desc);
-	}
-
-	if (ad->data_acs_name) {
-		ad->data_acs_name->sub_desc = g_strdup(ad->ed_acs_name_desc);
-	}
-	if (ad->data_srv_type) {
-		switch (ad->srvType) {
-			case CONNECTION_CELLULAR_SERVICE_TYPE_INTERNET:
-				ad->data_srv_type->sub_desc = g_strdup(_("IDS_ST_BODY_INTERNET_CONNECTION"));
-				break;
-			case CONNECTION_CELLULAR_SERVICE_TYPE_MMS:
-				ad->data_srv_type->sub_desc = g_strdup(_(STR_SETTING_MMS_CONNECTIONS));
-				break;
-			case CONNECTION_CELLULAR_SERVICE_TYPE_APPLICATION: {
-					int r = 0;
-					char tmp_str[SETTING_STR_SLP_LEN + 1] = {0,};
-					r = snprintf(tmp_str, SETTING_STR_SLP_LEN, "%s %s", _(INTERNET), PLUS_MMS);
-					if (r < 0)
-						SETTING_TRACE("snprintf failed");
-					ad->data_srv_type->sub_desc = g_strdup(tmp_str);
-					break;
-				}
-			default:
-				ad->data_srv_type->sub_desc = NULL;
-		}
-	}
-
-	if (ad->data_auth_type) {
-		ad->data_auth_type->sub_desc = g_strdup(ad->ed_auth_type_desc);
-		if (ad->sel_profile_h) {
-			/*int authType = ad->prof_list[ad->prof_sel_idx].ProfileInfo.Pdp.AuthInfo.AuthType; */
-			connection_cellular_auth_type_e authType = 0;
-			char *user_name;
-			char *pwd;
-			connection_profile_get_cellular_auth_info(ad->sel_profile_h, &authType, &user_name, &pwd);
-			ad->chkType = !ad->chkType;
-			setting_network_connection_display_auth_type(ad, authType);
-			FREE(user_name);
-			FREE(pwd);
-		}
-	}
-	if (ad->data_user_name) {
-		ad->data_user_name->sub_desc = g_strdup(ad->ed_user_name_desc);
-	}
-	if (ad->data_pwd) {
-		ad->data_pwd->sub_desc = g_strdup(ad->ed_pwd_desc);
-	}
-
-	if (ad->data_pxy_addr) {
-		ad->data_pxy_addr->sub_desc = g_strdup(ad->ed_pxy_addr_desc);
-	}
-	if (ad->data_pxy_port) {
-		ad->data_pxy_port->sub_desc = g_strdup(ad->ed_pxy_port_desc);
-	}
-	if (ad->data_hm_url) {
-		ad->data_hm_url->sub_desc = g_strdup(ad->ed_hm_url_desc);
-	}
-	elm_genlist_realized_items_update(ad->scl_edit);
-	return;
-}
 
 static void __network_max_len_reached(void *data, Evas_Object *obj, void *event_info)
 {
@@ -731,6 +612,14 @@ static void __network_max_len_reached(void *data, Evas_Object *obj, void *event_
 
 	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
 	list_item->maxLengthReachFlag = true;
+
+	SETTING_TRACE("list_item->enterKeyPressFlag : %d", list_item->enterKeyPressFlag);
+	SettingNetworkUG *ad = list_item->userdata;
+
+	// popup show
+	ad->popup = setting_create_popup(ad, ad->win_get, NULL,
+				 "IDS_ST_TPOP_MAXIMUM_NUMBER_OF_CHARACTERS_REACHED",
+				 NULL, 2, TRUE, FALSE, 0);
 }
 
 /*
@@ -783,6 +672,125 @@ static void setting_network_connection_entry_next_activated_cb(void *data, Evas_
 	return;
 }
 
+static void _init_context(void *cb)
+{
+	SETTING_TRACE_BEGIN;
+	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+
+	SettingNetworkUG *ad = (SettingNetworkUG *) cb;
+
+	/* connection intializes */
+	ad->data_profile_name = NULL;
+	ad->data_acs_name = NULL;
+	ad->data_auth_type = NULL;
+	ad->data_user_name = NULL;
+	ad->data_pwd = NULL;
+	ad->data_pxy_addr = NULL;
+	ad->data_pxy_port = NULL;
+	ad->data_hm_url = NULL;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+static Evas_Object* ctxpopup;
+
+static void
+ctxpopup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	evas_object_del(ctxpopup);
+	ctxpopup = NULL;
+}
+
+static void
+move_more_ctxpopup(Evas_Object *ctxpopup)
+{
+	SETTING_TRACE_BEGIN;
+	Evas_Object *win;
+	Evas_Coord w, h;
+	int pos = -1;
+
+	/* We convince the top widget is a window */
+	win = elm_object_top_widget_get(ctxpopup);
+	elm_win_screen_size_get(win, NULL, NULL, &w, &h);
+	pos = elm_win_rotation_get(win);
+
+	switch (pos) {
+		case 0:
+		case 180:
+			evas_object_move(ctxpopup, (w / 2), h);
+			break;
+		case 90:
+			evas_object_move(ctxpopup,  (h / 2), w);
+			break;
+		case 270:
+			evas_object_move(ctxpopup, (h / 2), w);
+			break;
+	}
+}
+
+static void
+naviframe_resize_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	Evas_Object *ctxpopup = data;
+	move_more_ctxpopup(ctxpopup);
+}
+
+static void
+more_ctxpopup_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	Evas_Object *nf = data;
+	evas_object_event_callback_del_full(nf, EVAS_CALLBACK_RESIZE, naviframe_resize_cb, ctxpopup);
+}
+
+static void
+win_rotation_changed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	Evas_Object *ctxpopup = data;
+	move_more_ctxpopup(ctxpopup);
+}
+
+/* Icon + Text (More button style : Naviframe Toolbar) */
+static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	Evas_Object *it_obj;
+	Evas_Object *nf = ad->navi_bar;
+	Evas_Object *win;
+	Elm_Object_Item *it;
+
+	if (ctxpopup != NULL) {
+		evas_object_del(ctxpopup);
+	}
+
+	ctxpopup = elm_ctxpopup_add(nf);
+	elm_ctxpopup_auto_hide_disabled_set(ctxpopup, EINA_TRUE);
+	elm_object_style_set(ctxpopup, "more/default");
+	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_BACK, eext_ctxpopup_back_cb, NULL);
+	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_MORE, eext_ctxpopup_back_cb, NULL);
+	evas_object_smart_callback_add(ctxpopup, "dismissed", ctxpopup_dismissed_cb, NULL);
+	evas_object_event_callback_add(ctxpopup, EVAS_CALLBACK_DEL, more_ctxpopup_del_cb, nf);
+	evas_object_event_callback_add(nf, EVAS_CALLBACK_RESIZE, naviframe_resize_cb, ctxpopup);
+
+	/* We convince the top widget is a window */
+	win = elm_object_top_widget_get(nf);
+	evas_object_smart_callback_add(win, "rotation,changed", win_rotation_changed_cb, ctxpopup);
+
+	//---------------------------------------------------------------------------------------------
+	elm_ctxpopup_item_append(ctxpopup, _("IDS_ST_BODY_SAVE"), NULL, setting_network_connection_click_softkey_save_cb, ad);
+	elm_ctxpopup_item_append(ctxpopup, _("IDS_ST_BUTTON_CANCEL_ABB"), NULL, setting_network_connection_click_softkey_back_cb, ad);
+	//---------------------------------------------------------------------------------------------
+
+	elm_ctxpopup_direction_priority_set(ctxpopup, ELM_CTXPOPUP_DIRECTION_UP, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN);
+	move_more_ctxpopup(ctxpopup);
+	evas_object_show(ctxpopup);
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 static int setting_network_connection_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
@@ -794,21 +802,13 @@ static int setting_network_connection_create(void *cb)
 	Evas_Object *scroller = elm_genlist_add(ad->win_main_layout);
 	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
 	         "Cannot set scroller object  as contento of layout");
-	//elm_genlist_realization_mode_set(scroller, EINA_TRUE);
-	elm_object_style_set(scroller, "dialogue");
 	elm_genlist_mode_set(scroller, ELM_LIST_COMPRESS);
 	elm_genlist_clear(scroller);	/* first to clear list */
 	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb, NULL);
 
-	/* connection intializes */
-	ad->data_profile_name = NULL;
-	ad->data_acs_name = NULL;
-	ad->data_auth_type = NULL;
-	ad->data_user_name = NULL;
-	ad->data_pwd = NULL;
-	ad->data_pxy_addr = NULL;
-	ad->data_pxy_port = NULL;
-	ad->data_hm_url = NULL;
+	ad->con_create_gl = scroller;
+
+	_init_context(ad);
 
 	const char *title = NULL;
 	switch (ad->profile_service_type) {
@@ -822,26 +822,25 @@ static int setting_network_connection_create(void *cb)
 			title = ad->con_name;
 			break;
 	}
+
 	ad->navi_it = setting_push_layout_navi_bar(_(title),
-	                                           _("IDS_ST_BUTTON_BACK"),
+	                                           NULL, /* ARROW STYLE */
 	                                           _("IDS_ST_BODY_SAVE"),
 	                                           _("IDS_ST_BUTTON_CANCEL_ABB"),
-	                                           NULL,/*setting_network_connection_click_softkey_back_cb2, */
+	                                           setting_network_connection_click_softkey_back_cb,
 	                                           setting_network_connection_click_softkey_save_cb,
 	                                           setting_network_connection_click_softkey_cancel_cb, /* setting_network_connection_click_softkey_back_cb, */
 	                                           ad, scroller, ad->navi_bar, NULL);
 
 	elm_naviframe_item_pop_cb_set(ad->navi_it, setting_network_connection_click_softkey_back_cb, ad);
-
-	/*Apply new SIP concept */
 	evas_object_data_set(ad->navi_bar, "sip.naviframe.title_obj", "*");
-	/*setting_append_naviframe_title_buttons(ad->navi_it, ad->navi_bar,
-					       NULL, NULL, _("IDS_SA_BUTTON_DONE_ABB") ,NULL,
-					       NULL,
-					       NULL,
-					       setting_network_connection_click_softkey_done_cb,
-					       setting_network_connection_click_softkey_cancel_cb,
-					       ad);*/
+
+
+	// Add ctx popup handler
+	Evas_Object* btn = elm_button_add(ad->navi_bar);
+	elm_object_style_set(btn, "naviframe/more/default");
+	evas_object_smart_callback_add(btn, "clicked", create_ctxpopup_more_button_cb, ad);
+	elm_object_item_part_content_set(ad->navi_it, "toolbar_more_btn", btn);
 
 	retv_if(!ad->navi_it, SETTING_RETURN_FAIL);
 	ad->has_form_changed  = FALSE;
@@ -849,10 +848,6 @@ static int setting_network_connection_create(void *cb)
 	setting_enable_expandable_genlist(scroller, ad,
 	                                  __setting_network_connection_exp_cb,
 	                                  NULL);
-	/* Do not hide input panel while drag the genlist
-	evas_object_event_callback_add(scroller, EVAS_CALLBACK_MOUSE_UP,
-				       __connection_gl_mouse_up, ad);
-	*/
 	__get_connection_info(ad);
 	Elm_Object_Item *item;
 
@@ -870,9 +865,7 @@ static int setting_network_connection_create(void *cb)
 		                                            NULL, NULL,
 		                                            SWALLOW_Type_INVALID,
 		                                            _("IDS_MSGF_BODY_SERVICE_TYPE"),
-		                                            _("IDS_ST_BODY_INTERNET_CONNECTION"),
-		                                            SETTING_GROUP_STYLE_TOP,
-		                                            SETTING_GROUP_STYLE_TOP);
+		                                            _("IDS_ST_BODY_INTERNET_CONNECTION"));
 		/* ad->data_auth_type->int_slp_setting_binded = INT_SLP_SETTING_INVALID; */
 		if (ad->data_srv_type) {
 			ad->data_srv_type->userdata = ad;
@@ -887,13 +880,12 @@ static int setting_network_connection_create(void *cb)
 	SETTING_TRACE("name :%s", ad->ed_profile_name_desc);
 	SETTING_TRACE("apn :%s", ad->ed_acs_name_desc);
 
-	/* Profile name */
+	/* [UI] Profile name */
 	if (!isEmptyStr(ad->ed_profile_name_desc)) {
 		/* Display */
 		ad->data_profile_name =
-		    setting_create_Gendial_field_groupitem(scroller,
+		    setting_create_Gendial_field_def(scroller,
 		                                           &itc_multiline_2text,
-		                                           NULL,
 		                                           NULL,
 		                                           ad,
 		                                           SWALLOW_Type_INVALID,
@@ -916,17 +908,14 @@ static int setting_network_connection_create(void *cb)
 		                                                       __network_max_len_reached,
 		                                                       ELM_INPUT_PANEL_LAYOUT_NORMAL,
 		                                                       FALSE, FALSE,
-		                                                       0, 64, NULL, NULL, ELM_INPUT_PANEL_RETURN_KEY_TYPE_NEXT, setting_network_connection_entry_next_activated_cb, NULL);
+		                                                       64, 64, NULL, NULL, ELM_INPUT_PANEL_RETURN_KEY_TYPE_NEXT, setting_network_connection_entry_next_activated_cb, NULL);
 	}
 
 	if (ad->data_profile_name) {
-		if (new_flag)
-			setting_genlist_item_groupstyle_set(ad->data_profile_name, SETTING_GROUP_STYLE_CENTER);
-		else
-			setting_genlist_item_groupstyle_set(ad->data_profile_name, SETTING_GROUP_STYLE_TOP);
 		__BACK_POINTER_SET(ad->data_profile_name);
 		ad->data_profile_name->userdata = ad;
 		ad->data_profile_name->win_main = ad->win_get;
+		ad->data_profile_name->isSinglelineFlag = TRUE;
 		/*there is no CAPI to set profile name,so disable it: */
 		/*setting_disable_genlist_item(ad->data_profile_name->item); */
 		if (!isEmptyStr(ad->ed_profile_name_desc)) { /*not create(first time) */
@@ -938,7 +927,7 @@ static int setting_network_connection_create(void *cb)
 		SETTING_TRACE_ERROR("ad->data_acs_name is NULL");
 	}
 
-	/* Access point name */
+	/* [UI] Access point name */
 	ad->data_acs_name =
 	    setting_create_Gendial_field_entry_with_return_key(scroller,
 	                                                       &itc_editfield, NULL,
@@ -950,11 +939,11 @@ static int setting_network_connection_create(void *cb)
 	                                                       __network_max_len_reached,
 	                                                       ELM_INPUT_PANEL_LAYOUT_NORMAL,
 	                                                       FALSE, FALSE,
-	                                                       0, 64, NULL, NULL, ELM_INPUT_PANEL_RETURN_KEY_TYPE_DONE, NULL, NULL);
+	                                                       64, 64, NULL, NULL, ELM_INPUT_PANEL_RETURN_KEY_TYPE_DONE, NULL, NULL);
 	if (ad->data_acs_name) {
-		setting_genlist_item_groupstyle_set(ad->data_acs_name, SETTING_GROUP_STYLE_BOTTOM);
 		__BACK_POINTER_SET(ad->data_acs_name);
 		ad->data_acs_name->userdata = ad;
+		ad->data_acs_name->isSinglelineFlag = TRUE;
 		ad->data_acs_name->win_main = ad->win_get;
 	} else {
 		SETTING_TRACE_ERROR("ad->data_acs_name is NULL");
@@ -966,13 +955,13 @@ static int setting_network_connection_create(void *cb)
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	ad->data_auth_type =
-	    setting_create_Gendial_exp_parent_field(scroller,
-	                                            &itc_2text_3_parent,
-	                                            NULL, NULL,
-	                                            SWALLOW_Type_INVALID,
-	                                            "IDS_ST_BODY_AUTH_TYPE",
-	                                            (char *)ad->ed_auth_type_desc,
-	                                            SETTING_GROUP_STYLE_TOP, SETTING_GROUP_STYLE_NONE);
+	    setting_create_Gendial_field_def(scroller,
+						    &itc_2text_3_parent,
+						    __create_auth_type_popup, ad,
+						    SWALLOW_Type_INVALID,
+						    NULL, NULL, 0,
+						    "IDS_ST_BODY_AUTH_TYPE",
+						    (char *)ad->ed_auth_type_desc, NULL);
 	/* ad->data_auth_type->int_slp_setting_binded = INT_SLP_SETTING_INVALID; */
 	if (ad->data_auth_type) {
 		ad->data_auth_type->userdata = ad;
@@ -988,7 +977,7 @@ static int setting_network_connection_create(void *cb)
 
 	ad->is_show_user = 0;
 	if (CONNECTION_CELLULAR_AUTH_TYPE_NONE != ad->chkType) {
-		/* User ID */
+		/* [UI] User ID */
 		ad->data_user_name =
 		    setting_create_Gendial_field_entry_with_return_key(scroller,
 		                                                       &itc_editfield,
@@ -1002,18 +991,18 @@ static int setting_network_connection_create(void *cb)
 		                                                       __network_max_len_reached,
 		                                                       ELM_INPUT_PANEL_LAYOUT_NORMAL,
 		                                                       FALSE, FALSE,
-		                                                       0, MAX_PDP_AUTH_USERNAME_LEN_MAX,
+		                                                       MAX_PDP_AUTH_USERNAME_LEN_MAX, MAX_PDP_AUTH_USERNAME_LEN_MAX,
 		                                                       NULL, NULL, ELM_INPUT_PANEL_RETURN_KEY_TYPE_NEXT, setting_network_connection_entry_next_activated_cb, NULL);
 		if (ad->data_user_name) {
 			__BACK_POINTER_SET(ad->data_user_name);
-			setting_genlist_item_groupstyle_set(ad->data_user_name, SETTING_GROUP_STYLE_TOP);
 			ad->data_user_name->userdata = ad;
+			ad->data_user_name->isSinglelineFlag = TRUE;
 			ad->data_user_name->win_main = ad->win_get;
 		} else {
 			SETTING_TRACE_ERROR("ad->data_user_name is NULL");
 		}
 
-		/* Password */
+		/* [UI] Password */
 		ad->data_pwd =
 		    setting_create_Gendial_field_entry_with_return_key(scroller,
 		                                                       &itc_editfield,
@@ -1026,13 +1015,13 @@ static int setting_network_connection_create(void *cb)
 		                                                       __network_max_len_reached,
 		                                                       ELM_INPUT_PANEL_LAYOUT_NORMAL,
 		                                                       TRUE, FALSE,
-		                                                       0, MAX_PDP_AUTH_USERNAME_LEN_MAX,
+		                                                       MAX_PDP_AUTH_USERNAME_LEN_MAX, MAX_PDP_AUTH_USERNAME_LEN_MAX,
 		                                                       NULL, NULL, ELM_INPUT_PANEL_RETURN_KEY_TYPE_NEXT, setting_network_connection_entry_next_activated_cb, NULL);
 		if (ad->data_pwd) {
 			__BACK_POINTER_SET(ad->data_pwd);
-			setting_genlist_item_groupstyle_set(ad->data_pwd, SETTING_GROUP_STYLE_BOTTOM);
 			ad->data_pwd->userdata = ad;
 			ad->data_pwd->win_main = ad->win_get;
+			ad->data_pwd->isSinglelineFlag = TRUE;
 			ad->is_show_user = 1;
 		} else {
 			SETTING_TRACE_ERROR("ad->data_pwd is NULL");
@@ -1045,7 +1034,7 @@ static int setting_network_connection_create(void *cb)
 		elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 	}
 
-	/* Proxy address */
+	/* [UI] Proxy address */
 	ad->data_pxy_addr =
 	    setting_create_Gendial_field_entry_with_return_key(scroller,
 	                                                       &itc_editfield, NULL,
@@ -1057,11 +1046,11 @@ static int setting_network_connection_create(void *cb)
 	                                                       __network_max_len_reached,
 	                                                       ELM_INPUT_PANEL_LAYOUT_URL,
 	                                                       FALSE, FALSE,
-	                                                       0, 512, NULL, NULL, ELM_INPUT_PANEL_RETURN_KEY_TYPE_NEXT, setting_network_connection_entry_next_activated_cb, NULL);
+	                                                       512, 512, NULL, NULL, ELM_INPUT_PANEL_RETURN_KEY_TYPE_NEXT, setting_network_connection_entry_next_activated_cb, NULL);
 	if (ad->data_pxy_addr) {
-		setting_genlist_item_groupstyle_set(ad->data_pxy_addr, SETTING_GROUP_STYLE_TOP);
 		__BACK_POINTER_SET(ad->data_pxy_addr);
 		ad->data_pxy_addr->userdata = ad;
+		ad->data_pxy_addr->isSinglelineFlag = TRUE;
 		ad->data_pxy_addr->win_main = ad->win_get;
 	} else {
 		SETTING_TRACE_ERROR("ad->data_pxy_addr is NULL");
@@ -1074,9 +1063,10 @@ static int setting_network_connection_create(void *cb)
 	if (!safeStrCmp(ad->con_name, STR_SETTING_MMS_CONNECTIONS)) {
 		type = ELM_INPUT_PANEL_RETURN_KEY_TYPE_NEXT;
 		cbFunc = setting_network_connection_entry_next_activated_cb;
+		//SETTING_TRACE_ERROR("Enter here hwy ---> ad->con_name : %s ", ad->con_name);
 	}
 
-	/* Proxy port */
+	/* [UI] Proxy port */
 	ad->data_pxy_port =
 	    setting_create_Gendial_field_entry_with_return_key(scroller,
 	                                                       &itc_editfield, NULL,
@@ -1092,20 +1082,24 @@ static int setting_network_connection_create(void *cb)
 	                                                       5, "0123456789", NULL, type, cbFunc, NULL);
 	if (ad->data_pxy_port) {
 		ad->data_pxy_port->userdata = ad;
-		setting_genlist_item_groupstyle_set(ad->data_pxy_port, SETTING_GROUP_STYLE_BOTTOM);
+		ad->data_pxy_port->isSinglelineFlag = TRUE;
 		__BACK_POINTER_SET(ad->data_pxy_port);
 		ad->data_pxy_port->win_main = ad->win_get;
 	} else {
 		SETTING_TRACE_ERROR("ad->data_pxy_port is NULL");
 	}
 
-	if (!safeStrCmp(ad->con_name, STR_SETTING_MMS_CONNECTIONS)) {	/*  mms Connection */
-		if (ad->data_pxy_port) {
-			setting_genlist_item_groupstyle_set(ad->data_pxy_port, SETTING_GROUP_STYLE_CENTER);
-			ad->data_pxy_port->return_key_type = ELM_INPUT_PANEL_RETURN_KEY_TYPE_DEFAULT;
-		}
 
-		/* Home URL */
+	// if current view is "MMS connection"
+	if (!safeStrCmp(ad->con_name, STR_SETTING_MMS_CONNECTIONS)) {	/*  mms Connection */
+
+		#if 0
+		if (ad->data_pxy_port) {
+			ad->data_pxy_port->return_key_type = ELM_INPUT_PANEL_RETURN_KEY_TYPE_DEFAULT;
+			//SETTING_TRACE_ERROR("ad->data_pxy_port->return_key_type = ELM_INPUT_PANEL_RETURN_KEY_TYPE_DEFAULT");
+		}
+		#endif
+		/* [UI] Home URL */
 		ad->data_hm_url =
 		    setting_create_Gendial_field_entry_with_return_key(scroller,
 		                                                       &itc_editfield,
@@ -1121,9 +1115,9 @@ static int setting_network_connection_create(void *cb)
 		                                                       0, 521, NULL, NULL,
 		                                                       ELM_INPUT_PANEL_RETURN_KEY_TYPE_DONE, NULL, NULL);
 		if (ad->data_hm_url) {
-			setting_genlist_item_groupstyle_set(ad->data_hm_url, SETTING_GROUP_STYLE_BOTTOM);
 			__BACK_POINTER_SET(ad->data_hm_url);
 			ad->data_hm_url->userdata = ad;
+			ad->data_hm_url->isSinglelineFlag = TRUE;
 			ad->data_hm_url->win_main = ad->win_get;
 			ad->data_hm_url->return_key_type = ELM_INPUT_PANEL_RETURN_KEY_TYPE_DONE;
 		} else {
@@ -1132,9 +1126,6 @@ static int setting_network_connection_create(void *cb)
 		/* ad->is_show_url = 1; */
 	}
 
-#if SUPPORT_TETHERING
-	is_tethering_enabled(ad);
-#endif
 	setting_view_network_connection_create.is_create = 1;
 	ad->scl_edit = scroller;
 	/*__genlist_disable_set(ad->scl_edit, TRUE); */
@@ -1196,15 +1187,7 @@ static int setting_network_connection_destroy(void *cb)
 
 	G_FREE(ad->ed_hm_url_desc);
 
-#if SUPPORT_TETHERING
-	if (ad->th_concreate) {
-		SETTING_TRACE("tethering destruction");
-		tethering_destroy(ad->th_concreate);
-		ad->th_concreate = NULL;
-	}
-#endif
-
-	/*elm_naviframe_item_pop(ad->navi_bar); */
+	elm_naviframe_item_pop(ad->navi_bar);
 
 	setting_view_network_connection_create.is_create = 0;
 	return SETTING_RETURN_SUCCESS;
@@ -1271,6 +1254,26 @@ bool need_check_default_profile(void *data, connection_cellular_service_type_e i
 	return TRUE;
 }
 
+/**
+ * popup - timeout and 'ok' callback
+ */
+static void __setting_network_connection_popup_rsp_cb(void *data, Evas_Object *obj, void *event_info)
+{
+
+	SETTING_TRACE_BEGIN;
+	setting_retm_if(obj == NULL, "obj parameter is NULL");
+	setting_retm_if(data == NULL, "Data parameter is NULL");
+	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+
+	// remove ctxpopup
+	if (ctxpopup != NULL) {
+		evas_object_del(ctxpopup);
+		ctxpopup = NULL;
+	}
+}
+
+
+
 static int __save_connection(void *data)
 {
 	SETTING_TRACE_BEGIN;
@@ -1328,7 +1331,9 @@ static int __save_connection(void *data)
 
 		char name[MAX_DISPLAY_NAME_LEN_ON_UI + 1] = {0, };
 		snprintf(name, sizeof(name), _("IDS_ST_POP_ENTER_PS"), _("IDS_ST_BODY_PROFILE_NAME"));
-		setting_create_simple_popup(ad, ad->win_get, NULL, _(name));
+
+
+		setting_create_popup(ad, ad->win_get, NULL, _(name), __setting_network_connection_popup_rsp_cb, 2/*SECONDS*/, false, false, 0);
 		FREE(acs_name);
 		FREE(profile_name);
 		FREE(usr_name);
@@ -1342,7 +1347,7 @@ static int __save_connection(void *data)
 
 		char name[MAX_DISPLAY_NAME_LEN_ON_UI + 1] = {0, };
 		snprintf(name, sizeof(name), _("IDS_ST_POP_ENTER_PS"), _("IDS_DLNA_BODY_ACCESS_POINT_NAME"));
-		setting_create_simple_popup(ad, ad->win_get, NULL, _(name));
+		setting_create_popup(ad, ad->win_get, NULL, _(name), __setting_network_connection_popup_rsp_cb, 2/*SECONDS*/, false, false, 0);
 		FREE(acs_name);
 		FREE(profile_name);
 		FREE(usr_name);
@@ -1403,15 +1408,16 @@ static int __save_connection(void *data)
 	FREE(acs_name);
 
 	/* save auth type */
-	/* type = elm_radio_value_get(ad->chk_type); */
 	type = ad->chkType;
+	SETTING_TRACE("-----> auth type: %d", type);
+	SETTING_TRACE("-----> radio button state: %d", elm_radio_value_get(ad->chk_type));
 
 #ifdef OLD_AUTH_CONCEPT
 	/* save user name */
 	if (!safeStrCmp(usr_name, "")
 	    && CONNECTION_CELLULAR_AUTH_TYPE_NONE != type) {
-		setting_create_simple_popup(ad, ad->win_get,
-		                            NULL, _(Insert_User_Name_Desc));
+		setting_create_popup(ad, ad->win_get,
+		                            NULL, _(Insert_User_Name_Desc), __setting_network_connection_popup_rsp_cb, 2/*SECONDS*/, false, false, 0);
 		FREE(usr_name);
 		FREE(pwd);
 		FREE(addr);
@@ -1422,8 +1428,8 @@ static int __save_connection(void *data)
 	/* save password */
 	if (!safeStrCmp(pwd, "")
 	    && CONNECTION_CELLULAR_AUTH_TYPE_NONE != type) {
-		setting_create_simple_popup(ad, ad->win_get,
-		                            NULL, _(""));/*this code is not used now, so remove the ID which is not used in po file*/
+		setting_create_popup(ad, ad->win_get,
+		                            NULL, _(""), __setting_network_connection_popup_rsp_cb,2/*SECONDS*/, false, false, 0);/*this code is not used now, so remove the ID which is not used in po file*/
 		FREE(usr_name);
 		FREE(pwd);
 		FREE(addr);
@@ -1440,8 +1446,8 @@ static int __save_connection(void *data)
 	if (isEmptyStr(addr)) {
 		/* check proxy port */
 		if (!isEmptyStr(port)) {
-			setting_create_simple_popup(ad, ad->win_get,
-			                            NULL, _("IDS_COM_BODY_ENTER_PROXY_EMPTY"));
+			setting_create_popup(ad, ad->win_get,
+			                            NULL, _("IDS_COM_BODY_ENTER_PROXY_EMPTY"), __setting_network_connection_popup_rsp_cb, 2/*SECONDS*/, false, false, 0);
 			FREE(usr_name);
 			FREE(pwd);
 			FREE(addr);
@@ -1519,7 +1525,7 @@ static int __save_connection(void *data)
 		if (err != CONNECTION_ERROR_NONE) {
 			SETTING_TRACE_ERROR("*** [ERR] connection_add_profile. err=%d ***", err);
 			ret = SETTING_DNET_RETURN_ERR;
-			setting_create_simple_popup(ad, ad->win_get, NULL, _("IDS_CST_POP_FAILED"));
+			setting_create_popup(ad, ad->win_get, NULL, _("IDS_CST_POP_FAILED"), NULL, 0, false, false, 0);
 			return ret;
 		}
 		connection_profile_h tmp_profile = NULL;
@@ -1549,7 +1555,7 @@ static int __save_connection(void *data)
 			if (err != CONNECTION_ERROR_NONE) {
 				SETTING_TRACE_ERROR("*** [ERR] connection_add_profile. err=%d ***", err);
 				ret = SETTING_DNET_RETURN_ERR;
-				setting_create_simple_popup(ad, ad->win_get, NULL, _("IDS_CST_POP_FAILED"));
+				setting_create_popup(ad, ad->win_get, NULL, _("IDS_CST_POP_FAILED"), NULL, 0, false, false, 0);
 				return ret;
 			}
 			connection_profile_h tmp_profile = NULL;
@@ -1576,8 +1582,8 @@ static int __save_connection(void *data)
 			("%s*** [ERR] net_modify_profile. err=%d ***%s",
 			 SETTING_FONT_RED, err, SETTING_FONT_BLACK);
 			ret = SETTING_DNET_RETURN_ERR;
-			setting_create_simple_popup(ad, ad->win_get,
-			                            NULL, _("IDS_CST_POP_FAILED"));
+			setting_create_popup(ad, ad->win_get,
+			                            NULL, _("IDS_CST_POP_FAILED"), NULL, 0, false, false, 0);
 		}
 	}
 	return ret;
@@ -1637,33 +1643,16 @@ static void __save_response_cb(void *data, Evas_Object *obj,
 	}
 	/*re-fetch connection info.. */
 	/*__get_connection_info(ad); */
-
 	SETTING_TRACE("ad->con_name:%s", ad->con_name);
 
 	ad->apn_MMS = __get_profile_name(CONNECTION_CELLULAR_SERVICE_TYPE_MMS, ad);
 
 	elm_naviframe_item_pop(ad->navi_bar);	/* Call automatically setting_network_connection_click_softkey_back_cb() by registering elm_naviframe_item_pop_cb_set() */
-
-	/*
-	//UI update
-	//elm_object_item_text_set(ad->navi_it, _(ad->con_name));
-	//setting_network_connection_click_softkey_cancel_cb(ad, ad->r_button, NULL);
-	SETTING_TRACE("ad->con_name:%s", ad->con_name);
-	if(!safeStrCmp(STR_SETTING_NEW_CONNECTIONS, ad->con_name)
-	   || ad->profile_topper_view == &setting_view_network_con)//new a profile,need to select the "Service type"
-	{
-		//not normal view change,need do specially
-		setting_view_cleanup(&setting_view_network_connection_create, ad);
-		//setting_view_update(&setting_view_network_con, ad);
-	}
-	else
-	{
-		elm_naviframe_item_pop(ad->navi_bar);	// Call automatically setting_network_connection_click_softkey_back_cb() by registering elm_naviframe_item_pop_cb_set()
-		//setting_view_change(&setting_view_network_connection_create, &setting_view_network_con_list, ad);
-	}
-	*/
 }
 
+/**
+ * [UI-CALLBACK] 'Save' button handler
+ */
 static void
 setting_network_connection_click_softkey_save_cb(void *data,
                                                  Evas_Object *obj,
@@ -1674,8 +1663,6 @@ setting_network_connection_click_softkey_save_cb(void *data,
 	retm_if(data == NULL, "Data parameter is NULL");
 
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-	/* elm_box_unpack_all(ad->bx_blk); */
-	/* elm_dialoguegroup_remove_all(ad->dg_blk); */
 
 	int ret = __save_connection(ad);
 	/* need special handle */
@@ -1692,8 +1679,14 @@ setting_network_connection_click_softkey_save_cb(void *data,
 		 SETTING_FONT_RED, SETTING_FONT_BLACK);
 	}
 
-	/*setting_create_popup_without_btn(ad, ad->win_get, NULL, _(KeyStr_Saved), __save_response_cb, POPUP_INTERVAL, FALSE, FALSE); */
-	setting_create_popup_without_btn(ad, ad->win_get, NULL, _(KeyStr_Saved), __save_response_cb, 1, FALSE, FALSE);
+	elm_object_tree_focus_allow_set(ad->con_create_gl, EINA_FALSE);
+
+	setting_create_popup(ad, ad->win_get, NULL, KeyStr_Saved, __save_response_cb, 1, FALSE, FALSE, 0);
+
+	if (ctxpopup != NULL) {
+		evas_object_del(ctxpopup);
+		ctxpopup = NULL;
+	}
 }
 
 
@@ -1705,122 +1698,10 @@ setting_network_connection_click_softkey_back_cb(void *data, Elm_Object_Item *it
 	retvm_if(data == NULL, EINA_TRUE, "Data parameter is NULL");
 
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+
+	elm_object_tree_focus_allow_set(ad->con_create_gl, EINA_FALSE);
+
 	SETTING_TRACE("ad->con_name:%s", ad->con_name);
-#if 0
-	Ecore_IMF_Context *imf_context = NULL;
-	Ecore_IMF_Input_Panel_State imf_state = ECORE_IMF_INPUT_PANEL_STATE_HIDE;
-	Setting_GenGroupItem_Data *data_item = NULL;
-	SETTING_TRACE("ECORE_IMF_INPUT_PANEL_STATE_SHOW:%d", ECORE_IMF_INPUT_PANEL_STATE_SHOW);
-
-	do {
-		data_item = ad->data_profile_name;
-		if (data_item) {
-			SETTING_TRACE("item:%s, entry_str:%s", _(data_item->keyStr), data_item->sub_desc);
-			/*isFoundEmptyEntry = TRUE; */
-			imf_context = elm_entry_imf_context_get(data_item->eo_check);
-
-			if (elm_object_focus_get(data_item->eo_check) && imf_context) {
-				imf_state = ecore_imf_context_input_panel_state_get(imf_context);
-				SETTING_TRACE("imf_state:%d", imf_state);
-				if (imf_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-					setting_hide_input_pannel_cb(data_item->eo_check);
-
-					return EINA_FALSE;
-				}
-			}
-		}
-
-		data_item = ad->data_acs_name;
-		if (data_item) {
-			SETTING_TRACE("item:%s, entry_str:%s", _(data_item->keyStr), data_item->sub_desc);
-			/*isFoundEmptyEntry = TRUE; */
-			imf_context = elm_entry_imf_context_get(data_item->eo_check);
-			SETTING_TRACE("elm_object_focus_get(data_item->eo_check):%d", elm_object_focus_get(data_item->eo_check));
-			if (elm_object_focus_get(data_item->eo_check) && imf_context) {
-				imf_state = ecore_imf_context_input_panel_state_get(imf_context);
-				SETTING_TRACE("imf_state:%d", imf_state);
-				if (imf_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-					setting_hide_input_pannel_cb(data_item->eo_check);
-					return EINA_FALSE;
-				}
-			}
-		}
-		data_item = ad->data_user_name;
-		if (data_item) {
-			SETTING_TRACE("item:%s, entry_str:%s", _(data_item->keyStr), data_item->sub_desc);
-			SETTING_TRACE("elm_object_focus_get(data_item->eo_check):%d", elm_object_focus_get(data_item->eo_check));
-			/*isFoundEmptyEntry = TRUE; */
-			imf_context = elm_entry_imf_context_get(data_item->eo_check);
-			if (elm_object_focus_get(data_item->eo_check) && imf_context) {
-				imf_state = ecore_imf_context_input_panel_state_get(imf_context);
-				SETTING_TRACE("imf_state:%d", imf_state);
-				if (imf_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-					setting_hide_input_pannel_cb(data_item->eo_check);
-					return EINA_FALSE;
-				}
-			}
-		}
-		data_item = ad->data_pwd;
-		if (data_item) {
-			SETTING_TRACE("item:%s, entry_str:%s", _(data_item->keyStr), data_item->sub_desc);
-			/*isFoundEmptyEntry = TRUE; */
-			imf_context = elm_entry_imf_context_get(data_item->eo_check);
-			if (elm_object_focus_get(data_item->eo_check) && imf_context) {
-				imf_state = ecore_imf_context_input_panel_state_get(imf_context);
-				SETTING_TRACE("imf_state:%d", imf_state);
-				if (imf_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-					setting_hide_input_pannel_cb(data_item->eo_check);
-					return EINA_FALSE;
-				}
-			}
-		}
-		data_item = ad->data_pxy_addr;
-		if (data_item) {
-			SETTING_TRACE("item:%s, entry_str:%s", _(data_item->keyStr), data_item->sub_desc);
-			/*isFoundEmptyEntry = TRUE; */
-			imf_context = elm_entry_imf_context_get(data_item->eo_check);
-			if (elm_object_focus_get(data_item->eo_check) && imf_context) {
-				imf_state = ecore_imf_context_input_panel_state_get(imf_context);
-				SETTING_TRACE("imf_state:%d", imf_state);
-				if (imf_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-					setting_hide_input_pannel_cb(data_item->eo_check);
-					return EINA_FALSE;
-				}
-			}
-		}
-		data_item = ad->data_pxy_port;
-		if (data_item) {
-			SETTING_TRACE("item:%s, entry_str:%s", _(data_item->keyStr), data_item->sub_desc);
-			/*isFoundEmptyEntry = TRUE; */
-			imf_context = elm_entry_imf_context_get(data_item->eo_check);
-			if (elm_object_focus_get(data_item->eo_check) && imf_context) {
-				imf_state = ecore_imf_context_input_panel_state_get(imf_context);
-				SETTING_TRACE("imf_state:%d", imf_state);
-				if (imf_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-					setting_hide_input_pannel_cb(data_item->eo_check);
-					return EINA_FALSE;
-				}
-			}
-		}
-
-		data_item = ad->data_hm_url;
-		if (data_item) {
-			SETTING_TRACE("item:%s, entry_str:%s", _(data_item->keyStr), data_item->sub_desc);
-			/*isFoundEmptyEntry = TRUE; */
-			imf_context = elm_entry_imf_context_get(data_item->eo_check);
-			if (elm_object_focus_get(data_item->eo_check) && imf_context) {
-				imf_state = ecore_imf_context_input_panel_state_get(imf_context);
-				SETTING_TRACE("imf_state:%d", imf_state);
-				if (imf_state == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
-					setting_hide_input_pannel_cb(data_item->eo_check);
-					return EINA_FALSE;
-				}
-			}
-		}
-
-	} while (0);
-
-#endif
 	if (!safeStrCmp(STR_SETTING_NEW_CONNECTIONS, ad->con_name)
 	    || ad->profile_topper_view == &setting_view_network_con) { /*new a profile,need to select the "Service type" */
 		/*not normal view change,need do specially */
@@ -1829,6 +1710,12 @@ setting_network_connection_click_softkey_back_cb(void *data, Elm_Object_Item *it
 	} else {
 		setting_view_change(&setting_view_network_connection_create, &setting_view_network_con_list, ad);
 	}
+
+	if (ctxpopup != NULL) {
+		evas_object_del(ctxpopup);
+		ctxpopup = NULL;
+	}
+
 	return EINA_TRUE;
 }
 
@@ -1844,13 +1731,6 @@ setting_network_connection_click_softkey_cancel_cb(void *data,
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
 
 	elm_naviframe_item_pop(ad->navi_bar);	/* Call automatically setting_network_connection_click_softkey_back_cb() by registering elm_naviframe_item_pop_cb_set() */
-
-	/*
-	__get_connection_info(ad);
-	__update_genlist_info(ad);
-	if(ad->data_auth_type) elm_genlist_item_expanded_set(ad->data_auth_type->item, FALSE);
-	ecore_idler_add(__connection_idler, ad);
-	*/
 }
 
 static void setting_network_connection_check_entry_empty(SettingNetworkUG *ad)
@@ -1929,8 +1809,8 @@ setting_network_connection_display_auth_type(SettingNetworkUG *ad,
 			    (char *)g_strdup(ad->ed_user_name_desc);
 			ad->data_user_name->swallow_type =
 			    SWALLOW_Type_LAYOUT_EDITFIELD;
+			ad->data_user_name->isSinglelineFlag = TRUE;
 			ad->data_user_name->userdata = ad;
-			ad->data_user_name->group_style = SETTING_GROUP_STYLE_TOP;
 
 			ad->data_user_name->return_key_type = ELM_INPUT_PANEL_RETURN_KEY_TYPE_NEXT;
 			ad->data_user_name->activated_cb = setting_network_connection_entry_next_activated_cb;
@@ -1980,7 +1860,6 @@ setting_network_connection_display_auth_type(SettingNetworkUG *ad,
 			ad->data_pwd->disable_auto_cap = EINA_TRUE;
 
 			__BACK_POINTER_SET(ad->data_pwd);
-			ad->data_pwd->group_style = SETTING_GROUP_STYLE_BOTTOM;
 
 			/* ad->data_pwd->chk_change_cb = chk_change_cb; */
 			ad->data_pwd->limit_filter_data = calloc(1, sizeof(Elm_Entry_Filter_Accept_Set));
@@ -2050,17 +1929,16 @@ setting_network_connection_entry_changed_cb(void *data, Evas_Object *obj,
 	SettingNetworkUG *ad = list_item->userdata;
 	const char *entry_str = elm_entry_entry_get(obj);
 
-	if (list_item->maxLengthReachFlag && list_item->enterKeyPressFlag == FALSE) {
+	if (list_item->maxLengthReachFlag && list_item->enterKeyPressFlag == false) {
+		#if 0
 		int ret = notification_status_message_post(_("IDS_ST_TPOP_MAXIMUM_NUMBER_OF_CHARACTERS_REACHED"));
 		if (ret != NOTIFICATION_ERROR_NONE)
 			SETTING_TRACE_ERROR("notification_status_message_post() failed(%d)", ret);
-
-		/*
-		ad->popup = setting_create_popup_without_btn(ad, ad->win_get, NULL,
-					 _("IDS_ST_TPOP_MAXIMUM_NUMBER_OF_CHARACTERS_REACHED"),
-					 NULL, 2, TRUE, FALSE);
-		*/
+		ad->popup = setting_create_popup(ad, ad->win_get, NULL,
+					 "IDS_ST_TPOP_MAXIMUM_NUMBER_OF_CHARACTERS_REACHED",
+					 NULL, 2, TRUE, FALSE, 0);
 		elm_object_focus_set(list_item->eo_check, EINA_FALSE);
+		#endif
 	}
 	list_item->maxLengthReachFlag = FALSE;
 	list_item->enterKeyPressFlag = FALSE;

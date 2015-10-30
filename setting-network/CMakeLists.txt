@@ -7,8 +7,9 @@ pkg_check_modules(pkgs_network REQUIRED elementary evas ecore ecore-imf eina edj
 appcore-common appcore-efl
 ui-gadget-1 capi-appfw-application
 capi-network-connection
-tapi dlog efl-extension efl-assist
-notification json-glib-1.0 eventsystem)
+tapi dlog efl-extension
+capi-system-system-settings
+notification json-glib-1.0 eventsystem callmgr_client)
 
 FOREACH(flag ${pkgs_network_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
@@ -36,13 +37,6 @@ ADD_LIBRARY(${SETTING_NETWORK_UG} SHARED
 	./src/setting-network-con-list.c
 	./src/setting-network-profile-delete.c
 	./src/setting-network-connection-create.c
-	./src/setting-network-3gcon-option.c
-	./src/setting-network-main-help.c
-	./src/setting-network-preferred-network.c
-	./src/setting-network-preferred-network-new.c
-	./src/setting-network-preferred-network-list.c
-	./src/setting-network-preferred-network-edit.c
-	./src/setting-network-preferred-network-delete.c
 	)
 
 TARGET_LINK_LIBRARIES(${SETTING_NETWORK_UG} -L${CMAKE_BINARY_DIR}/${SETTING_COMMON} -lsetting-common)

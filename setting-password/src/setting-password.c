@@ -257,7 +257,7 @@ static void *setting_password_ug_on_create(ui_gadget_h ug,
 	bindtextdomain(SETTING_PACKAGE, SETTING_LOCALEDIR);
 	evas_object_smart_callback_add(passwordUG->win_get, "wm,rotation,changed", setting_password_rotated_cb, passwordUG);
 
-	setting_create_Gendial_itc("groupindex", &(passwordUG->itc_title));
+	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE, &(passwordUG->itc_title));
 	setting_create_Gendial_itc("1icon", &(passwordUG->itc_variable_height));
 
 	passwordUG->itc_err_desc.item_style = "multiline_sub";
@@ -556,9 +556,9 @@ setting_password_ug_create_popup_notitle_nobtn(void *data, char *str,
 		evas_object_del(ad->notify);
 		ad->notify = NULL;
 	}
-	ad->notify = setting_create_popup_without_btn(ad, ad->ly_main, NULL, str,
-	                                              setting_password_ug_popup_resp_cb,
-	                                              POPUP_INTERVAL, FALSE, FALSE);
+	ad->notify = setting_create_popup(ad, ad->ly_main, NULL, str,
+									  setting_password_ug_popup_resp_cb,
+									  POPUP_INTERVAL, FALSE, FALSE, 0);
 }
 
 void setting_password_ug_check_attemps_left(void *data)
@@ -667,6 +667,7 @@ int setting_password_check_password(const char *challenge, unsigned int *remain_
 		ret = SETTING_RETURN_FAIL;
 	}
 #endif
+
 	return ret;
 }
 
