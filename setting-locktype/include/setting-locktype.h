@@ -32,7 +32,6 @@
 #include <setting-common-view.h>
 #include <setting-debug.h>
 #include <dlog.h>
-#include <recorder.h>
 #include <app_manager.h>
 
 /*#include <ckmc/ckmc-control.h> */
@@ -146,7 +145,6 @@ struct _SettingLocktypeUG {
 	Evas_Object *record_genlist;
 	Elm_Object_Item *screen_lock_main_item;
 	char *selected_lock_type;
-	recorder_h recorder_handle;
 
 	Evas_Object *ly_guild;
 	Evas_Object *ly_main;
