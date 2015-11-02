@@ -38,7 +38,6 @@
 #include <setting-common-draw-widget.h>
 #include <setting-common-view.h>
 #include <setting-debug.h>
-#include <recorder.h>
 #include <dlog.h>
 #include <net_connection.h>
 
@@ -301,7 +300,6 @@ struct _SettingSecurityUG {
 	Evas_Object *record_genlist;
 	Elm_Object_Item *screen_lock_main_item;
 	char *selected_lock_type;
-	recorder_h recorder_handle;
 
 	int viewtype;
 

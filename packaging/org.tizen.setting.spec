@@ -4,7 +4,7 @@
 
 Name:       org.tizen.setting
 Summary:    Setting application
-Version:    1.0.0
+Version:    1.0.1
 Release:    99
 Group:      misc
 License:    Apache-1.0
@@ -60,7 +60,6 @@ BuildRequires:  pkgconfig(cairo)
 BuildRequires:  pkgconfig(capi-system-runtime-info)
 BuildRequires:  pkgconfig(capi-media-player)
 BuildRequires:  pkgconfig(capi-media-sound-manager)
-BuildRequires:  pkgconfig(capi-media-recorder)
 BuildRequires:  pkgconfig(capi-content-media-content)
 BuildRequires:  pkgconfig(capi-system-device)
 BuildRequires:  pkgconfig(capi-appfw-application)
@@ -86,7 +85,6 @@ BuildRequires:  pkgconfig(deviced)
 BuildRequires:  pkgconfig(badge)
 BuildRequires:  pkgconfig(efl-extension)
 BuildRequires:  pkgconfig(sqlite3)
-BuildRequires:  pkgconfig(capi-media-camera)
 BuildRequires:  pkgconfig(notification)
 BuildRequires:	pkgconfig(app2sd)
 BuildRequires:	pkgconfig(capi-media-image-util)
