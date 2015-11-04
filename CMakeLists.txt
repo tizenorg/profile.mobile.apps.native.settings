@@ -62,7 +62,7 @@ SET(SETTING_FLIGHTMODE_UG setting-flightmode-efl)
 SET(LIB_SETTING_COMMON setting-common)
 
 
-#SET(GC_SECTIONS_FLAGS "-fdata-sections -ffunction-sections -Wl,--gc-sections -Werror-implicit-function-declaration -Wparentheses -feliminate-unused-debug-types -pipe -Wall -Wp, -D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -Wformat -Wformat-security -fmessage-length=0 -fdiagnostics-color=never -Wno-deprecated-declarations")
+#SET(GC_SECTIONS_FLAGS "-fdata-sections -ffunction-sections -Wl,--gc-sections -Werror-implicit-function-declaration -Wparentheses -feliminate-unused-debug-types -pipe -Wall -Wp, -D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -Wformat -Wformat-security -fmessage-length=0 -fdiagnostics-color=never -Wno-deprecated-declarations -Werror-implicit-function-declaration")
 SET(GC_SECTIONS_FLAGS "-fdata-sections -ffunction-sections -Wl,--gc-sections")
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${GC_SECTIONS_FLAGS}")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GC_SECTIONS_FLAGS}")

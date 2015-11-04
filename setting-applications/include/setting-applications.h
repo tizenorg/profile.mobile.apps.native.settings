@@ -239,7 +239,6 @@ extern setting_view setting_view_applications_defaultapp;
 
 void setting_applications_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode, void *priv);
 
-extern int setting_applications_set_auto_adjust_tone(int value);
 Eina_Bool __show_smartstay_guide_popup(void *data);
 Eina_Bool __show_smartrotation_guide_popup(void *data);
 
