@@ -445,43 +445,6 @@ static DBusMessage *__invoke_dbus_method(const char *dest, const char *path,
 	return reply;
 }
 
-int setting_display_set_auto_adjust_tone(int value)
-{
-	SETTING_TRACE_BEGIN;
-	if (value < 0 || value > 1) {
-		SETTING_TRACE_DEBUG("value has invalid range. [0 or 1]");
-		return SETTING_RETURN_FAIL;
-	}
-
-	int ret = 0;
-	int state;
-	DBusMessage *msg;
-	DBusError err;
-	char *arr[4] = {0,};
-	char temp[2] = {0,};
-
-	e_dbus_init();
-	dbus_error_init(&err);
-
-	snprintf(temp, 2, "%1d", value);
-	temp[1] = '\0';
-	SETTING_TRACE_DEBUG("set as [%s]", temp);
-	arr[0] = temp;
-	msg = __invoke_dbus_method(BUS_NAME, DEVICED_PATH_DISPLAY, DEVICED_INTERFACE_DISPLAY, "setautotone", "i", arr);
-	if (msg) {
-		if (!dbus_message_get_args(msg, &err, DBUS_TYPE_INT32, &state, DBUS_TYPE_INVALID)) {
-			SETTING_TRACE_DEBUG("no message : [%s:%s]", err.name, err.message);
-			ret = SETTING_RETURN_FAIL;
-		} else {
-			SETTING_TRACE_DEBUG("%s-%s : %d", DEVICED_INTERFACE_DISPLAY, "setautotone", state);
-		}
-		dbus_message_unref(msg);
-	}
-	e_dbus_shutdown();
-
-	return ret;
-}
-
 void setting_display_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
                                   void *priv)
 {
