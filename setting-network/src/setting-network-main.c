@@ -1130,7 +1130,7 @@ static void _setting_network_popup_mobile_data_hide_cb(void *data, Evas_Object *
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
 
 	_setting_network_popup_mobile_data_rollback(ad);
-	elm_popup_dismiss(obj);
+//	elm_popup_dismiss(obj);
 }
 
 static void _setting_network_popup_data_roaming_hide_cb(void *data, Evas_Object *obj, void *event_info)
@@ -1141,7 +1141,7 @@ static void _setting_network_popup_data_roaming_hide_cb(void *data, Evas_Object 
 
 	/* rollback */
 	_setting_network_popup_data_roaming_rollback(ad);
-	elm_popup_dismiss(obj);
+	//elm_popup_dismiss(obj);
 }
 
 

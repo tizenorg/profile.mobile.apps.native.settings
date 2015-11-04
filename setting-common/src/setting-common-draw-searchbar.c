@@ -136,20 +136,20 @@ static void ___searchbar_input_panel_event_cb(void *data, Ecore_IMF_Context *ctx
 static void
 _popup_block_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	elm_popup_dismiss(obj);
+	//elm_popup_dismiss(obj);
 }
 
 static void
 _popup_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	Evas_Object *popup = data;
-	elm_popup_dismiss(popup);
+//	elm_popup_dismiss(popup);
 }
 
 static void
 _popup_hide_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	elm_popup_dismiss(obj);
+	//elm_popup_dismiss(obj);
 }
 
 static void
