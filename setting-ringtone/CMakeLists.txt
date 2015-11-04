@@ -12,7 +12,7 @@ FOREACH(flag ${pkgs_ringtone_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
 ENDFOREACH(flag)
 
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS} -fPIC")
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS} -fPIC -Werror-implicit-function-declaration")
 SET(CMAKE_C_FLAGS_DEBUG "-O0 -g")
 SET(CMAKE_LDFLAGS "-Wl,-z,nodelete")
 
