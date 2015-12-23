@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns="http://tizen.org/ns/packages" package="org.tizen.setting" version="0.9.5" install-location="internal-only">
+<manifest xmlns="http://tizen.org/ns/packages" package="org.tizen.setting" api-version="2.4" version="0.9.5" install-location="internal-only">
 	<label>Settings</label>
 	<author email="mj2004.park@samsung.com" href="www.samsung.com">MyoungJune Park</author>
 	<description>Setting Application</description>
