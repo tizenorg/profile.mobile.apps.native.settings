@@ -29,25 +29,32 @@
 #include <unistd.h>
 #include <vconf.h>
 
-#define CFG_FILE_DIR_PATH	setting_cfg_get_dir_path()
-#define CFG_FILE_PATH		setting_cfg_get_path()
-
 JsonParser *parser;
 JsonNode   *root; /* category_list */
+static char *cfg_dir_path = NULL;
+static char *cfg_file_path = NULL;
 
 EXPORT_PUBLIC
 char *setting_cfg_get_dir_path()
 {
-	return app_get_data_path();
+	if (!cfg_dir_path)
+		cfg_dir_path = app_get_data_path();
+	return cfg_dir_path;
 }
 
 EXPORT_PUBLIC
 char *setting_cfg_get_path()
 {
-	char* path = app_get_data_path();
-	char string[1024];
-	sprintf(string, "%s%s", path, "setting.cfg");
-	return strdup(string);
+	if (!cfg_file_path) {
+		char* path = setting_cfg_get_dir_path();
+		if (!path) {
+			return NULL;
+		}
+		char string[PATH_MAX];
+		snprintf(string, PATH_MAX - 1, "%s%s", path, "setting.cfg");
+		cfg_file_path = strdup(string);
+	}
+	return cfg_file_path;
 }
 
 int setting_cfg_file_write(JsonNode *node);
@@ -431,7 +438,7 @@ int setting_cfg_file_read(void)
 {
 	struct stat sb;
 	memset(&sb, 0, sizeof(struct stat));
-	int r = stat(CFG_FILE_PATH, &sb);
+	int r = stat(setting_cfg_get_path(), &sb);
 	if (0 != r) {
 		SETTING_TRACE("ERROR, r:%d", r);
 	}
@@ -440,8 +447,8 @@ int setting_cfg_file_read(void)
 	parser = json_parser_new();  /* to be freed on exit */
 	/* file -> parser */
 	GError *error = NULL;
-	/*gboolean ret = json_parser_load_from_file( parser, CFG_FILE_PATH, &error ); */
-	if (!sb.st_size || FALSE == json_parser_load_from_file(parser, CFG_FILE_PATH, &error)) {
+	/*gboolean ret = json_parser_load_from_file( parser, setting_cfg_get_path(), &error ); */
+	if (!sb.st_size || FALSE == json_parser_load_from_file(parser, setting_cfg_get_path(), &error)) {
 		if (error)
 			SETTING_TRACE_ERROR("error->message:%s", (char *)(error->message));
 		/*return FALSE; */
@@ -455,10 +462,10 @@ int setting_cfg_file_read(void)
 		                    "script, it means setting.cfg is damaged (the "\
 		                    "formatting ia abnormal), we need to remove the"\
 		                    " file and recreate in next running time!",
-		                    CFG_FILE_PATH);
+		                    setting_cfg_get_path());
 
 		SETTING_TRACE("Trying to removing the damaged file.");
-		if (remove(CFG_FILE_PATH) != 0) {
+		if (remove(setting_cfg_get_path()) != 0) {
 			SETTING_TRACE_ERROR("Error to remove the damaged file");
 			return FALSE;
 		}
@@ -486,7 +493,7 @@ int setting_cfg_file_write(JsonNode *node)
 	JsonGenerator *generator = json_generator_new();
 	json_generator_set_root(generator, node);
 	g_object_set(generator, "pretty", TRUE, NULL);   /*write file in indent format */
-	gboolean ret = json_generator_to_file(generator, CFG_FILE_PATH, &error);
+	gboolean ret = json_generator_to_file(generator, setting_cfg_get_path(), &error);
 	g_object_unref(generator);
 
 	/* ***BEGIN***  DAC black screen SAMSUNG 2010/8/9 add
@@ -494,7 +501,7 @@ int setting_cfg_file_write(JsonNode *node)
 	 *chown -R inhouse:inhouse /home/inhouse/setting.cfg
 	 */
 	if (FALSE == ret) {
-		SETTING_TRACE_ERROR("Error writing file %s!", CFG_FILE_PATH);
+		SETTING_TRACE_ERROR("Error writing file %s!", setting_cfg_get_path());
 		return FALSE;
 	}
 	return TRUE;
@@ -504,9 +511,12 @@ int setting_cfg_file_write(JsonNode *node)
 EXPORT_PUBLIC
 int setting_cfg_init(void)
 {
-	if (!access(CFG_FILE_PATH, R_OK | W_OK | F_OK)) { /* succeed to access */
+	if (!setting_cfg_get_path()) {
+		return Cfg_Error_Type_OutOfMemory;
+	}
+	if (!access(setting_cfg_get_path(), R_OK | W_OK | F_OK)) { /* succeed to access */
 		if (!setting_cfg_file_read()) { /* return FALSE */
-			if (remove(CFG_FILE_PATH)) {
+			if (remove(setting_cfg_get_path())) {
 				return Cfg_Error_Type_RemoveCfg_Failed;
 			}
 			return Cfg_Error_Type_ReadCfg_Failed;
@@ -517,10 +527,10 @@ int setting_cfg_init(void)
 		switch (errno) {
 				/* file non-existing case */
 			case ENOENT:
-				SETTING_TRACE_ERROR("non-existing [%s]", CFG_FILE_PATH);
-				if (!ecore_file_is_dir(CFG_FILE_DIR_PATH)) {
-					SETTING_TRACE_ERROR("non-existing [%s]", CFG_FILE_DIR_PATH);
-					Eina_Bool flag = ecore_file_mkdir(CFG_FILE_DIR_PATH);
+				SETTING_TRACE_ERROR("non-existing [%s]", setting_cfg_get_path());
+				if (!ecore_file_is_dir(setting_cfg_get_dir_path())) {
+					SETTING_TRACE_ERROR("non-existing [%s]", setting_cfg_get_dir_path());
+					Eina_Bool flag = ecore_file_mkdir(setting_cfg_get_dir_path());
 					if (flag == EINA_FALSE) {
 						SETTING_TRACE_ERROR(">failed to create dir");
 					} else {
@@ -535,7 +545,7 @@ int setting_cfg_init(void)
 
 				if (!setting_cfg_file_read()) { /* return FALSE */
 					SETTING_TRACE_ERROR("Error to read config file");
-					if (remove(CFG_FILE_PATH)) {
+					if (remove(setting_cfg_get_path())) {
 						return Cfg_Error_Type_RemoveCfg_Failed;
 					}
 					return Cfg_Error_Type_ReadCfg_Failed;
@@ -554,13 +564,21 @@ int setting_cfg_init(void)
 EXPORT_PUBLIC
 void setting_cfg_exit(void)
 {
+	free(cfg_dir_path);
+	free(cfg_file_path);
+	cfg_dir_path = NULL;
+	cfg_file_path = NULL;
 	g_object_unref(parser);
 }
 
 EXPORT_PUBLIC
 int setting_cfg_file_update(void)
 {
-	if (access(CFG_FILE_PATH, W_OK | F_OK) != 0) {
+	free(cfg_dir_path);
+	free(cfg_file_path);
+	cfg_dir_path = NULL;
+	cfg_file_path = NULL;
+	if (access(setting_cfg_get_path(), W_OK | F_OK) != 0) {
 		return FALSE;
 	}
 	return setting_cfg_file_write(root);
@@ -586,7 +604,7 @@ int setting_cfg_migrate(void)
 	/*1. read old cfg file */
 	struct stat sb;
 	memset(&sb, 0, sizeof(struct stat));
-	int r = stat(CFG_FILE_PATH, &sb);
+	int r = stat(setting_cfg_get_path(), &sb);
 	if (0 != r) {
 		SETTING_TRACE("ERROR, r:%d", r);
 	}
@@ -594,13 +612,13 @@ int setting_cfg_migrate(void)
 
 	parser = json_parser_new();
 	GError *error = NULL;
-	if (!sb.st_size || FALSE == json_parser_load_from_file(parser, CFG_FILE_PATH, &error)) {
+	if (!sb.st_size || FALSE == json_parser_load_from_file(parser, setting_cfg_get_path(), &error)) {
 		if (error)
 			SETTING_TRACE_ERROR("error->message:%s", (char *)(error->message));
 
 		/*if read old cfg file unseccessfully, remove it */
 		SETTING_TRACE("Read old cfg fail, Trying to remove it");
-		if (remove(CFG_FILE_PATH) != 0) {
+		if (remove(setting_cfg_get_path()) != 0) {
 			SETTING_TRACE_ERROR("Error to remove the damaged file");
 		}
 		/*re-create cfg file */
@@ -1079,12 +1097,12 @@ app_control_h get_bundle_from_ug_args(void *data)
 EXPORT_PUBLIC void setting_cfg_dump_basic_info()
 {
 #if 1
-	bool fileExit = (0 == access(CFG_FILE_PATH, R_OK | W_OK | F_OK));
-	SETTING_TRACE("%s's exist:%d", CFG_FILE_PATH, fileExit);
+	bool fileExit = (0 == access(setting_cfg_get_path(), R_OK | W_OK | F_OK));
+	SETTING_TRACE("%s's exist:%d", setting_cfg_get_path(), fileExit);
 
 	struct stat sb;
 	memset(&sb, 0, sizeof(struct stat));
-	int r = stat(CFG_FILE_PATH, &sb);
+	int r = stat(setting_cfg_get_path(), &sb);
 	if (0 != r) {
 		SETTING_TRACE("ERROR, r:%d", r);
 	}
