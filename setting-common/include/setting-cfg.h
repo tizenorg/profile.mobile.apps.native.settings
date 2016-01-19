@@ -64,6 +64,7 @@ typedef enum _cfg_error_type {
     Cfg_Error_Type_ReadCfg_Failed = -4,
     Cfg_Error_Type_DirPermissionDenied = -5,
     Cfg_Error_Type_FilePermissionDenied = -6,
+    Cfg_Error_Type_OutOfMemory = -7,
 } Cfg_Error_Type;
 
 

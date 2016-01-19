@@ -270,7 +270,7 @@ static bool setting_main_app_create(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	LAUNCH_SETTING_IN();
-	SETTING_TRACE_DEBUG("[TIME] 3. it taked %d msec from main to setting_main_app_create ", appcore_measure_time());
+	SETTING_TRACE_DEBUG("[TIME] 3. it took %d msec from main to setting_main_app_create ", appcore_measure_time());
 	appcore_measure_start();
 
 	/*elm_config_accel_preference_set("3d"); */
@@ -368,6 +368,10 @@ static bool setting_main_app_create(void *data)
 				}
 			case Cfg_Error_Type_FilePermissionDenied: {
 					notifyStr = _("config file permission denied");
+					break;
+				}
+			case Cfg_Error_Type_OutOfMemory: {
+					notifyStr = _("out of memory");
 					break;
 				}
 			default: {
