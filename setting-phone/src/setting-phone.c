@@ -38,6 +38,9 @@
 
 #include <system_settings.h>
 
+#include <config_system_table.h>
+#include <config_table.h>
+
 #ifndef UG_MODULE_API
 #define UG_MODULE_API __attribute__ ((visibility("default")))
 #endif
@@ -966,14 +969,18 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
 
 int set_language_helper(const char *lang)
 {
-	int ret = system_settings_set_value_string(
-			SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, lang);
+//	int ret = system_settings_set_value_string(
+//			SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, lang);
+	SETTING_TRACE_BEGIN;
+	int ret = get_language_list_version_set("language", lang);
 	return ret;
 }
 
 int set_regionformat_helper(const char *region)
 {
-	int ret = system_settings_set_value_string(
-			SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, region);
+//	int ret = system_settings_set_value_string(
+//			SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, region);
+
+	int ret = get_language_list_version_set("region", region);
 	return ret;
 }

@@ -38,6 +38,10 @@
 
 #include <sqlite3.h>
 
+#include <config_system_table.h>
+#include <config_table.h>
+
+
 static int setting_main_create(void *cb);
 static int setting_main_destroy(void *cb);
 static int setting_main_update(void *cb);
@@ -392,6 +396,75 @@ Evas_Object *setting_main_layout_conform_create(Evas_Object *win_layout,
 	return layout;
 }
 
+static void tcf_iterator_langlist(int id ,void* val, void* data)
+{
+	SETTING_TRACE_BEGIN;
+	SETTING_TRACE(" language[%d] : %s ", id, (char*)val);
+}
+
+static int test(void* data)
+{
+	setting_main_appdata *ad = (setting_main_appdata *) data;
+#if 0
+	// network module
+	SETTING_TRACE("--------------------------------------------");
+	SETTING_TRACE("--> %s ", airplane_mode_on_get("net_key"));
+	SETTING_TRACE("--------------------------------------------");
+	airplane_mode_on_set("net_key", "net_key_value");
+
+	// complex module
+	SETTING_TRACE("--------------------------------------------");
+	SETTING_TRACE("--> %s ", get_complex_string_get("key****complex"));
+	SETTING_TRACE("--------------------------------------------");
+
+	// simple module
+	get_simple_text_get("simple****text");
+	SETTING_TRACE("--------------------------------------------\n");
+	SETTING_TRACE("--> %s ", get_sw_version_get("TEST-replacing-aplugin"));
+	SETTING_TRACE("--------------------------------------------");
+
+	// xml module
+	get_info_from_xml_get("world---hello");
+
+	// dbus module
+	SETTING_TRACE("--------------------------------------------");
+	SETTING_TRACE("--> %s ", get_info_from_dbus_get("dbus_key"));
+	SETTING_TRACE("--------------------------------------------");
+	SETTING_TRACE("--> %s ", get_info_from_dbus_set("dbus_key", "dbus_value"));
+	SETTING_TRACE("--------------------------------------------");
+#endif
+	// get_sw_version_get
+	SETTING_TRACE("--------------------------------------------\n");
+	SETTING_TRACE("--> %s ", get_sw_version_get("TEST-replacing-aplugin"));
+	SETTING_TRACE("--------------------------------------------");
+
+	// get_int_version_get
+	SETTING_TRACE("--------------------------------------------\n");
+	SETTING_TRACE("--> INT GET %d ", get_int_version_get("TEST-int-aplugin"));
+	SETTING_TRACE("--> INT SET %d ", get_int_version_set("TEST-int-aplugin", 100));
+	SETTING_TRACE("--------------------------------------------");
+	SETTING_TRACE("--> BOOL GET %d ", get_bool_version_get("TEST-bool-aplugin"));
+	SETTING_TRACE("--> BOOL SET %d ", get_bool_version_set("TEST-bool-aplugin", true));
+	SETTING_TRACE("--------------------------------------------");
+	SETTING_TRACE("--> FLOAT GET %d ", get_float_version_get("TEST-float-aplugin"));
+	SETTING_TRACE("--> FLOAT SET %d ", get_float_version_set("TEST-float-aplugin", 3.14));
+	SETTING_TRACE("--------------------------------------------");
+
+	SETTING_TRACE("--------------------------------------------");
+	char* lang = get_language_list_version_get("TEST-langlist-aplugin");
+	SETTING_TRACE("--> LANGUAGE GET %s ", lang);
+	FREE(lang);
+	SETTING_TRACE("--------------------------------------------");
+	get_language_list_version_list("locale", tcf_iterator_langlist, ad);
+	SETTING_TRACE("--------------------------------------------");
+	get_language_list_version_list("language", tcf_iterator_langlist, ad);
+	SETTING_TRACE("--------------------------------------------");
+
+  return 0;
+}
+
+
+
 /**
  * @brief create all view layout
  *
@@ -447,6 +520,7 @@ static int setting_main_create(void *cb)
 		elm_object_part_content_set(view_layout, "elm.swallow.content", all_list);
 
 	}
+	test(ad);
 
 	setting_view_main.is_create = 1;
 	LAUNCH_SETTING_OUT();
@@ -529,11 +603,4 @@ static int setting_main_cleanup(void *cb)
 
 	return SETTING_RETURN_SUCCESS;
 }
-
-/* ***************************************************
- *
- *general func
- *
- ***************************************************/
-/*///////////////////////////////////////////////////////////////////////// */
 
