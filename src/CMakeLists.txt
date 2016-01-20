@@ -29,6 +29,7 @@ pkg_check_modules(pkgs_main REQUIRED
 					  capi-media-image-util
 					  efl-extension
 					  callmgr_client
+					  tizen-config-fw
 				  )
 
 FOREACH(flag ${pkgs_main_CFLAGS})

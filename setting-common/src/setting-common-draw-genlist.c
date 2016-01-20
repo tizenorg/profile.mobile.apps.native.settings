@@ -1635,7 +1635,7 @@ static Evas_Object *_gl_Gendial_new_content_get(void *data, Evas_Object *obj,
 	__Content_Drawer *cd_list = NULL;
 	__drawer_fp fp = NULL;
 
-#if 1
+#if 0
 	SETTING_TRACE(" ------------> content get [%s]",part);
 #endif
 	if (!safeStrCmp(part, "elm.swallow.icon")) { /* LEFT AREA */

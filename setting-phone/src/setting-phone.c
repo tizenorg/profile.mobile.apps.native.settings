@@ -37,7 +37,10 @@
 #include <setting-cfg.h>
 
 #include <eventsystem.h>
-#include <system_settings.h>
+
+#include <config_system_table.h>
+#include <config_table.h>
+
 
 #ifndef UG_MODULE_API
 #define UG_MODULE_API __attribute__ ((visibility("default")))
@@ -815,31 +818,15 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv, 
 
 int set_language_helper(char *lang)
 {
-	#if 0
-	int ret = vconf_set_str(VCONFKEY_LANGSET, lang);
-	if (ret == 0) {
-		/* on success */
-		/* set event system */
-		setting_set_event_system(SYS_EVENT_LANGUAGE_SET, EVT_KEY_LANGUAGE_SET, lang);
-	}
-	#else
-	int ret = system_settings_set_value_string(SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, lang);
-	#endif
+	SETTING_TRACE_BEGIN;
+	int ret = get_language_list_version_set("language", lang);
 	return ret;
 }
 
 int set_regionformat_helper(char *region)
 {
 
-	#if 0
-	int ret = vconf_set_str(VCONFKEY_REGIONFORMAT, region);
-	if (ret == 0) {
-		/* set event system */
-		setting_set_event_system(SYS_EVENT_REGION_FORMAT, EVT_KEY_REGION_FORMAT, region);
-	}
-	#else
-	int ret = system_settings_set_value_string(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, region);
-	#endif
+	int ret = get_language_list_version_set("region", region);
 	return ret;
 }
 

@@ -22,7 +22,8 @@
 #include <setting-common-draw-widget.h>
 #include <eventsystem.h>
 
-#include <system_settings.h>
+#include <config_system_table.h>
+#include <config_table.h>
 
 #define MAX_REGION_STRLEN 256
 
@@ -1096,13 +1097,15 @@ static int setting_phone_region_format_create(void *cb)
 
 	/* SET SEARCHBAR AREA SIZE */
 	int value = 0;
-	ret = system_settings_get_value_int(SYSTEM_SETTINGS_KEY_FONT_SIZE, &value);
-
+	//ret = system_settings_get_value_int(SYSTEM_SETTINGS_KEY_FONT_SIZE, &value);
+	value = get_font_size_version_get("fontsize");
+#if 0
 	if (value == SYSTEM_SETTINGS_FONT_SIZE_GIANT) {
 		elm_object_signal_emit(ad->search_bar, "set,show,giant", "*");
 	} else {
 		elm_object_signal_emit(ad->search_bar, "set,show,normal", "*");
 	}
+#endif
 
 	elm_object_part_content_set(sub_layout, "elm.swallow.content", ad->gl_region);
 

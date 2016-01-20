@@ -23,6 +23,7 @@
 #include <setting-common-draw-widget.h>
 #include <eventsystem.h>
 
+
 static int setting_phone_display_language_create(void *cb);
 static int setting_phone_display_language_destroy(void *cb);
 static int setting_phone_display_language_cleanup(void *cb);
@@ -129,14 +130,12 @@ static void setting_phone_display_language_close_popup_ex(void *data)
 		/* [control] set vconf language */
 		if (ad->sim_lang != NULL) {
 			set_language_helper(ad->sim_lang);
-			/*vconf_set_str(VCONFKEY_LANGSET, ad->sim_lang); */
 			elm_language_set(ad->sim_lang);
 			SETTING_TRACE_DEBUG("select Automatic : sim_lang is %s", ad->sim_lang);
 		}
 	} else {
 		/* create loop operation here */
 		Eina_List *elist = NULL;
-		/*Eina_List* tmplist = NULL; */
 		setting_lang_entry *pnode = NULL;
 
 		/* load language table from XML file */
