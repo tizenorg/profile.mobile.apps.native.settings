@@ -22,6 +22,11 @@
 
 #include <setting-common-draw-widget.h>
 
+#include <config_system_table.h>
+#include <config_table.h>
+
+
+
 static int setting_phone_display_language_create(void *cb);
 static int setting_phone_display_language_destroy(void *cb);
 static int setting_phone_display_language_cleanup(void *cb);
@@ -119,7 +124,6 @@ static void setting_phone_display_language_close_popup_ex(void *data)
 		/* [control] set vconf language */
 		if (ad->sim_lang != NULL) {
 			set_language_helper(ad->sim_lang);
-			/*vconf_set_str(VCONFKEY_LANGSET, ad->sim_lang); */
 			elm_language_set(ad->sim_lang);
 			SETTING_TRACE_DEBUG("select Automatic : sim_lang is %s",
 					ad->sim_lang);
@@ -127,7 +131,6 @@ static void setting_phone_display_language_close_popup_ex(void *data)
 	} else {
 		/* create loop operation here */
 		Eina_List *elist = NULL;
-		/*Eina_List* tmplist = NULL; */
 		setting_lang_entry *pnode = NULL;
 
 		/* load language table from XML file */
@@ -266,6 +269,26 @@ static void setting_phone_display_language_mouse_up_Gendial_list_radio_cb(
  *
  ***************************************************/
 
+static void tcf_iterator_langlist(int id ,void* val, void* data)
+{
+	SettingPhoneUG *ad = (SettingPhoneUG *)data;
+
+	SETTING_TRACE_BEGIN;
+	SETTING_TRACE(" language[%d] : %s ", id, (char*)val);
+
+	Setting_GenGroupItem_Data *item_data = NULL;
+	item_data = setting_create_Gendial_field_def(ad->gl_lang,
+			&(ad->itc_1text), setting_phone_display_language_mouse_up_Gendial_list_radio_cb, ad,
+			SWALLOW_Type_INVALID, NULL, NULL,
+			0, (char*)val, NULL, NULL);
+	if (item_data) {
+		item_data->userdata = ad;
+	} else {
+		SETTING_TRACE_ERROR("item_data is NULL");
+	}
+}
+
+
 /**
  * @brief Callback of view creating
  *
@@ -329,31 +352,13 @@ static int setting_phone_display_language_create(void *cb)
 	elm_radio_state_value_set(ad->chk_lang, -1);
 
 	/* create loop operation here */
-	Eina_List *elist = NULL;
-	setting_lang_entry *pnode = NULL;
-	int idx = SETTING_LANG_KOREA; /* 2 */
-	int item_idx = 0;
-	Setting_GenGroupItem_Data *item_data = NULL;
+	//setting_lang_entry *pnode = NULL;
 
 	/* load language table from XML file */
-	Eina_List *langlist = setting_get_language_list();
-
-	EINA_LIST_FOREACH(langlist, elist, pnode)
-	{
-		item_data = setting_create_Gendial_field_def(scroller,
-				&(ad->itc_1text), gl_sel_cb, ad,
-				SWALLOW_Type_INVALID, NULL, NULL,
-				/*idx,			// <<< WARNING */
-				0, pnode->title, NULL, NULL);
-		if (item_data) {
-			item_data->userdata = ad;
-			item_idx++;
-			/*last_item = item_data; */
-		} else {
-			SETTING_TRACE_ERROR("item_data is NULL");
-		}
-		idx++;
-	}
+	//Eina_List *langlist = setting_get_language_list();
+	SETTING_TRACE("--------------------------------------------");
+	get_language_list_version_list("language", tcf_iterator_langlist, ad);
+	SETTING_TRACE("--------------------------------------------");
 
 	setting_view_phone_display_language.is_create = 1;
 

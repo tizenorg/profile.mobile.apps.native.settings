@@ -30,6 +30,7 @@ pkg_check_modules(pkgs_main REQUIRED
 					  efl-extension
 					  callmgr_client
 					  libtzplatform-config
+					  tizen-config-fw
 				  )
 
 FOREACH(flag ${pkgs_main_CFLAGS})

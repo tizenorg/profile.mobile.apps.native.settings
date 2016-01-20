@@ -22,6 +22,8 @@
 #include <setting-common-draw-widget.h>
 
 #include <system_settings.h>
+#include <config_system_table.h>
+#include <config_table.h>
 
 #define MAX_REGION_STRLEN 256
 
