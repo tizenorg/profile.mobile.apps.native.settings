@@ -94,6 +94,7 @@ BuildRequires:  pkgconfig(eventsystem)
 BuildRequires:  pkgconfig(bundle)
 BuildRequires:  pkgconfig(notification)
 BuildRequires:  pkgconfig(callmgr_client)
+BuildRequires:  pkgconfig(tizen-config-fw)
 #BuildRequires:	pkgconfig(capi-location-manager)
 BuildRequires:  libcap-devel
 BuildRequires:  cmake
