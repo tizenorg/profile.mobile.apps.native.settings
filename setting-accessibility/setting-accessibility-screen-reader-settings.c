@@ -89,7 +89,10 @@ static Eina_Bool _vconf_key_value_get(char *key)
 	retvm_if(!key, EINA_FALSE, "Key is NULL");
 	int value = 0;
 	int ret = vconf_get_bool(key, &value);
-	/*	retvm_if(ret != 0, false, "Invalid argument: data is NULL"); */
+	if (ret != 0) {
+		LOGE("Failed to get vconf bool value %s. Error: %d", key, ret);
+		return EINA_FALSE;
+	}
 	return (value != 0);
 }
 
@@ -255,7 +258,7 @@ void setting_accessibility_screen_reader_settings_page_create(SettingAccessibili
 {
 	SettingAccessibilityUG *ad = (SettingAccessibilityUG *) data;
 	Evas_Object *genlist = elm_genlist_add(ad->navi_bar);
-	retvm_if(genlist == NULL, NULL, "Cannot set genlist object as content of layout");
+	retm_if(genlist == NULL, "Cannot set genlist object as content of layout");
 	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
 	elm_object_style_set(genlist, "dialogue");
 	elm_genlist_clear(genlist);

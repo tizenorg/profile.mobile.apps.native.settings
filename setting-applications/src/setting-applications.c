@@ -42,10 +42,6 @@ setting_view *__get_applications_view_to_load(void *data, app_control_h service)
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if((!data), NULL, "!data");
 
-	SettingApplicationsUG *applicationsUG = (SettingApplicationsUG *)data;
-	char *viewtype = NULL;
-	char *uri = NULL;
-
 	setting_view_node_table_register(&setting_view_applications_main, NULL);
 	setting_view_node_table_register(&setting_view_applications_defaultapp, &setting_view_applications_main);
 	return &setting_view_applications_main;
@@ -126,18 +122,16 @@ static void setting_applications_ug_on_pause(ui_gadget_h ug, app_control_h servi
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
-	SettingApplicationsUG *applicationsUG = priv;
 }
 
 static void setting_applications_ug_on_resume(ui_gadget_h ug, app_control_h service,
                                               void *priv)
 {
 	SETTING_TRACE_BEGIN;
-	setting_retvm_if((!priv), NULL, "!priv");
-
-	SettingApplicationsUG *applicationsUG = priv;
+	setting_retm_if((!priv), "!priv");
 
 #if 0
+	SettingApplicationsUG *applicationsUG = priv;
 	if (applicationsUG->data_home) {
 		char *appid = vconf_get_str(VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME);
 		char *sub_desc = setting_application_get_defaultapp_name(appid);
@@ -280,7 +274,7 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 #define DEVICED_INTERFACE_DISPLAY   INTERFACE_NAME".applications"
 #define DBUS_REPLY_TIMEOUT 			(120 * 1000)
 
-static int __append_param(DBusMessage *msg, const char *sig, char *param[])
+static UNUSED int __append_param(DBusMessage *msg, const char *sig, char *param[])
 {
 	DBusMessageIter iter;
 	/*DBusMessageIter cont_iter; */

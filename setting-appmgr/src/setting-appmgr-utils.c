@@ -21,6 +21,8 @@
 /*#include <data_usage.h> */
 #include <app_manager.h>
 #include <app_manager_extension.h>
+#include <pkgmgr-info.h>
+//#include <package_manager.h>
 
 #include "setting-appmgr-main.h"
 #include "setting-appmgr-runinfo.h"
@@ -497,9 +499,9 @@ int appmgrUg_get_listinfos(SettingAppMgrUG *ad)
 	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_appinfo_filter_create() Fail(%d)", ret);
 
 	ret = pkgmgrinfo_pkginfo_filter_add_bool(filter_handle,
-	                                         PMINFO_PKGINFO_PROP_PACKAGE_DISABLE, EINA_TRUE);
+	                                         PMINFO_PKGINFO_PROP_PACKAGE_SUPPORT_DISABLE, EINA_TRUE);
 
-	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_appinfo_filter_add_bool() Fail(%d)", ret);
+	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_filter_add_bool() Fail(%d)", ret);
 
 	ret = pkgmgrinfo_pkginfo_filter_foreach_pkginfo(filter_handle,
 	                                                appmgrUg_get_disable_pkg_list_iter, &pkg_list);
@@ -540,7 +542,7 @@ int appmgrUg_get_listinfos(SettingAppMgrUG *ad)
 
 	APPMGRUG_STOP_POINT;
 
-	ret = pkgmgr_client_listen_status(ad->pc_all_size, appmgrUg_get_all_pkg_size, ad);
+	ret = pkgmgr_client_listen_status(ad->pc_all_size, (pkgmgr_handler)appmgrUg_get_all_pkg_size, ad);
 	if (ret < 0) {
 		SETTING_TRACE_ERROR("pkgmgr_client_listen_status() Fail(%d)", ret);
 		pkgmgr_client_free(ad->pc_all_size);
@@ -550,8 +552,10 @@ int appmgrUg_get_listinfos(SettingAppMgrUG *ad)
 
 	APPMGRUG_STOP_POINT;
 
-	ret = pkgmgr_client_request_size_info();
-	warn_if(ret < 0, "pkgmgr_client_request_size_info() Fail", ret);
+	// TODO
+	// Find new api for Tizen 3.0
+	//ret = pkgmgr_client_request_size_info();
+	//warn_if(ret < 0, "pkgmgr_client_request_size_info() Fail", ret);
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -598,7 +602,7 @@ void appmgrUg_pkgmgr_subscribe(SettingAppMgrUG *ad)
 		return;
 	}
 
-	ret = pkgmgr_client_listen_status(ad->pc_main, appmgrUg_pkgmgr_changed_cb, ad);
+	ret = pkgmgr_client_listen_status(ad->pc_main, (pkgmgr_handler)appmgrUg_pkgmgr_changed_cb, ad);
 	if (ret < 0) {
 		SETTING_TRACE_ERROR("pkgmgr_client_listen_status() Fail(%d)", ret);
 		pkgmgr_client_free(ad->pc_main);

@@ -226,7 +226,7 @@ static int appmgrUg_run_create(void *data)
 
 	Elm_Object_Item *navi_item = setting_push_layout_navi_bar_genlist(ad->lo_parent, ad->win,
 	                                                                  MGRAPP_STR_ACTIVE_APP, NULL, NULL,
-	                                                                  appmgrUg_run_back_cb,
+	                                                                  (setting_call_back_func)appmgrUg_run_back_cb,
 	                                                                  NULL, ad, &ad->gl_run, ad->navi);
 	elm_naviframe_item_pop_cb_set(navi_item, appmgrUg_run_back_cb, ad);
 
