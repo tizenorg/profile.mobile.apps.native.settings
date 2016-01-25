@@ -21,9 +21,9 @@ pkg_check_modules(pkgs_appmgr REQUIRED
 		vconf
 		pkgmgr-info
 		efl-extension
-		efl-assist
 		app2sd
 		json-glib-1.0
+		privilege-info
 		capi-appfw-package-manager)
 
 FOREACH(flag ${pkgs_appmgr_CFLAGS})

@@ -72,12 +72,7 @@ void __setting_about_gl_realized_cb(void *data, Evas_Object *obj, void *event_in
 {
 	/*SETTING_TRACE_BEGIN; */
 	setting_retm_if(event_info == NULL, "invalid parameter: event_info is NULL");
-	Elm_Object_Item *item = (Elm_Object_Item *)event_info;
-	/*Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *)elm_object_item_data_get(item); */
-
-
 }
-
 
 /**
  * @brief popup response callback fuc.
@@ -1431,7 +1426,7 @@ static Eina_Bool __setting_about_name_view_key_down(void *data, int type, void *
 	}
 	return ECORE_CALLBACK_RENEW;
 }
-static Eina_Bool setting_about_name_focus_update_cb(const void *data)
+static Eina_Bool setting_about_name_focus_update_cb(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -1453,7 +1448,7 @@ static Eina_Bool setting_about_name_focus_update_cb(const void *data)
 /**
  * Setting > About > Device name > (new view) here
  */
-static void __setting_about_main_creat_name_view(data)
+static void __setting_about_main_creat_name_view(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -1462,7 +1457,7 @@ static void __setting_about_main_creat_name_view(data)
 
 	Evas_Object *scroller = NULL;
 	scroller = elm_genlist_add(ad->navi_bar);
-	setting_retm_if(scroller == NULL, "Cannot set scroller object  as contento of layout");
+	setting_retm_if(scroller == NULL, "Cannot set scroller object  as content of layout");
 	elm_genlist_clear(scroller);	/* first to clear list */
 	elm_genlist_mode_set(scroller, ELM_LIST_COMPRESS);
 	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb, NULL);
@@ -1481,7 +1476,7 @@ static void __setting_about_main_creat_name_view(data)
 	if (!item_data) {
 		FREE(pa_sub_desc);
 	}
-	setting_retvm_if(!item_data, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER, "calloc failed");
+	setting_retm_if(!item_data, "calloc failed");
 
 	item_data->keyStr = (char *)g_strdup(SETTING_ABOUT_DEVICE_NAME_STR);
 	item_data->sub_desc = (char *)g_strdup(pa_sub_desc);
@@ -2044,41 +2039,6 @@ int setting_about_main_generate_genlist(void *data)
 		ecore_timer_add(1, (Ecore_Task_Cb) setting_about_main_timer_update_cb, ad);
 
 	return SETTING_RETURN_SUCCESS;
-}
-
-
-/**
- * @brief TAPI response callback,get the SIM LOCK data
- *
- * @param handle the changed vconf key node.
- * @param result application data
- * @param data it is struct TelSimLockInfo_t,store SIM lock info
- * @param user_data application data
- *
- * @see tel_get_sim_lock_info
- */
-static void __on_pin_getlock_info(TapiHandle *handle, int result, void *data, void *user_data)
-{
-	SETTING_TRACE_BEGIN;
-	ret_if(data == NULL || user_data == NULL);
-	TelSimPinOperationResult_t sec_rt = result;
-	TelSimLockInfo_t *lock = data;
-	SettingAboutUG *ad = (SettingAboutUG *)user_data;
-
-	/*lock->lock_status = TAPI_SIM_LOCK_PERM_BLOCKED; //for UT */
-	SETTING_TRACE_DEBUG("sec_ret[%d]", sec_rt);
-	SETTING_TRACE_DEBUG("lock_status:%d", lock->lock_status);
-	if (TAPI_SIM_LOCK_PERM_BLOCKED == lock->lock_status) {
-		/*update sub description with "PUK is locked" */
-		if (ad->item_data_my_phone_number) {
-			G_FREE(ad->item_data_my_phone_number->sub_desc);
-			ad->item_data_my_phone_number->sub_desc = (char *)g_strdup(SETTING_ABOUT_PUK_LOCKED);
-			elm_object_item_data_set(ad->item_data_my_phone_number->item, ad->item_data_my_phone_number);
-			elm_genlist_item_update(ad->item_data_my_phone_number->item);
-		} else {
-			ad->need_update = TRUE;
-		}
-	}
 }
 
 /**

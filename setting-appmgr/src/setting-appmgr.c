@@ -58,7 +58,7 @@ static void _app_mgr_item_del(void *data, Evas_Object *obj)
 static void
 _main_gl_del_cb(void *data, Evas_Object *obj EINA_UNUSED)
 {
-	retv_if(data == NULL, NULL);
+	ret_if(NULL == data);
 	/*appmgr_listinfo *info = data; */
 	/*info->item = NULL; */
 }
