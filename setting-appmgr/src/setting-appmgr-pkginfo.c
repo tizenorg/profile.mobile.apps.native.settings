@@ -17,10 +17,8 @@
  *
  */
 #include <appsvc.h>
-#include <privilege_info.h>
-
-
 #include <package_manager.h>
+#include <privilege_information.h>
 
 #include "setting-appmgr-utils.h"
 #include "setting-appmgr-pkginfo-utils.h"
@@ -106,7 +104,6 @@ static inline void appmgrUg_pkg_append_storage(SettingAppMgrUG *ad)
 static inline void appmgrUg_pkg_append_cache(SettingAppMgrUG *ad)
 {
 	SETTING_TRACE_BEGIN;
-	GList *cur;
 	appmgr_pkginfo *info;
 	Setting_GenGroupItem_Data *item_data = NULL;
 	char desc[APPMGRUG_MAX_STR_LEN] = {0};
@@ -165,14 +162,19 @@ static inline void appmgrUg_pkg_append_default(SettingAppMgrUG *ad)
 	info = ad->pkginfo;
 
 	cur = info->appids;
+
+#if 0
 	while (cur) {
 		char *appid = cur->data;
 
-		if (appid && 1 == appsvc_is_defapp(appid))
-			break;
+//TODO
+// appsvc has bad api
+//		if (appid && 1 == appsvc_is_defapp(appid))
+//			break;
 
 		cur = cur->next;
 	}
+#endif
 
 	if (NULL == cur) {
 		SETTING_TRACE_ERROR("No defualt Application");
@@ -217,7 +219,9 @@ static inline void appmgrUg_pkg_append_website(SettingAppMgrUG *ad)
 static inline void appmgrUg_pkg_append_privilege(SettingAppMgrUG *ad)
 {
 	SETTING_TRACE_BEGIN;
+#if 0
 	int ret;
+#endif
 	appmgr_pkginfo *info;
 	//Elm_Object_Item *sep_it;
 	Setting_GenGroupItem_Data *title_itdata;
@@ -233,10 +237,13 @@ static inline void appmgrUg_pkg_append_privilege(SettingAppMgrUG *ad)
 	                                                      MGRAPP_STR_PRIVILEGE, NULL);
 
 	info->first_prv = NULL;
+#if 0
+  //Deprecated API
 	ret = privilege_info_foreach_privilege_group_list_by_pkgid(info->pkgid,
 	                                                           appmgrUg_pkg_get_privileges_grp_iter, ad);
-	warn_if(PRVMGR_ERR_NONE != ret,
+	warn_if(PRVINFO_ERROR_NONE != ret,
 	        "privilege_info_foreach_privilege_group_list_by_pkgid() Fail(%d)", ret);
+#endif
 
 	if (NULL == info->first_prv) {
 		SETTING_TRACE_ERROR("No privilege");
@@ -478,7 +485,8 @@ static int appmgrUg_pkg_create(void *data)
 
 	navi_it = setting_push_layout_navi_bar_genlist(ad->lo_parent, ad->win,
 	                                               MGRAPP_STR_APPLICATION_INFO, NULL, NULL,
-	                                               appmgrUg_pkg_back_cb, NULL, ad, &ad->gl_pkg, ad->navi);
+	                                               (setting_call_back_func)appmgrUg_pkg_back_cb,
+	                                               NULL, ad, &ad->gl_pkg, ad->navi);
 	elm_genlist_mode_set(ad->gl_pkg, ELM_LIST_COMPRESS);
 	elm_naviframe_item_pop_cb_set(navi_it, appmgrUg_pkg_back_cb, ad);
 

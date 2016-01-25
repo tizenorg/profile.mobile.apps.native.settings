@@ -21,9 +21,9 @@ pkg_check_modules(pkgs_appmgr REQUIRED
 		vconf
 		pkgmgr-info
 		efl-extension
-		efl-assist
 		app2sd
 		json-glib-1.0
+		privilege-info
 		capi-appfw-package-manager)
 
 FOREACH(flag ${pkgs_appmgr_CFLAGS})
@@ -43,6 +43,6 @@ ADD_DEFINITIONS("-DPREFIX=\"${CMAKE_INSTALL_PREFIX}\"")
 ADD_LIBRARY(${SETTING_MANAGE_APPS_UG} SHARED ${APPMGR_SRCS})
 TARGET_LINK_LIBRARIES(${SETTING_MANAGE_APPS_UG} ${LIB_SETTING_COMMON})
 TARGET_LINK_LIBRARIES(${SETTING_MANAGE_APPS_UG} ${pkgs_appmgr_LDFLAGS})
-TARGET_LINK_LIBRARIES(${SETTING_MANAGE_APPS_UG} security-privilege-manager)
+#TARGET_LINK_LIBRARIES(${SETTING_MANAGE_APPS_UG} security-privilege-manager)
 
 INSTALL(TARGETS ${SETTING_MANAGE_APPS_UG} DESTINATION ${PREFIX}/lib/ug)

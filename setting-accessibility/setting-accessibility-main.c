@@ -21,7 +21,6 @@
 
 #include "setting-accessibility-main.h"
 #include "setting-accessibility-screen-reader.h"
-#include "app_control.h"
 
 static int setting_accessibility_main_create(void *cb);
 static int setting_accessibility_main_destroy(void *cb);
@@ -35,13 +34,14 @@ setting_view setting_view_accessibility_main = {
 	.cleanup = setting_accessibility_main_cleanup,
 };
 
-static void setting_accessibility_screen_reader_key_change_vconf_cb(keynode_t *node, void *user_data)
+static void setting_accessibility_screen_reader_key_change_vconf_cb(keynode_t *key, void *user_data)
 {
 	SETTING_TRACE_BEGIN;
 	Setting_GenGroupItem_Data *screen_reader_item = user_data;
 	if (screen_reader_item->sub_desc)
 		free(screen_reader_item->sub_desc);
-	screen_reader_item->sub_desc = strdup(node->value.b ? _(DEVOPTION_STR_ACCESSIBILITY_SCREEN_READER_ON) : _(DEVOPTION_STR_ACCESSIBILITY_SCREEN_READER_OFF));
+	screen_reader_item->sub_desc = strdup(vconf_keynode_get_bool(key) ? _(DEVOPTION_STR_ACCESSIBILITY_SCREEN_READER_ON) : _(DEVOPTION_STR_ACCESSIBILITY_SCREEN_READER_OFF));
+
 	elm_genlist_item_update(screen_reader_item->item);
 
 	SETTING_TRACE_END;
@@ -156,7 +156,6 @@ static int setting_accessibility_main_destroy(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingAccessibilityUG *ad = (SettingAccessibilityUG *) cb;
 	setting_view_accessibility_main.is_create = 0;
 	SETTING_TRACE_END;
 	return SETTING_RETURN_SUCCESS;
@@ -168,7 +167,6 @@ static int setting_accessibility_main_update(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingAccessibilityUG *ad = (SettingAccessibilityUG *) cb;
 	SETTING_TRACE_END;
 	return SETTING_RETURN_SUCCESS;
 }
@@ -179,7 +177,6 @@ static int setting_accessibility_main_cleanup(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingAccessibilityUG *ad = (SettingAccessibilityUG *) cb;
 	SETTING_TRACE_END;
 	return SETTING_RETURN_SUCCESS;
 }

@@ -26,9 +26,9 @@ static void screen_reader_key_change_vconf_cb(keynode_t *node, void *user_data)
 {
 	SETTING_TRACE_BEGIN;
 	Setting_GenGroupItem_Data *screenReaderItem = user_data;
-	SETTING_TRACE_DEBUG("check_status: %i, node->value.i: %i", screenReaderItem->chk_status, node->value.i);
+	//SETTING_TRACE_DEBUG("check_status: %i, node->value.i: %i", screenReaderItem->chk_status, node->value.i);
 	/* I don't know why following code does not update check box to checked/unchecked */
-	setting_update_gl_item_chk_status(screenReaderItem, node->value.b ? 1 : 0);
+//	setting_update_gl_item_chk_status(screenReaderItem, node->value.b ? 1 : 0);
 	elm_genlist_item_update(screenReaderItem->item);
 	SETTING_TRACE_END;
 }
@@ -56,7 +56,6 @@ static void setting_accessibility_main_chk_screenreader_cb(void *data,
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
-	SettingAccessibilityUG *ad = list_item->userdata;
 
 	list_item->chk_status = elm_check_state_get(obj);   /* for genlist update status */
 
@@ -87,7 +86,6 @@ static void setting_accessibility_screenreader_mouse_up_Gendial_list_cb(void *da
 	retm_if(data == NULL, "Invalid argument: data is NULL");
 	retm_if(event_info == NULL, "Invalid argument: event_info is NULL");
 	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
-	SettingAccessibilityUG *ad = (SettingAccessibilityUG *)data;
 
 	elm_genlist_item_selected_set(item, 0);
 
@@ -102,7 +100,7 @@ void setting_accessibility_screen_reader_page_create(SettingAccessibilityUG *dat
 {
 	SettingAccessibilityUG *ad = (SettingAccessibilityUG *) data;
 	Evas_Object *genlist = elm_genlist_add(ad->navi_bar);
-	retvm_if(genlist == NULL, NULL, "Cannot set genlist object as content of layout");
+	retm_if(genlist == NULL, "Cannot set genlist object as content of layout");
 	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
 	elm_object_style_set(genlist, "dialogue");
 	elm_genlist_clear(genlist);
@@ -123,7 +121,7 @@ void setting_accessibility_screen_reader_page_create(SettingAccessibilityUG *dat
 											 screen_reader_key_change_vconf_cb, screenreader_checkbox);
 	if (vconf_ret != 0) {
 		SETTING_TRACE("FAIL: vconf_notify_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS)");
-		return SETTING_RETURN_FAIL;
+		return ;
 	}
 
 	Setting_GenGroupItem_Data *multiline_screen_reader_comment =
