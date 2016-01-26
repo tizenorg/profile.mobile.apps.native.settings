@@ -26,8 +26,6 @@
 #include <bundle_internal.h>
 #include <system_settings.h>
 
-#define KEYSTR_SCREEN_ROTATION "IDS_ST_MBODY_SCREEN_ROTATION"
-
 
 static int setting_display_main_create(void *cb);
 static int setting_display_main_destroy(void *cb);
@@ -44,6 +42,8 @@ setting_view setting_view_display_main = {
 extern const char *str_in_arr[];
 extern const char *str_out_arr[];
 
+unsigned int auto_rotate_event_reg_id;
+
 /* ***************************************************
  *
  *basic func
@@ -51,20 +51,21 @@ extern const char *str_out_arr[];
  ***************************************************/
 static void __screen_timeout_cb(void *data, Evas_Object *obj, void *event_info)
 {
+	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
+	SettingDisplayUG *ad = data;
+	Setting_GenGroupItem_Data *list_item = NULL;
+	int value = 0;
+	int err;
+
 	/* error check */
 	ret_if(data == NULL);
 	retm_if(event_info == NULL, "Invalid argument: event info is NULL");
 
-	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
 	elm_genlist_item_selected_set(item, 0);
-
-	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
-
-	SettingDisplayUG *ad = data;
+	list_item = (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
 
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 
-	int value = 0;
 	if (!safeStrCmp(KeyStr_Backlight_15_SEC_STR, list_item->keyStr)) {
 		elm_radio_value_set(ad->screen_timeout_rdg, 0);
 		value = 15;
@@ -85,7 +86,6 @@ static void __screen_timeout_cb(void *data, Evas_Object *obj, void *event_info)
 		value = 600;
 	}
 
-	int err;
 	setting_set_int_slp_key(ad->data_back->int_slp_setting_binded, value, &err);
 
 	if (ad->screen_timeout_popup) {
@@ -96,17 +96,20 @@ static void __screen_timeout_cb(void *data, Evas_Object *obj, void *event_info)
 
 static void setting_display_screen_timeout_popup(void *data)
 {
+	SettingDisplayUG *ad = (SettingDisplayUG *) data;
+	Evas_Object *menu_glist = NULL;
+	Evas_Object *rdg = NULL;
+	int value;
+	int err;
+
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "data is NULL");
 
-	SettingDisplayUG *ad = (SettingDisplayUG *) data;
-
-	Evas_Object *menu_glist = NULL;
 	ad->screen_timeout_popup = setting_create_popup_with_list(&menu_glist, ad, ad->win_get,
 	                                                          KeyStr_BacklightTime, NULL, 0, false, false, 0);
 	_P(ad->screen_timeout_popup);
 
-	Evas_Object *rdg = elm_radio_add(menu_glist);
+	rdg = elm_radio_add(menu_glist);
 	elm_object_style_set(rdg, "list");
 	evas_object_propagate_events_set(rdg, EINA_TRUE);
 	elm_radio_state_value_set(rdg, -1);
@@ -186,8 +189,6 @@ static void setting_display_screen_timeout_popup(void *data)
 	}
 
 	/* update radio */
-	int value;
-	int err;
 	setting_get_int_slp_key(ad->data_back->int_slp_setting_binded, &value, &err);
 	if (15 == value) {
 		elm_radio_value_set(rdg, 0);
@@ -204,20 +205,22 @@ static void setting_display_screen_timeout_popup(void *data)
 	}
 }
 
-#if !SUPPOR_SEPARATE_BRIGHTNESS
+#if !SUPPORT_SEPARATE_BRIGHTNESS
 /* low battery */
 static void setting_display_main_lowbat_cb(keynode_t *key, void *data)
 {
-	ret_if(data == NULL);
 	SettingDisplayUG *ad = (SettingDisplayUG *) data;
+	char *vconf_key = NULL;
+	int battery_value;
+
 	SETTING_TRACE_BEGIN;
+	ret_if(data == NULL);
 	ret_if(ad->data_br == NULL);
 
-	char *vconf_key = vconf_keynode_get_name(key);
-	SETTING_TRACE("the value of [ %s ] just changed", vconf_key);
-	/* VCONFKEY_SYSMAN_BATTERY_STATUS_LOW */
+	vconf_key = vconf_keynode_get_name(key);
 
-	int battery_value;
+	SETTING_TRACE("the value of [ %s ] just changed", vconf_key);
+
 	vconf_get_int(VCONFKEY_SYSMAN_BATTERY_STATUS_LOW, &battery_value);
 	ad->low_bat = battery_value;
 
@@ -228,126 +231,24 @@ static void setting_display_main_lowbat_cb(keynode_t *key, void *data)
 	} else {
 		setting_enable_genlist_item(ad->data_br->item);
 	}
+
 	return;
 }
 #endif
 
-static char *___touchkey_light_duration_sub_desc()
-{
-	SETTING_TRACE_BEGIN;
-	int value = 0;
-	vconf_get_int(VCONFKEY_SETAPPL_TOUCHKEY_LIGHT_DURATION, &value);
-	switch (value) {
-		case 0:
-			return g_strdup("IDS_ST_BODY_ALWAYS_OFF");
-		case -1:
-			return g_strdup("IDS_ST_BODY_ALWAYS_ON");
-		case 90: {
-				return g_strdup("IDS_ST_BODY_1_5_SECONDS");
-			}
-		case 360: {
-				return g_strdup("IDS_MSG_OPT_6_SECONDS");
-			}
-		default:
-			return g_strdup("IDS_ST_BODY_ALWAYS_ON");
-	}
-	return NULL;
-}
-static char *___format_touchkey_light_duration_sub_desc(char *temp)
-{
-	/*SETTING_TRACE_BEGIN; */
-	/*SETTING_TRACE("temp:%s",temp); */
-	if (!safeStrCmp(temp, "IDS_ST_BODY_ALWAYS_OFF")) {
-		return g_strdup(_("IDS_ST_BODY_ALWAYS_OFF"));
-	} else if (!safeStrCmp(temp, "IDS_ST_BODY_ALWAYS_ON")) {
-		return g_strdup(_("IDS_ST_BODY_ALWAYS_ON"));
-	} else if (!safeStrCmp(temp, "1.5")) {
-		char duration[MAX_DISPLAY_NAME_LEN_ON_UI] = {0, };
-		snprintf(duration, sizeof(duration), "%s %s", temp, (char *)(_("IDS_ST_BODY_SECONDS")));
-		return g_strdup(duration);
-	} else if (!safeStrCmp(temp, "6")) {
-		char duration[MAX_DISPLAY_NAME_LEN_ON_UI] = {0, };
-		snprintf(duration, sizeof(duration), "%s %s", temp, (char *)(_("IDS_ST_BODY_SECONDS")));
-		return g_strdup(duration);
-	} else {
-		return g_strdup(_("IDS_ST_BODY_ALWAYS_ON"));
-	}
-	return NULL;
-}
-
-char *__item_touch_duration_sub_item_text_get(void *data, Evas_Object *obj, const char *part)
-{
-	/*SETTING_TRACE_BEGIN; */
-	setting_retvm_if(data == NULL, NULL, "Data parameter is NULL");
-	Setting_GenGroupItem_Data *item_data = (Setting_GenGroupItem_Data *) data;
-	char *ret_str = NULL;
-	if (!safeStrCmp(part, "elm.text") || !safeStrCmp(part, "elm.text.1")) {
-		if (item_data->keyStr) {
-			ret_str = ___format_touchkey_light_duration_sub_desc(item_data->keyStr);
-		}
-	}
-	return ret_str;
-}
-char *__item_touch_duration_text_get(void *data, Evas_Object *obj, const char *part)
-{
-	/*SETTING_TRACE_BEGIN; */
-	setting_retvm_if(data == NULL, NULL, "Data parameter is NULL");
-	Setting_GenGroupItem_Data *item_data = (Setting_GenGroupItem_Data *) data;
-	char *ret_str = NULL;
-	if (!safeStrCmp(part, "elm.text") || !safeStrCmp(part, "elm.text.1")) {
-		if (item_data->keyStr) {
-			ret_str = (char *)g_strdup(_(item_data->keyStr));
-		}
-	} else if (!safeStrCmp(part, "elm.text.2")) {	/* bottom or right */
-		if (item_data->sub_desc) {
-			ret_str = ___format_touchkey_light_duration_sub_desc(item_data->sub_desc);
-		}
-	}
-	return ret_str;
-}
-char *__item_backlight_sub_item_text_get(void *data, Evas_Object *obj, const char *part)
-{
-	/*SETTING_TRACE_BEGIN; */
-	setting_retvm_if(data == NULL, NULL, "Data parameter is NULL");
-	Setting_GenGroupItem_Data *item_data = (Setting_GenGroupItem_Data *) data;
-	char *ret_str = NULL;
-	if (!safeStrCmp(part, "elm.text") || !safeStrCmp(part, "elm.text.1")) {
-		if (item_data->keyStr) {
-			ret_str =  format_backlight_time_str(item_data->keyStr);
-		}
-	}
-	return ret_str;
-}
-
-
-char *__item_backlight_text_get(void *data, Evas_Object *obj, const char *part)
-{
-	/*SETTING_TRACE_BEGIN; */
-	setting_retvm_if(data == NULL, NULL, "Data parameter is NULL");
-	Setting_GenGroupItem_Data *item_data = (Setting_GenGroupItem_Data *) data;
-	char *ret_str = NULL;
-	if (!safeStrCmp(part, "elm.text") || !safeStrCmp(part, "elm.text.1")) {
-		if (item_data->keyStr) {
-			ret_str = (char *)g_strdup(_(item_data->keyStr));
-		}
-	} else if (!safeStrCmp(part, "elm.text.2")) {	/* bottom or right */
-		if (item_data->sub_desc) {
-			ret_str =  format_backlight_time_str(item_data->sub_desc);
-		}
-	}
-	/*SETTING_TRACE_END; */
-	return ret_str;
-}
 static void setting_display_main_vconf_change_cb(keynode_t *key, void *data)
 {
-	ret_if(data == NULL);
-
 	SettingDisplayUG *ad = data;
 	int status = 0;
+	char *vconf_name = NULL;
+
+	ret_if(data == NULL);
 
 	status = vconf_keynode_get_bool(key);
-	char *vconf_name = vconf_keynode_get_name(key);
+	vconf_name = vconf_keynode_get_name(key);
+
 	SETTING_TRACE("status:%d", status);
+
 	if (!safeStrCmp(vconf_name, VCONFKEY_SETAPPL_AUTO_ROTATE_SCREEN_BOOL)) {
 		if (ad->data_auto_rotate && ad->data_auto_rotate->eo_check) {
 			setting_update_gl_item_chk_status(ad->data_auto_rotate, status);
@@ -384,23 +285,19 @@ void auto_rotate_event_handler(const char *event_name, bundle *data, void *user_
 	SETTING_TRACE("auto_rotate_set(%s", auto_rotate_set);
 }
 
-int auto_rotate_event_reg_id;
-
 static int setting_display_main_create(void *cb)
 {
+	SettingDisplayUG *ad = (SettingDisplayUG *) cb;
+	Evas_Object *scroller = NULL;
+	int value = 0;
+	int ret = 0;
+	Elm_Object_Item *item = NULL;
+
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingDisplayUG *ad = (SettingDisplayUG *) cb;
-
-	Evas_Object *scroller = NULL;
-
-	int value = 0;
-	int ret = 0;
-
 	/* add basic layout */
-
 	ad->ly_main =
 	    setting_create_layout_navi_bar_genlist(ad->win_main_layout,
 	                                           ad->win_get,
@@ -417,36 +314,28 @@ static int setting_display_main_create(void *cb)
 
 	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_AUTO_ROTATE_SCREEN_BOOL,
 	                               setting_display_main_vconf_change_cb, ad);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf notifications Failed %d", ret);
-	}
+
 	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_LCD_AUTO_DISPLAY_ADJUSTMENT,
 	                               setting_display_main_vconf_change_cb, ad);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf notifications Failed %d", ret);
-	}
+
 	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_DYNAMIC_STATUS_BAR,
 	                               setting_display_main_vconf_change_cb, ad);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf notifications Failed %d", ret);
-	}
+
 	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_SCREEN_CAPTURE_EDIT_AFTER_CAPTURE,
 	                               setting_display_main_vconf_change_cb, ad);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf notifications Failed %d", ret);
-	}
+
 	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_LCD_TIMEOUT_NORMAL,
 	                               setting_display_main_vconf_change_cb, ad);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf notifications Failed %d", ret);
-	}
-	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_TOUCHKEY_LIGHT_DURATION,
-	                               setting_display_main_vconf_change_cb, ad);
-	if (ret != 0) {
-		SETTING_TRACE_ERROR("vconf notifications Failed %d", ret);
-	}
-
-
 
 	/* BRIGHTNESS */
 	construct_brightness(ad, scroller);
@@ -500,7 +389,7 @@ static int setting_display_main_create(void *cb)
 	}
 	G_FREE(pa_backlight_time);
 
-#if !SUPPOR_SEPARATE_BRIGHTNESS
+#if !SUPPORT_SEPARATE_BRIGHTNESS
 	if (ad->data_br) {
 		int battery_value;
 		vconf_get_int(VCONFKEY_SYSMAN_BATTERY_STATUS_LOW, &battery_value);
@@ -529,59 +418,59 @@ static int setting_display_main_create(void *cb)
 	}
 
 	/*  add separator in botton of view */
-	Elm_Object_Item *item =
-	    elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
+	item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
 	                            ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+
 	setting_view_display_main.is_create = 1;
+
 	return SETTING_RETURN_SUCCESS;
 }
 
 static int setting_display_main_destroy(void *cb)
 {
+	SettingDisplayUG *ad = (SettingDisplayUG *) cb;
+	int ret = 0;
+
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 	retv_if(!(setting_view_display_main.is_create), SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingDisplayUG *ad = (SettingDisplayUG *) cb;
 	destruct_brightness(ad);
+
 #if !SUPPORT_SEPARATE_BRIGHTNESS
 	/* low battery handler - registration */
 	vconf_ignore_key_changed(VCONFKEY_SYSMAN_BATTERY_STATUS_LOW, setting_display_main_lowbat_cb);
 #endif
+
 	vconf_ignore_key_changed(VCONFKEY_SETAPPL_BRIGHTNESS_AUTOMATIC_INT, __display_int_vconf_cb);
-	int ret = 0;
+
 	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_AUTO_ROTATE_SCREEN_BOOL,
 	                               setting_display_main_vconf_change_cb);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf ignore Failed %d", ret);
-	}
+
 	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_LCD_AUTO_DISPLAY_ADJUSTMENT,
 	                               setting_display_main_vconf_change_cb);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf ignore Failed %d", ret);
-	}
+
 	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_DYNAMIC_STATUS_BAR,
 	                               setting_display_main_vconf_change_cb);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf ignore Failed %d", ret);
-	}
+
 	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_SCREEN_CAPTURE_EDIT_AFTER_CAPTURE,
 	                               setting_display_main_vconf_change_cb);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf ignore Failed %d", ret);
-	}
+
 	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_LCD_TIMEOUT_NORMAL,
 	                               setting_display_main_vconf_change_cb);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf ignore Failed %d", ret);
-	}
-	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_TOUCHKEY_LIGHT_DURATION,
-	                               setting_display_main_vconf_change_cb);
-	if (ret != 0) {
-		SETTING_TRACE_ERROR("vconf ignore Failed %d", ret);
-	}
+
 
 	if (ad->nf_it) {
 		ad->nf_it = NULL;
@@ -591,37 +480,37 @@ static int setting_display_main_destroy(void *cb)
 		ad->ly_main = NULL;
 		/* if(ad->back_dialData) FREE(ad->back_dialData); */
 	}
+
 	setting_view_display_main.is_create = 0;
 
-	if (ES_R_OK != eventsystem_unregister_event(auto_rotate_event_reg_id)) {
+	if (ES_R_OK != eventsystem_unregister_event(auto_rotate_event_reg_id))
 		SETTING_TRACE_ERROR("error");
-	}
 
 	return SETTING_RETURN_SUCCESS;
 }
 
 static int setting_display_main_update(void *cb)
 {
+	SettingDisplayUG *ad = (SettingDisplayUG *) cb;
+
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingDisplayUG *ad = (SettingDisplayUG *) cb;
-
 	if (ad->ly_main != NULL) {
 		evas_object_show(ad->ly_main);
 		if (ad->data_br) {
-			ad->data_br->sub_desc =
-			    (char *)g_strdup(get_brightness_mode_str());
+			ad->data_br->sub_desc = (char *)g_strdup(get_brightness_mode_str());
 			elm_object_item_data_set(ad->data_br->item, ad->data_br);
 			elm_genlist_item_update(ad->data_br->item);
 
 		}
+
 #ifdef SUPPORT_SCREEN_MODE
 		if (ad->data_screen_mode) {
+			int i = 0;
 			char *curmode = vconf_get_str(VCONFKEY_SETAPPL_SCREENMODE_SELNAME);
 			SETTING_TRACE(">>> CUR SCREEN MODE : %s ", curmode);
-			int i = 0;
 			for (; i < SCREENMODE_MAX; i++) {
 				if (0 == safeStrCmp(str_in_arr[i], curmode)) {
 					ad->data_screen_mode->sub_desc = (char *)g_strdup(_(str_out_arr[i]));
@@ -641,7 +530,6 @@ static int setting_display_main_update(void *cb)
 
 static int setting_display_main_cleanup(void *cb)
 {
-	SETTING_TRACE_BEGIN;
 	return SETTING_RETURN_SUCCESS;
 }
 
@@ -654,35 +542,39 @@ static int setting_display_main_cleanup(void *cb)
 void setting_display_destroy_font_ug_cb(ui_gadget_h ug,
                                         void *priv)
 {
-	ret_if(priv == NULL);
 	SettingDisplayUG *ad = (SettingDisplayUG *) priv;
+	ret_if(priv == NULL);
+
 	if (ug) {
 		setting_ug_destroy(ug);
 		ad->ug_font = NULL;
 	}
+
 	elm_genlist_realized_items_update(ad->genlist);
 }
 
 
 Eina_Bool ___display_freeze_event_timer_cb(void *cb)
 {
+	SettingDisplayUG *ad = (SettingDisplayUG *)cb;
+
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, EINA_FALSE);
 
-	SettingDisplayUG *ad = (SettingDisplayUG *)cb;
-
 	evas_object_freeze_events_set(ad->navi_bar, EINA_FALSE);
 	ad->event_freeze_timer = NULL;
+
 	return EINA_FALSE;
 }
 
 gboolean setting_display_create_font_sg(void *data)
 {
+	SettingDisplayUG *ad = (SettingDisplayUG *) data;	/* ad is point to data */
+
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retv_if(data == NULL, FALSE);
 
-	SettingDisplayUG *ad = (SettingDisplayUG *) data;	/* ad is point to data */
 	if (0 == app_launcher("setting-font-efl")) {
 		if (ad->event_freeze_timer) {
 			ecore_timer_del(ad->event_freeze_timer);
@@ -691,37 +583,40 @@ gboolean setting_display_create_font_sg(void *data)
 		ad->event_freeze_timer = ecore_timer_add(1, ___display_freeze_event_timer_cb, ad);
 		evas_object_freeze_events_set(ad->navi_bar, EINA_TRUE);
 	}
+
 	return TRUE;
 }
 
 void setting_display_destroy_ledindicator_ug_cb(ui_gadget_h ug,
                                                 void *priv)
 {
-	ret_if(priv == NULL);
 	SettingDisplayUG *ad = (SettingDisplayUG *) priv;
+
+	ret_if(priv == NULL);
+
 	if (ug) {
 		setting_ug_destroy(ug);
 		ad->ug_ledindicator = NULL;
 	}
-	/* elm_genlist_realized_items_update(ad->genlist); */
 }
 
 gboolean setting_display_create_ledindicator_sg(void *data)
 {
+	SettingDisplayUG *ad = (SettingDisplayUG *) data;	/* ad is point to data */
+	struct ug_cbs *cbs = NULL;
+
 	/* error check */
 	retv_if(data == NULL, FALSE);
-
-	SettingDisplayUG *ad = (SettingDisplayUG *) data;	/* ad is point to data */
 
 	if (ad->ug_ledindicator) {
 		SETTING_TRACE("Font UG is already loaded.");
 		return FALSE;
 	}
-	struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
 
-	if (!cbs) {
+	cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
+	if (!cbs)
 		return FALSE;
-	}
+
 	cbs->layout_cb = setting_display_layout_ug_cb;
 	cbs->result_cb = NULL;
 	cbs->destroy_cb = setting_display_destroy_ledindicator_ug_cb;
@@ -743,18 +638,18 @@ static void
 setting_display_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
                                               void *event_info)
 {
+	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
+	SettingDisplayUG *ad = (SettingDisplayUG *) data;
+	Setting_GenGroupItem_Data *list_item = NULL;
+
 	/* error check */
 	setting_retm_if(data == NULL, "Data parameter is NULL");
-
 	retm_if(event_info == NULL, "Invalid argument: event info is NULL");
-	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
+
 	elm_genlist_item_selected_set(item, 0);
-	Setting_GenGroupItem_Data *list_item =
-	    (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
+	list_item = (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
+
 	setting_retm_if(NULL == list_item, "list_item is NULL");
-
-	SettingDisplayUG *ad = (SettingDisplayUG *) data;
-
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 
 	if (!safeStrCmp("IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING", list_item->keyStr)) {
@@ -774,31 +669,33 @@ static Eina_Bool
 setting_display_main_click_softkey_back_cb(void *data, Evas_Object *obj,
                                            void *event_info)
 {
+	SettingDisplayUG *ad = (SettingDisplayUG *) data;
+
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	setting_retvm_if(data == NULL, EINA_FALSE,
 	                 "[Setting > Display] Data parameter is NULL");
 
-	SettingDisplayUG *ad = (SettingDisplayUG *) data;
-
 	/* Send destroy request */
 	ug_destroy_me(ad->ug);
+
 	SETTING_TRACE_END;
+
 	return EINA_FALSE;
 
 }
 
 static void setting_display_main_auto_rotate_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	SETTING_TRACE_BEGIN;
-	/* error check */
-	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
 	SettingDisplayUG *ad = (SettingDisplayUG *)list_item->userdata;
 
+	SETTING_TRACE_BEGIN;
+	/* error check */
+	retm_if(data == NULL, "Data parameter is NULL");
+
 	list_item->chk_status = elm_check_state_get(obj);	/*  for genlist update status */
 
-	#if FUNCTION_SYSTEM_SETTING
 	if (list_item->chk_status == 1) {
 		int angle = elm_win_rotation_get(ad->win_main_layout);
 		elm_win_rotation_with_resize_set(ad->win_main_layout, angle);
@@ -808,21 +705,8 @@ static void setting_display_main_auto_rotate_chk_btn_cb(void *data, Evas_Object 
 		}
 	} else {
 		elm_win_rotation_with_resize_set(ad->win_main_layout, 0);
-		int ret = system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_DISPLAY_SCREEN_ROTATION_AUTO, false);
-		if (ret == SYSTEM_SETTINGS_ERROR_NONE) {
+		if (system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_DISPLAY_SCREEN_ROTATION_AUTO,
+																			 false) == SYSTEM_SETTINGS_ERROR_NONE)
 			SETTING_TRACE("SYSTEM_SETTINGS_KEY_DISPLAY_SCREEN_ROTATION_AUTO is OK");
-		}
 	}
-	#else
-	if (list_item->chk_status == 1) {
-		int angle = elm_win_rotation_get(ad->win_main_layout);
-		elm_win_rotation_with_resize_set(ad->win_main_layout, angle);
-		setting_set_event_system(SYS_EVENT_SCREEN_AUTOROTATE_STATE, EVT_KEY_SCREEN_AUTOROTATE_STATE, EVT_VAL_SCREEN_AUTOROTATE_ON);
-	} else {
-		elm_win_rotation_with_resize_set(ad->win_main_layout, 0);
-		setting_set_event_system(SYS_EVENT_SCREEN_AUTOROTATE_STATE, EVT_KEY_SCREEN_AUTOROTATE_STATE, EVT_VAL_SCREEN_AUTOROTATE_OFF);
-	}
-
-	vconf_set_bool(VCONFKEY_SETAPPL_AUTO_ROTATE_SCREEN_BOOL, list_item->chk_status);
-	#endif
 }

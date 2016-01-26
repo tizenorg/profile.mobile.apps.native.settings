@@ -22,7 +22,6 @@
 #define __SETTING_DISPLAY_BRIGHTNESS_H__
 
 #include <setting-display.h>
-#define SUPPORT_CENTER_POINT 0
 
 #define KeyStr_Brightness_Adjust "IDS_ST_BODY_ADJUST_BRIGHTNESS_LEVEL"
 #define KeyStr_Brightness_Auto_Adjust "IDS_ST_BODY_ADJUST_AUTOMATIC_BRIGHTNESS"
