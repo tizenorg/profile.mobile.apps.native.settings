@@ -309,39 +309,6 @@ int _handle_sim_exception(void *data, int sim_status)
 	return SETTING_RETURN_SUCCESS;
 }
 
-static Eina_Bool __remove_sim_popup_cb(void *data)
-{
-	SETTING_TRACE_BEGIN;
-	retv_if(data == NULL, EINA_FALSE);
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
-
-	if (ad->sim_popup) {
-		evas_object_del(ad->sim_popup);
-		ad->sim_popup = NULL;
-	}
-	ad->remove_sim_popup_timer = NULL;
-	return EINA_FALSE;
-}
-
-static Eina_Bool _check_tapi_async_cb_is_called(void *data)
-{
-	SETTING_TRACE_BEGIN;
-	retv_if(data == NULL, EINA_FALSE);
-
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
-
-	if (!ad->enter_tapi_async_cb_flag) {
-		ad->sim_popup = setting_create_popup(ad, ad->win_get,
-		                                     NULL, KeyStr_Security_Waiting_Sim,
-		                                     (setting_call_back_func)__remove_sim_popup_cb,
-		                                     0, FALSE, FALSE, 0);
-		ad->remove_sim_popup_timer = ecore_timer_add(1, __remove_sim_popup_cb, ad);
-	}
-	ad->tapi_async_cb_check_timer = NULL;
-
-	return EINA_FALSE;
-}
-
 Eina_Bool __freeze_event_timer_cb(void *cb)
 {
 	SETTING_TRACE_BEGIN;
@@ -406,18 +373,10 @@ setting_security_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 	    (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
 	setting_retm_if(NULL == list_item, "list_item is NULL");
 
-	SettingSecurityUG *ad = (SettingSecurityUG *) data;
-
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 
 	if (!safeStrCmp(KeyStr_LockScreen, list_item->keyStr)) {
-#if 0
-		int window_id = elm_win_xwindow_get(ad->win_get);
-		if (0 == app_launcher("lockscreen-options")) {
-			ad->update_view_timer = ecore_timer_add(1, __freeze_event_timer_cb, ad);
-			evas_object_freeze_events_set(ad->navi_bar, EINA_TRUE);
-		}
-#else
+
 		retm_if(data == NULL, "Data parameter is NULL");
 
 		SettingSecurityUG *ad = (SettingSecurityUG *) data;
@@ -434,7 +393,6 @@ setting_security_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 		SETTING_TRACE("To load ug[%s]", "lockscreen-options");
 		setting_ug_create(ad->ug, "lockscreen-options", UG_MODE_FULLVIEW, NULL, cbs);
 		FREE(cbs);
-#endif
 	}
 }
 

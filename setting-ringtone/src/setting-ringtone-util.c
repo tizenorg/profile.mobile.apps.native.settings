@@ -25,7 +25,7 @@ inline char *strlower(char *str)
 {
 	if (!str) return NULL;
 	char *orig = str;
-	for (; *str != '\0 '; str++)
+	for (; *str != '\0'; str++)
 		*str = tolower(*str);
 	return orig;
 };
