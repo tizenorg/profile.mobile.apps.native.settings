@@ -44,14 +44,14 @@ setting_view setting_view_display_backlight = {
  ****************************************************/
 static int setting_display_backlight_create(void *cb)
 {
+	SettingDisplayUG *ad = (SettingDisplayUG *) cb;
+	Evas_Object *scroller = NULL, *rgd = NULL;
+	Elm_Object_Item *item = NULL;
+
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingDisplayUG *ad = (SettingDisplayUG *) cb;
-
 	/* add basic layout */
-
-	Evas_Object *scroller = NULL;
 	ad->ly_main =
 	    setting_create_layout_navi_bar_genlist(ad->win_main_layout,
 	                                           ad->win_get,
@@ -62,20 +62,17 @@ static int setting_display_backlight_create(void *cb)
 	                                           NULL, ad, &scroller,
 	                                           &(ad->navi_bar));
 
-	Evas_Object *rgd = elm_radio_add(scroller);
-	/*elm_radio_state_value_set(rgd, -1); */
+	rgd = elm_radio_add(scroller);
 	elm_radio_value_set(rgd, -1);
 
 	/* separator */
-	Elm_Object_Item *item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
+	item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb, NULL);
 
 	/* to do : radio menu */
-	int is_emul_bin = FALSE;
 	if (isEmulBin()) {
-		is_emul_bin = TRUE;
 		ad->data_backlight_always_on = setting_create_Gendial_field_1radio(scroller,
 		                                                                   &itc_1text_1icon_2,
 		                                                                   setting_display_backlight_mouse_up_Gendial_list_cb, ad,
@@ -177,16 +174,20 @@ static int setting_display_backlight_create(void *cb)
 
 static int setting_display_backlight_destroy(void *cb)
 {
+	SettingDisplayUG *ad = (SettingDisplayUG *) cb;
+
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 	retv_if(!(setting_view_display_backlight.is_create), SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	SettingDisplayUG *ad = (SettingDisplayUG *) cb;
+
 	if (ad->ly_main != NULL) {
 		evas_object_del(ad->ly_main);
 		ad->ly_main = NULL;
 	}
+
 	setting_view_display_backlight.is_create = 0;
+
 	return SETTING_RETURN_SUCCESS;
 }
 
@@ -195,6 +196,7 @@ static int setting_display_backlight_update(void *cb)
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+
 	return SETTING_RETURN_SUCCESS;
 }
 
@@ -216,36 +218,39 @@ static void
 setting_display_backlight_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
                                                    void *event_info)
 {
+	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
+	Setting_GenGroupItem_Data *list_item = NULL;
+	int val, list_val, old_val;
+	int err = 0;
+
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	setting_retm_if(data == NULL, "Data parameter is NULL");
-
 	retm_if(event_info == NULL, "Invalid argument: event info is NULL");
-	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
+
 	elm_genlist_item_selected_set(item, 0);
-	Setting_GenGroupItem_Data *list_item =
-	    (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
+
+	list_item = (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
 	setting_retm_if(NULL == list_item, "list_item is NULL");
 
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 	SETTING_TRACE("chk_status[%d]", list_item->chk_status);
 
-	int list_val = list_item->chk_status;
-	int old_val = elm_radio_value_get(list_item->eo_check);
-	int val;
-	int err = 0;
+	list_val = list_item->chk_status;
+	old_val = elm_radio_value_get(list_item->eo_check);
+
 	setting_get_int_slp_key(INT_SLP_SETTING_LCD_TIMEOUT_NORMAL, &val, &err);
 	if (list_val == old_val && list_val == val) {
 		SETTING_TRACE_DEBUG("Selected same type");
 		return;
 	}
 
-	int ret = setting_set_int_slp_key(INT_SLP_SETTING_LCD_TIMEOUT_NORMAL, list_item->chk_status, &err);
-	if (ret != 0) {
+	if (setting_set_int_slp_key(INT_SLP_SETTING_LCD_TIMEOUT_NORMAL, list_item->chk_status, &err) != 0) {
 		SETTING_TRACE_ERROR("set vconf failed");
 		elm_radio_value_set(list_item->eo_check, val);
 		return;
 	}
+
 	elm_radio_value_set(list_item->eo_check, list_item->chk_status);
 }
 
@@ -255,13 +260,14 @@ static void
 setting_display_backlight_click_softkey_back_cb(void *data, Evas_Object *obj,
                                                 void *event_info)
 {
+	SettingDisplayUG *ad = (SettingDisplayUG *) data;
+
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retm_if(data == NULL, "[Setting > Security] Data parameter is NULL");
 
-	SettingDisplayUG *ad = (SettingDisplayUG *) data;
 	/* Send destroy request */
 	ug_destroy_me(ad->ug);
+
 	return;
-	SETTING_TRACE_END;
 }

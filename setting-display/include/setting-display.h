@@ -91,8 +91,6 @@ typedef enum {
 
 typedef struct _SettingDisplayUG SettingDisplayUG;
 
-#define BRIGHTNESS_DISPLAY 0
-
 /**
  * Setting Display UG context
  * all UG function has void* as an agument. this is casted back to SettingDisplayUG
