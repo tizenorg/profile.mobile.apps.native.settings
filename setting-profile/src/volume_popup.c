@@ -35,7 +35,8 @@ static Evas_Object *vp_create_win(const char *name, bool transparent)
 {
 	SETTING_TRACE_BEGIN;
 	Evas_Object *eo;
-	int w, h;
+	int w = 0;
+	int h = 0;
 
 	eo = elm_win_add(NULL, name, ELM_WIN_BASIC);
 
@@ -46,8 +47,8 @@ static Evas_Object *vp_create_win(const char *name, bool transparent)
 		if (transparent) {
 			elm_win_alpha_set(eo, EINA_TRUE);
 
-			unsigned int opaqueVal = 1;
 #ifdef ECORE_X
+			unsigned int opaqueVal = 1;
 			Ecore_X_Atom opaqueAtom = ecore_x_atom_get("_E_ILLUME_WINDOW_REGION_OPAQUE");
 			Ecore_X_Window xwin = elm_win_xwindow_get(eo);
 			ecore_x_window_prop_card32_set(xwin, opaqueAtom, &opaqueVal, 1);
@@ -57,10 +58,10 @@ static Evas_Object *vp_create_win(const char *name, bool transparent)
 		evas_object_smart_callback_add(eo, "delete,request", vp_del_win, NULL);
 #ifdef ECORE_X
 		ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
+#else
+		elm_win_screen_size_get(eo, NULL, NULL, &w, &h);
 #endif
 		evas_object_resize(eo, w, h);
-		/*elm_win_screen_size_get(eo, NULL, NULL, &w, &h); */
-		/*evas_object_resize(eo, 100, 100); */
 
 		evas_object_show(eo);
 		elm_win_activate(eo);

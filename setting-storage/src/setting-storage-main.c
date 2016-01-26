@@ -224,7 +224,6 @@ static inline void storageUg_main_part_pie_graph_set(Evas_Object *parent,
 Evas_Object *storageUg_main_pie_item_get_icon(void *data, Evas_Object *obj,
 											  const char *part)
 {
-	int layout_w, layout_h;
 	double used_size;
 	Evas_Object *layout;
 	SettingStorageUG *ad = data;
@@ -234,9 +233,6 @@ Evas_Object *storageUg_main_pie_item_get_icon(void *data, Evas_Object *obj,
 	retv_if(NULL == obj, NULL);
 	retv_if(NULL == data, NULL);
 	retvm_if(safeStrCmp(part, "elm.icon"), NULL, "part(%s) Invaild", part);
-
-	layout_w = SETTING_STORAGE_PIE_RECT_WIDTH;
-	layout_h = SETTING_STORAGE_PIE_RECT_HEIGHT;
 
 	layout = elm_layout_add(obj);
 	elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME, "storage_pie");
@@ -260,7 +256,6 @@ Evas_Object *storageUg_main_pie_item_get_icon(void *data, Evas_Object *obj,
 
 	/*pie */
 	storageUg_main_part_pie_graph_set(layout, "pie_rect", ad);
-	/*setting_resize_object(layout, layout_w, layout_h); */
 	evas_object_show(layout);
 
 	return layout;
