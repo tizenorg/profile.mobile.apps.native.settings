@@ -99,12 +99,12 @@ BuildRequires:  libcap-devel
 BuildRequires:  cmake
 BuildRequires:  edje-tools
 BuildRequires:  gettext-tools
-#BuildRequires:  capi-security-privilege-manager-devel
+#BuildRequires:  security-privilege-manager-devel
 BuildRequires:  hash-signer
 #BuildRequires:  system-resource-devel-meta
 
 #Requires: libeas-common
-Requires: capi-security-privilege-manager
+Requires: security-privilege-manager
 Requires(post): attr
 
 %description
