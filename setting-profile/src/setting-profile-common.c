@@ -199,56 +199,6 @@ static Evas_Object *__sound_slider_new_icon_get(void *data, Evas_Object *obj, co
 	return NULL;
 }
 
-
-
-static Evas_Object *__sound_slider_icon_get(void *data, Evas_Object *obj, const char *part)
-{
-	/*SETTING_TRACE_BEGIN; */
-	/*appcore_measure_start(); */
-	retv_if(data == NULL, NULL);
-
-	if (safeStrCmp(part, "elm.icon")) {
-		/*SETTING_TRACE("EDC part [%s]", part); */
-		return NULL;
-	}
-
-	Setting_GenGroupItem_Data *item_data = (Setting_GenGroupItem_Data *)data;
-	Evas_Object *slider = setting_create_slider(obj, item_data->evas,
-	                                            item_data->l_swallow_path,
-	                                            item_data->r_swallow_path,
-	                                            item_data->chk_status,
-	                                            item_data->isIndicatorVisible,
-	                                            item_data->slider_min,
-	                                            item_data->slider_max,
-	                                            item_data->chk_change_cb,
-	                                            item_data->start_change_cb,
-	                                            item_data->stop_change_cb,
-	                                            item_data);
-
-	if (slider == NULL)
-		return NULL;
-	if (0 == safeStrCmp(item_data->keyStr, "IDS_ST_BODY_MEDIA")) {
-		elm_object_style_set(slider, "warning");
-
-		Edje_Message_Float_Set *msg = alloca(sizeof(Edje_Message_Float_Set) + (sizeof(double)));
-		msg->count = 1;
-		msg->val[0] = 0.66667;
-		edje_object_message_send(_EDJ(slider), EDJE_MESSAGE_FLOAT_SET, 0, msg);
-		elm_slider_indicator_format_set(slider, "%1.0f");
-		elm_slider_indicator_show_set(slider, 1);
-	}
-
-	item_data->eo_check = slider;
-
-	evas_object_pass_events_set(slider, EINA_TRUE);
-	evas_object_propagate_events_set(slider, EINA_FALSE);
-
-	if (item_data->userdata == NULL)
-		return NULL;
-
-	return slider;
-}
-
 /* ***************************************************
  *
  *general func
@@ -348,7 +298,7 @@ static void __enable_sound_menu(void *data)
 		if (ad->is_ringtone_slidering) return;/*do need to restore from BACKUP VOLUME */
 
 		int mm_value = 0;
-		int ret =  sound_manager_get_volume(SOUND_TYPE_RINGTONE, &mm_value);
+		sound_manager_get_volume(SOUND_TYPE_RINGTONE, &mm_value);
 		if (mm_value <= 0) mm_value = 1;
 		/*SETTING_TRACE("ret:%d", ret); */
 		sound_manager_set_volume(SOUND_TYPE_RINGTONE, mm_value);
@@ -767,7 +717,7 @@ static Eina_Bool __volume_key_down_cb(void *data, int type, void *event)
 			}
 		} else {
 			SETTING_TRACE("sound_type == SOUND_TYPE_RINGTONE")
-			int ret =  sound_manager_get_volume(SOUND_TYPE_RINGTONE, &volume);
+			sound_manager_get_volume(SOUND_TYPE_RINGTONE, &volume);
 			/*ad->backup_ringtong_volume = volume; */
 			/*vconf_set_int(VCONFKEY_SETAPPL_RINGTONE_BACKUP_VOLUME, ad->backup_ringtong_volume); */
 			/*SETTING_TRACE("ret:%d, volume:%d, ad->backup_ringtong_volume:%d", ret, volume, ad->backup_ringtong_volume); */
@@ -909,9 +859,8 @@ void __setting_sound_ug_key_grab(SettingProfileUG *ad)
 #ifdef ECORE_X
 	Ecore_X_Window xwin = 0;
 	Ecore_X_Display *disp = NULL;
-#endif
-
 	int ret = 0;
+#endif
 
 	if (ad == NULL)
 		return;
@@ -957,9 +906,8 @@ void __setting_sound_ug_key_ungrab(SettingProfileUG *ad)
 #ifdef ECORE_X
 	Ecore_X_Window xwin = 0;
 	Ecore_X_Display *disp = NULL;
-#endif
-
 	int ret = 0;
+#endif
 
 	if (ad == NULL)
 		return;
@@ -1096,7 +1044,7 @@ void setting_sound_create_warning_popup_during_call(void *data)
 	ret_if(data == NULL);
 	SettingProfileUG *ad = (SettingProfileUG *) data;
 
-	int call_status = CM_CALL_STATUS_IDLE;
+	cm_call_status_e call_status = CM_CALL_STATUS_IDLE;
 	cm_client_h cm_handle = NULL;
 	cm_init(&cm_handle);
 	cm_get_call_status(cm_handle, &call_status);

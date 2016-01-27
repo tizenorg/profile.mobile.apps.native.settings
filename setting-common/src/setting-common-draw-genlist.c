@@ -2120,6 +2120,22 @@ EXPORT_PUBLIC Setting_GenGroupItem_Data *setting_create_Gendial_field_def(Evas_O
 	                                              chk_change_cb);
 }
 
+EXPORT_PUBLIC void setting_add_gl_help(Evas_Object *scroller, const char *str)
+{
+	if (str) {
+		Setting_GenGroupItem_Data *item_data = setting_create_Gendial_field_def(scroller, &itc_multiline_text,
+		                                                                        NULL,
+		                                                                        NULL,
+		                                                                        SWALLOW_Type_LAYOUT_SPECIALIZTION_X,
+		                                                                        NULL, NULL, 0, str, NULL, NULL);
+		if(NULL == item_data) {
+			SETTING_TRACE_ERROR("item_data is NULL");
+			return;
+		}
+		elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+	}
+}
+
 /**
  * Create 1entry style item with parameter return_key_type
  * @return a pointer to Setting_GenGroupItem_Data

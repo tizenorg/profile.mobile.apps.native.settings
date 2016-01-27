@@ -25,6 +25,7 @@
 #include <setting-profile-sound-main.h>
 #include <setting-profile.h>
 #include <setting-common-general-func.h>
+#include <setting-common-draw-widget.h>
 
 #include <eventsystem.h>
 #include <bundle_internal.h>
@@ -42,6 +43,7 @@ static int setting_sound_main_create(void *cb);
 static int setting_sound_main_destroy(void *cb);
 static int setting_sound_main_update(void *cb);
 static int setting_sound_main_cleanup(void *cb);
+static void __sound_chk_cb(void *data, Evas_Object *obj, void *event_info);
 
 setting_view setting_view_sound_main = {
 	.create = setting_sound_main_create,
@@ -50,49 +52,43 @@ setting_view setting_view_sound_main = {
 	.cleanup = setting_sound_main_cleanup,
 };
 
-#define ADD_GENLIST(genlist, parent) \
-	{\
-		genlist = elm_genlist_add(parent);\
-		retvm_if(genlist == NULL, NULL, "Cannot set genlist object as contento of layout");\
-		elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);\
-		elm_object_style_set(genlist, "dialogue");\
-		elm_genlist_clear(genlist);\
-		evas_object_smart_callback_add(genlist, "realized", __gl_realized_cb, NULL);\
-		elm_scroller_policy_set(genlist, ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_AUTO);\
-	}
+static void __add_genlist(Evas_Object *genlist, Evas_Object *parent)
+{
+	genlist = elm_genlist_add(parent);
 
-/* keystr, toggle */
-#define ADD_TOGGLE_MENU2(item, genlist, item_style, keystr, value, data) \
-	{\
-		item = setting_create_Gendial_field_def(genlist, &(item_style), \
-		                                        setting_sound_main_mouse_up_Gendial_list_cb, \
-		                                        data, SWALLOW_Type_1ICON_1RADIO, NULL, \
-		                                        NULL, value, \
-		                                        keystr, NULL, \
-		                                        __sound_chk_cb); \
-		if (item) { \
-			item->userdata = data; \
-		} else { \
-			SETTING_TRACE_ERROR("%s item is NULL", keystr); \
-		} \
+	if(!genlist) {
+		SETTING_TRACE_ERROR("Cannot set genlist object as contento of layout");
+		return;
 	}
+	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
+	elm_object_style_set(genlist, "dialogue");
+	elm_genlist_clear(genlist);
+	evas_object_smart_callback_add(genlist, "realized", __gl_realized_cb, NULL);
+	elm_scroller_policy_set(genlist, ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_AUTO);
+}
 
-/* keystr, multiline, toggle */
-#define ADD_TOGGLE_MENU(item, genlist, item_style, keystr, substr, value, data) \
-	{\
-		item = setting_create_Gendial_field_def(genlist, &(item_style), \
-		                                        setting_sound_main_mouse_up_Gendial_list_cb, \
-		                                        data, SWALLOW_Type_1ICON_1RADIO, NULL, \
-		                                        NULL, value, \
-		                                        keystr, NULL, \
-		                                        __sound_chk_cb); \
-		if (item) { \
-			item->userdata = data;\
-		} else { \
-			SETTING_TRACE_ERROR("%s item is NULL", keystr);\
-		} \
-		ADD_GL_HELP_NO_SEP(genlist, substr);\
+static void __add_toggle_menu(Setting_GenGroupItem_Data *item,
+		Evas_Object *genlist,
+		Elm_Genlist_Item_Class item_style,
+		const char *keystr,
+		const char *substr,
+		int value,
+		SettingProfileUG *data)
+{
+	item = setting_create_Gendial_field_def(genlist, &(item_style),
+	                                        setting_sound_main_mouse_up_Gendial_list_cb,
+	                                        data, SWALLOW_Type_1ICON_1RADIO, NULL,
+	                                        NULL, value,
+	                                        keystr, NULL,
+	                                        __sound_chk_cb);
+	if (item) {
+		item->userdata = data;
+	} else {
+		SETTING_TRACE_ERROR("%s item is NULL", keystr);
 	}
+	if (substr)
+		setting_add_gl_help(genlist, substr);
+}
 
 #define ADD_SOUND_SLIDER(item_data, genlist, item_style, l_img, r_img, value, keystr, data, sld_cb, sld_max, start_cb, stop_cb) \
 	{ \
@@ -482,13 +478,15 @@ char *setting_do_not_disturb_is_enable(void *data)
 {
 	int err = NOTIFICATION_ERROR_NONE;
 	bool do_not_disturb;
-	char *desc;
 	notification_system_setting_h system_setting = NULL;
 
 	err = notification_system_setting_load_system_setting(&system_setting);
-	setting_retvm_if(NULL == system_setting || NOTIFICATION_ERROR_NONE != err,
-									SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
-									"notification_system_setting_load_system_Setting failed");
+
+	if(NULL == system_setting || NOTIFICATION_ERROR_NONE != err) {
+		SETTING_TRACE_ERROR("notification_system_setting_load_system_Setting failed");
+		return "notification_system_setting_load_system_Setting failed";
+	}
+
 	err = notification_system_setting_get_do_not_disturb(system_setting, &do_not_disturb);
 	SETTING_TRACE("do_not_disturb: %d", do_not_disturb);
 
@@ -700,7 +698,9 @@ static void __get_lite_main_list(void *data)
 		if (vconf_get_bool(VCONFKEY_SETAPPL_VIBRATE_WHEN_RINGING_BOOL, &vconf_value) < 0) {
 			vconf_value = TRUE;	/*  default value of vibrate sound : on */
 		}
-		ADD_TOGGLE_MENU2(ad->data_sound_when_ring, genlist, itc_1text_1icon, "IDS_ST_BODY_VIBRATE_WHEN_RINGING", vconf_value, ad);
+
+		__add_toggle_menu(ad->data_sound_when_ring, genlist, itc_1text_1icon,
+							"IDS_ST_BODY_VIBRATE_WHEN_RINGING", NULL, vconf_value, ad);
 		__BACK_POINTER_SET(ad->data_sound_when_ring);
 		setting_genlist_item_disabled_set(ad->data_sound_when_ring, !sound_value);
 
@@ -753,24 +753,22 @@ void vibration_state_event_handler(const char *event_name, bundle *data, void *u
 	SETTING_TRACE("vibration_state_set(%s)", vibration_state_set);
 }
 
-int vibration_state_reg_id;
+unsigned int vibration_state_reg_id;
 
-static Eina_Bool
+static void
 setting_soudn_main_click_softkey_back_cb(void *data, Evas_Object *obj,
                                          void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
-	setting_retvm_if(data == NULL, EINA_FALSE,
-	                 "[Setting > Display] Data parameter is NULL");
+	if(data == NULL)
+		return;
 
 	SettingProfileUG *ad = (SettingProfileUG *) data;
 
 	/* Send destroy request */
 	ug_destroy_me(ad->ug);
 	SETTING_TRACE_END;
-	return EINA_FALSE;
-
 }
 
 
@@ -793,7 +791,7 @@ static int setting_sound_main_create(void *cb)
 		ad->ly_main = setting_create_win_layout(ad->win_get);
 		ad->navi_bar = setting_create_navi_bar(ad->ly_main);
 
-		ADD_GENLIST(ad->gl_lite_main, ad->navi_bar);
+		__add_genlist(ad->gl_lite_main, ad->navi_bar);
 
 		__get_lite_main_list(ad);
 
@@ -1143,8 +1141,15 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
                                             void *event_info)
 {
 	/* error check */
-	ret_if(data == NULL);
-	retm_if(event_info == NULL, "Invalid argument: event info is NULL");
+	if(data == NULL) {
+		SETTING_TRACE_ERROR("data == NULL");
+		return;
+	}
+
+	if(event_info == NULL) {
+		SETTING_TRACE_ERROR("Invalid argument: event info is NULL");
+		return;
+	}
 
 	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
 	elm_genlist_item_selected_set(item, 0);
@@ -1226,21 +1231,29 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 
 		int vconf_value = 0;
 		Evas_Object *genlist = NULL;
-		ADD_GENLIST(genlist, ad->navi_bar);
+		__add_genlist(genlist, ad->navi_bar);
 		/* 1. Touch sounds */
 		if (vconf_get_bool(VCONFKEY_SETAPPL_TOUCH_SOUNDS_BOOL, &vconf_value) < 0)
 			vconf_value = TRUE;	/*  default value of touch sounds : on */
-		ADD_TOGGLE_MENU(ad->data_touch_sounds, genlist, itc_1text_1icon, "IDS_ST_MBODY_TOUCH_SOUND", "IDS_ST_BODY_PLAY_A_SOUND_WHEN_BUTTONS_ICONS_AND_MENU_ITEMS_ARE_TAPPED", vconf_value, ad)
 
+		__add_toggle_menu(ad->data_touch_sounds, genlist,
+							itc_1text_1icon, "IDS_ST_MBODY_TOUCH_SOUND",
+							"IDS_ST_BODY_PLAY_A_SOUND_WHEN_BUTTONS_ICONS_AND_MENU_ITEMS_ARE_TAPPED",
+							vconf_value, ad);
 		/* 2. Keytones */
 		if (vconf_get_bool(VCONFKEY_SETAPPL_BUTTON_SOUNDS_BOOL, &vconf_value) < 0)
 			vconf_value = TRUE;	/*  default value of touch sounds : on */
-		ADD_TOGGLE_MENU(ad->data_button_sounds, genlist, itc_1text_1icon, "IDS_ST_MBODY_DIALLING_KEYPAD_TONE", "IDS_ST_BODY_PLAY_TONE_WHEN_THE_DIALLING_KEYPAD_IS_TAPPED", vconf_value, ad)
-
+		__add_toggle_menu(ad->data_button_sounds, genlist, itc_1text_1icon,
+							"IDS_ST_MBODY_DIALLING_KEYPAD_TONE",
+							"IDS_ST_BODY_PLAY_TONE_WHEN_THE_DIALLING_KEYPAD_IS_TAPPED", vconf_value, ad);
 		/*  3. Screen lock sound */
 		if (vconf_get_bool(VCONFKEY_SETAPPL_SOUND_LOCK_BOOL, &vconf_value) < 0)
 			vconf_value = 0;	/*  default value of lock/unlock sound : off */
-		ADD_TOGGLE_MENU(ad->data_lock_sound, genlist, itc_1text_1icon, "IDS_ST_BODY_SCREEN_LOCK_SOUND", "IDS_ST_BODY_PLAY_SOUNDS_WHEN_LOCKING_AND_UNLOCKING_SCREEN", vconf_value, ad)
+
+		__add_toggle_menu(ad->data_lock_sound, genlist, itc_1text_1icon,
+							"IDS_ST_BODY_SCREEN_LOCK_SOUND",
+							"IDS_ST_BODY_PLAY_SOUNDS_WHEN_LOCKING_AND_UNLOCKING_SCREEN",
+							vconf_value, ad);
 
 		Elm_Object_Item *navi_it = elm_naviframe_item_push(ad->navi_bar, "IDS_ST_HEADER_FEEDBACK", NULL, NULL, genlist, NULL);
 		elm_object_item_domain_text_translatable_set(navi_it, SETTING_PACKAGE, EINA_TRUE);

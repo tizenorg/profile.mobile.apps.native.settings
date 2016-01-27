@@ -454,7 +454,6 @@ static inline void storageUg_SD_remove_info(SettingStorageUG *ad)
 
 void storageUg_main_append_SD_info(SettingStorageUG *ad)
 {
-	char *str;
 	int mmc_mode;
 
 	ret_if(ad == NULL);
@@ -478,7 +477,7 @@ void storageUg_main_append_SD_info(SettingStorageUG *ad)
 		SETTING_TRACE_ERROR("mmc_mode(%d) Invalid", mmc_mode);
 
 #if 0
-	str = vconf_get_str(storageUg_ENCRYPT_stat);
+	char *str = vconf_get_str(storageUg_ENCRYPT_stat);
 	warn_if(NULL == str, "vconf_get_str(%s) Fail", storageUg_ENCRYPT_stat);
 	if (!safeStrCmp(str, "encryption_start") || !safeStrCmp(str, "decryption_start")) {
 		if (ad->sd_mount) setting_disable_genlist_item(ad->sd_mount->item);
