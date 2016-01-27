@@ -78,7 +78,7 @@
 /*##menu options##*/
 #define SUPPORT_FONT				1
 #define SUPPORT_WALLPAPER			0
-#define SUPPOR_SEPARATE_BRIGHTNESS		0
+#define SUPPORT_SEPARATE_BRIGHTNESS		0
 
 #define SUPPORT_ACCESSIBILITY			1
 
@@ -272,4 +272,3 @@
 
 
 #endif /* _SETTING_DEBUG_H_ */
-
