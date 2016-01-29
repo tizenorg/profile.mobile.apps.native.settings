@@ -270,5 +270,6 @@
 		}\
 	} while (0);
 
+#define UNUSED __attribute__((unused))
 
 #endif /* _SETTING_DEBUG_H_ */

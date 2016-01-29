@@ -41,7 +41,7 @@ setting_view setting_view_applications_main = {
  *
  ***************************************************/
 
-static void setting_applications_main_vconf_change_cb(keynode_t *key, void *data)
+static UNUSED void setting_applications_main_vconf_change_cb(keynode_t *key, void *data)
 {
 	ret_if(data == NULL);
 
@@ -62,7 +62,6 @@ static void setting_applications_main_vconf_change_cb(keynode_t *key, void *data
 	}
 }
 
-
 static int setting_applications_main_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
@@ -72,10 +71,6 @@ static int setting_applications_main_create(void *cb)
 	SettingApplicationsUG *ad = (SettingApplicationsUG *) cb;
 
 	Evas_Object *scroller = NULL;
-
-	int value = 0;
-	int ret = 0;
-
 
 	ad->ly_main =
 	    setting_create_layout_navi_bar_genlist(ad->win_main_layout,

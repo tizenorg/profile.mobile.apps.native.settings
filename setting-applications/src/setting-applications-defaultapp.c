@@ -117,11 +117,8 @@ static void setting_applications_defaultapp_vconf_change_cb(keynode_t *key, void
 	ret_if(data == NULL);
 
 	SettingApplicationsUG *ad = data;
-	int status = 0;
 
-	//status = vconf_keynode_get_string(key);
 	char *vconf_name = vconf_keynode_get_name(key);
-	//SETTING_TRACE("status:%d", status);
 
 	if (!safeStrCmp(vconf_name, VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME)) {
 		if (ad->data_home) {
@@ -164,6 +161,9 @@ static int setting_applications_defaultapp_create(void *cb)
 	// ad->data_home
 	int ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME,
 	                               setting_applications_defaultapp_vconf_change_cb, ad);
+	if (ret != 0) {
+		SETTING_TRACE_ERROR("call vconf_notify_key_changed failed");
+	}
 
 	// org.tizen.homescreen-efl : homescreen-efl
 	// org.tizen.homescreen     : Homescreen

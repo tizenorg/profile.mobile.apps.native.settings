@@ -156,7 +156,7 @@ static void appmgrUg_main_more_popup_del_cb(void *data, Evas *e,
 	                               "rotation,changed", appmgrUg_main_more_popup_rotate);
 }
 
-static char *_appmgrUg_access_info_prepend_cb(void *data, Evas_Object *obj)
+static UNUSED char *_appmgrUg_access_info_prepend_cb(void *data, Evas_Object *obj)
 {
 	SETTING_TRACE_BEGIN;
 	retv_if(!data, NULL);
@@ -204,10 +204,6 @@ static void appmgrUg_main_gl_realized(void *data, Evas_Object *obj,
                                       void *event_info)
 {
 	setting_retm_if(event_info == NULL, "invalid parameter: event_info is NULL");
-	Elm_Object_Item *item = (Elm_Object_Item *)event_info;
-	appmgr_listinfo *list_item = (appmgr_listinfo *)elm_object_item_data_get(item);
-
-	// setting_check_genlist_item_bottom_line(item);
 }
 
 static Evas_Object *appmgrUg_main_genlist(Evas_Object *parent)
@@ -593,15 +589,12 @@ static inline Evas_Object *appmgrUg_main_clear_defapp_toolbar(
 static void appmgrUg_download_create(void *data, Evas_Object *obj,
                                      void *event_info)
 {
-	Evas_Object *toolbar;
 	SettingAppMgrUG *ad = data;
 
 	ret_if(NULL == data);
 	ret_if(APPMGRUG_TAB_DOWNLOAD == ad->tabtype);
 
 	ad->tabtype = APPMGRUG_TAB_DOWNLOAD;
-	/*toolbar = elm_object_item_part_content_unset(ad->navi_main_it, "toolbar"); */
-	/*evas_object_del(toolbar); */
 
 	appmgrUg_main_genlist_append_items(ad);
 }
@@ -609,15 +602,12 @@ static void appmgrUg_download_create(void *data, Evas_Object *obj,
 static void appmgrUg_disabled_create(void *data, Evas_Object *obj,
                                      void *event_info)
 {
-	Evas_Object *toolbar;
 	SettingAppMgrUG *ad = data;
 
 	ret_if(NULL == data);
 	ret_if(APPMGRUG_TAB_DISABLED == ad->tabtype);
 
 	ad->tabtype = APPMGRUG_TAB_DISABLED;
-	/*toolbar = elm_object_item_part_content_unset(ad->navi_main_it, "toolbar"); */
-	/*evas_object_del(toolbar); */
 
 	appmgrUg_main_genlist_append_items(ad);
 }
@@ -625,15 +615,12 @@ static void appmgrUg_disabled_create(void *data, Evas_Object *obj,
 static void appmgrUg_running_create(void *data, Evas_Object *obj,
                                     void *event_info)
 {
-	Evas_Object *toolbar;
 	SettingAppMgrUG *ad = data;
 
 	ret_if(NULL == data);
 	ret_if(APPMGRUG_TAB_RUNNING == ad->tabtype);
 
 	ad->tabtype = APPMGRUG_TAB_RUNNING;
-	/*toolbar = elm_object_item_part_content_unset(ad->navi_main_it, "toolbar"); */
-	/*evas_object_del(toolbar); */
 
 	ad->is_runlist_ready = EINA_FALSE;
 	/*ad->running_list_worker = appmgrUg_start_async_worker(appmgrUg_get_running_list, appmgrUg_get_runlistinfos_cb, ad); */
@@ -644,15 +631,12 @@ static void appmgrUg_running_create(void *data, Evas_Object *obj,
 
 static void appmgrUg_all_create(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *toolbar;
 	SettingAppMgrUG *ad = data;
 
 	ret_if(NULL == data);
 	ret_if(APPMGRUG_TAB_ALL == ad->tabtype);
 
 	ad->tabtype = APPMGRUG_TAB_ALL;
-	/*toolbar = elm_object_item_part_content_unset(ad->navi_main_it, "toolbar"); */
-	/*evas_object_del(toolbar); */
 
 	appmgrUg_main_genlist_append_items(ad);
 }
@@ -745,8 +729,9 @@ static int appmgrUg_main_create(void *data)
 
 	/* back button */
 	back_btn = setting_create_button(ad->navi, MGRAPP_STR_APP_MANAGER,
-                                     NAVI_BACK_ARROW_BUTTON_STYLE,
-	                                 setting_appmgr_main_click_softkey_back_cb, ad);
+	                                 NAVI_BACK_ARROW_BUTTON_STYLE,
+	                                 (setting_call_back_func)setting_appmgr_main_click_softkey_back_cb,
+	                                 ad);
 
 	navi_it = elm_naviframe_item_push(ad->navi, MGRAPP_STR_APP_MANAGER,
 	                                  back_btn, NULL, NULL, "tabbar");
