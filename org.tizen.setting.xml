@@ -61,10 +61,6 @@
 		<label xml:lang="zh-sg">设定</label>
 		<label xml:lang="zh-tw">設定</label>
 	</ui-application>
-	<ui-application appid="org.tizen.mode-syspopup" exec="/usr/apps/org.tizen.mode-syspopup/bin/mode-syspopup" nodisplay="true" multiple="false" type="capp" taskmanage="false" ui-gadget="true">
-		<label>Mode System Popup</label>
-		<icon>/usr/share/icons/default/small/org.tizen.setting.png</icon>
-	</ui-application>
 	<ui-application appid="setting-network-efl" exec="/usr/apps/org.tizen.setting/bin/setting-network-eufl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
 			<icon>/usr/share/icons/default/small/org.tizen.setting.png</icon>
 			<label>Network</label>
