@@ -281,5 +281,7 @@
 		<privilege>http://tizen.org/privilege/account.write</privilege>
 		<privilege>http://tizen.org/privilege/notification</privilege>
 		<privilege>http://tizen.org/privilege/volume.set</privilege>
+		<privilege>http://tizen.org/privilege/telephony.admin</privilege>
+		<privilege>http://tizen.org/privilege/systemsettings.admin</privilege>
 	</privileges>
 </manifest>
