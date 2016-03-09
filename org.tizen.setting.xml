@@ -119,7 +119,7 @@
         </ui-application>
 
 	<ui-application appid="setting-storage-efl" exec="/usr/apps/org.tizen.setting/bin/setting-storage-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
-                        <icon>/usr/apps/org.tizen.setting/res/icons/settings_storage.png</icon>
+                        <icon>/usr/share/icons/default/small/org.tizen.setting.png</icon>
                         <label>Storage</label>
                         <label xml:lang="en-us">Storage</label>
 			<label xml:lang="ja-jp">ストレージ</label>
@@ -175,19 +175,6 @@
 	</ui-application>
         <ui-application appid="org.tizen.setting-blockingmode-alarm" exec="/usr/apps/org.tizen.setting/bin/setting-blockingmode-alarm" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
 			<label>Setting-blockingmode-alarm</label>
-	</ui-application>
-	<ui-application appid="setting-privacy-efl" exec="/usr/apps/org.tizen.setting/bin/setting-privacy-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
-			<icon>/usr/share/icons/default/small/org.tizen.setting.png</icon>
-			<label>Privacy </label>
-			<label xml:lang="en-us">Privacy</label>
-			<label xml:lang="ja-jp">プライバシー</label>
-			<label xml:lang="ko-kr">개인 정보 보호</label>
-			<application-service>
-				<operation name="http://samsung.com/appcontrol/operation/configure/privacy"/>
-			</application-service>
-			<application-service>
-				<operation name="http://tizen.org/appcontrol/operation/configure/privacy"/>
-			</application-service>
 	</ui-application>
 	<ui-application appid="setting-motion-efl" exec="/usr/apps/org.tizen.setting/bin/setting-motion-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
 			<icon>/usr/share/icons/default/small/org.tizen.setting.png</icon>
