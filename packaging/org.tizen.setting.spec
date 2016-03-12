@@ -243,7 +243,7 @@ fi
 	rm -rf {_prefix}/data/setting/set_info
 
 # for support shared menu icons
-ln -s %{RESDIR}/icons %{PREFIX}/shared/res/icons
+#ln -s %{RESDIR}/icons %{PREFIX}/shared/res/icons
 
 #APP_PATH_INFO=`%{PREFIX}/bin/setting_conf_util get_data_path`
 #echo "-------------------------------------------------------------> "$APP_PATH_INFO
