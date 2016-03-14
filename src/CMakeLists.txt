@@ -222,6 +222,7 @@ INSTALL(FILES ${CMAKE_SOURCE_DIR}/${SETTING_PKG_NAME}.png DESTINATION /usr/share
 INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/icons DESTINATION /usr/apps/${SETTING_PKG_NAME}/res FILES_MATCHING PATTERN "*.png")
 INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/images DESTINATION /usr/apps/${SETTING_PKG_NAME}/res FILES_MATCHING PATTERN "*.png")
 
+#INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/icons DESTINATION /usr/apps/${SETTING_PKG_NAME}/shared FILES_MATCHING PATTERN "*.png")
 
 # install file for help app
 #SET(HELPDATADIR_PH "/usr/apps/org.tizen.setting/shared/res")
@@ -238,6 +239,7 @@ ENDIF("${BUILD_ARCH}" STREQUAL "arm")
 INSTALL(FILES ${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting.xml DESTINATION /usr/apps/org.tizen.setting/shared/res/tables)
 
 INSTALL(FILES ${CMAKE_SOURCE_DIR}/mime.setting.xml DESTINATION /usr/share/mime/packages)
+
 
 
 #------------------------------------------------------------------
