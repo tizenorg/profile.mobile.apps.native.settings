@@ -369,6 +369,7 @@ static void setting_storageUg_on_key_event(ui_gadget_h ug,
 static void setting_storageUg_on_start(ui_gadget_h ug, app_control_h app_control, void *priv)
 {
 	SETTING_TRACE_BEGIN;
+	SettingStorageUG *storageUG = priv;
 
 	retm_if(NULL == ug || NULL == priv, "ug=%p, priv=%p is Invalid", ug, priv);
 

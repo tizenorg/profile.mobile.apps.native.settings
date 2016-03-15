@@ -437,7 +437,7 @@ void storageUG_update_apps_info(SettingStorageUG *ad)
 		return;
 	}
 
-	ret = pkgmgr_client_get_size(ad->pc, "get", PM_GET_ALL_PKGS, (pkgmgr_handler)storageUg_get_apps_info,
+	ret = pkgmgr_client_get_size(ad->pc, "get", PM_GET_ALL_PKGS, storageUg_get_apps_info,
 	                             ad);
 	warn_if(ret, "pkgmgr_client_get_size() Fail(%d)", ret);
 }

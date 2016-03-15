@@ -384,7 +384,7 @@ static int storageUg_default_create(void *data)
 		SETTING_TRACE_ERROR("ad->data_installapp is NULL");
 	}
 
-	setting_add_gl_help(genlist, STORAGEUG_STR_APP_LOC_NOTICE);
+	ADD_GL_HELP(genlist, STORAGEUG_STR_APP_LOC_NOTICE);
 
 	ret = vconf_notify_key_changed(storageUg_MMC_stat, storageUg_default_mmc_changed_cb,
 	                               ad);

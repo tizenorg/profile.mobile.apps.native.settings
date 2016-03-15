@@ -96,6 +96,14 @@ more_ctxpopup_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	evas_object_event_callback_del_full(nf, EVAS_CALLBACK_RESIZE, naviframe_resize_cb, ctxpopup);
 }
 
+static void
+win_rotation_changed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	Evas_Object *ctxpopup = data;
+	move_more_ctxpopup(ctxpopup);
+}
+
 //static inline void storageUg_misces_gl_remove_select_all_item(SettingStorageUG *ad);
 static void _genlist_check_hide(SettingStorageUG *ad, bool hide)
 {
@@ -170,7 +178,10 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *e
 {
 	SETTING_TRACE_BEGIN;
 	SettingStorageUG  *ad = (SettingStorageUG*) data;
+	Evas_Object *it_obj;
 	Evas_Object *nf = ad->navi;
+	Evas_Object *win;
+	Elm_Object_Item *it;
 
 	if (ctxpopup != NULL) {
 		evas_object_del(ctxpopup);
@@ -185,9 +196,16 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *e
 	evas_object_event_callback_add(ctxpopup, EVAS_CALLBACK_DEL, more_ctxpopup_del_cb, nf);
 	evas_object_event_callback_add(nf, EVAS_CALLBACK_RESIZE, naviframe_resize_cb, ctxpopup);
 
+	/* We convince the top widget is a window */
+//	win = elm_object_top_widget_get(nf);
+//	evas_object_smart_callback_add(win, "rotation,changed", win_rotation_changed_cb, ctxpopup);
+
 	//---------------------------------------------------------------------------------------------
 	elm_ctxpopup_item_append(ctxpopup, _("IDS_ST_BODY_DELETE"), NULL, setting_storage_ctx_click_softkey_cb, ad);
 	//---------------------------------------------------------------------------------------------
+
+
+
 
 	elm_ctxpopup_direction_priority_set(ctxpopup, ELM_CTXPOPUP_DIRECTION_UP, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN);
 	move_more_ctxpopup(ctxpopup);
@@ -1023,12 +1041,25 @@ storageUg_misces_cancel_cb(void *data, Evas_Object *obj, void *event_info)
 	SETTING_TRACE_END;
 }
 
+static void
+setting_storage_click_softkey_delete_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	/* error check */
+	retm_if(data == NULL, "Data parameter is NULL");
+
+	SettingStorageUG *ad = (SettingStorageUG *) data;
+
+	return;
+}
+
 //--------------------------------------------------
 //	name: "storageview_layout";
 //--------------------------------------------------
 static int storageUg_misces_create(void *data)
 {
 	SettingStorageUG *ad = data;
+	Evas_Object *sel_all = NULL;
 
 	retv_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 

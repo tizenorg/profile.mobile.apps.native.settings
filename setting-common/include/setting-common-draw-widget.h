@@ -109,7 +109,6 @@ extern const Elm_Genlist_Item_Class itc_bottom_line;
 		}\
 	}
 
-/*TODO: remove this:*/
 #define ADD_GL_HELP(scroller, str) \
 	{\
 		if (str) {\
@@ -123,7 +122,20 @@ extern const Elm_Genlist_Item_Class itc_bottom_line;
 		}\
 	}
 
-/*TODO remove this:*/
+#ifdef OLD_GENLIST_STYLE
+#define ADD_GL_HELP_NO_SEP(scroller, str) \
+	{\
+		if (str) {\
+			Setting_GenGroupItem_Data *item_data = setting_create_Gendial_field_def(scroller, &itc_multiline_text,\
+			                                                                        NULL,\
+			                                                                        NULL,\
+			                                                                        SWALLOW_Type_LAYOUT_SPECIALIZTION_X,\
+			                                                                        NULL, NULL, 0, str, NULL, NULL);\
+			setting_retvm_if(NULL == item_data, NULL, "item_data is NULL");\
+			elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
+		}\
+	}
+#else
 #define ADD_GL_HELP_NO_SEP(scroller, str) \
 	{\
 		if (str) {\
@@ -136,6 +148,8 @@ extern const Elm_Genlist_Item_Class itc_bottom_line;
 			elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
 		}\
 	}
+#endif
+
 
 #define ADD_GL_BUTTON(scroller, btn_str, btn_cb, cb_data) \
 	{\
@@ -349,8 +363,6 @@ extern Setting_GenGroupItem_Data *setting_create_Gendial_field_def(Evas_Object *
                                                                    const char *keyStr,
                                                                    char *sub_desc,
                                                                    setting_call_back_func chk_change_cb);
-
-extern void setting_add_gl_help(Evas_Object *scroller, const char *str);
 
 extern Setting_GenGroupItem_Data *setting_create_Gendial_field_entry_with_return_key(Evas_Object *
         genlist,

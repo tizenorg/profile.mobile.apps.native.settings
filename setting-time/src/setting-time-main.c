@@ -233,7 +233,8 @@ static void setting_time_main_int_vconf_change_cb(keynode_t *key, void *data)
 		setting_retm_if(NULL == pa_time_format, "pa_time_format is NULL");
 
 		char* lang = NULL;
-		system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, &lang);
+		int err = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, &lang);
+		char *date = __setting_phone_lang_get_by_pattern(lang, "MMM/d/yyyy");
 
 		if (!strncmp(pa_time_format, "IDS_ST_BODY_12_HOURS", strlen("IDS_ST_BODY_12_HOURS")))
 			time = __setting_phone_lang_get_by_pattern(lang, "hhmm");
@@ -269,7 +270,7 @@ static int _alarmmgr_set_systime_helper(time_t t_current)
 		/* set event system */
 		setting_set_event_system(SYS_EVENT_SCREEN_AUTOROTATE_STATE,
 		                         EVT_KEY_TIME_CHANGED,
-		                         ctime(&t_current));
+		                         t_current);
 	}
 
 	return ret;
@@ -527,16 +528,18 @@ static void setting_time_main_datefield_set_cb(void *data, Evas_Object *object, 
 	int ret = _alarmmgr_set_systime_helper(the_time);
 
 #ifdef USE_TIMER_UPDATE_TIME_IN_TIME_VIEW
-if (ad->update_timer) {
-	ecore_timer_thaw(ad->update_timer);
-}
+	if (ad->update_timer) {
+		ecore_timer_thaw(ad->update_timer);
+	}
 #endif
 
+#if 1
+	time_t cctime = time(NULL);
 	struct tm ts_ret;
-
+	struct tm *ts = localtime_r(&cctime, &ts_ret);
 	SETTING_TRACE("After _alarmmgr_set_systime_helper() ....year : %d, month : %d, day : %d, hour : %d, min : %d",
 	              ts_ret.tm_year, ts_ret.tm_mon, ts_ret.tm_mday, ts_ret.tm_hour, ts_ret.tm_min);
-
+#endif
 	Evas_Object *popup = NULL;
 	popup = evas_object_data_get(obj, "popup");
 	if (popup) {
@@ -549,11 +552,11 @@ if (ad->update_timer) {
 #ifdef USE_TIMER_UPDATE_TIME_IN_TIME_VIEW
 Eina_Bool __refresh_date_timer(void *data)
 {
-       SETTING_TRACE_BEGIN;
-       SettingTimeUG *ad = data;
+	SETTING_TRACE_BEGIN;
+	SettingTimeUG *ad = data;
 
-       __setting_update_datefield_cb(ad);
-       return 1;
+	__setting_update_datefield_cb(ad);
+	return 1;
 }
 #endif
 
@@ -566,7 +569,7 @@ void hour_format_event_handler(const char *event_name, bundle *data, void *user_
 	SETTING_TRACE("hour_format_set(%s)", hour_format_set);
 }
 
-unsigned int hour_format_event_reg_id;
+int hour_format_event_reg_id;
 
 static int setting_time_main_create(void *cb)
 {
@@ -774,8 +777,7 @@ static int setting_time_main_create(void *cb)
 	} else {
 		SETTING_TRACE_ERROR("ad->data_time_fmt is NULL");
 	}
-
-	setting_add_gl_help(scroller, "IDS_ST_SBODY_SHOW_THE_TIME_IN_24_HOUR_FORMAT_INSTEAD_OF_12_HOUR_HAM_PM_FORMAT");
+	ADD_GL_HELP_NO_SEP(scroller, "IDS_ST_SBODY_SHOW_THE_TIME_IN_24_HOUR_FORMAT_INSTEAD_OF_12_HOUR_HAM_PM_FORMAT");
 
 #if APPLIED_DATATIME_DATA_FORMAT
 	char *pa_date_format = get_pa_date_format_str();
@@ -1110,12 +1112,7 @@ void setting_time_main_launch_worldclock_sg(void *data)
 static void __setting_update_datefield_cb(void *cb)
 {
 	SETTING_TRACE_BEGIN;
-
-	if(!cb) {
-		SETTING_TRACE_ERROR("Data parameter is NULL");
-		return;
-	}
-
+	retvm_if(cb == NULL, EINA_FALSE, "Data parameter is NULL");
 	SettingTimeUG *ad = (SettingTimeUG *) cb;
 
 	if (ad->data_time) {
@@ -1125,18 +1122,14 @@ static void __setting_update_datefield_cb(void *cb)
 		SETTING_TRACE("year : %d, month : %d, day : %d, hour : %d, min : %d",
 		              ts_ret.tm_year, ts_ret.tm_mon, ts_ret.tm_mday, ts_ret.tm_hour, ts_ret.tm_min);
 		if (ts) {
+
 			char* region = NULL;
-			system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, &region );
+			int err = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, &region );
 			char *date = __setting_phone_lang_get_by_pattern(region, "MMM/d/yyyy");
 			char *time;
 			static char date_arr[DEF_BUF_SIZE], time_arr[DEF_BUF_SIZE];
 			char *pa_time_format = get_pa_time_format_str();
-
-			if(NULL == pa_time_format) {
-				SETTING_TRACE_ERROR("pa_time_format is NULL");
-				return;
-			}
-
+			setting_retvm_if(NULL == pa_time_format, FALSE, "pa_time_format is NULL");
 			if (!strncmp(pa_time_format, "IDS_ST_BODY_12_HOURS", strlen("IDS_ST_BODY_12_HOURS")))
 				time = __setting_phone_lang_get_by_pattern(region, "hhmm");
 			else
@@ -1291,12 +1284,7 @@ setting_time_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
-
-	if(!data) {
-		SETTING_TRACE_ERROR("Data parameter is NULL");
-		return;
-	}
-
+	retm_if(data == NULL, "Data parameter is NULL");
 	SettingTimeUG *ad = NULL;
 	Setting_GenGroupItem_Data *list_item =
 	    (Setting_GenGroupItem_Data *) data;
@@ -1334,6 +1322,8 @@ setting_time_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 #if FUNCTION_SYSTEM_SETTING
 	/* Time format */
 	if (ad->data_time_fmt == list_item) {
+		int err = 0;
+		int value = VCONFKEY_TIME_FORMAT_12;
 		if (list_item->chk_status) {
 			err = system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR, true);
 		} else {

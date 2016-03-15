@@ -57,12 +57,8 @@ setting_view setting_view_security_update = {
  ****************************************************/
 static int setting_view_security_update_create(void *cb)
 {
+	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 	SETTING_TRACE_BEGIN;
-	if (!cb) {
-		SETTING_TRACE_ERROR("cb == NULL");
-		return SETTING_GENERAL_ERR_NULL_DATA_PARAMETER;
-	}
-
 	SettingSecurityUG *ad = (SettingSecurityUG *) cb;
 
 	Evas_Object *scroller;
@@ -130,7 +126,7 @@ static int setting_view_security_update_create(void *cb)
 	} else {
 		SETTING_TRACE_ERROR("ad->data_security_update_chk is NULL");
 	}
-	setting_add_gl_help(scroller, CHECK_UPDATE_AUTO_MSG);
+	ADD_GL_HELP(scroller, CHECK_UPDATE_AUTO_MSG);
 
 	/* separator */
 	item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
@@ -151,7 +147,7 @@ static int setting_view_security_update_create(void *cb)
 	} else {
 		SETTING_TRACE_ERROR("ad->data_security_update_chk is NULL");
 	}
-	setting_add_gl_help(scroller, SECURITY_VIA_WIFI_HELP_MSG);
+	ADD_GL_HELP(scroller, SECURITY_VIA_WIFI_HELP_MSG);
 
 	/*get auto update & via wifi value */
 	__get_toggle_status_form_msa(cb);
