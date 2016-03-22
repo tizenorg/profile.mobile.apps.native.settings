@@ -270,5 +270,6 @@
 		<privilege>http://tizen.org/privilege/volume.set</privilege>
 		<privilege>http://tizen.org/privilege/telephony.admin</privilege>
 		<privilege>http://tizen.org/privilege/systemsettings.admin</privilege>
+		<privilege>http://tizen.org/privilege/telephony</privilege>
 	</privileges>
 </manifest>
