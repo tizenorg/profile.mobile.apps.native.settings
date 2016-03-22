@@ -109,7 +109,7 @@ void export_default(VconfNode *node, void *root)
 				type = "int";
 
 				SETTING_TRACE(">>(%d)<<", result.value.i);
-				sprintf(arr, "%d", result.value.i);
+				snprintf(arr,1024, "%d", result.value.i);
 				/*node->value.i */
 				val = arr;
 				break;
@@ -166,7 +166,7 @@ void export_json(VconfNode *node, void *root)
 				/*type = "int"; */
 
 				SETTING_TRACE(">>(%d)<<", result.value.i);
-				sprintf(arr, "%d", result.value.i);
+				snprintf(arr,1024, "%d", result.value.i);
 				/*node->value.i */
 				val = arr;
 				break;
@@ -569,7 +569,7 @@ char *setting_export_json(status_handler_fp fp, void *data)
 					break;
 				case eINT:
 					get_vconf(arr3[i], &result);
-					sprintf(arr, "%d", result.value.i);
+					snprintf(arr, 1024, "%d", result.value.i);
 					val = arr;
 					/*if (val == NULL) val = "-100"; */
 					break;

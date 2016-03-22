@@ -623,6 +623,8 @@ static int _slider_endpoint_x()
 	int w, h;
 	ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
 	return w;
+#else
+	return 0;
 #endif
 }
 
@@ -753,7 +755,7 @@ static void __setting_get_font_size_str(void *data, int size)
 {
 	SETTING_TRACE_BEGIN;
 
-	retv_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+	ret_if(data == NULL);
 	SettingFontUG *ad = (SettingFontUG *) data;
 
 	switch (size) {
@@ -780,8 +782,8 @@ static void __setting_get_font_size_str(void *data, int size)
 static void __setting_get_font_type_str(void *data, char *font_data)
 {
 	SETTING_TRACE_BEGIN;
-	retv_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	retv_if(font_data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+	ret_if(data == NULL);
+	ret_if(font_data == NULL);
 
 	SettingFontUG *ad = (SettingFontUG *) data;
 

@@ -442,7 +442,7 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
 	size = sizeof(search_configs) / sizeof(storageUg_search_data);
 
 	for (i = 0; i < size; i++) {
-		sprintf(ug_args, "keyword:%d", search_configs[i].keynum);
+		snprintf(ug_args, STORAGEUG_MAX_STR_LEN, "keyword:%d", search_configs[i].keynum);
 		node = setting_plugin_search_item_subindex_add(
 		           search_configs[i].key_name,
 		           ug_args,

@@ -30,16 +30,16 @@ static void get_gmt_offset(char *str_buf, int size)
 	/* timezone string +/-<n> ex. +9, -1 */
 	time_t t = time(0); 	/* get unix time. sec. */
 
-	struct tm *data;
-	data = localtime(&t);		/* save time as structure. */
-	setting_retm_if(!data, "data is NULL");
-	data->tm_isdst = 0;			/* summer time, not applied. */
-	time_t a = mktime(data);
+	struct tm *pdata,data;
+	pdata = localtime_r(&t, &data);		/* save time as structure. */
+	setting_retm_if(!pdata, "data is NULL");
+	pdata->tm_isdst = 0;			/* summer time, not applied. */
+	time_t a = mktime(pdata);
 
-	data = gmtime(&a);
-	setting_retm_if(!data, "data is NULL");
-	data->tm_isdst = 0;			/* summer time, not applied. */
-	time_t b = mktime(data);
+	pdata = gmtime_r(&a,&data);
+	setting_retm_if(!pdata, "data is NULL");
+	pdata->tm_isdst = 0;			/* summer time, not applied. */
+	time_t b = mktime(pdata);
 
 	int gmtoffset_hour = (a - b) / 3600;	/* result : hour. */
 	int gmtoffset_min = ((a - b) % 3600) / 60;	/* result : min. */

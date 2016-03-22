@@ -1129,7 +1129,7 @@ static void __setting_update_datefield_cb(void *cb)
 			char *time;
 			static char date_arr[DEF_BUF_SIZE], time_arr[DEF_BUF_SIZE];
 			char *pa_time_format = get_pa_time_format_str();
-			setting_retvm_if(NULL == pa_time_format, FALSE, "pa_time_format is NULL");
+			setting_retm_if(NULL == pa_time_format, "pa_time_format is NULL");
 			if (!strncmp(pa_time_format, "IDS_ST_BODY_12_HOURS", strlen("IDS_ST_BODY_12_HOURS")))
 				time = __setting_phone_lang_get_by_pattern(region, "hhmm");
 			else
@@ -1486,13 +1486,13 @@ static void get_gmt_offset(char *str_buf, int size)
 	/* timezone string +/-<n> ex. +9, -1 */
 	time_t t = time(0); 	/* get unix time. sec. */
 
-	struct tm *data;
-	data = localtime(&t);		/* save time as structure. */
+	struct tm *pdata, data;
+	pdata = localtime_r(&t, &data);		/* save time as structure. */
 
-	setting_retm_if(!data, "data is NULL");
+	setting_retm_if(!pdata, "data is NULL");
 
-	int gmtoffset_hour = (data->tm_gmtoff) / 3600;		/* result : hour. */
-	int gmtoffset_min = ((data->tm_gmtoff) % 3600) / 60;	/* result : min. */
+	int gmtoffset_hour = (pdata->tm_gmtoff) / 3600;		/* result : hour. */
+	int gmtoffset_min = ((pdata->tm_gmtoff) % 3600) / 60;	/* result : min. */
 
 #if 0
 	if (gmtoffset_min != 0) {
@@ -1580,7 +1580,9 @@ static char *get_timezone_displayname()
 	const char *localeID = uloc_getDefault();
 
 	time_t t = time(0);
-	struct tm *data = localtime(&t);
+	struct tm *pdata, data;
+
+	pdata= localtime_r(&t, &data);
 
 	ICU_set_timezone(get_timezone_str());
 
@@ -1592,8 +1594,8 @@ static char *get_timezone_displayname()
 
 	/* get timezone display name (check dst) */
 	if (cal) {
-		if (data) {
-			if (data->tm_isdst)
+		if (pdata) {
+			if (pdata->tm_isdst)
 				ucal_getTimeZoneDisplayName(cal, UCAL_DST, localeID, displayName, SETTING_STR_SLP_LEN, &status);
 			else
 				ucal_getTimeZoneDisplayName(cal, UCAL_STANDARD, localeID, displayName, SETTING_STR_SLP_LEN, &status);

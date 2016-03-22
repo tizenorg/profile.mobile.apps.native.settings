@@ -645,8 +645,8 @@ int setting_about_main_stat_get_cpuinfo(float *usr_pct, float *sys_pct)
 		goto out;
 	}
 
-	elapsed_tick = (cur_tv.tv_sec - old_tv.tv_sec) * tick_per_sec +
-	               ((cur_tv.tv_usec - old_tv.tv_usec) * tick_per_sec) / 1000000;
+	elapsed_tick = (unsigned long long) ( ((long long) cur_tv.tv_sec - old_tv.tv_sec) * tick_per_sec +
+	               (((long long) cur_tv.tv_usec - old_tv.tv_usec) * tick_per_sec) / 1000000 );
 
 	/* REMOVE BS */
 	if (elapsed_tick != 0) {

@@ -80,7 +80,7 @@ int get_filelist_from_dir_path(char *path, Eina_List **file_list)
 {
 	SETTING_TRACE_BEGIN;
 	DIR *pDir = NULL;
-	struct dirent *ent;
+	struct dirent ent, *result;
 
 	retvm_if(path == NULL, -1, "dir path is null");
 	retvm_if(file_list == NULL, -1, "file_list is null");
@@ -91,14 +91,16 @@ int get_filelist_from_dir_path(char *path, Eina_List **file_list)
 		return -2;
 	}
 
-	while ((ent = readdir(pDir)) != NULL) {
+	while (readdir_r(pDir,&ent,&result) ==0) {
+		if(result == NULL) break;
+			
 		fileNodeInfo *pNode = NULL;
 
-		if (strncmp(ent->d_name, ".", 1) == 0 || strcmp(ent->d_name, "..") == 0) {
+		if (strncmp(ent.d_name, ".", 1) == 0 || strcmp(ent.d_name, "..") == 0) {
 			continue;
 		}
 
-		if ((ent->d_type & DT_REG) == 0) {
+		if ((ent.d_type & DT_REG) == 0) {
 			continue;
 		}
 
@@ -109,7 +111,7 @@ int get_filelist_from_dir_path(char *path, Eina_List **file_list)
 		memset(pNode, 0, sizeof(fileNodeInfo));
 
 		pNode->path = g_strdup(path);
-		pNode->name = g_strdup(ent->d_name);
+		pNode->name = g_strdup(ent.d_name);
 		pNode->media_name = get_media_basename(pNode->path, pNode->name);
 
 		*file_list = eina_list_append(*file_list, pNode);

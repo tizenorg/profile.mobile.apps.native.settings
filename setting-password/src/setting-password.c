@@ -713,6 +713,8 @@ int setting_password_set_password(const char *cur_pwd, const char *new_pwd, void
 			return SETTING_PW_ERROR_UNKNOWN;
 		}
 	}
+#else
+	return SETTING_PW_ERROR_UNKNOWN;
 #endif
 }
 

@@ -78,20 +78,28 @@ setting_view setting_view_sound_main = {
 	}
 
 /* keystr, multiline, toggle */
-#define ADD_TOGGLE_MENU(item, genlist, item_style, keystr, substr, value, data) \
+#define ADD_TOGGLE_MENU(_item, genlist, item_style, keystr, substr, value, data) \
 	{\
-		item = setting_create_Gendial_field_def(genlist, &(item_style), \
+		_item = setting_create_Gendial_field_def(genlist, &(item_style), \
 		                                        setting_sound_main_mouse_up_Gendial_list_cb, \
 		                                        data, SWALLOW_Type_1ICON_1RADIO, NULL, \
 		                                        NULL, value, \
 		                                        keystr, NULL, \
 		                                        __sound_chk_cb); \
-		if (item) { \
-			item->userdata = data;\
+		if (_item) { \
+			_item->userdata = data;\
 		} else { \
 			SETTING_TRACE_ERROR("%s item is NULL", keystr);\
 		} \
-		ADD_GL_HELP_NO_SEP(genlist, substr);\
+		if (substr) {\
+			Setting_GenGroupItem_Data *item_data = setting_create_Gendial_field_def(genlist, &itc_multiline_text,\
+			                                                                        NULL,\
+			                                                                        NULL,\
+			                                                                        SWALLOW_Type_LAYOUT_SPECIALIZTION_X,\
+			                                                                        NULL, NULL, 0,  substr, NULL, NULL);\
+			setting_retm_if(NULL == item_data, "item_data is NULL");\
+			elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
+		}\
 	}
 
 #define ADD_SOUND_SLIDER(item_data, genlist, item_style, l_img, r_img, value, keystr, data, sld_cb, sld_max, start_cb, stop_cb) \

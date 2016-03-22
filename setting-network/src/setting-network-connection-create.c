@@ -675,7 +675,7 @@ static void setting_network_connection_entry_next_activated_cb(void *data, Evas_
 static void _init_context(void *cb)
 {
 	SETTING_TRACE_BEGIN;
-	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+	ret_if(cb == NULL);
 
 	SettingNetworkUG *ad = (SettingNetworkUG *) cb;
 

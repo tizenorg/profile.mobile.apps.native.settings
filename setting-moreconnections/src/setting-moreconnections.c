@@ -75,7 +75,7 @@ static void setting_moreconnections_ug_on_resume(ui_gadget_h ug, app_control_h s
                                                  void *priv)
 {
 	SETTING_TRACE_BEGIN;
-	setting_retvm_if((!priv), NULL, "!priv");
+	setting_retm_if((!priv), "!priv");
 
 	SettingMoreConnectionsUG *moreconnectionsUG = priv;
 	setting_view_create(&setting_view_moreconnections_main, (void *)moreconnectionsUG);

@@ -250,7 +250,7 @@ char *setting_phone_lang_get_region_str(const char *region)
 	char source[256] = {0,};
 	UChar dest[256] = {0,};
 	if (strlen(str_displayname) < 256) {
-		strcpy(source, str_displayname);
+		strncpy(source, str_displayname,256);
 	} else {
 		FREE(str_displayname);
 		return NULL;
@@ -301,7 +301,7 @@ char *setting_phone_lang_get_by_pattern(const char *locale, const char *skeleton
 	/*remove ".UTF-8" in locale */
 	char locale_tmp[32] = {0,};
 	if (strlen(locale) < 32)	{
-		strcpy(locale_tmp, locale);
+		strncpy(locale_tmp, locale,32);
 	} else {
 		return NULL;
 	}

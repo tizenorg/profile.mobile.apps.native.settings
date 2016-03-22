@@ -1341,22 +1341,22 @@ int setting_security_firewall_reset()
 {
 	SETTING_TRACE_BEGIN;
 
-	struct dirent *next_file;
+	struct dirent ent,*next_file;
 	DIR *theFolder;
 
 	char filepath[256];
 
 	theFolder = opendir(SEC_FIREWALL_DIR);
-	next_file = readdir(theFolder);
+	readdir_r(theFolder, &ent, &next_file);
 	while (next_file) {
 		/* build the full path for each file in the folder */
-		sprintf(filepath, "%s/%s", SEC_FIREWALL_DIR, next_file->d_name);
+		sprintf(filepath,256, "%s/%s", SEC_FIREWALL_DIR, ent.d_name);
 		SETTING_TRACE_DEBUG("[%s]", filepath);
 		/*(void) remove(filepath); */
 		if (remove(filepath) != 0) { /*delete the file */
 			perror("remove");
 		}
-		next_file = readdir(theFolder);
+		readdir_r(theFolder, &ent, &next_file);
 	}
 
 	closedir(theFolder);

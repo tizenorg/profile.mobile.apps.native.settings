@@ -658,7 +658,9 @@ int __setting_init_search_index_module()
 		char *domain_appname = NULL;
 #if 1
 		if (p) {
-			domain_appname = strtok(domainname, ":");
+			char *tempp;
+			domain_appname = strtok_r(domainname, ":",&tempp);
+			
 			SETTING_TRACE("p1:appname : %s\n", domain_appname);
 			SETTING_TRACE("p2:localedir : %s\n", p + 1);
 			/* set */
