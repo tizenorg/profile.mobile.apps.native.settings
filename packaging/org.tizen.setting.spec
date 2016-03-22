@@ -7,7 +7,7 @@ Summary:    Setting application
 Version:    1.0.1
 Release:    99
 Group:      misc
-License:    Apache-1.0
+License:    Apache-2.0
 Source0:    %{name}-%{version}.tar.gz
 Source1:    packaging/firewall.service
 
