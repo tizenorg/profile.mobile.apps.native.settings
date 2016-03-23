@@ -59,7 +59,7 @@ static void setting_font_rot_changed_cb(void *data, Evas_Object *obj, void *even
 		return;
 	}
 	int change_ang = elm_win_rotation_get(ad->win_get);
-	enum ug_event event = UG_EVENT_ROTATE_PORTRAIT;
+
 	switch (change_ang) {
 		case APP_DEVICE_ORIENTATION_0:
 			//SETTING_TRACE("change_ang : 0");

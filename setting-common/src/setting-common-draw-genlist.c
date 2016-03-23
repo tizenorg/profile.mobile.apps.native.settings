@@ -1014,7 +1014,7 @@ static Evas_Object *__add_entry_padding(Setting_GenGroupItem_Data *item_data, Ev
 {
 	retv_if(!item_data || !parent, NULL);
 	Evas_Object *layout = elm_layout_add(parent);
-	Eina_Bool ret = elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME, "entry_layout");
+	elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME, "entry_layout");
 	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
 	setting_retvm_if(layout == NULL, FALSE, "layout == NULL");
@@ -1403,7 +1403,8 @@ static Evas_Object *__add_datefield_new(Setting_GenGroupItem_Data *item_data, Ev
 
 	char* region = NULL;
 	//int err = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, &lang);
-	int err = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, &region );
+	//? int err = 
+	system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, &region );
 
 	char *date = __setting_phone_lang_get_by_pattern(region , "MMM/d/yyyy");
 	char *pa_time_format = get_pa_time_format_str();
@@ -2535,7 +2536,10 @@ void __gl_realized_cb(void *data, Evas_Object *obj, void *event_info)
 	/*SETTING_TRACE_BEGIN; */
 	setting_retm_if(event_info == NULL, "invalid parameter: event_info is NULL");
 	Elm_Object_Item *item = (Elm_Object_Item *)event_info;
-	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *)elm_object_item_data_get(item);
+
+	//? Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *)
+	elm_object_item_data_get(item);
+	
 /// #if SUPPORT_TTS
 	setting_check_genlist_item_bottom_line(item);
 }

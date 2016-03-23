@@ -311,7 +311,7 @@ static void __reached_max_pwlength_cb(void *data, Evas_Object *obj, void *event_
 	retm_if(data == NULL, "Data parameter is NULL");
 	retm_if(!elm_object_focus_get(obj), "Entry is not focused");/*notify only when entry is being focused on. */
 
-	int err = 0;
+	// int err = 0;
 
 	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
 	SettingPasswordUG *ad = (SettingPasswordUG *) list_item->userdata;
@@ -379,7 +379,7 @@ static void __entry_focused_cb(void *data, Evas_Object *obj, void *event_info)
 	retm_if(data == NULL, "Data parameter is NULL");
 
 	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
-	SettingPasswordUG *ad = (SettingPasswordUG *)list_item->userdata;
+	// SettingPasswordUG *ad = (SettingPasswordUG *)list_item->userdata;
 
 	if (!elm_entry_is_empty(obj)) {
 		elm_object_item_signal_emit(list_item->item, "elm,state,eraser,show", "");

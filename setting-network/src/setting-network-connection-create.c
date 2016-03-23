@@ -121,7 +121,7 @@ void __sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 	/* error check */
 	retm_if(event_info == NULL, "Invalid argument: event info is NULL");
 	Elm_Object_Item *subitem = (Elm_Object_Item *) event_info;
-	Elm_Object_Item *parentItem = elm_genlist_item_parent_get(subitem);
+	//Elm_Object_Item *parentItem = elm_genlist_item_parent_get(subitem);
 	elm_genlist_item_selected_set(subitem, 0);
 
 	Setting_GenGroupItem_Data *data_subItem = elm_object_item_data_get(subitem);
@@ -757,10 +757,10 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *e
 {
 	SETTING_TRACE_BEGIN;
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-	Evas_Object *it_obj;
+	//Evas_Object *it_obj;
 	Evas_Object *nf = ad->navi_bar;
 	Evas_Object *win;
-	Elm_Object_Item *it;
+	//Elm_Object_Item *it;
 
 	if (ctxpopup != NULL) {
 		evas_object_del(ctxpopup);
@@ -1263,7 +1263,7 @@ static void __setting_network_connection_popup_rsp_cb(void *data, Evas_Object *o
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(obj == NULL, "obj parameter is NULL");
 	setting_retm_if(data == NULL, "Data parameter is NULL");
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	//SettingNetworkUG *ad = (SettingNetworkUG *) data;
 
 	// remove ctxpopup
 	if (ctxpopup != NULL) {

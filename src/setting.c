@@ -211,7 +211,6 @@ static void setting_main_lang_changed_cb(app_event_info_h event_info, void *data
 	/*setting_main_appdata *ad = data; */
 	setting_main_appdata *ad = g_main_ad;
 
-	int i = 0;
 	elm_object_item_part_text_set(ad->navibar_main_it, "elm.text.title", _("IDS_ST_OPT_SETTINGS"));
 	//setting_navi_items_update(ad->navibar_main);
 
@@ -239,7 +238,7 @@ static void setting_main_lang_changed_cb(app_event_info_h event_info, void *data
 */
 static void setting_int_vconf_change_cb(keynode_t *key, void *data)
 {
-	setting_main_appdata *ad = data;
+	// setting_main_appdata *ad = data;
 	retm_if(!data, "Invalid argument: data is NULL");
 
 	int status = vconf_keynode_get_int(key);
@@ -254,7 +253,7 @@ static void setting_int_vconf_change_cb(keynode_t *key, void *data)
 */
 static void setting_string_vconf_change_cb(keynode_t *key, void *data)
 {
-	setting_main_appdata *ad = data;
+	// setting_main_appdata *ad = data;
 	retm_if(!data, "Invalid argument: data is NULL");
 
 	char *value = vconf_keynode_get_str(key);

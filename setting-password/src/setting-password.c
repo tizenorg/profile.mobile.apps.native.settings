@@ -53,10 +53,12 @@ static void setting_password_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
 
 void __chk_cur_pw_status(SettingPasswordUG *ad, app_control_h service)
 {
+#if SECURITY_SERVER
 	int ret = 0;
 	unsigned int attempt = 0;
 	unsigned int max_attempt = 0;
 	unsigned int expire_sec = 0;
+#endif
 
 	ad->pw_status = SETTING_PW_STATUS_DEFAULT;
 
@@ -75,7 +77,7 @@ void __get_extra_data(SettingPasswordUG *ad, app_control_h service)
 {
 	SETTING_TRACE_BEGIN;
 
-	char *encryption = NULL;
+	//char *encryption = NULL;
 
 	/* #1. viewtype */
 	app_control_get_extra_data(service, "viewtype", &(ad->view_type_string));
@@ -371,7 +373,7 @@ static void setting_password_ug_on_event(ui_gadget_h ug,
 	if (!priv)
 		return;
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)priv;
+	// SettingPasswordUG *ad = (SettingPasswordUG *)priv;
 	/*static int old_event = -1; */
 	switch (event) {
 		case UG_EVENT_LOW_MEMORY:
@@ -413,7 +415,7 @@ static void setting_password_ug_on_key_event(ui_gadget_h ug,
 	if (!priv)
 		return;
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)priv;
+	// SettingPasswordUG *ad = (SettingPasswordUG *)priv;
 
 	switch (event) {
 		case UG_KEY_EVENT_END:
@@ -639,13 +641,16 @@ int setting_password_check_password(const char *challenge, unsigned int *remain_
 	SETTING_TRACE_BEGIN;
 	retv_if(challenge == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	int inner_ret = 0;
 	int ret = 0;
+#if SECURITY_SERVER
+	int inner_ret = 0;
 	unsigned int current_attempt = 0;
 	unsigned int max_attempt = 0;
 	unsigned int valid_secs = 0;
+#endif
 
 	SETTING_TRACE_DEBUG("check pwd : %s", challenge);
+
 #if SECURITY_SERVER
 	inner_ret = security_server_chk_pwd(challenge, &current_attempt, &max_attempt, &valid_secs);
 
@@ -676,21 +681,20 @@ int setting_password_set_password(const char *cur_pwd, const char *new_pwd, void
 	SETTING_TRACE_BEGIN;
 	retv_if(new_pwd == NULL || data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
+#if SECURITY_SERVER
 	SettingPasswordUG *ad = (SettingPasswordUG *)data;
 	int ret = 0;
 	int err;
 
-	/* To support key manager */
-	uid_t user = 5000;
-	/*int ckmc_ret = CKMC_ERROR_NONE; */
-
-#if SECURITY_SERVER
 	/* max attempt count will be handled in passwordug for a while. */
 	if (ad->pw_status == SETTING_PW_STATUS_EMPTY) {
 		ret = security_server_set_pwd(NULL, new_pwd, 0, 0);
 		SETTING_TRACE_DEBUG("[security_server_set_pwd() + empty current] returns %d, INFINITE", ret);
 		if (ret == SECURITY_SERVER_API_SUCCESS) {
 #if 0
+			/* To support key manager */
+			uid_t user = 5000;
+			/*int ckmc_ret = CKMC_ERROR_NONE; */
 			ckmc_ret = ckmc_reset_user_password(user, new_pwd);
 			SETTING_TRACE("ckmc_reset_user_password() returns %d", ckmc_ret);
 			setting_set_int_slp_key(INT_SLP_SETTING_PHONE_LOCK_ATTEMPTS_LEFT, PHONE_LOCK_ATTEMPS_MAX, &err);

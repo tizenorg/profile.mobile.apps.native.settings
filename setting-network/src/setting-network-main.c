@@ -626,7 +626,7 @@ static void setting_network_mode_popup(void *data)
 	ad->network_mode_popup = setting_create_popup_with_list(&scroller , ad, ad->win_get,
 	                                                          "Network Mode", NULL, 0, false, false, 0);
 	_P(ad->network_mode_popup);
-	Evas_Object *parentItem = ad->network_mode_popup;
+	//Evas_Object *parentItem = ad->network_mode_popup;
 
 	int call_status = CM_CALL_STATUS_IDLE;
 	cm_client_h cm_handle = NULL;
@@ -1096,7 +1096,8 @@ static void _setting_network_popup_mobile_data_rollback(void *data)
 	int err = 0;
 	int value = 0;
 
-	int err_mobile_data = setting_network_get_state_mobile_data(&value);
+	//int err_mobile_data = 
+	setting_network_get_state_mobile_data(&value);
 	SETTING_TRACE("value = %d", value);
 
 	/* rollback */
@@ -1114,7 +1115,8 @@ static void _setting_network_popup_data_roaming_rollback(void *data)
 	int err = 0;
 	int value = 0;
 
-	int err_data_romaing = setting_network_get_state_data_roaming(&value);
+	//int err_data_romaing = 
+	setting_network_get_state_data_roaming(&value);
 	SETTING_TRACE("value = %d", value);
 
 	/* rollback */
@@ -1371,7 +1373,8 @@ static void setting_network_use_packet_resp_cb(void *data, Evas_Object *obj,
 	int response_type = btn_type(obj);
 	int value = 0;
 
-	int err_mobile_data = setting_network_get_state_mobile_data(&value);
+	//int err_mobile_data = 
+	setting_network_get_state_mobile_data(&value);
 	setting_retm_if(err != 0, "get vconf failed");
 	SETTING_TRACE("value = %d", value);
 

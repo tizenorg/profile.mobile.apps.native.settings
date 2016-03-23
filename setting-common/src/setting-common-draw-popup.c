@@ -191,8 +191,9 @@ EXPORT_PUBLIC void __popup_keygrab_del_cb(void *data, Evas *e, Evas_Object *obj,
 
 {
 	SETTING_TRACE_BEGIN;
-	int ret = -1;
+
 #ifdef ECORE_X
+	int ret = -1;
 	Ecore_X_Display *disp = ecore_x_display_get();
 	Ecore_X_Window xwin = elm_win_xwindow_get(obj);
 

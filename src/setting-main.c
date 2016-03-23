@@ -74,8 +74,8 @@ static void __all_gl_group_clicked_cb(void *data, Evas_Object *obj, void *event_
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	/*setting_retm_if(data == NULL, "Data parameter is NULL"); */
-	int view_type = (int)data;
-	setting_main_appdata *ad = g_main_ad;
+	// int view_type = (int)data;
+	// setting_main_appdata *ad = g_main_ad;
 	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
 	elm_genlist_item_selected_set(item, 0);
 	Setting_GenGroupItem_Data *data_parentItem = (Setting_GenGroupItem_Data *)elm_object_item_data_get(item);
@@ -83,8 +83,8 @@ static void __all_gl_group_clicked_cb(void *data, Evas_Object *obj, void *event_
 
 
 	Elm_Object_Item *start_item = NULL;
-	Elm_Object_Item *end_item = NULL;
-	Elm_Object_Item *it;
+	// Elm_Object_Item *end_item = NULL;
+	// Elm_Object_Item *it;
 
 	data_parentItem->isPlaying = !data_parentItem->isPlaying;
 	int hide_flag = !(data_parentItem->isPlaying);
@@ -126,7 +126,6 @@ Evas_Object *_view_list_geter(void *data)
 	evas_object_show(genlist);
 
 	Setting_GenGroupItem_Data *item_data = NULL;
-	Elm_Object_Item *item = NULL;
 	int group_dx = GL_Group_Connection;
 	/*---------------------------------------------------------------------------------------- */
 	/* 2.category name loop */

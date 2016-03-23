@@ -142,8 +142,8 @@ _popup_block_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 static void
 _popup_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Evas_Object *popup = data;
-//	elm_popup_dismiss(popup);
+	// Evas_Object *popup = data;
+	// elm_popup_dismiss(popup);
 }
 
 static void

@@ -226,10 +226,12 @@ static void __rotate_ctxpopup_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(data == NULL);
+
+#ifdef ECORE_X
 	Setting_Btn_Data *btn_data = (Setting_Btn_Data *)data;
 	Evas_Coord w, h;
 	int pos = -1;
-#ifdef ECORE_X
+
 	ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
 	pos = elm_win_rotation_get(ug_get_window());
 	SETTING_TRACE_DEBUG("pos: %d, w: %d, h: %d", pos, w, h);
@@ -579,9 +581,9 @@ Elm_Object_Item *__create_navi_bar_bottom_buttons(char *title_str,
                                                   Evas_Object *navigate_bar)
 {
 	SETTING_TRACE_BEGIN;
+
 	Elm_Object_Item *navi_it = NULL;
 	Evas_Object *lbtn = NULL;
-	Evas_Object *toolbar = NULL;
 
 #define USE_BACK 0
 #if USE_BACK

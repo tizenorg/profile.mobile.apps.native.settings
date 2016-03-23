@@ -287,10 +287,9 @@ void __add_locktype_items(void *data)
 
 	SettingLocktypeUG *ad = (SettingLocktypeUG *) data;
 
-	Elm_Object_Item *item = NULL;
 	Evas_Object *radio;
 
-	int index = -1;
+
 	int locktype = 0;
 	vconf_get_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, &locktype);
 	SETTING_TRACE("locktype is %d", locktype);
@@ -375,6 +374,7 @@ void __add_locktype_items(void *data)
 	}
 
 #if 0
+	int index = -1;
 	/* Add 3rd party lock apps in list. */
 	index = __add_3rd_party_lock(ad);
 
@@ -572,8 +572,8 @@ setting_locktype_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 				SETTING_TRACE_DEBUG("set_pwd result : %d", result);
 #endif
 
-				uid_t user = 5000;
 #if 0
+				uid_t user = 5000;
 				int ckmc_ret = CKMC_ERROR_NONE;
 				ckmc_ret = ckmc_change_user_password(user, ad->input_pwd, NULL);
 				SETTING_TRACE("ckmc_change_user_password() returns %d", ckmc_ret);
@@ -633,8 +633,8 @@ setting_locktype_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 				int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
 				SETTING_TRACE_DEBUG("set_pwd result : %d", result);
 #endif
-				uid_t user = 5000;
 #if 0
+				uid_t user = 5000;
 				int ckmc_ret = CKMC_ERROR_NONE;
 				ckmc_ret = ckmc_change_user_password(user, ad->input_pwd, NULL);
 				SETTING_TRACE("ckmc_change_user_password() returns %d", ckmc_ret);
@@ -681,8 +681,8 @@ setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj, void *event_i
 				int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
 				SETTING_TRACE_DEBUG("set_pwd result : %d", result);
 #endif
-				uid_t user = 5000;
 #if 0
+				uid_t user = 5000;
 				int ckmc_ret = CKMC_ERROR_NONE;
 				ckmc_ret = ckmc_change_user_password(user, ad->input_pwd, NULL);
 				SETTING_TRACE("ckmc_change_user_password() returns %d", ckmc_ret);
@@ -733,8 +733,8 @@ setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj, void *event_i
 					int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
 					SETTING_TRACE_DEBUG("set_pwd result : %d", result);
 #endif
-					uid_t user = 5000;
 #if 0
+					uid_t user = 5000;
 					int ckmc_ret = CKMC_ERROR_NONE;
 					ckmc_ret = ckmc_change_user_password(user, ad->input_pwd, NULL);
 					SETTING_TRACE("ckmc_change_user_password() returns %d", ckmc_ret);
