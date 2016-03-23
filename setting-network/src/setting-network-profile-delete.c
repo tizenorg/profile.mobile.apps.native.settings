@@ -22,7 +22,9 @@
 
 static int setting_network_profile_delete_create(void *cb);
 static int setting_network_profile_delete_destroy(void *cb);
+#if 0
 static int setting_network_profile_delete_update(void *cb);
+#endif
 static int setting_network_profile_delete_cleanup(void *cb);
 
 setting_view setting_view_network_profile_delete = {
@@ -329,6 +331,7 @@ static int setting_network_profile_delete_destroy(void *cb)
 	return SETTING_RETURN_SUCCESS;
 }
 
+#if 0
 static int setting_network_profile_delete_update(void *cb)
 {
 	SETTING_TRACE_BEGIN;
@@ -337,6 +340,7 @@ static int setting_network_profile_delete_update(void *cb)
 	__profile_delete_list_draw(cb);
 	return SETTING_RETURN_SUCCESS;
 }
+#endif
 
 static int setting_network_profile_delete_cleanup(void *cb)
 {

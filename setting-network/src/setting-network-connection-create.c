@@ -584,7 +584,7 @@ void __get_connection_info(void *cb)
 		SETTING_TRACE("ad->ed_pxy_addr_desc:%s", ad->ed_pxy_addr_desc);
 		/*ad->ed_pxy_addr_desc = g_strdup(addr); */
 		ad->ed_pxy_port_desc = g_strdup(port);
-		/*if (ad->con_type == NET_SERVICE_MMS) {	/* Message Connection * / */
+		// if (ad->con_type == NET_SERVICE_MMS) {	/* Message Connection * /
 		if (!safeStrCmp(ad->con_name, STR_SETTING_MMS_CONNECTIONS)) {	/* Message Connection */
 			/*ad->ed_hm_url_desc = ad->prof_list[ad->prof_sel_idx].ProfileInfo.Pdp.HomeURL; */
 			connection_profile_get_cellular_home_url(ad->sel_profile_h, &(ad->ed_hm_url_desc));

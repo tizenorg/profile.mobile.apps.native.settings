@@ -172,7 +172,6 @@ static Eina_Bool __set_net_mode_on_delay(void *data)
 
 	return ECORE_CALLBACK_CANCEL;
 }
-#endif
 
 static void __change_3g_on_resp_cb(void *data, Evas_Object *obj,
                                    void *event_info)
@@ -226,6 +225,8 @@ static void __change_3g_on_resp_cb(void *data, Evas_Object *obj,
 		/*elm_radio_value_set(ad->data_net_mode->rgd, ad->net_mode); */
 	}
 }
+#endif
+
 
 /**
  * item in genlist on the popup 'NETWORK MODE'

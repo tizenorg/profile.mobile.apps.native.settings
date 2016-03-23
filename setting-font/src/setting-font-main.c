@@ -616,6 +616,7 @@ static int _slider_get_width(void* data)
 }
 
 
+#if 0
 // 720, 1280
 static int _slider_endpoint_x()
 {
@@ -627,7 +628,7 @@ static int _slider_endpoint_x()
 	return 0;
 #endif
 }
-
+#endif
 
 /**
  * ad->rotate_angle = 90;	// do it

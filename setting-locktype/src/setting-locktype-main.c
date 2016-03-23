@@ -37,7 +37,11 @@ static int setting_locktype_main_create(void *cb);
 static int setting_locktype_main_destroy(void *cb);
 static int setting_locktype_main_update(void *cb);
 static int setting_locktype_main_cleanup(void *cb);
+
+#if 0
 static void __record_btn_click_cb(void *data, Evas_Object *obj, void *event_info);
+#endif
+
 setting_view setting_view_locktype_main = {
 	.create = setting_locktype_main_create,
 	.destroy = setting_locktype_main_destroy,
@@ -160,6 +164,7 @@ int __get_appinfo_cb(pkgmgrinfo_appinfo_h appinfo, void *user_data)
 	return 0;
 }
 
+#if 0
 static int __add_3rd_party_lock(void *data)
 {
 	SETTING_TRACE_BEGIN;
@@ -249,6 +254,7 @@ static int __add_3rd_party_lock(void *data)
 	FREE(filter);
 	return ret_index;
 }
+#endif
 
 static void __change_simple_password_cb(void *data, Evas_Object *obj, void *event_info)
 {
@@ -500,6 +506,8 @@ const char *motion_img[] = {
 	NULL
 };
 
+#if 0
+
 static void
 __motion_set_cb(void *data, Evas_Object *obj, void *event_info)
 {
@@ -525,6 +533,7 @@ __motion_cancel_cb(void *data, Evas_Object *obj, void *event_info)
 	elm_naviframe_item_pop(ad->navi_bar);
 	ug_destroy_me(ad->ug);
 }
+#endif
 
 
 static void
@@ -654,6 +663,7 @@ setting_locktype_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 	}
 }
 
+#if 0
 static void
 setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj, void *event_info)
 {
@@ -754,6 +764,7 @@ setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj, void *event_i
 			break;
 	}
 }
+#endif
 
 Eina_Bool setting_locktype_main_click_softkey_back_cb(void *data, Elm_Object_Item *it)
 {
