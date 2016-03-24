@@ -1112,7 +1112,7 @@ void setting_time_main_launch_worldclock_sg(void *data)
 static void __setting_update_datefield_cb(void *cb)
 {
 	SETTING_TRACE_BEGIN;
-	retvm_if(cb == NULL, EINA_FALSE, "Data parameter is NULL");
+	retm_if(cb == NULL, "Data parameter is NULL");
 	SettingTimeUG *ad = (SettingTimeUG *) cb;
 
 	if (ad->data_time) {

@@ -62,7 +62,7 @@ static void __encrypting_key_grab(SettingSecurityUG *ad)
 #ifdef ECORE_X
 	disp = ecore_x_display_get();
 	xwin = elm_win_xwindow_get((Evas_Object *)ug_get_window());
-#endif
+
 
 	ret = eext_win_keygrab_set(xwin, "XF86PowerOff");
 	if (ret)
@@ -76,7 +76,9 @@ static void __encrypting_key_grab(SettingSecurityUG *ad)
 	ret = eext_win_keygrab_set(xwin, "XF86AudioLowerVolume");
 	if (ret)
 		return;
-
+#else
+	// @todo : repace codes using X with codes tizen 3.0 API
+#endif
 	ad->event_handler = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, NULL, NULL);
 	SETTING_TRACE_END;
 }
@@ -96,7 +98,7 @@ static void __encrypting_key_ungrab(SettingSecurityUG *ad)
 #ifdef ECORE_X
 	disp = ecore_x_display_get();
 	xwin = elm_win_xwindow_get((Evas_Object *)ug_get_window());
-#endif
+
 
 	ret = eext_win_keygrab_unset(xwin, "XF86PowerOff");
 	if (ret)
@@ -110,7 +112,9 @@ static void __encrypting_key_ungrab(SettingSecurityUG *ad)
 	ret = eext_win_keygrab_unset(xwin, "XF86AudioLowerVolume");
 	if (ret)
 		return;
-
+#else
+	// @todo : repace codes using X with codes tizen 3.0 API
+#endif
 	ecore_event_handler_del(ad->event_handler);
 }
 

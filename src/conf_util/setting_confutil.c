@@ -109,8 +109,6 @@ debug level init 1(1)
 */
 int main(int argc, char *argv[])
 {
-	g_type_init();
-
 	elm_init(argc, argv);
 	setting_set_i18n_force(SETTING_PACKAGE, SETTING_LOCALEDIR);
 

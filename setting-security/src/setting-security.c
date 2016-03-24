@@ -304,6 +304,8 @@ int pwd_handler_sec_pw_pin1_blocked(SettingSecurityUG *data, void *arg)
 	ret = eext_win_keygrab_set(xwin, "XF86AudioLowerVolume");
 	if (ret)
 		SETTING_TRACE("eext_win_keygrab_set() failed.");
+#else
+	// @todo : repace codes using X with codes tizen 3.0 API
 #endif
 
 	unsigned int val[3];
@@ -315,6 +317,8 @@ int pwd_handler_sec_pw_pin1_blocked(SettingSecurityUG *data, void *arg)
 	Ecore_X_Atom ATOM_PANEL_SCROLLABLE_STATE = 0;
 	ATOM_PANEL_SCROLLABLE_STATE = ecore_x_atom_get("_E_MOVE_PANEL_SCROLLABLE_STATE");
 	ecore_x_window_prop_card32_set(xwin, ATOM_PANEL_SCROLLABLE_STATE, val, 3);
+#else
+	// @todo : repace codes using X with codes tizen 3.0 API
 #endif
 
 	ad->sim_popup = setting_create_popup(ad, ad->win_get, NULL,
@@ -560,6 +564,8 @@ static void setting_security_ug_on_pause(ui_gadget_h ug, app_control_h service,
 			ret = eext_win_keygrab_unset(xwin, "XF86AudioLowerVolume");
 			if (ret)
 				SETTING_TRACE("eext_win_keygrab_unset() failed.");
+#else
+	// @todo : repace codes using X with codes tizen 3.0 API
 #endif
 
 			unsigned int val[3];
@@ -571,6 +577,8 @@ static void setting_security_ug_on_pause(ui_gadget_h ug, app_control_h service,
 			Ecore_X_Atom ATOM_PANEL_SCROLLABLE_STATE = 0;
 			ATOM_PANEL_SCROLLABLE_STATE = ecore_x_atom_get("_E_MOVE_PANEL_SCROLLABLE_STATE");
 			ecore_x_window_prop_card32_set(xwin, ATOM_PANEL_SCROLLABLE_STATE, val, 3);
+#else
+	// @todo : repace codes using X with codes tizen 3.0 API
 #endif
 		}
 	}
@@ -914,6 +922,8 @@ void setting_security_end_password_ug_cb(ui_gadget_h ug,
 		ret = eext_win_keygrab_unset(xwin, "XF86AudioLowerVolume");
 		if (ret)
 			SETTING_TRACE("KEY_VOLUMEDOWN ungrab failed.");
+#else
+	// @todo : repace codes using X with codes tizen 3.0 API
 #endif
 	}
 #if SUPPORT_ENCRYPTION
@@ -1350,7 +1360,7 @@ int setting_security_firewall_reset()
 	readdir_r(theFolder, &ent, &next_file);
 	while (next_file) {
 		/* build the full path for each file in the folder */
-		sprintf(filepath,256, "%s/%s", SEC_FIREWALL_DIR, ent.d_name);
+		snprintf(filepath,256, "%s/%s", SEC_FIREWALL_DIR, ent.d_name);
 		SETTING_TRACE_DEBUG("[%s]", filepath);
 		/*(void) remove(filepath); */
 		if (remove(filepath) != 0) { /*delete the file */

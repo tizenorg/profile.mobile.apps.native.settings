@@ -611,8 +611,8 @@ void mobile_data_state_event_handler(const char *event_name, bundle *data, void 
 	SETTING_TRACE("mobile_data_state_set(%s)", mobile_data_state_set);
 }
 
-int data_roaming_event_reg_id;
-int mobile_data_event_reg_id;
+unsigned int data_roaming_event_reg_id;
+unsigned int mobile_data_event_reg_id;
 
 
 

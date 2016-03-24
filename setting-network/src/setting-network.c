@@ -867,11 +867,13 @@ void ___sort_merge_handle(void *usrdata, TelNetworkPlmnList_t *list)
 {
 	SETTING_TRACE_BEGIN;
 	SettingNetworkUG *ad = usrdata;
-	int cnt = 0;
+	int cnt = 0, tempcount=0;
 	ad->plmn_info.networks_count = list->networks_count;
 	SETTING_TRACE("list->networks_count:%d", list->networks_count);
 	int idx = 0;
-	for (idx = 0; idx < (int)list->networks_count; idx++) {
+
+	tempcount = list->networks_count;
+	for (idx = 0; idx < tempcount; idx++) {
 		SETTING_TRACE("[%d].network_name=%s, spn=%s, plmn=%s, plmn_id=%d, plmn_type=%d, access_technology=%d", idx, list->network_list[idx].network_name,
 		              list->network_list[idx].service_provider_name,
 		              list->network_list[idx].plmn, list->network_list[idx].plmn_id,
@@ -882,7 +884,8 @@ void ___sort_merge_handle(void *usrdata, TelNetworkPlmnList_t *list)
 
 	int j = 0;
 	bool alread_exist = FALSE;
-	for (idx = 0; idx < (int)list->networks_count; idx++) {
+	tempcount = list->networks_count;
+	for (idx = 0; idx < tempcount; idx++) {
 		alread_exist = FALSE;
 		for (j = 0; j < cnt; j++) {
 			if (0 == safeStrCmp(ad->plmn_info.network_list[j].network_name, list->network_list[idx].network_name)
@@ -901,7 +904,7 @@ void ___sort_merge_handle(void *usrdata, TelNetworkPlmnList_t *list)
 	SETTING_TRACE("*****************************************************");
 	SETTING_TRACE("After Sorted:");
 	ad->plmn_info.networks_count = list->networks_count = (char)cnt;
-	for (idx = 0; idx < (int)list->networks_count; idx++) {
+	for (idx = 0; idx < cnt; idx++) {
 		SETTING_TRACE("[%d]:network_name=%s,plmn=%s,plmn_id=%d,access_technology=%d", idx,
 		              ad->plmn_info.network_list[idx].network_name, ad->plmn_info.network_list[idx].plmn, ad->plmn_info.network_list[idx].plmn_id, ad->plmn_info.network_list[idx].access_technology);
 	}

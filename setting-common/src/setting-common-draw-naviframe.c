@@ -251,6 +251,8 @@ static void __rotate_ctxpopup_cb(void *data, Evas_Object *obj, void *event_info)
 	} else {
 		evas_object_move(btn_data->ctxpopup, 0, h);
 	}
+#else
+	// @todo : repace codes using X with codes tizen 3.0 API
 #endif
 }
 

@@ -127,7 +127,7 @@ char *setting_location_is_enable(void *data)
 	else if (0 == is_enabled)
 		return KeyStr_Off;
 	else
-		return KeyStr_Off;	//?? kiso.chang  KeyStr_OffSETTING_VCONF_ERR_RETURN_STR_NULL;
+		return KeyStr_Off;	// @todo : need to check and modify - old return was KeyStr_OffSETTING_VCONF_ERR_RETURN_STR_NULL
 #endif
 }
 

@@ -164,37 +164,38 @@ static Evas_Object *setting_main_create_win(const char *name)
 {
 	SETTING_TRACE_BEGIN;
 	LAUNCH_SETTING_IN();
-	Evas_Object *eo;
+	Evas_Object *win;
 	int w, h;
 
-	eo = (Evas_Object *) elm_win_add(NULL, name, ELM_WIN_BASIC);
-	if (!eo)
-		eo = elm_win_util_standard_add(name, name);
+	win = (Evas_Object *) elm_win_add(NULL, name, ELM_WIN_BASIC);
+	if (!win)
+		win = elm_win_util_standard_add(name, name);
 	else {
 		/* elm_win_util_standard_add creates bg inside */
 		Evas_Object *bg;
 
-		bg = elm_bg_add(eo);
+		bg = elm_bg_add(win);
 
 		if (!bg) {
-			evas_object_del(eo);
+			evas_object_del(win);
 			return NULL;
 		}
 		evas_object_size_hint_weight_set(bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-		elm_win_resize_object_add(eo, bg);
+		elm_win_resize_object_add(win, bg);
 		evas_object_show(bg);
 	}
-	if (eo) {
-		elm_win_title_set(eo, name);
-		evas_object_smart_callback_add(eo, "delete,request", setting_main_del_win, NULL);
+	if (win) {
+		elm_win_title_set(win, name);
+		evas_object_smart_callback_add(win, "delete,request", setting_main_del_win, NULL);
 #ifdef ECORE_X
-		ecore_x_window_size_get(ecore_x_window_root_first_get(),
-		                        &w, &h);
+		ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
+#else
+		elm_win_screen_size_get(win, NULL, NULL, &w, &h);
 #endif
-		evas_object_resize(eo, w, h);
+		evas_object_resize(win, w, h);
 	}
 	LAUNCH_SETTING_OUT();
-	return eo;
+	return win;
 }
 
 
