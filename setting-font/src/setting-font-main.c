@@ -315,7 +315,7 @@ static Eina_List *__setting_font_main_available_list_get()
 						/* I will set english as default family language. */
 						/* If there is no proper family language for current locale, */
 						/* we have to show the english family name. */
-						if (!strcmp(lang, "en")) {
+						if (!strcmp((char *)lang, "en")) {
 							family_result = (char *)family;
 						}
 						id++;
@@ -625,7 +625,9 @@ static int _slider_endpoint_x()
 	ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
 	return w;
 #else
-	return 0;
+	int w, h;	
+	elm_win_screen_size_get(win, NULL, NULL, &w, &h);
+	return w;
 #endif
 }
 #endif

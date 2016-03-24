@@ -208,6 +208,8 @@ EXPORT_PUBLIC void __popup_keygrab_del_cb(void *data, Evas *e, Evas_Object *obj,
 	if (ret) {
 		SETTING_TRACE_ERROR("KEY_BACK ungrab error ret[%d]", ret);
 	}
+#else
+	// @todo : repace codes using X with codes tizen 3.0 API
 #endif
 }
 
@@ -251,6 +253,8 @@ EXPORT_PUBLIC void setting_popup_event_set2(Evas_Object *popup, void *data,
 		if (ret) {
 			SETTING_TRACE_ERROR("KEY_HOME grab error ret[%d]", ret);
 		}
+#else
+	// @todo : repace codes using X with codes tizen 3.0 API
 #endif
 		evas_object_event_callback_add(popup, EVAS_CALLBACK_DEL, __popup_keygrab_del_cb, NULL);
 		eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, __ignore_back_key_cb, NULL);
@@ -315,6 +319,8 @@ Evas_Object *setting_create_popup2(void *data,
 		if (ret) {
 			SETTING_TRACE_ERROR("KEY_HOME grab error ret[%d]", ret);
 		}
+#else
+	// @todo : repace codes using X with codes tizen 3.0 API
 #endif
 		evas_object_event_callback_add(popup, EVAS_CALLBACK_DEL, __popup_keygrab_del_cb, NULL);
 		eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, __ignore_back_key_cb, NULL);
