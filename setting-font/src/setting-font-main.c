@@ -625,7 +625,9 @@ static int _slider_endpoint_x()
 	ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
 	return w;
 #else
-	return 0;
+	int w, h;	
+	elm_win_screen_size_get(win, NULL, NULL, &w, &h);
+	return w;
 #endif
 }
 #endif

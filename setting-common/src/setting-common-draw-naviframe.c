@@ -251,6 +251,8 @@ static void __rotate_ctxpopup_cb(void *data, Evas_Object *obj, void *event_info)
 	} else {
 		evas_object_move(btn_data->ctxpopup, 0, h);
 	}
+#else
+	// to do by kiso.chang
 #endif
 }
 

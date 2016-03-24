@@ -62,7 +62,7 @@ static void __encrypting_key_grab(SettingSecurityUG *ad)
 #ifdef ECORE_X
 	disp = ecore_x_display_get();
 	xwin = elm_win_xwindow_get((Evas_Object *)ug_get_window());
-#endif
+
 
 	ret = eext_win_keygrab_set(xwin, "XF86PowerOff");
 	if (ret)
@@ -76,7 +76,7 @@ static void __encrypting_key_grab(SettingSecurityUG *ad)
 	ret = eext_win_keygrab_set(xwin, "XF86AudioLowerVolume");
 	if (ret)
 		return;
-
+#endif
 	ad->event_handler = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, NULL, NULL);
 	SETTING_TRACE_END;
 }

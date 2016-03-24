@@ -104,6 +104,8 @@ static Evas_Object *support_display_create_win(const char *name)
 #ifdef ECORE_X
 		ecore_x_window_size_get(ecore_x_window_root_first_get(),
 		                        &w, &h);
+#else
+		elm_win_screen_size_get(eo, NULL, NULL, &w, &h);
 #endif
 		evas_object_resize(eo, w, h);
 	}

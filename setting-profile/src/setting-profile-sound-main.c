@@ -50,7 +50,21 @@ setting_view setting_view_sound_main = {
 	.cleanup = setting_sound_main_cleanup,
 };
 
+/* should be called in function to return int */
 #define ADD_GENLIST(genlist, parent) \
+	{\
+		genlist = elm_genlist_add(parent);\
+		retvm_if(genlist == NULL, SETTING_RETURN_FAIL, "Cannot set genlist object as contento of layout");\
+		elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);\
+		elm_object_style_set(genlist, "dialogue");\
+		elm_genlist_clear(genlist);\
+		evas_object_smart_callback_add(genlist, "realized", __gl_realized_cb, NULL);\
+		elm_scroller_policy_set(genlist, ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_AUTO);\
+	}
+
+
+/* should be called in function to return void */
+#define ADD_GENLIST2(genlist, parent) \
 	{\
 		genlist = elm_genlist_add(parent);\
 		retvm_if(genlist == NULL, NULL, "Cannot set genlist object as contento of layout");\
@@ -77,7 +91,9 @@ setting_view setting_view_sound_main = {
 		} \
 	}
 
+
 /* keystr, multiline, toggle */
+/* should be called in function to return void */
 #define ADD_TOGGLE_MENU(_item, genlist, item_style, keystr, substr, value, data) \
 	{\
 		_item = setting_create_Gendial_field_def(genlist, &(item_style), \
@@ -1234,7 +1250,7 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 
 		int vconf_value = 0;
 		Evas_Object *genlist = NULL;
-		ADD_GENLIST(genlist, ad->navi_bar);
+		ADD_GENLIST2(genlist, ad->navi_bar);
 		/* 1. Touch sounds */
 		if (vconf_get_bool(VCONFKEY_SETAPPL_TOUCH_SOUNDS_BOOL, &vconf_value) < 0)
 			vconf_value = TRUE;	/*  default value of touch sounds : on */
