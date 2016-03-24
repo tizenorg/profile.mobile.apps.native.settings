@@ -37,7 +37,11 @@ static int setting_locktype_main_create(void *cb);
 static int setting_locktype_main_destroy(void *cb);
 static int setting_locktype_main_update(void *cb);
 static int setting_locktype_main_cleanup(void *cb);
+
+#if 0
 static void __record_btn_click_cb(void *data, Evas_Object *obj, void *event_info);
+#endif
+
 setting_view setting_view_locktype_main = {
 	.create = setting_locktype_main_create,
 	.destroy = setting_locktype_main_destroy,
@@ -160,6 +164,7 @@ int __get_appinfo_cb(pkgmgrinfo_appinfo_h appinfo, void *user_data)
 	return 0;
 }
 
+#if 0
 static int __add_3rd_party_lock(void *data)
 {
 	SETTING_TRACE_BEGIN;
@@ -249,6 +254,7 @@ static int __add_3rd_party_lock(void *data)
 	FREE(filter);
 	return ret_index;
 }
+#endif
 
 static void __change_simple_password_cb(void *data, Evas_Object *obj, void *event_info)
 {
@@ -287,10 +293,9 @@ void __add_locktype_items(void *data)
 
 	SettingLocktypeUG *ad = (SettingLocktypeUG *) data;
 
-	Elm_Object_Item *item = NULL;
 	Evas_Object *radio;
 
-	int index = -1;
+
 	int locktype = 0;
 	vconf_get_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, &locktype);
 	SETTING_TRACE("locktype is %d", locktype);
@@ -375,6 +380,7 @@ void __add_locktype_items(void *data)
 	}
 
 #if 0
+	int index = -1;
 	/* Add 3rd party lock apps in list. */
 	index = __add_3rd_party_lock(ad);
 
@@ -500,6 +506,8 @@ const char *motion_img[] = {
 	NULL
 };
 
+#if 0
+
 static void
 __motion_set_cb(void *data, Evas_Object *obj, void *event_info)
 {
@@ -525,6 +533,7 @@ __motion_cancel_cb(void *data, Evas_Object *obj, void *event_info)
 	elm_naviframe_item_pop(ad->navi_bar);
 	ug_destroy_me(ad->ug);
 }
+#endif
 
 
 static void
@@ -572,8 +581,8 @@ setting_locktype_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 				SETTING_TRACE_DEBUG("set_pwd result : %d", result);
 #endif
 
-				uid_t user = 5000;
 #if 0
+				uid_t user = 5000;
 				int ckmc_ret = CKMC_ERROR_NONE;
 				ckmc_ret = ckmc_change_user_password(user, ad->input_pwd, NULL);
 				SETTING_TRACE("ckmc_change_user_password() returns %d", ckmc_ret);
@@ -633,8 +642,8 @@ setting_locktype_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 				int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
 				SETTING_TRACE_DEBUG("set_pwd result : %d", result);
 #endif
-				uid_t user = 5000;
 #if 0
+				uid_t user = 5000;
 				int ckmc_ret = CKMC_ERROR_NONE;
 				ckmc_ret = ckmc_change_user_password(user, ad->input_pwd, NULL);
 				SETTING_TRACE("ckmc_change_user_password() returns %d", ckmc_ret);
@@ -654,6 +663,7 @@ setting_locktype_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 	}
 }
 
+#if 0
 static void
 setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj, void *event_info)
 {
@@ -681,8 +691,8 @@ setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj, void *event_i
 				int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
 				SETTING_TRACE_DEBUG("set_pwd result : %d", result);
 #endif
-				uid_t user = 5000;
 #if 0
+				uid_t user = 5000;
 				int ckmc_ret = CKMC_ERROR_NONE;
 				ckmc_ret = ckmc_change_user_password(user, ad->input_pwd, NULL);
 				SETTING_TRACE("ckmc_change_user_password() returns %d", ckmc_ret);
@@ -733,8 +743,8 @@ setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj, void *event_i
 					int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
 					SETTING_TRACE_DEBUG("set_pwd result : %d", result);
 #endif
-					uid_t user = 5000;
 #if 0
+					uid_t user = 5000;
 					int ckmc_ret = CKMC_ERROR_NONE;
 					ckmc_ret = ckmc_change_user_password(user, ad->input_pwd, NULL);
 					SETTING_TRACE("ckmc_change_user_password() returns %d", ckmc_ret);
@@ -754,6 +764,7 @@ setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj, void *event_i
 			break;
 	}
 }
+#endif
 
 Eina_Bool setting_locktype_main_click_softkey_back_cb(void *data, Elm_Object_Item *it)
 {

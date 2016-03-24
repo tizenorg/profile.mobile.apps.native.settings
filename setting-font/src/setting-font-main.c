@@ -59,7 +59,7 @@ static void setting_font_rot_changed_cb(void *data, Evas_Object *obj, void *even
 		return;
 	}
 	int change_ang = elm_win_rotation_get(ad->win_get);
-	enum ug_event event = UG_EVENT_ROTATE_PORTRAIT;
+
 	switch (change_ang) {
 		case APP_DEVICE_ORIENTATION_0:
 			//SETTING_TRACE("change_ang : 0");
@@ -616,6 +616,7 @@ static int _slider_get_width(void* data)
 }
 
 
+#if 0
 // 720, 1280
 static int _slider_endpoint_x()
 {
@@ -627,7 +628,7 @@ static int _slider_endpoint_x()
 	return 0;
 #endif
 }
-
+#endif
 
 /**
  * ad->rotate_angle = 90;	// do it

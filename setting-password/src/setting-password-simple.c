@@ -206,7 +206,7 @@ static int _handle_step2(void *data, int *step, char *collection1, char *collect
 
 	SettingPasswordUG *ad = (SettingPasswordUG *) data;
 	int ret = 0;
-	static int simple_sequence = 0;
+
 
 	if (*step == 0) {	/* Enter new password */
 		_copy_chars_from_sp_entries(ad, collection1);

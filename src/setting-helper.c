@@ -47,7 +47,7 @@ void setting_main_genlist_handler_reset(void *data)
 void setting_main_genlist_handler_set(void *data, int viewtype)
 {
 	retm_if(data == NULL, "Invalid argument: data is NULL");
-	setting_main_appdata *ad = data;
+	// setting_main_appdata *ad = data;
 
 }
 
@@ -133,7 +133,7 @@ void setting_main_result_ug_cb(ui_gadget_h ug, app_control_h service,
 		return;
 	}
 	SETTING_TRACE_BEGIN;
-	setting_main_appdata *ad = (setting_main_appdata *) priv;
+	// setting_main_appdata *ad = (setting_main_appdata *) priv;
 
 	SETTING_TRACE_END;
 }

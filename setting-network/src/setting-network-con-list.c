@@ -100,10 +100,10 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *e
 {
 	SETTING_TRACE_BEGIN;
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-	Evas_Object *it_obj;
+	//Evas_Object *it_obj;
 	Evas_Object *nf = ad->navi_bar;
 	Evas_Object *win;
-	Elm_Object_Item *it;
+	//Elm_Object_Item *it;
 
 	if (ctxpopup != NULL) {
 		evas_object_del(ctxpopup);

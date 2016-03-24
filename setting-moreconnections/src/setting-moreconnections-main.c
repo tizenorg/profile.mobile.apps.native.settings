@@ -65,7 +65,7 @@ static void setting_moreconnections_main_mouse_up_Gendial_list_cb(void *data,
 	Setting_GenGroupItem_Data *list_item =
 	    (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
 
-	SettingMoreConnectionsUG *ad = (SettingMoreConnectionsUG *)data;
+	//SettingMoreConnectionsUG *ad = (SettingMoreConnectionsUG *)data;
 
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 
@@ -127,7 +127,7 @@ char *setting_location_is_enable(void *data)
 	else if (0 == is_enabled)
 		return KeyStr_Off;
 	else
-		return SETTING_VCONF_ERR_RETURN_STR_NULL;
+		return KeyStr_Off;	//?? kiso.chang  KeyStr_OffSETTING_VCONF_ERR_RETURN_STR_NULL;
 #endif
 }
 
@@ -144,7 +144,6 @@ int setting_moreconnections_main_generate_genlist(void *data)
 	SettingMoreConnectionsUG *ad = (SettingMoreConnectionsUG *) data;
 
 	Evas_Object *scroller = ad->genlist;
-	Setting_GenGroupItem_Data *item_data = NULL;
 
 	char *sub_desc = setting_location_is_enable(data);
 

@@ -28,6 +28,7 @@ extern Eina_List *elm_widget_scrollable_children_get(Evas_Object *obj);
 #define HALF_SCREEN_STR_LEN 20
 #define ONE_THIRD_SCREEN_STR_LEN 13
 
+#if 0
 #define ADD_MULTI_LANGUAGE_AUTO_UPDATE(eo_view, navi_it, title_str, lbutton_str, mbutton_str, rbutton_str) \
 	{\
 		evas_object_data_set(eo_view, "navi_it", navi_it);\
@@ -38,6 +39,7 @@ extern Eina_List *elm_widget_scrollable_children_get(Evas_Object *obj);
 		/*vconf_notify_key_changed(VCONFKEY_LANGSET, __navi_eo_view_lang_change_cb, eo_view);*/\
 		evas_object_event_callback_add(eo_view, EVAS_CALLBACK_DEL, __eo_view_del_cb, NULL);\
 	}
+#endif
 
 /*
 static void __navi_eo_view_lang_change_cb(keynode_t *key, void *data)
@@ -102,6 +104,8 @@ static void __navi_eo_view_lang_change_cb(keynode_t *key, void *data)
 	}
 }
 */
+
+#if 0
 static void __eo_view_del_cb(void *data, Evas *e, Evas_Object *eo_view, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
@@ -115,6 +119,9 @@ static void __eo_view_del_cb(void *data, Evas *e, Evas_Object *eo_view, void *ev
 
 	SETTING_TRACE_END;
 }
+
+#endif
+
 
 EXPORT_PUBLIC
 void setting_navi_items_update(Evas_Object *navigate_bar)
@@ -222,14 +229,18 @@ void setting_navi_items_update(Evas_Object *navigate_bar)
 	SETTING_TRACE_END;
 }
 
+
+#if 0
 static void __rotate_ctxpopup_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(data == NULL);
+
+#ifdef ECORE_X
 	Setting_Btn_Data *btn_data = (Setting_Btn_Data *)data;
 	Evas_Coord w, h;
 	int pos = -1;
-#ifdef ECORE_X
+
 	ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
 	pos = elm_win_rotation_get(ug_get_window());
 	SETTING_TRACE_DEBUG("pos: %d, w: %d, h: %d", pos, w, h);
@@ -242,6 +253,7 @@ static void __rotate_ctxpopup_cb(void *data, Evas_Object *obj, void *event_info)
 	}
 #endif
 }
+
 
 static void __ctxpopup_lang_change_cb(keynode_t *key, void *data)
 {
@@ -258,6 +270,8 @@ static void __ctxpopup_lang_change_cb(keynode_t *key, void *data)
 		}
 	}
 }
+#endif
+
 
 EXPORT_PUBLIC
 Evas_Object *setting_create_win_layout(Evas_Object *win_obj)
@@ -550,6 +564,7 @@ Elm_Object_Item *setting_create_navi_bar_top_buttons(char *title_str,
 	return navi_it;
 }
 
+#if 0
 static void _move_ctxpopup(Evas_Object *ctxpopup, Evas_Object *btn)
 {
 	Evas_Coord x, y, w , h;
@@ -571,6 +586,7 @@ _ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *event_info)
 	SETTING_TRACE_BEGIN;
 
 }
+#endif
 
 Elm_Object_Item *__create_navi_bar_bottom_buttons(char *title_str,
 												  char *lbutton_str,
@@ -579,9 +595,9 @@ Elm_Object_Item *__create_navi_bar_bottom_buttons(char *title_str,
                                                   Evas_Object *navigate_bar)
 {
 	SETTING_TRACE_BEGIN;
+
 	Elm_Object_Item *navi_it = NULL;
 	Evas_Object *lbtn = NULL;
-	Evas_Object *toolbar = NULL;
 
 #define USE_BACK 0
 #if USE_BACK

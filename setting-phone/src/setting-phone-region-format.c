@@ -548,8 +548,8 @@ static Eina_Bool __region_genlist_update(void *data)
 	}
 
 	if (search_count > 1) {
-		Setting_GenGroupItem_Data *last_item =
-			(Setting_GenGroupItem_Data *)elm_object_item_data_get(elm_genlist_last_item_get(ad->gl_region));
+		//? Setting_GenGroupItem_Data *last_item = (Setting_GenGroupItem_Data *)
+		elm_object_item_data_get(elm_genlist_last_item_get(ad->gl_region));
 	}
 
 	if (search_count == 0) {
@@ -753,8 +753,8 @@ static Eina_Bool __region_animator_cb(void *data)
 
 	Setting_GenGroupItem_Data *item_data = NULL;
 	if (ad->gl_region_cur_index >=  ad->region_num) {
-		Setting_GenGroupItem_Data *last_item =
-			(Setting_GenGroupItem_Data *)elm_object_item_data_get(elm_genlist_last_item_get(ad->gl_region));
+		//? Setting_GenGroupItem_Data *last_item = (Setting_GenGroupItem_Data *)
+		elm_object_item_data_get(elm_genlist_last_item_get(ad->gl_region));
 
 		if (ad->animator) {
 			ecore_animator_del(ad->animator);
@@ -929,8 +929,8 @@ static void __region_genlist_create(void *data)
 	} else { /*had finished adding items */
 		SETTING_TRACE("had finished adding items");
 
-		Setting_GenGroupItem_Data *last_item =
-			(Setting_GenGroupItem_Data *)elm_object_item_data_get(elm_genlist_last_item_get(ad->gl_region));
+		//? Setting_GenGroupItem_Data *last_item = (Setting_GenGroupItem_Data *)
+		elm_object_item_data_get(elm_genlist_last_item_get(ad->gl_region));
 	}
 }
 

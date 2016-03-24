@@ -28,13 +28,19 @@
 
 #define DEF_BUF_SIZE 32
 
+#ifdef OLD_GENLIST_STYLE
 static Evas_Object *_gl_Gendial_content_get(void *data, Evas_Object *obj, const char *part);
+#endif
+
 static char *_gl_Gendial_text_get(void *data, Evas_Object *obj, const char *part);
 
 static Evas_Object *_gl_Gendial_new_content_get(void *data, Evas_Object *obj, const char *part);
 static char *_gl_Gendial_new_text_get(void *data, Evas_Object *obj, const char *part);
 
+#if 0
 static char *_gl_Gendial_text2_get(void *data, Evas_Object *obj, const char *part);
+#endif
+
 static void _gl_Gendial_del(void *data, Evas_Object *obj);
 
 EXPORT_PUBLIC
@@ -498,6 +504,7 @@ static char *_gl_Gendial_text_get(void *data, Evas_Object *obj,
 	return ret_str;
 }
 
+#if 0
 static char *_gl_Gendial_text2_get(void *data, Evas_Object *obj,
                                   const char *part)
 {
@@ -523,6 +530,7 @@ static char *_gl_Gendial_text2_get(void *data, Evas_Object *obj,
 
 	return ret_str;
 }
+#endif
 
 static Evas_Object *__add_check_invisible(Setting_GenGroupItem_Data *item_data, Evas_Object *parent)
 {
@@ -804,6 +812,7 @@ static Evas_Object *__add_gif(Setting_GenGroupItem_Data *item_data, Evas_Object 
 	return image;
 }
 
+#if 0
 static Evas_Object *__add_image(Setting_GenGroupItem_Data *item_data, Evas_Object *parent)
 {
 	retv_if(!item_data || !parent || !item_data->l_swallow_path, NULL);
@@ -811,6 +820,7 @@ static Evas_Object *__add_image(Setting_GenGroupItem_Data *item_data, Evas_Objec
 	image = setting_create_image(parent, item_data->l_swallow_path);
 	return image;
 }
+#endif
 
 static void __entry_without_layout_focused_cb(void *data, Evas_Object *obj, void *ei) /* Focused callback will show X marked button and hide guidetext. */
 {
@@ -1014,7 +1024,7 @@ static Evas_Object *__add_entry_padding(Setting_GenGroupItem_Data *item_data, Ev
 {
 	retv_if(!item_data || !parent, NULL);
 	Evas_Object *layout = elm_layout_add(parent);
-	Eina_Bool ret = elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME, "entry_layout");
+	elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME, "entry_layout");
 	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
 	setting_retvm_if(layout == NULL, FALSE, "layout == NULL");
@@ -1024,6 +1034,7 @@ static Evas_Object *__add_entry_padding(Setting_GenGroupItem_Data *item_data, Ev
 	return layout;
 }
 
+#if 0
 static Evas_Object *__add_entry(Setting_GenGroupItem_Data *item_data, Evas_Object *parent)
 {
 	retv_if(!item_data || !parent, NULL);
@@ -1131,6 +1142,7 @@ static Evas_Object *__add_entry(Setting_GenGroupItem_Data *item_data, Evas_Objec
 	}
 	return ed_name;
 }
+#endif
 
 static Evas_Object *__add_5step_slider(Setting_GenGroupItem_Data *item_data, Evas_Object *parent)
 {
@@ -1175,6 +1187,7 @@ static Evas_Object *__add_slider(Setting_GenGroupItem_Data *item_data, Evas_Obje
 	return li_slider;
 }
 
+#if 0
 static Evas_Object *__add_layout(Setting_GenGroupItem_Data *item_data, Evas_Object *parent)
 {
 	retv_if(!item_data || !parent, NULL);
@@ -1188,6 +1201,7 @@ static Evas_Object *__add_layout(Setting_GenGroupItem_Data *item_data, Evas_Obje
 	/*elm_object_part_content_set(layout, "elm.swallow.content", navi); */
 	return layout;
 }
+#endif
 
 static void __picker_popup_cancel_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
@@ -1403,7 +1417,8 @@ static Evas_Object *__add_datefield_new(Setting_GenGroupItem_Data *item_data, Ev
 
 	char* region = NULL;
 	//int err = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, &lang);
-	int err = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, &region );
+	//? int err = 
+	system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, &region );
 
 	char *date = __setting_phone_lang_get_by_pattern(region , "MMM/d/yyyy");
 	char *pa_time_format = get_pa_time_format_str();
@@ -1475,6 +1490,7 @@ static Evas_Object *__add_datefield_new(Setting_GenGroupItem_Data *item_data, Ev
 	return box;
 }
 
+#if 0
 static Evas_Object *__add_process(Setting_GenGroupItem_Data *item_data, Evas_Object *parent)
 {
 	retv_if(!item_data || !parent, NULL);
@@ -1499,6 +1515,7 @@ static Evas_Object *__add_radio_lable(Setting_GenGroupItem_Data *item_data, Evas
 
 	return radio;
 }
+#endif
 
 static Evas_Object *__add_left_default(Setting_GenGroupItem_Data *item_data, Evas_Object *parent)
 {
@@ -1700,6 +1717,7 @@ static Evas_Object *_gl_Gendial_new_content_get(void *data, Evas_Object *obj,
 }
 
 
+#ifdef OLD_GENLIST_STYLE
 static Evas_Object *_gl_Gendial_content_get(void *data, Evas_Object *obj,
                                             const char *part)
 {
@@ -1764,6 +1782,7 @@ static Evas_Object *_gl_Gendial_content_get(void *data, Evas_Object *obj,
 	}
 	return fp ? fp(item_data, obj) : NULL;
 }
+#endif	// OLD_GENLIST_STYLE
 
 static void _gl_Gendial_del(void *data, Evas_Object *obj)
 {
@@ -2535,7 +2554,10 @@ void __gl_realized_cb(void *data, Evas_Object *obj, void *event_info)
 	/*SETTING_TRACE_BEGIN; */
 	setting_retm_if(event_info == NULL, "invalid parameter: event_info is NULL");
 	Elm_Object_Item *item = (Elm_Object_Item *)event_info;
-	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *)elm_object_item_data_get(item);
+
+	//? Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *)
+	elm_object_item_data_get(item);
+	
 /// #if SUPPORT_TTS
 	setting_check_genlist_item_bottom_line(item);
 }
