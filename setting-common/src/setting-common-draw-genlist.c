@@ -1547,22 +1547,23 @@ static Evas_Object *__add_left_default(Setting_GenGroupItem_Data *item_data, Eva
 	if (SWALLOW_Type_1ICON_1DOTTOOGLE == item_data->swallow_type
 	    || SWALLOW_Type_1ICON_1IMAGE == item_data->swallow_type) {
 		Evas_Object *icon = elm_icon_add(parent);
+		setting_decorate_image_RGBA(icon, 15, 41, 73, 255);
 		elm_image_file_set(icon, item_data->l_swallow_path, NULL);
 		evas_object_size_hint_aspect_set(icon, EVAS_ASPECT_CONTROL_VERTICAL, 1, 1);
 		return icon;
 	} else if (SWALLOW_Type_1ICON_SMALL_ICON == item_data->swallow_type) {
-		Evas_Object *ic = NULL;
-		ic = elm_layout_add(parent);
+		//Evas_Object *ic = NULL;
+		//ic = elm_layout_add(parent);
 		Evas_Object *c = NULL;
 
-		elm_layout_theme_set(ic, "layout", "list/B/type.4", "default");
+		//elm_layout_theme_set(ic, "layout", "list/B/type.4", "default");
 		c = elm_image_add(parent);
 		elm_image_file_set(c, item_data->l_swallow_path, NULL);
 		evas_object_size_hint_align_set(c, EVAS_HINT_FILL, EVAS_HINT_FILL);
 		evas_object_size_hint_weight_set(c, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-		elm_layout_content_set(ic, "elm.swallow.content", c);
-
-		return ic;
+		//elm_layout_content_set(ic, "elm.swallow.content", c);
+		//return ic;
+		return c;
 	} else {
 		Evas_Object *ic = NULL;
 		ic = elm_layout_add(parent);
