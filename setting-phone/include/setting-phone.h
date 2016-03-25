@@ -149,7 +149,7 @@ struct _SettingPhoneUG {
 	app_control_h bundle_data;
 	setting_view *view_to_load;
 	TelSimImsiInfo_t imsi;
-	const char *sim_lang; /** is just used for '0' (automatic). */
+	const char *sim_lang; 
 	Elm_Genlist_Item_Class itc_1text;
 	Elm_Genlist_Item_Class itc_1text_tb;
 	Elm_Genlist_Item_Class itc_1text_1icon_2;
@@ -239,7 +239,7 @@ extern char *setting_phone_lang_str_to_utf8(const UChar *unichars);
 
 
 /* event system */
-int set_language_helper(char *lang);
-int set_regionformat_helper(char *region);
+int set_language_helper(const char *lang);
+int set_regionformat_helper(const char *region);
 
 #endif				/* __SETTING_PHONE_H__ */

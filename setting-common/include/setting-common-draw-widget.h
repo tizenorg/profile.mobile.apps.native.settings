@@ -315,25 +315,6 @@ extern Setting_GenGroupItem_Data *setting_create_Gendial_field_1radio_1button(
     setting_call_back_func btn_clicked_cb);
 
 
-#if 0
-/**
- * Create common style item with menu icon
- * @return a pointer to Setting_GenGroupItem_Data
- */
-extern Setting_GenGroupItem_Data *setting_create_Gendial_field_groupitem(
-    Evas_Object *genlist,
-    const Elm_Genlist_Item_Class *itc,
-    Elm_Object_Item *parent,
-    setting_call_back_func gl_sel,
-    void *sel_data,
-    SWALLOW_Type swallow_type,
-    char *l_icon_path,
-    char *r_icon_path, int chk_status,
-    const char *keyStr, char *sub_desc,
-    setting_call_back_func
-    chk_change_cb);
-#endif
-
 extern Setting_GenGroupItem_Data *setting_create_Gendial_field_helpitem_without_bottom_separator(
     Evas_Object *genlist,
     const Elm_Genlist_Item_Class *itc,

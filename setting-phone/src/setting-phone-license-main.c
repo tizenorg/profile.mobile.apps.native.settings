@@ -59,11 +59,7 @@ static int setting_phone_license_main_create(void *cb)
 	                                                        &
 	                                                        (ad->navi_bar));
 	Elm_Object_Item *item = NULL;
-	Setting_GenGroupItem_Data *itme_data = NULL;
 
-
-	/*int value; */
-	/*int err; */
 	item =
 	    elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
 	                            ELM_GENLIST_ITEM_NONE, NULL, NULL);
@@ -76,7 +72,7 @@ static int setting_phone_license_main_create(void *cb)
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	/* [UI] open source license */
-	itme_data = setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
+	setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
 	                                             setting_phone_license_main_mouse_up_Gendial_list_cb,
 	                                             ad, SWALLOW_Type_INVALID, NULL, NULL,
 	                                             0, "IDS_ST_BODY_OPEN_SOURCE_LICENCES",

@@ -644,7 +644,6 @@ static int _slider_startpoint_x(void* data)
 	#if 0
 	if (_slider_get_width(ad) == 720)		/* M0 */
 		return 47;
-	else
 	#endif
 	return width;
 }

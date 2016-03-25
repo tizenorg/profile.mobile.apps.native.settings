@@ -197,7 +197,7 @@ static void setting_phone_display_language_close_popup_ex(void *data)
 			SETTING_TRACE_ERROR("[Error] set date format fail");
 		}
 
-		const char *lang = vconf_get_str(VCONFKEY_LANGSET);
+		char *lang = vconf_get_str(VCONFKEY_LANGSET);
 		if (lang) {
 			ret = set_regionformat_helper(lang);
 			/*ret = vconf_set_str(VCONFKEY_REGIONFORMAT, lang); */
@@ -347,7 +347,7 @@ static int setting_phone_display_language_create(void *cb)
 		if (item_data) {
 			item_data->userdata = ad;
 			item_idx++;
-			last_item = item_data;
+			//last_item = item_data;
 		} else {
 			SETTING_TRACE_ERROR("item_data is NULL");
 		}

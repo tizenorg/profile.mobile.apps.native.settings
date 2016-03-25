@@ -226,12 +226,11 @@ static void __create_auth_type_popup(void *data, Evas_Object *obj,
 
 	Evas_Object *rgd;
 
-	Setting_GenGroupItem_Data *list_item = NULL;
 	if (data_parentItem == ad->data_auth_type) {
 		rgd = elm_radio_add(scroller);
 		elm_radio_value_set(rgd, -1);
 
-		list_item = setting_create_Gendial_field_1radio(scroller,
+		setting_create_Gendial_field_1radio(scroller,
 						     &itc_multiline_1text_1icon,
 						     __sub_list_sel_cb, data_parentItem,
 						     SWALLOW_Type_1RADIO_RIGHT, rgd,
@@ -239,7 +238,7 @@ static void __create_auth_type_popup(void *data, Evas_Object *obj,
 						     "IDS_ST_MBODY_PAP",
 						     NULL);
 
-		list_item = setting_create_Gendial_field_1radio(scroller,
+		setting_create_Gendial_field_1radio(scroller,
 						     &itc_multiline_1text_1icon,
 						     __sub_list_sel_cb, data_parentItem,
 						     SWALLOW_Type_1RADIO_RIGHT, rgd,
@@ -247,7 +246,7 @@ static void __create_auth_type_popup(void *data, Evas_Object *obj,
 						     "IDS_ST_POP_CHAP",
 						     NULL);
 
-		list_item = setting_create_Gendial_field_1radio(scroller,
+		setting_create_Gendial_field_1radio(scroller,
 						     &itc_multiline_1text_1icon,
 						     __sub_list_sel_cb, data_parentItem,
 						     SWALLOW_Type_1RADIO_RIGHT, rgd,
@@ -262,7 +261,7 @@ static void __create_auth_type_popup(void *data, Evas_Object *obj,
 		rgd = elm_radio_add(scroller);
 		elm_radio_value_set(rgd, -1);
 
-		list_item = setting_create_Gendial_exp_sub_field(scroller,
+		setting_create_Gendial_exp_sub_field(scroller,
 						     &itc_1icon_1text_sub,
 						     __sub_list_sel_cb, ad,
 						     parentItem,
@@ -271,7 +270,7 @@ static void __create_auth_type_popup(void *data, Evas_Object *obj,
 						     "IDS_ST_BODY_INTERNET_CONNECTION",
 						     __sub_list_rd_change);
 
-		list_item = setting_create_Gendial_exp_sub_field(scroller,
+		setting_create_Gendial_exp_sub_field(scroller,
 						     &itc_1icon_1text_sub,
 						     __sub_list_sel_cb, ad,
 						     parentItem,
@@ -286,7 +285,7 @@ static void __create_auth_type_popup(void *data, Evas_Object *obj,
 		if(r < 0)
 			SETTING_TRACE("snprintf failed");
 
-		list_item = setting_create_Gendial_exp_sub_field(scroller,
+		setting_create_Gendial_exp_sub_field(scroller,
 						     &itc_1icon_1text_sub,
 						     __sub_list_sel_cb, ad,
 						     parentItem,
@@ -312,7 +311,6 @@ static void __setting_network_connection_exp_cb(void *data, Evas_Object *obj,
 
 	Evas_Object *rgd;
 
-	Setting_GenGroupItem_Data *list_item = NULL;
 	if (data_parentItem == ad->data_auth_type) {
 		rgd = elm_radio_add(scroller);
 		//elm_object_style_set(rgd, "list");
@@ -322,7 +320,7 @@ static void __setting_network_connection_exp_cb(void *data, Evas_Object *obj,
 		SETTING_TRACE("CONNECTION_CELLULAR_AUTH_TYPE_PAP : %d: ", CONNECTION_CELLULAR_AUTH_TYPE_PAP);
 		SETTING_TRACE("CONNECTION_CELLULAR_AUTH_TYPE_CHAP : %d: ", CONNECTION_CELLULAR_AUTH_TYPE_CHAP);
 
-		list_item = setting_create_Gendial_exp_sub_field(scroller,
+		setting_create_Gendial_exp_sub_field(scroller,
 		                                                 &itc_1icon_1text_sub,
 		                                                 __sub_list_sel_cb, ad,
 		                                                 parentItem,
@@ -331,7 +329,7 @@ static void __setting_network_connection_exp_cb(void *data, Evas_Object *obj,
 		                                                 IDS_ST_BODY_NONE,
 		                                                 __sub_list_rd_change);
 
-		list_item = setting_create_Gendial_exp_sub_field(scroller,
+		setting_create_Gendial_exp_sub_field(scroller,
 		                                                 &itc_1icon_1text_sub,
 		                                                 __sub_list_sel_cb, ad,
 		                                                 parentItem,
@@ -340,7 +338,7 @@ static void __setting_network_connection_exp_cb(void *data, Evas_Object *obj,
 		                                                 IDS_ST_MBODY_PAP,
 		                                                 __sub_list_rd_change);
 
-		list_item = setting_create_Gendial_exp_sub_field(scroller,
+		setting_create_Gendial_exp_sub_field(scroller,
 		                                                 &itc_1icon_1text_sub,
 		                                                 __sub_list_sel_cb, ad,
 		                                                 parentItem,
@@ -356,7 +354,7 @@ static void __setting_network_connection_exp_cb(void *data, Evas_Object *obj,
 		rgd = elm_radio_add(scroller);
 		elm_radio_value_set(rgd, -1);
 
-		list_item = setting_create_Gendial_exp_sub_field(scroller,
+		setting_create_Gendial_exp_sub_field(scroller,
 		                                                 &itc_1icon_1text_sub,
 		                                                 __sub_list_sel_cb, ad,
 		                                                 parentItem,
@@ -365,7 +363,7 @@ static void __setting_network_connection_exp_cb(void *data, Evas_Object *obj,
 		                                                 "IDS_ST_BODY_INTERNET_CONNECTION",
 		                                                 __sub_list_rd_change);
 
-		list_item = setting_create_Gendial_exp_sub_field(scroller,
+		setting_create_Gendial_exp_sub_field(scroller,
 		                                                 &itc_1icon_1text_sub,
 		                                                 __sub_list_sel_cb, ad,
 		                                                 parentItem,
@@ -380,7 +378,7 @@ static void __setting_network_connection_exp_cb(void *data, Evas_Object *obj,
 		if (r < 0)
 			SETTING_TRACE("snprintf failed");
 
-		list_item = setting_create_Gendial_exp_sub_field(scroller,
+		setting_create_Gendial_exp_sub_field(scroller,
 		                                                 &itc_1icon_1text_sub,
 		                                                 __sub_list_sel_cb, ad,
 		                                                 parentItem,
@@ -856,9 +854,8 @@ static int setting_network_connection_create(void *cb)
 	                            ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
-	bool new_flag = FALSE;
+
 	if (!safeStrCmp(STR_SETTING_NEW_CONNECTIONS, ad->con_name)) { /*new a profile,need to select the "Service type" */
-		new_flag = TRUE;
 		ad->data_srv_type =
 		    setting_create_Gendial_exp_parent_field(scroller,
 		                                            &itc_2text_3_parent,

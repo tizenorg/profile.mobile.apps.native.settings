@@ -813,7 +813,7 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv, 
 	return 0;
 }
 
-int set_language_helper(char *lang)
+int set_language_helper(const char *lang)
 {
 	#if 0
 	int ret = vconf_set_str(VCONFKEY_LANGSET, lang);
@@ -828,7 +828,7 @@ int set_language_helper(char *lang)
 	return ret;
 }
 
-int set_regionformat_helper(char *region)
+int set_regionformat_helper(const char *region)
 {
 
 	#if 0
