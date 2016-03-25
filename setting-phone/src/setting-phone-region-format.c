@@ -212,7 +212,7 @@ static int setting_phone_region_format_get_region_fmt(char *list[],
 		setting_retvm_if(NULL == loc_list, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER, "loc_list is NULL");
 
 		char* e = strchr(loc_list, '_');
-		char* result;
+		const char* result;
 		if (e) {
 			int index = (int)(e-loc_list);
 			result = substring(loc_list, 0, index);

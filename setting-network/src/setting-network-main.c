@@ -378,7 +378,7 @@ static void __data_roaming_change_cb(keynode_t *key, void *data)
 		if (status) {
 			int value = 0;
 			int err = 0;
-			int err_mobile_data = setting_network_get_state_mobile_data(&value);
+			setting_network_get_state_mobile_data(&value);
 			setting_retm_if(err != 0, "get vconf failed");
 			if (!value) {
 				setting_network_set_state_mobile_data(SETTING_ON_OFF_BTN_ON);
@@ -805,8 +805,8 @@ static int setting_network_main_create(void *cb)
 
 	/* [UI] TITLE : "Mobile Data" */
 	int value_mobile_data;
-	int err_mobile_data;
-	err_mobile_data = setting_network_get_state_mobile_data(&value_mobile_data);
+
+	setting_network_get_state_mobile_data(&value_mobile_data);
 
 	ad->data_mobile_data = setting_create_Gendial_field_def(scroller, &itc_1text_1icon,
 	                                                       setting_network_main_item_Gendial_mouse_up_cb,
@@ -828,9 +828,8 @@ static int setting_network_main_create(void *cb)
 	#endif
 
 	/* [UI] Data Roaming - TITLE : "Data Roaming" */
-	int err_data_roaming;
 	int value_data_roaming;
-	err_data_roaming = setting_network_get_state_data_roaming(&value_data_roaming);
+	setting_network_get_state_data_roaming(&value_data_roaming);
 
 	SETTING_TRACE_ERROR(" ---> data roaming value : %d", value_data_roaming);
 
@@ -1097,7 +1096,6 @@ static void _setting_network_popup_mobile_data_rollback(void *data)
 	int err = 0;
 	int value = 0;
 
-	//int err_mobile_data = 
 	setting_network_get_state_mobile_data(&value);
 	SETTING_TRACE("value = %d", value);
 
@@ -1374,7 +1372,6 @@ static void setting_network_use_packet_resp_cb(void *data, Evas_Object *obj,
 	int response_type = btn_type(obj);
 	int value = 0;
 
-	//int err_mobile_data = 
 	setting_network_get_state_mobile_data(&value);
 	setting_retm_if(err != 0, "get vconf failed");
 	SETTING_TRACE("value = %d", value);

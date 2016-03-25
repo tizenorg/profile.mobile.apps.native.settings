@@ -1973,7 +1973,7 @@ Setting_GenGroupItem_Data *setting_create_Gendial_field_1radio_1button(
 	return item_data;
 }
 
-static char* _handle_special_str(char* keyStr)
+static char* _handle_special_str(const char* keyStr)
 {
 	char speciliztion[MAX_SPECIALIZITION_LEN] = { 0, };
 	char *temp1 = (char *)keyStr;

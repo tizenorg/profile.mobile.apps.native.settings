@@ -700,25 +700,28 @@ int setting_password_set_password(const char *cur_pwd, const char *new_pwd, void
 			setting_set_int_slp_key(INT_SLP_SETTING_PHONE_LOCK_ATTEMPTS_LEFT, PHONE_LOCK_ATTEMPS_MAX, &err);
 #endif
 			return SETTING_RETURN_SUCCESS;
-		} else {
-			return SETTING_PW_ERROR_UNKNOWN;
-		}
-	} else {
-		ret = security_server_set_pwd(cur_pwd, new_pwd, 0, 0);
-		SETTING_TRACE_DEBUG("[security_server_set_pwd()] returns %d, INFINITE", ret);
-		if (ret == SECURITY_SERVER_API_SUCCESS) {
+		} 
+
+		return SETTING_PW_ERROR_UNKNOWN;
+
+	} 
+
+	ret = security_server_set_pwd(cur_pwd, new_pwd, 0, 0);
+	SETTING_TRACE_DEBUG("[security_server_set_pwd()] returns %d, INFINITE", ret);
+	if (ret == SECURITY_SERVER_API_SUCCESS) {
 #if 0
-			ckmc_ret = ckmc_change_user_password(user, cur_pwd, new_pwd);
-			SETTING_TRACE("ckmc_change_user_password() returns %d", ckmc_ret);
-			setting_set_int_slp_key(INT_SLP_SETTING_PHONE_LOCK_ATTEMPTS_LEFT, PHONE_LOCK_ATTEMPS_MAX, &err);
+		ckmc_ret = ckmc_change_user_password(user, cur_pwd, new_pwd);
+		SETTING_TRACE("ckmc_change_user_password() returns %d", ckmc_ret);
+		setting_set_int_slp_key(INT_SLP_SETTING_PHONE_LOCK_ATTEMPTS_LEFT, PHONE_LOCK_ATTEMPS_MAX, &err);
 #endif
-			return SETTING_RETURN_SUCCESS;
-		} else {
-			return SETTING_PW_ERROR_UNKNOWN;
-		}
-	}
-#else
+		return SETTING_RETURN_SUCCESS;
+	} 
 	return SETTING_PW_ERROR_UNKNOWN;
+
+#else
+
+	return SETTING_PW_ERROR_UNKNOWN;
+
 #endif
 }
 
