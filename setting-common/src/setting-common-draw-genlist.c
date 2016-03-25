@@ -611,15 +611,36 @@ static Evas_Object *__add_check(Setting_GenGroupItem_Data *item_data, Evas_Objec
 static Evas_Object *__add_toggle(Setting_GenGroupItem_Data *item_data, Evas_Object *parent)
 {
 	retv_if(!item_data || !parent, NULL);
-	Evas_Object *ly_toggle = elm_layout_add(parent);
-	elm_layout_theme_set(ly_toggle, "layout", "list/C/type.3", "default");
-	__add_check(item_data, parent);
-	Evas_Object *check = item_data->eo_check;
-	elm_object_style_set(check, "on&off");
+	Evas_Object *check = elm_check_add(parent);
 
-	elm_layout_content_set(ly_toggle, "elm.swallow.content", check);
-	/*return check; */
-	return ly_toggle;
+	/* To fix check button flicker issue when rotate the screen*/
+	if (item_data->isItemDisableFlag)
+		elm_object_disabled_set(check, EINA_FALSE);
+
+	elm_check_state_set(check, item_data->chk_status);
+	evas_object_propagate_events_set(check, 0);
+	evas_object_size_hint_align_set(check, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+
+	if (SWALLOW_Type_1CHECK == item_data->swallow_type) {
+		elm_check_state_pointer_set(check, (Eina_Bool *)(&(item_data->chk_status)));
+		evas_object_pass_events_set(check, 1);
+	} else {
+		evas_object_pass_events_set(check, 1);
+	}
+
+
+	item_data->eo_check = check;
+
+	if (item_data->chk_change_cb) {
+		evas_object_smart_callback_add(check, "changed", item_data->chk_change_cb, item_data);
+	} else {
+		evas_object_smart_callback_add(check, "changed", __chk_changed, item_data);
+	}
+	evas_object_show(check);
+
+	elm_object_style_set(check, "on&off");
+	return check;
 }
 
 static Evas_Object *__add_dot_toggle(Setting_GenGroupItem_Data *item_data, Evas_Object *parent)
