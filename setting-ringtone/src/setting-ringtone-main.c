@@ -201,7 +201,7 @@ char *get_default_filepath(SettingRingtoneUG *ad)
 
 	} else {
 
-		default_ringtone = vconf_get_str(VCONFKEY_SETAPPL_NOTI_RINGTONE_PATH_STR);
+		default_ringtone = vconf_get_str(VCONFKEY_SETAPPL_NOTI_MSG_RINGTONE_PATH_STR);
 		if (default_ringtone && ecore_file_exists(default_ringtone)) {
 			return default_ringtone;
 		} else {
