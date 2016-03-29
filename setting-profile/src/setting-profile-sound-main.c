@@ -261,7 +261,7 @@ static void __call_slider_change_cb(void *data, Evas_Object *obj, void *event_in
 		if (list_item->chk_status == 0) {
 			/* change to Vibration mode */
 			// call system_setting
-			system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_SOUND_SILENT_MODE, false);
+			//system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_SOUND_SILENT_MODE, false);
 			vconf_set_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, FALSE);
 			vconf_set_bool(VCONFKEY_SETAPPL_VIBRATION_STATUS_BOOL, TRUE);
 
@@ -269,7 +269,7 @@ static void __call_slider_change_cb(void *data, Evas_Object *obj, void *event_in
 			if (!ad->sound_on) {
 				/* change to Sound mode */
 				// call system_setting
-				system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_SOUND_SILENT_MODE, false);
+				//system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_SOUND_SILENT_MODE, false);
 				vconf_set_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, TRUE);
 				vconf_set_bool(VCONFKEY_SETAPPL_VIBRATION_STATUS_BOOL, FALSE);
 			}
