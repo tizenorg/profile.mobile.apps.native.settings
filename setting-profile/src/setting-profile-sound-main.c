@@ -67,7 +67,7 @@ setting_view setting_view_sound_main = {
 #define ADD_GENLIST2(genlist, parent) \
 	{\
 		genlist = elm_genlist_add(parent);\
-		retvm_if(genlist == NULL, NULL, "Cannot set genlist object as contento of layout");\
+		retm_if(genlist == NULL, "Cannot set genlist object as contento of layout");\
 		elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);\
 		elm_object_style_set(genlist, "dialogue");\
 		elm_genlist_clear(genlist);\
