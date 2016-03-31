@@ -1138,10 +1138,10 @@ bool setting_add_listen_node(Eina_List **listened_list, const char *vconf, vconf
 			*listened_list = eina_list_append(*listened_list, node);
 		} else {
 			SETTING_TRACE_ERROR("Failed to register callback[%p] of %s", node->cb, node->in_key);
+			FREE(node);
 			ret = FALSE;
 		}
 	}
-	FREE(node);
 	return ret;
 }
 

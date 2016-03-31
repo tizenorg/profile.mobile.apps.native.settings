@@ -565,11 +565,18 @@ int setting_cfg_init(void)
 EXPORT_PUBLIC
 void setting_cfg_exit(void)
 {
-	free(cfg_dir_path);
-	free(cfg_file_path);
-	cfg_dir_path = NULL;
-	cfg_file_path = NULL;
-	g_object_unref(parser);
+	if (cfg_dir_path) {
+		free(cfg_dir_path);
+		cfg_dir_path = NULL;
+	}
+	if (cfg_file_path) {
+		free(cfg_file_path);
+		cfg_file_path = NULL;
+	}
+	if (parser) {
+		g_object_unref(parser);
+		parser = NULL;
+	}
 }
 
 EXPORT_PUBLIC
@@ -628,6 +635,7 @@ int setting_cfg_migrate(void)
 			SETTING_TRACE_ERROR("Error to create a new config file");
 		}
 		g_object_unref(parser);
+		parser = NULL;
 		return FALSE;
 	}
 	root = json_parser_get_root(parser);

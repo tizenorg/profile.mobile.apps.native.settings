@@ -118,7 +118,7 @@ Evas_Object *_view_list_geter(void *data)
 	retvm_if(genlist == NULL, NULL, "Cannot set genlist object as contento of layout");
 
 	ad->sc_gl[SC_All_List] = genlist;
-	elm_genlist_block_count_set(genlist, 2);
+	//elm_genlist_block_count_set(genlist, 2);
 	//elm_object_style_set(genlist, "dialogue");
 	elm_genlist_clear(genlist);	/* first to clear list */
 	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);	/* resolve abnormal height issue */
@@ -451,11 +451,12 @@ static int setting_main_destroy(void *cb)
 
 	elm_object_part_content_unset(ad->view_layout, "elm.swallow.content");
 	elm_object_item_part_content_unset(ad->navibar_main_it, "tabbar");
+#if 0
 	if (ad->sc_gl[SC_All_List]) {
 		evas_object_del(ad->sc_gl[SC_All_List]);
 		ad->sc_gl[SC_All_List] = NULL;
 	}
-
+#endif
 	/* sound */
 	effect_playsound_close();
 

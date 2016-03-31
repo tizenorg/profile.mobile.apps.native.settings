@@ -400,6 +400,7 @@ static void setting_main_app_terminate(void *data)
 	vconf_set_bool(VCONFKEY_SETAPPL_ROTATE_HOLD_BOOL, FALSE);
 	evas_object_smart_callback_del(ad->win_main, "wm,rotation,changed", _rot_changed_cb);
 
+#if 1
 	/*PLUGIN_FINI; */
 	setting_cfg_exit();
 	clear_system_service_data();
@@ -407,21 +408,15 @@ static void setting_main_app_terminate(void *data)
 	ug_destroy_all();
 	ad->ug = NULL;
 
-	SETTING_TRACE_DEBUG("%s*** SETTING APPLICATION CLOSED ***%s", SETTING_FONT_BGREEN, SETTING_FONT_BLACK);
+#endif
+	SETTING_TRACE("*** SETTING APPLICATION CLOSED ***");
 	DEREGISTER_VCONFS(ad->listened_list);
-
-
 	setting_view_destroy(&setting_view_main, ad);
 
 	SETTING_TRACE_DEBUG("!!! After setting_view_destroy");
 	if (ad->win_main) {
 		evas_object_del(ad->win_main);
 		ad->win_main = NULL;
-	}
-
-	if (ad->b) {
-		bundle_free(ad->b);
-		ad->b = NULL;
 	}
 
 	SETTING_TRACE_END;
@@ -538,10 +533,6 @@ int main(int argc, char *argv[])
 		.app_control = setting_main_app_reset,
 	};
 	memset(&ad, 0x00, sizeof(setting_main_appdata));
-
-	bundle *b = NULL;
-	b = bundle_import_from_argv(argc, argv);
-	ad.b = b;
 
 	SETTING_TRACE_DEBUG("[TIME] 2. main : %d msec ", appcore_measure_time());
 	appcore_measure_start();

@@ -113,28 +113,11 @@ typedef struct _setting_main_appdata {
 	/* ---------------------------------------------------------- */
 	Ecore_Timer *event_freeze_timer;
 
-	bundle *b;
+	//bundle *b;
 
 	Cfg_Item_Type is_searchmode;
 	Eina_Hash *main_list_hash;
 
-#if 0
-	//Evas_Object *main_genlist;				/**< 'Setting main' in main page */
-	Evas_Object *ly_editview;			/**< Edit mode */
-	Evas_Object *popup_wifi_mode;
-	Evas_Object *popup_kies_via_wifi;
-	bool b_fm_requesting; /**< whether some request is processing. 1:yes, 0:no */
-	FLIGHT_MODE_OPEARTION fm_waiting_op;
-	Ecore_Timer *wifi_timer;
-	Ecore_Timer *update_idler;
-	int noti_id;
-	Evas_Object *search_genlist;
-	Evas_Object *ly_topview;
-	Evas_Object *search_bar;
-	char search_text[512 + 1];
-	Ecore_Idler *search_idler;
-	int wifi_op;
-#endif
 } setting_main_appdata;
 extern setting_main_appdata *g_main_ad;
 
