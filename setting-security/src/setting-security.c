@@ -1031,6 +1031,7 @@ void setting_security_destroy_lockscreen_options_ug_cb(ui_gadget_h ug,
 	}
 }
 
+
 gboolean setting_security_create_lockscreen_options_sg(void *data)
 {
 	/* error check */
@@ -1042,6 +1043,11 @@ gboolean setting_security_create_lockscreen_options_sg(void *data)
 		SETTING_TRACE("Password UG is already loaded.");
 		return FALSE;
 	}
+
+
+#if 1
+	app_launcher("lockscreen-options");
+#else
 	struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
 
 	if (!cbs)
@@ -1060,6 +1066,7 @@ gboolean setting_security_create_lockscreen_options_sg(void *data)
 	}
 
 	FREE(cbs);
+#endif
 
 	return TRUE;
 }

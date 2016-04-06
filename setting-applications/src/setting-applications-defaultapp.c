@@ -283,6 +283,9 @@ static gboolean setting_applications_create_homescreen_setting_ug(void *data)
 		SETTING_TRACE("Font UG is already loaded.");
 		return FALSE;
 	}
+
+
+#if 0	
 	struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
 
 	if (!cbs) {
@@ -301,7 +304,9 @@ static gboolean setting_applications_create_homescreen_setting_ug(void *data)
 		evas_object_show(ad->ly_main);
 	}
 	FREE(cbs);
-
+#else
+	app_launcher("setting-homescreen-efl");
+#endif
 	return TRUE;
 }
 

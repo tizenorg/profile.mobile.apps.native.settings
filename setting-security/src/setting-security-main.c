@@ -342,7 +342,7 @@ static Eina_Bool _check_tapi_async_cb_is_called(void *data)
 	return EINA_FALSE;
 }
 
-Eina_Bool __freeze_event_timer_cb(void *cb)
+static Eina_Bool __freeze_event_timer_cb(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, EINA_FALSE);
@@ -411,9 +411,9 @@ setting_security_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 
 	if (!safeStrCmp(KeyStr_LockScreen, list_item->keyStr)) {
-#if 0
-		int window_id = elm_win_xwindow_get(ad->win_get);
+#if 1
 		if (0 == app_launcher("lockscreen-options")) {
+		//if (0 == app_launcher("setting-lockscreen-options-efl")) {
 			ad->update_view_timer = ecore_timer_add(1, __freeze_event_timer_cb, ad);
 			evas_object_freeze_events_set(ad->navi_bar, EINA_TRUE);
 		}

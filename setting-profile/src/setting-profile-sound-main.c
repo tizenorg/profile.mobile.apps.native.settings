@@ -1187,6 +1187,7 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 		setting_sound_main_create_myfile_ug(ad, list_item->keyStr);
 		__setting_sound_ug_key_ungrab(ad);
 	} else if (!safeStrCmp("IDS_ST_MBODY_DO_NOT_DISTURB_ABB", list_item->keyStr)) {
+#if 0
 		SettingProfileUG *ad = (SettingProfileUG *) data;
 		struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
 		setting_retm_if(!cbs, "calloc failed");
@@ -1200,8 +1201,11 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 		SETTING_TRACE("To load ug[%s]", "ug-setting-notification-do-not-disturb-efl");
 		ug_create(ad->ug, "ug-setting-notification-do-not-disturb-efl", UG_MODE_FULLVIEW, NULL, cbs);
 		FREE(cbs);
-
+#else
+		app_launcher("ug-setting-notification-do-not-disturb-efl");
+#endif
 	} else if (!safeStrCmp("IDS_ST_MBODY_APP_NOTIFICATIONS", list_item->keyStr)) {
+#if 0
 		SettingProfileUG *ad = (SettingProfileUG *) data;
 		struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
 		setting_retm_if(!cbs, "calloc failed");
@@ -1215,6 +1219,9 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 		SETTING_TRACE("To load ug[%s]", "ug-setting-notification-app-notifications-efl");
 		ug_create(ad->ug, "ug-setting-notification-app-notifications-efl", UG_MODE_FULLVIEW, NULL, cbs);
 		FREE(cbs);
+#else
+		app_launcher("ug-setting-notification-app-notifications-efl");
+#endif
 
 	}
 	/* additional */
