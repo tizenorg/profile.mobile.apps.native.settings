@@ -3,7 +3,7 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${SETTING_COMMON}/include)
 
 INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_display REQUIRED elementary ecore edje evas appcore-common appcore-efl ui-gadget-1 capi-appfw-application dlog capi-system-device efl-extension
-deviced json-glib-1.0 capi-appfw-package-manager pkgmgr-info)
+deviced json-glib-1.0 capi-appfw-package-manager pkgmgr-info libtzplatform-config)
 
 FOREACH(flag ${pkgs_display_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")

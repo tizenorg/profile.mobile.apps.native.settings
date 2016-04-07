@@ -32,7 +32,7 @@
 
 #define SETTING_TIME_ZONEINFO_PATH 		"/usr/share/zoneinfo/"
 #define SETTING_TIME_SHARE_LOCAL_PATH 	"/usr/share/locale"
-#define SETTING_TZONE_SYMLINK_PATH		"/opt/etc/localtime"
+#define SETTING_TZONE_SYMLINK_PATH		_TZ_SYS_ETC"/localtime"
 
 void setting_time_main_launch_worldclock_sg(void *data);
 void setting_time_main_close_worldclock_sg(gpointer cb_data, gint argc,

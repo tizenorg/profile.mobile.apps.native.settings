@@ -19,9 +19,11 @@
 #include <glib.h>
 #include <storage.h>
 #include <media_content.h>
+#include <tzplatform_config.h>
 
 #include "setting-storage-async-worker.h"
 #include "setting-storage-utils.h"
+
 
 void storageUg_popup_del(void *data, Evas_Object *obj, void *event_info)
 {
@@ -358,6 +360,7 @@ int storageUg_get_internal_detail(SettingStorageUG *ad)
 {
 	int ret;
 	const char *cond;
+	char cond_str[1024];
 	struct _calculated_sizes sizes = {0.0, 0.0, 0.0};
 
 	retv_if(NULL == ad, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
@@ -371,8 +374,10 @@ int storageUg_get_internal_detail(SettingStorageUG *ad)
 
 	storageUG_STOP_POINT;
 
-	cond = "(MEDIA_TYPE = 4) and MEDIA_PATH LIKE \'/opt/usr/media/%%\'";;
-	ret = storageUG_get_media_info(cond, storageUg_get_misces_item, &sizes);
+	snprintf(cond_str,1024, "(MEDIA_TYPE = 4) and MEDIA_PATH LIKE \'%s/%%\'", tzplatform_getenv(TZ_USER_CONTENT));
+	//cond = "(MEDIA_TYPE = 4) and MEDIA_PATH LIKE \'"_TZ_USER_CONTENT"/%%\'";
+	//ret = storageUG_get_media_info(cond, storageUg_get_misces_item, &sizes);
+	ret = storageUG_get_media_info(cond_str, storageUg_get_misces_item, &sizes);
 	warn_if(MEDIA_CONTENT_ERROR_NONE != ret, "storageUG_get_media_info() Fail(%d)", ret);
 
 	storageUG_STOP_POINT;

@@ -24,7 +24,8 @@ pkg_check_modules(pkgs_appmgr REQUIRED
 		app2sd
 		json-glib-1.0
 		privilege-info
-		capi-appfw-package-manager)
+		capi-appfw-package-manager
+		libtzplatform-config)
 
 FOREACH(flag ${pkgs_appmgr_CFLAGS})
     SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")

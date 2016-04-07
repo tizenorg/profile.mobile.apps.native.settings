@@ -398,7 +398,7 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv, 
 	SETTING_TRACE(">> setting-display-efl DB search code");
 	setting_retvm_if(!priv || !applocale, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER, "pplist/applocale is NULL");
 
-	*applocale = strdup("setting:/usr/apps/org.tizen.setting/res/locale");
+	*applocale = strdup("setting:"_TZ_SYS_RO_APP"/org.tizen.setting/res/locale");
 
 	size = sizeof(s_cfg_node_array) / sizeof(s_cfg_node_array[0]);
 	for (i = 0; i < size; i++) {

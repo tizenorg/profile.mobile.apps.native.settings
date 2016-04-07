@@ -115,8 +115,8 @@
 #define NotifyStr_PDP_OFF "PDP will be disabled to find network nearby"
 #define Keystr_UNKNOWN_NETWORK _("IDS_ST_OPT_UNTITLED_NETWORK")
 
-/*#define WHITELIST_DIR_PATH	"/opt/usr/data/setting/lteon_netlist.xml" */
-#define WHITELIST_DIR_PATH	"/opt/system/csc/usr/network/lteon_netlist.xml"
+/*#define WHITELIST_DIR_PATH		_TZ_SYS_DATA"/setting/lteon_netlist.xml" */
+#define WHITELIST_DIR_PATH		"/opt/system/csc/usr/network/lteon_netlist.xml"
 
 
 #define SETTING_ADD_PROFILE_INDEX -1

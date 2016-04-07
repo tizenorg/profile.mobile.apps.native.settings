@@ -33,11 +33,12 @@
 
 #define VOLUME_APP_NAME "org.tizen.setting.volume"
 #define MAX_SAFETY_VOLUME_LEVEL 10
-#define SETTING_PROFILE_SOUND_ALERTS_PATH   "/opt/usr/share/settings/Alerts"
-#define SETTING_PROFILE_SOUND_RINGTONES_PATH    "/opt/usr/share/settings/Ringtones"
-#define SETTING_PROFILE_MMC_PATH        "/opt/storage/sdcard"
-#define SETTING_DEFAULT_MSG_TONE        "/opt/usr/share/settings/Alerts/Whistle.ogg"
-#define SETTING_DEFAULT_MEDIA_TONE      "/opt/usr/share/settings/Previews/Media_preview_Over_the_horizon.ogg"
+#define SETTING_PROFILE_SOUND_ALERTS_PATH   _TZ_SYS_SHARE"/settings/Alerts"
+//#define SETTING_PROFILE_SOUND_RINGTONES_PATH    _TZ_SYS_SHARE"/settings/Ringtones"
+#define SETTING_PROFILE_SOUND_RINGTONES_PATH    "/usr/apps/org.tizen.setting/shared/res/settings/Ringtones"
+#define SETTING_PROFILE_MMC_PATH        _TZ_SYS_MEDIA"/sdcard"
+#define SETTING_DEFAULT_MSG_TONE        _TZ_SYS_SHARE"/settings/Alerts/Whistle.ogg"
+#define SETTING_DEFAULT_MEDIA_TONE      _TZ_SYS_SHARE"/settings/Previews/Media_preview_Over_the_horizon.ogg"
 #define SUPPORT_PLAYER_ASYNC 1
 
 /*Call ringtone:3 icon status */

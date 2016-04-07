@@ -4,7 +4,7 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${SETTING_COMMON}/include)
 
 INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_time REQUIRED evas elementary appcore-common appcore-efl ecore tapi ui-gadget-1
-capi-appfw-application deviced icu-i18n icu-io icu-le icu-lx icu-uc json-glib-1.0 alarm-service eventsystem capi-system-system-settings)
+capi-appfw-application deviced icu-i18n icu-io icu-le icu-lx icu-uc json-glib-1.0 alarm-service eventsystem capi-system-system-settings libtzplatform-config)
 
 FOREACH(flag ${pkgs_time_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")

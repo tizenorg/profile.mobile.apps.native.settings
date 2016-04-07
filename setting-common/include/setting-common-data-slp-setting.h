@@ -26,8 +26,8 @@
 #include <vconf.h>
 #include <setting-common-general-func.h>
 
-#define LANGLIST_FILE_PATH		"/usr/apps/org.tizen.setting/def_config/langlist.xml"
-#define LANGLIST_ALL_FILE_PATH	"/opt/usr/apps/org.tizen.setting/data/langlist_all.xml"
+#define LANGLIST_FILE_PATH		_TZ_SYS_RO_APP"/org.tizen.setting/def_config/langlist.xml"
+#define LANGLIST_ALL_FILE_PATH	_TZ_SYS_RW_APP"/org.tizen.setting/data/langlist_all.xml"
 
 
 #define SETTING_STR_SLP_LEN 256

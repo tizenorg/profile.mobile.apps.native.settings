@@ -103,7 +103,7 @@ int status_fp(int total, int current, void *data)
 
 
 /**
-sh-4.1# /opt/usr/apps/org.tizen.setting/bin/setting_conf_util timezone_check
+sh-4.1# [_TZ_SYS_RW_APP]/org.tizen.setting/bin/setting_conf_util timezone_check
 debug level init 1(1)
 >>> time zone : /usr/share/zoneinfo/Asia/Seoul
 */
@@ -148,7 +148,7 @@ static char *get_timezone()
 
 	enum { BUFFERSIZE = 1024 };
 	char buf[BUFFERSIZE] = {0, };
-	ssize_t len = readlink("/opt/etc/localtime", buf, sizeof(buf) - 1);
+	ssize_t len = readlink(_TZ_SYS_ETC"/localtime", buf, sizeof(buf) - 1);
 
 	if (len != -1) {
 		buf[len] = '\0';

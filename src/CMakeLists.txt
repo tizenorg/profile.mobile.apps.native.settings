@@ -29,6 +29,7 @@ pkg_check_modules(pkgs_main REQUIRED
 					  capi-media-image-util
 					  efl-extension
 					  callmgr_client
+					  libtzplatform-config
 				  )
 
 FOREACH(flag ${pkgs_main_CFLAGS})
@@ -75,7 +76,7 @@ ADD_EXECUTABLE(${SETTING_CONFUTIL}
 	)
 TARGET_LINK_LIBRARIES(${SETTING_CONFUTIL} -L${CMAKE_BINARY_DIR}/${SETTING_COMMON} -lsetting-common)
 TARGET_LINK_LIBRARIES(${SETTING_CONFUTIL} ${pkgs_main_LDFLAGS} "-pie")
-INSTALL(TARGETS ${SETTING_CONFUTIL} DESTINATION /usr/apps/${SETTING_PKG_NAME}/bin)
+INSTALL(TARGETS ${SETTING_CONFUTIL} DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/bin)
 
 ####FOR TEST>>>>########
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} -L${CMAKE_BINARY_DIR}/${SETTING_COMMON} -lsetting-common)
@@ -84,7 +85,7 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME} -L${CMAKE_BINARY_DIR}/${SETTING_COMMON} -l
 # dmalloc
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${pkgs_main_LDFLAGS} "-pie")
 
-INSTALL(TARGETS ${PROJECT_NAME} DESTINATION /usr/apps/${SETTING_PKG_NAME}/bin)
+INSTALL(TARGETS ${PROJECT_NAME} DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/bin)
 
 # support help ringtone
 SET(SETTING_HELP_RINGTONE setting_help_ringtone)
@@ -93,7 +94,7 @@ ADD_EXECUTABLE(${SETTING_HELP_RINGTONE}
          )
 TARGET_LINK_LIBRARIES(${SETTING_HELP_RINGTONE} -L${CMAKE_BINARY_DIR}/${SETTING_COMMON} -lsetting-common)
 TARGET_LINK_LIBRARIES(${SETTING_HELP_RINGTONE} ${pkgs_main_LDFLAGS} "-pie")
-INSTALL(TARGETS ${SETTING_HELP_RINGTONE} DESTINATION /usr/apps/${SETTING_PKG_NAME}/bin)
+INSTALL(TARGETS ${SETTING_HELP_RINGTONE} DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/bin)
 # end
 
 
@@ -104,7 +105,7 @@ ADD_CUSTOM_TARGET(font-slider.edj
 		DEPENDS ${CMAKE_SOURCE_DIR}/resource/font-slider.edc
 )
 ADD_DEPENDENCIES(${PROJECT_NAME} font-slider.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/font-slider.edj DESTINATION /usr/apps/${SETTING_PKG_NAME}/res/edje/)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/font-slider.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
 
 # make setting-theme.edj
 ADD_CUSTOM_TARGET(setting-theme.edj
@@ -115,7 +116,7 @@ ADD_CUSTOM_TARGET(setting-theme.edj
 
 ADD_DEPENDENCIES(${PROJECT_NAME} setting-theme.edj)
 
-INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-theme.edj DESTINATION /usr/apps/${SETTING_PKG_NAME}/res/edje/)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-theme.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
 
 # make settings.edj
 ADD_CUSTOM_TARGET(settings.edj
@@ -125,7 +126,7 @@ ADD_CUSTOM_TARGET(settings.edj
 )
 ADD_DEPENDENCIES(${PROJECT_NAME} settings.edj)
 
-INSTALL(FILES ${CMAKE_BINARY_DIR}/settings.edj DESTINATION /usr/apps/${SETTING_PKG_NAME}/res/edje/)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/settings.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
 
 # make setting-newux.edj
 ADD_CUSTOM_TARGET(setting-newux.edj
@@ -135,7 +136,7 @@ ADD_CUSTOM_TARGET(setting-newux.edj
 )
 
 ADD_DEPENDENCIES(${PROJECT_NAME} setting-newux.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-newux.edj DESTINATION /usr/apps/${SETTING_PKG_NAME}/res/edje/)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-newux.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
 
 # make setting-genlist.edj
 ADD_CUSTOM_TARGET(setting-genlist.edj
@@ -145,7 +146,7 @@ ADD_CUSTOM_TARGET(setting-genlist.edj
 )
 
 ADD_DEPENDENCIES(${PROJECT_NAME} setting-genlist.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-genlist.edj DESTINATION /usr/apps/${SETTING_PKG_NAME}/res/edje/)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-genlist.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
 
 ADD_CUSTOM_TARGET(setting-new-genlist.edj
 		COMMAND edje_cc -id ${CMAKE_SOURCE_DIR}/resource/images -sd ${CMAKE_SOURCE_DIR}/resource/sounds
@@ -155,7 +156,7 @@ ADD_CUSTOM_TARGET(setting-new-genlist.edj
 )
 
 ADD_DEPENDENCIES(${PROJECT_NAME} setting-new-genlist.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-new-genlist.edj DESTINATION /usr/apps/${SETTING_PKG_NAME}/res/edje/)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-new-genlist.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
 
 # make setting-proc.edj
 ADD_CUSTOM_TARGET(setting-proc.edj
@@ -165,7 +166,7 @@ ADD_CUSTOM_TARGET(setting-proc.edj
 )
 
 ADD_DEPENDENCIES(${PROJECT_NAME} setting-proc.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-proc.edj DESTINATION /usr/apps/${SETTING_PKG_NAME}/res/edje/)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-proc.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
 
 # make setting-slider.edj
 ADD_CUSTOM_TARGET(setting-slider.edj
@@ -176,7 +177,7 @@ ADD_CUSTOM_TARGET(setting-slider.edj
 )
 
 ADD_DEPENDENCIES(${PROJECT_NAME} setting-slider.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-slider.edj DESTINATION /usr/apps/${SETTING_PKG_NAME}/res/edje/)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-slider.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
 
 # make setting-eff.edj
 ADD_CUSTOM_TARGET(setting-eff.edj
@@ -186,7 +187,7 @@ ADD_CUSTOM_TARGET(setting-eff.edj
 )
 
 ADD_DEPENDENCIES(${PROJECT_NAME} setting-eff.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-eff.edj DESTINATION /usr/apps/${SETTING_PKG_NAME}/res/edje/)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-eff.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
 
 # make ug-setting-manage-applications-efl.edj
 ADD_CUSTOM_TARGET(ug-setting-manage-applications-efl.edj
@@ -196,7 +197,7 @@ ADD_CUSTOM_TARGET(ug-setting-manage-applications-efl.edj
 )
 
 ADD_DEPENDENCIES(${PROJECT_NAME} ug-setting-manage-applications-efl.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/ug-setting-manage-applications-efl.edj DESTINATION /usr/apps/${SETTING_PKG_NAME}/res/edje/)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/ug-setting-manage-applications-efl.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
 
 # make setting-custompopup.edj
 ADD_CUSTOM_TARGET(setting-custompopup.edj
@@ -207,9 +208,9 @@ ADD_CUSTOM_TARGET(setting-custompopup.edj
 )
 
 ADD_DEPENDENCIES(${PROJECT_NAME} setting-custompopup.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-custompopup.edj DESTINATION /usr/apps/${SETTING_PKG_NAME}/res/edje/)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-custompopup.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
 
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/resource/langlist.xml DESTINATION /usr/apps/${SETTING_PKG_NAME}/def_config)
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/resource/langlist.xml DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/def_config)
 #------------------------------------------------------------------------------------------
 
 # install desktop file & icon
@@ -218,25 +219,25 @@ SET(PREFIX ${CMAKE_INSTALL_PREFIX})
 INSTALL(FILES ${CMAKE_SOURCE_DIR}/org.tizen.setting.xml DESTINATION /usr/share/packages/)
 INSTALL(FILES ${CMAKE_SOURCE_DIR}/org.tizen.setting.xml.ref DESTINATION /usr/share/packages/)
 
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/${SETTING_PKG_NAME}.png DESTINATION /usr/share/icons/default/small)
-INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/icons DESTINATION /usr/apps/${SETTING_PKG_NAME}/res FILES_MATCHING PATTERN "*.png")
-INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/images DESTINATION /usr/apps/${SETTING_PKG_NAME}/res FILES_MATCHING PATTERN "*.png")
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/${SETTING_PKG_NAME}.png DESTINATION ${TZ_SYS_RO_ICONS}/default/small)
+INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/icons DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res FILES_MATCHING PATTERN "*.png")
+INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/images DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res FILES_MATCHING PATTERN "*.png")
 
-#INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/icons DESTINATION /usr/apps/${SETTING_PKG_NAME}/shared FILES_MATCHING PATTERN "*.png")
+#INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/icons DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/shared FILES_MATCHING PATTERN "*.png")
 
 # install file for help app
-#SET(HELPDATADIR_PH "/usr/apps/org.tizen.setting/shared/res")
+#SET(HELPDATADIR_PH "${TZ_SYS_RO_APP}/org.tizen.setting/shared/res")
 #INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/help DESTINATION ${HELPDATADIR_PH} PATTERN "*")
 
 # install media-data ; should be at /usr/share
 IF("${BUILD_ARCH}" STREQUAL "arm")
-	INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media-data-sdk/settings DESTINATION /usr/apps/org.tizen.setting/shared/res PATTERN "*")
+	INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media-data-sdk/settings DESTINATION ${TZ_SYS_RO_APP}/org.tizen.setting/shared/res PATTERN "*")
 ELSE("${BUILD_ARCH}" STREQUAL "arm")
-	INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media-data-sdk/settings DESTINATION /usr/apps/org.tizen.setting/shared/res PATTERN "*")
+	INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media-data-sdk/settings DESTINATION ${TZ_SYS_RO_APP}/org.tizen.setting/shared/res PATTERN "*")
 ENDIF("${BUILD_ARCH}" STREQUAL "arm")
 
 # install changeable UI code
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting.xml DESTINATION /usr/apps/org.tizen.setting/shared/res/tables)
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting.xml DESTINATION ${TZ_SYS_RO_APP}/org.tizen.setting/shared/res/tables)
 
 INSTALL(FILES ${CMAKE_SOURCE_DIR}/mime.setting.xml DESTINATION /usr/share/mime/packages)
 

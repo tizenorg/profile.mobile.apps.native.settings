@@ -26,7 +26,7 @@
 #define SUPPORT_FOTA
 
 #define SETTING_ABOUT_POWER_SUPPLY_PATH "/sys/class/power_supply"
-#define SETTING_ABOUT_BD_ADDR_PATH "/opt/etc/.bd_addr"
+#define SETTING_ABOUT_BD_ADDR_PATH	_TZ_SYS_ETC"/.bd_addr"
 #define SETTING_ABOUT_STAT_PATH "/proc/stat"
 
 #define SETTING_ABOUT_NEVER_TURN_WIFI_ON_STR "Never Turn WI-FI ON"

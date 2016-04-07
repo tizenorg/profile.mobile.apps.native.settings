@@ -9,7 +9,7 @@ pkg_check_modules(pkgs_profile REQUIRED
 			ui-gadget-1 capi-appfw-application capi-appfw-app-manager vconf
 			capi-media-player capi-media-sound-manager
 			dlog feedback deviced capi-system-device efl-extension
-			cairo mm-keysound capi-media-metadata-extractor json-glib-1.0 eventsystem notification callmgr_client capi-system-system-settings)
+			cairo mm-keysound capi-media-metadata-extractor json-glib-1.0 eventsystem notification callmgr_client capi-system-system-settings libtzplatform-config)
 
 FOREACH(flag ${pkgs_profile_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
@@ -49,6 +49,6 @@ ADD_EXECUTABLE(${SETTING_VOLUME_POPUP}
 	)
 TARGET_LINK_LIBRARIES(${SETTING_VOLUME_POPUP} -L${CMAKE_BINARY_DIR}/${SETTING_COMMON} -lsetting-common)
 TARGET_LINK_LIBRARIES(${SETTING_VOLUME_POPUP} ${pkgs_profile_LDFLAGS} "-pie")
-INSTALL(TARGETS ${SETTING_VOLUME_POPUP} DESTINATION /usr/apps/${SETTING_PKG_NAME}/bin)
+INSTALL(TARGETS ${SETTING_VOLUME_POPUP} DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/bin)
 # end
 

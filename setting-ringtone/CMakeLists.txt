@@ -5,8 +5,8 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${SETTING_COMMON}/include)
 
 INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_ringtone REQUIRED
-elementary appcore-common appcore-efl ui-gadget-1 capi-appfw-application evas capi-media-metadata-extractor efl-extension
-ecore edje glib-2.0 capi-media-player capi-media-sound-manager)
+elementary appcore-common appcore-efl ui-gadget-1 capi-appfw-application evas capi-media-metadata-extractor efl-extension json-glib-1.0
+ecore edje glib-2.0 capi-media-player capi-media-sound-manager libtzplatform-config)
 
 FOREACH(flag ${pkgs_ringtone_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")

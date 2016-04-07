@@ -3,7 +3,7 @@
         <label>Settings shortcut</label>
         <author email="mj2004.park@samsung.com" href="www.samsung.com">MyoungJune Park</author>
         <description>Shortcut list of settings</description>
-	<ui-application appid="setting-shortcut-efl" exec="/usr/ug/bin/setting-shortcut-efl" type="capp" nodisplay="true" taskmanage="false">
+	<ui-application appid="setting-shortcut-efl" exec="@TZ_SYS_RO_UG@/bin/setting-shortcut-efl" type="capp" nodisplay="true" taskmanage="false">
 		<icon>ug-setting-shortcut-efl.png</icon>
 		<label>Settings shortcut</label>
 		<label xml:lang="en-us">Settings shortcut</label>

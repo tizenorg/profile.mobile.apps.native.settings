@@ -1520,7 +1520,7 @@ static char *get_timezone_str()
 
 	enum { BUFFERSIZE = 1024 };
 	char buf[BUFFERSIZE];
-	ssize_t len = readlink("/opt/etc/localtime", buf, sizeof(buf) - 1);
+	ssize_t len = readlink(_TZ_SYS_ETC"/localtime", buf, sizeof(buf) - 1);
 
 	if (len != -1) {
 		buf[len] = '\0';
@@ -1542,7 +1542,7 @@ static bool get_city_name(char *tzname)
 	sqlite3 *pSQLite3 = NULL;
 	char    *szErrMsg = NULL;
 
-	int rst = sqlite3_open("/opt/dbspace/.worldclock.db", &pSQLite3);
+	int rst = sqlite3_open(_TZ_SYS_DB"/.worldclock.db", &pSQLite3);
 	if (rst) {
 		SETTING_TRACE("Can't open database: %s", sqlite3_errmsg(pSQLite3));
 		sqlite3_close(pSQLite3);

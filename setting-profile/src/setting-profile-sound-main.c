@@ -543,7 +543,7 @@ __sound_chk_cb(void *data, Evas_Object *obj,
 	setting_sound_main_mouse_up_Gendial_list_cb(ad, NULL, list_item->item);
 }
 
-#define INIT_PATH	"/opt/usr/share/settings/Vibrations/"
+#define INIT_PATH	_TZ_SYS_SHARE"/settings/Vibrations/"
 static void __get_lite_main_list(void *data)
 {
 	SETTING_TRACE_BEGIN;

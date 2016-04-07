@@ -18,6 +18,7 @@ ExcludeArch: %{arm} %ix86 x86_64
 ExcludeArch: %{arm} %ix86 x86_64
 %endif
 
+BuildRequires:  pkgconfig(libtzplatform-config)
 BuildRequires:  pkgconfig(appcore-common)
 BuildRequires:  pkgconfig(appcore-efl)
 BuildRequires:  pkgconfig(elementary)
@@ -103,7 +104,6 @@ BuildRequires:  gettext-tools
 #BuildRequires:  security-privilege-manager-devel
 BuildRequires:  hash-signer
 #BuildRequires:  system-resource-devel-meta
-
 #Requires: libeas-common
 Requires: security-privilege-manager
 Requires(post): attr
@@ -135,14 +135,15 @@ Group: Application Framework/Settings
 %build
 
 %define PREFIX    %{_prefix}/apps/org.tizen.setting
-%define OPTPREFIX /opt/usr/apps/org.tizen.setting
+%define OPTPREFIX %{TZ_SYS_RW_APP}/org.tizen.setting
 %define RESDIR    %{PREFIX}/res
-%define OPTSHAREREFIX    /usr/apps/org.tizen.setting/shared/res/settings
+%define OPTSHAREREFIX  %{TZ_SYS_RO_APP}/org.tizen.setting/shared/res/settings
 
 %define CONFIGDIR    %{PREFIX}/def_config
 %define IMAGEDIR    %{RESDIR}/images
 CFLAGS+=" -fPIC -fvisibility=hidden ";export CFLAGS
 CXXFLAGS+=" -fPIC -fvisibility=hidden ";export CFLAGS
+
 LDFLAGS+="-Wl,--rpath=%{PREFIX}/lib -Wl,--hash-style=both -Wl,--as-needed";export LDFLAGS
 
 %if 0%{?sec_build_binary_debug_enable}
@@ -170,21 +171,30 @@ export CFLAGS="$CFLAGS -DTIZEN_BUILD_EMULATOR"
 %ifarch %{arm}
 	cmake . -DCMAKE_INSTALL_PREFIX=%{PREFIX} -DARCH=arm -DLIBDIR=%{_libdir} -DINCLUDEDIR=%{_includedir} \
 %if %{with wayland} && !%{with x}
--Dwith_wayland=TRUE
+-Dwith_wayland=TRUE \
 %else
--Dwith_x=TRUE
+-Dwith_x=TRUE \
 %endif
 %else
 	cmake . -DCMAKE_INSTALL_PREFIX=%{PREFIX} -DARCH=x86 -DLIBDIR=%{_libdir} -DINCLUDEDIR=%{_includedir} \
 %if %{with wayland} && !%{with x}
--Dwith_wayland=TRUE
+-Dwith_wayland=TRUE \
 %else
--Dwith_x=TRUE
+-Dwith_x=TRUE \
 %endif
 %endif
 %if 0%{?tizen_build_binary_release_type_eng}
 		-DBINARY_RELEASE_TYPE_ENG=YES \
 %endif
+	-DTZ_SYS_DATA=%{TZ_SYS_DATA} \
+	-DTZ_SYS_ETC=%{TZ_SYS_ETC} \
+	-DTZ_SYS_SHARE=%{TZ_SYS_SHARE} \
+	-DTZ_SYS_RO_APP=%{TZ_SYS_RO_APP} \
+	-DTZ_SYS_RW_APP=%{TZ_SYS_RW_APP} \
+	-DTZ_SYS_RO_UG=%{TZ_SYS_RO_UG} \
+	-DTZ_SYS_RO_ICONS=%{TZ_SYS_RO_ICONS} \
+	-DTZ_SYS_MEDIA=%{TZ_SYS_MEDIA} \
+	-DTZ_SYS_DB=%{TZ_SYS_DB}
 
 # build all
 make
@@ -225,6 +235,8 @@ GOPTION="-g 6514"
 #resetSound
 	DEFAULT_CALL_TONE="%{OPTSHAREREFIX}/Ringtones/ringtone_sdk.mp3"
 	DEFAULT_NOTI_TONE="%{OPTSHAREREFIX}/Alerts/General notification_sdk.wav"
+
+
 
 #resetImages
 	DEFAULT_HOME="%{OPTSHAREREFIX}/Wallpapers/Home_default.jpg"
@@ -291,7 +303,7 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %{PREFIX}/res/*
 %{_datadir}/mime/packages/*
 
-#/opt/usr/share/settings/*
+#%{TZ_SYS_SHARE}/settings/*
 %{OPTSHAREREFIX}/*
 
 %{PREFIX}/shared/res/*

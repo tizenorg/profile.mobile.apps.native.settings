@@ -9,8 +9,8 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
 INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_common_data REQUIRED appcore-efl elementary vconf openssl evas
 ecore ecore-imf json-glib-1.0 edje glib-2.0 libxml-2.0 ui-gadget-1 alarm-service cairo
-capi-appfw-application capi-system-info capi-system-system-settings pkgmgr-info efl-extension
-capi-appfw-app-common notification feedback capi-media-player capi-media-sound-manager dbus-1 icu-i18n icu-io icu-le icu-lx icu-uc eventsystem)
+capi-appfw-application capi-system-info capi-system-system-settings pkgmgr-info efl-extension libtzplatform-config
+capi-appfw-app-common notification feedback capi-media-player capi-media-sound-manager dbus-1 icu-i18n icu-io icu-le icu-lx icu-uc eventsystem libtzplatform-config)
 
 
 FOREACH(flag ${pkgs_common_data_CFLAGS})

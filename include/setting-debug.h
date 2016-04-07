@@ -55,11 +55,11 @@
 #endif
 
 #if !defined(LOCALEDIR)
-#define LOCALEDIR "/usr/apps/org.tizen.setting/res/locale"
+#define LOCALEDIR 	_TZ_SYS_RO_APP"/org.tizen.setting/res/locale"
 #endif
 
 #if !defined(EDJDIR)
-#define EDJDIR "/usr/apps/org.tizen.setting/res/edje"
+#define EDJDIR 	_TZ_SYS_RO_APP"/org.tizen.setting/res/edje"
 #endif
 
 #define SUPPORT_BOTTOM_BTNS 1

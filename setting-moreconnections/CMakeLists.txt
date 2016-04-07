@@ -16,7 +16,8 @@ pkg_check_modules(pkgs_moreconnections REQUIRED
 		deviced
 		efl-extension
 		#capi-location-manager
-		json-glib-1.0)
+		json-glib-1.0
+		libtzplatform-config)
 
 FOREACH(flag ${pkgs_moreconnections_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
