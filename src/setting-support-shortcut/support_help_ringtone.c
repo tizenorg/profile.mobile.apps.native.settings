@@ -368,10 +368,10 @@ static void support_help_app_reset(app_control_h service, void *data)
 
 	char *cur_ringtone_path = vconf_get_str(VCONFKEY_SETAPPL_CALL_RINGTONE_PATH_STR);
 	if (cur_ringtone_path == NULL)
-		cur_ringtone_path = (char *)strdup("/opt/usr/share/settings/Ringtones/Over_the_horizon.ogg");
+		cur_ringtone_path = (char *)strdup(_TZ_SYS_SHARE"/settings/Ringtones/Over_the_horizon.ogg");
 	app_control_add_extra_data(svc, "title", "IDS_ST_HEADER_RINGTONES");
 	app_control_add_extra_data(svc, "domain", "setting");
-	app_control_add_extra_data(svc, "path", "/opt/usr/share/settings/Ringtones");
+	app_control_add_extra_data(svc, "path", _TZ_SYS_SHARE"/settings/Ringtones");
 	app_control_add_extra_data(svc, "select_type", "SINGLE_FILE");
 	app_control_add_extra_data(svc, "file_type", "SOUND");
 	app_control_add_extra_data(svc, "drm_type", "DRM_ALL");

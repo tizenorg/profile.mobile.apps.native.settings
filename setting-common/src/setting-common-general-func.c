@@ -1344,7 +1344,7 @@ int setting_invoke_reset_function(char *ug_name, app_control_h service, void *ex
 	struct stat st;
 	if (stat(ug_file, &st) != 0) {
 
-		/*2.if it does not exit in /opt/ug/lib, then do exist-checking in /usr/ug/lib */
+		/*2.if it does not exit in /opt/ug/lib, then do exist-checking in (_TZ_SYS_RO_UG)/lib */
 		memset(ug_file, 0x00, PATH_MAX + 1);
 		snprintf(ug_file, PATH_MAX, "%s/libug-%s.so", SETTING_UG_PATH_USR, ug_name);
 		if (stat(ug_file, &st) != 0) {

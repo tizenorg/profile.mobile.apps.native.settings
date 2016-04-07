@@ -27,7 +27,7 @@
 /*////////////////////////// */
 /*/////// IMAGE //////////// */
 /*///////////////////////// */
-#define IMG_SETTING	"/usr/share/icons/default/small/org.tizen.setting.png"
+#define IMG_SETTING		_TZ_SYS_RO_ICONS"/default/small/org.tizen.setting.png"
 
 #define IMG_Joyn				SETTING_OTHER_UG_ICON_PATH"org.tizen.setting.png"
 /* connectivity IMG*/
@@ -174,7 +174,7 @@
 
 /*  pdf */
 #define PDF_SOURCE_ANNOUNCEMENT \
-	"/usr/apps/org.tizen.setting/data/Open_Source_Announcement.pdf"
+	_TZ_SYS_RO_APP"/org.tizen.setting/data/Open_Source_Announcement.pdf"
 
 /* home screen*/
 #define IMG_DEFAULT_HOME_SCREEN \

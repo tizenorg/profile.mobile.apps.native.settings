@@ -25,9 +25,9 @@ FOREACH(pofile ${POFILES})
 			COMMAND ${MSGFMT} -o ${moFile} ${absPofile}
 			DEPENDS ${absPofile}
 	)
-	INSTALL(FILES ${moFile} DESTINATION /usr/apps/${SETTING_PKG_NAME}/res/locale/${lang}/LC_MESSAGES RENAME setting.mo)
+	INSTALL(FILES ${moFile} DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/locale/${lang}/LC_MESSAGES RENAME setting.mo)
 
-#/usr/apps/org.tizen.mode-syspopup
+#${TZ_SYS_RO_APP}/org.tizen.mode-syspopup
 
 	SET(moFiles ${moFiles} ${moFile})
 ENDFOREACH(pofile)

@@ -2,7 +2,7 @@
 
 DESC="Tizen firewall"
 DAEMON=/usr/bin/$NAME
-MJRUN=/usr/apps/org.tizen.setting/bin/firewall
+MJRUN=$TZ_SYS_RO_APP/org.tizen.setting/bin/firewall
 FIREWALLSTART="30"
 FIREWALLSTOP="31"
 

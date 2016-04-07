@@ -6,7 +6,7 @@ FILE(GLOB ACC_SRCS *.c)
 INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_acc REQUIRED elementary ui-gadget-1 capi-appfw-application
         evas dlog edje glib-2.0 appcore-efl eina appsvc capi-appfw-app-manager
-        vconf app2sd json-glib-1.0 efl-extension)
+        vconf app2sd json-glib-1.0 efl-extension libtzplatform-config)
 
 FOREACH(flag ${pkgs_acc_CFLAGS})
     SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")

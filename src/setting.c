@@ -350,7 +350,7 @@ static bool setting_main_app_create(void *data)
 					break;
 				}
 			case Cfg_Error_Type_Mkdir_Failed: {
-					notifyStr = _("file system missed<br>/opt/usr/data/setting, <br>re-install org.tizen.setting please");
+					notifyStr = _("file system missed<br>"_TZ_SYS_DATA"/setting, <br>re-install org.tizen.setting please");
 					break;
 				}
 			case Cfg_Error_Type_RemoveCfg_Failed: {

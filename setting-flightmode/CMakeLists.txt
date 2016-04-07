@@ -2,8 +2,8 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${SETTING_COMMON}/include)
 
 INCLUDE(FindPkgConfig)
-pkg_check_modules(pkgs_flightmode REQUIRED elementary ecore edje evas appcore-common appcore-efl ui-gadget-1 dlog aul
-pkgmgr-info tapi notification)
+pkg_check_modules(pkgs_flightmode REQUIRED elementary ecore edje evas appcore-common appcore-efl ui-gadget-1 dlog aul json-glib-1.0
+pkgmgr-info tapi notification libtzplatform-config)
 
 FOREACH(flag ${pkgs_flightmode_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")

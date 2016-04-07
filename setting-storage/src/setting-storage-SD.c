@@ -397,7 +397,7 @@ static inline void storageUg_SD_info_mounted(SettingStorageUG *ad)
 	double avail = 0.0;
 	char total_str[STORAGEUG_MAX_STR_LEN] = {0};
 	char avail_str[STORAGEUG_MAX_STR_LEN] = {0};
-	const char *MMC_path = "/opt/storage/sdcard";
+	const char *MMC_path = _TZ_SYS_MEDIA"/sdcard";
 
 	storageUg_get_external_storage_status(MMC_path, &total, &avail);
 	storageUg_size_to_str(total, total_str, sizeof(total_str));

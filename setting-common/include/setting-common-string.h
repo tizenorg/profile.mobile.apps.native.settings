@@ -35,18 +35,18 @@
 #define EXCEED_LIMITATION_STR					"IDS_ST_TPOP_MAXIMUM_NUMBER_OF_CHARACTERS_REACHED"
 #define EXCEED_MINLENGTH_LIMITATION_STR		"The content is too short"
 
-#define SETTING_ICON_PATH_CFG					"/usr/apps/org.tizen.setting/res/icons/"
+#define SETTING_ICON_PATH_CFG					_TZ_SYS_RO_APP"/org.tizen.setting/res/icons/"
 #define SETTING_LIST_ICON_PATH_CFG					SETTING_ICON_PATH_CFG"list_icon/"
 
-#define SETTING_IMAGE_PATH_CFG				"/usr/apps/org.tizen.setting/res/images/"
+#define SETTING_IMAGE_PATH_CFG				_TZ_SYS_RO_APP"/org.tizen.setting/res/images/"
 #define SETTING_OPEN_SOURCE_LICENSE_PATH 	"file:///usr/share/license.html"
 
-#define SETTING_OTHER_UG_ICON_PATH			"/usr/share/icons/default/small/"
-#define SETTING_DEFAULT_CALL_TONE		"/opt/usr/share/settings/Ringtones/Over_the_horizon.ogg"
-#define SETTING_DEFAULT_CALL_TONE_SDK		"/opt/usr/share/settings/Ringtones/Over_the_horizon.ogg"
-#define SETTING_DEFAULT_CALL_VIB		"/opt/usr/share/settings/Vibrations/haptic/default/Ticktock.ivt"
-#define DEF_RINGTONE 					"/opt/usr/share/settings/Ringtones/Over_the_horizon.ogg"
-#define SETTING_MMC_PATH 				"/opt/storage/sdcard/"
+#define SETTING_OTHER_UG_ICON_PATH			_TZ_SYS_RO_ICONS"/default/small/"
+#define SETTING_DEFAULT_CALL_TONE			_TZ_SYS_SHARE"/settings/Ringtones/Over_the_horizon.ogg"
+#define SETTING_DEFAULT_CALL_TONE_SDK	_TZ_SYS_SHARE"/settings/Ringtones/Over_the_horizon.ogg"
+#define SETTING_DEFAULT_CALL_VIB			_TZ_SYS_SHARE"/settings/Vibrations/haptic/default/Ticktock.ivt"
+#define DEF_RINGTONE 						_TZ_SYS_SHARE"/settings/Ringtones/Over_the_horizon.ogg"
+#define SETTING_MMC_PATH 				_TZ_SYS_MEDIA"/sdcard/"
 
 /***************new V7.0*************/
 #define KeyStr_Emulator 				"Emulator" /* be used to compare with model_str from system_info_get_platform_string(SYSTEM_INFO_KEY_MODEL, &model_str) */

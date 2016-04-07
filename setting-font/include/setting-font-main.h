@@ -24,7 +24,7 @@
 #include <setting-font.h>
 
 #define SETTING_FONT_PRELOAD_FONT_PATH "/usr/share/fonts"
-#define SETTING_FONT_DOWNLOADED_FONT_PATH "/opt/share/fonts"
+#define SETTING_FONT_DOWNLOADED_FONT_PATH	_TZ_SYS_SHARE"/fonts"
 
 
 

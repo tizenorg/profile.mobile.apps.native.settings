@@ -21,6 +21,7 @@
 #include "setting-storage-miscellaneous.h"
 
 
+#include <tzplatform_config.h>
 #include <media_content.h>
 #include <efl_extension.h>
 
@@ -336,7 +337,8 @@ static void storageUg_misces_clear_list(Eina_List *list)
 static inline void storageUg_meisces_get_list(SettingStorageUG *ad)
 {
 	int ret;
-	char *condition;
+	char condition[1024];
+	char *tz_user_content = tzplatform_getenv(TZ_USER_CONTENT);
 	filter_h filter = NULL;
 
 	ret_if(NULL == ad);
@@ -347,17 +349,27 @@ static inline void storageUg_meisces_get_list(SettingStorageUG *ad)
 	}
 
 	/*Set Filter*/
-	condition = "(MEDIA_TYPE=4) and MEDIA_PATH LIKE \'/opt/usr/media/%%\'";
+	snprintf(condition, 1024, "(MEDIA_TYPE=4) and MEDIA_PATH LIKE \'%s/%%\'", tz_user_content);
 	/*
-	   condition = "(MEDIA_TYPE=4) and (MEDIA_PATH LIKE \'/opt/usr/media/.tmp_download/%%\'"
-	   "or MEDIA_PATH LIKE \'/opt/usr/media/.video-hub/%%\'"
-	   "or MEDIA_PATH LIKE \'/opt/usr/media/Camera/%%\'"
-	   "or MEDIA_PATH LIKE \'/opt/usr/media/Downloads/%%\'"
-	   "or MEDIA_PATH LIKE \'/opt/usr/media/Images/%%\'"
-	   "or MEDIA_PATH LIKE \'/opt/usr/media/Others/%%\'"
-	   "or MEDIA_PATH LIKE \'/opt/usr/media/Sounds/%%\'"
-	   "or MEDIA_PATH LIKE \'/opt/usr/media/Videos/%%\'"
-	   "or MEDIA_PATH LIKE \'/opt/usr/media/lost+found/%%\')";
+	snprintf(condition, 1024, "(MEDIA_TYPE=4) and (MEDIA_PATH LIKE \'%s/.tmp_download/%%\'"
+	   "or MEDIA_PATH LIKE \'%s/.video-hub/%%\'"
+	   "or MEDIA_PATH LIKE \'%s/Camera/%%\'"
+	   "or MEDIA_PATH LIKE \'%s/Downloads/%%\'"
+	   "or MEDIA_PATH LIKE \'%s/Images/%%\'"
+	   "or MEDIA_PATH LIKE \'%s/Others/%%\'"
+	   "or MEDIA_PATH LIKE \'%s/Sounds/%%\'"
+	   "or MEDIA_PATH LIKE \'%s/Videos/%%\'"
+	   "or MEDIA_PATH LIKE \'%s/lost+found/%%\')",
+	   tz_user_content,
+	   tz_user_content,
+	   tz_user_content,
+	   tz_user_content,
+	   tz_user_content,
+	   tz_user_content,
+	   tz_user_content,
+	   tz_user_content,
+	   tz_user_content);
+
 	   */
 
 	/*Set Filter*/

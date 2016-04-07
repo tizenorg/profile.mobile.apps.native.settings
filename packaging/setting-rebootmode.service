@@ -3,7 +3,7 @@ Description=Register Notifications from settings
 After=default.target
 
 [Service]
-ExecStart=/usr/apps/org.tizen.mode-syspopup/bin/mode-syspopup 1
+ExecStart=%{TZ_SYS_RO_APP}/org.tizen.mode-syspopup/bin/mode-syspopup 1
 #ExecStart=/etc/rc.d/init.d/mode-syspopup.sh
 
 [Install]

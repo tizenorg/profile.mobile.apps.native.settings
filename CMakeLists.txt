@@ -3,17 +3,16 @@ PROJECT(setting)
 
 SET(SETTING_PKG_NAME org.tizen.setting)
 
-SET(PREFIX "/usr/apps/org.tizen.setting")
+SET(PREFIX "${TZ_SYS_RO_APP}/org.tizen.setting")
 SET(BINDIR "${PREFIX}/bin")
 SET(RESDIR "${PREFIX}/res")
 SET(DATADIR "${PREFIX}/data")
 SET(CONFICDIR "${PREFIX}/def_config")
 SET(LOCALEDIR "${RESDIR}/locale")
-SET(ICONDIR "/usr/share/icons/default/small")
+SET(ICONDIR "${TZ_SYS_RO_ICONS}/default/small")
 SET(EDJDIR "${RESDIR}/edje")
 SET(IMAGEDIR "${RESDIR}/images")
 SET(CMAKE_SKIP_BUILD_RPATH true)
-
 
 #set variable
 SET(SETTING_PROFILE setting-profile)
@@ -67,6 +66,16 @@ SET(GC_SECTIONS_FLAGS "-fdata-sections -ffunction-sections -Wl,--gc-sections")
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${GC_SECTIONS_FLAGS}")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GC_SECTIONS_FLAGS}")
 
+ADD_DEFINITIONS("-D_TZ_SYS_RO_APP=\"${TZ_SYS_RO_APP}\"")
+ADD_DEFINITIONS("-D_TZ_SYS_DATA=\"${TZ_SYS_DATA}\"")
+ADD_DEFINITIONS("-D_TZ_SYS_ETC=\"${TZ_SYS_ETC}\"")
+ADD_DEFINITIONS("-D_TZ_SYS_SHARE=\"${TZ_SYS_SHARE}\"")
+ADD_DEFINITIONS("-D_TZ_SYS_RW_APP=\"${TZ_SYS_RW_APP}\"")
+ADD_DEFINITIONS("-D_TZ_SYS_RO_UG=\"${TZ_SYS_RO_UG}\"")
+ADD_DEFINITIONS("-D_TZ_SYS_RO_ICONS=\"${TZ_SYS_RO_ICONS}\"")
+ADD_DEFINITIONS("-D_TZ_SYS_MEDIA=\"${TZ_SYS_MEDIA}\"")
+ADD_DEFINITIONS("-D_TZ_SYS_DB=\"${TZ_SYS_DB}\"")
+
 #Create po header file
 SET(CREATE_PO_HEADER "./scripts/create_po_header.sh")
 EXECUTE_PROCESS(COMMAND  ${CREATE_PO_HEADER}
@@ -80,6 +89,20 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${SETTING_COMMON}/include)
 ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_COMMON})
 ADD_SUBDIRECTORY(resource/po)
+
+
+
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/org.tizen.setting.xml.in ${CMAKE_SOURCE_DIR}/org.tizen.setting.xml @ONLY)
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/org.tizen.setting.xml.ref.in ${CMAKE_SOURCE_DIR}/org.tizen.setting.xml.ref @ONLY)
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/langlist_all.xml.in ${CMAKE_SOURCE_DIR}/resource/langlist_all.xml @ONLY)
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/ug-setting-shortcut-efl.xml.in ${CMAKE_SOURCE_DIR}/resource/ug-setting-shortcut-efl.xml @ONLY)
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/langlist.india.xml.in ${CMAKE_SOURCE_DIR}/resource/langlist.india.xml @ONLY)
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/langlist.xml.in ${CMAKE_SOURCE_DIR}/resource/langlist.xml @ONLY)
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting.xml.in ${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting.xml @ONLY)
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting_font-lite.xml.in ${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting_font-lite.xml @ONLY)
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/mime.setting.xml.in ${CMAKE_SOURCE_DIR}/mime.setting.xml @ONLY)
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/src/setting-common-internal.pc.in ${CMAKE_SOURCE_DIR}/src/setting-common-internal.pc @ONLY)
+
 
 # setting bin
 # setting plugin

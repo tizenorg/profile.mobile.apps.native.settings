@@ -31,6 +31,9 @@
 #include <setting-debug.h>	/*  including debuging type */
 #include <setting-common-resource.h>	/* including one class of data type */
 #include <setting-common-data-error.h>	/* including another class of data type */
+
+#include <setting-cfg.h>
+
 #ifndef PREFIX
 #define PREFIX "/opt"
 #endif
@@ -38,7 +41,7 @@
 #ifndef bool
 #define bool Eina_Bool
 #endif
-#define PWD_FILE "/opt/usr/data/setting/set_info"
+#define PWD_FILE 	_TZ_SYS_DATA"/setting/set_info"
 
 
 #ifdef OLD_GENLIST_STYLE
@@ -61,24 +64,24 @@
 #define SETTING_POSTINST_FILE "/var/lib/dpkg/info/org.tizen.setting.postinst"
 #define SETTING_PACKAGE			"setting"
 #define SYSTEM_PACKAGE			"sys_string"
-#define SETTING_LOCALEDIR		"/usr/apps/org.tizen.setting/res/locale"
+#define SETTING_LOCALEDIR		_TZ_SYS_RO_APP"/org.tizen.setting/res/locale"
 
 #define MODE_SYSPOPUP_PACKAGE                  "mode-syspopup"
-#define MODE_SYSPOPUP_LOCALEDIR                "/usr/apps/org.tizen.mode-syspopup/res/locale"
+#define MODE_SYSPOPUP_LOCALEDIR                _TZ_SYS_RO_APP"/org.tizen.mode-syspopup/res/locale"
 
-#define SYSTEM_ICON_PATH		"/usr/apps/org.tizen.setting/res/icons"
-#define SETTING_ICON_PATH		"/usr/apps/org.tizen.setting/res/icons"
-#define SETTING_UG_ICON_PATH	"/usr/ug/res/icon/org.tizen.setting"
+#define SYSTEM_ICON_PATH		_TZ_SYS_RO_APP"/org.tizen.setting/res/icons"
+#define SETTING_ICON_PATH		_TZ_SYS_RO_APP"/org.tizen.setting/res/icons"
+#define SETTING_UG_ICON_PATH	_TZ_SYS_RO_UG"/res/icon/org.tizen.setting"
 
-#define SETTING_UG_PATH			"/usr/ug/lib"
-#define SETTING_UG_PATH_USR		"/usr/ug/lib"
+#define SETTING_UG_PATH			_TZ_SYS_RO_UG"/lib"
+#define SETTING_UG_PATH_USR		_TZ_SYS_RO_UG"/lib"
 
 /*#define SETTING_UG_PATH_OPT			"/opt/ug/lib" */
 /*#define SETTING_UG_PATH_USR_OPT		"/opt/ug/lib" */
 
 #define SETTING_PATH_MEMORY_OPT 		"/opt/usr"
-#define SETTING_PATH_SDCARD_OPT			"/opt/storage/sdcard"
-#define SETTING_PATH_PARENT_SDCARD_OPT 	"/opt/storage/sdcard/.."
+#define SETTING_PATH_SDCARD_OPT			_TZ_SYS_MEDIA"/sdcard"
+#define SETTING_PATH_PARENT_SDCARD_OPT 	_TZ_SYS_MEDIA"/sdcard/.."
 
 
 #define SETTING_KILOBYTE_VALUE		1024
@@ -104,7 +107,7 @@
 #define SETTING_THEME_COLOR_THEME_EDJ_NAME		SETTING_EDJ_PATH"/setting-color-theme.edj"
 
 
-#define RCS_CHECHING_FILE "/opt/share/ims/.RCS_ENABLED"
+#define RCS_CHECHING_FILE		_TZ_SYS_SHARE"/ims/.RCS_ENABLED"
 
 /* inoti (broadcasting without data */
 #define SETTING_TIME_CHANGED	"setting_time_changed"
@@ -136,8 +139,8 @@
 #define NAVI_BTN_STYLE_PREV "prev_btn"
 
 #define PROGRESSBAR_STYLE "process_medium"
-#define SETTING_FONT_CONF_FILE "/opt/etc/fonts/conf.avail/99-slp.conf"
-#define SETTING_DEFAULT_FONT_CONF_FILE "/usr/opt/etc/fonts/conf.avail/99-slp.conf"
+#define SETTING_FONT_CONF_FILE	_TZ_SYS_ETC"/fonts/conf.avail/99-slp.conf"
+#define SETTING_DEFAULT_FONT_CONF_FILE 	_TZ_SYS_DATA"/etc/fonts/conf.avail/99-slp.conf"
 
 
 

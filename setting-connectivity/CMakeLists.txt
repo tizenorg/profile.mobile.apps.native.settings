@@ -3,7 +3,7 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${SETTING_COMMON}/include)
 
 INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_connectivity REQUIRED evas elementary appcore-common appcore-efl
-ui-gadget-1 capi-appfw-application capi-system-runtime-info capi-appfw-app-manager json-glib-1.0)
+ui-gadget-1 capi-appfw-application capi-system-runtime-info capi-appfw-app-manager json-glib-1.0 libtzplatform-config)
 
 FOREACH(flag ${pkgs_connectivity_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")

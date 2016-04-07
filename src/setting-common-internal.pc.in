@@ -1,8 +1,8 @@
 # Package Information for pkg-config
 
-prefix=/usr/apps/org.tizen.setting
+prefix=/@TZ_SYS_RO_APP@/org.tizen.setting
 exec_prefix=/usr
-#libdir=/usr/apps/org.tizen.setting/lib
+#libdir=/@TZ_SYS_RO_APP@/org.tizen.setting/lib
 libdir=/usr/lib
 
 #includedir=/usr/include/system

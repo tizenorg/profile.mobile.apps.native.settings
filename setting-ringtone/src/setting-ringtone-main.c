@@ -20,13 +20,13 @@
  */
 #include <setting-ringtone-main.h>
 
-#define RINGTONE_FILE_PATH	"/opt/usr/share/settings/Ringtones"
-#define ALERT_FILE_PATH		"/opt/usr/share/settings/Alerts"
-#define RINGTONE_FILE_PATH_DEF	"/opt/usr/share/settings/Ringtones/Over_the_horizon.ogg"
-#define ALERT_FILE_PATH_DEF	"/opt/usr/share/settings/Alerts/Beep_Once.ogg"
+#define RINGTONE_FILE_PATH		_TZ_SYS_SHARE"/settings/Ringtones"
+#define ALERT_FILE_PATH			_TZ_SYS_SHARE"/settings/Alerts"
+#define RINGTONE_FILE_PATH_DEF	_TZ_SYS_SHARE"/settings/Ringtones/Over_the_horizon.ogg"
+#define ALERT_FILE_PATH_DEF	_TZ_SYS_SHARE"/settings/Alerts/Beep_Once.ogg"
 
-#define RINGTONE_FILE_PATH_1	"/opt/usr/share/settings/Ringtones/"
-#define ALERT_FILE_PATH_1	"/opt/usr/share/settings/Alerts/"
+#define RINGTONE_FILE_PATH_1	_TZ_SYS_SHARE"/settings/Ringtones/"
+#define ALERT_FILE_PATH_1		_TZ_SYS_SHARE"/settings/Alerts/"
 
 static int setting_ringtone_create(void *cb);
 static int setting_ringtone_destroy(void *cb);
@@ -254,7 +254,7 @@ static int setting_ringtone_create(void *cb)
 	Eina_List *filelist = NULL;
 	int ret = get_filelist_from_dir_path(ad->dir_path, &filelist);
 	if (ret != 0) {
-		SETTING_TRACE_ERROR("Failed to get filelist, ret = %d", ret);
+		SETTING_TRACE_ERROR("Failed to get filelist, ret = %d %s", ret, RINGTONE_FILE_PATH);
 	}
 	filelist = eina_list_sort(filelist,
 	                          eina_list_count(filelist), _compare_cb);

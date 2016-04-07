@@ -254,8 +254,8 @@ static Evas_Object *__sound_slider_icon_get(void *data, Evas_Object *obj, const 
  *general func
  *
  ***************************************************/
-#define SETTING_DEFAULT_FOLDER_PATH	"/opt/usr/share/settings/" /*resolve P130805-7070 */
-#define SDCARD_PATH	"/opt/storage/sdcard/"
+#define SETTING_DEFAULT_FOLDER_PATH	_TZ_SYS_SHARE"/settings/" /*resolve P130805-7070 */
+#define SDCARD_PATH	_TZ_SYS_MEDIA"/sdcard/"
 
 int setting_sound_check_file_exist(void *data, const char *file_path)
 {
@@ -794,7 +794,7 @@ static Eina_Bool __volume_key_down_cb(void *data, int type, void *event)
 				setting_sound_close_other_mm_players_but_type(ad, SOUND_TYPE_RINGTONE);
 				if (volume > 0) {
 					setting_sound_play_sound_origin(&(ad->mp_ringtone), ad, NULL,
-					                                "/opt/usr/share/settings/Sys/Volume_control.ogg",
+					                                _TZ_SYS_SHARE"/settings/Sys/Volume_control.ogg",
 					                                volume,
 					                                SOUND_TYPE_RINGTONE);
 				}
@@ -870,7 +870,7 @@ static Eina_Bool __volume_key_down_cb(void *data, int type, void *event)
 				setting_sound_close_other_mm_players_but_type(ad, SOUND_TYPE_RINGTONE);
 				if (volume > 0) {
 					setting_sound_play_sound_origin(&(ad->mp_ringtone), ad, NULL,
-					                                "/opt/usr/share/settings/Sys/Volume_control.ogg",
+					                                _TZ_SYS_SHARE"/settings/Sys/Volume_control.ogg",
 					                                volume,
 					                                SOUND_TYPE_RINGTONE);
 				}

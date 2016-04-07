@@ -9,7 +9,7 @@ pkg_check_modules(pkgs_about REQUIRED
 	ui-gadget-1 efl-extension
 	capi-appfw-application capi-appfw-app-manager evas ecore
 	tapi capi-system-info capi-system-system-settings capi-network-bluetooth
-	notification capi-network-wifi json-glib-1.0 capi-telephony)
+	notification capi-network-wifi json-glib-1.0 capi-telephony libtzplatform-config)
 
 FOREACH(flag ${pkgs_about_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")

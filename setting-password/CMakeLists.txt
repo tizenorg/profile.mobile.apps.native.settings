@@ -8,8 +8,8 @@ INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_password REQUIRED evas ecore edje elementary appcore-common
 appcore-efl deviced ecore-imf
 ui-gadget-1 capi-appfw-application tapi dlog
-notification
-)
+notification json-glib-1.0
+libtzplatform-config)
 
 FOREACH(flag ${pkgs_password_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")

@@ -37,7 +37,7 @@
 #include <glib.h>
 #include <json-glib/json-glib.h>
 
-#define SETTING_DATA_DIR_PATH "/opt/apps/org.tizen.setting/data/"
+#define SETTING_DATA_DIR_PATH _TZ_SYS_RW_APP"/org.tizen.setting/data/"
 #define SETTING_CFG_JSON_FILE_PATH	SETTING_DATA_DIR_PATH"exported.json"
 #define EXPORT_FILE 		SETTING_DATA_DIR_PATH"setting_export.xml"
 
@@ -189,7 +189,7 @@ void export_json(VconfNode *node, void *root)
 	}
 }
 
-/* /opt/usr/data/setting/aaa.xml */
+/* _TZ_SYS_DATA/setting/aaa.xml */
 /* import function for each vconf key */
 EXPORT_PUBLIC
 void import_default(VconfNode *node, void *data)

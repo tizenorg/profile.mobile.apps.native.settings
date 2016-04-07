@@ -437,7 +437,7 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
 	retv_if(NULL == priv, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 	retv_if(NULL == applocale, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	*applocale = strdup("setting:/usr/apps/org.tizen.setting/res/locale");
+	*applocale = strdup("setting:"_TZ_SYS_RO_APP"/org.tizen.setting/res/locale");
 
 	size = sizeof(search_configs) / sizeof(storageUg_search_data);
 

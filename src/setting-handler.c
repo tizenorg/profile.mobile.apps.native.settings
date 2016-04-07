@@ -213,7 +213,7 @@ setting_main_click_list_item_ug_cb(void *data, Evas_Object *obj,
 		evas_object_show(ad->ly_main);
 		/*don't going to access globle var errno */
 		/*SETTING_TRACE_ERROR("errno:%d", errno); */
-		/*SETTING_TRACE_ERROR("Failed to load /usr/ug/lib/libug-%s.so", ug_to_load); */
+		/*SETTING_TRACE_ERROR("Failed to load _TZ_SYS_RO_UG/lib/libug-%s.so", ug_to_load); */
 		/*SETTING_TRACE_ERROR("Failed to load lib-%s.so", ug_to_load); */
 		setting_create_popup(ad, ad->win_main, NULL, NO_UG_FOUND_MSG, NULL, 0, false, false, 0);
 	}

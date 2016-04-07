@@ -1309,7 +1309,7 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv, 
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE(">> setting-security-efl DB search code");
 
-	*applocale = strdup("setting:/usr/apps/org.tizen.setting/res/locale");
+	*applocale = strdup("setting:"_TZ_SYS_RO_APP"/org.tizen.setting/res/locale");
 
 	Eina_List **pplist = (Eina_List **)priv;
 	int i;
@@ -1349,7 +1349,7 @@ int setting_security_system_command(const char *command, const char *commandex)
 		};
 
 		SETTING_TRACE_DEBUG("[%s]:%s", argv[0], argv[1]);
-		execv("/usr/apps/org.tizen.setting/bin/firewall", args);
+		execv(_TZ_SYS_RO_APP"/org.tizen.setting/bin/firewall", args);
 	}
 	return 1;
 }
