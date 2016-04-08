@@ -23,8 +23,6 @@
 
 void storageUg_popup_del(void *data, Evas_Object *obj, void *event_info);
 void storageUg_get_internal_storage_status();
-Elm_Object_Item *storageUg_append_separator(Evas_Object *parent,
-                                            SettingStorageUG *ad);
 void storageUg_get_external_storage_status(const char *path, double *total,
                                            double *avail);
 

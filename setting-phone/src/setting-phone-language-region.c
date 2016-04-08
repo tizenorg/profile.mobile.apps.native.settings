@@ -287,12 +287,6 @@ static int setting_phone_language_region_create(void *cb)
 	ad->lang_region_navi_it = navi_it;
 	SETTING_TRACE("navi_it:%p", navi_it);
 	evas_object_smart_callback_add(ad->gl_lang_region, "realized", __gl_realized_cb, NULL);
-	Elm_Object_Item *item = NULL;
-	item =
-	    elm_genlist_item_append(scroller, &itc_seperator,
-	                            NULL, NULL, ELM_GENLIST_ITEM_NONE,
-	                            NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	char *pa_display_lang = get_pa_display_language_str();
 	ad->data_display_language =

@@ -291,8 +291,6 @@ static inline void storageUg_main_append_USB_info(SettingStorageUG *ad)
 			SETTING_TRACE_ERROR("ad->usb_mount is NULL");
 		}
 	}
-
-	ad->usb_sep_item = storageUg_append_separator(ad->gl_main, ad);
 }
 
 static void storageUg_USB_cb(char *type, char *path, int mount, void *data)

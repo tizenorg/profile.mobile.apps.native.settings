@@ -305,8 +305,6 @@ void __add_locktype_items(void *data)
 		elm_radio_state_value_set(radio, -1);
 		ad->lock_type_rd = radio;
 	}
-	/* separator */
-	ADD_GL_SEPARATOR(ad->genlist)
 
 	evas_object_smart_callback_add(ad->genlist, "realized", __gl_realized_cb, NULL);
 

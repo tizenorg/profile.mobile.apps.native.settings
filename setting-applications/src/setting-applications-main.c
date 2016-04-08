@@ -89,11 +89,6 @@ static int setting_applications_main_create(void *cb)
 
 	Elm_Object_Item *item = NULL;
 
-	item =
-	    elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
-	                            ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-
 	setting_create_Gendial_field_def(ad->genlist, &itc_1text,
 	                                 setting_applications_main_mouse_up_Gendial_list_cb,
 	                                 ad, SWALLOW_Type_INVALID, NULL,

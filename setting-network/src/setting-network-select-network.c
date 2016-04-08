@@ -284,7 +284,6 @@ static int setting_network_select_network_create(void *cb)
 		}
 		*/
 	}
-	/*ADD_GL_SEPARATOR(ad->genlist_sel_network); */
 
 	setting_view_network_select_network.is_create = TRUE;
 	return SETTING_RETURN_SUCCESS;

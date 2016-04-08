@@ -91,14 +91,10 @@ static int setting_security_main_create(void *cb)
 
 	Elm_Object_Item *item = NULL;
 
-	ADD_GL_SEPARATOR(scroller);
-
 	/* Group List: Lock screen */
 	(void)setting_create_Gendial_field_titleItem(scroller,
 	                                             &itc_group_item,
 	                                             KeyStr_LockScreen, NULL);
-	item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	/* Lockscreen */
 	setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
@@ -106,10 +102,6 @@ static int setting_security_main_create(void *cb)
 	                                 SWALLOW_Type_INVALID,
 	                                 NULL, NULL,
 	                                 0, KeyStr_LockScreen, NULL, NULL);
-
-	/*Seperator */
-	elm_genlist_item_select_mode_set(elm_genlist_item_append(scroller, &(itc_seperator), NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL),
-	                                 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	/*Security update*/
 	app_info_h app_info = NULL;
@@ -120,8 +112,6 @@ static int setting_security_main_create(void *cb)
 	if (ret != APP_MANAGER_ERROR_NONE) {
 		SETTING_TRACE("No corresponding app_id for [%s]\n", "org.tizen.msa");
 	} else {
-		item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
-		elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 		ad->data_security_update = setting_create_Gendial_field_def(scroller, &(ad->itc_1text_1icon),
 		                                                            setting_security_main_mouse_up_Gendial_list_cb, ad,
 		                                                            SWALLOW_Type_INVALID,
@@ -132,7 +122,6 @@ static int setting_security_main_create(void *cb)
 			SETTING_TRACE_ERROR("app_info_destroy error for org.tizen.msa");
 		}
 	}
-	ADD_GL_SEPARATOR(scroller);
 
 	/* update info */
 	if (ad->data_sim_settings) {

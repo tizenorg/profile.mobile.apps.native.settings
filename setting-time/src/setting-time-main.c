@@ -612,11 +612,6 @@ static int setting_time_main_create(void *cb)
 	int value;
 	int err;
 	int ret = 0;
-	Elm_Object_Item *item;
-
-	item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
-	                               ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 	setting_get_bool_slp_key(BOOL_SLP_SETTING_AUTOMATIC_TIME_UPDATE, &value,
 	                         &err);
 
@@ -714,7 +709,6 @@ static int setting_time_main_create(void *cb)
 		SETTING_TRACE_ERROR("ad->data_time is NULL");
 	}
 
-	/*ADD_GL_SEPARATOR(scroller); */
 	setting_set_i18n("worldclock", SETTING_TIME_SHARE_LOCAL_PATH);
 	char time_zone_sub_str[CITY_BUF_SIZE + GMT_BUF_SIZE + 3] = { 0, };
 	char *displayTimezone = NULL;

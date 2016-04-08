@@ -417,11 +417,6 @@ static int setting_display_main_create(void *cb)
 		SETTING_TRACE_ERROR("error");
 	}
 
-	/*  add separator in botton of view */
-	item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
-	                            ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-
 	setting_view_display_main.is_create = 1;
 
 	return SETTING_RETURN_SUCCESS;

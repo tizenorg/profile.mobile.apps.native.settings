@@ -196,8 +196,6 @@ static int __create_sim_layout(void *data)
 	evas_object_event_callback_add(ad->scroller, EVAS_CALLBACK_MOUSE_UP,
 	                               __password_sim_gl_mouse_up, ad);
 
-	ADD_GL_SEPARATOR(ad->scroller)
-
 	return SETTING_RETURN_SUCCESS;
 }
 
@@ -347,7 +345,6 @@ static int setting_password_sim_update(void *cb)
 		SETTING_TRACE_DEBUG("view type : PIN1_BLOCKED, change view");
 		if (ad->scroller) {
 			elm_genlist_clear(ad->scroller);
-			ADD_GL_SEPARATOR(ad->scroller)
 			if (ad->cur_pwd) {
 				setting_password_sim_draw_2line_entry(ad, NULL);
 			} else {
@@ -1243,7 +1240,6 @@ static void setting_password_sim_done(void *data)
 					if (ret == SETTING_RETURN_SUCCESS) {
 						ad->cur_pwd = (char *)strdup(ad->ed_pw1->sub_desc);
 						elm_genlist_clear(ad->scroller);
-						ADD_GL_SEPARATOR(ad->scroller)
 						setting_password_sim_draw_2line_entry(ad, NULL);
 					} else {
 						setting_password_sim_clear_1line_entry(ad);
@@ -1393,7 +1389,6 @@ static void setting_password_sim_done(void *data)
 						}
 
 						elm_genlist_clear(ad->scroller);
-						ADD_GL_SEPARATOR(ad->scroller)
 						setting_password_sim_draw_2line_entry(ad, NULL);
 						ad->focus_timer = ecore_timer_add(0.5, __setting_password_sim_rotate_cb, ad);
 					} else {
@@ -1451,7 +1446,6 @@ static void setting_password_sim_done(void *data)
 						}
 
 						elm_genlist_clear(ad->scroller);
-						ADD_GL_SEPARATOR(ad->scroller)
 						setting_password_sim_draw_2line_entry(ad, NULL);
 						ad->focus_timer = ecore_timer_add(0.5, __setting_password_sim_rotate_cb, ad);
 					} else {
@@ -2088,7 +2082,6 @@ static void setting_password_ug_display_result_popup(tapi_receive_info *result,
 					ad->incorrect_pin1_flag = TRUE;
 					FREE(ad->cur_pwd);
 					elm_genlist_clear(ad->scroller);
-					ADD_GL_SEPARATOR(ad->scroller)
 					setting_password_sim_draw_1line_entry(ad, NULL);
 					ad->focus_timer = ecore_timer_add(0.5, __setting_password_sim_rotate_cb, ad);
 					return;
@@ -2126,7 +2119,6 @@ static void setting_password_ug_display_result_popup(tapi_receive_info *result,
 					ad->incorrect_pin2_flag = TRUE;
 					FREE(ad->cur_pwd);
 					elm_genlist_clear(ad->scroller);
-					ADD_GL_SEPARATOR(ad->scroller)
 					setting_password_sim_draw_1line_entry(ad, NULL);
 					ad->focus_timer = ecore_timer_add(0.5, __setting_password_sim_rotate_cb, ad);
 					return;

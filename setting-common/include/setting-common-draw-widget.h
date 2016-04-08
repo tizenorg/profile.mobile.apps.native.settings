@@ -87,13 +87,6 @@ extern const Elm_Genlist_Item_Class itc_normal_1text;
 extern const Elm_Genlist_Item_Class itc_bottom_line;
 
 
-#define ADD_GL_SEPARATOR(scroller) \
-	{\
-		Elm_Object_Item *item = elm_genlist_item_append(scroller, &(itc_seperator), NULL, NULL,\
-		                                                ELM_GENLIST_ITEM_NONE, NULL, NULL);\
-		elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
-	}
-
 #define ADD_GL_LABLE(scroller, str) \
 	{\
 		if (str) {\

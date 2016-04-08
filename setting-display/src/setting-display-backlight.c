@@ -46,7 +46,6 @@ static int setting_display_backlight_create(void *cb)
 {
 	SettingDisplayUG *ad = (SettingDisplayUG *) cb;
 	Evas_Object *scroller = NULL, *rgd = NULL;
-	Elm_Object_Item *item = NULL;
 
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
@@ -64,10 +63,6 @@ static int setting_display_backlight_create(void *cb)
 
 	rgd = elm_radio_add(scroller);
 	elm_radio_value_set(rgd, -1);
-
-	/* separator */
-	item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb, NULL);
 

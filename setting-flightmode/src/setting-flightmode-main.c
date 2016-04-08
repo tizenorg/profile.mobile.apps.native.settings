@@ -226,10 +226,6 @@ static int setting_flightmode_main_create(void *cb)
 	                                           &genlist,
 	                                           &(ad->navi_bar));
 
-	/* seperator */
-	elm_genlist_item_select_mode_set(elm_genlist_item_append(genlist, &(itc_seperator), NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL),
-	                                 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-
 	/* add - flightmode setting menu list */
 	int value, err, ret;
 	ret = setting_get_bool_slp_key(BOOL_SLP_SETTING_FLIGHT_MODE, &value, &err);

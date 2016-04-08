@@ -1777,10 +1777,6 @@ int setting_about_main_generate_genlist(void *data)
 		SETTING_TRACE_ERROR("item_data is NULL");
 	}
 
-	item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
-			ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-
 	/* [UI] Legal Information */
 	setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
 			setting_about_main_mouse_up_Gendial_list_cb,
@@ -1788,9 +1784,6 @@ int setting_about_main_generate_genlist(void *data)
 			0, "IDS_ST_MBODY_LEGAL_INFORMATION_ABB", NULL, NULL);
 
 	/*//////////////////////////////////////////////////////////////////// */
-	/* [UI] separator */
-	elm_genlist_item_select_mode_set(elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL),
-			ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 	(void)setting_create_Gendial_field_titleItem(scroller,
 			&(ad->itc_group_item),
 			"IDS_ST_BODY_DEVICE_INFORMATION", NULL);

@@ -168,7 +168,6 @@ static int setting_password_main_create(void *cb)
 	elm_box_pack_end(ad->bottom_btn, ad->bottom_btn1);
 
 	elm_object_item_part_content_set(ad->navi_it, "toolbar", ad->bottom_btn);
-	ADD_GL_SEPARATOR(ad->scroller)
 
 	ad->cur_step = 1;
 	setting_password_main_draw_1line_password(ad, NULL);

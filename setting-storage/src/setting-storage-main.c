@@ -649,27 +649,20 @@ static int storageUg_main_create(void *data)
 	storageUG_update_apps_info(ad);
 	storageUG_update_cache_info(ad);
 
-	storageUg_append_separator(ad->gl_main, ad);
 	if (!isEmulBin()) {
 		ret = vconf_get_int(storageUg_MMC_stat, &ad->mmc_status);
 		retvm_if(ret, SETTING_RETURN_FAIL, "vconf_get_int(%s) Fail", storageUg_MMC_stat);
-
-		storageUg_append_separator(ad->gl_main, ad);
 
 		/* Default storage */
 		setting_create_Gendial_field_def(ad->gl_main, &itc_1text,
 										 storageUg_main_sel, ad, SWALLOW_Type_INVALID, NULL, NULL, 0,
 										 STORAGEUG_STR_DEF_STORAGE, NULL, NULL);
 
-		storageUg_append_separator(ad->gl_main, ad);
-
 		/* SD */
 		ad->sd_card = setting_create_Gendial_field_titleItem(ad->gl_main,
 															 &itc_group_item, STORAGEUG_STR_SD_CARD, NULL);
 		if (ad->sd_card)
 			storageUg_main_append_SD_info(ad);
-
-		storageUg_append_separator(ad->gl_main, ad);
 
 		ret = vconf_notify_key_changed(storageUg_MMC_stat, storageUg_SD_change_cb, ad);
 		warn_if(ret != 0, "vconf_notify_key_changed(%s) Fail", storageUg_MMC_stat);

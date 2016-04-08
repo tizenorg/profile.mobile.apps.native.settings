@@ -58,27 +58,12 @@ static int setting_phone_license_main_create(void *cb)
 	                                                        ad, &scroller,
 	                                                        &
 	                                                        (ad->navi_bar));
-	Elm_Object_Item *item = NULL;
-
-	item =
-	    elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
-	                            ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-
-	/* Clear license */
-	item =
-	    elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
-	                            ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-
 	/* [UI] open source license */
 	setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
 	                                             setting_phone_license_main_mouse_up_Gendial_list_cb,
 	                                             ad, SWALLOW_Type_INVALID, NULL, NULL,
 	                                             0, "IDS_ST_BODY_OPEN_SOURCE_LICENCES",
 	                                             NULL, NULL);
-
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	setting_view_phone_license_main.is_create = 1;
 

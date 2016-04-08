@@ -67,19 +67,6 @@ void storageUg_get_internal_storage_status(double *total, double *avail)
 	}
 }
 
-
-Elm_Object_Item *storageUg_append_separator(Evas_Object *genlist,
-                                            SettingStorageUG *ad)
-{
-	Elm_Object_Item *item = NULL;
-
-	item = elm_genlist_item_append(genlist, &itc_seperator, NULL, NULL,
-	                               ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-
-	return item;
-}
-
 void storageUg_get_external_storage_status(const char *path, double *total,
                                            double *avail)
 {

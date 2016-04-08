@@ -147,11 +147,6 @@ static int __con_list_recreate(void *cb)
 	Evas_Object *scroller;
 	scroller = ad->con_list_gl;
 	elm_genlist_clear(scroller);	/* first to clear list */
-	Elm_Object_Item *first_item;
-	/* item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL, ELM_GENLIST_ITEM_GROUP, NULL, NULL); */
-	first_item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
-	                                     ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(first_item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	Evas_Object *radio_group;
 	Setting_GenGroupItem_Data *item_data = NULL;
@@ -250,7 +245,6 @@ static int __con_list_recreate(void *cb)
 		G_FREE(id);
 		idx++;
 	}
-	ADD_GL_SEPARATOR(scroller);
 
 	SETTING_TRACE("idx:%d", idx);
 	Evas_Object *toolbar = elm_object_item_part_content_get(ad->navi_it_con_list, "toolbar");

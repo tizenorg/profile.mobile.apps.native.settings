@@ -304,7 +304,6 @@ static int setting_network_profile_delete_create(void *cb)
 #endif
 
 	__profile_delete_list_draw(ad);
-	ADD_GL_SEPARATOR(scroller);
 	setting_view_network_profile_delete.is_create = 1;
 
 	return SETTING_RETURN_SUCCESS;

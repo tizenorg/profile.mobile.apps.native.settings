@@ -175,12 +175,6 @@ static int setting_password_forgot_password_create(void *cb)
 	elm_naviframe_item_pop_cb_set(navi_it, (Elm_Naviframe_Item_Pop_Cb)__forgot_password_pop_cb, ad);
 
 	if (genlist) {
-		Elm_Object_Item *item = elm_genlist_item_append(genlist,
-		                                                &itc_seperator, NULL, NULL,
-		                                                ELM_GENLIST_ITEM_NONE, NULL, NULL);
-		if (item)
-			elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-
 		/* menu 1. */
 		setting_create_Gendial_field_def(genlist, &(itc_1text),
 		                                 setting_password_forgot_password_mouse_up_Gendial_list_cb, ad,
