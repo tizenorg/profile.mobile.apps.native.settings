@@ -795,10 +795,7 @@ static int setting_network_main_create(void *cb)
 	evas_object_smart_callback_add(ad->genlist, "realized", __gl_realized_cb, ad);
 
 	Elm_Object_Item *item = NULL;;
-	item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
-	                               ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-	/*elm_object_item_access_unregister(item); */
 
 	// mobile data ON  --> Data Roaming activate
 	// mobile data OFF --> Data Roaming de-activate
@@ -912,6 +909,7 @@ static int setting_network_main_create(void *cb)
 	__check_flight_mode(ad);
 
 	/* eventsystem */
+#if 0
 	if (ES_R_OK != eventsystem_register_event(SYS_EVENT_MOBILE_DATA_STATE,
 	                                          &mobile_data_event_reg_id,
 	                                          (eventsystem_handler)mobile_data_state_event_handler, cb)) {
@@ -923,6 +921,7 @@ static int setting_network_main_create(void *cb)
 	                                          (eventsystem_handler)data_roaming_state_event_handler, cb)) {
 		SETTING_TRACE_ERROR("error");
 	}
+#endif
 
 	// mobile data On -> data roaming activates
 	// mobile data Off -> data roaming deactivates
@@ -962,13 +961,14 @@ static int setting_network_main_destroy(void *cb)
 
 	setting_view_network_main.is_create = 0;
 
+#if 0
 	if (ES_R_OK != eventsystem_unregister_event(mobile_data_event_reg_id)) {
 		SETTING_TRACE_ERROR("error");
 	}
 	if (ES_R_OK != eventsystem_unregister_event(data_roaming_event_reg_id)) {
 		SETTING_TRACE_ERROR("error");
 	}
-
+#endif
 	return SETTING_RETURN_SUCCESS;
 }
 
