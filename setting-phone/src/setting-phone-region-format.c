@@ -211,6 +211,7 @@ static int setting_phone_region_format_get_region_fmt(char *list[],
 		loc_list = uloc_getAvailable(i);
 		setting_retvm_if(NULL == loc_list, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER, "loc_list is NULL");
 
+
 		char* e = strchr(loc_list, '_');
 		const char* result;
 		if (e) {
@@ -326,9 +327,13 @@ static int setting_phone_region_format_get_region_fmt(char *list[],
 	i = 0;
 	EINA_LIST_FOREACH(region_list, iter, item_data) {
 		if (item_data) {
-			list[i] = (char *)g_strdup(item_data->desc);
+			//list[i] = (char *)g_strdup(item_data->desc);
+			list[i] = elm_entry_utf8_to_markup(item_data->desc);
 			item_idx[i] = i;
 			region_keyStr[i] = (char *)g_strdup(item_data->key);
+
+			//SETTING_TRACE(" list[i] : %s, region_keyStr[i]", list[i], region_keyStr[i]);
+			
 			free(item_data);
 			item_data = NULL;
 			i++;
