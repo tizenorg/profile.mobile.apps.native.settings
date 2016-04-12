@@ -230,7 +230,7 @@ INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/images DESTINATION ${TZ_SYS_RO_AP
 #INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/help DESTINATION ${HELPDATADIR_PH} PATTERN "*")
 
 # install media-data ; should be at /usr/share
-INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media/settings DESTINATION ${TZ_SYS_SHARE}/settings PATTERN "*")
+INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media/settings DESTINATION ${TZ_SYS_SHARE} PATTERN "*")
 #IF("${BUILD_ARCH}" STREQUAL "arm")
 #	INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resource/media-data-sdk/settings DESTINATION ${TZ_SYS_RO_APP}/org.tizen.setting/shared/res PATTERN "*")
 #ELSE("${BUILD_ARCH}" STREQUAL "arm")
