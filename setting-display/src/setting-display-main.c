@@ -26,6 +26,8 @@
 #include <bundle_internal.h>
 #include <system_settings.h>
 
+// elm_layout_file_set
+
 
 static int setting_display_main_create(void *cb);
 static int setting_display_main_destroy(void *cb);

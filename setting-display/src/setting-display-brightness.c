@@ -543,10 +543,14 @@ static Evas_Object *__setting_brightness_add_slider(void *data, Evas_Object *obj
 	Eina_List *items = NULL;
 
 	SETTING_TRACE_BEGIN;
+
+#if 1
+	SETTING_TRACE(" ------------> slider content get [%s]",part);
+#endif
 	setting_retvm_if(!data || !obj, NULL, "!data || !obj");
 	retv_if(!data, NULL);
 
-	if (!safeStrCmp(part, "elm.icon")) {
+	if (!safeStrCmp(part, "elm.swallow.content")) {
 		int auto_value = SETTING_BRIGHTNESS_AUTOMATIC_ON;
 		int err, ret;
 		Evas_Object *slider = elm_slider_add(obj);	/*  "elm/slider/horizontal/default" */
@@ -625,7 +629,8 @@ void construct_brightness(void *data, Evas_Object *genlist)
 	SETTING_TRACE_BEGIN;
 	ret_if(data == NULL);
 
-	setting_create_Gendial_itc("slider.main", &(ad->itc_1icon));
+	//setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(ad->itc_1icon));
+	setting_create_Gendial_itc(SETTING_GENLIST_LEFT_ICON_CONTENT_ICON_STYLE, &(ad->itc_1icon));
 
 	ad->itc_1icon.func.content_get = __setting_brightness_add_slider;
 	ad->last_requested_level = -1;
