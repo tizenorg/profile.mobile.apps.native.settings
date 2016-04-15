@@ -543,10 +543,44 @@ static Evas_Object *__setting_brightness_add_slider(void *data, Evas_Object *obj
 	Eina_List *items = NULL;
 
 	SETTING_TRACE_BEGIN;
+
+#if 1
+	SETTING_TRACE(" ------------> slider content get [%s]",part);
+#endif
 	setting_retvm_if(!data || !obj, NULL, "!data || !obj");
 	retv_if(!data, NULL);
 
-	if (!safeStrCmp(part, "elm.icon")) {
+	if (!safeStrCmp(part, "elm.swallow.content")) {
+
+		Evas_Object *layout, *label;
+
+		// Set custom layout style
+		layout = elm_layout_add(obj);
+		elm_layout_file_set(layout, SETTING_SLIDER_EDJ_NAME, "gl_custom_item");
+		evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
+		evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+
+		// Set text into layout
+		label = elm_label_add(obj);
+		evas_object_size_hint_weight_set(label, EVAS_HINT_EXPAND, 0);
+		evas_object_size_hint_align_set(label, EVAS_HINT_FILL, EVAS_HINT_FILL);
+		elm_object_text_set(label, _("IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING"));
+		elm_object_part_content_set(layout, "elm.text", label);
+
+		//elm_atspi_accessible_relationship_append(id->item, ELM_ATSPI_RELATION_LABELLED_BY, label);
+		//elm_atspi_accessible_relationship_append(label, ELM_ATSPI_RELATION_CONTROLLED_BY, id->item);
+
+		// Set slider into layout
+#if 0
+		slider = elm_slider_add(obj);
+		elm_slider_indicator_show_set(slider, EINA_FALSE);
+		evas_object_size_hint_align_set(slider, EVAS_HINT_FILL, EVAS_HINT_FILL);
+		evas_object_size_hint_weight_set(slider, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+		elm_slider_horizontal_set(slider, EINA_TRUE);
+		elm_object_part_content_set(layout, "elm.swallow.content", slider);
+#endif
+
+		
 		int auto_value = SETTING_BRIGHTNESS_AUTOMATIC_ON;
 		int err, ret;
 		Evas_Object *slider = elm_slider_add(obj);	/*  "elm/slider/horizontal/default" */
@@ -572,6 +606,7 @@ static Evas_Object *__setting_brightness_add_slider(void *data, Evas_Object *obj
 			step = _step_size_calculate(slider, BRIGHTNESS_AUTO_MIN_LEVEL, BRIGHTNESS_AUTO_MAX_LEVEL);
 			elm_slider_step_set(slider, step);
 		}
+
 
 		elm_slider_min_max_set(slider, BRIGHTNESS_MIN, BRIGHTNESS_MAX);
 		evas_object_size_hint_weight_set(slider, EVAS_HINT_EXPAND, 0.0);
@@ -605,8 +640,12 @@ static Evas_Object *__setting_brightness_add_slider(void *data, Evas_Object *obj
 			items = eina_list_append(items, slider);
 			elm_object_item_access_order_set(item_data->item, items);
 		}
-
+#if 0
 		return slider;
+#else
+		elm_object_part_content_set(layout, "elm.swallow.content", slider);
+		return layout;
+#endif
 	}
 
 	return NULL;
@@ -625,7 +664,8 @@ void construct_brightness(void *data, Evas_Object *genlist)
 	SETTING_TRACE_BEGIN;
 	ret_if(data == NULL);
 
-	setting_create_Gendial_itc("slider.main", &(ad->itc_1icon));
+	//setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(ad->itc_1icon));
+	setting_create_Gendial_itc(SETTING_GENLIST_LEFT_ICON_CONTENT_ICON_STYLE, &(ad->itc_1icon));
 
 	ad->itc_1icon.func.content_get = __setting_brightness_add_slider;
 	ad->last_requested_level = -1;
