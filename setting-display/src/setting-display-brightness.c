@@ -888,8 +888,14 @@ static void setting_display_set_slider_value(void *data, Evas_Object *obj, doubl
 	vconf_str = __display_brightness_get_vconf_need_save();
 	if (!safeStrCmp(vconf_str, VCONFKEY_SETAPPL_LCD_BRIGHTNESS)) {
 		int ret, err;
+
+#if 1
 		ret = display_set_brightness_with_setting(value);
 		if (ret == DEVICE_ERROR_NONE) {
+#else
+		ret == vconf_set_int(VCONFKEY_SETAPPL_LCD_BRIGHTNESS, (int)value);;
+		if (ret == 0) {		
+#endif
 			ad->data_br_sli->chk_status = (int)value;
 			SETTING_TRACE("value:%f", value);
 		} else {
