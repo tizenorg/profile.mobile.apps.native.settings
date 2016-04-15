@@ -185,11 +185,12 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 	{KeyStr_FlightMode, IMG_FlightMode, "setting-flightmode-efl", Cfg_Item_Pos_Level0, Cfg_Item_unResetable,  0, Cfg_Item_Ui_Node_Toggle, NULL, KeyStr_Connections, &flightmode_tfunc, uuid_FlightMode, 0, NULL},
 #endif
 
+#ifdef TIZEN_BUILD_EMULATOR
+	{KeyStr_NFC, IMG_NFC, "ug-nfc-efl|type:nfc", Cfg_Item_Pos_Level0, Cfg_Item_unResetable,  0, Cfg_Item_Ug_Node_Toggle, NULL, KeyStr_Connections, &nfc_tfunc, uuid_NFC, 0, "ug-nfc-efl"},
+#endif
+
 #ifdef TIZEN_BUILD_TARGET
 	{KeyStr_MobileAP, IMG_MobileAP, "ug-setting-mobileap-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable,  0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Connections, NULL, uuid_MobileAP, 0, NULL},
-#ifdef _M0
-	{KeyStr_NFC, IMG_NFC, "setting-nfc-efl|type:nfc", Cfg_Item_Pos_Level0, Cfg_Item_unResetable,  0, Cfg_Item_Ug_Node_Toggle, NULL, KeyStr_Connections, &nfc_tfunc, uuid_NFC, 0, "setting-nfc-efl"},
-#endif
 #endif
 #ifdef TIZEN_BUILD_TARGET
 	{KeyStr_MobileNetworks, IMG_Network, "setting-network-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0,  Cfg_Item_Ug_Node, NULL, KeyStr_Connections, NULL, uuid_Network, 0, NULL},
