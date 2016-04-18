@@ -590,8 +590,8 @@ int __setting_init_search_index_module()
 		"setting-synchronise-efl",				/* NO CODE !!! */
 		"wifi-efl-UG",							/* NO CODE !!! */
 		"setting-wifidirect-efl",				/* NO CODE !!! */
-		"worldclock-efl"						/* NO CODE !!! */
-		"setting-nfc-efl",						/* NO CODE !!! */
+		"worldclock-efl",						/* NO CODE !!! */
+		"ug-nfc-efl",							/* NO CODE !!! */
 		"setting-font-efl",						/* NO CODE !!! */
 		"quickpanel-setting-efl",				/* NO CODE !!! */
 		"setting-easymode-efl",					/* NO CODE !!! */
