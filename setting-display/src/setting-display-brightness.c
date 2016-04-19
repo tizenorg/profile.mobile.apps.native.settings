@@ -58,18 +58,18 @@ setting_view setting_view_display_brightness = {
 #define DBUS_SIGNAL_NAME "ChangedSiop"
 
 const char *iconPath[SETTING_DISPLAY_ICON_PATH] = {
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_00.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_01.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_02.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_03.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_04.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_05.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_06.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_07.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_08.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_09.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_10.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_11.png"
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_00.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_01.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_02.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_03.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_04.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_05.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_06.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_07.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_08.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_09.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_10.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_11.png"
 };
 
 
@@ -479,7 +479,7 @@ void __display_int_vconf_cb(keynode_t *key, void *data)
 			err = display_set_brightness_with_setting(val);
 			if (err != DEVICE_ERROR_NONE) {
 				SETTING_TRACE(" device_display_set_brightness : failed[ret=%d]", err);
-				setting_create_popup(ad, ad->win_get, NULL, "IDS_CST_POP_FAILED",
+				setting_create_popup(ad, ad->main_win, NULL, "IDS_CST_POP_FAILED",
 									 NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
 			}
 
@@ -556,7 +556,7 @@ static Evas_Object *__setting_brightness_add_slider(void *data, Evas_Object *obj
 
 		/* Set custom layout style */
 		layout = elm_layout_add(obj);
-		elm_layout_file_set(layout, SETTING_SLIDER_EDJ_NAME, "gl_custom_item");
+		elm_layout_file_set(layout, DISPLAY_SLIDER_EDJ_NAME, "gl_custom_item");
 		evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
 		evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 
@@ -564,7 +564,8 @@ static Evas_Object *__setting_brightness_add_slider(void *data, Evas_Object *obj
 		label = elm_label_add(obj);
 		evas_object_size_hint_weight_set(label, EVAS_HINT_EXPAND, 0);
 		evas_object_size_hint_align_set(label, EVAS_HINT_FILL, EVAS_HINT_FILL);
-		elm_object_text_set(label, _("IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING"));
+//		elm_object_text_set(label, _("IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING"));
+		elm_object_text_set(label, _("Brightness"));
 		elm_object_part_content_set(layout, "elm.text", label);
 
 		/*elm_atspi_accessible_relationship_append(id->item, ELM_ATSPI_RELATION_LABELLED_BY, label); */
@@ -692,12 +693,13 @@ void construct_brightness(void *data, Evas_Object *genlist)
 		setting_create_Gendial_field_def(genlist, &(ad->itc_1icon), NULL,
 										 NULL, SWALLOW_Type_LAYOUT_SLIDER,
 										 (char *)left_icon,
-										 NULL, value, "IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING",
+//										 NULL, value, "IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING",
+										 NULL, value, "Brightness",
 										 NULL,
 										 setting_display_birghtness_bright_slider_value_change_cb);
 
 	if (ad->data_br_sli) {
-		ad->data_br_sli->win_main = ad->win_main_layout;
+		ad->data_br_sli->win_main = ad->main_win;
 		ad->data_br_sli->evas = ad->evas;
 		if (auto_value) {
 			ad->data_br_sli->isIndicatorVisible = 1;
@@ -771,7 +773,7 @@ static int setting_display_brightness_create(void *cb)
 	if (&setting_view_display_brightness == ad->view_to_load) {
 		ad->ly_main =
 			setting_create_layout_navi_bar(ad->win_main_layout,
-										   ad->win_get,
+										   ad->main_win,
 										   "IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING",
 										   _("IDS_ST_BUTTON_BACK"),
 										   setting_display_brightness_click_softkey_cancel_cb,
@@ -905,14 +907,14 @@ static void setting_display_set_slider_value(void *data, Evas_Object *obj, doubl
 			setting_get_int_slp_key(INT_SLP_SETTING_LCD_BRIGHTNESS, &tmp, &err);
 			vconf_get_int(VCONFKEY_SETAPPL_LCD_BRIGHTNESS, &tmp);
 			elm_slider_value_set(obj, tmp);
-			setting_create_popup(ad, ad->win_get, NULL, "IDS_CST_POP_FAILED",
+			setting_create_popup(ad, ad->main_win, NULL, "IDS_CST_POP_FAILED",
 								 NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
 		}
 	} else {
 		int ret = vconf_set_int(VCONFKEY_SETAPPL_LCD_AUTOMATIC_BRIGHTNESS, value);
 		/*add error handle.. */
 		if (0 != ret) {
-			setting_create_popup(ad, ad->win_get, NULL, "IDS_CST_POP_FAILED",
+			setting_create_popup(ad, ad->main_win, NULL, "IDS_CST_POP_FAILED",
 								 NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
 		}
 	}
