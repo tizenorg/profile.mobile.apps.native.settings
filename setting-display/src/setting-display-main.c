@@ -21,6 +21,9 @@
 #include <setting-display-main.h>
 #include <dd-display.h>
 
+//#include <eventsystem.h>
+#include <efl_extension.h>
+
 #include <setting-common-draw-widget.h>
 #include <bundle_internal.h>
 #include <system_settings.h>
@@ -61,6 +64,13 @@ unsigned int auto_rotate_event_reg_id;
  *basic func
  *
  ***************************************************/
+Eina_Bool _back_cb(void *data, Elm_Object_Item *it)
+{
+	SETTING_TRACE_BEGIN;
+	ui_app_exit();
+	return EINA_TRUE;
+}
+
 static void __screen_timeout_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
@@ -157,6 +167,7 @@ static void _pdm_handle(int radio_num, int max_inactivity_time, Setting_GenGroup
 
 static void setting_display_screen_timeout_popup(void *data)
 {
+	SETTING_TRACE_BEGIN;
 	SettingDisplayUG *ad = (SettingDisplayUG *) data;
 	Evas_Object *menu_glist = NULL;
 	Evas_Object *rdg = NULL;
@@ -404,7 +415,7 @@ static void setting_display_main_vconf_change_cb(keynode_t *key, void *data)
 static int setting_display_main_create(void *cb)
 {
 	SettingDisplayUG *ad = (SettingDisplayUG *) cb;
-	Evas_Object *scroller = NULL;
+	Evas_Object *genlist = NULL;
 	int value = 0;
 	int ret = 0;
 
@@ -413,6 +424,8 @@ static int setting_display_main_create(void *cb)
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
 	/* add basic layout */
+/* TODO PRUS
+<<<<<<< HEAD
 	ad->ly_main =
 		setting_create_layout_navi_bar_genlist(
 				ad->win_main_layout,
@@ -426,6 +439,57 @@ static int setting_display_main_create(void *cb)
 
 	ad->genlist = scroller;
 	elm_genlist_mode_set(ad->genlist, ELM_LIST_COMPRESS);
+=======
+*/
+	// Conformant
+	Evas_Object *conform= elm_conformant_add(ad->main_win);
+	evas_object_size_hint_weight_set(conform, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_win_resize_object_add(ad->main_win, conform);
+	evas_object_show(conform);
+
+	/* navi frame */
+	Evas_Object *navi = NULL;
+	navi = elm_naviframe_add(conform);
+
+	elm_naviframe_prev_btn_auto_pushed_set(navi, EINA_TRUE);
+	elm_object_part_content_set(conform, "elm.swallow.content", navi);
+	eext_object_event_callback_add(navi, EEXT_CALLBACK_BACK, eext_naviframe_back_cb, NULL);
+	eext_object_event_callback_add(navi, EEXT_CALLBACK_MORE, eext_naviframe_more_cb, NULL);
+
+	if (navi == NULL) {
+		SETTING_TRACE(" *** elm_naviframe_add returns NULL *** ");
+		return SETTING_GENERAL_ERR_NULL_DATA_PARAMETER;
+	}
+	evas_object_show(navi);
+	ad->navi_bar = navi;
+
+	/* genlist */
+	genlist = elm_genlist_add(navi);
+	retvm_if(genlist == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER, "Cannot set scroller object as contento of layout");
+	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
+	elm_genlist_clear(genlist);	/* first to clear list */
+
+	ad->genlist = genlist;
+
+	evas_object_size_hint_weight_set(ad->genlist, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_win_resize_object_add(ad->navi_bar, ad->genlist);
+	evas_object_show(genlist);
+
+	Evas_Object *button = elm_button_add(ad->navi_bar);
+	elm_object_style_set(button, NAVI_BACK_ARROW_BUTTON_STYLE);
+	evas_object_smart_callback_add(button, "clicked",
+			(setting_call_back_func)setting_display_main_click_softkey_back_cb,
+			ad);
+	evas_object_show(button);
+
+	Elm_Object_Item *nf_it = NULL;
+	nf_it = elm_naviframe_item_push(navi, _("IDS_ST_HEADER_DISPLAY"), button, NULL, genlist, NULL);
+	elm_naviframe_item_pop_cb_set(nf_it, _back_cb, ad);
+
+/**END OF CREATE VIEW *********************************************************/
+/* TODO PRUS END
+>>>>>>> Replace dlopen by app_launcher part1: setting-display
+*/
 	/*register vconf key */
 
 	ret = vconf_notify_key_changed(
@@ -459,11 +523,11 @@ static int setting_display_main_create(void *cb)
 		SETTING_TRACE_ERROR("vconf notifications Failed %d", ret);
 
 	/* BRIGHTNESS */
-	construct_brightness(ad, scroller);
-
+	construct_brightness(ad, genlist);
+	SETTING_TRACE_BEGIN;
 	/* FONT */
 	ad->data_font = setting_create_Gendial_field_def(
-			scroller, &(ad->itc_1text),
+			genlist, &(ad->itc_1text),
 			setting_display_main_mouse_up_Gendial_list_cb,
 			ad, SWALLOW_Type_INVALID, NULL,
 			NULL, 0, KeyStr_Font,
@@ -478,7 +542,7 @@ static int setting_display_main_create(void *cb)
 	/* AUTO ROTATE */
 	ret = vconf_get_bool(VCONFKEY_SETAPPL_AUTO_ROTATE_SCREEN_BOOL, &value);
 	ad->data_auto_rotate = setting_create_Gendial_field_def(
-			scroller, &(ad->itc_1text_1icon),
+			genlist, &(ad->itc_1text_1icon),
 			setting_display_main_mouse_up_Gendial_list_cb,
 			ad, SWALLOW_Type_1ICON_1RADIO, NULL,
 			NULL, value, "IDS_ST_HEADER_AUTO_ROTATE_SCREEN_ABB",
@@ -490,12 +554,13 @@ static int setting_display_main_create(void *cb)
 	} else {
 		SETTING_TRACE_ERROR("ad->data_battery is NULL");
 	}
-
+	SETTING_TRACE_BEGIN;
 	/* BACKLIGHTTIME */
 	char *pa_backlight_time = get_pa_backlight_time_str();
+	SETTING_TRACE_BEGIN;
 	ad->data_back =
 		setting_create_Gendial_field_def(
-				scroller,
+				genlist,
 				&itc_2text_3_parent,
 				setting_display_main_mouse_up_Gendial_list_cb,
 				ad,
@@ -810,15 +875,12 @@ setting_display_main_click_softkey_back_cb(
 		void *data, Evas_Object *obj,
 		void *event_info)
 {
-	SettingDisplayUG *ad = (SettingDisplayUG *) data;
-
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	setting_retvm_if(data == NULL, EINA_FALSE,
 			"[Setting > Display] Data parameter is NULL");
 
-	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+	ui_app_exit();
 
 	SETTING_TRACE_END;
 

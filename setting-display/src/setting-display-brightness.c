@@ -20,6 +20,9 @@
  */
 
 #include <setting-display-brightness.h>
+#include <vconf.h>
+#include <vconf-keys.h>
+
 #include <dbus/dbus.h>
 #include <dbus/dbus-glib-lowlevel.h>
 
@@ -62,18 +65,18 @@ setting_view setting_view_display_brightness = {
 #define DBUS_SIGNAL_NAME "ChangedSiop"
 
 const char *iconPath[SETTING_DISPLAY_ICON_PATH] = {
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_00.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_01.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_02.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_03.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_04.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_05.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_06.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_07.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_08.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_09.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_10.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_11.png"
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_00.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_01.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_02.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_03.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_04.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_05.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_06.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_07.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_08.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_09.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_10.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_11.png"
 };
 
 
@@ -639,6 +642,8 @@ static Evas_Object *__setting_brightness_add_slider(void *data,
 				VCONFKEY_SETAPPL_BRIGHTNESS_AUTOMATIC_INT);
 	}
 
+/* TODO PRUS
+<<<<<<< HEAD
 	if (auto_value) {
 		elm_slider_indicator_format_function_set(
 				slider,
@@ -659,9 +664,119 @@ static Evas_Object *__setting_brightness_add_slider(void *data,
 	item_data->eo_check = slider;
 
 	if (item_data->item) {
-		/* convey highlight to its content */
+//		 convey highlight to its content
 		items = eina_list_append(items, slider);
 		elm_object_item_access_order_set(item_data->item, items);
+=======
+ END PRUS */
+#if 1
+	SETTING_TRACE(" ------------> slider content get [%s]",part);
+#endif
+	setting_retvm_if(!data || !obj, NULL, "!data || !obj");
+	retv_if(!data, NULL);
+
+	if (!safeStrCmp(part, "elm.swallow.content")) {
+
+		Evas_Object *layout, *label;
+
+		/* Set custom layout style */
+		layout = elm_layout_add(obj);
+		elm_layout_file_set(layout, DISPLAY_SLIDER_EDJ_NAME, "gl_custom_item");
+		evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
+		evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+
+		/* Set text into layout */
+		label = elm_label_add(obj);
+		evas_object_size_hint_weight_set(label, EVAS_HINT_EXPAND, 0);
+		evas_object_size_hint_align_set(label, EVAS_HINT_FILL, EVAS_HINT_FILL);
+//		elm_object_text_set(label, _("IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING"));
+		elm_object_text_set(label, _("Brightness"));
+		elm_object_part_content_set(layout, "elm.text", label);
+
+		/*elm_atspi_accessible_relationship_append(id->item, ELM_ATSPI_RELATION_LABELLED_BY, label); */
+		/*elm_atspi_accessible_relationship_append(label, ELM_ATSPI_RELATION_CONTROLLED_BY, id->item); */
+
+		/* Set slider into layout */
+#if 0
+		slider = elm_slider_add(obj);
+		elm_slider_indicator_show_set(slider, EINA_FALSE);
+		evas_object_size_hint_align_set(slider, EVAS_HINT_FILL, EVAS_HINT_FILL);
+		evas_object_size_hint_weight_set(slider, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+		elm_slider_horizontal_set(slider, EINA_TRUE);
+		elm_object_part_content_set(layout, "elm.swallow.content", slider);
+#endif
+
+
+		int auto_value = SETTING_BRIGHTNESS_AUTOMATIC_ON;
+		int err, ret;
+		Evas_Object *slider = elm_slider_add(obj);	/*	"elm/slider/horizontal/default" */
+		retv_if(slider == NULL, NULL);
+
+		ret = setting_get_int_slp_key(INT_SLP_SETTING_AUTOMATIC_BRIGHTNESS, &auto_value, &err);/*if get failed,to hold value SETTING_BRIGHTNESS_AUTOMATIC_ON */
+		SETTING_TRACE("auto_value:%d", auto_value);
+
+		elm_layout_signal_emit(item_data->eo_check, "elm,state,val,hide", "");
+
+		if (0 != ret) {
+			/*add error handle,due to different target env.. */
+			SETTING_TRACE_ERROR("Failed to get value of [%s]", VCONFKEY_SETAPPL_BRIGHTNESS_AUTOMATIC_INT);
+		}
+
+		if (auto_value) {
+			double step = 0;
+			elm_slider_indicator_show_set(slider, EINA_TRUE);
+			elm_slider_indicator_format_function_set(slider, _setting_display_brightness_indicator_format, _indicator_free);
+			elm_object_style_set(slider, "center_point");
+			elm_slider_indicator_format_set(slider, "%1.0f");
+
+//			step = _step_size_calculate(slider, BRIGHTNESS_AUTO_MIN_LEVEL, BRIGHTNESS_AUTO_MAX_LEVEL);
+			//TODO PRUS
+			elm_slider_step_set(slider, step);
+		}
+
+
+		elm_slider_min_max_set(slider, BRIGHTNESS_MIN, BRIGHTNESS_MAX);
+		evas_object_size_hint_weight_set(slider, EVAS_HINT_EXPAND, 0.0);
+		evas_object_size_hint_align_set(slider, EVAS_HINT_FILL, 0.5);
+
+		if (item_data->chk_change_cb)
+			evas_object_smart_callback_add(slider, "changed", item_data->chk_change_cb, item_data);
+
+		if (item_data->stop_change_cb)
+			evas_object_smart_callback_add(slider, "slider,drag,stop", item_data->stop_change_cb, item_data);
+
+		if (item_data->start_change_cb)
+			evas_object_smart_callback_add(slider, "slider,drag,start", item_data->start_change_cb, item_data);
+
+		evas_object_event_callback_add(slider, EVAS_CALLBACK_MOUSE_DOWN, _brightness_slider_mouse_down_cb, item_data);
+		evas_object_event_callback_add(slider, EVAS_CALLBACK_MOUSE_UP, _brightness_slider_mouse_up_cb, item_data);
+		evas_object_smart_callback_add(slider, "delay,changed", _brightness_slider_delayed_changed_cb, item_data);
+
+		Evas_Object *icon1 = elm_icon_add(slider);
+		elm_image_file_set(icon1, item_data->l_swallow_path, NULL);
+		evas_object_size_hint_aspect_set(icon1, EVAS_ASPECT_CONTROL_VERTICAL, 1, 1);
+		elm_object_content_set(slider, icon1);
+
+		elm_slider_value_set(slider, item_data->chk_status);
+		evas_object_pass_events_set(slider, 1);
+		evas_object_propagate_events_set(slider, 0);
+		item_data->eo_check = slider;
+
+		if (item_data->item) {
+			/* convey highlight to its content */
+			items = eina_list_append(items, slider);
+			elm_object_item_access_order_set(item_data->item, items);
+		}
+#if 0
+		return slider;
+#else
+		elm_object_part_content_set(layout, "elm.swallow.content", slider);
+		return layout;
+#endif
+
+/* TODO PRUS KONIEC
+>>>>>>> Replace dlopen by app_launcher part1: setting-display
+*/
 	}
 	/* Set text into layout */
 	elm_object_part_text_set(layout, "elm.text",
@@ -728,7 +843,7 @@ void construct_brightness(void *data, Evas_Object *genlist)
 			setting_display_birghtness_bright_slider_value_change_cb);
 
 	if (ad->data_br_sli) {
-		ad->data_br_sli->win_main = ad->win_main_layout;
+		ad->data_br_sli->win_main = ad->main_win;
 		ad->data_br_sli->evas = ad->evas;
 		if (auto_value) {
 			ad->data_br_sli->isIndicatorVisible = 1;

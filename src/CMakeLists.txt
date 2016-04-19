@@ -97,7 +97,6 @@ TARGET_LINK_LIBRARIES(${SETTING_HELP_RINGTONE} ${pkgs_main_LDFLAGS} "-pie")
 INSTALL(TARGETS ${SETTING_HELP_RINGTONE} DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/bin)
 # end
 
-
 # make font-slider.edj
 ADD_CUSTOM_TARGET(font-slider.edj
 		COMMAND edje_cc -id ${CMAKE_SOURCE_DIR}/resource/images -id ${CMAKE_SOURCE_DIR}/resource/icons -sd ${CMAKE_SOURCE_DIR}/resource/sounds

@@ -60,6 +60,8 @@
 #define SYSTEM_PACKAGE		"sys_string"
 #define SETTING_LOCALEDIR	_TZ_SYS_RO_APP\
 	"/org.tizen.setting/res/locale"
+#define DISPLAY_LOCALEDIR		_TZ_SYS_RO_APP\
+	"/org.tizen.setting-display/res/locale"
 
 #define MODE_SYSPOPUP_PACKAGE		"mode-syspopup"
 #define MODE_SYSPOPUP_LOCALEDIR	_TZ_SYS_RO_APP\
@@ -91,7 +93,22 @@
 #define SETTING_THEME_EDJ_NAME		SETTING_EDJ_PATH"/setting-theme.edj"
 #define SETTING_5STEP_SLIDER_EDJ_NAME	SETTING_EDJ_PATH"/font-slider.edj"
 #define SETTING_GENLIST_EDJ_NAME	SETTING_EDJ_PATH"/setting-genlist.edj"
+#define SETTING_NEW_GENLIST_EDJ_NAME	SETTING_EDJ_PATH"/setting-new-genlist.edj"
+#define SETTING_PROC_EDJ_NAME			SETTING_EDJ_PATH"/setting-proc.edj"
+#define SETTING_SLIDER_EDJ_NAME	SETTING_EDJ_PATH"/setting-slider.edj"
+#define SETTING_EFF_EDJ_NAME			SETTING_EDJ_PATH"/setting-eff.edj"
 
+#define SETTING_THEME_COLOR_THEME_EDJ_NAME		SETTING_EDJ_PATH"/setting-color-theme.edj"
+/* DISPLAY PART */
+#if !defined(DISPLAYEDJ)
+#define DISPLAYEDJ  _TZ_SYS_RO_APP"/org.tizen.setting-display/res/edje"
+#endif
+
+#define DISPLAY_THEME_EDJ_NAME		DISPLAYEDJ"/setting-theme.edj"
+#define DISPLAY_NEWUX_EDJ_NAME		DISPLAYEDJ"/setting-newux.edj"
+#define DISPLAY_GENLIST_EDJ_NAME	DISPLAYEDJ"/setting-genlist.edj"
+#define DISPLAY_NEW_GENLIST_EDJ_NAME	DISPLAYEDJ"/setting-new-genlist.edj"
+#define DISPLAY_SLIDER_EDJ_NAME		DISPLAYEDJ"/setting-slider.edj"
 
 #define RCS_CHECHING_FILE		_TZ_SYS_SHARE"/ims/.RCS_ENABLED"
 

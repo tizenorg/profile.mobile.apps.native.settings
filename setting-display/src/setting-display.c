@@ -23,9 +23,31 @@
 #include <Eina.h>
 #include <setting-cfg.h>
 
+#include <app.h>
+#include <appcore-common.h>
+
+
 #ifndef UG_MODULE_API
 #define UG_MODULE_API __attribute__ ((visibility("default")))
 #endif
+
+static Elm_Theme* __theme = NULL;
+
+/******************************APP CONTROL***********************************/
+static bool _setting_display_app_create(void *data);
+static void _setting_display_app_control_cb(app_control_h app_control, void *data);
+static void _setting_display_app_on_pause(void *data);
+static void _setting_display_app_on_resume(void *data);
+static void _setting_display_app_terminate(void *data);
+/********************************OTHER***************************************/
+static void _main_win_del_cb(void *data, Evas_Object *obj, void *event_info);
+
+
+static void _main_win_del_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	elm_exit();
+}
 
 /**
  * view selection by service variable
@@ -42,11 +64,14 @@ setting_view *__get_display_view_to_load(void *data, app_control_h service)
 
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if((!data), NULL, "!data");
+	app_control_get_extra_data(service, "viewtype", &viewtype);
+	if (!viewtype)
+		return NULL;
 
 	ret = app_control_get_uri(service, &uri);
 	if (!ret && uri) {
 		SETTING_TRACE("uri:%s", uri);
-		/* DO NOTHING NOW */
+		// DO NOTHING NOW /
 	} else {
 		app_control_get_extra_data(service, "viewtype", &viewtype);
 		if (!viewtype)
@@ -81,8 +106,10 @@ setting_view *__get_display_view_to_load(void *data, app_control_h service)
 			setting_view_node_table_register(
 					&setting_view_display_brightness,
 					&setting_view_display_main);
+//	SETTING_TRACE_DEBUG("viewtype:%s", viewtype);
 			FREE(viewtype);
 			return &setting_view_display_main;
+	SETTING_TRACE_BEGIN;
 		}
 	}
 	return NULL;
@@ -104,7 +131,7 @@ Evas_Object *__get_display_layout_to_return(app_control_h service, void *priv)
 
 	ret = app_control_get_uri(service, &uri);
 	if (!ret && uri)
-		return displayUG->ly_main;
+		return displayUG->win_main_layout;
 
 	app_control_get_extra_data(service, "viewtype", &viewtype);
 	if (!viewtype)
@@ -113,7 +140,7 @@ Evas_Object *__get_display_layout_to_return(app_control_h service, void *priv)
 	SETTING_TRACE("viewtype:%s", viewtype);
 	FREE(viewtype);
 
-	return displayUG->ly_main;
+	return displayUG->win_main_layout;
 }
 
 static void setting_display_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
@@ -166,6 +193,8 @@ Eina_Bool __show_smartrotation_guide_popup(void *data)
 	return ECORE_CALLBACK_CANCEL;
 }
 
+/* TODO PRUS
+<<<<<<< HEAD
 static void *setting_display_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 		app_control_h service, void *priv)
 {
@@ -179,13 +208,13 @@ static void *setting_display_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	displayUG->win_main_layout = (Evas_Object *)ug_get_parent_layout(ug);
 	displayUG->win_get = (Evas_Object *)ug_get_window();
 
-	/*evas_object_show(displayUG->win_main_layout); */
+//	evas_object_show(displayUG->win_main_layout);
 	displayUG->evas = evas_object_evas_get(displayUG->win_main_layout);
 
 	setting_retvm_if(displayUG->win_main_layout == NULL, NULL,
 			"cannot get main window ");
 
-	/* register view node table */
+//	 register view node table
 	setting_view_node_table_intialize();
 
 	setting_create_Gendial_itc("1line.top", &(displayUG->itc_1text));
@@ -196,7 +225,7 @@ static void *setting_display_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
 			&(displayUG->itc_2text_3));
 
-	/*	creating a view. */
+//		creating a view.
 	displayUG->view_to_load = __get_display_view_to_load(displayUG,
 			service);
 	setting_retvm_if(NULL == displayUG->view_to_load, NULL,
@@ -209,20 +238,18 @@ static void *setting_display_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 
 	return __get_display_layout_to_return(service, displayUG);
 }
+*/
+/* TODO PRUS END */
+
+#if 0
+/* TODO PRUS
+>>>>>>> Replace dlopen by app_launcher part1: setting-display
+*/
 
 static void setting_display_ug_on_start(ui_gadget_h ug, app_control_h service,
 		void *priv)
 {
-}
-
-static void setting_display_ug_on_pause(ui_gadget_h ug, app_control_h service,
-		void *priv)
-{
-}
-
-static void setting_display_ug_on_resume(ui_gadget_h ug, app_control_h service,
-		void *priv)
-{
+	SETTING_TRACE_BEGIN;
 }
 
 static void setting_display_ug_on_destroy(ui_gadget_h ug, app_control_h service,
@@ -329,29 +356,6 @@ static void setting_display_ug_on_key_event(ui_gadget_h ug,
 	}
 }
 
-UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
-{
-	SettingDisplayUG *displayUG = calloc(1, sizeof(SettingDisplayUG));
-
-	SETTING_TRACE_BEGIN;
-	setting_retvm_if(!displayUG, -1, "Create SettingDisplayUG obj failed");
-
-	memset(displayUG, 0x00, sizeof(SettingDisplayUG));
-
-	ops->create = setting_display_ug_on_create;
-	ops->start = setting_display_ug_on_start;
-	ops->pause = setting_display_ug_on_pause;
-	ops->resume = setting_display_ug_on_resume;
-	ops->destroy = setting_display_ug_on_destroy;
-	ops->message = setting_display_ug_on_message;
-	ops->event = setting_display_ug_on_event;
-	ops->key_event = setting_display_ug_on_key_event;
-	ops->priv = displayUG;
-	ops->opt = UG_OPT_INDICATOR_ENABLE;
-
-	return 0;
-}
-
 UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 {
 	struct SettingDisplayUG *displayUG;
@@ -363,6 +367,7 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 	if (displayUG)
 		FREE(displayUG);
 }
+#endif
 
 /* ***************************************************
  *
@@ -691,4 +696,180 @@ UG_MODULE_API int setting_plugin_search_query_ops(char *str_id,
 	}
 	SETTING_TRACE(">> get tfunc operation via plugin-model 2");
 	return 0;
+}
+
+#if 0
+UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
+{
+	SettingDisplayUG *displayUG = calloc(1, sizeof(SettingDisplayUG));
+
+	SETTING_TRACE_BEGIN;
+	setting_retvm_if(!displayUG, -1, "Create SettingDisplayUG obj failed");
+
+	memset(displayUG, 0x00, sizeof(SettingDisplayUG));
+
+	ops->create = setting_display_ug_on_create;
+	ops->start = setting_display_ug_on_start;
+	ops->pause = setting_display_ug_on_pause;
+	ops->resume = setting_display_ug_on_resume;
+	ops->destroy = setting_display_ug_on_destroy;
+	ops->message = setting_display_ug_on_message;
+	ops->event = setting_display_ug_on_event;
+	ops->key_event = setting_display_ug_on_key_event;
+	ops->priv = displayUG;
+	ops->opt = UG_OPT_INDICATOR_ENABLE;
+
+	return 0;
+}
+#endif
+
+static void _setting_display_app_control_cb(app_control_h app_control, void *data)
+{
+	SETTING_TRACE_BEGIN;
+}
+
+static bool _setting_display_app_create(void *data)
+{
+	SETTING_TRACE_BEGIN;
+	setting_retvm_if(NULL == data, false, "!priv");
+
+	elm_app_base_scale_set(2.4);
+	SettingDisplayUG *display_ad = (SettingDisplayUG *)data;
+
+	Evas_Object *win;
+	int w, h;
+	const char *name = "setting-display";
+
+    __theme = elm_theme_new();
+    elm_theme_ref_set(__theme, NULL);
+
+    elm_theme_extension_add(__theme, DISPLAY_THEME_EDJ_NAME);
+    elm_theme_extension_add(__theme, DISPLAY_NEWUX_EDJ_NAME);
+    elm_theme_extension_add(__theme, DISPLAY_GENLIST_EDJ_NAME);
+    elm_theme_extension_add(__theme, DISPLAY_NEW_GENLIST_EDJ_NAME);
+    elm_theme_extension_add(__theme, DISPLAY_SLIDER_EDJ_NAME);
+
+//	Create window
+	win = elm_win_add(NULL, name, ELM_WIN_BASIC);
+	if (!win)
+	{
+		win = elm_win_util_standard_add(name, name);
+	} else {
+		/* elm_win_util_standard_add creates bg inside */
+		Evas_Object *bg;
+		bg = elm_bg_add(win);
+
+		if (!bg) {
+			evas_object_del(win);
+			return false;
+		}
+		evas_object_size_hint_weight_set(bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+		elm_win_resize_object_add(win, bg);
+		evas_object_show(bg);
+		elm_bg_color_set(bg, 225, 120, 120);
+	}
+
+	if (win) {
+		elm_win_title_set(win, name);
+#ifdef ECORE_X
+		ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
+#else
+		elm_win_screen_size_get(win, NULL, NULL, &w, &h);
+#endif
+		evas_object_resize(win, w, h);
+	}
+
+	elm_win_indicator_mode_set(win, ELM_WIN_INDICATOR_SHOW);
+	elm_win_indicator_opacity_set(win, ELM_WIN_INDICATOR_OPAQUE);
+	setting_set_i18n("setting", DISPLAY_LOCALEDIR);
+	evas_object_smart_callback_add(win, "delete,request",
+                                   _main_win_del_cb, display_ad);
+
+	////TODO FIX IT
+    app_control_h service;
+    if (app_control_create(&service)) {
+    }
+    app_control_add_extra_data(service, "viewtype", "main");
+
+    display_ad->main_win = win;
+	display_ad->evas = evas_object_evas_get(display_ad->main_win);
+
+	setting_retvm_if(NULL == display_ad->main_win, false, "cannot get main window ");
+
+//	Create base Layout
+	setting_create_Gendial_itc("1line.top", &(display_ad->itc_1text));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(display_ad->itc_1text_1icon));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(display_ad->itc_1text));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(display_ad->itc_2text_3));
+
+
+//  creating a view.
+	display_ad->view_to_load = __get_display_view_to_load(display_ad, service);
+
+	SETTING_TRACE_BEGIN;
+	setting_retvm_if(NULL == display_ad->view_to_load, false, "NULL == display_ad->view_to_load");
+	setting_view_node_set_cur_view(display_ad->view_to_load);
+	SETTING_TRACE_BEGIN;
+	if (&setting_view_display_main == display_ad->view_to_load) {
+
+	setting_view_create(display_ad->view_to_load, (void *)display_ad);
+	SETTING_TRACE_BEGIN;
+	evas_object_event_callback_add(display_ad->win_main_layout,
+								   EVAS_CALLBACK_RESIZE,
+								   setting_display_ug_cb_resize, display_ad);
+	}
+
+	evas_object_show(display_ad->main_win);
+
+	SETTING_TRACE_BEGIN;
+	__get_display_layout_to_return(service, display_ad);
+
+	SETTING_TRACE_BEGIN;
+	return true;
+}
+
+static void _setting_display_app_terminate(void *data)
+{
+	SETTING_TRACE_BEGIN;
+	SettingDisplayUG *ad = (SettingDisplayUG *)data;
+	setting_view_destroy(&setting_view_display_main, ad);
+	SETTING_TRACE_DEBUG("!!! After setting_view_destroy");
+	if (ad->main_win) {
+		evas_object_del(ad->main_win);
+		ad->main_win = NULL;
+	}
+}
+
+static void _setting_display_app_on_pause(void *data)
+{
+	SETTING_TRACE_BEGIN;
+}
+
+static void _setting_display_app_on_resume(void *data)
+{
+	SETTING_TRACE_BEGIN;
+}
+
+EXPORT_PUBLIC
+int main(int argc, char *argv[])
+{
+	SettingDisplayUG display_ad ;
+
+	ui_app_lifecycle_callback_s ops = {
+        .create = _setting_display_app_create,
+        .pause = _setting_display_app_on_pause,
+        .resume = _setting_display_app_on_resume,
+        .terminate = _setting_display_app_terminate,
+        .app_control = _setting_display_app_control_cb,
+    };
+
+//    app_event_handler_h hLowBatteryHandle;
+//    app_event_handler_h hLanguageChangedHandle;
+
+    memset(&display_ad, 0x00, sizeof(SettingDisplayUG));
+	int r = 0;
+    r = ui_app_main(argc, argv, &ops, &display_ad);
+    retv_if(r == -1, -1);
+
+    return 0;
 }

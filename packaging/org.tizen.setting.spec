@@ -137,6 +137,13 @@ Group: Application
 %description flightmode
 Configuration application for flightmode
 
+%package display
+Summary: A setting display module
+Group: Application
+
+%description display
+replace shared library by stand alone application
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -286,6 +293,10 @@ mkdir -p %{_prefix}/apps/org.tizen.mode-syspopup/bin/
 rm -rf %{_datadir}/packages/org.tizen.setting.xml
 mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen.setting.xml
 
+%post display
+mkdir -p %{_prefix}/apps/org.tizen.setting-display/shared
+mkdir -p %{_prefix}/apps/org.tizen.settung-display/shared/res
+
 %posttrans
 
 %files -n org.tizen.setting
@@ -350,9 +361,18 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %{_datadir}/mime/packages/mime.setting.xml
 %{_datadir}/packages/org.tizen.setting.xml.ref
 
-
 %files flightmode
 %manifest setting-flightmode/org.tizen.setting-flightmode.manifest
 %{_prefix}/apps/org.tizen.setting-flightmode/bin/setting-flightmode
 %{_datadir}/packages/org.tizen.setting-flightmode.xml
 %{_prefix}/apps/org.tizen.setting-flightmode/res/*
+
+%files display
+%manifest setting-display/org.tizen.setting-display.manifest
+%{_prefix}/apps/org.tizen.setting-display/bin/setting-display
+%{_datadir}/packages/org.tizen.setting-display.xml
+
+%{_prefix}/apps/org.tizen.setting-display/res/*
+
+#%{_prefix}/apps/org.tizen.setting-display/shared/res/*
+#%attr(-,app,app) %dir %{_prefix}/apps/org.tizen.setting-display/shared
