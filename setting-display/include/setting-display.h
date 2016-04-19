@@ -89,14 +89,13 @@ typedef enum {
 	SETTING_DISPLAY_VIEWTYPE_MAX,
 } display_viewtype;
 
-typedef struct _SettingDisplayUG SettingDisplayUG;
 
 /**
  * Setting Display UG context
  * all UG function has void* as an agument. this is casted back to SettingDisplayUG
  * and the functions access app context.
  */
-struct _SettingDisplayUG {
+typedef struct _SettingDisplayUG {
 	ui_gadget_h ug;
 
 	/* add more variables here (move your appdata to here) */
@@ -204,7 +203,8 @@ struct _SettingDisplayUG {
 
 	DisplayExpandState display_expand_state;
 
-};
+} SettingDisplayUG;
+extern SettingDisplayUG *g_main_ad;
 
 extern setting_view setting_view_display_main;
 extern setting_view setting_view_display_brightness;

@@ -23,6 +23,10 @@
 #include <Eina.h>
 #include <setting-cfg.h>
 
+#include <app.h>
+#include <appcore-common.h>
+
+
 #ifndef UG_MODULE_API
 #define UG_MODULE_API __attribute__ ((visibility("default")))
 #endif
@@ -153,27 +157,28 @@ Eina_Bool __show_smartrotation_guide_popup(void *data)
 	return ECORE_CALLBACK_CANCEL;
 }
 
-static void *setting_display_ug_on_create(ui_gadget_h ug,
-										  enum ug_mode mode, app_control_h service,
-										  void *priv)
+//static void *setting_display_ug_on_create(ui_gadget_h ug,
+//                                          enum ug_mode mode, app_control_h service,
+//                                          void *priv)
+static void *setting_display_ug_on_create(void *priv)
 {
 	setting_retvm_if((!priv), NULL, "!priv");
 	SETTING_TRACE_BEGIN;
 
 	SettingDisplayUG *displayUG = priv;
+/*
 	displayUG->ug = ug;
 	setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR);
 
 	displayUG->win_main_layout = (Evas_Object *) ug_get_parent_layout(ug);
 	displayUG->win_get = (Evas_Object *) ug_get_window();
 
-	/*evas_object_show(displayUG->win_main_layout); */
 	displayUG->evas = evas_object_evas_get(displayUG->win_main_layout);
 
 	setting_retvm_if(displayUG->win_main_layout == NULL, NULL,
 					 "cannot get main window ");
 
-	/* register view node table */
+	// register view node table 
 	setting_view_node_table_intialize();
 
 	setting_create_Gendial_itc("1line.top", &(displayUG->itc_1text));
@@ -181,7 +186,7 @@ static void *setting_display_ug_on_create(ui_gadget_h ug,
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(displayUG->itc_1text));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(displayUG->itc_2text_3));
 
-	/*  creating a view. */
+	//  creating a view.
 	displayUG->view_to_load = __get_display_view_to_load(displayUG, service);
 	setting_retvm_if(NULL == displayUG->view_to_load, NULL,
 					 "NULL == displayUG->view_to_load");
@@ -192,6 +197,7 @@ static void *setting_display_ug_on_create(ui_gadget_h ug,
 								   setting_display_ug_cb_resize, displayUG);
 
 	return __get_display_layout_to_return(service, displayUG);
+*/
 }
 
 static void setting_display_ug_on_start(ui_gadget_h ug, app_control_h service,
@@ -199,13 +205,16 @@ static void setting_display_ug_on_start(ui_gadget_h ug, app_control_h service,
 {
 }
 
-static void setting_display_ug_on_pause(ui_gadget_h ug, app_control_h service,
-										void *priv)
+////TODO PRUS
+//static void setting_display_ug_on_pause(ui_gadget_h ug, app_control_h service,
+//                                        void *priv)
+static void setting_display_ug_on_pause(void *priv)
 {
 }
 
-static void setting_display_ug_on_resume(ui_gadget_h ug, app_control_h service,
-										 void *priv)
+//static void setting_display_ug_on_resume(ui_gadget_h ug, app_control_h service,
+//                                         void *priv)
+static void setting_display_ug_on_resume(void *priv)
 {
 }
 
@@ -307,7 +316,7 @@ static void setting_display_ug_on_key_event(ui_gadget_h ug,
 		break;
 	}
 }
-
+#if 0
 UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
 {
 	SettingDisplayUG *displayUG = calloc(1, sizeof(SettingDisplayUG));
@@ -330,7 +339,33 @@ UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
 
 	return 0;
 }
+#endif
 
+EXPORT_PUBLIC
+int main(int argc, char *argv[])
+{
+	SettingDisplayUG displayUG ;//= calloc(1, sizeof(SettingDisplayUG));
+
+	ui_app_lifecycle_callback_s ops = {
+        .create = setting_display_ug_on_create,
+//        .terminate = setting_main_app_terminate,
+        .pause = setting_display_ug_on_pause,
+        .resume = setting_display_ug_on_resume,
+//        .app_control = setting_main_app_reset,
+    };
+    memset(&displayUG, 0x00, sizeof(SettingDisplayUG));
+	int r = 0;
+    r = ui_app_main(argc, argv, &ops, &displayUG);
+    retv_if(r == -1, -1);
+
+    return 0;
+
+
+	
+
+}
+
+#if 0
 UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 {
 	struct SettingDisplayUG *displayUG;
@@ -342,6 +377,7 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 	if (displayUG)
 		FREE(displayUG);
 }
+#endif
 
 /* ***************************************************
  *
