@@ -90,7 +90,7 @@ char *_ringtone_gl_label_get(void *data, Evas_Object *obj, const char *part)
 	retvm_if(data == NULL, NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *item_data = (Setting_GenGroupItem_Data *) data;
 
-	if (safeStrCmp(part, "elm.text.main.left"))
+	if (safeStrCmp(part, "elm.text"))
 		return NULL;
 
 	return (char *)g_strdup(_(item_data->keyStr));
@@ -103,12 +103,10 @@ Evas_Object *_ringtone_gl_icon_get(void *data, Evas_Object *obj,
 	Setting_GenGroupItem_Data *item_data = (Setting_GenGroupItem_Data *) data;
 	/*SettingRingtoneUG *ad = (SettingRingtoneUG *) (item_data->userdata); */
 
-	if (safeStrCmp(part, "elm.icon.right"))
+	if (safeStrCmp(part, "elm.swallow.end"))	
 		return NULL;
 
-	Evas_Object *lay = elm_layout_add(obj);
-
-	Evas_Object *radio = elm_radio_add(lay);
+	Evas_Object *radio = elm_radio_add(obj);
 	evas_object_propagate_events_set(radio, EINA_FALSE);
 	evas_object_repeat_events_set(radio, EINA_TRUE);
 	elm_radio_state_value_set(radio, item_data->chk_status);
@@ -116,10 +114,8 @@ Evas_Object *_ringtone_gl_icon_get(void *data, Evas_Object *obj,
 	evas_object_show(radio);
 	item_data->eo_check = radio;
 
-	elm_layout_theme_set(lay, "layout", "list/C/type.2", "default");
-	elm_layout_content_set(lay, "elm.swallow.content", radio);
+	return radio;
 
-	return lay;
 }
 
 static void _ringtone_gl_del(void *data, Evas_Object *obj)
@@ -137,7 +133,7 @@ static void _ringtone_gl_del(void *data, Evas_Object *obj)
 static inline void appmgrUg_init_itcs(SettingRingtoneUG *ad)
 {
 	SETTING_TRACE_BEGIN;
-	ad->itc_ring.item_style = "1line";
+	ad->itc_ring.item_style = "type1";
 	ad->itc_ring.func.text_get = _ringtone_gl_label_get;
 	ad->itc_ring.func.content_get = _ringtone_gl_icon_get;
 	ad->itc_ring.func.state_get = NULL;
@@ -256,6 +252,8 @@ static int setting_ringtone_create(void *cb)
 	if (ret != 0) {
 		SETTING_TRACE_ERROR("Failed to get filelist, ret = %d %s", ret, RINGTONE_FILE_PATH);
 	}
+	SETTING_TRACE("file path = %d : %s", ret, RINGTONE_FILE_PATH);
+	
 	filelist = eina_list_sort(filelist,
 	                          eina_list_count(filelist), _compare_cb);
 	ad->filelist = filelist;
@@ -280,6 +278,8 @@ static int setting_ringtone_create(void *cb)
 			item_data->rgd = ad->ring_rgd;
 			item_data->chk_status = cnt;
 			item_data->filepath = get_default_filepath(ad);
+			SETTING_TRACE("item_data->filepath = %s", item_data->filepath);
+			
 			item_data->item = elm_genlist_item_append(ad->scroller, &(ad->itc_ring), item_data, NULL,
 			                                          ELM_GENLIST_ITEM_NONE, ringtone_item_sel, ad);
 
@@ -332,6 +332,8 @@ static int setting_ringtone_create(void *cb)
 			item_data->rgd = ad->ring_rgd;
 			item_data->chk_status = cnt;
 			item_data->filepath = g_strdup(fullPath);
+			SETTING_TRACE("item_data->filepath = %s", item_data->filepath);
+			
 			item_data->item = elm_genlist_item_append(ad->scroller, &(ad->itc_ring), item_data, NULL,
 			                                          ELM_GENLIST_ITEM_NONE, ringtone_item_sel, ad);
 
@@ -429,3 +431,4 @@ setting_ringtone_click_back_cb(void *data, Elm_Object_Item *it)
 	ug_destroy_me(ad->ug);
 	return EINA_FALSE;
 }
+
