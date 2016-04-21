@@ -87,8 +87,6 @@ static int setting_applications_main_create(void *cb)
 
 	evas_object_smart_callback_add(ad->genlist, "realized", __gl_realized_cb, NULL);
 
-	Elm_Object_Item *item = NULL;
-
 	setting_create_Gendial_field_def(ad->genlist, &itc_1text,
 	                                 setting_applications_main_mouse_up_Gendial_list_cb,
 	                                 ad, SWALLOW_Type_INVALID, NULL,

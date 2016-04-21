@@ -293,7 +293,6 @@ static int setting_display_main_create(void *cb)
 	Evas_Object *scroller = NULL;
 	int value = 0;
 	int ret = 0;
-	Elm_Object_Item *item = NULL;
 
 	SETTING_TRACE_BEGIN;
 	/* error check */

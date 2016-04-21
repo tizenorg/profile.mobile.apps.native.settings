@@ -22,8 +22,6 @@
 #include <setting-common-data-slp-setting.h>
 #include <feedback.h>
 
-#define EXPORT_PUBLIC __attribute__((visibility("default")))
-
 /**
  * @brief Initialize function for tap sound playing
  *

@@ -584,6 +584,7 @@ collections
 				   font: "Tizen:style=Bold";
 				   size: 32;
 				   text_class: "tizen";
+				   ellipsis: -1;
 				}
 				min: 1 GROUP_ITEM_HEIGHT;
 				max: -1 GROUP_ITEM_HEIGHT;

@@ -198,46 +198,6 @@ static void __entry_changed(void *data, Evas_Object *obj, void *event_info)
 	}
 }
 
-static void __entry_unfocused(void *data, Evas_Object *obj, void *event_info) /* Unfocused callback will show guidetext and hide X marked button. */
-{
-	ret_if(!data);
-	SETTING_TRACE_BEGIN;
-	Evas_Object *entry_container = data;
-	/*whe entry unfocused, its guidetext will becomes "Input here" */
-
-	if (elm_entry_is_empty(obj)) {
-		elm_object_part_text_set(entry_container, "elm.guidetext", _("IDS_ST_BODY_TAP_TO_INSERT"));
-		elm_object_signal_emit(entry_container, "elm,state,guidetext,show", "elm");
-	}
-	elm_object_signal_emit(entry_container, "elm,state,eraser,hide", "elm");
-}
-
-static void __entry_focused(void *data, Evas_Object *obj, void *event_info) /* Focused callback will show X marked button and hide guidetext. */
-{
-	ret_if(!data);
-	SETTING_TRACE_BEGIN;
-	Evas_Object *entry_container = data;
-	/*whe entry focused, its guidetext will becomes "Input here" */
-
-	if (!elm_entry_is_empty(obj)) {
-		elm_object_signal_emit(entry_container, "elm,state,eraser,show", "elm");
-	} else {
-		elm_object_part_text_set(entry_container, "elm.guidetext", _("IDS_ST_BODY_TAP_TO_INSERT"));
-	}
-	elm_object_signal_emit(entry_container, "elm,state,guidetext,hide", "elm");
-
-	Ecore_IMF_Context *imf_context = (Ecore_IMF_Context *)elm_entry_imf_context_get(obj);
-	if (imf_context) ecore_imf_context_input_panel_show(imf_context);
-}
-
-static void __eraser_clicked(void *data, Evas_Object *obj, const char *emission, const char *source) /* When X marked button is clicked, empty entry's contents. */
-{
-	ret_if(!data);
-	Evas_Object *entry = data;
-	elm_entry_entry_set(entry, "");
-	elm_object_focus_set(entry, EINA_TRUE);
-}
-
 static void __chk_changed(void *data, Evas_Object *obj, void *event_info)
 {
 	retm_if(data == NULL, "Data parameter is NULL");
