@@ -328,7 +328,6 @@ static int setting_phone_display_language_create(void *cb)
 	setting_lang_entry *pnode = NULL;
 	int idx = SETTING_LANG_KOREA;		/* 2 */
 	int item_idx = 0;
-	Setting_GenGroupItem_Data *last_item = NULL;
 	Setting_GenGroupItem_Data *item_data = NULL;
 
 	/* load language table from XML file */

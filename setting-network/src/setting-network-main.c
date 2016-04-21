@@ -77,59 +77,6 @@ static void __net_restriction_mode_vconf_change_cb(keynode_t *key, void *data);
  *
  ***************************************************/
 #ifdef UI_NETWORK_MODE
-static Eina_Bool __set_net_mode_on_timer(void *data)
-{
-	/* error check */
-	SETTING_TRACE_BEGIN;
-	retvm_if(data == NULL, ECORE_CALLBACK_CANCEL, "Data parameter is NULL");
-	Elm_Object_Item *subitem = (Elm_Object_Item *) data;
-	Elm_Object_Item *parentItem = elm_genlist_item_parent_get(subitem);
-	retvm_if(parentItem == NULL, ECORE_CALLBACK_CANCEL, "parentItem is NULL");
-
-	Setting_GenGroupItem_Data *data_subItem = elm_object_item_data_get(subitem);	/* parent data */
-	Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(parentItem);	/* parent data */
-	retvm_if(!data_subItem || !data_parentItem, ECORE_CALLBACK_CANCEL, "!data_subItem || !data_parentItem");
-
-	SettingNetworkUG *ad = data_parentItem->userdata;
-	retvm_if(ad == NULL, ECORE_CALLBACK_CANCEL, "ad is NULL");
-	if (ad->popup) {
-		evas_object_del(ad->popup);
-		ad->popup = NULL;
-	}
-
-	elm_radio_value_set(ad->data_net_mode->rgd, data_subItem->chk_status);
-
-	ad->net_mode = data_subItem->chk_status;
-	int tapi_ret = tel_set_network_mode(ad->handle, data_subItem->chk_status, setting_tapi_set_band_cb, ad);
-	if (tapi_ret != TAPI_API_SUCCESS) {
-		SETTING_TRACE_DEBUG
-		("%s*** [ERR] tel_set_network_mode. tapi_ret=%d ***%s",
-		 SETTING_FONT_RED, tapi_ret, SETTING_FONT_BLACK);
-		setting_create_popup(ad, ad->win_get, NULL, _(Invok_API_Failed_Desc), NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
-		/*rollback */
-		int err = 0;
-		int ret = setting_get_int_slp_key(ad->data_net_mode->int_slp_setting_binded,
-		                                  &(ad->net_mode), &err);
-		if (ret == SETTING_RETURN_FAIL) {
-			SETTING_TRACE_ERROR("failed to get vconf");
-		}
-
-		if (ad->net_mode == (TAPI_NETWORK_MODE_GSM | TAPI_NETWORK_MODE_WCDMA)) {
-			ad->net_mode = TAPI_NETWORK_MODE_AUTO;
-		}
-		elm_radio_value_set(ad->data_net_mode->rgd, ad->net_mode);
-		return ECORE_CALLBACK_CANCEL;
-	}
-
-	/*it will be deleted in callback set by tel_set_network_mode(that is setting_tapi_set_band_cb.) */
-	ad->network_ug_pop = setting_create_popup(ad, ad->win_get, NULL,
-	                                                      "IDS_ST_BUTTON2_PROCESSING_ING", NULL,
-	                                                      0.0, TRUE, FALSE, 0);
-
-	/*ecore_timer_del(ad->timer); */
-	ad->timer = NULL;
-	return ECORE_CALLBACK_CANCEL;
-}
 
 #if 0
 static Eina_Bool __set_net_mode_on_delay(void *data)
@@ -629,7 +576,7 @@ static void setting_network_mode_popup(void *data)
 	_P(ad->network_mode_popup);
 	//Evas_Object *parentItem = ad->network_mode_popup;
 
-	int call_status = CM_CALL_STATUS_IDLE;
+	cm_call_status_e call_status = CM_CALL_STATUS_IDLE;
 	cm_client_h cm_handle = NULL;
 	cm_init(&cm_handle);
 	cm_get_call_status(cm_handle, &call_status);
@@ -1170,7 +1117,7 @@ setting_network_main_item_Gendial_mouse_up_cb(void *data, Evas_Object *obj, void
 	if (!safeStrCmp("IDS_ST_BODY_NETWORK_MODE", list_item->keyStr)) {
 		setting_network_mode_popup(ad);
 	} else if (!safeStrCmp("IDS_COM_BODY_NETWORK_OPERATORS", list_item->keyStr)) {
-		int call_status = CM_CALL_STATUS_IDLE;
+		cm_call_status_e call_status = CM_CALL_STATUS_IDLE;
 		cm_client_h cm_handle = NULL;
 		cm_init(&cm_handle);
 		cm_get_call_status(cm_handle, &call_status);
