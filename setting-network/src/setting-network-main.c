@@ -629,7 +629,7 @@ static void setting_network_mode_popup(void *data)
 	_P(ad->network_mode_popup);
 	//Evas_Object *parentItem = ad->network_mode_popup;
 
-	int call_status = CM_CALL_STATUS_IDLE;
+	cm_call_status_e call_status = CM_CALL_STATUS_IDLE;
 	cm_client_h cm_handle = NULL;
 	cm_init(&cm_handle);
 	cm_get_call_status(cm_handle, &call_status);

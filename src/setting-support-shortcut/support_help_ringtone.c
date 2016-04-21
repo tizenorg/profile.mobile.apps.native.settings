@@ -32,9 +32,6 @@
 #include <efl_extension.h>
 #include <setting-common-general-func.h>
 
-#define EXPORT_PUBLIC __attribute__((visibility("default")))
-
-
 typedef struct _support_help_appdata {
 
 	ui_gadget_h ug;

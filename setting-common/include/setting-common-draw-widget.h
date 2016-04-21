@@ -38,8 +38,6 @@
 
 
 
-#define EXPORT_PUBLIC __attribute__ ((visibility ("default")))
-
 #define SETTING_COMMON_DRAW_WIDGET_CONTROLBAR_ITEM_LEN 3
 #define POPUP_INTERVAL 2.0
 
@@ -110,7 +108,7 @@ extern const Elm_Genlist_Item_Class itc_bottom_line;
 			                                                                        NULL,\
 			                                                                        SWALLOW_Type_LAYOUT_SPECIALIZTION_X,\
 			                                                                        NULL, NULL, 0, str, NULL, NULL);\
-			setting_retvm_if(NULL == item_data, NULL, "item_data is NULL");\
+			setting_retvm_if(NULL == item_data, -1, "item_data is NULL");\
 			elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
 		}\
 	}
@@ -997,8 +995,8 @@ extern void setting_popup_event_set(Evas_Object *popup, void *data,
  **********************************************************/
 EXPORT_PUBLIC Evas_Object *setting_create_popup(void *data,
 												Evas_Object *parent,
-												char *title,
-												char *text,
+												const char *title,
+												const char *text,
 												setting_call_back_func response_cb,
 												int timeout,
 												bool blocked_flag,

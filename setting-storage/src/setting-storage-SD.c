@@ -454,7 +454,6 @@ static inline void storageUg_SD_remove_info(SettingStorageUG *ad)
 
 void storageUg_main_append_SD_info(SettingStorageUG *ad)
 {
-	char *str;
 	int mmc_mode;
 
 	ret_if(ad == NULL);
