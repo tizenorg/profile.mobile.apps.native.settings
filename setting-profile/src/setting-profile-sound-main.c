@@ -506,12 +506,11 @@ char *setting_do_not_disturb_is_enable(void *data)
 {
 	int err = NOTIFICATION_ERROR_NONE;
 	bool do_not_disturb;
-	char *desc;
 	notification_system_setting_h system_setting = NULL;
 
 	err = notification_system_setting_load_system_setting(&system_setting);
 	setting_retvm_if(NULL == system_setting || NOTIFICATION_ERROR_NONE != err,
-									SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
+									"NULL parameter",
 									"notification_system_setting_load_system_Setting failed");
 	err = notification_system_setting_get_do_not_disturb(system_setting, &do_not_disturb);
 	SETTING_TRACE("do_not_disturb: %d", do_not_disturb);
@@ -777,7 +776,7 @@ void vibration_state_event_handler(const char *event_name, bundle *data, void *u
 	SETTING_TRACE("vibration_state_set(%s)", vibration_state_set);
 }
 
-int vibration_state_reg_id;
+unsigned int vibration_state_reg_id;
 
 static Eina_Bool
 setting_soudn_main_click_softkey_back_cb(void *data, Evas_Object *obj,
@@ -823,7 +822,7 @@ static int setting_sound_main_create(void *cb)
 
 		Evas_Object *lbtn = setting_create_button(ad->navi_bar, _(NULL),
 		                                          NAVI_BACK_ARROW_BUTTON_STYLE,
-		                                          setting_soudn_main_click_softkey_back_cb, ad);
+		                                          &setting_soudn_main_click_softkey_back_cb, ad);
 
 
 		Elm_Object_Item *navi_it = elm_naviframe_item_push(ad->navi_bar, KeyStr_Sounds, lbtn, NULL, ad->gl_lite_main, NULL);
@@ -1140,25 +1139,6 @@ void setting_sound_notifications_layout_ug_cb(ui_gadget_h ug,
 			break;
 	}
 	SETTING_TRACE_END;
-}
-
-static void setting_sound_notifications_destroy_ug_cb(ui_gadget_h ug, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-	ret_if(priv == NULL);
-	SettingProfileUG *ad = (SettingProfileUG *) priv;
-	if (ug) {
-		setting_ug_destroy(ug);
-	}
-	elm_genlist_realized_items_update(ad->gl_lite_main);
-
-	/* do not disturb */
-	if (ad->data_do_not_disturb) {
-		char *sub_desc = setting_do_not_disturb_is_enable(priv);
-		ad->data_do_not_disturb->sub_desc = (char *)strdup(sub_desc);
-		elm_object_item_data_set(ad->data_do_not_disturb->item, ad->data_do_not_disturb);
-		elm_genlist_item_update(ad->data_do_not_disturb->item);
-	}
 }
 
 static void

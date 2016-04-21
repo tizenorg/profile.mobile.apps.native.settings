@@ -77,9 +77,9 @@ static int setting_connectivity_usb_help_create(void *cb)
 	char *strsamsung_kies_help = samsung_kies_help;
 	char *strmass_storage_help = mass_storage_help;
 	char *strdebugging_mode_help = debugging_mode_help;
-	ADD_GL_LABLE(genlist, strsamsung_kies_help);
-	ADD_GL_LABLE(genlist, strmass_storage_help);
-	ADD_GL_LABLE(genlist, strdebugging_mode_help);
+	setting_add_gl_help(genlist, strsamsung_kies_help);
+	setting_add_gl_help(genlist, strmass_storage_help);
+	setting_add_gl_help(genlist, strdebugging_mode_help);
 
 	setting_view_connectivity_usb_help.is_create = 1;
 

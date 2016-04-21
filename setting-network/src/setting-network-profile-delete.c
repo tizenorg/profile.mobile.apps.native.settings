@@ -26,6 +26,7 @@ static int setting_network_profile_delete_destroy(void *cb);
 static int setting_network_profile_delete_update(void *cb);
 #endif
 static int setting_network_profile_delete_cleanup(void *cb);
+static void setting_network_profile_delete_click_softkey_cancel_ctx_cb(void *data, Evas_Object *obj, void *event_info);
 
 setting_view setting_view_network_profile_delete = {
 	.create = setting_network_profile_delete_create,
@@ -230,7 +231,7 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *e
 	evas_object_smart_callback_add(win, "rotation,changed", win_rotation_changed_cb, ctxpopup);
 
 	//---------------------------------------------------------------------------------------------
-	elm_ctxpopup_item_append(ctxpopup, _("IDS_ST_BUTTON_CANCEL_ABB"), NULL, setting_network_profile_delete_click_softkey_cancel_cb, ad);
+	elm_ctxpopup_item_append(ctxpopup, _("IDS_ST_BUTTON_CANCEL_ABB"), NULL, setting_network_profile_delete_click_softkey_cancel_ctx_cb, ad);
 	elm_ctxpopup_item_append(ctxpopup, _("IDS_ST_BODY_DELETE"), NULL, setting_network_profile_delete_click_softkey_delete_cb, ad);
 	//---------------------------------------------------------------------------------------------
 
@@ -437,6 +438,11 @@ static Eina_Bool setting_network_profile_delete_click_softkey_cancel_cb(void *da
 		ctxpopup = NULL;
 	}
 	return EINA_TRUE;
+}
+
+static void setting_network_profile_delete_click_softkey_cancel_ctx_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	setting_network_profile_delete_click_softkey_cancel_cb(data, NULL);
 }
 
 static void __popup_deleted_response_cb(void *data, Evas_Object *obj,
