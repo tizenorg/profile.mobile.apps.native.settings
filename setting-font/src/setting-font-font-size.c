@@ -96,7 +96,11 @@ static int setting_font_font_size_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	/*error check */
-	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+    if (!cb) {
+        SETTING_TRACE_ERROR("cb == NULL");
+        return SETTING_GENERAL_ERR_NULL_DATA_PARAMETER;
+    }
+
 
 	SettingFontUG *ad = (SettingFontUG *) cb;
 	Evas_Object *scroller;
@@ -157,7 +161,7 @@ static int setting_font_font_size_create(void *cb)
 
 
 	/* [UI] help text */
-	ADD_GL_HELP(scroller, STR_FONT_SIZE_CHANGING);
+	setting_add_gl_help(scroller, STR_FONT_SIZE_CHANGING);
 
 	/* update check status - init values */
 	setting_update_chk_status(ad->size_rdg, INT_SLP_SETTING_ACCESSIBILITY_FONT_SIZE);

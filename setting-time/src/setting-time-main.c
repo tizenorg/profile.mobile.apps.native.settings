@@ -234,7 +234,9 @@ static void setting_time_main_int_vconf_change_cb(keynode_t *key, void *data)
 
 		char* lang = NULL;
 		int err = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, &lang);
-		char *date = __setting_phone_lang_get_by_pattern(lang, "MMM/d/yyyy");
+	    if (err != SYSTEM_SETTINGS_ERROR_NONE) {
+       		SETTING_TRACE("Failed to call system_settings_get_value_string with error code %d", err);
+	    }
 
 		if (!strncmp(pa_time_format, "IDS_ST_BODY_12_HOURS", strlen("IDS_ST_BODY_12_HOURS")))
 			time = __setting_phone_lang_get_by_pattern(lang, "hhmm");
@@ -270,7 +272,7 @@ static int _alarmmgr_set_systime_helper(time_t t_current)
 		/* set event system */
 		setting_set_event_system(SYS_EVENT_SCREEN_AUTOROTATE_STATE,
 		                         EVT_KEY_TIME_CHANGED,
-		                         t_current);
+		                         ctime(&t_current));
 	}
 
 	return ret;
@@ -337,9 +339,6 @@ static void __update_time_via_sim_card(void *data)
 	ret = _alarmmgr_set_systime_helper(t_current);
 	setting_retm_if(ret == -1, "_alarmmgr_set_systime_helper call failed");
 	if (ad->data_time) {
-		struct tm ts_ret;
-		struct tm *ts = localtime_r(&t_current, &ts_ret);
-		ret_if(!ts);
 		setting_enable_evas_object(ad->data_time->btn_left);
 		setting_enable_evas_object(ad->data_time->btn_right);
 	}
@@ -536,7 +535,7 @@ static void setting_time_main_datefield_set_cb(void *data, Evas_Object *object, 
 #if 1
 	time_t cctime = time(NULL);
 	struct tm ts_ret;
-	struct tm *ts = localtime_r(&cctime, &ts_ret);
+	localtime_r(&cctime, &ts_ret);
 	SETTING_TRACE("After _alarmmgr_set_systime_helper() ....year : %d, month : %d, day : %d, hour : %d, min : %d",
 	              ts_ret.tm_year, ts_ret.tm_mon, ts_ret.tm_mday, ts_ret.tm_hour, ts_ret.tm_min);
 #endif
@@ -569,7 +568,7 @@ void hour_format_event_handler(const char *event_name, bundle *data, void *user_
 	SETTING_TRACE("hour_format_set(%s)", hour_format_set);
 }
 
-int hour_format_event_reg_id;
+unsigned int hour_format_event_reg_id;
 
 static int setting_time_main_create(void *cb)
 {
@@ -730,11 +729,15 @@ static int setting_time_main_create(void *cb)
 		ret = snprintf(time_zone_sub_str, CITY_BUF_SIZE + GMT_BUF_SIZE + 2, "%s, GMT %s",
 		               displayTimezone, _(str_buf));
 		FREE(timezone_str);
-		retv_if(ret < 0, 0);
+		if (ret < 0) {
+			SETTING_TRACE_ERROR("cannot snprintf");
+		}
 	} else {
 		/* default code */
 		ret = snprintf(time_zone_sub_str, CITY_BUF_SIZE + GMT_BUF_SIZE + 2, "Korean Standard Time, GMT +9:00");
-		retv_if(ret < 0, 0);
+		if (ret < 0) {
+			SETTING_TRACE_ERROR("cannot snprintf");
+		}
 	}
 	FREE(displayTimezone);
 
@@ -771,7 +774,7 @@ static int setting_time_main_create(void *cb)
 	} else {
 		SETTING_TRACE_ERROR("ad->data_time_fmt is NULL");
 	}
-	ADD_GL_HELP_NO_SEP(scroller, "IDS_ST_SBODY_SHOW_THE_TIME_IN_24_HOUR_FORMAT_INSTEAD_OF_12_HOUR_HAM_PM_FORMAT");
+	setting_add_gl_help(scroller, "IDS_ST_SBODY_SHOW_THE_TIME_IN_24_HOUR_FORMAT_INSTEAD_OF_12_HOUR_HAM_PM_FORMAT");
 
 #if APPLIED_DATATIME_DATA_FORMAT
 	char *pa_date_format = get_pa_date_format_str();
@@ -1119,6 +1122,9 @@ static void __setting_update_datefield_cb(void *cb)
 
 			char* region = NULL;
 			int err = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, &region );
+		    if (err != SYSTEM_SETTINGS_ERROR_NONE) {
+        		SETTING_TRACE("Failed to call system_settings_get_value_string with error code %d", err);
+		    }
 			char *date = __setting_phone_lang_get_by_pattern(region, "MMM/d/yyyy");
 			char *time;
 			static char date_arr[DEF_BUF_SIZE], time_arr[DEF_BUF_SIZE];
@@ -1316,12 +1322,18 @@ setting_time_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 #if FUNCTION_SYSTEM_SETTING
 	/* Time format */
 	if (ad->data_time_fmt == list_item) {
-		int err = 0;
-		int value = VCONFKEY_TIME_FORMAT_12;
 		if (list_item->chk_status) {
-			err = system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR, true);
+			int ret = SYSTEM_SETTINGS_ERROR_NONE;
+			ret = system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR, true);
+		    if (ret != SYSTEM_SETTINGS_ERROR_NONE) {
+        		SETTING_TRACE("Failed to call system_settings_set_value_bool with error code %d", ret);
+		    }
 		} else {
-			err = system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR, false);
+			int ret = SYSTEM_SETTINGS_ERROR_NONE;
+			ret = system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR, false);
+		    if (ret != SYSTEM_SETTINGS_ERROR_NONE) {
+        		SETTING_TRACE("Failed to call system_settings_set_value_bool with error code %d", ret);
+		    }
 		}
 	}
 #else
