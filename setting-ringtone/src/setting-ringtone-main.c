@@ -172,8 +172,8 @@ static void ringtone_item_sel(void *data, Evas_Object *obj, void *event_info)
 
 static int _compare_cb(const void *d1, const void *d2)
 {
-	fileNodeInfo *pNode1 = d1;
-	fileNodeInfo *pNode2 = d2;
+	fileNodeInfo *pNode1 = (fileNodeInfo*) d1;
+	fileNodeInfo *pNode2 = (fileNodeInfo*) d2;
 
 	return safeStrCmp(pNode1->media_name, pNode2->media_name);
 }

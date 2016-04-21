@@ -35,7 +35,10 @@ setting_view setting_view_flightmode_main = {
 static void setting_flightmode_main_tapi_event_cb(TapiHandle *handle, int result, void *data, void *user_data)
 {
 	SETTING_TRACE_BEGIN;
-	ret_if(!user_data);
+    if (!user_data) {
+        SETTING_TRACE_ERROR("cb == NULL");
+		return;
+    }
 	SettingFlightModeUG *ad = (SettingFlightModeUG *) user_data;
 	ad->b_fm_requesting = FALSE;
 	SETTING_TRACE("result:%d", result);
@@ -220,7 +223,7 @@ static int setting_flightmode_main_create(void *cb)
 	                                           "IDS_ST_BODY_FLIGHT_MODE",
 	                                           _("IDS_ST_BUTTON_BACK"),
 	                                           NULL,
-	                                           setting_flightmode_main_click_softkey_back_cb,
+	                                           (setting_call_back_func)setting_flightmode_main_click_softkey_back_cb,
 	                                           NULL,
 	                                           ad,
 	                                           &genlist,
@@ -251,7 +254,7 @@ static int setting_flightmode_main_create(void *cb)
 		__BACK_POINTER_SET(ad->data_flightmode);
 	}
 
-	ADD_GL_HELP_NO_SEP(genlist, "IDS_ST_BODY_FLIGHT_MODE_DISABLES_CALLING_AND_MESSAGING_FUNCTIONS_AND_TURNS_OFF_MOBILE_DATA_AND_CONNECTIVITY_FUNCTIONS_MSG");
+	setting_add_gl_help(genlist, "IDS_ST_BODY_FLIGHT_MODE_DISABLES_CALLING_AND_MESSAGING_FUNCTIONS_AND_TURNS_OFF_MOBILE_DATA_AND_CONNECTIVITY_FUNCTIONS_MSG");
 
 	ret = vconf_notify_key_changed(VCONFKEY_TELEPHONY_FLIGHT_MODE, _flightmode_vconf_change_cb, ad);
 	if (ret != 0) {

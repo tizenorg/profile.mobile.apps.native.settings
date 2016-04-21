@@ -61,11 +61,11 @@ extern struct _pw_item pw_its[];
  *
  ***************************************************/
 
-static Eina_Bool setting_password_main_click_softkey_cancel_cb(void *data, Elm_Object_Item *it)
+static void setting_password_main_click_softkey_cancel_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
-	retvm_if(data == NULL, EINA_FALSE, "[Setting > Password] Data parameter is NULL");
+	setting_retm_if(NULL == data, "[Setting > Password] Data parameter is NULL");
 
 	SettingPasswordUG *ad = (SettingPasswordUG *) data;
 
@@ -88,8 +88,6 @@ static Eina_Bool setting_password_main_click_softkey_cancel_cb(void *data, Elm_O
 	}
 	/* Send destroy request */
 	ug_destroy_me(ad->ug);
-
-	return EINA_TRUE;
 }
 
 Eina_Bool __rotate_cb(void *data)
@@ -802,7 +800,7 @@ static int __count_string(const char *str, int *cnt_letter, int *cnt_digit, int 
 	retv_if(str == NULL || cnt_letter == NULL || cnt_digit == NULL || cnt_sym == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
 	/*char* plain_str = elm_entry_markup_to_utf8(str); */
-	char *plain_str = str;
+	char *plain_str = (char*)str;
 
 	int length = strlen(plain_str);
 	int index = 0;
