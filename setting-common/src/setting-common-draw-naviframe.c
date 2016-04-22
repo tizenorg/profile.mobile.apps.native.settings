@@ -765,8 +765,8 @@ Evas_Object *setting_create_layout_navi_bar_genlist(Evas_Object *win_layout,
                                                     char *title_str,
                                                     char *lbutton_str,
                                                     char *rbutton_str, /* do nothing */
-                                                    setting_call_back_func lbutton_click_cb,
-                                                    setting_call_back_func rbutton_click_cb,/* do nothing */
+                                                    void *lbutton_click_cb,
+                                                    void *rbutton_click_cb,/* do nothing */
                                                     void *cb_data,
                                                     Evas_Object **genlist,
                                                     Evas_Object **navi_bar)
@@ -799,9 +799,9 @@ Elm_Object_Item *
 setting_push_layout_navi_bar(char *title_str,
                              char *lbutton_str, char *rbutton_str,
                              char *mbutton_str,
-                             setting_call_back_func lbutton_click_cb,
-                             setting_call_back_func rbutton_click_cb,
-                             setting_call_back_func mbutton_click_cb,
+                             void *lbutton_click_cb,
+                             void *rbutton_click_cb,
+                             void *mbutton_click_cb,
                              void *cb_data, Evas_Object *eo_view,
                              Evas_Object *navi_bar, Evas_Object **titleobj)
 {
@@ -856,8 +856,8 @@ Elm_Object_Item *
 setting_push_layout_navi_bar_genlist(Evas_Object *win_layout,
                                      Evas_Object *win_obj, char *title_str,
                                      char *lbutton_str, char *rbutton_str,
-                                     setting_call_back_func lbutton_click_cb,
-                                     setting_call_back_func rbutton_click_cb,
+                                     void *lbutton_click_cb,
+                                     void *rbutton_click_cb,
                                      void *cb_data, Evas_Object **genlist,
                                      Evas_Object *navi_bar)
 {

@@ -48,7 +48,7 @@ void setting_hide_input_pannel_cb(Evas_Object *entry)
 EXPORT_PUBLIC
 Evas_Object *setting_create_button(Evas_Object *parent, const char *btn_str,
                                    const char *btn_style,
-                                   setting_call_back_func btn_click_cb,
+                                   void *btn_click_cb,
                                    void *cb_data)
 {
 	LAUNCH_SETTING_IN();

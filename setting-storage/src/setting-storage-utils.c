@@ -398,7 +398,7 @@ void storageUG_update_cache_info(SettingStorageUG *ad)
 	warn_if(ret, "pkgmgr_client_get_total_package_size_info() Fail(%d)", ret);
 }
 
-static int storageUg_get_apps_info(int req_id, const char *pkg_type,
+static int storageUg_get_apps_info(uid_t target_uid, int req_id, const char *pkg_type,
                                    const char *pkgid, const char *key, const char *val, const void *pmsg, void *data)
 {
 	SettingStorageUG *ad = data;
@@ -429,7 +429,7 @@ void storageUG_update_apps_info(SettingStorageUG *ad)
 		return;
 	}
 
-	ret = pkgmgr_client_get_size(ad->pc, "get", PM_GET_ALL_PKGS, storageUg_get_apps_info,
+	ret = pkgmgr_client_get_size(ad->pc, "get", PM_GET_ALL_PKGS, &storageUg_get_apps_info,
 	                             ad);
 	warn_if(ret, "pkgmgr_client_get_size() Fail(%d)", ret);
 }

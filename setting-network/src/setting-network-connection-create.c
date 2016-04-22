@@ -31,6 +31,7 @@ static int setting_network_connection_create(void *cb);
 static int setting_network_connection_destroy(void *cb);
 static int setting_network_connection_update(void *cb);
 static int setting_network_connection_cleanup(void *cb);
+static void setting_network_connection_click_softkey_back_ctx_cb(void *data, Evas_Object *obj, void *event_info);
 
 setting_view setting_view_network_connection_create = {
 	.create = setting_network_connection_create,
@@ -779,7 +780,7 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *e
 
 	//---------------------------------------------------------------------------------------------
 	elm_ctxpopup_item_append(ctxpopup, _("IDS_ST_BODY_SAVE"), NULL, setting_network_connection_click_softkey_save_cb, ad);
-	elm_ctxpopup_item_append(ctxpopup, _("IDS_ST_BUTTON_CANCEL_ABB"), NULL, setting_network_connection_click_softkey_back_cb, ad);
+	elm_ctxpopup_item_append(ctxpopup, _("IDS_ST_BUTTON_CANCEL_ABB"), NULL, setting_network_connection_click_softkey_back_ctx_cb, ad);
 	//---------------------------------------------------------------------------------------------
 
 	elm_ctxpopup_direction_priority_set(ctxpopup, ELM_CTXPOPUP_DIRECTION_UP, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN);
@@ -1714,6 +1715,11 @@ setting_network_connection_click_softkey_back_cb(void *data, Elm_Object_Item *it
 	}
 
 	return EINA_TRUE;
+}
+
+static void setting_network_connection_click_softkey_back_ctx_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	setting_network_connection_click_softkey_back_cb(data, NULL);
 }
 
 static void

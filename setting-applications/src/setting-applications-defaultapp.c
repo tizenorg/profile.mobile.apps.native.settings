@@ -259,18 +259,6 @@ void setting_applications_defaultapp_mouse_up_Gendial_list_cb(void *data, Evas_O
 	}
 }
 
-static void setting_applications_destroy_homescreen_setting_ug_cb(ui_gadget_h ug, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-	ret_if(priv == NULL);
-	SettingApplicationsUG *ad = (SettingApplicationsUG *) priv;
-	if (ug) {
-		setting_ug_destroy(ug);
-		ad->ug_homescreen = NULL;
-	}
-	elm_genlist_realized_items_update(ad->genlist);
-}
-
 static gboolean setting_applications_create_homescreen_setting_ug(void *data)
 {
 	SETTING_TRACE_BEGIN;

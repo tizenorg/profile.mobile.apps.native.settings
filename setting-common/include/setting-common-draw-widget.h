@@ -38,8 +38,6 @@
 
 
 
-#define EXPORT_PUBLIC __attribute__ ((visibility ("default")))
-
 #define SETTING_COMMON_DRAW_WIDGET_CONTROLBAR_ITEM_LEN 3
 #define POPUP_INTERVAL 2.0
 
@@ -110,7 +108,7 @@ extern const Elm_Genlist_Item_Class itc_bottom_line;
 			                                                                        NULL,\
 			                                                                        SWALLOW_Type_LAYOUT_SPECIALIZTION_X,\
 			                                                                        NULL, NULL, 0, str, NULL, NULL);\
-			setting_retvm_if(NULL == item_data, NULL, "item_data is NULL");\
+			setting_retvm_if(NULL == item_data, -1, "item_data is NULL");\
 			elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
 		}\
 	}
@@ -611,7 +609,7 @@ extern Elm_Object_Item *setting_create_guild_layout2(Evas_Object *navi_bar,
 */
 extern Evas_Object *setting_create_button(Evas_Object *parent, const char *btn_str,
                                           const char *btn_style,
-                                          setting_call_back_func btn_click_cb,
+                                          void *btn_click_cb,
                                           void *cb_data);
 
 extern void setting_nf_check_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -723,8 +721,8 @@ extern Evas_Object *setting_create_layout_navi_bar_genlist(Evas_Object *win_layo
                                                            char *title_str,
                                                            char *lbutton_str,
                                                            char *rbutton_str,
-                                                           setting_call_back_func lbutton_click_cb,
-                                                           setting_call_back_func rbutton_click_cb,
+                                                           void *lbutton_click_cb,
+                                                           void *rbutton_click_cb,
                                                            void *cb_data,
                                                            Evas_Object **genlist,
                                                            Evas_Object **navi_bar);
@@ -736,9 +734,9 @@ extern Evas_Object *setting_create_layout_navi_bar_genlist(Evas_Object *win_layo
 extern Elm_Object_Item *setting_push_layout_navi_bar(char *title_str,
                                                      char *lbutton_str, char *rbutton_str,
                                                      char *mbutton_str,
-                                                     setting_call_back_func lbutton_click_cb,
-                                                     setting_call_back_func rbutton_click_cb,
-                                                     setting_call_back_func mbutton_click_cb,
+                                                     void *lbutton_click_cb,
+                                                     void *rbutton_click_cb,
+                                                     void *mbutton_click_cb,
                                                      void *cb_data,
                                                      Evas_Object *eo_view,
                                                      Evas_Object *navi_bar,
@@ -768,8 +766,8 @@ setting_push_layout_navi_bar_genlist(Evas_Object *win_layout,
                                      char *title_str,
                                      char *lbutton_str,
                                      char *rbutton_str,
-                                     setting_call_back_func lbutton_click_cb,
-                                     setting_call_back_func rbutton_click_cb,
+                                     void *lbutton_click_cb,
+                                     void *rbutton_click_cb,
                                      void *cb_data,
                                      Evas_Object **genlist,
                                      Evas_Object *navi_bar);
@@ -983,8 +981,8 @@ extern void setting_popup_event_set(Evas_Object *popup, void *data,
  **********************************************************/
 EXPORT_PUBLIC Evas_Object *setting_create_popup(void *data,
 												Evas_Object *parent,
-												char *title,
-												char *text,
+												const char *title,
+												const char *text,
 												setting_call_back_func response_cb,
 												int timeout,
 												bool blocked_flag,
