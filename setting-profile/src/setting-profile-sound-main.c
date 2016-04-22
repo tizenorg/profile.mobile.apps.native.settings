@@ -31,6 +31,8 @@
 #include <notification_setting.h>
 #include <notification_setting_internal.h>
 
+#define DO_NOT_DISTURB_OP "http://tizen.org/appcontrol/operation/setting/do_not_disturb"	
+#define APP_NOTIFICATIONS_OP "http://tizen.org/appcontrol/operation/setting/app_notifications"
 
 #define SETTING_SOUND_VOL_MAX 15
 #define SETTING_DEFAULT_RINGTONE_VOL_INT	11
@@ -1182,7 +1184,12 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 		ug_create(ad->ug, "ug-setting-notification-do-not-disturb-efl", UG_MODE_FULLVIEW, NULL, cbs);
 		FREE(cbs);
 #else
-		app_launcher("ug-setting-notification-do-not-disturb-efl");
+		app_control_h service=0;
+		app_control_create(&service);
+		app_control_set_app_id(service,"org.tizen.setting-notification");
+		app_control_set_operation(service, DO_NOT_DISTURB_OP);
+		app_control_send_launch_request(service, NULL, NULL);
+		app_control_destroy(service);
 #endif
 	} else if (!safeStrCmp("IDS_ST_MBODY_APP_NOTIFICATIONS", list_item->keyStr)) {
 #if 0
@@ -1200,7 +1207,13 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 		ug_create(ad->ug, "ug-setting-notification-app-notifications-efl", UG_MODE_FULLVIEW, NULL, cbs);
 		FREE(cbs);
 #else
-		app_launcher("ug-setting-notification-app-notifications-efl");
+		app_control_h service=0;
+		app_control_create(&service);
+		app_control_set_app_id(service,"org.tizen.setting-notification");
+		app_control_set_operation(service, APP_NOTIFICATIONS_OP);
+		app_control_send_launch_request(service, NULL, NULL);
+		app_control_destroy(service);
+
 #endif
 
 	}

@@ -293,7 +293,7 @@ static gboolean setting_applications_create_homescreen_setting_ug(void *data)
 	}
 	FREE(cbs);
 #else
-	app_launcher("setting-homescreen-efl");
+	app_launcher("org.tizen.setting-homescreen");
 #endif
 	return TRUE;
 }

@@ -400,7 +400,7 @@ setting_security_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 
 	if (!safeStrCmp(KeyStr_LockScreen, list_item->keyStr)) {
 #if 1
-		if (0 == app_launcher("lockscreen-options")) {
+		if (0 == app_launcher("org.tizen.ug-lockscreen-options")) {
 			/*if (0 == app_launcher("setting-lockscreen-options-efl")) { */
 			ad->update_view_timer = ecore_timer_add(1, __freeze_event_timer_cb, ad);
 			evas_object_freeze_events_set(ad->navi_bar, EINA_TRUE);
