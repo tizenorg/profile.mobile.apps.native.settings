@@ -229,13 +229,13 @@ static int __add_3rd_party_lock(void *data)
 	int index = 0;
 	for (index = 0; index < count; index++) {
 		ad->data_locktype_3rd[index] = setting_create_Gendial_field_1radio(ad->genlist,
-		                                                                   &(itc_1text_1icon_3),
-		                                                                   setting_locktype_main_mouse_up_Gendial_list_cb,	/*add to sel_cb */
-		                                                                   ad,	/* sel data */
-		                                                                   SWALLOW_Type_1RADIO,
-		                                                                   ad->lock_type_rd, SETTING_SCREEN_LOCK_TYPE_OTHER + index,
-		                                                                   list->app_name,
-		                                                                   NULL);
+																		   &(itc_1text_1icon_3),
+																		   setting_locktype_main_mouse_up_Gendial_list_cb,	/*add to sel_cb */
+																		   ad,	/* sel data */
+																		   SWALLOW_Type_1RADIO,
+																		   ad->lock_type_rd, SETTING_SCREEN_LOCK_TYPE_OTHER + index,
+																		   list->app_name,
+																		   NULL);
 		if (ad->data_locktype_3rd[index]) {
 			ad->data_locktype_3rd[index]->userdata = ad;
 		} else {
@@ -260,7 +260,7 @@ static void __change_simple_password_cb(void *data, Evas_Object *obj, void *even
 {
 	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item =
-	    (Setting_GenGroupItem_Data *) data;
+		(Setting_GenGroupItem_Data *) data;
 	/*  for update */
 
 	SettingLocktypeUG *ad = (SettingLocktypeUG *)list_item->userdata;
@@ -275,7 +275,7 @@ static void __change_password_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item =
-	    (Setting_GenGroupItem_Data *) data;
+		(Setting_GenGroupItem_Data *) data;
 	/*  for update */
 
 	SettingLocktypeUG *ad = (SettingLocktypeUG *)list_item->userdata;
@@ -312,14 +312,14 @@ void __add_locktype_items(void *data)
 	/* 0) None */
 	if (!isEmulBin()) {
 		ad->data_locktype_none =
-		    setting_create_Gendial_field_def(ad->genlist,
-		                                        &(itc_1text_1icon_3),
-		                                        setting_locktype_main_mouse_up_Gendial_list_cb,	/*add to sel_cb */
-		                                        ad,	/* sel data */
-		                                        SWALLOW_Type_INVALID,
-		                                        NULL, NULL, SETTING_SCREEN_LOCK_TYPE_NONE,
-		                                        "IDS_ST_BODY_NONE",
-		                                        NULL, NULL);
+			setting_create_Gendial_field_def(ad->genlist,
+											 &(itc_1text_1icon_3),
+											 setting_locktype_main_mouse_up_Gendial_list_cb,	/*add to sel_cb */
+											 ad,	/* sel data */
+											 SWALLOW_Type_INVALID,
+											 NULL, NULL, SETTING_SCREEN_LOCK_TYPE_NONE,
+											 "IDS_ST_BODY_NONE",
+											 NULL, NULL);
 		if (ad->data_locktype_none) {
 			ad->data_locktype_none->userdata = ad;
 		} else {
@@ -329,14 +329,14 @@ void __add_locktype_items(void *data)
 
 	/* 1) swipe */
 	ad->data_locktype_swipe =
-	    setting_create_Gendial_field_def(ad->genlist,
-		                                        &(itc_1text_1icon_3),
-		                                        setting_locktype_main_mouse_up_Gendial_list_cb,	/*add to sel_cb */
-		                                        ad,	/* sel data */
-		                                        SWALLOW_Type_INVALID,
-		                                        NULL, NULL, SETTING_SCREEN_LOCK_TYPE_SWIPE,
-		                                        Keystr_Swipe,
-		                                        NULL, NULL);
+		setting_create_Gendial_field_def(ad->genlist,
+										 &(itc_1text_1icon_3),
+										 setting_locktype_main_mouse_up_Gendial_list_cb,	/*add to sel_cb */
+										 ad,	/* sel data */
+										 SWALLOW_Type_INVALID,
+										 NULL, NULL, SETTING_SCREEN_LOCK_TYPE_SWIPE,
+										 Keystr_Swipe,
+										 NULL, NULL);
 	if (ad->data_locktype_swipe) {
 		ad->data_locktype_swipe->userdata = ad;
 	} else {
@@ -347,13 +347,13 @@ void __add_locktype_items(void *data)
 		/* 4) simple password */
 		ad->data_locktype_simple =
 			setting_create_Gendial_field_def(ad->genlist,
-											&(itc_1text_1icon_3),
-											setting_locktype_main_mouse_up_Gendial_list_cb,	/*add to sel_cb */
-											ad,	/* sel data */
-											SWALLOW_Type_INVALID,
-											NULL, NULL, SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD,
-											"IDS_ST_BODY_SIMPLE_PASSWORD",
-											NULL, NULL);
+											 &(itc_1text_1icon_3),
+											 setting_locktype_main_mouse_up_Gendial_list_cb,	/*add to sel_cb */
+											 ad,	/* sel data */
+											 SWALLOW_Type_INVALID,
+											 NULL, NULL, SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD,
+											 "IDS_ST_BODY_SIMPLE_PASSWORD",
+											 NULL, NULL);
 		if (ad->data_locktype_simple) {
 			ad->data_locktype_simple->userdata = ad;
 		} else {
@@ -361,15 +361,15 @@ void __add_locktype_items(void *data)
 		}
 
 		/* 5) password */
-		ad->data_locktype_password = 
+		ad->data_locktype_password =
 			setting_create_Gendial_field_def(ad->genlist,
-											&(itc_1text_1icon_3),
-											setting_locktype_main_mouse_up_Gendial_list_cb,	/*add to sel_cb */
-											ad,	/* sel data */
-											SWALLOW_Type_INVALID,
-											NULL, NULL, SETTING_SCREEN_LOCK_TYPE_PASSWORD,
-											"IDS_ST_BODY_PASSWORD",
-											NULL, NULL);
+											 &(itc_1text_1icon_3),
+											 setting_locktype_main_mouse_up_Gendial_list_cb,	/*add to sel_cb */
+											 ad,	/* sel data */
+											 SWALLOW_Type_INVALID,
+											 NULL, NULL, SETTING_SCREEN_LOCK_TYPE_PASSWORD,
+											 "IDS_ST_BODY_PASSWORD",
+											 NULL, NULL);
 		if (ad->data_locktype_password) {
 			ad->data_locktype_password->userdata = ad;
 		} else {
@@ -430,13 +430,13 @@ static int setting_locktype_main_create(void *cb)
 
 	Evas_Object *scroller = NULL;
 	ad->ly_main = setting_create_layout_navi_bar_genlist(ad->win_main_layout,
-	                                                     ad->win_get,
-	                                                     "IDS_ST_BODY_SCREEN_LOCK_TYPE",
-	                                                     _("IDS_ST_BUTTON_BACK"),
-	                                                     NULL,
-	                                                     (setting_call_back_func)setting_locktype_main_click_softkey_back_cb,
-	                                                     NULL, ad, &scroller,
-	                                                     &(ad->navi_bar));
+														 ad->win_get,
+														 "IDS_ST_BODY_SCREEN_LOCK_TYPE",
+														 _("IDS_ST_BUTTON_BACK"),
+														 NULL,
+														 (setting_call_back_func)setting_locktype_main_click_softkey_back_cb,
+														 NULL, ad, &scroller,
+														 &(ad->navi_bar));
 	ad->screen_lock_main_item = elm_naviframe_top_item_get(ad->navi_bar);
 
 	ad->genlist = scroller;
@@ -536,7 +536,7 @@ __motion_cancel_cb(void *data, Evas_Object *obj, void *event_info)
 
 static void
 setting_locktype_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
-                                               void *event_info)
+											   void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -546,7 +546,7 @@ setting_locktype_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
 	elm_genlist_item_selected_set(item, 0);
 	Setting_GenGroupItem_Data *list_item =
-	    (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
+		(Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
 	SettingLocktypeUG *ad = (SettingLocktypeUG *) data;
 	setting_retm_if(NULL == list_item, "list_item is NULL");
 
@@ -569,73 +569,172 @@ setting_locktype_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 	char *pkg_name = NULL;
 
 	switch (lock_type) {
-		case SETTING_SCREEN_LOCK_TYPE_NONE:
-		case SETTING_SCREEN_LOCK_TYPE_SWIPE:
-			/* To do : Call security-server API. pw : 0000 */
-			if (old_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD
-			    || old_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
+	case SETTING_SCREEN_LOCK_TYPE_NONE:
+	case SETTING_SCREEN_LOCK_TYPE_SWIPE:
+		/* To do : Call security-server API. pw : 0000 */
+		if (old_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD
+			|| old_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
 #if SECURITY_SERVER
-				int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
-				SETTING_TRACE_DEBUG("set_pwd result : %d", result);
+			int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
+			SETTING_TRACE_DEBUG("set_pwd result : %d", result);
 #endif
 
 #if 0
-				uid_t user = 5000;
-				int ckmc_ret = CKMC_ERROR_NONE;
-				ckmc_ret = ckmc_change_user_password(user, ad->input_pwd, NULL);
-				SETTING_TRACE("ckmc_change_user_password() returns %d", ckmc_ret);
+			uid_t user = 5000;
+			int ckmc_ret = CKMC_ERROR_NONE;
+			ckmc_ret = ckmc_change_user_password(user, ad->input_pwd, NULL);
+			SETTING_TRACE("ckmc_change_user_password() returns %d", ckmc_ret);
 #endif
-			}
-			if (vconf_set_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, lock_type) == 0) {
-				/* set radio */
-				elm_radio_value_set(list_item->eo_check, lock_type);
-			}
-			/*SETTING_TRACE_DEBUG("PASS #1"); */
-			ug_destroy_me(ad->ug);
-			break;
+		}
+		if (vconf_set_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, lock_type) == 0) {
+			/* set radio */
+			elm_radio_value_set(list_item->eo_check, lock_type);
+		}
+		/*SETTING_TRACE_DEBUG("PASS #1"); */
+		ug_destroy_me(ad->ug);
+		break;
 #if 0
-		case SETTING_SCREEN_LOCK_TYPE_MOTION:
-			ad->old_type = old_type;
-			setting_create_guild_layout(ad->navi_bar,
-			                            _(About_Motion_Unlock_Str),
-			                            _("IDS_ST_BUTTON_CANCEL_ABB"), _(SET_AS_LOCK_STR), NULL,
-			                            __motion_cancel_cb, __motion_set_cb, NULL,
-			                            _("IDS_LCKSCN_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_TO_UNLOCK_IT_MSG"),
-			                            (char **)motion_img,
-			                            NULL,
-			                            NULL,
-			                            NULL, ad);
-			break;
+	case SETTING_SCREEN_LOCK_TYPE_MOTION:
+		ad->old_type = old_type;
+		setting_create_guild_layout(ad->navi_bar,
+									_(About_Motion_Unlock_Str),
+									_("IDS_ST_BUTTON_CANCEL_ABB"), _(SET_AS_LOCK_STR), NULL,
+									__motion_cancel_cb, __motion_set_cb, NULL,
+									_("IDS_LCKSCN_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_TO_UNLOCK_IT_MSG"),
+									(char **)motion_img,
+									NULL,
+									NULL,
+									NULL, ad);
+		break;
 #endif
-		case SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD:
-			if(SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD == old_type){
-				__change_simple_password_cb(list_item,NULL,NULL);
-			} else {
-				ad->pw_type = SETTING_LOCKTYPE_PW_SIMPLE_PASSWD;
-				if(old_type != SETTING_SCREEN_LOCK_TYPE_PASSWORD)
-				{
-					FREE(ad->input_pwd);
-					ad->input_pwd = (char*)strdup("0000");
-				}
-				setting_locktype_create_password_sg(ad);
+	case SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD:
+		if (SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD == old_type) {
+			__change_simple_password_cb(list_item,NULL,NULL);
+		} else {
+			ad->pw_type = SETTING_LOCKTYPE_PW_SIMPLE_PASSWD;
+			if (old_type != SETTING_SCREEN_LOCK_TYPE_PASSWORD) {
+				FREE(ad->input_pwd);
+				ad->input_pwd = (char *)strdup("0000");
 			}
-			break;
-		case SETTING_SCREEN_LOCK_TYPE_PASSWORD:
-			if(SETTING_SCREEN_LOCK_TYPE_PASSWORD == old_type){
-				__change_password_cb(list_item,NULL,NULL);
-			}else{
-				ad->pw_type = SETTING_LOCKTYPE_PW_PASSWORD;
-				if(old_type != SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD)
-				{
-					FREE(ad->input_pwd);
-					ad->input_pwd = (char*)strdup("0000");
-				}
-				setting_locktype_create_password_sg(ad);
+			setting_locktype_create_password_sg(ad);
+		}
+		break;
+	case SETTING_SCREEN_LOCK_TYPE_PASSWORD:
+		if (SETTING_SCREEN_LOCK_TYPE_PASSWORD == old_type) {
+			__change_password_cb(list_item,NULL,NULL);
+		} else {
+			ad->pw_type = SETTING_LOCKTYPE_PW_PASSWORD;
+			if (old_type != SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
+				FREE(ad->input_pwd);
+				ad->input_pwd = (char *)strdup("0000");
 			}
-			break;
-		case SETTING_SCREEN_LOCK_TYPE_OTHER:
+			setting_locktype_create_password_sg(ad);
+		}
+		break;
+	case SETTING_SCREEN_LOCK_TYPE_OTHER:
+		if (old_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD
+			|| old_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
+#if SECURITY_SERVER
+			int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
+			SETTING_TRACE_DEBUG("set_pwd result : %d", result);
+#endif
+#if 0
+			uid_t user = 5000;
+			int ckmc_ret = CKMC_ERROR_NONE;
+			ckmc_ret = ckmc_change_user_password(user, ad->input_pwd, NULL);
+			SETTING_TRACE("ckmc_change_user_password() returns %d", ckmc_ret);
+#endif
+		}
+		index = __get_lockapp_index_from_appname(list_item->keyStr);
+		pkg_name = __get_lockapp_pkgname_from_appname(list_item->keyStr);
+		SETTING_TRACE_DEBUG("3rd lock selected. index[%d] pkg_name[%s]", index, pkg_name);
+		vconf_set_str(VCONFKEY_SETAPPL_3RD_LOCK_PKG_NAME_STR, pkg_name);
+		vconf_set_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, lock_type);
+		/* set radio */
+		elm_radio_value_set(list_item->eo_check, lock_type + index);
+		ug_destroy_me(ad->ug);
+		break;
+	default:
+		break;
+	}
+}
+
+#if 0
+static void
+setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	setting_retm_if(data == NULL, "Data parameter is NULL");
+	Setting_GenGroupItem_Data *list_item =
+		(Setting_GenGroupItem_Data *) data;
+	SettingLocktypeUG *ad = list_item->userdata;
+
+	int lock_type = elm_radio_value_get(obj);
+	int old_type = 0;
+
+	vconf_get_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, &old_type);
+
+	if (old_type == lock_type)
+		return;
+
+	switch (lock_type) {
+	case SETTING_SCREEN_LOCK_TYPE_NONE:
+	case SETTING_SCREEN_LOCK_TYPE_SWIPE:
+		/* To do : Call security-server API. pw : 0000 */
+		if (old_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD
+			|| old_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
+#if SECURITY_SERVER
+			int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
+			SETTING_TRACE_DEBUG("set_pwd result : %d", result);
+#endif
+#if 0
+			uid_t user = 5000;
+			int ckmc_ret = CKMC_ERROR_NONE;
+			ckmc_ret = ckmc_change_user_password(user, ad->input_pwd, NULL);
+			SETTING_TRACE("ckmc_change_user_password() returns %d", ckmc_ret);
+#endif
+		}
+		vconf_set_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, lock_type);
+		ug_destroy_me(ad->ug);
+		break;
+#if 0
+	case SETTING_SCREEN_LOCK_TYPE_MOTION:
+		ad->old_type = old_type;
+		elm_radio_value_set(obj, old_type);
+		setting_create_guild_layout(ad->navi_bar,
+									_(About_Motion_Unlock_Str),
+									_("IDS_ST_BUTTON_CANCEL_ABB"), _(SET_AS_LOCK_STR), NULL,
+									__motion_cancel_cb, __motion_set_cb, NULL,
+									_("IDS_LCKSCN_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_TO_UNLOCK_IT_MSG"),
+									(char **)motion_img,
+									NULL,
+									NULL,
+									NULL, ad);
+		break;
+#endif
+	case SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD:
+		elm_radio_value_set(obj, old_type);
+		ad->pw_type = SETTING_SEC_PW_SIMPLE_PASSWD;
+		if (old_type != SETTING_SCREEN_LOCK_TYPE_PASSWORD) {
+			FREE(ad->input_pwd);
+			ad->input_pwd = (char *)strdup("0000");
+		}
+		setting_locktype_create_password_sg(ad);
+		break;
+	case SETTING_SCREEN_LOCK_TYPE_PASSWORD:
+		elm_radio_value_set(obj, old_type);
+		ad->pw_type = SETTING_SEC_PW_PASSWORD;
+		if (old_type != SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
+			FREE(ad->input_pwd);
+			ad->input_pwd = (char *)strdup("0000");
+		}
+		setting_locktype_create_password_sg(ad);
+		break;
+	case SETTING_SCREEN_LOCK_TYPE_OTHER: {
+			int index = -1;
+			char *pkg_name = NULL;
 			if (old_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD
-			    || old_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
+				|| old_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
 #if SECURITY_SERVER
 				int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
 				SETTING_TRACE_DEBUG("set_pwd result : %d", result);
@@ -655,111 +754,10 @@ setting_locktype_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 			/* set radio */
 			elm_radio_value_set(list_item->eo_check, lock_type + index);
 			ug_destroy_me(ad->ug);
-			break;
-		default:
-			break;
-	}
-}
-
-#if 0
-static void
-setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	SETTING_TRACE_BEGIN;
-	setting_retm_if(data == NULL, "Data parameter is NULL");
-	Setting_GenGroupItem_Data *list_item =
-	    (Setting_GenGroupItem_Data *) data;
-	SettingLocktypeUG *ad = list_item->userdata;
-
-	int lock_type = elm_radio_value_get(obj);
-	int old_type = 0;
-
-	vconf_get_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, &old_type);
-
-	if (old_type == lock_type)
-		return;
-
-	switch (lock_type) {
-		case SETTING_SCREEN_LOCK_TYPE_NONE:
-		case SETTING_SCREEN_LOCK_TYPE_SWIPE:
-			/* To do : Call security-server API. pw : 0000 */
-			if (old_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD
-			    || old_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
-#if SECURITY_SERVER
-				int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
-				SETTING_TRACE_DEBUG("set_pwd result : %d", result);
-#endif
-#if 0
-				uid_t user = 5000;
-				int ckmc_ret = CKMC_ERROR_NONE;
-				ckmc_ret = ckmc_change_user_password(user, ad->input_pwd, NULL);
-				SETTING_TRACE("ckmc_change_user_password() returns %d", ckmc_ret);
-#endif
-			}
-			vconf_set_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, lock_type);
-			ug_destroy_me(ad->ug);
-			break;
-#if 0
-		case SETTING_SCREEN_LOCK_TYPE_MOTION:
-			ad->old_type = old_type;
-			elm_radio_value_set(obj, old_type);
-			setting_create_guild_layout(ad->navi_bar,
-			                            _(About_Motion_Unlock_Str),
-			                            _("IDS_ST_BUTTON_CANCEL_ABB"), _(SET_AS_LOCK_STR), NULL,
-			                            __motion_cancel_cb, __motion_set_cb, NULL,
-			                            _("IDS_LCKSCN_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_TO_UNLOCK_IT_MSG"),
-			                            (char **)motion_img,
-			                            NULL,
-			                            NULL,
-			                            NULL, ad);
-			break;
-#endif
-		case SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD:
-			elm_radio_value_set(obj, old_type);
-			ad->pw_type = SETTING_SEC_PW_SIMPLE_PASSWD;
-			if (old_type != SETTING_SCREEN_LOCK_TYPE_PASSWORD) {
-				FREE(ad->input_pwd);
-				ad->input_pwd = (char *)strdup("0000");
-			}
-			setting_locktype_create_password_sg(ad);
-			break;
-		case SETTING_SCREEN_LOCK_TYPE_PASSWORD:
-			elm_radio_value_set(obj, old_type);
-			ad->pw_type = SETTING_SEC_PW_PASSWORD;
-			if (old_type != SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
-				FREE(ad->input_pwd);
-				ad->input_pwd = (char *)strdup("0000");
-			}
-			setting_locktype_create_password_sg(ad);
-			break;
-		case SETTING_SCREEN_LOCK_TYPE_OTHER: {
-				int index = -1;
-				char *pkg_name = NULL;
-				if (old_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD
-				    || old_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
-#if SECURITY_SERVER
-					int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
-					SETTING_TRACE_DEBUG("set_pwd result : %d", result);
-#endif
-#if 0
-					uid_t user = 5000;
-					int ckmc_ret = CKMC_ERROR_NONE;
-					ckmc_ret = ckmc_change_user_password(user, ad->input_pwd, NULL);
-					SETTING_TRACE("ckmc_change_user_password() returns %d", ckmc_ret);
-#endif
-				}
-				index = __get_lockapp_index_from_appname(list_item->keyStr);
-				pkg_name = __get_lockapp_pkgname_from_appname(list_item->keyStr);
-				SETTING_TRACE_DEBUG("3rd lock selected. index[%d] pkg_name[%s]", index, pkg_name);
-				vconf_set_str(VCONFKEY_SETAPPL_3RD_LOCK_PKG_NAME_STR, pkg_name);
-				vconf_set_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, lock_type);
-				/* set radio */
-				elm_radio_value_set(list_item->eo_check, lock_type + index);
-				ug_destroy_me(ad->ug);
-			}
-			break;
-		default:
-			break;
+		}
+		break;
+	default:
+		break;
 	}
 }
 #endif

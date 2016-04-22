@@ -67,7 +67,7 @@ int setting_view_node_table_intialize();
  * @return #0 on success, else on failed
  */
 int setting_view_node_table_register(setting_view *view,
-                                     setting_view *topview);
+									 setting_view *topview);
 
 /**
  * @brief callback invoked when pressed hard end key
@@ -140,6 +140,6 @@ extern int setting_view_cleanup(setting_view *view, void *cb);
  * @warning the function should be invoked to change views
  */
 extern int setting_view_change(setting_view *from_view, setting_view *to_view,
-                               void *cb);
+							   void *cb);
 
 #endif				/* __SETTING_COMMON_VIEW_H__ */

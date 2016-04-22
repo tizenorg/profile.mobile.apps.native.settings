@@ -79,11 +79,11 @@ setting_view setting_view_sound_main = {
 #define ADD_TOGGLE_MENU2(item, genlist, item_style, keystr, value, data) \
 	{\
 		item = setting_create_Gendial_field_def(genlist, &(item_style), \
-		                                        setting_sound_main_mouse_up_Gendial_list_cb, \
-		                                        data, SWALLOW_Type_1ICON_1RADIO, NULL, \
-		                                        NULL, value, \
-		                                        keystr, NULL, \
-		                                        __sound_chk_cb); \
+												setting_sound_main_mouse_up_Gendial_list_cb, \
+												data, SWALLOW_Type_1ICON_1RADIO, NULL, \
+												NULL, value, \
+												keystr, NULL, \
+												__sound_chk_cb); \
 		if (item) { \
 			item->userdata = data; \
 		} else { \
@@ -97,11 +97,11 @@ setting_view setting_view_sound_main = {
 #define ADD_TOGGLE_MENU(_item, genlist, item_style, keystr, substr, value, data) \
 	{\
 		_item = setting_create_Gendial_field_def(genlist, &(item_style), \
-		                                        setting_sound_main_mouse_up_Gendial_list_cb, \
-		                                        data, SWALLOW_Type_1ICON_1RADIO, NULL, \
-		                                        NULL, value, \
-		                                        keystr, NULL, \
-		                                        __sound_chk_cb); \
+												 setting_sound_main_mouse_up_Gendial_list_cb, \
+												 data, SWALLOW_Type_1ICON_1RADIO, NULL, \
+												 NULL, value, \
+												 keystr, NULL, \
+												 __sound_chk_cb); \
 		if (_item) { \
 			_item->userdata = data;\
 		} else { \
@@ -109,10 +109,10 @@ setting_view setting_view_sound_main = {
 		} \
 		if (substr) {\
 			Setting_GenGroupItem_Data *item_data = setting_create_Gendial_field_def(genlist, &itc_multiline_text,\
-			                                                                        NULL,\
-			                                                                        NULL,\
-			                                                                        SWALLOW_Type_LAYOUT_SPECIALIZTION_X,\
-			                                                                        NULL, NULL, 0,  substr, NULL, NULL);\
+																					NULL,\
+																					NULL,\
+																					SWALLOW_Type_LAYOUT_SPECIALIZTION_X,\
+																					NULL, NULL, 0,  substr, NULL, NULL);\
 			setting_retm_if(NULL == item_data, "item_data is NULL");\
 			elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
 		}\
@@ -121,13 +121,13 @@ setting_view setting_view_sound_main = {
 #define ADD_SOUND_SLIDER(item_data, genlist, item_style, l_img, r_img, value, keystr, data, sld_cb, sld_max, start_cb, stop_cb) \
 	{ \
 		item_data = setting_create_Gendial_field_def(genlist, &(item_style), NULL,\
-		                                             NULL, \
-		                                             SWALLOW_Type_LAYOUT_SLIDER,\
-		                                             l_img, r_img,\
-		                                             value,\
-		                                             keystr,\
-		                                             NULL,\
-		                                             sld_cb);\
+													 NULL, \
+													 SWALLOW_Type_LAYOUT_SLIDER,\
+													 l_img, r_img,\
+													 value,\
+													 keystr,\
+													 NULL,\
+													 sld_cb);\
 		if (item_data) {\
 			item_data->win_main = data->win_main_layout;\
 			item_data->evas = data->evas;\
@@ -193,9 +193,9 @@ static Eina_Bool __play_ringtone_sound_idle_cb(void *data)
 		}
 		if (list_item->chk_status > 0) {
 			setting_sound_play_sound_origin(&(ad->mp_ringtone), ad, NULL,
-			                                pa_tone_path,
-			                                (float)list_item->chk_status,
-			                                SOUND_TYPE_RINGTONE);
+											pa_tone_path,
+											(float)list_item->chk_status,
+											SOUND_TYPE_RINGTONE);
 		}
 	} else {
 		player_state_e state;
@@ -257,24 +257,24 @@ static void __call_slider_change_cb(void *data, Evas_Object *obj, void *event_in
 		sound_manager_set_volume(SOUND_TYPE_RINGTONE, list_item->chk_status);
 		SETTING_TRACE_DEBUG("ringtone volume is %d, %f", list_item->chk_status, val);
 
-		#if FUNCTION_SYSTEM_SETTING
+#if FUNCTION_SYSTEM_SETTING
 		if (list_item->chk_status == 0) {
 			/* change to Vibration mode */
-			// call system_setting
-			//system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_SOUND_SILENT_MODE, false);
+			/* call system_setting */
+			/*system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_SOUND_SILENT_MODE, false); */
 			vconf_set_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, FALSE);
 			vconf_set_bool(VCONFKEY_SETAPPL_VIBRATION_STATUS_BOOL, TRUE);
 
 		} else {
 			if (!ad->sound_on) {
 				/* change to Sound mode */
-				// call system_setting
-				//system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_SOUND_SILENT_MODE, false);
+				/* call system_setting */
+				/*system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_SOUND_SILENT_MODE, false); */
 				vconf_set_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, TRUE);
 				vconf_set_bool(VCONFKEY_SETAPPL_VIBRATION_STATUS_BOOL, FALSE);
 			}
 		}
-		#else
+#else
 		if (list_item->chk_status == 0) {
 			/* change to Vibration mode */
 			vconf_set_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, FALSE);
@@ -289,7 +289,7 @@ static void __call_slider_change_cb(void *data, Evas_Object *obj, void *event_in
 				/*insert log for sound mode on state */
 			}
 		}
-		#endif
+#endif
 
 		setting_sound_update_slider_icon(list_item, SND_SLIDER_CALL);
 
@@ -362,8 +362,8 @@ static void __noti_slider_change_cb(void *data, Evas_Object *obj, void *event_in
 				}
 			}
 			setting_sound_play_sound_origin(&(ad->mp_noti), ad, NULL,
-			                                pa_tone_path, (float)list_item->chk_status,
-			                                sound_type);
+											pa_tone_path, (float)list_item->chk_status,
+											sound_type);
 			FREE(pa_tone_path);
 		}
 	} else {
@@ -429,9 +429,9 @@ static void __media_slider_change_cb(void *data, Evas_Object *obj, void *event_i
 			sound_type_e type;
 			sound_manager_get_current_sound_type(&type);
 			setting_sound_play_sound_origin(&(ad->mp_media), ad, NULL,
-			                                pa_tone_path,
-			                                (float)list_item->chk_status,
-			                                sound_type);
+											pa_tone_path,
+											(float)list_item->chk_status,
+											sound_type);
 			FREE(pa_tone_path);
 		}
 	} else {
@@ -510,12 +510,12 @@ char *setting_do_not_disturb_is_enable(void *data)
 
 	err = notification_system_setting_load_system_setting(&system_setting);
 	setting_retvm_if(NULL == system_setting || NOTIFICATION_ERROR_NONE != err,
-									"NULL parameter",
-									"notification_system_setting_load_system_Setting failed");
+					 "NULL parameter",
+					 "notification_system_setting_load_system_Setting failed");
 	err = notification_system_setting_get_do_not_disturb(system_setting, &do_not_disturb);
 	SETTING_TRACE("do_not_disturb: %d", do_not_disturb);
 
-	if (1 == do_not_disturb){
+	if (1 == do_not_disturb) {
 		notification_system_setting_free_system_setting(system_setting);
 		return "IDS_ST_BODY_ON";
 	} else {
@@ -526,7 +526,7 @@ char *setting_do_not_disturb_is_enable(void *data)
 
 static void
 __sound_chk_cb(void *data, Evas_Object *obj,
-               void *event_info)
+			   void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -567,16 +567,16 @@ static void __get_lite_main_list(void *data)
 	Elm_Genlist_Item_Class *itc_slider = NULL;
 
 
-	//----------------------------------------------------------------------------
-	//----------------------------------------------------------------------------
-	//----------------------------------------------------------------------------
+	/*---------------------------------------------------------------------------- */
+	/*---------------------------------------------------------------------------- */
+	/*---------------------------------------------------------------------------- */
 	itc_slider = &(ad->itc_layout_1icon);
 
 	if (0 == safeStrCmp(ad->viewtype, VOLUME_APP_NAME))
 		itc_slider = &(ad->itc_layout);
-	//----------------------------------------------------------------------------
-	//----------------------------------------------------------------------------
-	//----------------------------------------------------------------------------
+	/*---------------------------------------------------------------------------- */
+	/*---------------------------------------------------------------------------- */
+	/*---------------------------------------------------------------------------- */
 
 	/* 1. Ringtones */
 	SETTING_TRACE(" ???????????? ad->viewtype : %s ", ad->viewtype);
@@ -614,11 +614,11 @@ static void __get_lite_main_list(void *data)
 		}
 		sub_desc = setting_media_basename(pa_ringtone);
 		ad->data_call_alert_tone =
-		    setting_create_Gendial_field_def(genlist, &itc_2text_2,
-		                                     setting_sound_main_mouse_up_Gendial_list_cb,
-		                                     ad, SWALLOW_Type_INVALID, NULL,
-		                                     NULL, 0, "IDS_ST_MBODY_RINGTONE",
-		                                     sub_desc, NULL);
+			setting_create_Gendial_field_def(genlist, &itc_2text_2,
+											 setting_sound_main_mouse_up_Gendial_list_cb,
+											 ad, SWALLOW_Type_INVALID, NULL,
+											 NULL, 0, "IDS_ST_MBODY_RINGTONE",
+											 sub_desc, NULL);
 		if (ad->data_call_alert_tone) {
 			__BACK_POINTER_SET(ad->data_call_alert_tone);
 			ad->data_call_alert_tone->userdata = ad;
@@ -637,12 +637,12 @@ static void __get_lite_main_list(void *data)
 
 	left_icon = setting_sound_get_slider_icon(SND_SLIDER_CALL, mm_value);
 	ADD_SOUND_SLIDER(ad->data_call_volume, genlist,
-	                 (*itc_slider),
-	                 left_icon, NULL,
-	                 mm_value, "IDS_ST_MBODY_RINGTONE", ad,/*"IDS_ST_HEADER_RINGTONES" is for volume App,in Setting > Sound,it has no title */
-	                 __call_slider_change_cb,
-	                 SETTING_SOUND_VOL_MAX,
-	                 __start_change_cb, __stop_change_cb);
+					 (*itc_slider),
+					 left_icon, NULL,
+					 mm_value, "IDS_ST_MBODY_RINGTONE", ad,/*"IDS_ST_HEADER_RINGTONES" is for volume App,in Setting > Sound,it has no title */
+					 __call_slider_change_cb,
+					 SETTING_SOUND_VOL_MAX,
+					 __start_change_cb, __stop_change_cb);
 	__BACK_POINTER_SET(ad->data_call_volume);
 
 	/* 3. Notification alert */
@@ -656,12 +656,12 @@ static void __get_lite_main_list(void *data)
 		}
 		sub_desc = setting_media_basename(pa_ringtone);
 		ad->data_msg_alert_tone =
-		    setting_create_Gendial_field_def(genlist, &itc_2text_2,
-		                                     setting_sound_main_mouse_up_Gendial_list_cb,
-		                                     ad, SWALLOW_Type_INVALID, NULL,
-		                                     NULL, 0,
-		                                     "IDS_ST_BODY_NOTIFICATION"/*SETTING_SOUND_TEXT_MSG_ALERT*/,
-		                                     sub_desc, NULL);
+			setting_create_Gendial_field_def(genlist, &itc_2text_2,
+											 setting_sound_main_mouse_up_Gendial_list_cb,
+											 ad, SWALLOW_Type_INVALID, NULL,
+											 NULL, 0,
+											 "IDS_ST_BODY_NOTIFICATION"/*SETTING_SOUND_TEXT_MSG_ALERT*/,
+											 sub_desc, NULL);
 		if (ad->data_msg_alert_tone) {
 			__BACK_POINTER_SET(ad->data_msg_alert_tone);
 			ad->data_msg_alert_tone->userdata = ad;
@@ -678,12 +678,12 @@ static void __get_lite_main_list(void *data)
 
 	left_icon = setting_sound_get_slider_icon(SND_SLIDER_NOTI, mm_value);
 	ADD_SOUND_SLIDER(ad->data_noti_volume, genlist,
-	                 (*itc_slider),
-	                 left_icon, NULL,
-	                 mm_value, "IDS_ST_BODY_NOTIFICATION", ad,
-	                 __noti_slider_change_cb,
-	                 SETTING_SOUND_VOL_MAX,
-	                 __start_change_cb, __stop_change_cb);
+					 (*itc_slider),
+					 left_icon, NULL,
+					 mm_value, "IDS_ST_BODY_NOTIFICATION", ad,
+					 __noti_slider_change_cb,
+					 SETTING_SOUND_VOL_MAX,
+					 __start_change_cb, __stop_change_cb);
 	__BACK_POINTER_SET(ad->data_noti_volume);
 
 	/* 5.media volume */
@@ -692,11 +692,11 @@ static void __get_lite_main_list(void *data)
 
 	left_icon = setting_sound_get_slider_icon(SND_SLIDER_MEDIA, mm_value);
 	ADD_SOUND_SLIDER(ad->data_media_volume, genlist, ad->itc_layout,
-	                 left_icon, NULL/*IMG_SLIDER_BTN_VOLUME02*/,
-	                 mm_value, "IDS_ST_BODY_MEDIA", ad,
-	                 __media_slider_change_cb,
-	                 SETTING_SOUND_VOL_MAX,
-	                 __start_change_cb, __stop_change_cb);
+					 left_icon, NULL/*IMG_SLIDER_BTN_VOLUME02*/,
+					 mm_value, "IDS_ST_BODY_MEDIA", ad,
+					 __media_slider_change_cb,
+					 SETTING_SOUND_VOL_MAX,
+					 __start_change_cb, __stop_change_cb);
 
 	__BACK_POINTER_SET(ad->data_media_volume);
 
@@ -710,11 +710,11 @@ static void __get_lite_main_list(void *data)
 
 	left_icon = setting_sound_get_slider_icon(SND_SLIDER_SYSTEM, mm_value);
 	ADD_SOUND_SLIDER(ad->data_touch_volume, genlist, ad->itc_layout,
-	                 left_icon, NULL/*IMG_SLIDER_BTN_SYSTEM_VOLUME*/,
-	                 mm_value, "IDS_ST_BODY_SYSTEM", ad,
-	                 __sys_slider_change_cb,
-	                 SETTING_SOUND_VOL_MAX,
-	                 __start_change_cb, __stop_change_cb);
+					 left_icon, NULL/*IMG_SLIDER_BTN_SYSTEM_VOLUME*/,
+					 mm_value, "IDS_ST_BODY_SYSTEM", ad,
+					 __sys_slider_change_cb,
+					 SETTING_SOUND_VOL_MAX,
+					 __start_change_cb, __stop_change_cb);
 
 	__BACK_POINTER_SET(ad->data_touch_volume);
 
@@ -729,27 +729,27 @@ static void __get_lite_main_list(void *data)
 
 		/* 8. Feedback */
 		setting_create_Gendial_field_def(genlist, &itc_1text,
-				setting_sound_main_mouse_up_Gendial_list_cb,
-				data, SWALLOW_Type_INVALID, NULL,
-				NULL, 0,
-				"IDS_ST_HEADER_FEEDBACK", NULL, NULL);
+										 setting_sound_main_mouse_up_Gendial_list_cb,
+										 data, SWALLOW_Type_INVALID, NULL,
+										 NULL, 0,
+										 "IDS_ST_HEADER_FEEDBACK", NULL, NULL);
 
 		/* Notifications */
 		setting_create_Gendial_field_titleItem(genlist, &itc_group_item, _("IDS_ST_BODY_NOTIFICATIONS"), NULL);
 		/* 9. Notifications - Do not disturb */
 		char *sub_desc = setting_do_not_disturb_is_enable(data);
 		ad->data_do_not_disturb = setting_create_Gendial_field_def(genlist, &itc_2text_2,
-															setting_sound_main_mouse_up_Gendial_list_cb,
-															data, SWALLOW_Type_INVALID, NULL,
-															NULL, 0,
-															"IDS_ST_MBODY_DO_NOT_DISTURB_ABB", sub_desc, NULL);
+																   setting_sound_main_mouse_up_Gendial_list_cb,
+																   data, SWALLOW_Type_INVALID, NULL,
+																   NULL, 0,
+																   "IDS_ST_MBODY_DO_NOT_DISTURB_ABB", sub_desc, NULL);
 		/* 10. Notifications - App notifications */
 		setting_create_Gendial_field_def(genlist, &itc_2text_2,
-										setting_sound_main_mouse_up_Gendial_list_cb,
-										data, SWALLOW_Type_INVALID, NULL,
-										NULL, 0,
-										"IDS_ST_MBODY_APP_NOTIFICATIONS",
-										"IDS_ST_BODY_ALLOW_OR_BLOCK_NOTIFICATIONS_FROM_INDIVIDUAL_APPLICATIONS", NULL);
+										 setting_sound_main_mouse_up_Gendial_list_cb,
+										 data, SWALLOW_Type_INVALID, NULL,
+										 NULL, 0,
+										 "IDS_ST_MBODY_APP_NOTIFICATIONS",
+										 "IDS_ST_BODY_ALLOW_OR_BLOCK_NOTIFICATIONS_FROM_INDIVIDUAL_APPLICATIONS", NULL);
 
 		ad->gl_lite_main = genlist;
 
@@ -780,12 +780,12 @@ unsigned int vibration_state_reg_id;
 
 static Eina_Bool
 setting_soudn_main_click_softkey_back_cb(void *data, Evas_Object *obj,
-                                         void *event_info)
+										 void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	setting_retvm_if(data == NULL, EINA_FALSE,
-	                 "[Setting > Display] Data parameter is NULL");
+					 "[Setting > Display] Data parameter is NULL");
 
 	SettingProfileUG *ad = (SettingProfileUG *) data;
 
@@ -809,8 +809,8 @@ static int setting_sound_main_create(void *cb)
 	SETTING_TRACE("viewtype: %s", ad->viewtype);
 	if (!safeStrCmp(ad->viewtype, VOLUME_APP_NAME)) {
 		ad->ly_main = setting_create_popup_with_list(&ad->gl_lite_main, ad, ad->win_get,
-		                                             "IDS_ST_BODY_VOLUME", __volume_popup_del_cb,
-		                                             0 , false, false, 1, "IDS_ST_SK3_DONE");
+													 "IDS_ST_BODY_VOLUME", __volume_popup_del_cb,
+													 0 , false, false, 1, "IDS_ST_SK3_DONE");
 		__get_lite_main_list(ad);
 	} else {
 		ad->ly_main = setting_create_win_layout(ad->win_get);
@@ -821,21 +821,21 @@ static int setting_sound_main_create(void *cb)
 		__get_lite_main_list(ad);
 
 		Evas_Object *lbtn = setting_create_button(ad->navi_bar, _(NULL),
-		                                          NAVI_BACK_ARROW_BUTTON_STYLE,
-		                                          &setting_soudn_main_click_softkey_back_cb, ad);
+												  NAVI_BACK_ARROW_BUTTON_STYLE,
+												  &setting_soudn_main_click_softkey_back_cb, ad);
 
 
 		Elm_Object_Item *navi_it = elm_naviframe_item_push(ad->navi_bar, KeyStr_Sounds, lbtn, NULL, ad->gl_lite_main, NULL);
 		elm_naviframe_item_pop_cb_set(navi_it, (Elm_Naviframe_Item_Pop_Cb)setting_sound_main_click_softkey_cancel_cb, ad);
-		//elm_object_item_part_content_set(navi_it, "title_left_btn", lbtn);
+		/*elm_object_item_part_content_set(navi_it, "title_left_btn", lbtn); */
 		elm_object_item_domain_text_translatable_set(navi_it, SETTING_PACKAGE, EINA_TRUE);
 	}
 	setting_view_sound_main.is_create = TRUE;
 
 	/* eventsystem */
 	if (ES_R_OK != eventsystem_register_event(SYS_EVENT_VIBRATION_STATE,
-	                                          &vibration_state_reg_id,
-	                                          (eventsystem_handler)vibration_state_event_handler, cb)) {
+											  &vibration_state_reg_id,
+											  (eventsystem_handler)vibration_state_event_handler, cb)) {
 		SETTING_TRACE_ERROR("error");
 	}
 	SETTING_TRACE_END;
@@ -970,7 +970,7 @@ static void setting_sound_main_destroy_myfile_ug_cb(ui_gadget_h ug, void *priv)
 
 static void
 setting_sound_main_result_myfile_ug_cb(ui_gadget_h ug,
-                                       app_control_h result, void *priv)
+									   app_control_h result, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(priv == NULL);
@@ -1008,7 +1008,7 @@ setting_sound_main_result_myfile_ug_cb(ui_gadget_h ug,
 				vconf_set_str(VCONFKEY_SETAPPL_CALL_RINGTONE_PATH_WITH_RECOMMENDATION_TIME_STR, recommend_info);
 			}
 		} else if (0 ==
-		           safeStrCmp(ad->ringtone_type, "IDS_ST_BODY_NOTIFICATION")) {
+				   safeStrCmp(ad->ringtone_type, "IDS_ST_BODY_NOTIFICATION")) {
 			if (vconf_set_str(VCONFKEY_SETAPPL_NOTI_MSG_RINGTONE_PATH_STR, ringtone_path) == 0) {
 				if (ad->data_msg_alert_tone) {
 					ad->data_msg_alert_tone->sub_desc = (char *)g_strdup(ringtone_file);
@@ -1116,8 +1116,8 @@ static Eina_Bool __feedback_back_cb(void *data, Elm_Object_Item *it)
 }
 
 void setting_sound_notifications_layout_ug_cb(ui_gadget_h ug,
-											enum ug_mode mode,
-											void *priv)
+											  enum ug_mode mode,
+											  void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	Evas_Object *base;
@@ -1130,21 +1130,21 @@ void setting_sound_notifications_layout_ug_cb(ui_gadget_h ug,
 		return;
 
 	switch (mode) {
-		case UG_MODE_FULLVIEW:
-			evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-					EVAS_HINT_EXPAND);
-			evas_object_show(base);
-			break;
-		default:
-			break;
+	case UG_MODE_FULLVIEW:
+		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
+										 EVAS_HINT_EXPAND);
+		evas_object_show(base);
+		break;
+	default:
+		break;
 	}
 	SETTING_TRACE_END;
 }
 
 static void
 setting_sound_main_mouse_up_Gendial_list_cb(void *data,
-                                            Evas_Object *obj,
-                                            void *event_info)
+											Evas_Object *obj,
+											void *event_info)
 {
 	/* error check */
 	ret_if(data == NULL);
@@ -1162,7 +1162,7 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 	if (!safeStrCmp("IDS_ST_MBODY_RINGTONE", list_item->keyStr)
-	    || !safeStrCmp("IDS_ST_BODY_NOTIFICATION", list_item->keyStr)) {
+		|| !safeStrCmp("IDS_ST_BODY_NOTIFICATION", list_item->keyStr)) {
 		ad->ringtone_type = list_item->keyStr;
 		setting_sound_main_create_myfile_ug(ad, list_item->keyStr);
 		__setting_sound_ug_key_ungrab(ad);

@@ -72,7 +72,7 @@ setting_view *__get_display_view_to_load(void *data, app_control_h service)
 			}
 			setting_view_node_table_register(&setting_view_display_main, NULL);
 			setting_view_node_table_register(&setting_view_display_brightness,
-			                                 &setting_view_display_main);
+											 &setting_view_display_main);
 			FREE(viewtype);
 			return &setting_view_display_main;
 		}
@@ -110,7 +110,7 @@ Evas_Object *__get_display_layout_to_return(app_control_h service, void *priv)
 
 
 static void setting_display_ug_cb_resize(void *data, Evas *e,
-                                         Evas_Object *obj, void *event_info)
+										 Evas_Object *obj, void *event_info)
 {
 	SettingDisplayUG *ad = (SettingDisplayUG *) data;
 	setting_view_update(ad->view_to_load, ad);
@@ -122,11 +122,11 @@ Eina_Bool __show_smartstay_guide_popup(void *data)
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	setting_retvm_if(data == NULL, ECORE_CALLBACK_CANCEL,
-	                 "[Setting > Display] Data parameter is NULL");
+					 "[Setting > Display] Data parameter is NULL");
 
 	SettingDisplayUG *ad = (SettingDisplayUG *) data;
 	setting_retvm_if(ad->smart_stay_sublayout == NULL, ECORE_CALLBACK_CANCEL,
-	                 "[Setting > Display] Dad->smart_stay_sublayout parameter is NULL");
+					 "[Setting > Display] Dad->smart_stay_sublayout parameter is NULL");
 
 	/*hide top popup*/
 	elm_object_signal_emit(ad->smart_stay_sublayout, "elm,state,top,hide", "elm");
@@ -140,11 +140,11 @@ Eina_Bool __show_smartrotation_guide_popup(void *data)
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	setting_retvm_if(data == NULL, ECORE_CALLBACK_CANCEL,
-	                 "[Setting > Display] Data parameter is NULL");
+					 "[Setting > Display] Data parameter is NULL");
 
 	SettingDisplayUG *ad = (SettingDisplayUG *) data;
 	setting_retvm_if(ad->smart_rotation_sublayout == NULL, ECORE_CALLBACK_CANCEL,
-	                 "[Setting > Display] ad->smart_rotation_sublayout parameter is NULL");
+					 "[Setting > Display] ad->smart_rotation_sublayout parameter is NULL");
 	/*hide top popup*/
 	elm_object_signal_emit(ad->smart_rotation_sublayout, "elm,state,top,hide", "elm");
 	/*show center popup*/
@@ -154,8 +154,8 @@ Eina_Bool __show_smartrotation_guide_popup(void *data)
 }
 
 static void *setting_display_ug_on_create(ui_gadget_h ug,
-                                          enum ug_mode mode, app_control_h service,
-                                          void *priv)
+										  enum ug_mode mode, app_control_h service,
+										  void *priv)
 {
 	setting_retvm_if((!priv), NULL, "!priv");
 	SETTING_TRACE_BEGIN;
@@ -171,7 +171,7 @@ static void *setting_display_ug_on_create(ui_gadget_h ug,
 	displayUG->evas = evas_object_evas_get(displayUG->win_main_layout);
 
 	setting_retvm_if(displayUG->win_main_layout == NULL, NULL,
-	                 "cannot get main window ");
+					 "cannot get main window ");
 
 	/* register view node table */
 	setting_view_node_table_intialize();
@@ -184,33 +184,33 @@ static void *setting_display_ug_on_create(ui_gadget_h ug,
 	/*  creating a view. */
 	displayUG->view_to_load = __get_display_view_to_load(displayUG, service);
 	setting_retvm_if(NULL == displayUG->view_to_load, NULL,
-	                 "NULL == displayUG->view_to_load");
+					 "NULL == displayUG->view_to_load");
 	setting_view_node_set_cur_view(displayUG->view_to_load);
 	setting_view_create(displayUG->view_to_load, (void *)displayUG);
 	evas_object_event_callback_add(displayUG->win_main_layout,
-	                               EVAS_CALLBACK_RESIZE,
-	                               setting_display_ug_cb_resize, displayUG);
+								   EVAS_CALLBACK_RESIZE,
+								   setting_display_ug_cb_resize, displayUG);
 
 	return __get_display_layout_to_return(service, displayUG);
 }
 
 static void setting_display_ug_on_start(ui_gadget_h ug, app_control_h service,
-                                        void *priv)
+										void *priv)
 {
 }
 
 static void setting_display_ug_on_pause(ui_gadget_h ug, app_control_h service,
-                                        void *priv)
+										void *priv)
 {
 }
 
 static void setting_display_ug_on_resume(ui_gadget_h ug, app_control_h service,
-                                         void *priv)
+										 void *priv)
 {
 }
 
 static void setting_display_ug_on_destroy(ui_gadget_h ug, app_control_h service,
-                                          void *priv)
+										  void *priv)
 {
 	SettingDisplayUG *displayUG = priv;
 
@@ -246,13 +246,13 @@ static void setting_display_ug_on_destroy(ui_gadget_h ug, app_control_h service,
 }
 
 static void setting_display_ug_on_message(ui_gadget_h ug, app_control_h msg,
-                                          app_control_h service, void *priv)
+										  app_control_h service, void *priv)
 {
 }
 
 static void setting_display_ug_on_event(ui_gadget_h ug,
-                                        enum ug_event event, app_control_h service,
-                                        void *priv)
+										enum ug_event event, app_control_h service,
+										void *priv)
 {
 	SettingDisplayUG *ad = priv;
 
@@ -260,29 +260,29 @@ static void setting_display_ug_on_event(ui_gadget_h ug,
 	setting_retm_if(NULL == ad, "ad is NULL");
 
 	switch (event) {
-		case UG_EVENT_LOW_MEMORY:
-			break;
-		case UG_EVENT_LOW_BATTERY:
-			break;
-		case UG_EVENT_LANG_CHANGE:
-			setting_navi_items_update(ad->navi_bar);
-			break;
-		case UG_EVENT_ROTATE_PORTRAIT:
-		case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-			break;
-		case UG_EVENT_ROTATE_LANDSCAPE:
-		case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-			break;
-		case UG_EVENT_REGION_CHANGE:
-			break;
-		default:
-			break;
+	case UG_EVENT_LOW_MEMORY:
+		break;
+	case UG_EVENT_LOW_BATTERY:
+		break;
+	case UG_EVENT_LANG_CHANGE:
+		setting_navi_items_update(ad->navi_bar);
+		break;
+	case UG_EVENT_ROTATE_PORTRAIT:
+	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
+		break;
+	case UG_EVENT_ROTATE_LANDSCAPE:
+	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
+		break;
+	case UG_EVENT_REGION_CHANGE:
+		break;
+	default:
+		break;
 	}
 }
 
 static void setting_display_ug_on_key_event(ui_gadget_h ug,
-                                            enum ug_key_event event,
-                                            app_control_h service, void *priv)
+											enum ug_key_event event,
+											app_control_h service, void *priv)
 {
 	SettingDisplayUG *ad = (SettingDisplayUG *) priv;
 
@@ -290,21 +290,21 @@ static void setting_display_ug_on_key_event(ui_gadget_h ug,
 	setting_retm_if(NULL == ad, "ad is NULL");
 
 	switch (event) {
-		case UG_KEY_EVENT_END: {
-				if (elm_naviframe_top_item_get(ad->navi_bar) ==
-				    elm_naviframe_bottom_item_get(ad->navi_bar)) {
-					ug_destroy_me(ug);
-				} else {
-					if (&setting_view_display_brightness ==
-					    setting_view_node_get_cur_view()) {
-								/* ????? */
-					}
-					setting_view_cb_at_endKey(ad);
+	case UG_KEY_EVENT_END: {
+			if (elm_naviframe_top_item_get(ad->navi_bar) ==
+				elm_naviframe_bottom_item_get(ad->navi_bar)) {
+				ug_destroy_me(ug);
+			} else {
+				if (&setting_view_display_brightness ==
+					setting_view_node_get_cur_view()) {
+					/* ????? */
 				}
+				setting_view_cb_at_endKey(ad);
 			}
-			break;
-		default:
-			break;
+		}
+		break;
+	default:
+		break;
 	}
 }
 
@@ -350,7 +350,7 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
  ***************************************************/
 
 void setting_display_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
-                                  void *priv)
+								  void *priv)
 {
 	Evas_Object *base;
 
@@ -361,13 +361,13 @@ void setting_display_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
 		return;
 
 	switch (mode) {
-		case UG_MODE_FULLVIEW:
-			evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-			                                 EVAS_HINT_EXPAND);
-			evas_object_show(base);
-			break;
-		default:
-			break;
+	case UG_MODE_FULLVIEW:
+		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
+										 EVAS_HINT_EXPAND);
+		evas_object_show(base);
+		break;
+	default:
+		break;
 	}
 
 	SETTING_TRACE_END;
@@ -403,7 +403,7 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv, 
 	size = sizeof(s_cfg_node_array) / sizeof(s_cfg_node_array[0]);
 	for (i = 0; i < size; i++) {
 		node = setting_plugin_search_item_subindex_add(s_cfg_node_array[i].key_name, s_cfg_node_array[i].ug_args,
-			s_cfg_node_array[i].icon_path, s_cfg_node_array[i].item_type, s_cfg_node_array[i].data, s_cfg_node_array[i].sub_index);
+													   s_cfg_node_array[i].icon_path, s_cfg_node_array[i].item_type, s_cfg_node_array[i].data, s_cfg_node_array[i].sub_index);
 		*pplist = eina_list_append(*pplist, node);
 	}
 	return 0;

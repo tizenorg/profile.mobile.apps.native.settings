@@ -52,14 +52,14 @@ static int setting_display_backlight_create(void *cb)
 
 	/* add basic layout */
 	ad->ly_main =
-	    setting_create_layout_navi_bar_genlist(ad->win_main_layout,
-	                                           ad->win_get,
-	                                           _(KeyStr_BacklightTime),
-	                                           _("IDS_ST_BUTTON_BACK"),
-	                                           NULL,
-	                                           setting_display_backlight_click_softkey_back_cb,
-	                                           NULL, ad, &scroller,
-	                                           &(ad->navi_bar));
+		setting_create_layout_navi_bar_genlist(ad->win_main_layout,
+											   ad->win_get,
+											   _(KeyStr_BacklightTime),
+											   _("IDS_ST_BUTTON_BACK"),
+											   NULL,
+											   setting_display_backlight_click_softkey_back_cb,
+											   NULL, ad, &scroller,
+											   &(ad->navi_bar));
 
 	rgd = elm_radio_add(scroller);
 	elm_radio_value_set(rgd, -1);
@@ -69,11 +69,11 @@ static int setting_display_backlight_create(void *cb)
 	/* to do : radio menu */
 	if (isEmulBin()) {
 		ad->data_backlight_always_on = setting_create_Gendial_field_1radio(scroller,
-		                                                                   &itc_1text_1icon_2,
-		                                                                   setting_display_backlight_mouse_up_Gendial_list_cb, ad,
-		                                                                   SWALLOW_Type_1RADIO, rgd,
-		                                                                   0, 			/* Always ON */
-		                                                                   "IDS_ST_BODY_ALWAYS_ON", NULL);
+																		   &itc_1text_1icon_2,
+																		   setting_display_backlight_mouse_up_Gendial_list_cb, ad,
+																		   SWALLOW_Type_1RADIO, rgd,
+																		   0, 			/* Always ON */
+																		   "IDS_ST_BODY_ALWAYS_ON", NULL);
 
 		if (ad->data_backlight_always_on) {
 			ad->data_backlight_always_on->userdata = ad;
@@ -84,11 +84,11 @@ static int setting_display_backlight_create(void *cb)
 
 	}
 	ad->data_backlight_15sec = setting_create_Gendial_field_1radio(scroller,
-	                                                               &itc_1text_1icon_2,
-	                                                               setting_display_backlight_mouse_up_Gendial_list_cb, ad,
-	                                                               SWALLOW_Type_1RADIO, rgd,
-	                                                               15,				/* 15 sec */
-	                                                               SETTING_DISPLAY_TIME_15_SEC_STR, NULL);
+																   &itc_1text_1icon_2,
+																   setting_display_backlight_mouse_up_Gendial_list_cb, ad,
+																   SWALLOW_Type_1RADIO, rgd,
+																   15,				/* 15 sec */
+																   SETTING_DISPLAY_TIME_15_SEC_STR, NULL);
 	if (ad->data_backlight_15sec) {
 		ad->data_backlight_15sec->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_15sec);
@@ -97,11 +97,11 @@ static int setting_display_backlight_create(void *cb)
 	}
 
 	ad->data_backlight_30sec = setting_create_Gendial_field_1radio(scroller,
-	                                                               &itc_1text_1icon_2,
-	                                                               setting_display_backlight_mouse_up_Gendial_list_cb, ad,
-	                                                               SWALLOW_Type_1RADIO, rgd,
-	                                                               30,				/* 30 sec */
-	                                                               SETTING_DISPLAY_TIME_30_SEC_STR, NULL);
+																   &itc_1text_1icon_2,
+																   setting_display_backlight_mouse_up_Gendial_list_cb, ad,
+																   SWALLOW_Type_1RADIO, rgd,
+																   30,				/* 30 sec */
+																   SETTING_DISPLAY_TIME_30_SEC_STR, NULL);
 	if (ad->data_backlight_30sec) {
 		ad->data_backlight_30sec->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_30sec);
@@ -110,11 +110,11 @@ static int setting_display_backlight_create(void *cb)
 	}
 
 	ad->data_backlight_1min = setting_create_Gendial_field_1radio(scroller,
-	                                                              &itc_1text_1icon_2,
-	                                                              setting_display_backlight_mouse_up_Gendial_list_cb, ad,
-	                                                              SWALLOW_Type_1RADIO, rgd,
-	                                                              60,				/* 60 sec */
-	                                                              SETTING_DISPLAY_TIME_1_MIN_STR, NULL);
+																  &itc_1text_1icon_2,
+																  setting_display_backlight_mouse_up_Gendial_list_cb, ad,
+																  SWALLOW_Type_1RADIO, rgd,
+																  60,				/* 60 sec */
+																  SETTING_DISPLAY_TIME_1_MIN_STR, NULL);
 	if (ad->data_backlight_1min) {
 		ad->data_backlight_1min->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_1min);
@@ -123,11 +123,11 @@ static int setting_display_backlight_create(void *cb)
 	}
 
 	ad->data_backlight_2min = setting_create_Gendial_field_1radio(scroller,
-	                                                              &itc_1text_1icon_2,
-	                                                              setting_display_backlight_mouse_up_Gendial_list_cb, ad,
-	                                                              SWALLOW_Type_1RADIO, rgd,
-	                                                              120,				/* 2min */
-	                                                              SETTING_DISPLAY_TIME_2_MIN_STR, NULL);
+																  &itc_1text_1icon_2,
+																  setting_display_backlight_mouse_up_Gendial_list_cb, ad,
+																  SWALLOW_Type_1RADIO, rgd,
+																  120,				/* 2min */
+																  SETTING_DISPLAY_TIME_2_MIN_STR, NULL);
 	if (ad->data_backlight_2min) {
 		ad->data_backlight_2min->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_2min);
@@ -136,11 +136,11 @@ static int setting_display_backlight_create(void *cb)
 	}
 
 	ad->data_backlight_5min = setting_create_Gendial_field_1radio(scroller,
-	                                                              &itc_1text_1icon_2,
-	                                                              setting_display_backlight_mouse_up_Gendial_list_cb, ad,
-	                                                              SWALLOW_Type_1RADIO, rgd,
-	                                                              300,				/* 5min */
-	                                                              SETTING_DISPLAY_TIME_5_MIN_STR, NULL);
+																  &itc_1text_1icon_2,
+																  setting_display_backlight_mouse_up_Gendial_list_cb, ad,
+																  SWALLOW_Type_1RADIO, rgd,
+																  300,				/* 5min */
+																  SETTING_DISPLAY_TIME_5_MIN_STR, NULL);
 	if (ad->data_backlight_5min) {
 		ad->data_backlight_5min->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_5min);
@@ -149,11 +149,11 @@ static int setting_display_backlight_create(void *cb)
 	}
 
 	ad->data_backlight_10min = setting_create_Gendial_field_1radio(scroller,
-	                                                               &itc_1text_1icon_2,
-	                                                               setting_display_backlight_mouse_up_Gendial_list_cb, ad,
-	                                                               SWALLOW_Type_1RADIO, rgd,
-	                                                               600,				/* 10min */
-	                                                               SETTING_DISPLAY_TIME_10_MIN_STR, NULL);
+																   &itc_1text_1icon_2,
+																   setting_display_backlight_mouse_up_Gendial_list_cb, ad,
+																   SWALLOW_Type_1RADIO, rgd,
+																   600,				/* 10min */
+																   SETTING_DISPLAY_TIME_10_MIN_STR, NULL);
 	if (ad->data_backlight_10min) {
 		ad->data_backlight_10min->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_10min);
@@ -211,7 +211,7 @@ static int setting_display_backlight_cleanup(void *cb)
  ****************************************************/
 static void
 setting_display_backlight_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
-                                                   void *event_info)
+												   void *event_info)
 {
 	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
 	Setting_GenGroupItem_Data *list_item = NULL;
@@ -253,7 +253,7 @@ setting_display_backlight_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 
 static void
 setting_display_backlight_click_softkey_back_cb(void *data, Evas_Object *obj,
-                                                void *event_info)
+												void *event_info)
 {
 	SettingDisplayUG *ad = (SettingDisplayUG *) data;
 

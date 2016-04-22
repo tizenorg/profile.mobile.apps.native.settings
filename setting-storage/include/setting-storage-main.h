@@ -23,8 +23,8 @@
 
 void storageUg_main_init(SettingStorageUG *ad);
 Evas_Object *storageUg_main_pie_item_get_icon(void *data, Evas_Object *obj,
-                                              const char *part);
+											  const char *part);
 Evas_Object *storageUg_color_item_content_get(void *data, Evas_Object *obj,
-                                              const char *part);
+											  const char *part);
 
 #endif /*__SETTING_STORAGE_MAIN_H__ */

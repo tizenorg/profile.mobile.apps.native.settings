@@ -134,10 +134,10 @@ char *get_pa_usb_connect_mode_str()
 	setting_retvm_if(SETTING_RETURN_FAIL == ret, NULL, "Failed to get vconf value");	/* file system exceptional handle */
 
 	switch (value) {
-		case SETTING_USB_DEBUG_MODE:
-			return (char *)g_strdup(_("IDS_ST_BODY_USB_DEBUGGING"));
-		default:
-			return (char *)g_strdup(_("IDS_ST_BODY_DISCONNECTED"));
+	case SETTING_USB_DEBUG_MODE:
+		return (char *)g_strdup(_("IDS_ST_BODY_USB_DEBUGGING"));
+	default:
+		return (char *)g_strdup(_("IDS_ST_BODY_DISCONNECTED"));
 	}
 }
 
@@ -146,7 +146,7 @@ char  *get_brightness_mode_str()
 {
 	int value, err;
 	setting_get_int_slp_key(INT_SLP_SETTING_AUTOMATIC_BRIGHTNESS, &value,
-	                        &err);
+							&err);
 	if (value != SETTING_BRIGHTNESS_AUTOMATIC_OFF) {
 		return "IDS_ST_BODY_ANSWERINGMODE_AUTOMATIC";
 	} else {
@@ -160,10 +160,10 @@ char *get_pa_screen_mode_str()
 {
 	const char *str_in_arr[MAX_SCREEN_MODE_NUM] = {"Dynamic", "Standard", "Natural", "Movie"};
 	const char *str_out_arr[MAX_SCREEN_MODE_NUM] = {"IDS_ST_BODY_DYNAMIC_T_DISPLAY_EFFECT",
-	                                                "IDS_ST_BODY_STANDARD_T_DISPLAY_EFFECT",
-	                                                "IDS_ST_BODY_NATURAL_T_DISPLAY_EFFECT",
-	                                                "IDS_ST_BODY_MOVIE_T_DISPLAY_EFFECT"
-	                                               };
+													"IDS_ST_BODY_STANDARD_T_DISPLAY_EFFECT",
+													"IDS_ST_BODY_NATURAL_T_DISPLAY_EFFECT",
+													"IDS_ST_BODY_MOVIE_T_DISPLAY_EFFECT"
+												   };
 
 	char *curmode = NULL;
 	curmode = vconf_get_str(VCONFKEY_SETAPPL_SCREENMODE_SELNAME);
@@ -214,8 +214,8 @@ char *get_pa_backlight_time_str()
 #else
 	int err;
 	int ret =
-	    setting_get_int_slp_key(INT_SLP_SETTING_LCD_TIMEOUT_NORMAL, &value,
-	                            &err);
+		setting_get_int_slp_key(INT_SLP_SETTING_LCD_TIMEOUT_NORMAL, &value,
+								&err);
 
 #if NORMAL
 	if (SETTING_RETURN_FAIL == ret || value < 0) {	/* file system exceptional handle, eg. The vconf file lost due to file system. */
@@ -225,7 +225,7 @@ char *get_pa_backlight_time_str()
 		else
 			value = 30;
 		setting_set_int_slp_key(INT_SLP_SETTING_LCD_TIMEOUT_NORMAL,
-		                        value, &err);
+								value, &err);
 	}
 #else /* for MDM server */
 	/* adjust value. */
@@ -270,38 +270,38 @@ char *get_pa_backlight_time_str()
 #endif
 #endif
 	switch (value) {
-		case 0:
-			snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
-			         _(KeyStr_Backlight_Alays_On));
-			break;
-		case 15:
-			snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
-			         _(KeyStr_Backlight_15_SEC_STR));
-			break;
-		case 30:
-			snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
-			         _(KeyStr_Backlight_30_SEC_STR));
-			break;
-		case 60:
-			snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
-			         _(KeyStr_Backlight_1_MIN_STR));
-			break;
-		case 120:
-			snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
-			         _(KeyStr_Backlight_2_MIN_STR));
-			break;
-		case 300:
-			snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
-			         _(KeyStr_Backlight_5_MIN_STR));
-			break;
-		case 600:
-			snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
-			         _(KeyStr_Backlight_10_MIN_STR));
-			break;
-		default:
-			snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
-			         _(KeyStr_Backlight_30_SEC_STR));
-			break;
+	case 0:
+		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
+				 _(KeyStr_Backlight_Alays_On));
+		break;
+	case 15:
+		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
+				 _(KeyStr_Backlight_15_SEC_STR));
+		break;
+	case 30:
+		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
+				 _(KeyStr_Backlight_30_SEC_STR));
+		break;
+	case 60:
+		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
+				 _(KeyStr_Backlight_1_MIN_STR));
+		break;
+	case 120:
+		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
+				 _(KeyStr_Backlight_2_MIN_STR));
+		break;
+	case 300:
+		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
+				 _(KeyStr_Backlight_5_MIN_STR));
+		break;
+	case 600:
+		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
+				 _(KeyStr_Backlight_10_MIN_STR));
+		break;
+	default:
+		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
+				 _(KeyStr_Backlight_30_SEC_STR));
+		break;
 	}
 	return (char *)g_strdup(backlight_time_str);
 }
@@ -371,38 +371,38 @@ char *get_pa_backlight_time_value_str()
 	value = adjust_backlight_time_value(value);
 
 	switch (value) {
-		case 0:
-			snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
-			         _(KeyStr_Backlight_Alays_On));
-			break;
-		case 15:
-			snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
-			         _(KeyStr_Backlight_15_SEC_STR));
-			break;
-		case 30:
-			snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
-			         _(KeyStr_Backlight_30_SEC_STR));
-			break;
-		case 60:
-			snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
-			         _(KeyStr_Backlight_1_MIN_STR));
-			break;
-		case 120:
-			snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
-			         _(KeyStr_Backlight_2_MIN_STR));
-			break;
-		case 300:
-			snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
-			         _(KeyStr_Backlight_5_MIN_STR));
-			break;
-		case 600:
-			snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
-			         _(KeyStr_Backlight_10_MIN_STR));
-			break;
-		default:
-			snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
-			         _(KeyStr_Backlight_30_SEC_STR));
-			break;
+	case 0:
+		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
+				 _(KeyStr_Backlight_Alays_On));
+		break;
+	case 15:
+		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
+				 _(KeyStr_Backlight_15_SEC_STR));
+		break;
+	case 30:
+		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
+				 _(KeyStr_Backlight_30_SEC_STR));
+		break;
+	case 60:
+		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
+				 _(KeyStr_Backlight_1_MIN_STR));
+		break;
+	case 120:
+		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
+				 _(KeyStr_Backlight_2_MIN_STR));
+		break;
+	case 300:
+		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
+				 _(KeyStr_Backlight_5_MIN_STR));
+		break;
+	case 600:
+		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
+				 _(KeyStr_Backlight_10_MIN_STR));
+		break;
+	default:
+		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
+				 _(KeyStr_Backlight_30_SEC_STR));
+		break;
 	}
 	return (char *)g_strdup(backlight_time_str);
 
@@ -417,16 +417,16 @@ char *format_backlight_time_str(char *backligt_time)
 	SETTING_TRACE("backligt_time:%s--value:%d", backligt_time, value);
 	if (value == 0) {
 		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
-		         _("IDS_ST_BODY_ALWAYS_ON"));
+				 _("IDS_ST_BODY_ALWAYS_ON"));
 	} else if (value == 60) {
 		snprintf(backlight_time_str, sizeof(backlight_time_str),
-		         "%d %s", 1, (char *)(_("IDS_CLD_OPT_MINUTE")));
+				 "%d %s", 1, (char *)(_("IDS_CLD_OPT_MINUTE")));
 	} else if (value > 60) {
 		snprintf(backlight_time_str, sizeof(backlight_time_str),
-		         "%d %s", value / 60, (char *)(_("IDS_CLD_OPT_MINUTES_LC_ABB")));
+				 "%d %s", value / 60, (char *)(_("IDS_CLD_OPT_MINUTES_LC_ABB")));
 	} else {
 		snprintf(backlight_time_str, sizeof(backlight_time_str),
-		         "%d %s", value, (char *)(_("IDS_ST_BODY_SECONDS")));
+				 "%d %s", value, (char *)(_("IDS_ST_BODY_SECONDS")));
 	}
 	SETTING_TRACE("backlight_time_str:%s", backlight_time_str)
 	return (char *)g_strdup(backlight_time_str);
@@ -481,12 +481,12 @@ char *get_pa_Wi_Fi_on_off_str()
 	int value, err;
 	int ret = SETTING_RETURN_FAIL;
 	ret =
-	    setting_get_int_slp_key(INT_SLP_SETTING_WIFI_STATUS, &value, &err);
+		setting_get_int_slp_key(INT_SLP_SETTING_WIFI_STATUS, &value, &err);
 
 	if (SETTING_RETURN_FAIL == ret) {	/* file system exceptional handle, eg. The vconf file lost due to file system. */
 		value = VCONFKEY_WIFI_OFF;
 		setting_set_int_slp_key(INT_SLP_SETTING_WIFI_STATUS,
-		                        VCONFKEY_WIFI_OFF, &err);
+								VCONFKEY_WIFI_OFF, &err);
 	}
 
 	if (value) {
@@ -508,8 +508,8 @@ char *get_Mobile_AP_on_off_str()
 {
 	int value = -1, err;
 	int ret =
-	    setting_get_int_slp_key(INT_SLP_SETTING_MOBILE_AP_STATUS, &value,
-	                            &err);
+		setting_get_int_slp_key(INT_SLP_SETTING_MOBILE_AP_STATUS, &value,
+								&err);
 
 	/*  7 means bitwise-operation */
 	/*
@@ -521,7 +521,7 @@ char *get_Mobile_AP_on_off_str()
 	if (0 != ret || value < 0 || value > 7) {
 		value = 0;
 		setting_set_int_slp_key(INT_SLP_SETTING_MOBILE_AP_STATUS, value,
-		                        &err);
+								&err);
 	}
 
 	if (value != 0) {
@@ -542,7 +542,7 @@ char *get_BT_on_off_str()
 	if (SETTING_RETURN_FAIL == ret) {	/* file system exceptional handle, eg. The vconf file lost due to file system. */
 		value = VCONFKEY_BT_STATUS_OFF;
 		setting_set_int_slp_key(INT_SLP_SETTING_BT_STATUS,
-		                        VCONFKEY_BT_STATUS_OFF, &err);
+								VCONFKEY_BT_STATUS_OFF, &err);
 	}
 
 	if (VCONFKEY_BT_STATUS_OFF == value) {
@@ -579,11 +579,11 @@ char *get_pa_time_format_str()
 	int ret = SETTING_RETURN_FAIL;
 	int value, err;
 	char *format_str[] = { "IDS_ST_BODY_12_HOURS",
-	                       "IDS_ST_BODY_24_HOURS"
-	                     };
+						   "IDS_ST_BODY_24_HOURS"
+						 };
 	ret =
-	    setting_get_int_slp_key(INT_SLP_SETTING_REGIONFORMAT_TIME1224,
-	                            &value, &err);
+		setting_get_int_slp_key(INT_SLP_SETTING_REGIONFORMAT_TIME1224,
+								&value, &err);
 	setting_retvm_if(SETTING_RETURN_FAIL == ret, NULL, "Failed to get vconf value");	/* file system exceptional handle */
 
 	/*  scope */
@@ -601,11 +601,11 @@ EXPORT_PUBLIC char *get_pa_date_format_str()
 	int ret = SETTING_RETURN_FAIL;
 	int value, err;
 	char *format_str[] = { _("IDS_ST_BODY_DDMMYYYY_DOT"),
-	                       _("IDS_ST_BODY_MM_DD_YYYY_DOT"),
-	                       _("IDS_ST_BODY_YYYY_MM_DD_DOT"), _("IDS_ST_BODY_YYYY_DD_MM_DOT")
-	                     };
+						   _("IDS_ST_BODY_MM_DD_YYYY_DOT"),
+						   _("IDS_ST_BODY_YYYY_MM_DD_DOT"), _("IDS_ST_BODY_YYYY_DD_MM_DOT")
+						 };
 	ret =
-	    setting_get_int_slp_key(INT_SLP_SETTING_DATE_FORMAT, &value, &err);
+		setting_get_int_slp_key(INT_SLP_SETTING_DATE_FORMAT, &value, &err);
 	setting_retvm_if(SETTING_RETURN_FAIL == ret, NULL, "Failed to get vconf value");	/* file system exceptional handle */
 	return (char *)g_strdup(format_str[value]);
 }
@@ -615,156 +615,156 @@ static inline const char *_check_language_env_value(const char *value)
 	retv_if(NULL == value, NULL);
 
 	switch (*value) {
-		case 'a':
-			if (0 == strcmp(value, "ar"))
-				return "ar";
-			else if (0 == strcmp(value, "az"))
-				return "az";
-			break;
-		case 'b':
-			if (0 == strcmp(value, "bg"))
-				return "bg";
-			break;
-		case 'c':
-			if (0 == strcmp(value, "ca"))
-				return "ca";
-			else if (0 == strcmp(value, "cs"))
-				return "cs";
-			break;
-		case 'd':
-			if (0 == strcmp(value, "da"))
-				return "da";
-			else if (0 == strcmp(value, "de_DE"))
-				return "de_DE";
-			break;
-		case 'e':
-			if (0 == strcmp(value, "el_GR"))
-				return "el_GR";
-			else if (0 == strcmp(value, "en"))
-				return "en";
-			else if (0 == strcmp(value, "en_PH"))
-				return "en_PH";
-			else if (0 == strcmp(value, "en_US"))
-				return "en_US";
-			else if (0 == strcmp(value, "es_ES"))
-				return "es_ES";
-			else if (0 == strcmp(value, "es_MX"))
-				return "es_MX";
-			else if (0 == strcmp(value, "et"))
-				return "et";
-			else if (0 == strcmp(value, "eu"))
-				return "eu";
-			break;
-		case 'f':
-			if (0 == strcmp(value, "fi"))
-				return "fi";
-			else if (0 == strcmp(value, "fr_CA"))
-				return "fr_CA";
-			else if (0 == strcmp(value, "fr_FR"))
-				return "fr_FR";
-			break;
-		case 'g':
-			if (0 == strcmp(value, "ga"))
-				return "ga";
-			else if (0 == strcmp(value, "gl"))
-				return "gl";
-			break;
-		case 'h':
-			if (0 == strcmp(value, "hi"))
-				return "hi";
-			else if (0 == strcmp(value, "hr"))
-				return "hr";
-			else if (0 == strcmp(value, "hu"))
-				return "hu";
-			else if (0 == strcmp(value, "hy"))
-				return "hy";
-			break;
-		case 'i':
-			if (0 == strcmp(value, "is"))
-				return "is";
-			else if (0 == strcmp(value, "it_IT"))
-				return "it_IT";
-			break;
-		case 'j':
-			if (0 == strcmp(value, "ja_JP"))
-				return "ja_JP";
-			break;
-		case 'k':
-			if (0 == strcmp(value, "ka"))
-				return "ka";
-			else if (0 == strcmp(value, "kk"))
-				return "kk";
-			else if (0 == strcmp(value, "ko_KR"))
-				return "ko_KR";
-			break;
-		case 'l':
-			if (0 == strcmp(value, "lt"))
-				return "lt";
-			else if (0 == strcmp(value, "lv"))
-				return "lv";
-			break;
-		case 'm':
-			if (0 == strcmp(value, "mk"))
-				return "mk";
-			break;
-		case 'n':
-			if (0 == strcmp(value, "nb"))
-				return "nb";
-			else if (0 == strcmp(value, "nl_NL"))
-				return "nl_NL";
-			break;
-			/*case 'o': */
-		case 'p':
-			if (0 == strcmp(value, "pl"))
-				return "pl";
-			else if (0 == strcmp(value, "pt_BR"))
-				return "pt_BR";
-			else if (0 == strcmp(value, "pt_PT"))
-				return "pt_PT";
-			break;
-			/*case 'q': */
-		case 'r':
-			if (0 == strcmp(value, "ro"))
-				return "ro";
-			else if (0 == strcmp(value, "ru_RU"))
-				return "ru_RU";
-			break;
-		case 's':
-			if (0 == strcmp(value, "sk"))
-				return "sk";
-			else if (0 == strcmp(value, "sl"))
-				return "sl";
-			else if (0 == strcmp(value, "sr"))
-				return "sr";
-			else if (0 == strcmp(value, "sv"))
-				return "sv";
-			break;
-		case 't':
-			if (0 == strcmp(value, "tr_TR"))
-				return "tr_TR";
-			break;
-		case 'u':
-			if (0 == strcmp(value, "uk"))
-				return "uk";
-			else if (0 == strcmp(value, "uz"))
-				return "uz";
-			break;
-			/*case 'v': */
-			/*case 'w': */
-			/*case 'x': */
-			/*case 'y': */
-		case 'z':
-			if (0 == strcmp(value, "zh_CN"))
-				return "zh_CN";
-			else if (0 == strcmp(value, "zh_HK"))
-				return "zh_HK";
-			else if (0 == strcmp(value, "zh_SG"))
-				return "zh_SG";
-			else if (0 == strcmp(value, "zh_TW"))
-				return "zh_TW";
-			break;
-		default:
-			break;
+	case 'a':
+		if (0 == strcmp(value, "ar"))
+			return "ar";
+		else if (0 == strcmp(value, "az"))
+			return "az";
+		break;
+	case 'b':
+		if (0 == strcmp(value, "bg"))
+			return "bg";
+		break;
+	case 'c':
+		if (0 == strcmp(value, "ca"))
+			return "ca";
+		else if (0 == strcmp(value, "cs"))
+			return "cs";
+		break;
+	case 'd':
+		if (0 == strcmp(value, "da"))
+			return "da";
+		else if (0 == strcmp(value, "de_DE"))
+			return "de_DE";
+		break;
+	case 'e':
+		if (0 == strcmp(value, "el_GR"))
+			return "el_GR";
+		else if (0 == strcmp(value, "en"))
+			return "en";
+		else if (0 == strcmp(value, "en_PH"))
+			return "en_PH";
+		else if (0 == strcmp(value, "en_US"))
+			return "en_US";
+		else if (0 == strcmp(value, "es_ES"))
+			return "es_ES";
+		else if (0 == strcmp(value, "es_MX"))
+			return "es_MX";
+		else if (0 == strcmp(value, "et"))
+			return "et";
+		else if (0 == strcmp(value, "eu"))
+			return "eu";
+		break;
+	case 'f':
+		if (0 == strcmp(value, "fi"))
+			return "fi";
+		else if (0 == strcmp(value, "fr_CA"))
+			return "fr_CA";
+		else if (0 == strcmp(value, "fr_FR"))
+			return "fr_FR";
+		break;
+	case 'g':
+		if (0 == strcmp(value, "ga"))
+			return "ga";
+		else if (0 == strcmp(value, "gl"))
+			return "gl";
+		break;
+	case 'h':
+		if (0 == strcmp(value, "hi"))
+			return "hi";
+		else if (0 == strcmp(value, "hr"))
+			return "hr";
+		else if (0 == strcmp(value, "hu"))
+			return "hu";
+		else if (0 == strcmp(value, "hy"))
+			return "hy";
+		break;
+	case 'i':
+		if (0 == strcmp(value, "is"))
+			return "is";
+		else if (0 == strcmp(value, "it_IT"))
+			return "it_IT";
+		break;
+	case 'j':
+		if (0 == strcmp(value, "ja_JP"))
+			return "ja_JP";
+		break;
+	case 'k':
+		if (0 == strcmp(value, "ka"))
+			return "ka";
+		else if (0 == strcmp(value, "kk"))
+			return "kk";
+		else if (0 == strcmp(value, "ko_KR"))
+			return "ko_KR";
+		break;
+	case 'l':
+		if (0 == strcmp(value, "lt"))
+			return "lt";
+		else if (0 == strcmp(value, "lv"))
+			return "lv";
+		break;
+	case 'm':
+		if (0 == strcmp(value, "mk"))
+			return "mk";
+		break;
+	case 'n':
+		if (0 == strcmp(value, "nb"))
+			return "nb";
+		else if (0 == strcmp(value, "nl_NL"))
+			return "nl_NL";
+		break;
+	/*case 'o': */
+	case 'p':
+		if (0 == strcmp(value, "pl"))
+			return "pl";
+		else if (0 == strcmp(value, "pt_BR"))
+			return "pt_BR";
+		else if (0 == strcmp(value, "pt_PT"))
+			return "pt_PT";
+		break;
+	/*case 'q': */
+	case 'r':
+		if (0 == strcmp(value, "ro"))
+			return "ro";
+		else if (0 == strcmp(value, "ru_RU"))
+			return "ru_RU";
+		break;
+	case 's':
+		if (0 == strcmp(value, "sk"))
+			return "sk";
+		else if (0 == strcmp(value, "sl"))
+			return "sl";
+		else if (0 == strcmp(value, "sr"))
+			return "sr";
+		else if (0 == strcmp(value, "sv"))
+			return "sv";
+		break;
+	case 't':
+		if (0 == strcmp(value, "tr_TR"))
+			return "tr_TR";
+		break;
+	case 'u':
+		if (0 == strcmp(value, "uk"))
+			return "uk";
+		else if (0 == strcmp(value, "uz"))
+			return "uz";
+		break;
+	/*case 'v': */
+	/*case 'w': */
+	/*case 'x': */
+	/*case 'y': */
+	case 'z':
+		if (0 == strcmp(value, "zh_CN"))
+			return "zh_CN";
+		else if (0 == strcmp(value, "zh_HK"))
+			return "zh_HK";
+		else if (0 == strcmp(value, "zh_SG"))
+			return "zh_SG";
+		else if (0 == strcmp(value, "zh_TW"))
+			return "zh_TW";
+		break;
+	default:
+		break;
 	}
 
 	return NULL;
@@ -816,7 +816,7 @@ char *get_pa_week_format_str()
 	};
 
 	ret =
-	    setting_get_int_slp_key(INT_SLP_SETTING_WEEK_FORMAT, &value, &err);
+		setting_get_int_slp_key(INT_SLP_SETTING_WEEK_FORMAT, &value, &err);
 	setting_retvm_if(SETTING_RETURN_FAIL == ret, NULL, "Failed to get vconf value");	/* file system exceptional handle */
 	return (char *)g_strdup(format_str[value]);
 }
@@ -891,22 +891,22 @@ char *get_pa_screen_lock_type_str()
 	vconf_get_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, &lock_type);
 
 	switch (lock_type) {
-		case SETTING_SCREEN_LOCK_TYPE_NONE:
-			return setting_gettext("IDS_ST_MBODY_NONE");
-		case SETTING_SCREEN_LOCK_TYPE_SWIPE:
-			return setting_gettext("IDS_ST_MBODY_SWIPE");
-		case SETTING_SCREEN_LOCK_TYPE_MOTION:
-			return setting_gettext("IDS_ST_BODY_MOTION");
-		case SETTING_SCREEN_LOCK_TYPE_FACE_AND_VOICE:
-			return setting_gettext("IDS_ST_BODY_FACE_AND_VOICE");
-		case SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD:
-			return setting_gettext("IDS_ST_BODY_SIMPLE_PASSWORD");
-		case SETTING_SCREEN_LOCK_TYPE_PASSWORD:
-			return setting_gettext("IDS_ST_BODY_PASSWORD");
-		case SETTING_SCREEN_LOCK_TYPE_OTHER:
-			return vconf_get_str(VCONFKEY_SETAPPL_3RD_LOCK_PKG_NAME_STR);
-		default:
-			return NULL;
+	case SETTING_SCREEN_LOCK_TYPE_NONE:
+		return setting_gettext("IDS_ST_MBODY_NONE");
+	case SETTING_SCREEN_LOCK_TYPE_SWIPE:
+		return setting_gettext("IDS_ST_MBODY_SWIPE");
+	case SETTING_SCREEN_LOCK_TYPE_MOTION:
+		return setting_gettext("IDS_ST_BODY_MOTION");
+	case SETTING_SCREEN_LOCK_TYPE_FACE_AND_VOICE:
+		return setting_gettext("IDS_ST_BODY_FACE_AND_VOICE");
+	case SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD:
+		return setting_gettext("IDS_ST_BODY_SIMPLE_PASSWORD");
+	case SETTING_SCREEN_LOCK_TYPE_PASSWORD:
+		return setting_gettext("IDS_ST_BODY_PASSWORD");
+	case SETTING_SCREEN_LOCK_TYPE_OTHER:
+		return vconf_get_str(VCONFKEY_SETAPPL_3RD_LOCK_PKG_NAME_STR);
+	default:
+		return NULL;
 	}
 }
 
@@ -1016,7 +1016,7 @@ bool is_substr_ncase(const char *parentstr, const char *substr)
 
 EXPORT_PUBLIC
 bool is_string_belong_to_array(const char *partern, const char **array,
-                               int array_num)
+							   int array_num)
 {
 	int idx = 0;
 	for (; idx < array_num; idx++) {
@@ -1039,8 +1039,8 @@ EXPORT_PUBLIC char *remove_first_substring(const char *parent, const char *pat)
 	int str_len = safeStrLen(str);
 	int pat_len = safeStrLen(pat);
 	setting_retvm_if(pat_len > str_len, str,
-	                 "patlen[%d] > strlen[%d], Exit %s with return [%s]",
-	                 pat_len, str_len, __FUNCTION__, str);
+					 "patlen[%d] > strlen[%d], Exit %s with return [%s]",
+					 pat_len, str_len, __FUNCTION__, str);
 	char *p = NULL;
 	char *q = NULL;
 	for (; idx < str_len; idx++) {
@@ -1315,7 +1315,7 @@ bool is_ip_string(const char *ipstr, char **output)
 			return FALSE;
 		}
 		snprintf(speciliztion, sizeof(speciliztion),
-		         "%d", ip);
+				 "%d", ip);
 		g_strlcat(output_ipstr, speciliztion, MAX_SPECIALIZITION_LEN);
 		if (i < 3)
 			g_strlcat(output_ipstr, ".", MAX_SPECIALIZITION_LEN);
@@ -1383,7 +1383,7 @@ int excuteCmd(char *exec_path, int option_num, ...)
 {
 	char cmd[MAX_COMMON_BUFFER_LEN + 1] = {0, };
 	snprintf(cmd, MAX_COMMON_BUFFER_LEN,
-	         "%s", exec_path);
+			 "%s", exec_path);
 
 
 	va_list args;
@@ -1475,7 +1475,7 @@ bool isEmulBin()
 	}
 
 	if (0 == safeStrCmp(KeyStr_Emulator, model_str)
-	    || 0 == safeStrCmp("EMULATOR", model_str)) {
+		|| 0 == safeStrCmp("EMULATOR", model_str)) {
 		FREE(model_str);
 		return TRUE;
 	} else {
@@ -1495,28 +1495,28 @@ int get_popup_btn_response_type(Evas_Object *obj)
 	if (btn_str) {
 		SETTING_TRACE("btn_str:%s", btn_str);
 		if (0 == safeStrCmp(btn_str, _("IDS_CST_BUTTON_CLOSE"))
-		    || 0 == safeStrCmp(btn_str, _("IDS_SAPPS_SK_TRY_ABB"))/*KeyStr_Try */
-		    || 0 == safeStrCmp(btn_str, _("IDS_ST_BUTTON_OK"))
-		    || 0 == safeStrCmp(btn_str, _("IDS_ST_BUTTON_OK"))
-		    || 0 == safeStrCmp(btn_str, _("IDS_ST_SK_YES"))
-		    || 0 == safeStrCmp(btn_str, _("IDS_ST_BUTTON_STOP"))
-		    || 0 == safeStrCmp(btn_str, _("IDS_ST_BUTTON_DISCONNECT"))
-		    || 0 == safeStrCmp(btn_str, _("IDS_ST_BODY_USE_MOTION"))
-		    || 0 == safeStrCmp(btn_str, _("IDS_ST_TPOP_TRY_AGAIN"))
-		    || 0 == safeStrCmp(btn_str, _("IDS_ST_BODY_DELETE"))
-		    || 0 == safeStrCmp(btn_str, _("IDS_ST_HEADER_RESET"))
-		    || 0 == safeStrCmp(btn_str, _("IDS_ST_SK_FORMAT_ABB"))
-		    || 0 == safeStrCmp(btn_str, _("IDS_ST_HEADER_FORMAT_MVERB_ABB"))
-		    || 0 == safeStrCmp(btn_str, _("IDS_ST_BUTTON_CONTINUE"))
-		    || 0 == safeStrCmp(btn_str, _(KeyStr_Save))
-		    || 0 == safeStrCmp(btn_str, _("IDS_ST_BUTTON_ENABLE"))
-		    || 0 == safeStrCmp(btn_str, _("IDS_ST_BUTTON_DISABLE"))
-		    || 0 == safeStrCmp(btn_str, _("IDS_SA_BUTTON_DONE_ABB"))
-		    || 0 == safeStrCmp(btn_str, _("IDS_ST_BODY_TURN_OFF"))
-		    || 0 == safeStrCmp(btn_str, _("IDS_CLD_BUTTON_EXPORT"))
-		    || 0 == safeStrCmp(btn_str, _("IDS_SMEMO_BUTTON_IMPORT"))
-		    || 0 == safeStrCmp(btn_str, _("IDS_ST_HEADER_CLEAR_CACHE_ABB"))
-		    || 0 == safeStrCmp(btn_str, _("IDS_MTTRL_BUTTON_ENABLE_MOTION"))) {
+			|| 0 == safeStrCmp(btn_str, _("IDS_SAPPS_SK_TRY_ABB"))/*KeyStr_Try */
+			|| 0 == safeStrCmp(btn_str, _("IDS_ST_BUTTON_OK"))
+			|| 0 == safeStrCmp(btn_str, _("IDS_ST_BUTTON_OK"))
+			|| 0 == safeStrCmp(btn_str, _("IDS_ST_SK_YES"))
+			|| 0 == safeStrCmp(btn_str, _("IDS_ST_BUTTON_STOP"))
+			|| 0 == safeStrCmp(btn_str, _("IDS_ST_BUTTON_DISCONNECT"))
+			|| 0 == safeStrCmp(btn_str, _("IDS_ST_BODY_USE_MOTION"))
+			|| 0 == safeStrCmp(btn_str, _("IDS_ST_TPOP_TRY_AGAIN"))
+			|| 0 == safeStrCmp(btn_str, _("IDS_ST_BODY_DELETE"))
+			|| 0 == safeStrCmp(btn_str, _("IDS_ST_HEADER_RESET"))
+			|| 0 == safeStrCmp(btn_str, _("IDS_ST_SK_FORMAT_ABB"))
+			|| 0 == safeStrCmp(btn_str, _("IDS_ST_HEADER_FORMAT_MVERB_ABB"))
+			|| 0 == safeStrCmp(btn_str, _("IDS_ST_BUTTON_CONTINUE"))
+			|| 0 == safeStrCmp(btn_str, _(KeyStr_Save))
+			|| 0 == safeStrCmp(btn_str, _("IDS_ST_BUTTON_ENABLE"))
+			|| 0 == safeStrCmp(btn_str, _("IDS_ST_BUTTON_DISABLE"))
+			|| 0 == safeStrCmp(btn_str, _("IDS_SA_BUTTON_DONE_ABB"))
+			|| 0 == safeStrCmp(btn_str, _("IDS_ST_BODY_TURN_OFF"))
+			|| 0 == safeStrCmp(btn_str, _("IDS_CLD_BUTTON_EXPORT"))
+			|| 0 == safeStrCmp(btn_str, _("IDS_SMEMO_BUTTON_IMPORT"))
+			|| 0 == safeStrCmp(btn_str, _("IDS_ST_HEADER_CLEAR_CACHE_ABB"))
+			|| 0 == safeStrCmp(btn_str, _("IDS_MTTRL_BUTTON_ENABLE_MOTION"))) {
 			rsp_type = POPUP_RESPONSE_OK;
 		} else { /*for others, */
 			rsp_type = POPUP_RESPONSE_CANCEL;
@@ -1578,24 +1578,24 @@ static int __font_size_get()
 	retvm_if(ret != 0, -1, "get vconf failed");
 
 	switch (value) {
-		case SYSTEM_SETTINGS_FONT_SIZE_SMALL:
-			font_size = SMALL_FONT_DPI;
-			break;
-		case SYSTEM_SETTINGS_FONT_SIZE_NORMAL:
-			font_size = MIDDLE_FONT_DPI;
-			break;
-		case SYSTEM_SETTINGS_FONT_SIZE_LARGE:
-			font_size = LARGE_FONT_DPI;
-			break;
-		case SYSTEM_SETTINGS_FONT_SIZE_HUGE:
-			font_size = HUGE_FONT_DPI;
-			break;
-		case SYSTEM_SETTINGS_FONT_SIZE_GIANT:
-			font_size = GIANT_FONT_DPI;
-			break;
-		default:
-			font_size = MIDDLE_FONT_DPI;
-			break;
+	case SYSTEM_SETTINGS_FONT_SIZE_SMALL:
+		font_size = SMALL_FONT_DPI;
+		break;
+	case SYSTEM_SETTINGS_FONT_SIZE_NORMAL:
+		font_size = MIDDLE_FONT_DPI;
+		break;
+	case SYSTEM_SETTINGS_FONT_SIZE_LARGE:
+		font_size = LARGE_FONT_DPI;
+		break;
+	case SYSTEM_SETTINGS_FONT_SIZE_HUGE:
+		font_size = HUGE_FONT_DPI;
+		break;
+	case SYSTEM_SETTINGS_FONT_SIZE_GIANT:
+		font_size = GIANT_FONT_DPI;
+		break;
+	default:
+		font_size = MIDDLE_FONT_DPI;
+		break;
 	}
 	return font_size;
 }
@@ -2009,18 +2009,18 @@ EXPORT_PUBLIC char *__get_font_size_str(int font_size)
 		"IDS_EMAIL_POP_GIANT_M_TEXTSIZE",			   /* 4 */
 	};
 	switch (font_size) {
-		case SYSTEM_SETTINGS_FONT_SIZE_SMALL:
-			return (char *)font_size_arr[0];
-		case SYSTEM_SETTINGS_FONT_SIZE_NORMAL:
-			return (char *)font_size_arr[1];
-		case SYSTEM_SETTINGS_FONT_SIZE_LARGE:
-			return (char *)font_size_arr[2];
-		case SYSTEM_SETTINGS_FONT_SIZE_HUGE:
-			return (char *)font_size_arr[3];
-		case SYSTEM_SETTINGS_FONT_SIZE_GIANT:
-			return (char *)font_size_arr[4];
-		default:
-			return (char *)font_size_arr[1];
+	case SYSTEM_SETTINGS_FONT_SIZE_SMALL:
+		return (char *)font_size_arr[0];
+	case SYSTEM_SETTINGS_FONT_SIZE_NORMAL:
+		return (char *)font_size_arr[1];
+	case SYSTEM_SETTINGS_FONT_SIZE_LARGE:
+		return (char *)font_size_arr[2];
+	case SYSTEM_SETTINGS_FONT_SIZE_HUGE:
+		return (char *)font_size_arr[3];
+	case SYSTEM_SETTINGS_FONT_SIZE_GIANT:
+		return (char *)font_size_arr[4];
+	default:
+		return (char *)font_size_arr[1];
 	}
 }
 
@@ -2047,7 +2047,7 @@ void setting_ug_destroy(ui_gadget_h parent)
 
 EXPORT_PUBLIC
 void setting_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
-                          void *priv)
+						  void *priv)
 {
 	Evas_Object *base;
 
@@ -2062,19 +2062,19 @@ void setting_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
 	}
 
 	switch (mode) {
-		case UG_MODE_FULLVIEW:
-			evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-			                                 EVAS_HINT_EXPAND);
-			evas_object_show(base);
-			break;
-		default:
-			break;
+	case UG_MODE_FULLVIEW:
+		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
+										 EVAS_HINT_EXPAND);
+		evas_object_show(base);
+		break;
+	default:
+		break;
 	}
 }
 
 EXPORT_PUBLIC
 void setting_play_sound(const char *sound_file, int vol,
-                        void **mp_handle)
+						void **mp_handle)
 {
 	SETTING_TRACE_BEGIN;
 	player_h *player = calloc(1, sizeof(player_h));
@@ -2089,7 +2089,7 @@ void setting_play_sound(const char *sound_file, int vol,
 	int err = player_create(player);
 	if (err != PLAYER_ERROR_NONE) {
 		SETTING_TRACE_ERROR("creating the player handle failed[%d]",
-		                    err);
+							err);
 		FREE(player);
 		return;
 	}
@@ -2097,7 +2097,7 @@ void setting_play_sound(const char *sound_file, int vol,
 	err = player_set_uri(*player, sound_file);
 	if (err != PLAYER_ERROR_NONE) {
 		SETTING_TRACE_ERROR("error to set attribute---profile_uri[%d]",
-		                    err);
+							err);
 		player_destroy(*player);
 		FREE(player);
 		return;
@@ -2106,7 +2106,7 @@ void setting_play_sound(const char *sound_file, int vol,
 	err = player_prepare(*player);
 	if (err != PLAYER_ERROR_NONE) {
 		SETTING_TRACE_ERROR("realizing the player handle failed[%d]",
-		                    err);
+							err);
 		player_destroy(*player);
 		FREE(player);
 		return;

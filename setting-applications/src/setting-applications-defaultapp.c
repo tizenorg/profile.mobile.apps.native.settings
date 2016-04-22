@@ -86,11 +86,11 @@ void construct_defaultapp(void *data, Evas_Object *genlist)
 	char *appid = vconf_get_str(VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME);
 	char *sub_desc = setting_application_get_defaultapp_name(appid);
 	ad->data_home =
-	    setting_create_Gendial_field_def(genlist, &(ad->itc_2text_2),
-	                                     setting_applications_defaultapp_mouse_up_Gendial_list_cb,
-	                                     ad, SWALLOW_Type_INVALID, NULL,
-	                                     NULL, 0, KeyStr_Home,
-	                                     sub_desc, NULL);
+		setting_create_Gendial_field_def(genlist, &(ad->itc_2text_2),
+										 setting_applications_defaultapp_mouse_up_Gendial_list_cb,
+										 ad, SWALLOW_Type_INVALID, NULL,
+										 NULL, 0, KeyStr_Home,
+										 sub_desc, NULL);
 	if (ad->data_home) {
 		ad->data_home->userdata = ad;
 		__BACK_POINTER_SET(ad->data_home);
@@ -123,11 +123,11 @@ static void setting_applications_defaultapp_vconf_change_cb(keynode_t *key, void
 	if (!safeStrCmp(vconf_name, VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME)) {
 		if (ad->data_home) {
 			G_FREE(ad->data_home->sub_desc);
-			//ad->data_home->sub_desc = get_pa_backlight_time_value_str();
-			char* pkgname = vconf_get_str(VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME);
+			/*ad->data_home->sub_desc = get_pa_backlight_time_value_str(); */
+			char *pkgname = vconf_get_str(VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME);
 
-			// pkgname --> label
-			char * label = setting_application_get_defaultapp_name(pkgname);
+			/* pkgname --> label */
+			char *label = setting_application_get_defaultapp_name(pkgname);
 			ad->data_home->sub_desc = label;
 			elm_object_item_data_set(ad->data_home->item, ad->data_home);
 			elm_genlist_item_update(ad->data_home->item);
@@ -149,25 +149,25 @@ static int setting_applications_defaultapp_create(void *cb)
 	elm_genlist_clear(genlist);	/* first to clear list */
 
 	setting_push_layout_navi_bar(KeyStr_DefaultApplications,
-	                             _("IDS_ST_BUTTON_BACK"), NULL, NULL,
-	                             setting_applications_defaultapp_click_softkey_cancel_cb,
-	                             NULL,
-	                             NULL, ad, genlist, ad->navi_bar, NULL);
+								 _("IDS_ST_BUTTON_BACK"), NULL, NULL,
+								 setting_applications_defaultapp_click_softkey_cancel_cb,
+								 NULL,
+								 NULL, ad, genlist, ad->navi_bar, NULL);
 
 	/*ad->genlist = genlist; */
 	evas_object_smart_callback_add(genlist, "realized", __gl_realized_cb, ad);
 
 	construct_defaultapp(ad, genlist);/*------- */
-	// ad->data_home
+	/* ad->data_home */
 	int ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME,
-	                               setting_applications_defaultapp_vconf_change_cb, ad);
+									   setting_applications_defaultapp_vconf_change_cb, ad);
 	if (ret != 0) {
 		SETTING_TRACE_ERROR("call vconf_notify_key_changed failed");
 	}
 
-	// org.tizen.homescreen-efl : homescreen-efl
-	// org.tizen.homescreen     : Homescreen
-	// org.tizen.menu-screen : Simple Menu-screen
+	/* org.tizen.homescreen-efl : homescreen-efl */
+	/* org.tizen.homescreen     : Homescreen */
+	/* org.tizen.menu-screen : Simple Menu-screen */
 
 	setting_view_applications_defaultapp.is_create = 1;
 	return SETTING_RETURN_SUCCESS;
@@ -187,7 +187,7 @@ static int setting_applications_defaultapp_destroy(void *cb)
 
 
 	vconf_ignore_key_changed(VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME,
-	                               setting_applications_defaultapp_vconf_change_cb);
+							 setting_applications_defaultapp_vconf_change_cb);
 
 	setting_view_applications_defaultapp.is_create = 0;
 	elm_naviframe_item_pop(ad->navi_bar);
@@ -226,8 +226,8 @@ static int setting_applications_defaultapp_cleanup(void *cb)
 
 static void
 setting_applications_defaultapp_click_softkey_cancel_cb(void *data,
-                                                        Evas_Object *obj,
-                                                        void *event_info)
+														Evas_Object *obj,
+														void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -235,7 +235,7 @@ setting_applications_defaultapp_click_softkey_cancel_cb(void *data,
 	SettingApplicationsUG *ad = (SettingApplicationsUG *) data;
 
 	setting_view_change(&setting_view_applications_defaultapp,
-	                    &setting_view_applications_main, ad);
+						&setting_view_applications_main, ad);
 }
 
 void setting_applications_defaultapp_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj, void *event_info)
@@ -249,7 +249,7 @@ void setting_applications_defaultapp_mouse_up_Gendial_list_cb(void *data, Evas_O
 	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
 	elm_genlist_item_selected_set(item, 0);
 	Setting_GenGroupItem_Data *list_item =
-	    (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
+		(Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
 
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 	/*SETTING_TRACE("chk_status[%d]", list_item->chk_status); */
@@ -273,7 +273,7 @@ static gboolean setting_applications_create_homescreen_setting_ug(void *data)
 	}
 
 
-#if 0	
+#if 0
 	struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
 
 	if (!cbs) {

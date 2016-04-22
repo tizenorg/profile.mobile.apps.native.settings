@@ -54,12 +54,12 @@ const Elm_Genlist_Item_Class itc_no_reult = {
 
 #define DEFINE_ITC2(style, name) \
 	EXPORT_PUBLIC const Elm_Genlist_Item_Class name = {\
-	                                                   .item_style = style,\
-	                                                   .func.text_get = __search_label_get,\
-	                                                   .func.content_get = __search_icon_get,\
-	                                                   .func.state_get = NULL,\
-	                                                   .func.del = __search_item_del,\
-	                                                  };
+													   .item_style = style,\
+													   .func.text_get = __search_label_get,\
+													   .func.content_get = __search_icon_get,\
+													   .func.state_get = NULL,\
+													   .func.del = __search_item_del,\
+													  };
 
 DEFINE_ITC2("dialogue/1text.1icon.3.tb", g_search_genlist_ts);
 DEFINE_ITC2("dialogue/newset.1text.2icon.4.tb", g_search_genlist_ts_toggle);
@@ -165,7 +165,7 @@ static Evas_Object *__no_result_icon_get(void *data, Evas_Object *obj, const cha
 		int rot = elm_win_rotation_get(obj);
 		SETTING_TRACE_DEBUG("....change_ang:%d", rot);
 		if (APP_DEVICE_ORIENTATION_0 == rot
-		    || APP_DEVICE_ORIENTATION_180 == rot) {
+			|| APP_DEVICE_ORIENTATION_180 == rot) {
 			/*b.separator.. */
 			Evas_Object *separator = setting_create_blank_rect_customize(box, 1, 270);
 			elm_box_pack_end(box, separator);
@@ -372,7 +372,7 @@ void setting_add_db_search_index(sqlite3 *db, char *locale, char *keystr, char *
 	/*snprintf(query, sizeof(query), "INSERT INTO setting_search VALUES (%Q, %Q, %Q, %d, NULL, %Q, %Q, %Q)", */
 	/*			locale, fieldname, viewname, data_type,	keystr,	infostr, icon_path); */
 	char *query = sqlite3_mprintf("INSERT INTO setting_search VALUES (%Q, %Q, %Q, %d, NULL, %Q, %Q, %Q)",
-	                              locale, fieldname, viewname, data_type, keystr, infostr, icon_path);
+								  locale, fieldname, viewname, data_type, keystr, infostr, icon_path);
 	sql_stmt(db, query);
 	sqlite3_free(query);
 	query = NULL;
@@ -531,7 +531,7 @@ int setting_search_get_module_item_state(char *keyword, char *ug_name, Cfg_Item_
 	if (query_ops && keyword) {
 		/* OPS RETURNS NULL, IT'S PROBLEM */
 		cfg_func_table *ops = NULL;
-		// ret = (*query_ops) ("MOCK_STR_ID", &ops);   /*  CALL * /
+		/* ret = (*query_ops) ("MOCK_STR_ID", &ops);   /*  CALL * / */
 		ret = (*query_ops)(keyword, (void **)&ops);   /*  CALL */
 		SETTING_TRACE(" ops = %x ", ops);
 		/*------------------------------------------------------------- */
@@ -660,7 +660,7 @@ int __setting_init_search_index_module()
 		if (p) {
 			char *tempp;
 			domain_appname = strtok_r(domainname, ":",&tempp);
-			
+
 			SETTING_TRACE("p1:appname : %s\n", domain_appname);
 			SETTING_TRACE("p2:localedir : %s\n", p + 1);
 			/* set */
@@ -788,10 +788,10 @@ int __setting_init_search_index_app()
 				setting_add_db_search_index(db, locale, _(pitem[i].key_name), pitem[i].ug_args, pitem[i].item_type/*title in Genlist*/, "", subindex, icon_path);
 
 			} else if (pitem[i].item_type == Cfg_Item_Ug_Node
-			           || pitem[i].item_type == Cfg_Item_Ug_Node_Toggle
-			           || pitem[i].item_type == Cfg_Item_AppLauncher_Node
-			           || pitem[i].item_type == Cfg_Item_AppLauncher_Node_Toggle
-			          ) {
+					   || pitem[i].item_type == Cfg_Item_Ug_Node_Toggle
+					   || pitem[i].item_type == Cfg_Item_AppLauncher_Node
+					   || pitem[i].item_type == Cfg_Item_AppLauncher_Node_Toggle
+					  ) {
 
 				if (pitem[i].key_name && _(pitem[i].key_name)) {
 					setting_add_db_search_index(db, locale, _(pitem[i].key_name), pitem[i].ug_args, pitem[i].item_type/*UG name*/, "", subindex, icon_path);
@@ -802,8 +802,8 @@ int __setting_init_search_index_app()
 					setting_add_db_search_index(db, locale, _(pitem[i].key_name), pitem[i].ug_args, pitem[i].item_type/*App Launching*/, "", subindex, icon_path);
 				}
 			} else if (pitem[i].item_type == Cfg_Item_Ui_Node
-			           || pitem[i].item_type == Cfg_Item_Ui_Node_Toggle
-			          ) {
+					   || pitem[i].item_type == Cfg_Item_Ui_Node_Toggle
+					  ) {
 
 				setting_add_db_search_index(db, locale, _(pitem[i].key_name), pitem[i].ug_args, pitem[i].item_type/*UI type*/, "", subindex, icon_path);
 			}

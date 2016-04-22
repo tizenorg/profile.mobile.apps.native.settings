@@ -54,20 +54,20 @@ setting_view setting_view_network_main = {
 };
 
 static void setting_network_main_item_Gendial_mouse_up_cb(void *data,
-                                                          Evas_Object *obj,
-                                                          void *event_info);
+														  Evas_Object *obj,
+														  void *event_info);
 static void setting_network_main_click_softkey_help_cb(void *data,
-                                                       Evas_Object *obj,
-                                                       void *event_info);
+													   Evas_Object *obj,
+													   void *event_info);
 static void setting_network_main_click_softkey_back_cb(void *data,
-                                                       Evas_Object *obj,
-                                                       void *event_info);
+													   Evas_Object *obj,
+													   void *event_info);
 static void setting_network_main_chk_btn_cb(void *data, Evas_Object *obj,
-                                            void *event_info);
+											void *event_info);
 static void setting_network_use_packet_resp_cb(void *data, Evas_Object *obj,
-                                               void *event_info);
+											   void *event_info);
 static void __setting_network_data_roaming_resp_cb(void *data, Evas_Object *obj,
-                                                   void *event_info);
+												   void *event_info);
 static void __net_restriction_mode_vconf_change_cb(keynode_t *key, void *data);
 
 
@@ -87,13 +87,13 @@ static Eina_Bool __set_net_mode_on_delay(void *data)
 	retvm_if(data == NULL, ECORE_CALLBACK_CANCEL, "Data parameter is NULL");
 
 	SettingNetworkUG *ad = (SettingNetworkUG *)data;
-	//Elm_Object_Item *subitem = (Elm_Object_Item *) data;
-	//Elm_Object_Item *parentItem = elm_genlist_item_parent_get(subitem);
-	//retvm_if(parentItem == NULL, ECORE_CALLBACK_CANCEL, "parentItem is NULL");
+	/*Elm_Object_Item *subitem = (Elm_Object_Item *) data; */
+	/*Elm_Object_Item *parentItem = elm_genlist_item_parent_get(subitem); */
+	/*retvm_if(parentItem == NULL, ECORE_CALLBACK_CANCEL, "parentItem is NULL"); */
 
-	//Setting_GenGroupItem_Data *data_subItem = elm_object_item_data_get(subitem);	/* parent data */
-	//Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(parentItem);	/* parent data */
-	//retvm_if(!data_subItem || !data_parentItem, ECORE_CALLBACK_CANCEL, "!data_subItem || !data_parentItem");
+	/*Setting_GenGroupItem_Data *data_subItem = elm_object_item_data_get(subitem);	/* parent data * / */
+	/*Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(parentItem);	/* parent data * / */
+	/*retvm_if(!data_subItem || !data_parentItem, ECORE_CALLBACK_CANCEL, "!data_subItem || !data_parentItem"); */
 
 	retvm_if(ad == NULL, ECORE_CALLBACK_CANCEL, "ad is NULL");
 
@@ -121,7 +121,7 @@ static Eina_Bool __set_net_mode_on_delay(void *data)
 }
 
 static void __change_3g_on_resp_cb(void *data, Evas_Object *obj,
-                                   void *event_info)
+								   void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
@@ -145,8 +145,8 @@ static void __change_3g_on_resp_cb(void *data, Evas_Object *obj,
 		ad->b_trigged_by_modechanging = TRUE;
 		/*for delay.. */
 		ad->popup = setting_create_popup_with_progressbar(ad, ad->win_get,
-		                                                  PROGRESSBAR_STYLE,
-		                                                  NULL, NULL, NULL, 0, TRUE, FALSE, 0);
+														  PROGRESSBAR_STYLE,
+														  NULL, NULL, NULL, 0, TRUE, FALSE, 0);
 		if (ad->timer) {
 			ecore_timer_del(ad->timer);
 			ad->timer = NULL;
@@ -290,12 +290,12 @@ static void _setting_network_activate_state_data_roaming(void *data, bool state)
 	SettingNetworkUG *ad = data;
 
 	if (state == true) {
-		if(ad->data_roaming && ad->data_roaming->item) {
+		if (ad->data_roaming && ad->data_roaming->item) {
 			setting_enable_genlist_item(ad->data_roaming->item);
 			SETTING_TRACE("AFTER enable data roaming");
 		}
 	} else {
-		if(ad->data_roaming && ad->data_roaming->item) {
+		if (ad->data_roaming && ad->data_roaming->item) {
 			setting_disable_genlist_item(ad->data_roaming->item);
 			SETTING_TRACE("AFTER disable data roaming");
 		}
@@ -320,7 +320,7 @@ static void __data_roaming_change_cb(keynode_t *key, void *data)
 	SETTING_TRACE("vconf_name:%s, status:%d", vconf_name, status);
 
 	if (!safeStrCmp(vconf_name, VCONFKEY_SETAPPL_STATE_DATA_ROAMING_BOOL) && ad->data_roaming) {
-		#if 0
+#if 0
 		setting_update_gl_item_chk_status(ad->data_roaming, status);
 		if (status) {
 			int value = 0;
@@ -331,7 +331,7 @@ static void __data_roaming_change_cb(keynode_t *key, void *data)
 				setting_network_set_state_mobile_data(SETTING_ON_OFF_BTN_ON);
 			}
 		}
-		#endif
+#endif
 	}
 }
 
@@ -394,27 +394,27 @@ static char *_get_network_mode_sub_desc()
 	if (-1 != k) {
 		SETTING_TRACE("VCONFKEY_SETAPPL_NETWORK_MODE_INT value:%d", value);
 		switch (value) {
-			case TAPI_NETWORK_MODE_AUTO:
-			case TAPI_NETWORK_MODE_LTE|TAPI_NETWORK_MODE_GSM|TAPI_NETWORK_MODE_WCDMA: {
-					SETTING_TRACE("_(Keystr_NetBrand_Auto):%s", _(Keystr_NetBrand_Auto));
-					sub_des = _(Keystr_NetBrand_Auto);
-					break;
-				}
+		case TAPI_NETWORK_MODE_AUTO:
+		case TAPI_NETWORK_MODE_LTE|TAPI_NETWORK_MODE_GSM|TAPI_NETWORK_MODE_WCDMA: {
+				SETTING_TRACE("_(Keystr_NetBrand_Auto):%s", _(Keystr_NetBrand_Auto));
+				sub_des = _(Keystr_NetBrand_Auto);
+				break;
+			}
 
-			case TAPI_NETWORK_MODE_GSM:
-				sub_des = _(Keystr_NetBrand_GSM);
-				break;
-			case TAPI_NETWORK_MODE_WCDMA:
-				sub_des = _(Keystr_NetBrand_WCDMA);
-				break;
-			case TAPI_NETWORK_MODE_LTE|TAPI_NETWORK_MODE_WCDMA:
-				sub_des = _(Keystr_NetBrand_LTE_WCDMA);
-				break;
-			case TAPI_NETWORK_MODE_GSM|TAPI_NETWORK_MODE_WCDMA:
-				sub_des = _(Keystr_NetBrand_Auto_WCDMA_GSM);
-				break;
-			default:
-				break;
+		case TAPI_NETWORK_MODE_GSM:
+			sub_des = _(Keystr_NetBrand_GSM);
+			break;
+		case TAPI_NETWORK_MODE_WCDMA:
+			sub_des = _(Keystr_NetBrand_WCDMA);
+			break;
+		case TAPI_NETWORK_MODE_LTE|TAPI_NETWORK_MODE_WCDMA:
+			sub_des = _(Keystr_NetBrand_LTE_WCDMA);
+			break;
+		case TAPI_NETWORK_MODE_GSM|TAPI_NETWORK_MODE_WCDMA:
+			sub_des = _(Keystr_NetBrand_Auto_WCDMA_GSM);
+			break;
+		default:
+			break;
 		}
 	} else {
 		SETTING_TRACE("VCONFKEY_SETAPPL_NETWORK_MODE_INT value:%d on success ", value);
@@ -451,7 +451,7 @@ void _get_network_selected_desc(void *data, char *sel_network_desc, int size)
 	/*	} */
 	/*	else{ */
 	snprintf(sel_network_desc, size,
-	         "%s, %s", _("IDS_ST_BODY_ANSWERINGMODE_AUTOMATIC"), _(ad->sel_network));
+			 "%s, %s", _("IDS_ST_BODY_ANSWERINGMODE_AUTOMATIC"), _(ad->sel_network));
 	/*	} */
 }
 
@@ -480,27 +480,27 @@ static void __check_sim_card(void *cb)
 	setting_get_int_slp_key(INT_SLP_SETTING_SIM_SLOT, &value, &err);
 	SETTING_TRACE("sim: %d", value);
 	switch (value) {
-		case VCONFKEY_TELEPHONY_SIM_NOT_PRESENT:
-			ad->popup = setting_create_popup(ad, ad->win_get,
-			                                 NULL, _("IDS_ST_POP_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"),
-			                                 __popup_cb, 0, true, true,
-											 1, keyStr_OK);
-			SETTING_TRACE("%s*** [ERR] No SIM. sim_slot_type=%d ***%s",
-			              SETTING_FONT_RED, value, SETTING_FONT_BLACK);
-			return;
-			break;
-		case VCONFKEY_TELEPHONY_SIM_CARD_ERROR:
-		case VCONFKEY_TELEPHONY_SIM_UNKNOWN:
-			ad->popup = setting_create_popup(ad, ad->win_get,
-			                                 NULL, _("IDS_ST_POP_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"),
-			                                  __popup_cb, 0, true, true,
-											  1, keyStr_OK);
-			SETTING_TRACE("%s*** [ERR] Invalid SIM. sim_slot_type=%d ***%s",
-			              SETTING_FONT_RED, value, SETTING_FONT_BLACK);
-			return;
-			break;
-		default:
-			break;
+	case VCONFKEY_TELEPHONY_SIM_NOT_PRESENT:
+		ad->popup = setting_create_popup(ad, ad->win_get,
+										 NULL, _("IDS_ST_POP_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"),
+										 __popup_cb, 0, true, true,
+										 1, keyStr_OK);
+		SETTING_TRACE("%s*** [ERR] No SIM. sim_slot_type=%d ***%s",
+					  SETTING_FONT_RED, value, SETTING_FONT_BLACK);
+		return;
+		break;
+	case VCONFKEY_TELEPHONY_SIM_CARD_ERROR:
+	case VCONFKEY_TELEPHONY_SIM_UNKNOWN:
+		ad->popup = setting_create_popup(ad, ad->win_get,
+										 NULL, _("IDS_ST_POP_INSERT_SIM_CARD_TO_ACCESS_NETWORK_SERVICES"),
+										 __popup_cb, 0, true, true,
+										 1, keyStr_OK);
+		SETTING_TRACE("%s*** [ERR] Invalid SIM. sim_slot_type=%d ***%s",
+					  SETTING_FONT_RED, value, SETTING_FONT_BLACK);
+		return;
+		break;
+	default:
+		break;
 	}
 }
 
@@ -533,8 +533,8 @@ static void __check_flight_mode(void *cb)
 			ad->popup = NULL;
 		}
 		ad->popup = setting_create_popup(ad, ad->win_get,
-		                                 NULL, "IDS_ST_BODY_FLIGHT_MODE_HAS_BEEN_ENABLED_NETWORK_SETTINGS_WILL_CLOSE",
-		                                 __popup_cb2, 0, true, true,
+										 NULL, "IDS_ST_BODY_FLIGHT_MODE_HAS_BEEN_ENABLED_NETWORK_SETTINGS_WILL_CLOSE",
+										 __popup_cb2, 0, true, true,
 										 1, keyStr_OK);
 	}
 }
@@ -572,9 +572,9 @@ static void setting_network_mode_popup(void *data)
 
 	Evas_Object *scroller = NULL;
 	ad->network_mode_popup = setting_create_popup_with_list(&scroller , ad, ad->win_get,
-	                                                          "Network Mode", NULL, 0, false, false, 0);
+															"Network Mode", NULL, 0, false, false, 0);
 	_P(ad->network_mode_popup);
-	//Evas_Object *parentItem = ad->network_mode_popup;
+	/*Evas_Object *parentItem = ad->network_mode_popup; */
 
 	cm_call_status_e call_status = CM_CALL_STATUS_IDLE;
 	cm_client_h cm_handle = NULL;
@@ -583,7 +583,7 @@ static void setting_network_mode_popup(void *data)
 	cm_deinit(cm_handle);
 	if (CM_CALL_STATUS_IDLE != call_status) {
 		setting_create_popup(ad, ad->win_get, NULL,
-		                            _("IDS_CST_POP_OPERATION_NOT_ALLOWED_DURING_CALLS"), NULL, 0, false, false, 0);
+							 _("IDS_CST_POP_OPERATION_NOT_ALLOWED_DURING_CALLS"), NULL, 0, false, false, 0);
 		return;
 	}
 
@@ -606,11 +606,11 @@ static void setting_network_mode_popup(void *data)
 			pszStrId = _("IDS_ST_BODY_LTE_WCDMA_GSM_NHAUTO_CONNECT");
 
 		ad->lte_wcdma_gsm = setting_create_Gendial_field_1radio(scroller, &itc_multiline_1text_1icon,
-	                                                              __network_sub_list_sel_cb, ad,
-	                                                              SWALLOW_Type_1RADIO_RIGHT,
-	                                                              rdg, TAPI_NETWORK_MODE_LTE | TAPI_NETWORK_MODE_WCDMA | TAPI_NETWORK_MODE_GSM/* chk_status */,
-																  pszStrId,
-	                                                              __network_default_rd_change);
+																__network_sub_list_sel_cb, ad,
+																SWALLOW_Type_1RADIO_RIGHT,
+																rdg, TAPI_NETWORK_MODE_LTE | TAPI_NETWORK_MODE_WCDMA | TAPI_NETWORK_MODE_GSM/* chk_status */,
+																pszStrId,
+																__network_default_rd_change);
 	}
 
 	/* WCDMA/GSM */
@@ -622,12 +622,12 @@ static void setting_network_mode_popup(void *data)
 
 
 	ad->wcdma_gsm = setting_create_Gendial_field_1radio(scroller, &itc_multiline_1text_1icon,
-	                                                              __network_sub_list_sel_cb, ad,
-	                                                              SWALLOW_Type_1RADIO_RIGHT,
-	                                                              rdg,
-																  TAPI_NETWORK_MODE_WCDMA | TAPI_NETWORK_MODE_GSM,	/* chk_status */
-																  pszStrId,
-	                                                              __network_default_rd_change);
+														__network_sub_list_sel_cb, ad,
+														SWALLOW_Type_1RADIO_RIGHT,
+														rdg,
+														TAPI_NETWORK_MODE_WCDMA | TAPI_NETWORK_MODE_GSM,	/* chk_status */
+														pszStrId,
+														__network_default_rd_change);
 
 	/* WCDMA */
 	if (strcmp(szCscFeatureValue, "all_numeric") == 0)
@@ -636,12 +636,12 @@ static void setting_network_mode_popup(void *data)
 		pszStrId = _("IDS_ST_MBODY_WCDMA_ONLY");
 
 	ad->wcdma_only = setting_create_Gendial_field_1radio(scroller, &itc_multiline_1text_1icon,
-	                                                              __network_sub_list_sel_cb, ad,
-	                                                              SWALLOW_Type_1RADIO_RIGHT,
-	                                                              rdg,
-																  TAPI_NETWORK_MODE_WCDMA,	/* chk_status */
-																  pszStrId,
-	                                                              __network_default_rd_change);
+														 __network_sub_list_sel_cb, ad,
+														 SWALLOW_Type_1RADIO_RIGHT,
+														 rdg,
+														 TAPI_NETWORK_MODE_WCDMA,	/* chk_status */
+														 pszStrId,
+														 __network_default_rd_change);
 
 	/* GSM */
 	if (strcmp(szCscFeatureValue, "all_numeric") == 0)
@@ -650,12 +650,12 @@ static void setting_network_mode_popup(void *data)
 		pszStrId = _("IDS_ST_MBODY_GSM_ONLY");
 
 	ad->gsm_only = setting_create_Gendial_field_1radio(scroller, &itc_multiline_1text_1icon,
-	                                                              __network_sub_list_sel_cb, ad,
-	                                                              SWALLOW_Type_1RADIO_RIGHT,
-	                                                              rdg,
-																  TAPI_NETWORK_MODE_GSM,	/* chk_status */
-																  pszStrId,
-	                                                              __network_default_rd_change);
+													   __network_sub_list_sel_cb, ad,
+													   SWALLOW_Type_1RADIO_RIGHT,
+													   rdg,
+													   TAPI_NETWORK_MODE_GSM,	/* chk_status */
+													   pszStrId,
+													   __network_default_rd_change);
 
 	setting_get_int_slp_key(INT_SLP_SETTING_NETWORK_MODE, &value, &err);
 	SETTING_TRACE("value: %d, err: %d", value, err);
@@ -721,16 +721,16 @@ static int setting_network_main_create(void *cb)
 	Evas_Object *scroller;
 
 	ad->ly_main =
-	    setting_create_layout_navi_bar_genlist(ad->win_main_layout,
-	                                           ad->win_get,
-	                                           _("IDS_ST_BODY_NETWORK"),
-	                                           //dgettext("sys_string", "IDS_ST_BUTTON_BACK"),
-	                                           NULL, /* ARROW STYLE */
-	                                           NULL,/*_("IDS_ST_HEADER_HELP"), */
-	                                           setting_network_main_click_softkey_back_cb,
-	                                           setting_network_main_click_softkey_help_cb,
-	                                           ad, &scroller,
-	                                           &ad->navi_bar);
+		setting_create_layout_navi_bar_genlist(ad->win_main_layout,
+											   ad->win_get,
+											   _("IDS_ST_BODY_NETWORK"),
+											   /*dgettext("sys_string", "IDS_ST_BUTTON_BACK"), */
+											   NULL, /* ARROW STYLE */
+											   NULL,/*_("IDS_ST_HEADER_HELP"), */
+											   setting_network_main_click_softkey_back_cb,
+											   setting_network_main_click_softkey_help_cb,
+											   ad, &scroller,
+											   &ad->navi_bar);
 
 	if (scroller) {
 		ad->genlist = scroller;
@@ -744,8 +744,8 @@ static int setting_network_main_create(void *cb)
 	Elm_Object_Item *item = NULL;;
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
-	// mobile data ON  --> Data Roaming activate
-	// mobile data OFF --> Data Roaming de-activate
+	/* mobile data ON  --> Data Roaming activate */
+	/* mobile data OFF --> Data Roaming de-activate */
 
 	/* [UI] TITLE : "Mobile Data" */
 	int value_mobile_data;
@@ -753,11 +753,11 @@ static int setting_network_main_create(void *cb)
 	setting_network_get_state_mobile_data(&value_mobile_data);
 
 	ad->data_mobile_data = setting_create_Gendial_field_def(scroller, &itc_1text_1icon,
-	                                                       setting_network_main_item_Gendial_mouse_up_cb,
-	                                                       ad, SWALLOW_Type_1ICON_1RADIO, NULL,
-	                                                       NULL, value_mobile_data,
-	                                                       KeyStr_UseMobileData, NULL,
-	                                                       setting_network_main_chk_btn_cb);
+															setting_network_main_item_Gendial_mouse_up_cb,
+															ad, SWALLOW_Type_1ICON_1RADIO, NULL,
+															NULL, value_mobile_data,
+															KeyStr_UseMobileData, NULL,
+															setting_network_main_chk_btn_cb);
 	if (ad->data_mobile_data) {
 		ad->data_mobile_data->userdata = ad;
 		__BACK_POINTER_SET(ad->data_mobile_data);
@@ -765,11 +765,11 @@ static int setting_network_main_create(void *cb)
 		SETTING_TRACE_ERROR("ad->data_mobile_data is NULL");
 	}
 
-	#ifdef OLD_GENLIST_STYLE
+#ifdef OLD_GENLIST_STYLE
 	/* [UI] "Mobile Data" descrition */
 	const char *title = Data_packet_Sub_desc;
 	ADD_GL_HELP(scroller, title);
-	#endif
+#endif
 
 	/* [UI] Data Roaming - TITLE : "Data Roaming" */
 	int value_data_roaming;
@@ -778,32 +778,32 @@ static int setting_network_main_create(void *cb)
 	SETTING_TRACE_ERROR(" ---> data roaming value : %d", value_data_roaming);
 
 	ad->data_roaming = setting_create_Gendial_field_def(scroller, &(itc_1text_1icon),
-	                                                    setting_network_main_item_Gendial_mouse_up_cb,
-	                                                    ad, SWALLOW_Type_1ICON_1RADIO, NULL,
-	                                                    NULL, value_data_roaming,
-	                                                    KeyStr_DataRoaming, NULL,
-	                                                    setting_network_main_chk_btn_cb);
+														setting_network_main_item_Gendial_mouse_up_cb,
+														ad, SWALLOW_Type_1ICON_1RADIO, NULL,
+														NULL, value_data_roaming,
+														KeyStr_DataRoaming, NULL,
+														setting_network_main_chk_btn_cb);
 	if (ad->data_roaming) {
 		ad->data_roaming->userdata = ad;
-		//ad->data_roaming->isItemDisableFlag = value_mobile_data;
+		/*ad->data_roaming->isItemDisableFlag = value_mobile_data; */
 		__BACK_POINTER_SET(ad->data_roaming);
 	} else {
 		SETTING_TRACE_ERROR("ad->data_roaming is NULL");
 	}
 
 
-	#ifdef OLD_GENLIST_STYLE
+#ifdef OLD_GENLIST_STYLE
 	ADD_GL_HELP(scroller, SETTING_NETWORK_DATA_ROMING_DESC);
-	#endif
+#endif
 	/* [UI] Network Mode */
 	ad->data_net_mode =
-	    setting_create_Gendial_field_def(scroller,
-	                                     &itc_2text_3_parent,
+		setting_create_Gendial_field_def(scroller,
+										 &itc_2text_3_parent,
 										 setting_network_main_item_Gendial_mouse_up_cb,
 										 ad, SWALLOW_Type_INVALID, NULL, NULL,
-	                                     0, "IDS_ST_BODY_NETWORK_MODE",
-	                                     NULL,
-	                                     NULL);
+										 0, "IDS_ST_BODY_NETWORK_MODE",
+										 NULL,
+										 NULL);
 
 	if (ad->data_net_mode) {
 		ad->data_net_mode->int_slp_setting_binded = INT_SLP_SETTING_NETWORK_MODE;
@@ -817,12 +817,12 @@ static int setting_network_main_create(void *cb)
 	char sel_network_desc[MAX_COMMON_BUFFER_LEN] = {0,};
 	_get_network_selected_desc(ad, sel_network_desc, MAX_COMMON_BUFFER_LEN);
 	ad->data_sel_net = setting_create_Gendial_field_def(scroller,
-	                                                    &itc_2text_3,
-	                                                    setting_network_main_item_Gendial_mouse_up_cb,
-	                                                    ad, SWALLOW_Type_INVALID,
-	                                                    NULL, NULL, 0,
-	                                                    "IDS_COM_BODY_NETWORK_OPERATORS",
-	                                                    sel_network_desc, NULL);
+														&itc_2text_3,
+														setting_network_main_item_Gendial_mouse_up_cb,
+														ad, SWALLOW_Type_INVALID,
+														NULL, NULL, 0,
+														"IDS_COM_BODY_NETWORK_OPERATORS",
+														sel_network_desc, NULL);
 	if (ad->data_sel_net) {
 		__BACK_POINTER_SET(ad->data_sel_net);
 		ad->data_sel_net->userdata = ad;
@@ -833,10 +833,10 @@ static int setting_network_main_create(void *cb)
 
 	/* [UI] Connection mode description */
 	ad->data_connection = setting_create_Gendial_field_def(scroller, &itc_1text,
-	                                                       setting_network_main_item_Gendial_mouse_up_cb,
-	                                                       ad, SWALLOW_Type_INVALID, NULL, NULL,
-	                                                       0, CONNECTION_DSC,
-	                                                       NULL, NULL);
+														   setting_network_main_item_Gendial_mouse_up_cb,
+														   ad, SWALLOW_Type_INVALID, NULL, NULL,
+														   0, CONNECTION_DSC,
+														   NULL, NULL);
 	if (ad->data_connection) {
 		__BACK_POINTER_SET(ad->data_connection);
 		ad->data_connection->userdata = ad;
@@ -858,20 +858,20 @@ static int setting_network_main_create(void *cb)
 	/* eventsystem */
 #if 0
 	if (ES_R_OK != eventsystem_register_event(SYS_EVENT_MOBILE_DATA_STATE,
-	                                          &mobile_data_event_reg_id,
-	                                          (eventsystem_handler)mobile_data_state_event_handler, cb)) {
+											  &mobile_data_event_reg_id,
+											  (eventsystem_handler)mobile_data_state_event_handler, cb)) {
 		SETTING_TRACE_ERROR("error");
 	}
 
 	if (ES_R_OK != eventsystem_register_event(SYS_EVENT_DATA_ROAMING_STATE,
-	                                          &data_roaming_event_reg_id,
-	                                          (eventsystem_handler)data_roaming_state_event_handler, cb)) {
+											  &data_roaming_event_reg_id,
+											  (eventsystem_handler)data_roaming_state_event_handler, cb)) {
 		SETTING_TRACE_ERROR("error");
 	}
 #endif
 
-	// mobile data On -> data roaming activates
-	// mobile data Off -> data roaming deactivates
+	/* mobile data On -> data roaming activates */
+	/* mobile data Off -> data roaming deactivates */
 	SETTING_TRACE(" ---> mobile-data value : %d", value_mobile_data);
 	if (value_mobile_data)
 		_setting_network_activate_state_data_roaming(ad, true);
@@ -965,7 +965,7 @@ static int setting_network_main_cleanup(void *cb)
 
 static void
 setting_network_main_click_softkey_help_cb(void *data, Evas_Object *obj,
-                                           void *event_info)
+										   void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -974,7 +974,7 @@ setting_network_main_click_softkey_help_cb(void *data, Evas_Object *obj,
 
 static void
 setting_network_main_click_softkey_back_cb(void *data, Evas_Object *obj,
-                                           void *event_info)
+										   void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
@@ -995,15 +995,15 @@ static Eina_Bool __change_search_view_on_timer(void *data)
 	}
 
 	setting_view_change(&setting_view_network_main,
-	                    &setting_view_network_select_network,
-	                    ad);
+						&setting_view_network_select_network,
+						ad);
 	/*ecore_timer_del(ad->timer); */
 	ad->timer = NULL;
 	return ECORE_CALLBACK_CANCEL;
 }
 
 void __change_search_view_on_resp_cb(void *data, Evas_Object *obj,
-                                     void *event_info)
+									 void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
@@ -1021,8 +1021,8 @@ void __change_search_view_on_resp_cb(void *data, Evas_Object *obj,
 
 		/*for delay.. */
 		ad->popup = setting_create_popup_with_progressbar(ad, ad->win_get,
-		                                                  PROGRESSBAR_STYLE,
-		                                                  NULL, NULL, NULL, 0, TRUE, FALSE, 0);
+														  PROGRESSBAR_STYLE,
+														  NULL, NULL, NULL, 0, TRUE, FALSE, 0);
 
 		if (ad->timer) {
 			ecore_timer_del(ad->timer);
@@ -1061,7 +1061,7 @@ static void _setting_network_popup_data_roaming_rollback(void *data)
 	int err = 0;
 	int value = 0;
 
-	//int err_data_romaing = 
+	/*int err_data_romaing = */
 	setting_network_get_state_data_roaming(&value);
 	SETTING_TRACE("value = %d", value);
 
@@ -1078,7 +1078,7 @@ static void _setting_network_popup_mobile_data_hide_cb(void *data, Evas_Object *
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
 
 	_setting_network_popup_mobile_data_rollback(ad);
-//	elm_popup_dismiss(obj);
+	/*	elm_popup_dismiss(obj); */
 }
 
 static void _setting_network_popup_data_roaming_hide_cb(void *data, Evas_Object *obj, void *event_info)
@@ -1089,7 +1089,7 @@ static void _setting_network_popup_data_roaming_hide_cb(void *data, Evas_Object 
 
 	/* rollback */
 	_setting_network_popup_data_roaming_rollback(ad);
-//	elm_popup_dismiss(obj);
+	/*	elm_popup_dismiss(obj); */
 }
 
 
@@ -1104,7 +1104,7 @@ setting_network_main_item_Gendial_mouse_up_cb(void *data, Evas_Object *obj, void
 	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
 	elm_genlist_item_selected_set(item, 0);
 	Setting_GenGroupItem_Data *list_item =
-	    (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
+		(Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
 	setting_retm_if(NULL == list_item, "list_item is NULL");
 
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
@@ -1124,7 +1124,7 @@ setting_network_main_item_Gendial_mouse_up_cb(void *data, Evas_Object *obj, void
 		cm_deinit(cm_handle);
 		if (CM_CALL_STATUS_IDLE != call_status) {
 			setting_create_popup(ad, ad->win_get, NULL,
-			                            _("IDS_CST_POP_OPERATION_NOT_ALLOWED_DURING_CALLS"), NULL, 0, false, false, 0);
+								 _("IDS_CST_POP_OPERATION_NOT_ALLOWED_DURING_CALLS"), NULL, 0, false, false, 0);
 			return;
 		}
 
@@ -1135,8 +1135,8 @@ setting_network_main_item_Gendial_mouse_up_cb(void *data, Evas_Object *obj, void
 		SETTING_TRACE("ad->sel_net:%d", ad->sel_net);
 
 		ret = setting_view_change(&setting_view_network_main,
-				&setting_view_network_select_network,
-				ad);
+								  &setting_view_network_select_network,
+								  ad);
 
 	} else if (!safeStrCmp(KeyStr_UseMobileData, list_item->keyStr)) {
 		/* new status */
@@ -1148,18 +1148,18 @@ setting_network_main_item_Gendial_mouse_up_cb(void *data, Evas_Object *obj, void
 				SETTING_TRACE_ERROR("Failed to get vconf value");
 			}
 			ad->popup_data_off = setting_create_popup2(ad,
-													ad->win_get,
-													"IDS_ST_HEADER_TURN_OFF_MOBILE_DATA",
-													"IDS_ST_POP_UNLESS_YOU_CONNECT_TO_A_WI_FI_NETWORK_YOU_WILL_NOT_BE_ABLE_TO_USE_THE_INTERNET_EMAIL_OR_OTHER_APPS_MSG",
-													setting_network_use_packet_resp_cb,
-													_setting_network_popup_mobile_data_hide_cb,
-													0,
-													FALSE,
-													FALSE,
-													2,
-													"IDS_ST_BUTTON_DISABLE",
-													"IDS_ST_BUTTON_CANCEL_ABB");
-			// Evas_Object *setting_create_popup2(void *data,
+													   ad->win_get,
+													   "IDS_ST_HEADER_TURN_OFF_MOBILE_DATA",
+													   "IDS_ST_POP_UNLESS_YOU_CONNECT_TO_A_WI_FI_NETWORK_YOU_WILL_NOT_BE_ABLE_TO_USE_THE_INTERNET_EMAIL_OR_OTHER_APPS_MSG",
+													   setting_network_use_packet_resp_cb,
+													   _setting_network_popup_mobile_data_hide_cb,
+													   0,
+													   FALSE,
+													   FALSE,
+													   2,
+													   "IDS_ST_BUTTON_DISABLE",
+													   "IDS_ST_BUTTON_CANCEL_ABB");
+			/* Evas_Object *setting_create_popup2(void *data, */
 
 			/* should set data_roming as same as status of use_packet_data */
 			int data_roaming_value = 0;
@@ -1176,17 +1176,17 @@ setting_network_main_item_Gendial_mouse_up_cb(void *data, Evas_Object *obj, void
 				SETTING_TRACE_ERROR("Failed to get vconf value");
 			}
 			ad->popup_data_on = setting_create_popup2(ad,
-													ad->win_get,
-													"IDS_ST_HEADER_TURN_ON_MOBILE_DATA",
-													"IDS_ST_POP_MOBILE_DATA_WILL_BE_TURNED_ON_CONNECTING_TO_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_DEPENDING_ON_YOUR_PAYMENT_PLAN",
-													setting_network_use_packet_resp_cb,
-													_setting_network_popup_mobile_data_hide_cb,
-													0,
-													FALSE,
-													FALSE,
-													2,
-													"IDS_ST_BUTTON_ENABLE",
-													"IDS_ST_BUTTON_CANCEL_ABB");
+													  ad->win_get,
+													  "IDS_ST_HEADER_TURN_ON_MOBILE_DATA",
+													  "IDS_ST_POP_MOBILE_DATA_WILL_BE_TURNED_ON_CONNECTING_TO_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_DEPENDING_ON_YOUR_PAYMENT_PLAN",
+													  setting_network_use_packet_resp_cb,
+													  _setting_network_popup_mobile_data_hide_cb,
+													  0,
+													  FALSE,
+													  FALSE,
+													  2,
+													  "IDS_ST_BUTTON_ENABLE",
+													  "IDS_ST_BUTTON_CANCEL_ABB");
 		}
 
 	} else if (!safeStrCmp(KeyStr_DataRoaming, list_item->keyStr)) {
@@ -1194,20 +1194,20 @@ setting_network_main_item_Gendial_mouse_up_cb(void *data, Evas_Object *obj, void
 
 		if (list_item->chk_status) {
 			ad->popup =  setting_create_popup2(ad, ad->win_get,
-											  "IDS_ST_HEADER_ENABLE_DATA_ROAMING",
-											  "IDS_ST_POP_ROAMING_WILL_INCUR_EXTRA_CHARGES_CONTINUE_Q",
-											  __setting_network_data_roaming_resp_cb,
-											 _setting_network_popup_data_roaming_hide_cb,
-											  0,
-											  FALSE,
-											  FALSE,
-											  2,
-											  "IDS_ST_BUTTON_ENABLE",
-											  "IDS_ST_BUTTON_CANCEL_ABB");
+											   "IDS_ST_HEADER_ENABLE_DATA_ROAMING",
+											   "IDS_ST_POP_ROAMING_WILL_INCUR_EXTRA_CHARGES_CONTINUE_Q",
+											   __setting_network_data_roaming_resp_cb,
+											   _setting_network_popup_data_roaming_hide_cb,
+											   0,
+											   FALSE,
+											   FALSE,
+											   2,
+											   "IDS_ST_BUTTON_ENABLE",
+											   "IDS_ST_BUTTON_CANCEL_ABB");
 		}
 	} else if (!safeStrCmp(CONNECTION_DSC, list_item->keyStr)) {
 		ret = setting_view_change(&setting_view_network_main,
-		                          &setting_view_network_con, ad);
+								  &setting_view_network_con, ad);
 	}
 }
 
@@ -1219,7 +1219,7 @@ setting_network_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 	retm_if(data == NULL, "Data parameter is NULL");
 	SettingNetworkUG *ad = NULL;
 	Setting_GenGroupItem_Data *list_item =
-	    (Setting_GenGroupItem_Data *) data;
+		(Setting_GenGroupItem_Data *) data;
 	ad = list_item->userdata;
 	list_item->chk_status = elm_check_state_get(obj);	/*  for genlist update status */
 
@@ -1237,17 +1237,17 @@ setting_network_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 				SETTING_TRACE_ERROR("Failed to get vconf value");
 			}
 			ad->popup_data_off = setting_create_popup2(ad,
-								ad->win_get,
-								"IDS_ST_HEADER_TURN_OFF_MOBILE_DATA",
-								"IDS_ST_POP_UNLESS_YOU_CONNECT_TO_A_WI_FI_NETWORK_YOU_WILL_NOT_BE_ABLE_TO_USE_THE_INTERNET_EMAIL_OR_OTHER_APPS_MSG",
-								setting_network_use_packet_resp_cb,
-								_setting_network_popup_mobile_data_hide_cb,
-								0,
-								FALSE,
-								FALSE,
-								2,
-								"IDS_ST_BUTTON_DISABLE",
-								"IDS_ST_BUTTON_CANCEL_ABB");
+													   ad->win_get,
+													   "IDS_ST_HEADER_TURN_OFF_MOBILE_DATA",
+													   "IDS_ST_POP_UNLESS_YOU_CONNECT_TO_A_WI_FI_NETWORK_YOU_WILL_NOT_BE_ABLE_TO_USE_THE_INTERNET_EMAIL_OR_OTHER_APPS_MSG",
+													   setting_network_use_packet_resp_cb,
+													   _setting_network_popup_mobile_data_hide_cb,
+													   0,
+													   FALSE,
+													   FALSE,
+													   2,
+													   "IDS_ST_BUTTON_DISABLE",
+													   "IDS_ST_BUTTON_CANCEL_ABB");
 
 			/* should set data_roming as same as status of use_packet_data */
 			int data_roaming_value = 0;
@@ -1268,33 +1268,33 @@ setting_network_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 				SETTING_TRACE_ERROR("Failed to get vconf value");
 			}
 			ad->popup_data_on = setting_create_popup2(ad,
-								ad->win_get,
-								"IDS_ST_HEADER_TURN_ON_MOBILE_DATA",
-								"IDS_ST_POP_MOBILE_DATA_WILL_BE_TURNED_ON_CONNECTING_TO_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_DEPENDING_ON_YOUR_PAYMENT_PLAN",
-								setting_network_use_packet_resp_cb,
-								_setting_network_popup_mobile_data_hide_cb,
-								0,
-								FALSE,
-								FALSE,
-								2,
-								"IDS_ST_BUTTON_ENABLE",
-								"IDS_ST_BUTTON_CANCEL_ABB");
+													  ad->win_get,
+													  "IDS_ST_HEADER_TURN_ON_MOBILE_DATA",
+													  "IDS_ST_POP_MOBILE_DATA_WILL_BE_TURNED_ON_CONNECTING_TO_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_DEPENDING_ON_YOUR_PAYMENT_PLAN",
+													  setting_network_use_packet_resp_cb,
+													  _setting_network_popup_mobile_data_hide_cb,
+													  0,
+													  FALSE,
+													  FALSE,
+													  2,
+													  "IDS_ST_BUTTON_ENABLE",
+													  "IDS_ST_BUTTON_CANCEL_ABB");
 		}
 	} else if (obj == ad->data_roaming->eo_check) {
 		SETTING_TRACE(" TOUCH HANDLING DATA ROAMING");
 		if (list_item->chk_status) {
 			SETTING_TRACE(" TOUCH HANDLING DATA ROAMING - set true");
 			ad->popup =  setting_create_popup2(ad, ad->win_get,
-											  "IDS_ST_HEADER_ENABLE_DATA_ROAMING",
-											  "IDS_ST_POP_ROAMING_WILL_INCUR_EXTRA_CHARGES_CONTINUE_Q",
-											  __setting_network_data_roaming_resp_cb,
-											 _setting_network_popup_data_roaming_hide_cb,
-											  0,
-											  FALSE,
-											  FALSE,
-											  2,
-											  "IDS_ST_BUTTON_ENABLE",
-											  "IDS_ST_BUTTON_CANCEL_ABB");
+											   "IDS_ST_HEADER_ENABLE_DATA_ROAMING",
+											   "IDS_ST_POP_ROAMING_WILL_INCUR_EXTRA_CHARGES_CONTINUE_Q",
+											   __setting_network_data_roaming_resp_cb,
+											   _setting_network_popup_data_roaming_hide_cb,
+											   0,
+											   FALSE,
+											   FALSE,
+											   2,
+											   "IDS_ST_BUTTON_ENABLE",
+											   "IDS_ST_BUTTON_CANCEL_ABB");
 		} else {
 			SETTING_TRACE(" TOUCH HANDLING DATA ROAMING - set false");
 			setting_network_set_state_data_roaming(SETTING_ON_OFF_BTN_OFF);
@@ -1309,7 +1309,7 @@ setting_network_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
  * mobile data OFF --> Data Roaming de-activate
  */
 static void setting_network_use_packet_resp_cb(void *data, Evas_Object *obj,
-                                   void *event_info)
+											   void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
@@ -1344,7 +1344,7 @@ static void setting_network_use_packet_resp_cb(void *data, Evas_Object *obj,
 				ug_destroy_me(ad->ug);
 				return;
 			}
-		} else {	// (value != 0)
+		} else {	/* (value != 0) */
 
 			setting_network_set_state_mobile_data(SETTING_ON_OFF_BTN_OFF);
 			setting_retm_if(err != 0, "set vconf failed");
@@ -1386,7 +1386,7 @@ static void setting_network_use_packet_resp_cb(void *data, Evas_Object *obj,
  * @see also setting_create_popup
  */
 static void __setting_network_data_roaming_resp_cb(void *data, Evas_Object *obj,
-                                                   void *event_info)
+												   void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
@@ -1398,7 +1398,7 @@ static void __setting_network_data_roaming_resp_cb(void *data, Evas_Object *obj,
 	if (POPUP_RESPONSE_OK == response_type) {
 
 		SETTING_TRACE(" >>>> ad->data_roaming->chk_status = %d", ad->data_roaming->chk_status);
-		//setting_update_gl_item_chk_status(ad->data_roaming, !(ad->data_roaming->chk_status));
+		/*setting_update_gl_item_chk_status(ad->data_roaming, !(ad->data_roaming->chk_status)); */
 
 		int value = 0;
 		int err = 0;

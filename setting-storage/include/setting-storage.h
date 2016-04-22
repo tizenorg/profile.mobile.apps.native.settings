@@ -165,7 +165,7 @@ struct _SettingStorageUG {
 	void *del_worker;
 
 	Evas_Object *ly_select_all;		/** misc > 'select all' layout */
-	Evas_Object* ly_default;
+	Evas_Object *ly_default;
 
 	Evas_Object *title_left_btn;
 	Evas_Object *title_right_btn;

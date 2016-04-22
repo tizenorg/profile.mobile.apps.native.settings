@@ -23,7 +23,7 @@
 
 void storageUg_default_init(SettingStorageUG *ad);
 Evas_Object *storageUg_default_notice_get_icon(void *data, Evas_Object *obj,
-                                               const char *part);
+											   const char *part);
 
 
 #endif /*__SETTING_STORAGE_DEFAULT_H__ */

@@ -57,7 +57,7 @@ bool __parse_ug_argument(app_control_h service, void *priv)
 * @param event_info
 */
 static void setting_fileview_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
-                                          void *event_info)
+										  void *event_info)
 {
 	SettingFileviewUG *ad = (SettingFileviewUG *) data;
 	setting_view_update(&setting_view_fileview_main, ad);
@@ -74,7 +74,7 @@ static void setting_fileview_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
 * @return
 */
 static void *setting_fileview_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
-                                           app_control_h service, void *priv)
+										   app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if((NULL == priv), NULL, "NULL == priv");
@@ -87,7 +87,7 @@ static void *setting_fileview_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	fileviewUG->evas = evas_object_evas_get(fileviewUG->win_main_layout);
 
 	setting_retvm_if(fileviewUG->win_main_layout == NULL, NULL,
-	                 "cannot get main window ");
+					 "cannot get main window ");
 
 	/*  creating a view. */
 	if (!__parse_ug_argument(service, priv)) {
@@ -96,24 +96,24 @@ static void *setting_fileview_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	}
 	setting_view_create(&setting_view_fileview_main, (void *)fileviewUG);
 	evas_object_event_callback_add(fileviewUG->win_main_layout,
-	                               EVAS_CALLBACK_RESIZE,
-	                               setting_fileview_ug_cb_resize, fileviewUG);
+								   EVAS_CALLBACK_RESIZE,
+								   setting_fileview_ug_cb_resize, fileviewUG);
 	return fileviewUG->ly_main;
 }
 
 static void setting_fileview_ug_on_start(ui_gadget_h ug, app_control_h service,
-                                         void *priv)
+										 void *priv)
 {
 }
 
 static void setting_fileview_ug_on_pause(ui_gadget_h ug, app_control_h service,
-                                         void *priv)
+										 void *priv)
 {
 	SETTING_TRACE_BEGIN;
 }
 
 static void setting_fileview_ug_on_resume(ui_gadget_h ug, app_control_h service,
-                                          void *priv)
+										  void *priv)
 {
 	SETTING_TRACE_BEGIN;
 }
@@ -126,7 +126,7 @@ static void setting_fileview_ug_on_resume(ui_gadget_h ug, app_control_h service,
 * @param priv
 */
 static void setting_fileview_ug_on_destroy(ui_gadget_h ug, app_control_h service,
-                                           void *priv)
+										   void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
@@ -151,57 +151,57 @@ static void setting_fileview_ug_on_destroy(ui_gadget_h ug, app_control_h service
 }
 
 static void setting_fileview_ug_on_message(ui_gadget_h ug, app_control_h msg,
-                                           app_control_h service, void *priv)
+										   app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 }
 
 static void setting_fileview_ug_on_event(ui_gadget_h ug, enum ug_event event,
-                                         app_control_h service, void *priv)
+										 app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	switch (event) {
-		case UG_EVENT_LOW_MEMORY:
-			break;
-		case UG_EVENT_LOW_BATTERY:
-			break;
-		case UG_EVENT_LANG_CHANGE:
-			break;
-		case UG_EVENT_ROTATE_PORTRAIT:
-			break;
-		case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-			break;
-		case UG_EVENT_ROTATE_LANDSCAPE:
-			break;
-		case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-			break;
-		case UG_EVENT_REGION_CHANGE:
-			break;
-		default:
-			break;
+	case UG_EVENT_LOW_MEMORY:
+		break;
+	case UG_EVENT_LOW_BATTERY:
+		break;
+	case UG_EVENT_LANG_CHANGE:
+		break;
+	case UG_EVENT_ROTATE_PORTRAIT:
+		break;
+	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
+		break;
+	case UG_EVENT_ROTATE_LANDSCAPE:
+		break;
+	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
+		break;
+	case UG_EVENT_REGION_CHANGE:
+		break;
+	default:
+		break;
 	}
 }
 
 static void setting_fileview_ug_on_key_event(ui_gadget_h ug,
-                                             enum ug_key_event event,
-                                             app_control_h service, void *priv)
+											 enum ug_key_event event,
+											 app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SettingFileviewUG *ad = (SettingFileviewUG *) priv;
 
 	switch (event) {
-		case UG_KEY_EVENT_END: {
-				if (elm_naviframe_top_item_get(ad->navi_bar) ==
-				    elm_naviframe_bottom_item_get(ad->navi_bar)) {
-					ug_destroy_me(ug);
-				} else {
-					/* elm_naviframe_item_pop(ad->navi_bar); */
-					setting_view_cb_at_endKey(ad);
-				}
+	case UG_KEY_EVENT_END: {
+			if (elm_naviframe_top_item_get(ad->navi_bar) ==
+				elm_naviframe_bottom_item_get(ad->navi_bar)) {
+				ug_destroy_me(ug);
+			} else {
+				/* elm_naviframe_item_pop(ad->navi_bar); */
+				setting_view_cb_at_endKey(ad);
 			}
-			break;
-		default:
-			break;
+		}
+		break;
+	default:
+		break;
 	}
 }
 

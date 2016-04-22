@@ -31,7 +31,7 @@ static void setting_network_profile_delete_click_softkey_cancel_ctx_cb(void *dat
 setting_view setting_view_network_profile_delete = {
 	.create = setting_network_profile_delete_create,
 	.destroy = setting_network_profile_delete_destroy,
-	//.update = setting_network_profile_delete_update,
+	/*.update = setting_network_profile_delete_update, */
 	.update = NULL,
 	.cleanup = setting_network_profile_delete_cleanup,
 };
@@ -52,7 +52,7 @@ static void __profile_delete_list_draw(SettingNetworkUG *ad)
 	Elm_Object_Item *first_item;
 	/* item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL, ELM_GENLIST_ITEM_GROUP, NULL, NULL); */
 	first_item = elm_genlist_item_append(ad->gl_profile_del, &itc_seperator, NULL, NULL,
-	                                     ELM_GENLIST_ITEM_NONE, NULL, NULL);
+										 ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	elm_genlist_item_select_mode_set(first_item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	Eina_List *elist = NULL;
@@ -67,9 +67,9 @@ static void __profile_delete_list_draw(SettingNetworkUG *ad)
 
 	setting_network_reget_profile_list(ad);
 
-	// CREATE GENLIST 'Select All'
+	/* CREATE GENLIST 'Select All' */
 
-	// CREATE GENLIST
+	/* CREATE GENLIST */
 	SETTING_TRACE("ad->profile_list:%p", ad->profile_list);
 	EINA_LIST_FOREACH(ad->profile_list, elist, profile_h) {
 		SETTING_TRACE("profile_h:%p", profile_h);
@@ -91,7 +91,7 @@ static void __profile_delete_list_draw(SettingNetworkUG *ad)
 		}
 
 		SETTING_TRACE("Record[%s], profile_type:%d, service_type:%d, id:%s",
-		              apn, profile_type, ad->profile_service_type, id);
+					  apn, profile_type, ad->profile_service_type, id);
 
 		item_data = (Setting_GenGroupItem_Data *) calloc(1, sizeof(Setting_GenGroupItem_Data));
 		if (0 == item_data) {
@@ -108,11 +108,11 @@ static void __profile_delete_list_draw(SettingNetworkUG *ad)
 		item_data->belongs_to = (int) profile_h;
 
 		item_data->item =
-		    elm_genlist_item_append(ad->gl_profile_del, &(itc_2text_1icon_2), item_data, NULL,
-		                            ELM_GENLIST_ITEM_NONE,
-		                            setting_network_profile_delete_mouse_up_cb, ad);
+			elm_genlist_item_append(ad->gl_profile_del, &(itc_2text_1icon_2), item_data, NULL,
+									ELM_GENLIST_ITEM_NONE,
+									setting_network_profile_delete_mouse_up_cb, ad);
 		ad->profile_del_list =
-		    eina_list_append(ad->profile_del_list, item_data);
+			eina_list_append(ad->profile_del_list, item_data);
 
 		idx++;
 	}
@@ -141,8 +141,8 @@ static void __profile_delete_list_draw(SettingNetworkUG *ad)
 	return;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-static Evas_Object* ctxpopup;
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+static Evas_Object *ctxpopup;
 
 static void
 ctxpopup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
@@ -166,16 +166,16 @@ move_more_ctxpopup(Evas_Object *ctxpopup)
 	pos = elm_win_rotation_get(win);
 
 	switch (pos) {
-		case 0:
-		case 180:
-			evas_object_move(ctxpopup, (w / 2), h);
-			break;
-		case 90:
-			evas_object_move(ctxpopup,  (h / 2), w);
-			break;
-		case 270:
-			evas_object_move(ctxpopup, (h / 2), w);
-			break;
+	case 0:
+	case 180:
+		evas_object_move(ctxpopup, (w / 2), h);
+		break;
+	case 90:
+		evas_object_move(ctxpopup, (h / 2), w);
+		break;
+	case 270:
+		evas_object_move(ctxpopup, (h / 2), w);
+		break;
 	}
 }
 
@@ -208,10 +208,10 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *e
 {
 	SETTING_TRACE_BEGIN;
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-	//Evas_Object *it_obj;
+	/*Evas_Object *it_obj; */
 	Evas_Object *nf = ad->navi_bar;
 	Evas_Object *win;
-	//Elm_Object_Item *it;
+	/*Elm_Object_Item *it; */
 
 	if (ctxpopup != NULL) {
 		evas_object_del(ctxpopup);
@@ -230,16 +230,16 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *e
 	win = elm_object_top_widget_get(nf);
 	evas_object_smart_callback_add(win, "rotation,changed", win_rotation_changed_cb, ctxpopup);
 
-	//---------------------------------------------------------------------------------------------
+	/*--------------------------------------------------------------------------------------------- */
 	elm_ctxpopup_item_append(ctxpopup, _("IDS_ST_BUTTON_CANCEL_ABB"), NULL, setting_network_profile_delete_click_softkey_cancel_ctx_cb, ad);
 	elm_ctxpopup_item_append(ctxpopup, _("IDS_ST_BODY_DELETE"), NULL, setting_network_profile_delete_click_softkey_delete_cb, ad);
-	//---------------------------------------------------------------------------------------------
+	/*--------------------------------------------------------------------------------------------- */
 
 	elm_ctxpopup_direction_priority_set(ctxpopup, ELM_CTXPOPUP_DIRECTION_UP, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN, ELM_CTXPOPUP_DIRECTION_UNKNOWN);
 	move_more_ctxpopup(ctxpopup);
 	evas_object_show(ctxpopup);
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 
 
@@ -250,20 +250,20 @@ static int setting_network_profile_delete_create(void *cb)
 
 	Evas_Object *scroller = elm_genlist_add(ad->win_main_layout);
 	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
-	         "Cannot set scroller object  as contento of layout");
+			 "Cannot set scroller object  as contento of layout");
 	elm_object_style_set(scroller, "dialogue");
 	elm_genlist_clear(scroller);	/* first to clear list */
 	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb, NULL);
 	ad->gl_profile_del = scroller;
 
 	ad->navi_it_profile_del_list = setting_push_layout_navi_bar(_(IDS_ST_BODY_DELETE),
-	                                                            NULL,
-	                                                            _(IDS_ST_BODY_DELETE),
-	                                                            _(IDS_ST_BUTTON_CANCEL_ABB),
-	                                                            setting_network_profile_delete_click_softkey_cancel_cb,
-	                                                            setting_network_profile_delete_click_softkey_delete_cb,
-	                                                            setting_network_profile_delete_click_softkey_cancel_cb,
-	                                                            ad, scroller, ad->navi_bar, NULL);
+																NULL,
+																_(IDS_ST_BODY_DELETE),
+																_(IDS_ST_BUTTON_CANCEL_ABB),
+																setting_network_profile_delete_click_softkey_cancel_cb,
+																setting_network_profile_delete_click_softkey_delete_cb,
+																setting_network_profile_delete_click_softkey_cancel_cb,
+																ad, scroller, ad->navi_bar, NULL);
 	/*disable Delete button */
 	Evas_Object *toolbar = elm_object_item_part_content_get(ad->navi_it_profile_del_list, "toolbar");
 	Elm_Object_Item *it = elm_toolbar_last_item_get(toolbar);
@@ -283,19 +283,19 @@ static int setting_network_profile_delete_create(void *cb)
 		elm_naviframe_item_pop_cb_set(ad->navi_it_profile_del_list, setting_network_profile_delete_click_softkey_cancel_cb, ad);
 	}
 
-	// Add ctx popup handler
-	Evas_Object* morebtn = elm_button_add(ad->navi_bar);
+	/* Add ctx popup handler */
+	Evas_Object *morebtn = elm_button_add(ad->navi_bar);
 	elm_object_style_set(morebtn, "naviframe/more/default");
 	evas_object_smart_callback_add(morebtn, "clicked", create_ctxpopup_more_button_cb, ad);
 	elm_object_item_part_content_set(ad->navi_it_profile_del_list, "toolbar_more_btn", morebtn);
 
 #if 0
-	// ADD 'SELECT ALL'
+	/* ADD 'SELECT ALL' */
 	ad->data_delete_all = setting_create_Gendial_field_1radio(ad->gl_profile_del, &(ad->itc_1icon_1text_sub),
-	                                                              __screen_timeout_cb, ad,
-	                                                              SWALLOW_Type_1RADIO_RIGHT,
-	                                                              rdg, 4, KeyStr_Backlight_5_MIN_STR,
-	                                                              NULL);
+															  __screen_timeout_cb, ad,
+															  SWALLOW_Type_1RADIO_RIGHT,
+															  rdg, 4, KeyStr_Backlight_5_MIN_STR,
+															  NULL);
 	if (ad->data_delete_all) {
 		ad->data_delete_all->userdata = ad;
 		__BACK_POINTER_SET(ad->data_delete_all);
@@ -345,7 +345,7 @@ static int setting_network_profile_delete_update(void *cb)
 static int setting_network_profile_delete_cleanup(void *cb)
 {
 	SETTING_TRACE_BEGIN;
-	 setting_network_profile_delete_destroy(cb);
+	setting_network_profile_delete_destroy(cb);
 	return SETTING_RETURN_SUCCESS;
 }
 
@@ -390,19 +390,19 @@ void ___profile_selected(void *data)
 
 static void
 setting_network_profile_delete_check_cb(void *data, Evas_Object *obj,
-                                        void *event_info)
+										void *event_info)
 {
 	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item =
-	    (Setting_GenGroupItem_Data *) data;
+		(Setting_GenGroupItem_Data *) data;
 	list_item->chk_status = elm_check_state_get(obj);	/*  for genlist update status */
 	___profile_selected(list_item->userdata);
 }
 
 static void
 setting_network_profile_delete_mouse_up_cb(void *data,
-                                           Evas_Object *obj,
-                                           void *event_info)
+										   Evas_Object *obj,
+										   void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -411,7 +411,7 @@ setting_network_profile_delete_mouse_up_cb(void *data,
 	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
 	elm_genlist_item_selected_set(item, 0);
 	Setting_GenGroupItem_Data *list_item =
-	    (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
+		(Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
 	setting_retm_if(NULL == list_item, "list_item is NULL");
 	SETTING_TRACE("list_item->keyStr:%s", list_item->keyStr);
 
@@ -431,7 +431,7 @@ static Eina_Bool setting_network_profile_delete_click_softkey_cancel_cb(void *da
 	retvm_if(data == NULL, FALSE, "Data parameter is NULL");
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
 	setting_view_change(&setting_view_network_profile_delete,
-	                    &setting_view_network_con_list, ad);
+						&setting_view_network_con_list, ad);
 
 	if (ctxpopup != NULL) {
 		evas_object_del(ctxpopup);
@@ -446,7 +446,7 @@ static void setting_network_profile_delete_click_softkey_cancel_ctx_cb(void *dat
 }
 
 static void __popup_deleted_response_cb(void *data, Evas_Object *obj,
-                                        void *event_info)
+										void *event_info)
 {
 	retm_if(data == NULL, "Data parameter is NULL");
 
@@ -457,9 +457,9 @@ static void __popup_deleted_response_cb(void *data, Evas_Object *obj,
 
 static void
 setting_network_profile_delete_click_softkey_delete_cb(void *data,
-                                                       Evas_Object *
-                                                       obj, void
-                                                       *event_info)
+													   Evas_Object *
+													   obj, void
+													   *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -525,8 +525,8 @@ setting_network_profile_delete_click_softkey_delete_cb(void *data,
 				if (first_valid_item) {
 					connection_profile_h first_profile_h = (connection_profile_h)(first_valid_item->belongs_to);
 					(void)connection_set_default_cellular_service_profile(ad->connection,
-					                                                      ad->profile_service_type,
-					                                                      first_profile_h);
+																		  ad->profile_service_type,
+																		  first_profile_h);
 				}
 			}
 			/*eina_list_remove(ad->profile_list, profile_h); */
@@ -573,8 +573,8 @@ setting_network_profile_delete_click_softkey_delete_cb(void *data,
 
 static void
 setting_network_profile_delete_click_softkey_select_all_cb(void *data,
-                                                           Evas_Object *obj,
-                                                           void *event_info)
+														   Evas_Object *obj,
+														   void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");

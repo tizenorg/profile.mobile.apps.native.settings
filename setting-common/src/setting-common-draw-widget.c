@@ -47,16 +47,16 @@ void setting_hide_input_pannel_cb(Evas_Object *entry)
 
 EXPORT_PUBLIC
 Evas_Object *setting_create_button(Evas_Object *parent, const char *btn_str,
-                                   const char *btn_style,
-                                   void *btn_click_cb,
-                                   void *cb_data)
+								   const char *btn_style,
+								   void *btn_click_cb,
+								   void *cb_data)
 {
 	LAUNCH_SETTING_IN();
 	retv_if(!parent || !btn_str, NULL);
 	if ('\0' == btn_str[0]) {/*Empty rectangle */
 		return setting_create_blank_rect_customize(parent,
-		                                           SETTING_PADDING_WIDTH,
-		                                           SETTING_PADDING_WIDTH);
+												   SETTING_PADDING_WIDTH,
+												   SETTING_PADDING_WIDTH);
 	}
 
 	Evas_Object *button = elm_button_add(parent);
@@ -73,7 +73,7 @@ Evas_Object *setting_create_button(Evas_Object *parent, const char *btn_str,
 
 	if (btn_click_cb) {
 		evas_object_smart_callback_add(button, "clicked",
-		                               btn_click_cb, cb_data);
+									   btn_click_cb, cb_data);
 	}
 	evas_object_show(button);
 	LAUNCH_SETTING_OUT();
@@ -98,13 +98,13 @@ static double _step_size_calculate(Evas_Object *obj, double min, double max)
  *@return a slider container object
  */
 EXPORT_PUBLIC Evas_Object *setting_create_5step_slider(Evas_Object *parent, Evas *evas,
-                                                       const char *l_swallow_path,
-                                                       const char *r_swallow_path, double value,
-                                                       bool indicator, double slider_min, double slider_max,
-                                                       setting_call_back_func slider_change_cb,
-                                                       setting_call_back_func slider_start_change_cb,
-                                                       setting_call_back_func slider_stop_change_cb,
-                                                       void *cb_data)
+													   const char *l_swallow_path,
+													   const char *r_swallow_path, double value,
+													   bool indicator, double slider_min, double slider_max,
+													   setting_call_back_func slider_change_cb,
+													   setting_call_back_func slider_start_change_cb,
+													   setting_call_back_func slider_stop_change_cb,
+													   void *cb_data)
 {
 
 	Evas_Object *layout = elm_layout_add(parent);
@@ -159,13 +159,13 @@ EXPORT_PUBLIC Evas_Object *setting_create_5step_slider(Evas_Object *parent, Evas
  *@return a slider container object
  */
 EXPORT_PUBLIC Evas_Object *setting_create_slider(Evas_Object *parent, Evas *evas,
-                                                 const char *l_swallow_path,
-                                                 const char *r_swallow_path, double value,
-                                                 bool indicator, double slider_min, double slider_max,
-                                                 setting_call_back_func slider_change_cb,
-                                                 setting_call_back_func slider_start_change_cb,
-                                                 setting_call_back_func slider_stop_change_cb,
-                                                 void *cb_data)
+												 const char *l_swallow_path,
+												 const char *r_swallow_path, double value,
+												 bool indicator, double slider_min, double slider_max,
+												 setting_call_back_func slider_change_cb,
+												 setting_call_back_func slider_start_change_cb,
+												 setting_call_back_func slider_stop_change_cb,
+												 void *cb_data)
 {
 	Evas_Object *slider = elm_slider_add(parent);	/*  "elm/slider/horizontal/default" */
 	retv_if(slider == NULL, NULL);
@@ -219,10 +219,10 @@ EXPORT_PUBLIC Evas_Object *setting_create_slider(Evas_Object *parent, Evas *evas
  */
 EXPORT_PUBLIC
 void create_image_box_add_ex(void *data, Evas_Object *win_main, Evas *evas,
-                             char *img_path, int img_w, int img_h,
-                             Evas_Object_Event_Cb mouse_down_cb,
-                             Evas_Object_Event_Cb mouse_up_cb,
-                             Evas_Object **image_box, Evas_Object **img)
+							 char *img_path, int img_w, int img_h,
+							 Evas_Object_Event_Cb mouse_down_cb,
+							 Evas_Object_Event_Cb mouse_up_cb,
+							 Evas_Object **image_box, Evas_Object **img)
 {
 	/* SETTING_TRACE_BEGIN; */
 	*image_box = elm_box_add(win_main);
@@ -249,9 +249,9 @@ void create_image_box_add_ex(void *data, Evas_Object *win_main, Evas *evas,
 	evas_object_show(*img);
 
 	evas_object_event_callback_add(*img, EVAS_CALLBACK_MOUSE_DOWN,
-	                               mouse_down_cb, data);
+								   mouse_down_cb, data);
 	evas_object_event_callback_add(*img, EVAS_CALLBACK_MOUSE_UP,
-	                               mouse_up_cb, data);
+								   mouse_up_cb, data);
 
 	elm_box_pack_end(*image_box, *img);
 }
@@ -263,17 +263,17 @@ void create_image_box_add_ex(void *data, Evas_Object *win_main, Evas *evas,
 
 EXPORT_PUBLIC
 Evas_Object *create_image_box_add(void *data, Evas_Object *win_main,
-                                  Evas *evas, char *img_path, int img_w,
-                                  int img_h, Evas_Object_Event_Cb mouse_down_cb,
-                                  Evas_Object_Event_Cb mouse_up_cb)
+								  Evas *evas, char *img_path, int img_w,
+								  int img_h, Evas_Object_Event_Cb mouse_down_cb,
+								  Evas_Object_Event_Cb mouse_up_cb)
 {
 	/* SETTING_TRACE_BEGIN; */
 	Evas_Object *image_box = NULL;
 	Evas_Object *img = NULL;
 	create_image_box_add_ex(data, win_main, evas, img_path,
-	                        img_w * WIDGET_SCALE_FACTOR,
-	                        img_h * WIDGET_SCALE_FACTOR, mouse_down_cb,
-	                        mouse_up_cb, &image_box, &img);
+							img_w * WIDGET_SCALE_FACTOR,
+							img_h * WIDGET_SCALE_FACTOR, mouse_down_cb,
+							mouse_up_cb, &image_box, &img);
 	return image_box;
 
 }
@@ -286,13 +286,13 @@ Evas_Object *create_image_box_add(void *data, Evas_Object *win_main,
 
 EXPORT_PUBLIC
 Evas_Object *create_bgimage_box_add(void *data, Evas_Object *win_main, Evas *evas, char *img_path, int img_w, int img_h,	/* if img_w<0 or img_h <0, load the image as it's own size */
-                                    Evas_Object_Event_Cb mouse_down_cb,
-                                    Evas_Object_Event_Cb mouse_up_cb)
+									Evas_Object_Event_Cb mouse_down_cb,
+									Evas_Object_Event_Cb mouse_up_cb)
 {
 	Evas_Object *image_box = NULL;
 	Evas_Object *img = NULL;
 	create_image_box_add_ex(data, win_main, evas, img_path, img_w, img_h,
-	                        mouse_down_cb, mouse_up_cb, &image_box, &img);
+							mouse_down_cb, mouse_up_cb, &image_box, &img);
 	return image_box;
 }
 
@@ -321,7 +321,7 @@ Evas_Object *setting_create_client_bx(Evas_Object *win_main)
 
 EXPORT_PUBLIC
 Evas_Object *setting_create_lable(Evas_Object *parent, const char *text,
-                                  const char *style, const char *align)
+								  const char *style, const char *align)
 {
 	retvm_if(!parent || !text, NULL, "Cannot create client box object");
 	Evas_Object *label = NULL;
@@ -527,7 +527,7 @@ int setting_update_chk_status(Evas_Object *chk, setting_int_slp_list type)
 */
 EXPORT_PUBLIC
 Evas_Object *setting_create_blank_rect_customize(Evas_Object *layout, int w,
-                                                 int h)
+												 int h)
 {
 	Evas_Object *rect;
 
@@ -551,7 +551,7 @@ EXPORT_PUBLIC
 Evas_Object *setting_create_blank_rect(Evas_Object *layout)
 {
 	return setting_create_blank_rect_customize(layout,
-	                                           SETTING_PADDING_WIDTH, 80);
+											   SETTING_PADDING_WIDTH, 80);
 }
 
 /**
@@ -681,7 +681,7 @@ Evas_Object *setting_create_bg(Evas_Object *parent, Evas_Object *win, const char
 	retv_if(!bg, NULL);
 	if (bg_style) elm_object_style_set(bg, bg_style);
 	evas_object_size_hint_weight_set(bg, EVAS_HINT_EXPAND,
-	                                 EVAS_HINT_EXPAND);
+									 EVAS_HINT_EXPAND);
 	/*elm_win_resize_object_add(win, bg); */
 	evas_object_show(bg);
 	return bg;
@@ -808,10 +808,10 @@ void setting_make_evas_object_clickable(Evas_Object *obj)
 */
 EXPORT_PUBLIC
 Evas_Object *setting_create_icon(Evas_Object *parent, const char *img_path,
-                                 Evas_Object_Event_Cb up_cb,
-                                 Evas_Object_Event_Cb down_cb,
-                                 Evas_Object_Event_Cb move_cb,
-                                 void *data)
+								 Evas_Object_Event_Cb up_cb,
+								 Evas_Object_Event_Cb down_cb,
+								 Evas_Object_Event_Cb move_cb,
+								 void *data)
 {
 	SETTING_TRACE_BEGIN;
 	retv_if(!parent || !img_path, NULL);
@@ -822,15 +822,15 @@ Evas_Object *setting_create_icon(Evas_Object *parent, const char *img_path,
 
 	if (up_cb) {
 		evas_object_event_callback_add(icon, EVAS_CALLBACK_MOUSE_UP,
-		                               up_cb, data);
+									   up_cb, data);
 	}
 	if (down_cb) {
 		evas_object_event_callback_add(icon, EVAS_CALLBACK_MOUSE_DOWN,
-		                               down_cb, data);
+									   down_cb, data);
 	}
 	if (move_cb) {
 		evas_object_event_callback_add(icon, EVAS_CALLBACK_MOUSE_MOVE,
-		                               move_cb, data);
+									   move_cb, data);
 	}
 
 	return icon;
@@ -848,10 +848,10 @@ Evas_Object *setting_create_icon(Evas_Object *parent, const char *img_path,
 */
 EXPORT_PUBLIC
 Evas_Object *setting_create_image_button(Evas_Object *parent,
-                                         const char *btn_img,
-                                         setting_call_back_func clicked_cb,
-                                         setting_call_back_func unpressed_cb,
-                                         void *data)
+										 const char *btn_img,
+										 setting_call_back_func clicked_cb,
+										 setting_call_back_func unpressed_cb,
+										 void *data)
 {
 	SETTING_TRACE_BEGIN;
 	retv_if(!parent, NULL);
@@ -901,7 +901,7 @@ EXPORT_PUBLIC void setting_entry_entry_set(Evas_Object *entry, const char *text,
 */
 EXPORT_PUBLIC
 char *setting_customize_text(const char *input_str, const int font_size,
-                             const char *color, const char *align)
+							 const char *color, const char *align)
 {
 	/*SETTING_TRACE_BEGIN; */
 	retv_if(isEmptyStr(input_str), NULL);
@@ -910,7 +910,7 @@ char *setting_customize_text(const char *input_str, const int font_size,
 	/*<font_size=%d><align=middle><color=#9C9C9C>bbb</color></align></font_size> */
 	if (font_size > 0) {
 		snprintf(speciliztion, sizeof(speciliztion),
-		         "<font_size=%d>", font_size);
+				 "<font_size=%d>", font_size);
 	}
 
 	if (align) {
@@ -988,7 +988,7 @@ void __toogle_chk_changed(void *data, Evas_Object *obj, void *event_info)
 {
 	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item =
-	    (Setting_GenGroupItem_Data *) data;
+		(Setting_GenGroupItem_Data *) data;
 	list_item->chk_status = elm_check_state_get(obj);	/*  for update */
 
 	/*int err = 0; */
@@ -1075,17 +1075,17 @@ static void __tabbar_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *ev
 	Evas_Object *tabbar = NULL;
 	/*char *tabbar_t = NULL; */
 	if ((navi = elm_object_part_content_get(obj, "elm.swallow.content"))
-	    && (top_item = elm_naviframe_top_item_get(navi))) {
+		&& (top_item = elm_naviframe_top_item_get(navi))) {
 		/*SETTING_TRACE("top_item:%p", top_item); */
 		if ((eo_view = elm_object_item_content_get(top_item))
-		    && (tabbar = elm_object_part_content_get(eo_view, "elm.swallow.tabbar"))
-		    && 0 == safeStrCmp(evas_object_type_get(tabbar), "elm_toolbar")) {
+			&& (tabbar = elm_object_part_content_get(eo_view, "elm.swallow.tabbar"))
+			&& 0 == safeStrCmp(evas_object_type_get(tabbar), "elm_toolbar")) {
 			/*SETTING_TRACE("Skip Case 1"); */
 			skip = FALSE;
 		}
 
 		if (skip && (tabbar = elm_object_item_part_content_get(top_item, "tabbar"))
-		    && 0 == safeStrCmp(evas_object_type_get(tabbar), "elm_toolbar")) {
+			&& 0 == safeStrCmp(evas_object_type_get(tabbar), "elm_toolbar")) {
 			/*SETTING_TRACE("Skip case 2"); */
 			skip = FALSE;
 		}
@@ -1174,11 +1174,11 @@ setting_add_gl_help(Evas_Object *scroller, const char *str)
 {
 	if (str) {
 		Setting_GenGroupItem_Data *item_data = setting_create_Gendial_field_def(scroller, &itc_multiline_text,
-		                                                                        NULL,
-		                                                                        NULL,
-		                                                                        SWALLOW_Type_LAYOUT_SPECIALIZTION_X,
-		                                                                        NULL, NULL, 0, str, NULL, NULL);
-		if(NULL == item_data) {
+																				NULL,
+																				NULL,
+																				SWALLOW_Type_LAYOUT_SPECIALIZTION_X,
+																				NULL, NULL, 0, str, NULL, NULL);
+		if (NULL == item_data) {
 			SETTING_TRACE_ERROR("item_data is NULL");
 			return;
 		}

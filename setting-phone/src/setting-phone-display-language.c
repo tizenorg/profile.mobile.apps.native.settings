@@ -44,8 +44,8 @@ setting_view setting_view_phone_display_language = {
  * @param data The view data passed between all callbacks
  */
 static void setting_phone_display_language_caller_exist_right_cb(void *data,
-                                                                 Evas_Object *obj,
-                                                                 void *event_info)
+																 Evas_Object *obj,
+																 void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "Data parameter is NULL");
@@ -223,8 +223,8 @@ static void setting_phone_display_language_close_popup_ex(void *data)
 
 	} else {
 		ad->pop_progress_lang = setting_create_popup_with_progressbar(ad, ad->ly_language,
-		                                                                         PROGRESSBAR_STYLE,
-		                                                                         NULL, KeyStr_Loading, setting_phone_display_language_done_popup_resp_cb, 3/*0*/, TRUE, TRUE, 0);	/* 3 seconds to wait in maximum */
+																	  PROGRESSBAR_STYLE,
+																	  NULL, KeyStr_Loading, setting_phone_display_language_done_popup_resp_cb, 3/*0*/, TRUE, TRUE, 0);	/* 3 seconds to wait in maximum */
 	}
 
 	FREE(pa_lang);
@@ -239,8 +239,8 @@ static void setting_phone_display_language_close_popup_ex(void *data)
  * @param event_info The select genlist item
  */
 static void setting_phone_display_language_mouse_up_Gendial_list_radio_cb(void *data,
-                                                                          Evas_Object *obj,
-                                                                          void *event_info)
+																		  Evas_Object *obj,
+																		  void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "Data parameter is NULL");
@@ -292,11 +292,11 @@ static int setting_phone_display_language_create(void *cb)
 
 		if (caller) {
 			ad->ly_language = setting_create_layout_navi_bar_genlist(ad->win_main_layout,
-			                                                         ad->win_get,
-			                                                         title,
-			                                                         "IDS_ST_BUTTON_BACK", NULL,
-			                                                         setting_phone_display_language_caller_exist_right_cb, NULL,
-			                                                         ad, &scroller, &ad->navi_bar);
+																	 ad->win_get,
+																	 title,
+																	 "IDS_ST_BUTTON_BACK", NULL,
+																	 setting_phone_display_language_caller_exist_right_cb, NULL,
+																	 ad, &scroller, &ad->navi_bar);
 			gl_sel_cb = setting_phone_display_language_mouse_up_Gendial_list_radio_cb;
 			FREE(caller);
 		} else {
@@ -306,10 +306,10 @@ static int setting_phone_display_language_create(void *cb)
 	} else {
 		/* add basic layout */
 		Elm_Object_Item *navi_it = setting_push_layout_navi_bar_genlist(ad->win_main_layout, ad->win_get,
-		                                                                title, "IDS_ST_BUTTON_BACK",
-		                                                                NULL,
-		                                                                setting_phone_display_language_click_softkey_cancel_cb,
-		                                                                NULL, ad, &scroller, ad->navi_bar);
+																		title, "IDS_ST_BUTTON_BACK",
+																		NULL,
+																		setting_phone_display_language_click_softkey_cancel_cb,
+																		NULL, ad, &scroller, ad->navi_bar);
 		elm_naviframe_item_pop_cb_set(navi_it, setting_phone_display_language_click_softkey_cancel_cb, ad);
 		gl_sel_cb = setting_phone_display_language_mouse_up_Gendial_list_radio_cb;
 	}
@@ -335,18 +335,18 @@ static int setting_phone_display_language_create(void *cb)
 
 	EINA_LIST_FOREACH(langlist, elist, pnode) {
 		item_data =
-		    setting_create_Gendial_field_def(scroller,
-		                                     &(ad->itc_1text),
-		                                     gl_sel_cb,
-		                                     ad,
-		                                     SWALLOW_Type_INVALID, NULL, NULL,
-		                                     /*idx,			// <<< WARNING */
-		                                     0,
-		                                     pnode->title, NULL, NULL);
+			setting_create_Gendial_field_def(scroller,
+											 &(ad->itc_1text),
+											 gl_sel_cb,
+											 ad,
+											 SWALLOW_Type_INVALID, NULL, NULL,
+											 /*idx,			// <<< WARNING */
+											 0,
+											 pnode->title, NULL, NULL);
 		if (item_data) {
 			item_data->userdata = ad;
 			item_idx++;
-			//last_item = item_data;
+			/*last_item = item_data; */
 		} else {
 			SETTING_TRACE_ERROR("item_data is NULL");
 		}

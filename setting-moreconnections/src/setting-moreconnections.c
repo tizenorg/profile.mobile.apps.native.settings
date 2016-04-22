@@ -26,8 +26,8 @@
 #endif
 
 static void *setting_moreconnections_ug_on_create(ui_gadget_h ug,
-                                                  enum ug_mode mode, app_control_h service,
-                                                  void *priv)
+												  enum ug_mode mode, app_control_h service,
+												  void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if((!priv), NULL, "!priv");
@@ -40,7 +40,7 @@ static void *setting_moreconnections_ug_on_create(ui_gadget_h ug,
 	moreconnectionsUG->evas = evas_object_evas_get(moreconnectionsUG->win_main_layout);
 
 	setting_retvm_if(moreconnectionsUG->win_main_layout == NULL, NULL,
-	                 "cannot get main window ");
+					 "cannot get main window ");
 	setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR);
 
 	/* register view node table */
@@ -58,21 +58,21 @@ static void *setting_moreconnections_ug_on_create(ui_gadget_h ug,
 }
 
 static void setting_moreconnections_ug_on_start(ui_gadget_h ug, app_control_h service,
-                                                void *priv)
+												void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE_END;
 }
 
 static void setting_moreconnections_ug_on_pause(ui_gadget_h ug, app_control_h service,
-                                                void *priv)
+												void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE_END;
 }
 
 static void setting_moreconnections_ug_on_resume(ui_gadget_h ug, app_control_h service,
-                                                 void *priv)
+												 void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
@@ -91,36 +91,36 @@ static void setting_moreconnections_ug_on_resume(ui_gadget_h ug, app_control_h s
 }
 
 static void setting_moreconnections_ug_on_destroy(ui_gadget_h ug, app_control_h service,
-                                                  void *priv)
+												  void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SettingMoreConnectionsUG *moreconnectionsUG = priv;
 
 
 	/*  called when this shared gadget is terminated. similar with app_exit */
-    setting_view_destroy(&setting_view_moreconnections_main, moreconnectionsUG);
+	setting_view_destroy(&setting_view_moreconnections_main, moreconnectionsUG);
 
 	SETTING_TRACE_END;
 }
 
 static void setting_moreconnections_ug_on_message(ui_gadget_h ug, app_control_h msg,
-                                                  app_control_h service, void *priv)
+												  app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE_END;
 }
 
 static void setting_moreconnections_ug_on_event(ui_gadget_h ug,
-                                                enum ug_event event, app_control_h service,
-                                                void *priv)
+												enum ug_event event, app_control_h service,
+												void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE_END;
 }
 
 static void setting_moreconnections_ug_on_key_event(ui_gadget_h ug,
-                                                    enum ug_key_event event,
-                                                    app_control_h service, void *priv)
+													enum ug_key_event event,
+													app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE_END;

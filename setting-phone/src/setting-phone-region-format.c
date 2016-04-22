@@ -212,27 +212,27 @@ static int setting_phone_region_format_get_region_fmt(char *list[],
 		setting_retvm_if(NULL == loc_list, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER, "loc_list is NULL");
 
 
-		char* e = strchr(loc_list, '_');
-		const char* result;
+		char *e = strchr(loc_list, '_');
+		const char *result;
 		if (e) {
 			int index = (int)(e-loc_list);
 			result = substring(loc_list, 0, index);
-			//SETTING_TRACE("lang code : %s", result);
+			/*SETTING_TRACE("lang code : %s", result); */
 		} else {
-			//SETTING_TRACE("lang code itself : %s", loc_list);
+			/*SETTING_TRACE("lang code itself : %s", loc_list); */
 			result = loc_list;
 		}
 
-		//****************************************************************************
-		//****************************************************************************
-		//****************************************************************************
-		// current font doesn't support the font
-		// filter out if result == 'bo'
+		/***************************************************************************** */
+		/***************************************************************************** */
+		/***************************************************************************** */
+		/* current font doesn't support the font */
+		/* filter out if result == 'bo' */
 		if (0 == safeStrCmp(result, "bo")
-			|| 0 == safeStrCmp(result, "dz") ) continue;
-		//****************************************************************************
-		//****************************************************************************
-		//****************************************************************************
+			|| 0 == safeStrCmp(result, "dz")) continue;
+		/***************************************************************************** */
+		/***************************************************************************** */
+		/***************************************************************************** */
 
 		uloc_getDisplayLanguage(loc_list, localeID, lang, LANGUAGE_STR_LEN, &language_status);
 		if (U_FAILURE(language_status)) {
@@ -264,10 +264,10 @@ static int setting_phone_region_format_get_region_fmt(char *list[],
 		str_variant = setting_phone_lang_str_to_utf8(variant);
 		str_displayname = setting_phone_lang_str_to_utf8(displayname);
 
-		//SETTING_TRACE(" lang : %s, country : %s ---> str_displayname : %s ", str_lang, str_country, str_displayname);
+		/*SETTING_TRACE(" lang : %s, country : %s ---> str_displayname : %s ", str_lang, str_country, str_displayname); */
 
 		if (0 == safeStrCmp(str_lang, result)) {
-			//SETTING_TRACE(" str_lang is equal to result %s %s ", str_lang, result);
+			/*SETTING_TRACE(" str_lang is equal to result %s %s ", str_lang, result); */
 			FREE(str_lang);
 			FREE(str_country);
 			FREE(str_variant);
@@ -277,14 +277,14 @@ static int setting_phone_region_format_get_region_fmt(char *list[],
 		}
 
 		if (str_lang == NULL) {
-			//SETTING_TRACE(" str_lang is NULL. ");
+			/*SETTING_TRACE(" str_lang is NULL. "); */
 			FREE(str_lang);
 			FREE(str_country);
 			FREE(str_variant);
 			FREE(str_displayname);
 			continue;
 		} else if (0 == safeStrCmp(str_lang, "")) {
-			//SETTING_TRACE(" str_lang is Empty string. ");
+			/*SETTING_TRACE(" str_lang is Empty string. "); */
 			FREE(str_lang);
 			FREE(str_country);
 			FREE(str_variant);
@@ -327,13 +327,13 @@ static int setting_phone_region_format_get_region_fmt(char *list[],
 	i = 0;
 	EINA_LIST_FOREACH(region_list, iter, item_data) {
 		if (item_data) {
-			//list[i] = (char *)g_strdup(item_data->desc);
+			/*list[i] = (char *)g_strdup(item_data->desc); */
 			list[i] = elm_entry_utf8_to_markup(item_data->desc);
 			item_idx[i] = i;
 			region_keyStr[i] = (char *)g_strdup(item_data->key);
 
-			//SETTING_TRACE(" list[i] : %s, region_keyStr[i]", list[i], region_keyStr[i]);
-			
+			/*SETTING_TRACE(" list[i] : %s, region_keyStr[i]", list[i], region_keyStr[i]); */
+
 			free(item_data);
 			item_data = NULL;
 			i++;
@@ -553,28 +553,23 @@ static Eina_Bool __region_genlist_update(void *data)
 	}
 
 	if (search_count > 1) {
-		//? Setting_GenGroupItem_Data *last_item = (Setting_GenGroupItem_Data *)
+		/*? Setting_GenGroupItem_Data *last_item = (Setting_GenGroupItem_Data *) */
 		elm_object_item_data_get(elm_genlist_last_item_get(ad->gl_region));
 	}
 
 	if (search_count == 0) {
-		if(!ad->nocontents)
-		{
+		if (!ad->nocontents) {
 			ad->nocontents = elm_layout_add(ad->win_get);
 			elm_layout_theme_set(ad->nocontents, "layout", "nocontents", "search");
 			elm_object_part_text_set(ad->nocontents, "elm.text", _("IDS_ST_BODY_NO_RESULTS_FOUND"));
 		}
-		if (ad->nocontents != elm_object_part_content_get(ad->ly_sub_region, "elm.swallow.content"))
-		{
+		if (ad->nocontents != elm_object_part_content_get(ad->ly_sub_region, "elm.swallow.content")) {
 			ad->gl_region = elm_object_part_content_unset(ad->ly_sub_region, "elm.swallow.content");
 			evas_object_hide(ad->gl_region);
 			elm_object_part_content_set(ad->ly_sub_region, "elm.swallow.content", ad->nocontents);
 		}
-	}
-	else
-	{
-		if (ad->gl_region != elm_object_part_content_get(ad->ly_sub_region, "elm.swallow.content"))
-		{
+	} else {
+		if (ad->gl_region != elm_object_part_content_get(ad->ly_sub_region, "elm.swallow.content")) {
 			ad->nocontents = elm_object_part_content_unset(ad->ly_sub_region, "elm.swallow.content");
 			evas_object_hide(ad->nocontents);
 			elm_object_part_content_set(ad->ly_sub_region, "elm.swallow.content", ad->gl_region);
@@ -584,7 +579,7 @@ static Eina_Bool __region_genlist_update(void *data)
 #if 0
 	int automatic_select = 0;
 	vconf_get_bool(VCONFKEY_SETAPPL_REGION_AUTOMATIC_BOOL, &automatic_select);
-	if(automatic_select){
+	if (automatic_select) {
 		ad->selected_region_idx = 0;
 	}
 
@@ -758,7 +753,7 @@ static Eina_Bool __region_animator_cb(void *data)
 
 	Setting_GenGroupItem_Data *item_data = NULL;
 	if (ad->gl_region_cur_index >=  ad->region_num) {
-		//? Setting_GenGroupItem_Data *last_item = (Setting_GenGroupItem_Data *)
+		/*? Setting_GenGroupItem_Data *last_item = (Setting_GenGroupItem_Data *) */
 		elm_object_item_data_get(elm_genlist_last_item_get(ad->gl_region));
 
 		if (ad->animator) {
@@ -934,7 +929,7 @@ static void __region_genlist_create(void *data)
 	} else { /*had finished adding items */
 		SETTING_TRACE("had finished adding items");
 
-		//? Setting_GenGroupItem_Data *last_item = (Setting_GenGroupItem_Data *)
+		/*? Setting_GenGroupItem_Data *last_item = (Setting_GenGroupItem_Data *) */
 		elm_object_item_data_get(elm_genlist_last_item_get(ad->gl_region));
 	}
 }
@@ -1073,7 +1068,7 @@ static int setting_phone_region_format_create(void *cb)
 	elm_genlist_clear(ad->gl_region);	/* first to clear list */
 
 	retvm_if(ad->gl_region == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER, "ad->gl_region is NULL");
-	//evas_object_smart_callback_add(ad->gl_region, "realized", __gl_realized_cb, NULL);
+	/*evas_object_smart_callback_add(ad->gl_region, "realized", __gl_realized_cb, NULL); */
 
 	ad->chk_region = elm_radio_add(ad->gl_region);
 	elm_radio_state_value_set(ad->chk_region, -1);

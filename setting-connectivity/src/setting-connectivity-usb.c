@@ -81,14 +81,14 @@ static void __setting_processes_sub_list_sel_cb(void *data, Evas_Object *obj, vo
 	Elm_Object_Item *parentItem = elm_genlist_item_parent_get(subitem);
 	elm_genlist_item_selected_set(subitem, 0);
 	Setting_GenGroupItem_Data *data_subItem =
-	    elm_object_item_data_get(subitem);
+		elm_object_item_data_get(subitem);
 	Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(parentItem);	/* parent data */
 	ret_if(NULL == data_subItem || NULL == data_parentItem);
 
 	elm_radio_value_set(data_subItem->rgd, data_subItem->chk_status);
 	int err;
 	setting_set_int_slp_key(data_parentItem->int_slp_setting_binded,
-	                        data_subItem->chk_status, &err);
+							data_subItem->chk_status, &err);
 	setting_retm_if(0 != err, "Set vconf error[%d]", data_parentItem->int_slp_setting_binded);
 
 	data_parentItem->sub_desc = (char *)g_strdup(_(data_subItem->keyStr));
@@ -133,7 +133,7 @@ static void __setting_devoptions_main_sub_list_sel_cb(void *data, Evas_Object *o
 }
 #endif
 
-static char* _get_graphic_engine()
+static char *_get_graphic_engine()
 {
 	/* Get GPU Rendering state */
 	const char *engine_str = NULL;
@@ -177,41 +177,41 @@ static void __setting_devoptions_main_exp_cb(void *data, Evas_Object *obj, void 
 			elm_radio_value_set(rgd, -1);
 
 			setting_create_Gendial_exp_sub_field(scroller,
-					&itc_1text_1icon,
-					__setting_processes_sub_list_sel_cb, ad, parentItem,
-					SWALLOW_Type_1RADIO, rgd,
-					0, _(bgprocess_list[0]),
-					NULL);
+												 &itc_1text_1icon,
+												 __setting_processes_sub_list_sel_cb, ad, parentItem,
+												 SWALLOW_Type_1RADIO, rgd,
+												 0, _(bgprocess_list[0]),
+												 NULL);
 			setting_create_Gendial_exp_sub_field(scroller,
-					&itc_1text_1icon,
-					__setting_processes_sub_list_sel_cb, ad, parentItem,
-					SWALLOW_Type_1RADIO, rgd,
-					1, _(bgprocess_list[1]),
-					NULL);
+												 &itc_1text_1icon,
+												 __setting_processes_sub_list_sel_cb, ad, parentItem,
+												 SWALLOW_Type_1RADIO, rgd,
+												 1, _(bgprocess_list[1]),
+												 NULL);
 			setting_create_Gendial_exp_sub_field(scroller,
-					&itc_1text_1icon,
-					__setting_processes_sub_list_sel_cb, ad, parentItem,
-					SWALLOW_Type_1RADIO, rgd,
-					2, _(bgprocess_list[2]),
-					NULL);
+												 &itc_1text_1icon,
+												 __setting_processes_sub_list_sel_cb, ad, parentItem,
+												 SWALLOW_Type_1RADIO, rgd,
+												 2, _(bgprocess_list[2]),
+												 NULL);
 			setting_create_Gendial_exp_sub_field(scroller,
-					&itc_1text_1icon,
-					__setting_processes_sub_list_sel_cb, ad, parentItem,
-					SWALLOW_Type_1RADIO, rgd,
-					3, _(bgprocess_list[3]),
-					NULL);
+												 &itc_1text_1icon,
+												 __setting_processes_sub_list_sel_cb, ad, parentItem,
+												 SWALLOW_Type_1RADIO, rgd,
+												 3, _(bgprocess_list[3]),
+												 NULL);
 			setting_create_Gendial_exp_sub_field(scroller,
-					&itc_1text_1icon,
-					__setting_processes_sub_list_sel_cb, ad, parentItem,
-					SWALLOW_Type_1RADIO, rgd,
-					4, _(bgprocess_list[4]),
-					NULL);
+												 &itc_1text_1icon,
+												 __setting_processes_sub_list_sel_cb, ad, parentItem,
+												 SWALLOW_Type_1RADIO, rgd,
+												 4, _(bgprocess_list[4]),
+												 NULL);
 			setting_create_Gendial_exp_sub_field(scroller,
-					&itc_1text_1icon,
-					__setting_processes_sub_list_sel_cb, ad, parentItem,
-					SWALLOW_Type_1RADIO, rgd,
-					5, _(bgprocess_list[5]),
-					NULL);
+												 &itc_1text_1icon,
+												 __setting_processes_sub_list_sel_cb, ad, parentItem,
+												 SWALLOW_Type_1RADIO, rgd,
+												 5, _(bgprocess_list[5]),
+												 NULL);
 
 			setting_update_chk_status(rgd, data_parentItem->int_slp_setting_binded);
 		} else if (data_parentItem == ad->gpu_render) {
@@ -220,25 +220,25 @@ static void __setting_devoptions_main_exp_cb(void *data, Evas_Object *obj, void 
 			elm_radio_value_set(rgd, -1);
 
 			setting_create_Gendial_exp_sub_field(scroller,
-					&itc_1text_1icon,
-					__setting_devoptions_main_sub_list_sel_cb, ad, parentItem,
-					SWALLOW_Type_1RADIO, rgd,
-					/*NONE*/0, "NONE",
-					NULL);
+												 &itc_1text_1icon,
+												 __setting_devoptions_main_sub_list_sel_cb, ad, parentItem,
+												 SWALLOW_Type_1RADIO, rgd,
+												 /*NONE*/0, "NONE",
+												 NULL);
 
 			setting_create_Gendial_exp_sub_field(scroller,
-					&itc_1text_1icon,
-					__setting_devoptions_main_sub_list_sel_cb, ad, parentItem,
-					SWALLOW_Type_1RADIO, rgd,
-					/*SOFTWARE*/1, "OFF",
-					NULL);
+												 &itc_1text_1icon,
+												 __setting_devoptions_main_sub_list_sel_cb, ad, parentItem,
+												 SWALLOW_Type_1RADIO, rgd,
+												 /*SOFTWARE*/1, "OFF",
+												 NULL);
 			setting_create_Gendial_exp_sub_field(scroller,
-					&itc_1text_1icon,
-					__setting_devoptions_main_sub_list_sel_cb, ad, parentItem,
-					SWALLOW_Type_1RADIO, rgd,
-					/*HARDWARE*/2, "ON",
-					NULL);
-			const char *render_engine = _get_graphic_engine(); // on, off, none
+												 &itc_1text_1icon,
+												 __setting_devoptions_main_sub_list_sel_cb, ad, parentItem,
+												 SWALLOW_Type_1RADIO, rgd,
+												 /*HARDWARE*/2, "ON",
+												 NULL);
+			const char *render_engine = _get_graphic_engine(); /* on, off, none */
 			if (!safeStrCmp("NONE", render_engine)) {
 				vconf_set_int(ad->bg_processes->int_slp_setting_binded, SETTING_HW_ACCELERATION_NONE);
 				elm_radio_value_set(rgd, 0);
@@ -279,7 +279,7 @@ static int setting_connectivity_change_debug_mode_toggle(SettingConnectivityUG *
 				return -1;
 			}
 			setting_create_popup(ad, ad->view_layout, NULL, CONNECTTIVITY_SELECT_INFO_POPUP_STR,
-								NULL, 3, false, false, 0);
+								 NULL, 3, false, false, 0);
 		} else {
 			load_usb_connection_popup(ad);
 		}
@@ -301,7 +301,7 @@ static int setting_connectivity_change_debug_mode_toggle(SettingConnectivityUG *
 }
 
 static void setting_connectivity_main_chk_usb_debug_cb(void *data,
-                                                       Evas_Object *obj, void *event_info)
+													   Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
@@ -316,7 +316,7 @@ static void setting_connectivity_main_chk_usb_debug_cb(void *data,
 }
 
 static void setting_connectivity_usb_mouse_up_Gendial_list_cb(void *data,
-                                                              Evas_Object *obj, void *event_info)
+															  Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Invalid argument: data is NULL");
@@ -350,7 +350,7 @@ static void setting_connectivity_main_chk_btn_cb(void *data, Evas_Object *obj, v
 		if (opposite) {
 			app_launcher(SETTING_CPU_USAGE_PKG_NAME);
 		} else {
-			#if 0
+#if 0
 			bool running_flag = FALSE;
 			int ret = app_manager_is_running(SETTING_CPU_USAGE_PKG_NAME, &running_flag);
 			setting_retm_if(ret != 0, "fail to call app_manager_is_running");
@@ -365,7 +365,7 @@ static void setting_connectivity_main_chk_btn_cb(void *data, Evas_Object *obj, v
 					SETTING_TRACE_ERROR("===== app_manager_terminate_app fail.");
 				}
 			}
-			#endif
+#endif
 		}
 	} else {
 		/* do nothing */
@@ -463,30 +463,30 @@ static int setting_connectivity_usb_create(void *cb)
 	/* win_main of the popup */
 #ifdef HELP_UG_EXIST
 	ad->ly_usb =
-	    setting_create_layout_navi_bar_genlist(ad->win_main_layout,
-	                                           ad->win_get,
-	                                           KeyStr_DeveloperOption,
-	                                           dgettext("sys_string", "IDS_ST_BUTTON_BACK"),
-	                                           _("IDS_ST_HEADER_HELP"),
-	                                           setting_connectivity_usb_click_softkey_cancel_cb,
-	                                           setting_connectivity_usb_click_softkey_set_cb,
-	                                           ad, &scroller,
-	                                           &ad->navi_bar);
+		setting_create_layout_navi_bar_genlist(ad->win_main_layout,
+											   ad->win_get,
+											   KeyStr_DeveloperOption,
+											   dgettext("sys_string", "IDS_ST_BUTTON_BACK"),
+											   _("IDS_ST_HEADER_HELP"),
+											   setting_connectivity_usb_click_softkey_cancel_cb,
+											   setting_connectivity_usb_click_softkey_set_cb,
+											   ad, &scroller,
+											   &ad->navi_bar);
 #else
 	ad->ly_usb =
-	    setting_create_layout_navi_bar(ad->win_main_layout, ad->win_get,
-	                                   KeyStr_DeveloperOption,
-	                                   _("IDS_ST_BUTTON_BACK"),
-	                                   setting_connectivity_usb_click_softkey_cancel_cb,
-	                                   ad, view_layout,
-	                                   &ad->navi_bar, NULL);
+		setting_create_layout_navi_bar(ad->win_main_layout, ad->win_get,
+									   KeyStr_DeveloperOption,
+									   _("IDS_ST_BUTTON_BACK"),
+									   setting_connectivity_usb_click_softkey_cancel_cb,
+									   ad, view_layout,
+									   &ad->navi_bar, NULL);
 #endif
 
 	SETTING_TRACE("before init\n");
 
 	scroller = elm_genlist_add(ad->win_main_layout);
 	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
-	         "Cannot set scroller object  as contento of layout");
+			 "Cannot set scroller object  as contento of layout");
 	elm_object_style_set(scroller, "dialogue");
 	elm_genlist_clear(scroller);	/* first to clear list */
 	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb, NULL);
@@ -501,7 +501,7 @@ static int setting_connectivity_usb_create(void *cb)
 #if 1
 	/* [UI] separator */
 	item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
-	                               ELM_GENLIST_ITEM_NONE, NULL, NULL);
+								   ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	/* [UI] USB debugging */
@@ -517,11 +517,11 @@ static int setting_connectivity_usb_create(void *cb)
 	SETTING_TRACE("toggle_dbg: %d", toggle_dbg);
 
 	ad->debug_mode =
-	    setting_create_Gendial_field_def(scroller, &itc_1text_1icon,
-	                                     setting_connectivity_usb_mouse_up_Gendial_list_cb,
-	                                     ad, SWALLOW_Type_1ICON_1RADIO, NULL,
-	                                     NULL, toggle_dbg, "IDS_ST_BODY_USB_DEBUGGING",
-	                                     NULL, setting_connectivity_main_chk_usb_debug_cb);
+		setting_create_Gendial_field_def(scroller, &itc_1text_1icon,
+										 setting_connectivity_usb_mouse_up_Gendial_list_cb,
+										 ad, SWALLOW_Type_1ICON_1RADIO, NULL,
+										 NULL, toggle_dbg, "IDS_ST_BODY_USB_DEBUGGING",
+										 NULL, setting_connectivity_main_chk_usb_debug_cb);
 
 	if (ad->debug_mode) {
 		ad->debug_mode->userdata = ad;
@@ -550,11 +550,11 @@ static int setting_connectivity_usb_create(void *cb)
 		}
 
 		ad->cpu_usage =
-		    setting_create_Gendial_field_def(scroller, &itc_1text_1icon,
-		                                     setting_connectivity_usb_mouse_up_Gendial_CPU_usage_cb,
-		                                     ad, SWALLOW_Type_1ICON_1RADIO, NULL,
-		                                     NULL, vconf_val, "IDS_ST_MBODY_SHOW_CPU_USAGE",
-		                                     NULL, setting_connectivity_main_chk_btn_cb);
+			setting_create_Gendial_field_def(scroller, &itc_1text_1icon,
+											 setting_connectivity_usb_mouse_up_Gendial_CPU_usage_cb,
+											 ad, SWALLOW_Type_1ICON_1RADIO, NULL,
+											 NULL, vconf_val, "IDS_ST_MBODY_SHOW_CPU_USAGE",
+											 NULL, setting_connectivity_main_chk_btn_cb);
 		if (ad->cpu_usage) {
 			ad->cpu_usage->userdata = ad;
 			__BACK_POINTER_SET(ad->cpu_usage);
@@ -574,9 +574,9 @@ static int setting_connectivity_usb_create(void *cb)
 
 		/* [UI] Force GPU rendering */
 		ad->gpu_render = setting_create_Gendial_exp_parent_field(scroller,
-		                                                         &(ad->itc_2text_3_parent),
-		                                                         NULL, NULL, SWALLOW_Type_INVALID,
-		                                                         DEFAULT_RENDERING_ENGINE_STR, _(render_engine));
+																 &(ad->itc_2text_3_parent),
+																 NULL, NULL, SWALLOW_Type_INVALID,
+																 DEFAULT_RENDERING_ENGINE_STR, _(render_engine));
 		if (ad->gpu_render) {
 			__BACK_POINTER_SET(ad->gpu_render);
 			ad->gpu_render->userdata = ad;
@@ -595,12 +595,12 @@ static int setting_connectivity_usb_create(void *cb)
 		/* [UI] expandble list - Automatic answering */
 		char *bgproc = get_bg_processes();
 		ad->bg_processes =
-		    setting_create_Gendial_exp_parent_field(scroller,
-		                                            &(ad->itc_2text_3_parent),
-		                                            NULL, NULL,
-		                                            SWALLOW_Type_INVALID,
-		                                            "IDS_ST_BODY_LIMIT_BACKGROUND_PROCESSES",
-		                                            bgproc);
+			setting_create_Gendial_exp_parent_field(scroller,
+													&(ad->itc_2text_3_parent),
+													NULL, NULL,
+													SWALLOW_Type_INVALID,
+													"IDS_ST_BODY_LIMIT_BACKGROUND_PROCESSES",
+													bgproc);
 
 		/* [UI] Limit background processes */
 		if (ad->bg_processes) {
@@ -613,25 +613,25 @@ static int setting_connectivity_usb_create(void *cb)
 		}
 
 		item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
-		                               ELM_GENLIST_ITEM_NONE, NULL, NULL);
+									   ELM_GENLIST_ITEM_NONE, NULL, NULL);
 		elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 		/* [UI] Diagnostics and Usage */
 		setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
-		                                 __setting_connectivity_usb_dia_usage_mouse_up_cb,
-		                                 ad, SWALLOW_Type_INVALID, NULL, NULL,
-		                                 0, DIAGNOSTICS_USAGE_STR,
-		                                 NULL, NULL);
+										 __setting_connectivity_usb_dia_usage_mouse_up_cb,
+										 ad, SWALLOW_Type_INVALID, NULL, NULL,
+										 0, DIAGNOSTICS_USAGE_STR,
+										 NULL, NULL);
 	}
 
 	item = elm_genlist_item_append(scroller, &itc_bottom_seperator, NULL, NULL,
-	                               ELM_GENLIST_ITEM_NONE, NULL, NULL);
+								   ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	/*---------------------------------------------------------------------------------------------- */
 	/* Registering callback function for VCONFKEY_SETAPPL_USB_MODE_INT */
 	vconf_ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_USB_DEBUG_MODE_BOOL,
-	                                     debug_mode_change_vconf_cb, ad);
+										 debug_mode_change_vconf_cb, ad);
 	if (vconf_ret != 0) {
 		SETTING_TRACE("FAIL: vconf_notify_key_changed(VCONFKEY_SETAPPL_USB_DEBUG_MODE_BOOL)");
 		return SETTING_RETURN_FAIL;
@@ -639,7 +639,7 @@ static int setting_connectivity_usb_create(void *cb)
 
 	/* Registering callback function for VCONFKEY_SETAPPL_USB_IN_MODE_CHANGE */
 	vconf_ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_USB_IN_MODE_CHANGE,
-	                                     in_mode_change_vconf_cb, ad);
+										 in_mode_change_vconf_cb, ad);
 	if (vconf_ret != 0) {
 		SETTING_TRACE("FAIL: vconf_notify_key_changed(VCONFKEY_SETAPPL_USB_IN_MODE_CHANGE)\n");
 		return SETTING_RETURN_FAIL;
@@ -759,7 +759,7 @@ static int setting_connectivity_usb_destroy(void *cb)
 
 	/* Closing vconf trace */
 	vconf_ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_USB_DEBUG_MODE_BOOL,
-	                                     debug_mode_change_vconf_cb);
+										 debug_mode_change_vconf_cb);
 
 	if (vconf_ret != 0) {
 		SETTING_TRACE("FAIL: vconf_ignore_key_changed(VCONFKEY_SETAPPL_USB_DEBUG_MODE_BOOL)");
@@ -833,7 +833,7 @@ static int setting_connectivity_usb_cleanup(void *cb)
  */
 static void
 setting_connectivity_usb_click_softkey_cancel_cb(void *data, Evas_Object *obj,
-                                                 void *event_info)
+												 void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -858,7 +858,7 @@ setting_connectivity_usb_click_softkey_cancel_cb(void *data, Evas_Object *obj,
 #ifdef HELP_UG_EXIST
 static void
 setting_connectivity_usb_click_softkey_set_cb(void *data, Evas_Object *obj,
-                                              void *event_info)
+											  void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -868,7 +868,7 @@ setting_connectivity_usb_click_softkey_set_cb(void *data, Evas_Object *obj,
 
 	/* Send destroy request */
 	setting_view_change(&setting_view_connectivity_usb,
-	                    &setting_view_connectivity_usb_help, ad);
+						&setting_view_connectivity_usb_help, ad);
 	SETTING_TRACE_END;
 }
 #endif
@@ -915,8 +915,8 @@ static void debug_mode_resp_cb(void *data, Evas_Object *obj, void *event_info)
 			return;
 		}
 		setting_create_popup(ad, ad->view_layout, NULL,
-							CONNECTTIVITY_SELECT_INFO_POPUP_STR, NULL,
-							3, false, false, 0);
+							 CONNECTTIVITY_SELECT_INFO_POPUP_STR, NULL,
+							 3, false, false, 0);
 	} else if (resp_type == POPUP_RESPONSE_CANCEL) {
 		/* rollback */
 		/*setting_update_gl_item_chk_status(ad->debug_mode, 0); */
@@ -941,10 +941,10 @@ void load_usb_connection_popup(void *data)
 
 	unload_popup(ad);
 	ad->pop = setting_create_popup(ad, ad->win_get, NULL,
-                                   _(DEBUG_MODE_POPUP_TEXT),
-                                   debug_mode_resp_cb,
-                                   0, false, false, 2,
-                                   _("IDS_ST_BUTTON_CANCEL_ABB"), _("IDS_ST_BUTTON_ENABLE"));
+								   _(DEBUG_MODE_POPUP_TEXT),
+								   debug_mode_resp_cb,
+								   0, false, false, 2,
+								   _("IDS_ST_BUTTON_CANCEL_ABB"), _("IDS_ST_BUTTON_ENABLE"));
 
 	if (!(ad->pop)) SETTING_TRACE("FAIL: setting_create_popup()");
 

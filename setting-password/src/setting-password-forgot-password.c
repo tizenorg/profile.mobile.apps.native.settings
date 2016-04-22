@@ -130,7 +130,7 @@ static void setting_password_forgot_password_mouse_up_Gendial_list_cb(void *data
 		int screen_lock_type = 0;
 		vconf_get_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, &screen_lock_type);
 		if (screen_lock_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD
-		    || screen_lock_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD) {
+			|| screen_lock_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD) {
 			/* call lockscreen app */
 			__launch_lockscreen();
 			/*int ret = 0; */
@@ -168,19 +168,19 @@ static int setting_password_forgot_password_create(void *cb)
 	Elm_Object_Item *navi_it = NULL;
 
 	navi_it = setting_push_layout_navi_bar_genlist(ad->win_main_layout, ad->win_get,
-	                                               PW_ST_FORGOT_PASSWORD,
-	                                               NULL, NULL, NULL, NULL, NULL,
-	                                               &genlist, ad->navi_bar);
+												   PW_ST_FORGOT_PASSWORD,
+												   NULL, NULL, NULL, NULL, NULL,
+												   &genlist, ad->navi_bar);
 	/* add pop cb */
 	elm_naviframe_item_pop_cb_set(navi_it, (Elm_Naviframe_Item_Pop_Cb)__forgot_password_pop_cb, ad);
 
 	if (genlist) {
 		/* menu 1. */
 		setting_create_Gendial_field_def(genlist, &(itc_1text),
-		                                 setting_password_forgot_password_mouse_up_Gendial_list_cb, ad,
-		                                 SWALLOW_Type_INVALID,
-		                                 NULL, NULL,
-		                                 0, PW_ST_RESET_PERSONAL_MODE, NULL, NULL);
+										 setting_password_forgot_password_mouse_up_Gendial_list_cb, ad,
+										 SWALLOW_Type_INVALID,
+										 NULL, NULL,
+										 0, PW_ST_RESET_PERSONAL_MODE, NULL, NULL);
 
 		/* menu 2. */
 		ADD_GL_HELP(genlist, PW_ST_RESET_PERSONAL_MODE_HELP);

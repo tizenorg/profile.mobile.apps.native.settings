@@ -77,7 +77,7 @@ void __get_extra_data(SettingPasswordUG *ad, app_control_h service)
 {
 	SETTING_TRACE_BEGIN;
 
-	//char *encryption = NULL;
+	/*char *encryption = NULL; */
 
 	/* #1. viewtype */
 	app_control_get_extra_data(service, "viewtype", &(ad->view_type_string));
@@ -196,15 +196,15 @@ static void setting_password_rotated_cb(void *data, Evas_Object *obj, void *even
 	changed_ang = elm_win_rotation_get(obj);*/
 
 	if (ad->view_type == SETTING_PW_TYPE_PIN_LOCK_OFF
-	    || ad->view_type == SETTING_PW_TYPE_PIN_LOCK_ON
-	    || ad->view_type == SETTING_PW_TYPE_CHANGE_PIN
-	    || ad->view_type == SETTING_PW_TYPE_PIN_BLOCKED) {
+		|| ad->view_type == SETTING_PW_TYPE_PIN_LOCK_ON
+		|| ad->view_type == SETTING_PW_TYPE_CHANGE_PIN
+		|| ad->view_type == SETTING_PW_TYPE_PIN_BLOCKED) {
 		if (ad->handle) {
 			if (tel_get_sim_lock_info(ad->handle, TAPI_SIM_LOCK_SC, setting_get_pin_lock_info_cb, ad) != 0)
 				SETTING_TRACE_DEBUG("failed to call tel_get_sim_lock_info()");
 		}
 	} else if (ad->view_type == SETTING_PW_TYPE_CHANGE_PIN2
-	           || ad->view_type == SETTING_PW_TYPE_PIN2_BLOCKED) {
+			   || ad->view_type == SETTING_PW_TYPE_PIN2_BLOCKED) {
 		if (ad->handle) {
 			if (tel_get_sim_lock_info(ad->handle, TAPI_SIM_LOCK_FD, setting_get_pin_lock_info_cb, ad) != 0)
 				SETTING_TRACE_DEBUG("failed to call tel_get_sim_lock_info()");
@@ -238,8 +238,8 @@ static void setting_password_rotated_cb(void *data, Evas_Object *obj, void *even
 }
 
 static void *setting_password_ug_on_create(ui_gadget_h ug,
-                                           enum ug_mode mode, app_control_h service,
-                                           void *priv)
+										   enum ug_mode mode, app_control_h service,
+										   void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if((!priv), NULL, "!priv");
@@ -252,7 +252,7 @@ static void *setting_password_ug_on_create(ui_gadget_h ug,
 	passwordUG->evas = evas_object_evas_get(passwordUG->win_main_layout);
 
 	setting_retvm_if(passwordUG->win_main_layout == NULL, NULL,
-	                 "cannot get main window ");
+					 "cannot get main window ");
 
 	/* set launguage */
 	/*setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR); */
@@ -282,9 +282,9 @@ static void *setting_password_ug_on_create(ui_gadget_h ug,
 	/*  creating a view. */
 	setting_view_create(main_view, (void *)passwordUG);
 	evas_object_event_callback_add(passwordUG->win_main_layout,
-	                               EVAS_CALLBACK_RESIZE,
-	                               setting_password_ug_cb_resize,
-	                               passwordUG);
+								   EVAS_CALLBACK_RESIZE,
+								   setting_password_ug_cb_resize,
+								   passwordUG);
 
 	return passwordUG->ly_main;
 }
@@ -360,69 +360,69 @@ static void setting_password_ug_on_destroy(ui_gadget_h ug, app_control_h service
 }
 
 static void setting_password_ug_on_message(ui_gadget_h ug, app_control_h msg,
-                                           app_control_h service, void *priv)
+										   app_control_h service, void *priv)
 {
 
 }
 
 static void setting_password_ug_on_event(ui_gadget_h ug,
-                                         enum ug_event event, app_control_h service,
-                                         void *priv)
+										 enum ug_event event, app_control_h service,
+										 void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	if (!priv)
 		return;
 
-	// SettingPasswordUG *ad = (SettingPasswordUG *)priv;
+	/* SettingPasswordUG *ad = (SettingPasswordUG *)priv; */
 	/*static int old_event = -1; */
 	switch (event) {
-		case UG_EVENT_LOW_MEMORY:
-			break;
-		case UG_EVENT_LOW_BATTERY:
-			break;
-		case UG_EVENT_LANG_CHANGE: {
+	case UG_EVENT_LOW_MEMORY:
+		break;
+	case UG_EVENT_LOW_BATTERY:
+		break;
+	case UG_EVENT_LANG_CHANGE: {
 #if 0
-				/* update toolbar items */
-				Evas_Object *toolbar = elm_object_item_part_content_get(ad->navi_it, "toolbar");
-				if (toolbar != NULL) {
-					Elm_Object_Item *last_item = elm_toolbar_last_item_get(toolbar);
-					Elm_Object_Item *first_item = elm_toolbar_last_item_get(toolbar);
+			/* update toolbar items */
+			Evas_Object *toolbar = elm_object_item_part_content_get(ad->navi_it, "toolbar");
+			if (toolbar != NULL) {
+				Elm_Object_Item *last_item = elm_toolbar_last_item_get(toolbar);
+				Elm_Object_Item *first_item = elm_toolbar_last_item_get(toolbar);
 
-					if (last_item)
-						elm_object_item_text_set(last_item, _("IDS_SA_BUTTON_DONE_ABB"));
-					if (first_item && (first_item != last_item))
-						elm_object_item_text_set(last_item, _("IDS_ST_BUTTON_CANCEL_ABB"));
-				}
-#endif
+				if (last_item)
+					elm_object_item_text_set(last_item, _("IDS_SA_BUTTON_DONE_ABB"));
+				if (first_item && (first_item != last_item))
+					elm_object_item_text_set(last_item, _("IDS_ST_BUTTON_CANCEL_ABB"));
 			}
-			break;
-		case UG_EVENT_ROTATE_PORTRAIT:
-		case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-		case UG_EVENT_ROTATE_LANDSCAPE:
-		case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-			break;
-		case UG_EVENT_REGION_CHANGE:
-			break;
-		default:
-			break;
+#endif
+		}
+		break;
+	case UG_EVENT_ROTATE_PORTRAIT:
+	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
+	case UG_EVENT_ROTATE_LANDSCAPE:
+	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
+		break;
+	case UG_EVENT_REGION_CHANGE:
+		break;
+	default:
+		break;
 	}
 }
 
 static void setting_password_ug_on_key_event(ui_gadget_h ug,
-                                             enum ug_key_event event,
-                                             app_control_h service, void *priv)
+											 enum ug_key_event event,
+											 app_control_h service, void *priv)
 {
 	if (!priv)
 		return;
 
-	// SettingPasswordUG *ad = (SettingPasswordUG *)priv;
+	/* SettingPasswordUG *ad = (SettingPasswordUG *)priv; */
 
 	switch (event) {
-		case UG_KEY_EVENT_END:
-			ug_destroy_me(ug);
-			break;
-		default:
-			break;
+	case UG_KEY_EVENT_END:
+		ug_destroy_me(ug);
+		break;
+	default:
+		break;
 	}
 }
 
@@ -459,7 +459,7 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 }
 
 void setting_password_ug_popup_resp_cb(void *data, Evas_Object *obj,
-                                       void *event_info)
+									   void *event_info)
 {
 	retm_if(data == NULL, "Data parameter is NULL");
 
@@ -532,10 +532,10 @@ void setting_password_ug_display_desc(void *data, char *desc, int destroy)
 	}
 
 	ad->err_desc = setting_create_Gendial_field_helpitem_without_bottom_separator(
-	                   ad->scroller,
-	                   &(itc_multiline_text),
-	                   SWALLOW_Type_LAYOUT_SPECIALIZTION_X,
-	                   desc);
+					   ad->scroller,
+					   &(itc_multiline_text),
+					   SWALLOW_Type_LAYOUT_SPECIALIZTION_X,
+					   desc);
 
 	/* if pw incorrect, show keyboard again. */
 	/*if(ad->ed_pw1 && ad->ed_pw1->eo_check) */
@@ -546,7 +546,7 @@ void setting_password_ug_display_desc(void *data, char *desc, int destroy)
 
 void
 setting_password_ug_create_popup_notitle_nobtn(void *data, char *str,
-                                               int destroy)
+											   int destroy)
 {
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");
@@ -588,7 +588,7 @@ void setting_password_ug_check_attemps_left(void *data)
 	int err = SETTING_RETURN_SUCCESS;
 	setting_get_int_slp_key(item_attempts_left, &value, &err);
 	setting_retm_if(err == SETTING_RETURN_FAIL,
-	                "[Error] get value of vconf fail.");
+					"[Error] get value of vconf fail.");
 
 	value--;
 
@@ -617,11 +617,11 @@ void setting_password_ug_check_attemps_left(void *data)
 
 		setting_set_string_slp_key(item_lock_timestamp, cur_timestamp, &err);
 		setting_retm_if(err == SETTING_RETURN_FAIL,
-		                "[Error] set value of vconf fail.");
+						"[Error] set value of vconf fail.");
 
 		setting_set_int_slp_key(item_attempts_left, value, &err);
 		setting_retm_if(err == SETTING_RETURN_FAIL,
-		                "[Error] set value of vconf fail.");
+						"[Error] set value of vconf fail.");
 
 		ad->disable_item_type = ad->view_type;
 
@@ -631,7 +631,7 @@ void setting_password_ug_check_attemps_left(void *data)
 		setting_password_ug_create_popup_notitle_nobtn(ad, temp, FALSE);
 	} else {
 		setting_password_ug_create_popup_notitle_nobtn(ad,
-		                                               _("IDS_ST_POP_ERROR"), FALSE);
+													   _("IDS_ST_POP_ERROR"), FALSE);
 	}
 
 }
@@ -700,11 +700,11 @@ int setting_password_set_password(const char *cur_pwd, const char *new_pwd, void
 			setting_set_int_slp_key(INT_SLP_SETTING_PHONE_LOCK_ATTEMPTS_LEFT, PHONE_LOCK_ATTEMPS_MAX, &err);
 #endif
 			return SETTING_RETURN_SUCCESS;
-		} 
+		}
 
 		return SETTING_PW_ERROR_UNKNOWN;
 
-	} 
+	}
 
 	ret = security_server_set_pwd(cur_pwd, new_pwd, 0, 0);
 	SETTING_TRACE_DEBUG("[security_server_set_pwd()] returns %d, INFINITE", ret);
@@ -715,7 +715,7 @@ int setting_password_set_password(const char *cur_pwd, const char *new_pwd, void
 		setting_set_int_slp_key(INT_SLP_SETTING_PHONE_LOCK_ATTEMPTS_LEFT, PHONE_LOCK_ATTEMPS_MAX, &err);
 #endif
 		return SETTING_RETURN_SUCCESS;
-	} 
+	}
 	return SETTING_PW_ERROR_UNKNOWN;
 
 #else

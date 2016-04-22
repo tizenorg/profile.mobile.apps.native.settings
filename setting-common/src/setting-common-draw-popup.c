@@ -47,8 +47,8 @@
 			int argno = 0;\
 			\
 			char *btn_part_str[] = {\
-				_("button1"), _("button2"), _("button3")\
-			};\
+									_("button1"), _("button2"), _("button3")\
+								   };\
 			\
 			int i = 0;\
 			for (; i < btn_num; i++) {\
@@ -75,7 +75,7 @@
 		SETTING_TRACE_ERROR("incorrect button number for popup");\
 		return NULL;\
 	}\
-
+	 
 #define ADD_POPUP_MULTI_LANGUAGE_AUTO_UPDATE(popup, title, text, button1_str, button2_str, button3_str) \
 	evas_object_data_set(popup, "title", title);\
 	evas_object_data_set(popup, "text", text);\
@@ -84,7 +84,7 @@
 	evas_object_data_set(popup, "button3", button3_str);\
 	vconf_notify_key_changed(VCONFKEY_LANGSET, _popup_lang_change_cb, popup);\
 	evas_object_event_callback_add(popup, EVAS_CALLBACK_DEL, _popup_lang_del_cb, NULL);\
-
+	 
 EXPORT_PUBLIC void __setting_popup_lang_update(Evas_Object *popup)
 {
 	SETTING_TRACE_BEGIN;
@@ -209,24 +209,24 @@ EXPORT_PUBLIC void __popup_keygrab_del_cb(void *data, Evas *e, Evas_Object *obj,
 		SETTING_TRACE_ERROR("KEY_BACK ungrab error ret[%d]", ret);
 	}
 #else
-	// @todo : repace codes using X with codes tizen 3.0 API
+	/* @todo : repace codes using X with codes tizen 3.0 API */
 #endif
 }
 
 static void __ignore_back_key_cb(void *data, Evas_Object *obj,
-                                 void *event_info)
+								 void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	return;
 }
 
 EXPORT_PUBLIC void setting_popup_event_set2(Evas_Object *popup, void *data,
-                                     setting_call_back_func response_cb,
-                                     setting_call_back_func back_cb,
-                                     int timeout,/*to control the timeout time */
-                                     bool blocked_flag,/*to control whether to block the screen */
-                                     bool keygrab_flag/*to control whether to block the 'Home key' */
-                                    )
+											setting_call_back_func response_cb,
+											setting_call_back_func back_cb,
+											int timeout,/*to control the timeout time */
+											bool blocked_flag,/*to control whether to block the screen */
+											bool keygrab_flag/*to control whether to block the 'Home key' */
+										   )
 {
 	if (timeout > 0) {
 		if (response_cb) {
@@ -254,7 +254,7 @@ EXPORT_PUBLIC void setting_popup_event_set2(Evas_Object *popup, void *data,
 			SETTING_TRACE_ERROR("KEY_HOME grab error ret[%d]", ret);
 		}
 #else
-	// @todo : repace codes using X with codes tizen 3.0 API
+		/* @todo : repace codes using X with codes tizen 3.0 API */
 #endif
 		evas_object_event_callback_add(popup, EVAS_CALLBACK_DEL, __popup_keygrab_del_cb, NULL);
 		eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, __ignore_back_key_cb, NULL);
@@ -266,32 +266,32 @@ EXPORT_PUBLIC void setting_popup_event_set2(Evas_Object *popup, void *data,
 
 
 EXPORT_PUBLIC void setting_popup_event_set(Evas_Object *popup, void *data,
-                                     setting_call_back_func response_cb,
-                                     int timeout,/*to control the timeout time */
-                                     bool blocked_flag,/*to control whether to block the screen */
-                                     bool keygrab_flag/*to control whether to block the 'Home key' */
-                                    )
+										   setting_call_back_func response_cb,
+										   int timeout,/*to control the timeout time */
+										   bool blocked_flag,/*to control whether to block the screen */
+										   bool keygrab_flag/*to control whether to block the 'Home key' */
+										  )
 {
 	setting_popup_event_set2(popup, data,
-			response_cb,
-			setting_popup_del_cb,
-			timeout,
-			blocked_flag,
-			keygrab_flag);
+							 response_cb,
+							 setting_popup_del_cb,
+							 timeout,
+							 blocked_flag,
+							 keygrab_flag);
 }
 
 
 EXPORT_PUBLIC
 Evas_Object *setting_create_popup2(void *data,
-                                  Evas_Object *parent,
-                                  char *title,
-                                  char *text,
-                                  setting_call_back_func response_cb,
-                                  setting_call_back_func back_cb,
-                                  int timeout,
-                                  bool blocked_flag,
-                                  bool keygrab_flag,
-                                  int btn_num, ...)
+								   Evas_Object *parent,
+								   char *title,
+								   char *text,
+								   setting_call_back_func response_cb,
+								   setting_call_back_func back_cb,
+								   int timeout,
+								   bool blocked_flag,
+								   bool keygrab_flag,
+								   int btn_num, ...)
 {
 	SETTING_TRACE_BEGIN;
 	Evas_Object *popup = elm_popup_add(parent);
@@ -320,7 +320,7 @@ Evas_Object *setting_create_popup2(void *data,
 			SETTING_TRACE_ERROR("KEY_HOME grab error ret[%d]", ret);
 		}
 #else
-	// @todo : repace codes using X with codes tizen 3.0 API
+		/* @todo : repace codes using X with codes tizen 3.0 API */
 #endif
 		evas_object_event_callback_add(popup, EVAS_CALLBACK_DEL, __popup_keygrab_del_cb, NULL);
 		eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, __ignore_back_key_cb, NULL);
@@ -363,14 +363,14 @@ Evas_Object *setting_create_popup2(void *data,
 **********************************************************/
 EXPORT_PUBLIC
 Evas_Object *setting_create_popup(void *data,
-                                  Evas_Object *parent,
-                                  const char *title,
-                                  const char *text,
-                                  setting_call_back_func response_cb,
-                                  int timeout,
-                                  bool blocked_flag,
-                                  bool keygrab_flag,
-                                  int btn_num, ...)
+								  Evas_Object *parent,
+								  const char *title,
+								  const char *text,
+								  setting_call_back_func response_cb,
+								  int timeout,
+								  bool blocked_flag,
+								  bool keygrab_flag,
+								  int btn_num, ...)
 {
 	SETTING_TRACE_BEGIN;
 
@@ -422,14 +422,14 @@ Evas_Object *setting_create_popup(void *data,
 *******************************************************************/
 EXPORT_PUBLIC
 Evas_Object *setting_create_popup_with_progressbar(void *data,
-                                                   Evas_Object *parent,
-                                                   char *progressbar_style,
-                                                   char *title,
-                                                   char *text,
-                                                   setting_call_back_func response_cb,
-                                                   int timeout,
-                                                   bool blocked_flag,
-                                                   bool keygrab_flag,
+												   Evas_Object *parent,
+												   char *progressbar_style,
+												   char *title,
+												   char *text,
+												   setting_call_back_func response_cb,
+												   int timeout,
+												   bool blocked_flag,
+												   bool keygrab_flag,
 												   int btn_num, ...)
 {
 	SETTING_TRACE_BEGIN;
@@ -453,7 +453,7 @@ Evas_Object *setting_create_popup_with_progressbar(void *data,
 	progressbar = elm_progressbar_add(layout);
 
 	if (!safeStrCmp("default", progressbar_style)) {
-		// do nothing
+		/* do nothing */
 	} else {
 		elm_object_style_set(progressbar, progressbar_style);
 	}
@@ -499,14 +499,14 @@ Evas_Object *setting_create_popup_with_progressbar(void *data,
 *******************************************************************/
 EXPORT_PUBLIC
 Evas_Object *setting_create_popup_with_list(Evas_Object **genlist,
-												void *data,
-												Evas_Object *parent,
-												const char *title,
-												setting_call_back_func response_cb,
-												int timeout,
-												bool blocked_flag,
-												bool keygrab_flag,
-												int btn_num, ...)
+											void *data,
+											Evas_Object *parent,
+											const char *title,
+											setting_call_back_func response_cb,
+											int timeout,
+											bool blocked_flag,
+											bool keygrab_flag,
+											int btn_num, ...)
 {
 	SETTING_TRACE_BEGIN;
 	retv_if(NULL == parent, NULL);

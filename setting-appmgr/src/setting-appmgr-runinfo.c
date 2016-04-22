@@ -59,7 +59,7 @@ static void appmgrUg_del_running_list(gpointer data, gpointer user_data)
 }
 
 static inline int appmgrUg_run_get_app_info(const char *appid,
-                                            appmgr_runinfo *out)
+											appmgr_runinfo *out)
 {
 	int ret;
 	char *value;
@@ -145,21 +145,21 @@ static void appmgrUg_run_stop_iter(gpointer data, gpointer user_data)
 		return;
 	}
 
-	#if 1
+#if 1
 	SETTING_TRACE_ERROR("app_manager_terminate_app is not External interface. need check in more detail.");
-	#else
+#else
 	ret = app_manager_terminate_app(app_context);
 	if (APP_MANAGER_ERROR_NONE != ret) {
 		SETTING_TRACE_ERROR("app_manager_terminate_app() Fail(%d)", ret);
 		return;
 	}
-	#endif
+#endif
 
 	app_context_destroy(app_context);
 }
 
 void appmgrUg_run_stop_click(void *data, Evas_Object *obj,
-                             void *event_info)
+							 void *event_info)
 {
 	SettingAppMgrUG *ad = data;
 
@@ -202,8 +202,8 @@ static void appmgrUg_run_append_run_apps(SettingAppMgrUG *ad)
 		}
 
 		d_item = setting_create_Gendial_field_def(ad->gl_run, &ad->itc_1txt_1ic_2, NULL,
-		                                          NULL, SWALLOW_Type_1ICON_SMALL_ICON, (char *)ad->sel_icon, NULL, 0, info->label,
-		                                          NULL, NULL);
+												  NULL, SWALLOW_Type_1ICON_SMALL_ICON, (char *)ad->sel_icon, NULL, 0, info->label,
+												  NULL, NULL);
 		if (NULL == d_item) {
 			SETTING_TRACE_ERROR("setting_create_Gendial_field_def() Fail");
 			continue;
@@ -225,21 +225,21 @@ static int appmgrUg_run_create(void *data)
 	retv_if(NULL == data, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
 	Elm_Object_Item *navi_item = setting_push_layout_navi_bar_genlist(ad->lo_parent, ad->win,
-	                                                                  MGRAPP_STR_ACTIVE_APP, NULL, NULL,
-	                                                                  (setting_call_back_func)appmgrUg_run_back_cb,
-	                                                                  NULL, ad, &ad->gl_run, ad->navi);
+																	  MGRAPP_STR_ACTIVE_APP, NULL, NULL,
+																	  (setting_call_back_func)appmgrUg_run_back_cb,
+																	  NULL, ad, &ad->gl_run, ad->navi);
 	elm_naviframe_item_pop_cb_set(navi_item, appmgrUg_run_back_cb, ad);
 
 	elm_genlist_mode_set(ad->gl_run, ELM_LIST_COMPRESS);
 
-	//appmgrUg_append_separator(ad->gl_run, ad);
+	/*appmgrUg_append_separator(ad->gl_run, ad); */
 
 	/* Title (pkg name, process N) */
 	item = elm_genlist_item_append(ad->gl_run, &ad->itc_info_title, ad, NULL,
-	                               ELM_GENLIST_ITEM_NONE, NULL, NULL);
+								   ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
-	//appmgrUg_append_separator(ad->gl_run, ad);
+	/*appmgrUg_append_separator(ad->gl_run, ad); */
 
 	/* notice */
 	snprintf(msg, sizeof(msg), _(MGRAPP_STR_APP_STOP_MSG), ad->sel_label, ad->sel_label);
@@ -247,17 +247,17 @@ static int appmgrUg_run_create(void *data)
 
 	/* Stop button */
 	elm_genlist_item_append(ad->gl_run, &ad->itc_1ic, ad, NULL, ELM_GENLIST_ITEM_NONE,
-	                        NULL, NULL);
+							NULL, NULL);
 
-	//appmgrUg_append_separator(ad->gl_run, ad);
+	/*appmgrUg_append_separator(ad->gl_run, ad); */
 
 	/* group title(applications) */
 	setting_create_Gendial_field_titleItem(ad->gl_run, &ad->itc_grp_title,
-	                                       MGRAPP_STR_APPS, NULL);
+										   MGRAPP_STR_APPS, NULL);
 
 	appmgrUg_run_append_run_apps(ad);
 
-	//appmgrUg_append_separator(ad->gl_run, ad);
+	/*appmgrUg_append_separator(ad->gl_run, ad); */
 
 	setting_view_appmgr_runinfo.is_create = 1;
 
@@ -316,7 +316,7 @@ void appmgrUg_appinfo_init(SettingAppMgrUG *ad)
 }
 
 Evas_Object *appmgrUg_run_gl_stop_btn(void *data, Evas_Object *obj,
-                                      const char *part)
+									  const char *part)
 {
 	GList *cur;
 	Evas_Object *btn;

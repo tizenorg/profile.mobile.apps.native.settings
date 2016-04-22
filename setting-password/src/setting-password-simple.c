@@ -49,11 +49,11 @@ setting_view setting_view_password_simple = {
 #define SETTING_SP_TITLE_INDEX_START 0
 #define SETTING_SP_TITLE_INDEX_MAX 3
 const char *sp_titles[5] = { PW_ST_ENTER_PW,
-                             PW_ST_NEW_PW,
-                             PW_ST_ENTER_PW_AGAIN,
-                             PW_ST_ENTER_CUR_PW,
-                             NULL,
-                           };
+							 PW_ST_NEW_PW,
+							 PW_ST_ENTER_PW_AGAIN,
+							 PW_ST_ENTER_CUR_PW,
+							 NULL,
+						   };
 
 
 extern struct _pw_item pw_its[];
@@ -114,7 +114,7 @@ static void _copy_chars_from_sp_entries(void *data, char *collection)
 	SettingPasswordUG *ad = (SettingPasswordUG *) data;
 
 	if (ad->sp_entry1 == NULL || ad->sp_entry2 == NULL ||
-	    ad->sp_entry3 == NULL || ad->sp_entry4 == NULL)
+		ad->sp_entry3 == NULL || ad->sp_entry4 == NULL)
 		return;
 
 	strncpy(collection, ad->sp_chars, 4);
@@ -162,14 +162,14 @@ static int _handle_step1(void *data, char *collection)
 
 		if (value == 0)
 			ret = setting_set_bool_slp_key(BOOL_SLP_SETTING_POWER_ON_LOCK,
-			                               SETTING_ON_OFF_BTN_ON, &err);
+										   SETTING_ON_OFF_BTN_ON, &err);
 		else
 			ret = setting_set_bool_slp_key(BOOL_SLP_SETTING_POWER_ON_LOCK,
-			                               SETTING_ON_OFF_BTN_OFF, &err);
+										   SETTING_ON_OFF_BTN_OFF, &err);
 
 		/* reset VCONF */
 		setting_set_int_slp_key(INT_SLP_SETTING_PHONE_LOCK_ATTEMPTS_LEFT,
-		                        PHONE_LOCK_ATTEMPS_MAX, &err);
+								PHONE_LOCK_ATTEMPS_MAX, &err);
 		setting_retvm_if(err == SETTING_RETURN_FAIL, SETTING_RETURN_FAIL, "[Error] set value of vconf fail.");
 
 		/* Correct Password. Send Bundle to caller for status change */
@@ -296,17 +296,17 @@ static int setting_password_simple_done_simple_password(void *data, int on_locki
 	static char collection_step2[SETTING_PW_UG_NORMAL_PASSWORD_MIN_LENGTH + 1] = {0,};
 
 	switch (ad->view_type) {
-		case SETTING_PW_TYPE_SIMPLE_PASSWORD: {
-				SETTING_TRACE_DEBUG("case SIMPLE_PASSWORD");
-				return _handle_step1(ad, collection_step1);
-			}
-		case SETTING_PW_TYPE_SET_SIMPLE_PASSWORD: {
-				SETTING_TRACE_DEBUG("case SET_SIMPLE_PASSWORD");
-				return _handle_step2(ad, &step, collection_step1, collection_step2);
-			}
+	case SETTING_PW_TYPE_SIMPLE_PASSWORD: {
+			SETTING_TRACE_DEBUG("case SIMPLE_PASSWORD");
+			return _handle_step1(ad, collection_step1);
+		}
+	case SETTING_PW_TYPE_SET_SIMPLE_PASSWORD: {
+			SETTING_TRACE_DEBUG("case SET_SIMPLE_PASSWORD");
+			return _handle_step2(ad, &step, collection_step1, collection_step2);
+		}
 
-		default:
-			break;
+	default:
+		break;
 	}
 	return SETTING_RETURN_SUCCESS;
 }
@@ -364,11 +364,11 @@ static Eina_Bool setting_password_simple_check_4entries(void *data)
 			retv_if(ret < 0, EINA_FALSE);
 			setting_set_string_slp_key(item_lock_timestamp, cur_timestamp, &err);
 			setting_retvm_if(err == SETTING_RETURN_FAIL, EINA_FALSE,
-			                 "[Error] set value of vconf fail.");
+							 "[Error] set value of vconf fail.");
 
 			setting_set_int_slp_key(item_attempts_left, value, &err);
 			setting_retvm_if(err == SETTING_RETURN_FAIL, EINA_FALSE,
-			                 "[Error] set value of vconf fail.");
+							 "[Error] set value of vconf fail.");
 
 			ad->disable_item_type = ad->view_type;
 
@@ -535,11 +535,11 @@ static int setting_password_simple_create(void *cb)
 	/* End */
 
 	ad->ly_main = setting_create_layout_navi_bar(ad->win_main_layout, ad->win_get, "IDS_ST_BODY_SIMPLE_PASSWORD",
-	                                             _("IDS_ST_BUTTON_BACK"),
-	                                             (setting_call_back_func)setting_password_simple_click_softkey_cancel_cb,
-	                                             ad,
-	                                             ad->simple_layout,
-	                                             &(ad->navi_bar), NULL);
+												 _("IDS_ST_BUTTON_BACK"),
+												 (setting_call_back_func)setting_password_simple_click_softkey_cancel_cb,
+												 ad,
+												 ad->simple_layout,
+												 &(ad->navi_bar), NULL);
 	evas_object_event_callback_add(ad->sp_entry1, EVAS_CALLBACK_MOUSE_DOWN, __enable_imf_cb, ad);
 	evas_object_event_callback_add(ad->sp_entry2, EVAS_CALLBACK_MOUSE_DOWN, __enable_imf_cb, ad);
 	evas_object_event_callback_add(ad->sp_entry3, EVAS_CALLBACK_MOUSE_DOWN, __enable_imf_cb, ad);
@@ -630,7 +630,7 @@ int setting_password_simple_draw_next_simple_password(void *data, int title_inde
 {
 	/* error check */
 	retvm_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
-	         "[Setting > Password] Data parameter is NULL");
+			 "[Setting > Password] Data parameter is NULL");
 
 	SettingPasswordUG *ad = (SettingPasswordUG *) data;
 

@@ -30,7 +30,7 @@
 
 
 void setting_about_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
-                                void *priv)
+								void *priv)
 {
 	/*SettingAboutUG *ad = (SettingAboutUG *) priv; */
 	Evas_Object *base;
@@ -46,14 +46,14 @@ void setting_about_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
 	}
 
 	switch (mode) {
-		case UG_MODE_FULLVIEW:
-			evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-			                                 EVAS_HINT_EXPAND);
-			/* elm_win_resize_object_add(ad->win_get, base); */
-			evas_object_show(base);
-			break;
-		default:
-			break;
+	case UG_MODE_FULLVIEW:
+		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
+										 EVAS_HINT_EXPAND);
+		/* elm_win_resize_object_add(ad->win_get, base); */
+		evas_object_show(base);
+		break;
+	default:
+		break;
 	}
 
 	SETTING_TRACE_END;
@@ -68,7 +68,7 @@ void setting_about_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
 * @param event_info
 */
 static void setting_about_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
-                                       void *event_info)
+									   void *event_info)
 {
 	SettingAboutUG *ad = (SettingAboutUG *) data;
 	setting_view_update(&setting_view_about_main, ad);
@@ -85,7 +85,7 @@ static void setting_about_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
 * @return
 */
 static void *setting_about_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
-                                        app_control_h service, void *priv)
+										app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if((NULL == priv), NULL, "NULL == priv");
@@ -98,7 +98,7 @@ static void *setting_about_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	aboutUG->evas = evas_object_evas_get(aboutUG->win_main_layout);
 
 	setting_retvm_if(aboutUG->win_main_layout == NULL, NULL,
-	                 "cannot get main window ");
+					 "cannot get main window ");
 
 	setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR);
 
@@ -123,12 +123,12 @@ static void *setting_about_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 }
 
 static void setting_about_ug_on_start(ui_gadget_h ug, app_control_h service,
-                                      void *priv)
+									  void *priv)
 {
 }
 
 static void setting_about_ug_on_pause(ui_gadget_h ug, app_control_h service,
-                                      void *priv)
+									  void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SettingAboutUG *SettingAboutUG = priv;
@@ -136,7 +136,7 @@ static void setting_about_ug_on_pause(ui_gadget_h ug, app_control_h service,
 }
 
 static void setting_about_ug_on_resume(ui_gadget_h ug, app_control_h service,
-                                       void *priv)
+									   void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
@@ -179,7 +179,7 @@ static void setting_about_ug_on_resume(ui_gadget_h ug, app_control_h service,
 * @param priv
 */
 static void setting_about_ug_on_destroy(ui_gadget_h ug, app_control_h service,
-                                        void *priv)
+										void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
@@ -199,7 +199,7 @@ static void setting_about_ug_on_destroy(ui_gadget_h ug, app_control_h service,
 }
 
 static void setting_about_ug_on_message(ui_gadget_h ug, app_control_h msg,
-                                        app_control_h service, void *priv)
+										app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 }
@@ -215,47 +215,47 @@ static void setting_about_ug_on_message(ui_gadget_h ug, app_control_h msg,
 * @return
 */
 static void setting_about_ug_on_event(ui_gadget_h ug, enum ug_event event,
-                                      app_control_h service, void *priv)
+									  app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SettingAboutUG *ad = (SettingAboutUG *)priv;
 	setting_retm_if(NULL == ad, "ad is NULL");
 	switch (event) {
-		case UG_EVENT_LOW_MEMORY:
-			break;
-		case UG_EVENT_LOW_BATTERY:
-			break;
-		case UG_EVENT_LANG_CHANGE:
-			setting_navi_items_update(ad->navi_bar);
-			break;
-		case UG_EVENT_ROTATE_PORTRAIT:
-			/*break; */
-		case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-			/*break; */
-		case UG_EVENT_ROTATE_LANDSCAPE:
-			/*break; */
-		case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN: {
-				/*restore the focus status */
-				SettingAboutUG *ad = (SettingAboutUG *) priv;
-				if (!ad || !ad->is_dev_name_focus || !ad->item_dev_name) {
-					return;
-				}
-				SETTING_TRACE("ad->is_dev_name_focus:%d", ad->is_dev_name_focus);
-
-				Ecore_IMF_Context *imf_context = (Ecore_IMF_Context *)elm_entry_imf_context_get(ad->item_dev_name->eo_check);
-				if (imf_context) {
-					/*ecore_imf_context_input_panel_hide(imf_context); */
-					ecore_imf_context_input_panel_show(imf_context);
-				}
-				elm_object_focus_set(ad->item_dev_name->eo_check, ad->is_dev_name_focus);
-				elm_entry_cursor_pos_set(ad->item_dev_name->eo_check, ad->cursor_pos);
-				ad->is_dev_name_focus = FALSE;
+	case UG_EVENT_LOW_MEMORY:
+		break;
+	case UG_EVENT_LOW_BATTERY:
+		break;
+	case UG_EVENT_LANG_CHANGE:
+		setting_navi_items_update(ad->navi_bar);
+		break;
+	case UG_EVENT_ROTATE_PORTRAIT:
+	/*break; */
+	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
+	/*break; */
+	case UG_EVENT_ROTATE_LANDSCAPE:
+	/*break; */
+	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN: {
+			/*restore the focus status */
+			SettingAboutUG *ad = (SettingAboutUG *) priv;
+			if (!ad || !ad->is_dev_name_focus || !ad->item_dev_name) {
+				return;
 			}
-			break;
-		case UG_EVENT_REGION_CHANGE:
-			break;
-		default:
-			break;
+			SETTING_TRACE("ad->is_dev_name_focus:%d", ad->is_dev_name_focus);
+
+			Ecore_IMF_Context *imf_context = (Ecore_IMF_Context *)elm_entry_imf_context_get(ad->item_dev_name->eo_check);
+			if (imf_context) {
+				/*ecore_imf_context_input_panel_hide(imf_context); */
+				ecore_imf_context_input_panel_show(imf_context);
+			}
+			elm_object_focus_set(ad->item_dev_name->eo_check, ad->is_dev_name_focus);
+			elm_entry_cursor_pos_set(ad->item_dev_name->eo_check, ad->cursor_pos);
+			ad->is_dev_name_focus = FALSE;
+		}
+		break;
+	case UG_EVENT_REGION_CHANGE:
+		break;
+	default:
+		break;
 	}
 }
 
@@ -270,8 +270,8 @@ static void setting_about_ug_on_event(ui_gadget_h ug, enum ug_event event,
 * @return
 */
 static void setting_about_ug_on_key_event(ui_gadget_h ug,
-                                          enum ug_key_event event,
-                                          app_control_h service, void *priv)
+										  enum ug_key_event event,
+										  app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SettingAboutUG *ad = (SettingAboutUG *) priv;
@@ -280,18 +280,18 @@ static void setting_about_ug_on_key_event(ui_gadget_h ug,
 	}
 
 	switch (event) {
-		case UG_KEY_EVENT_END: {
-				if (elm_naviframe_top_item_get(ad->navi_bar) ==
-				    elm_naviframe_bottom_item_get(ad->navi_bar)) {
-					ug_destroy_me(ug);
-				} else {
-					/* elm_naviframe_item_pop(ad->navi_bar); */
-					setting_view_cb_at_endKey(ad);
-				}
+	case UG_KEY_EVENT_END: {
+			if (elm_naviframe_top_item_get(ad->navi_bar) ==
+				elm_naviframe_bottom_item_get(ad->navi_bar)) {
+				ug_destroy_me(ug);
+			} else {
+				/* elm_naviframe_item_pop(ad->navi_bar); */
+				setting_view_cb_at_endKey(ad);
 			}
-			break;
-		default:
-			break;
+		}
+		break;
+	default:
+		break;
 	}
 }
 
@@ -335,7 +335,7 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 	aboutUG = ops->priv;
 	if (aboutUG) {
 		if (aboutUG->handle
-		    && tel_deinit(aboutUG->handle) == TAPI_API_SUCCESS) {
+			&& tel_deinit(aboutUG->handle) == TAPI_API_SUCCESS) {
 			SETTING_TRACE("tel_deinit sucessed");
 		}
 		FREE(aboutUG);

@@ -28,12 +28,12 @@
 #define SETTING_LICESE_SAMSUNG_LEGAL "IDS_ST_BODY_SAMSUNG_LEGAL"
 
 void setting_phone_license_main_mouse_up_Gendial_list_cb(void *data,
-                                                         Evas_Object *obj,
-                                                         void *event_info);
+														 Evas_Object *obj,
+														 void *event_info);
 void setting_phone_license_main_click_softkey_cancel(void *data,
-                                                     Evas_Object *obj,
-                                                     void *event_info);
+													 Evas_Object *obj,
+													 void *event_info);
 void setting_phone_license_main_popup_resp_cb(void *data, Evas_Object *obj,
-                                              void *event_info);
+											  void *event_info);
 
 #endif				/* __SETTING_PHONE_LICENSE_MAIN_H__ */

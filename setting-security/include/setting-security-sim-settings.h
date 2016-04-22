@@ -26,7 +26,7 @@
 
 static void
 setting_security_sim_settings_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
-                                                       void *event_info);
+													   void *event_info);
 /*static void */
 /*setting_security_sim_settings_click_softkey_back_cb(void *data, Evas_Object *obj, */
 /*					    void *event_info); */
@@ -34,6 +34,6 @@ Eina_Bool setting_security_sim_settings_click_softkey_back_cb(void *data, Elm_Ob
 
 static void
 setting_security_sim_settings_chk_btn_cb(void *data, Evas_Object *obj,
-                                         void *event_info);
+										 void *event_info);
 
 #endif

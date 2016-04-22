@@ -41,15 +41,15 @@
 #define DEVOPTION_STR_CRASH_VIEWER				"IDS_ST_BODY_CRASH_VIEWER"
 
 enum mode_change {
-    CHANGE_COMPLETE = 0,
-    IN_MODE_CHANGE,
-    IN_MODE_CHANGE_NONE
+	CHANGE_COMPLETE = 0,
+	IN_MODE_CHANGE,
+	IN_MODE_CHANGE_NONE
 };
 
 enum usb_connection_status {
-    USB_DISCONNECTED = 0,
-    USB_CONNECTED,
-    GETTING_STATUS_FAIL
+	USB_DISCONNECTED = 0,
+	USB_CONNECTED,
+	GETTING_STATUS_FAIL
 };
 
 typedef struct _SettingConnectivityUG SettingConnectivityUG;

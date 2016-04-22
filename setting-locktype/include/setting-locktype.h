@@ -110,17 +110,17 @@ struct _locktype_item {
 #define MAX_SEC_PROFILE_NUM 100
 
 enum {
-    SETTING_LOCKTYPE_PW_PASSWORD,
-    SETTING_LOCKTYPE_PW_SIMPLE_PASSWD,
-    SETTING_LOCKTYPE_PW_CHANGE_PASSWD,
-    SETTING_LOCKTYPE_PW_CHANGE_SIMPLE_PASSWD,
-    SETTING_LOCKTYPE_PW_MAX
+	SETTING_LOCKTYPE_PW_PASSWORD,
+	SETTING_LOCKTYPE_PW_SIMPLE_PASSWD,
+	SETTING_LOCKTYPE_PW_CHANGE_PASSWD,
+	SETTING_LOCKTYPE_PW_CHANGE_SIMPLE_PASSWD,
+	SETTING_LOCKTYPE_PW_MAX
 };
 
 enum {
-    SETTING_LOCKTYPE_VIEWTYPE_MAIN,
-    SETTING_LOCKTYPE_VIEWTYPE_ENCRYPTION,
-    SETTING_LOCKTYPE_VIEWTYPE_RECOVERY, /* In case that recovery password using tizen account, lockscreen can call locktype */
+	SETTING_LOCKTYPE_VIEWTYPE_MAIN,
+	SETTING_LOCKTYPE_VIEWTYPE_ENCRYPTION,
+	SETTING_LOCKTYPE_VIEWTYPE_RECOVERY, /* In case that recovery password using tizen account, lockscreen can call locktype */
 };
 
 /**
@@ -191,11 +191,11 @@ extern setting_view setting_view_locktype_main;
 
 
 void setting_locktype_result_password_ug_cb(ui_gadget_h ug,
-                                            app_control_h service, void *priv);
+											app_control_h service, void *priv);
 gboolean setting_locktype_create_password_sg(void *data);
 void setting_locktype_destroy_password_ug_cb(ui_gadget_h ug,
-                                             void *priv);
+											 void *priv);
 void setting_locktype_layout_passwd_ug_cb(ui_gadget_h ug,
-                                          enum ug_mode mode, void *priv);
+										  enum ug_mode mode, void *priv);
 
 #endif

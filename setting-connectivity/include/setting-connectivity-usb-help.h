@@ -24,7 +24,7 @@
 #include <setting-connectivity.h>
 
 static void setting_connectivity_usb_help_click_back_cb(void *data,
-                                                        Evas_Object *obj,
-                                                        void *event_info);
+														Evas_Object *obj,
+														void *event_info);
 
 #endif				/* __SETTING_CONNECTIVITY_USB_HELP_H__ */

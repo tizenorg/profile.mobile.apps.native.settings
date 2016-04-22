@@ -59,11 +59,11 @@
 
 
 typedef enum {
-    SND_SLIDER_CALL = 0,
-    SND_SLIDER_NOTI,
-    SND_SLIDER_MEDIA,
-    SND_SLIDER_SYSTEM,
-    SND_SLIDER_MAX,
+	SND_SLIDER_CALL = 0,
+	SND_SLIDER_NOTI,
+	SND_SLIDER_MEDIA,
+	SND_SLIDER_SYSTEM,
+	SND_SLIDER_MAX,
 } SoundType;
 
 typedef struct _SettingProfileUG SettingProfileUG;
@@ -130,16 +130,16 @@ struct _SettingProfileUG {
 extern setting_view setting_view_sound_main;
 
 extern void setting_sound_play_sound_origin(player_h **mp_handle, void *data,
-                                            void *cb, char *ringtone_file, float vol,
-                                            sound_type_e sound_type);
+											void *cb, char *ringtone_file, float vol,
+											sound_type_e sound_type);
 extern int setting_sound_check_file_exist(void *data, const char *file_path);
 
 extern void system_settings_changed_silent_mode(system_settings_key_e key, void *user_data);
 
 extern player_h *setting_sound_play_sound(void *data, void *cb,
-                                          char *ringtone_file,
-                                          int vol,
-                                          sound_type_e sound_type);
+										  char *ringtone_file,
+										  int vol,
+										  sound_type_e sound_type);
 
 extern int __close_player(void *data, SoundType type);
 

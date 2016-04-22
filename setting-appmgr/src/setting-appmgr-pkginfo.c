@@ -54,10 +54,10 @@ static inline void appmgrUg_pkg_append_storage(SettingAppMgrUG *ad)
 
 	info = ad->pkginfo;
 
-	//appmgrUg_append_separator(ad->gl_pkg, ad);
+	/*appmgrUg_append_separator(ad->gl_pkg, ad); */
 
 	setting_create_Gendial_field_titleItem(ad->gl_pkg, &(ad->itc_grp_title),
-	                                       MGRAPP_STR_STORAGE, NULL);
+										   MGRAPP_STR_STORAGE, NULL);
 
 	/* Total size */
 	if (0 <= ad->sel_total)
@@ -65,12 +65,12 @@ static inline void appmgrUg_pkg_append_storage(SettingAppMgrUG *ad)
 	else
 		snprintf(desc, sizeof(desc), "%s", MGRAPP_STR_COMPUTING);
 	info->total_size = setting_create_Gendial_field_def(ad->gl_pkg, &ad->itc_2txt_2,
-	                                                    NULL, NULL, SWALLOW_Type_INVALID, NULL, NULL, 0, _(MGRAPP_STR_TOTAL), desc,
-	                                                    NULL);
+														NULL, NULL, SWALLOW_Type_INVALID, NULL, NULL, 0, _(MGRAPP_STR_TOTAL), desc,
+														NULL);
 
 	if (info->total_size) {
 		elm_genlist_item_select_mode_set(info->total_size->item,
-		                                 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+										 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 	}
 
 	/* App size */
@@ -79,11 +79,11 @@ static inline void appmgrUg_pkg_append_storage(SettingAppMgrUG *ad)
 	else
 		snprintf(desc, sizeof(desc), "%s", MGRAPP_STR_COMPUTING);
 	info->app_size = setting_create_Gendial_field_def(ad->gl_pkg, &ad->itc_2txt_2,
-	                                                  NULL, NULL, SWALLOW_Type_INVALID, NULL, NULL, 0, MGRAPP_STR_APPLICATION,
-	                                                  desc, NULL);
+													  NULL, NULL, SWALLOW_Type_INVALID, NULL, NULL, 0, MGRAPP_STR_APPLICATION,
+													  desc, NULL);
 	if (info->app_size) {
 		elm_genlist_item_select_mode_set(info->app_size->item,
-		                                 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+										 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 	}
 
 	/* Data size */
@@ -92,11 +92,11 @@ static inline void appmgrUg_pkg_append_storage(SettingAppMgrUG *ad)
 	else
 		snprintf(desc, sizeof(desc), "%s", MGRAPP_STR_COMPUTING);
 	info->data_size = setting_create_Gendial_field_def(ad->gl_pkg, &ad->itc_2txt_2,
-	                                                   NULL, NULL, SWALLOW_Type_INVALID, NULL, NULL, 0, MGRAPP_STR_DATA,
-	                                                   desc, NULL);
+													   NULL, NULL, SWALLOW_Type_INVALID, NULL, NULL, 0, MGRAPP_STR_DATA,
+													   desc, NULL);
 	if (info->data_size) {
 		elm_genlist_item_select_mode_set(info->data_size->item,
-		                                 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+										 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 	}
 
 }
@@ -113,11 +113,11 @@ static inline void appmgrUg_pkg_append_cache(SettingAppMgrUG *ad)
 
 	info = ad->pkginfo;
 
-	//appmgrUg_append_separator(ad->gl_pkg, ad);
+	/*appmgrUg_append_separator(ad->gl_pkg, ad); */
 
 	/* title */
 	setting_create_Gendial_field_titleItem(ad->gl_pkg, &(ad->itc_grp_title),
-	                                       MGRAPP_STR_CACHE, NULL);
+										   MGRAPP_STR_CACHE, NULL);
 
 	/* cache size */
 	if (0 <= info->sz_cache)
@@ -128,12 +128,12 @@ static inline void appmgrUg_pkg_append_cache(SettingAppMgrUG *ad)
 	SETTING_TRACE(" ************************************************************* ----> DESC : %s", desc);
 
 	ad->cache_size = setting_create_Gendial_field_def(ad->gl_pkg, &ad->itc_2txt_2,
-	                                                  NULL, NULL, SWALLOW_Type_INVALID, NULL, NULL, 0, MGRAPP_STR_CACHE,
-	                                                  desc, NULL);
+													  NULL, NULL, SWALLOW_Type_INVALID, NULL, NULL, 0, MGRAPP_STR_CACHE,
+													  desc, NULL);
 	if (ad->cache_size) {
 		__BACK_POINTER_SET(ad->cache_size);
 		elm_genlist_item_select_mode_set(ad->cache_size->item,
-		                                 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+										 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 	}
 
 	/* clear cache */
@@ -143,7 +143,7 @@ static inline void appmgrUg_pkg_append_cache(SettingAppMgrUG *ad)
 		__BACK_POINTER_SET(ad->clear_cache);
 		item_data->userdata = ad;
 		item_data->item = elm_genlist_item_append(ad->gl_pkg, &(ad->itc_1button), item_data, NULL,
-		                                          ELM_GENLIST_ITEM_NONE, NULL, NULL);
+												  ELM_GENLIST_ITEM_NONE, NULL, NULL);
 		elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 	} else {
 		SETTING_TRACE_ERROR("item_data is NULL");
@@ -167,10 +167,10 @@ static inline void appmgrUg_pkg_append_default(SettingAppMgrUG *ad)
 	while (cur) {
 		char *appid = cur->data;
 
-//TODO
-// appsvc has bad api
-//		if (appid && 1 == appsvc_is_defapp(appid))
-//			break;
+		/*TODO */
+		/* appsvc has bad api */
+		/*		if (appid && 1 == appsvc_is_defapp(appid)) */
+		/*			break; */
 
 		cur = cur->next;
 	}
@@ -181,17 +181,17 @@ static inline void appmgrUg_pkg_append_default(SettingAppMgrUG *ad)
 		return;
 	}
 
-	//info->def_sep = appmgrUg_append_separator(ad->gl_pkg, ad);
+	/*info->def_sep = appmgrUg_append_separator(ad->gl_pkg, ad); */
 
 	setting_create_Gendial_field_titleItem(ad->gl_pkg, &(ad->itc_grp_title),
-	                                       MGRAPP_STR_LAUNCH_BY_DEFAULT, NULL);
+										   MGRAPP_STR_LAUNCH_BY_DEFAULT, NULL);
 
 	setting_create_Gendial_field_def(ad->gl_pkg, &ad->itc_1txt,
-	                                 appmgrUg_pkg_clear_default, ad, SWALLOW_Type_INVALID, NULL, NULL, 0,
-	                                 MGRAPP_STR_CLEAR_DEFAULTS, NULL, NULL);
+									 appmgrUg_pkg_clear_default, ad, SWALLOW_Type_INVALID, NULL, NULL, 0,
+									 MGRAPP_STR_CLEAR_DEFAULTS, NULL, NULL);
 
 	setting_create_Gendial_field_titleItem(ad->gl_pkg, &ad->itc_multiline,
-	                                       MGRAPP_STR_DEFAULT_DESC, NULL);
+										   MGRAPP_STR_DEFAULT_DESC, NULL);
 }
 
 static inline void appmgrUg_pkg_append_website(SettingAppMgrUG *ad)
@@ -209,11 +209,11 @@ static inline void appmgrUg_pkg_append_website(SettingAppMgrUG *ad)
 		return;
 	}
 
-	//appmgrUg_append_separator(ad->gl_pkg, ad);
+	/*appmgrUg_append_separator(ad->gl_pkg, ad); */
 
 	setting_create_Gendial_field_def(ad->gl_pkg, &ad->itc_1txt,
-	                                 appmgrUg_pkg_webapp_ug, ad, SWALLOW_Type_INVALID, NULL, NULL, 0,
-	                                 MAGAPP_STR_WEB_SETTING, NULL, NULL);
+									 appmgrUg_pkg_webapp_ug, ad, SWALLOW_Type_INVALID, NULL, NULL, 0,
+									 MAGAPP_STR_WEB_SETTING, NULL, NULL);
 }
 
 static inline void appmgrUg_pkg_append_privilege(SettingAppMgrUG *ad)
@@ -223,7 +223,7 @@ static inline void appmgrUg_pkg_append_privilege(SettingAppMgrUG *ad)
 	int ret;
 #endif
 	appmgr_pkginfo *info;
-	//Elm_Object_Item *sep_it;
+	/*Elm_Object_Item *sep_it; */
 	Setting_GenGroupItem_Data *title_itdata;
 
 	ret_if(NULL == ad);
@@ -231,23 +231,23 @@ static inline void appmgrUg_pkg_append_privilege(SettingAppMgrUG *ad)
 
 	info = ad->pkginfo;
 
-	//sep_it = appmgrUg_append_separator(ad->gl_pkg, ad);
+	/*sep_it = appmgrUg_append_separator(ad->gl_pkg, ad); */
 
 	title_itdata = setting_create_Gendial_field_titleItem(ad->gl_pkg, &(ad->itc_grp_title),
-	                                                      MGRAPP_STR_PRIVILEGE, NULL);
+														  MGRAPP_STR_PRIVILEGE, NULL);
 
 	info->first_prv = NULL;
 #if 0
-  //Deprecated API
+	/*Deprecated API */
 	ret = privilege_info_foreach_privilege_group_list_by_pkgid(info->pkgid,
-	                                                           appmgrUg_pkg_get_privileges_grp_iter, ad);
+															   appmgrUg_pkg_get_privileges_grp_iter, ad);
 	warn_if(PRVINFO_ERROR_NONE != ret,
-	        "privilege_info_foreach_privilege_group_list_by_pkgid() Fail(%d)", ret);
+			"privilege_info_foreach_privilege_group_list_by_pkgid() Fail(%d)", ret);
 #endif
 
 	if (NULL == info->first_prv) {
 		SETTING_TRACE_ERROR("No privilege");
-		//elm_object_item_del(sep_it);
+		/*elm_object_item_del(sep_it); */
 		if (title_itdata)
 			elm_object_item_del(title_itdata->item);
 		return;
@@ -280,7 +280,7 @@ static void appmgrUg_pkg_uninstall(void *data, Evas_Object *obj, void *event_inf
 		return;
 
 	ad->popup = setting_create_popup_with_progressbar(ad, ad->win, PROGRESSBAR_STYLE, NULL,
-	                                                  MGRAPP_STR_UNINSTALLING, appmgrUg_popup_del, 0, TRUE, TRUE, 0);
+													  MGRAPP_STR_UNINSTALLING, appmgrUg_popup_del, 0, TRUE, TRUE, 0);
 
 	if (info->pc_request)
 		pkgmgr_client_free(info->pc_request);
@@ -292,7 +292,7 @@ static void appmgrUg_pkg_uninstall(void *data, Evas_Object *obj, void *event_inf
 
 	ad->pkg_request = APPMGRUG_PKG_REQUEST_UNINSTALL;
 	ret = pkgmgr_client_uninstall(info->pc_request, info->pkg_type, info->pkgid, PM_QUIET,
-	                              NULL, NULL);
+								  NULL, NULL);
 	if (ret < PKGMGR_R_OK) {
 		SETTING_TRACE_ERROR("pkgmgr_client_uninstall() Fail(%d)", ret);
 		ad->pkg_request = APPMGRUG_PKG_REQUEST_NONE;
@@ -301,7 +301,7 @@ static void appmgrUg_pkg_uninstall(void *data, Evas_Object *obj, void *event_inf
 }
 
 void appmgrUg_pkg_uninstall_click(void *data, Evas_Object *obj,
-                                  void *event_info)
+								  void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	SettingAppMgrUG *ad = data;
@@ -316,7 +316,7 @@ void appmgrUg_pkg_uninstall_click(void *data, Evas_Object *obj,
 }
 
 void appmgrUg_pkg_clear_cache_click(void *data, Evas_Object *obj,
-                                    void *event_info)
+									void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "Data parameter is NULL");
@@ -334,7 +334,7 @@ void appmgrUg_pkg_clear_cache_click(void *data, Evas_Object *obj,
 }
 
 void appmgrUg_pkg_moveto_cb(void *data, Evas_Object *obj,
-                            void *event_info)
+							void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	int ret;
@@ -349,7 +349,7 @@ void appmgrUg_pkg_moveto_cb(void *data, Evas_Object *obj,
 		evas_object_del(ad->popup);
 
 	ad->popup = setting_create_popup_with_progressbar(ad, ad->win, PROGRESSBAR_STYLE,
-	                                                  NULL, MGRAPP_STR_MOVEING, appmgrUg_popup_del, 0, TRUE, TRUE, 0);
+													  NULL, MGRAPP_STR_MOVEING, appmgrUg_popup_del, 0, TRUE, TRUE, 0);
 
 	ad->pkg_request = APPMGRUG_PKG_REQUEST_MOVE;
 
@@ -361,7 +361,7 @@ void appmgrUg_pkg_moveto_cb(void *data, Evas_Object *obj,
 }
 
 static void appmgrUg_pkg_append_toolbar(Evas_Object *toolbar,
-                                        SettingAppMgrUG *ad)
+										SettingAppMgrUG *ad)
 {
 	SETTING_TRACE_BEGIN;
 	int ret, mmc;
@@ -400,7 +400,7 @@ static void appmgrUg_pkg_append_toolbar(Evas_Object *toolbar,
 	else
 		btn_str = MGRAPP_STR_UNINSTALL;
 	tool_it = elm_toolbar_item_append(toolbar, NULL, btn_str,
-	                                  appmgrUg_pkg_uninstall_click, ad);
+									  appmgrUg_pkg_uninstall_click, ad);
 	elm_object_item_domain_text_translatable_set(tool_it, SETTING_PACKAGE, EINA_TRUE);
 
 	if (!info->removable)
@@ -408,7 +408,7 @@ static void appmgrUg_pkg_append_toolbar(Evas_Object *toolbar,
 }
 
 static inline Evas_Object *appmgrUg_pkg_create_toolbar(Evas_Object *parent,
-                                                       SettingAppMgrUG *ad)
+													   SettingAppMgrUG *ad)
 {
 	SETTING_TRACE_BEGIN;
 	Evas_Object *toolbar;
@@ -434,21 +434,21 @@ static void appmgrUg_pkg_append_genlist(SettingAppMgrUG *ad)
 	SETTING_TRACE_BEGIN;
 	Elm_Object_Item *item;
 
-	//appmgrUg_append_separator(ad->gl_pkg, ad);
+	/*appmgrUg_append_separator(ad->gl_pkg, ad); */
 
 	/* Title (pkg name, version S) */
 	item = elm_genlist_item_append(ad->gl_pkg, &ad->itc_info_title, ad, NULL,
-	                               ELM_GENLIST_ITEM_NONE, NULL, NULL);
+								   ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	item = elm_genlist_item_append(ad->gl_pkg, &ad->itc_2button1, ad, NULL,
-	                               ELM_GENLIST_ITEM_NONE, NULL, NULL);
+								   ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	/*elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY); */
 
 	appmgrUg_pkg_append_storage(ad);
 
 	item = elm_genlist_item_append(ad->gl_pkg, &ad->itc_2button2, ad, NULL,
-	                               ELM_GENLIST_ITEM_NONE, NULL, NULL);
+								   ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	/*elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY); */
 
 	appmgrUg_pkg_append_cache(ad);
@@ -460,7 +460,7 @@ static void appmgrUg_pkg_append_genlist(SettingAppMgrUG *ad)
 
 	appmgrUg_pkg_append_privilege(ad);
 
-	//appmgrUg_append_separator(ad->gl_pkg, ad);
+	/*appmgrUg_append_separator(ad->gl_pkg, ad); */
 }
 
 
@@ -484,9 +484,9 @@ static int appmgrUg_pkg_create(void *data)
 	}
 
 	navi_it = setting_push_layout_navi_bar_genlist(ad->lo_parent, ad->win,
-	                                               MGRAPP_STR_APPLICATION_INFO, NULL, NULL,
-	                                               (setting_call_back_func)appmgrUg_pkg_back_cb,
-	                                               NULL, ad, &ad->gl_pkg, ad->navi);
+												   MGRAPP_STR_APPLICATION_INFO, NULL, NULL,
+												   (setting_call_back_func)appmgrUg_pkg_back_cb,
+												   NULL, ad, &ad->gl_pkg, ad->navi);
 	elm_genlist_mode_set(ad->gl_pkg, ELM_LIST_COMPRESS);
 	elm_naviframe_item_pop_cb_set(navi_it, appmgrUg_pkg_back_cb, ad);
 

@@ -26,9 +26,9 @@ static void screen_reader_key_change_vconf_cb(keynode_t *node, void *user_data)
 {
 	SETTING_TRACE_BEGIN;
 	Setting_GenGroupItem_Data *screenReaderItem = user_data;
-	//SETTING_TRACE_DEBUG("check_status: %i, node->value.i: %i", screenReaderItem->chk_status, node->value.i);
+	/*SETTING_TRACE_DEBUG("check_status: %i, node->value.i: %i", screenReaderItem->chk_status, node->value.i); */
 	/* I don't know why following code does not update check box to checked/unchecked */
-//	setting_update_gl_item_chk_status(screenReaderItem, node->value.b ? 1 : 0);
+	/*	setting_update_gl_item_chk_status(screenReaderItem, node->value.b ? 1 : 0); */
 	elm_genlist_item_update(screenReaderItem->item);
 	SETTING_TRACE_END;
 }

@@ -71,9 +71,9 @@ setting_view *__get_phone_view_to_load(app_control_h service)
 		} else {
 			setting_view_node_table_register(&setting_view_phone_language_region, NULL);
 			setting_view_node_table_register(&setting_view_phone_display_language,
-			                                 &setting_view_phone_language_region);
+											 &setting_view_phone_language_region);
 			setting_view_node_table_register(&setting_view_phone_region_format,
-			                                 &setting_view_phone_language_region);
+											 &setting_view_phone_language_region);
 			FREE(viewtype);
 			return &setting_view_phone_language_region;
 		}
@@ -201,9 +201,9 @@ static void setting_phone_update_item(void *data)
 	if (ad->data_region_fmt_example) {
 
 		char *example_desc =
-		    setting_phone_lang_get_example_desc(pa_region, ad);
+			setting_phone_lang_get_example_desc(pa_region, ad);
 		ad->data_region_fmt_example->keyStr =
-		    (char *)g_strdup(example_desc);
+			(char *)g_strdup(example_desc);
 		FREE(example_desc);
 		elm_object_item_data_set(ad->data_region_fmt_example->item, ad->data_region_fmt_example);
 		elm_genlist_item_update(ad->data_region_fmt_example->item);
@@ -238,7 +238,7 @@ char *setting_phone_lang_get_region_str(const char *region)
 
 	localeID = uloc_getDefault();
 	uloc_getDisplayName(region, localeID, displayname, SETTING_STR_SLP_LEN,
-	                    &status);
+						&status);
 
 	char *str_displayname = setting_phone_lang_str_to_utf8(displayname);
 	if (str_displayname == NULL) {
@@ -324,7 +324,7 @@ char *setting_phone_lang_get_by_pattern(const char *locale, const char *skeleton
 	u_uastrncpy(customSkeleton, skeleton, safeStrLen(skeleton));
 
 	if (ad->pattern_generator == NULL
-	    || safeStrCmp(locale_tmp, ad->prev_locale) != 0) {
+		|| safeStrCmp(locale_tmp, ad->prev_locale) != 0) {
 		if (ad->pattern_generator != NULL) {
 			udatpg_close(ad->pattern_generator);
 			ad->pattern_generator = NULL;
@@ -333,22 +333,22 @@ char *setting_phone_lang_get_by_pattern(const char *locale, const char *skeleton
 	}
 
 	int32_t bestPatternCapacity =
-	    (int32_t)(sizeof(bestPattern) / sizeof((bestPattern)[0]));
+		(int32_t)(sizeof(bestPattern) / sizeof((bestPattern)[0]));
 	(void)udatpg_getBestPattern(ad->pattern_generator, customSkeleton,
-	                            u_strlen(customSkeleton), bestPattern,
-	                            bestPatternCapacity, &status);
+								u_strlen(customSkeleton), bestPattern,
+								bestPatternCapacity, &status);
 
 	u_austrcpy(bestPatternString, bestPattern);
 	SETTING_TRACE("BestPattern is %s", bestPatternString);
 
 	UDate date = ucal_getNow();
 	formatter =
-	    udat_open(UDAT_IGNORE, UDAT_IGNORE, locale_tmp, NULL, -1, bestPattern,
-	              -1, &status);
+		udat_open(UDAT_IGNORE, UDAT_IGNORE, locale_tmp, NULL, -1, bestPattern,
+				  -1, &status);
 	int32_t formattedCapacity =
-	    (int32_t)(sizeof(formatted) / sizeof((formatted)[0]));
+		(int32_t)(sizeof(formatted) / sizeof((formatted)[0]));
 	(void)udat_format(formatter, date, formatted, formattedCapacity, NULL,
-	                  &status);
+					  &status);
 	u_austrcpy(formattedString, formatted);
 	SETTING_TRACE("DATE & TIME is %s", formattedString);
 
@@ -459,8 +459,8 @@ char *setting_phone_lang_get_example_desc(const char *region, void *data)
 	setting_retvm_if(region == NULL, NULL, "region parameter is NULL");
 	setting_retvm_if(data == NULL, NULL, "Data parameter is NULL");
 	char *date = setting_phone_lang_get_by_pattern(region,
-	                                               UDAT_YEAR_MONTH_WEEKDAY_DAY,
-	                                               data);
+												   UDAT_YEAR_MONTH_WEEKDAY_DAY,
+												   data);
 
 	enum appcore_time_format timeformat = APPCORE_TIME_FORMAT_12;
 	int ret = appcore_get_timeformat(&timeformat);
@@ -488,7 +488,7 @@ char *setting_phone_lang_get_example_desc(const char *region, void *data)
 	Eina_Strbuf *temp_str = eina_strbuf_new();
 	char *r_str_text = NULL;
 	eina_strbuf_append_printf(temp_str,
-	                          "%s", _("IDS_ST_BODY_REGIONAL_EXAMPLE"));
+							  "%s", _("IDS_ST_BODY_REGIONAL_EXAMPLE"));
 	eina_strbuf_append_printf(temp_str, "<br>%s : %s", _("IDS_ST_BODY_DATE"), date);
 	eina_strbuf_append_printf(temp_str, "<br>%s : %s", _("IDS_ST_HEADER_TIME"), time);
 	eina_strbuf_append_printf(temp_str, "<br>%s : %s", _("IDS_ST_BODY_NUMBER"), number);
@@ -507,7 +507,7 @@ char *setting_phone_lang_get_example_desc(const char *region, void *data)
 
 
 static void setting_phone_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
-                                       void *event_info)
+									   void *event_info)
 {
 	SettingPhoneUG *ad = (SettingPhoneUG *) data;
 	/* setting_view_update(&setting_view_about_main, ad); */
@@ -515,7 +515,7 @@ static void setting_phone_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
 }
 
 static void *setting_phone_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
-                                        app_control_h service, void *priv)
+										app_control_h service, void *priv)
 {
 	setting_retvm_if((!priv), NULL, "!priv");
 	SETTING_TRACE_BEGIN;
@@ -528,7 +528,7 @@ static void *setting_phone_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	phoneUG->evas = evas_object_evas_get(phoneUG->win_main_layout);
 
 	setting_retvm_if(phoneUG->win_main_layout == NULL, NULL,
-	                 "cannot get main window ");
+					 "cannot get main window ");
 
 	/* --------------------------------------------------------- */
 	char *pa_path = NULL;;
@@ -557,7 +557,7 @@ static void *setting_phone_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 		SETTING_TRACE("phoneUG->handle:%d", phoneUG->handle);
 		memset(&(phoneUG->imsi), 0, sizeof(TelSimImsiInfo_t));
 		if (phoneUG->handle
-		    && TAPI_API_SUCCESS == tel_get_sim_imsi(phoneUG->handle, &(phoneUG->imsi))) {
+			&& TAPI_API_SUCCESS == tel_get_sim_imsi(phoneUG->handle, &(phoneUG->imsi))) {
 			SETTING_TRACE_SECURE_DEBUG("********************************************");
 			SETTING_TRACE_SECURE_DEBUG("imsi.szMcc: [%s]", phoneUG->imsi.szMcc);
 			SETTING_TRACE_SECURE_DEBUG("imsi.szMnc: [%s]", phoneUG->imsi.szMnc);
@@ -587,34 +587,34 @@ static void *setting_phone_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(phoneUG->itc_2text_3_parent));
 	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(phoneUG->itc_2text_2));
 	setting_create_Gendial_itc("multiline/1text",
-	                           &(phoneUG->itc_bg_1icon));
+							   &(phoneUG->itc_bg_1icon));
 	phoneUG->pattern_generator = NULL;
 	phoneUG->prev_locale = NULL;
 	/*  creating a view. */
 	phoneUG->bundle_data = service;
 	phoneUG->view_to_load = __get_phone_view_to_load(service);
 	setting_retvm_if(NULL == phoneUG->view_to_load, NULL,
-	                 "NULL == phoneUG->view_to_load");
+					 "NULL == phoneUG->view_to_load");
 	setting_view_node_set_cur_view(phoneUG->view_to_load);
 	setting_view_create(phoneUG->view_to_load, (void *)phoneUG);
 	evas_object_event_callback_add(phoneUG->win_main_layout,
-	                               EVAS_CALLBACK_RESIZE,
-	                               setting_phone_ug_cb_resize, phoneUG);
+								   EVAS_CALLBACK_RESIZE,
+								   setting_phone_ug_cb_resize, phoneUG);
 	return __get_phone_layout_to_return(service, phoneUG);
 }
 
 static void setting_phone_ug_on_start(ui_gadget_h ug, app_control_h service,
-                                      void *priv)
+									  void *priv)
 {
 }
 
 static void setting_phone_ug_on_pause(ui_gadget_h ug, app_control_h service,
-                                      void *priv)
+									  void *priv)
 {
 }
 
 static void setting_phone_ug_on_resume(ui_gadget_h ug, app_control_h service,
-                                       void *priv)
+									   void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(!priv);
@@ -627,7 +627,7 @@ static void setting_phone_ug_on_resume(ui_gadget_h ug, app_control_h service,
 }
 
 static void setting_phone_ug_on_destroy(ui_gadget_h ug, app_control_h service,
-                                        void *priv)
+										void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!ug || !priv), "!ug || !priv");
@@ -642,16 +642,16 @@ static void setting_phone_ug_on_destroy(ui_gadget_h ug, app_control_h service,
 	/*  called when this shared gadget is terminated. similar with app_exit */
 	if (&setting_view_phone_language_region == phoneUG->view_to_load) {
 		setting_view_destroy(&setting_view_phone_display_language,
-		                     phoneUG);
+							 phoneUG);
 		setting_view_destroy(&setting_view_phone_region_format,
-		                     phoneUG);
+							 phoneUG);
 		setting_view_destroy(&setting_view_phone_language_region, phoneUG);
 	}
 #ifdef ENABLE_TICKER_NOTI
 	else if (&setting_view_phone_ticker_notification ==
-	         phoneUG->view_to_load) {
+			 phoneUG->view_to_load) {
 		setting_view_destroy(&setting_view_phone_ticker_notification,
-		                     phoneUG);
+							 phoneUG);
 		setting_view_destroy(&setting_view_phone_ticker_notification_details, phoneUG);
 
 	}
@@ -671,7 +671,7 @@ static void setting_phone_ug_on_destroy(ui_gadget_h ug, app_control_h service,
 }
 
 static void setting_phone_ug_on_message(ui_gadget_h ug, app_control_h msg,
-                                        app_control_h service, void *priv)
+										app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(NULL == priv, "priv is NULL");
@@ -690,68 +690,68 @@ static void setting_phone_ug_on_message(ui_gadget_h ug, app_control_h msg,
 }
 
 static void setting_phone_ug_on_event(ui_gadget_h ug, enum ug_event event,
-                                      app_control_h service, void *priv)
+									  app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 
 	SettingPhoneUG *ad = (SettingPhoneUG *) priv;
 	switch (event) {
-		case UG_EVENT_LOW_MEMORY:
-			break;
-		case UG_EVENT_LOW_BATTERY:
-			break;
-		case UG_EVENT_REGION_CHANGE: {
-				if (ad->gl_lang_region && setting_view_phone_language_region.is_create) {
-					elm_genlist_realized_items_update(ad->gl_lang_region);
-					setting_phone_update_item(ad);
-				}
+	case UG_EVENT_LOW_MEMORY:
+		break;
+	case UG_EVENT_LOW_BATTERY:
+		break;
+	case UG_EVENT_REGION_CHANGE: {
+			if (ad->gl_lang_region && setting_view_phone_language_region.is_create) {
+				elm_genlist_realized_items_update(ad->gl_lang_region);
+				setting_phone_update_item(ad);
 			}
-			break;
-		case UG_EVENT_LANG_CHANGE: {
-				ad->lang_change = EINA_TRUE;
+		}
+		break;
+	case UG_EVENT_LANG_CHANGE: {
+			ad->lang_change = EINA_TRUE;
 
-				if (ad->gl_lang_region && setting_view_phone_language_region.is_create) {
-					elm_genlist_realized_items_update(ad->gl_lang_region);
-					setting_phone_update_item(ad);
-				}
-
-				setting_navi_items_update(ad->navi_bar);
+			if (ad->gl_lang_region && setting_view_phone_language_region.is_create) {
+				elm_genlist_realized_items_update(ad->gl_lang_region);
+				setting_phone_update_item(ad);
 			}
-			break;
 
-		case UG_EVENT_ROTATE_PORTRAIT:
-			break;
-		case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-			break;
-		case UG_EVENT_ROTATE_LANDSCAPE:
-			break;
-		case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-			break;
-		default:
-			break;
+			setting_navi_items_update(ad->navi_bar);
+		}
+		break;
+
+	case UG_EVENT_ROTATE_PORTRAIT:
+		break;
+	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
+		break;
+	case UG_EVENT_ROTATE_LANDSCAPE:
+		break;
+	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
+		break;
+	default:
+		break;
 	}
 }
 
 static void setting_phone_ug_on_key_event(ui_gadget_h ug,
-                                          enum ug_key_event event,
-                                          app_control_h service, void *priv)
+										  enum ug_key_event event,
+										  app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SettingPhoneUG *ad = (SettingPhoneUG *) priv;
 
 	SETTING_TRACE("event:%d", event);
 	switch (event) {
-		case UG_KEY_EVENT_END: {
-				if (elm_naviframe_top_item_get(ad->navi_bar) ==
-				    elm_naviframe_bottom_item_get(ad->navi_bar)) {
-					ug_destroy_me(ug);
-				} else {
-					setting_view_cb_at_endKey(ad);
-				}
+	case UG_KEY_EVENT_END: {
+			if (elm_naviframe_top_item_get(ad->navi_bar) ==
+				elm_naviframe_bottom_item_get(ad->navi_bar)) {
+				ug_destroy_me(ug);
+			} else {
+				setting_view_cb_at_endKey(ad);
 			}
-			break;
-		default:
-			break;
+		}
+		break;
+	default:
+		break;
 	}
 }
 
@@ -815,31 +815,31 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv, 
 
 int set_language_helper(const char *lang)
 {
-	#if 0
+#if 0
 	int ret = vconf_set_str(VCONFKEY_LANGSET, lang);
 	if (ret == 0) {
 		/* on success */
 		/* set event system */
 		setting_set_event_system(SYS_EVENT_LANGUAGE_SET, EVT_KEY_LANGUAGE_SET, lang);
 	}
-	#else
+#else
 	int ret = system_settings_set_value_string(SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, lang);
-	#endif
+#endif
 	return ret;
 }
 
 int set_regionformat_helper(const char *region)
 {
 
-	#if 0
+#if 0
 	int ret = vconf_set_str(VCONFKEY_REGIONFORMAT, region);
 	if (ret == 0) {
 		/* set event system */
 		setting_set_event_system(SYS_EVENT_REGION_FORMAT, EVT_KEY_REGION_FORMAT, region);
 	}
-	#else
+#else
 	int ret = system_settings_set_value_string(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, region);
-	#endif
+#endif
 	return ret;
 }
 

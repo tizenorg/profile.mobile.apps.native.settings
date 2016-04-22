@@ -107,12 +107,12 @@ static void appmgrUg_update_listinfos(SettingAppMgrUG *ad)
 	if (ad->list_worker)
 		appmgrUg_stop_async_worker(ad->list_worker);
 	ad->list_worker = appmgrUg_start_async_worker(appmgrUg_get_listinfos,
-	                                              appmgrUg_get_listinfos_cb, ad);
+												  appmgrUg_get_listinfos_cb, ad);
 }
 
 static int appmgrUg_pkgmgr_changed_cb(int req_id, const char *pkg_type,
-                                      const char *pkgid, const char *key, const char *val, const void *pmsg,
-                                      void *data)
+									  const char *pkgid, const char *key, const char *val, const void *pmsg,
+									  void *data)
 {
 	SettingAppMgrUG *ad = data;
 
@@ -120,7 +120,7 @@ static int appmgrUg_pkgmgr_changed_cb(int req_id, const char *pkg_type,
 
 	SETTING_TRACE_DEBUG("key:%s val:%s", key, val);
 	SETTING_TRACE_DEBUG("pkg_type:%s, pkgid:%s, sel_pkgid:%s", pkg_type, pkgid,
-	                    ad->sel_pkgid);
+						ad->sel_pkgid);
 
 	/*
 	   if (!safeStrCmp(key, "start") && safeStrCmp(val, "uninstall"))
@@ -182,7 +182,7 @@ static int appmgrUg_pkgmgr_changed_cb(int req_id, const char *pkg_type,
 }
 
 Evas_Object *appmgrUg_no_item(Evas_Object *parent, const char *text,
-                              const char *help)
+							  const char *help)
 {
 	Evas_Object *layout, *icon;
 
@@ -222,7 +222,7 @@ progressbar_pulse_add(char *style_name, char *container_name, Evas_Object *layou
 }
 
 Evas_Object *appmgrUg_loading_item(Evas_Object *parent, const char *text,
-                                   const char *help)
+								   const char *help)
 {
 	Evas_Object *layout;
 
@@ -245,12 +245,12 @@ Evas_Object *appmgrUg_loading_item(Evas_Object *parent, const char *text,
 }
 
 Elm_Object_Item *appmgrUg_append_separator(Evas_Object *genlist,
-                                           SettingAppMgrUG *ad)
+										   SettingAppMgrUG *ad)
 {
 	Elm_Object_Item *item = NULL;
 
 	item = elm_genlist_item_append(genlist, &ad->itc_sep, NULL, NULL,
-	                               ELM_GENLIST_ITEM_NONE, NULL, NULL);
+								   ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 	return item;
 }
@@ -278,7 +278,7 @@ char *appmgrUg_get_defualt_icon(pkgmgrinfo_appinfo_h handle)
 }
 
 static void appmgrUg_get_listinfo(pkgmgrinfo_pkginfo_h handle,
-                                  appmgr_listinfo *info)
+								  appmgr_listinfo *info)
 {
 	int ret = 0;
 	char *value;
@@ -429,8 +429,8 @@ static Eina_Bool appmgrUg_get_all_pkg_sizesort(void *data)
 }
 
 static int appmgrUg_get_all_pkg_size(int req_id, const char *pkg_type,
-                                     const char *pkg_name, const char *key, const char *val, const void *pmsg,
-                                     void *data)
+									 const char *pkg_name, const char *key, const char *val, const void *pmsg,
+									 void *data)
 {
 	/*If get all size finished. return directly */
 	GList *list;
@@ -499,12 +499,12 @@ int appmgrUg_get_listinfos(SettingAppMgrUG *ad)
 	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_appinfo_filter_create() Fail(%d)", ret);
 
 	ret = pkgmgrinfo_pkginfo_filter_add_bool(filter_handle,
-	                                         PMINFO_PKGINFO_PROP_PACKAGE_SUPPORT_DISABLE, EINA_TRUE);
+											 PMINFO_PKGINFO_PROP_PACKAGE_SUPPORT_DISABLE, EINA_TRUE);
 
 	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_filter_add_bool() Fail(%d)", ret);
 
 	ret = pkgmgrinfo_pkginfo_filter_foreach_pkginfo(filter_handle,
-	                                                appmgrUg_get_disable_pkg_list_iter, &pkg_list);
+													appmgrUg_get_disable_pkg_list_iter, &pkg_list);
 	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_filter_foreach_pkginfo() Fail(%d)", ret);
 
 	pkgmgrinfo_pkginfo_filter_destroy(filter_handle);
@@ -552,10 +552,10 @@ int appmgrUg_get_listinfos(SettingAppMgrUG *ad)
 
 	APPMGRUG_STOP_POINT;
 
-	// TODO
-	// Find new api for Tizen 3.0
-	//ret = pkgmgr_client_request_size_info();
-	//warn_if(ret < 0, "pkgmgr_client_request_size_info() Fail", ret);
+	/* TODO */
+	/* Find new api for Tizen 3.0 */
+	/*ret = pkgmgr_client_request_size_info(); */
+	/*warn_if(ret < 0, "pkgmgr_client_request_size_info() Fail", ret); */
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -649,7 +649,7 @@ void appmgrUg_free_listinfos(SettingAppMgrUG *ad)
 }
 
 Evas_Object *appmgrUg_info_title_gl_icon_get(void *data, Evas_Object *obj,
-                                             const char *part)
+											 const char *part)
 {
 	Evas_Object *icon = NULL;
 	Evas_Object *lay = NULL;
@@ -676,7 +676,7 @@ Evas_Object *appmgrUg_info_title_gl_icon_get(void *data, Evas_Object *obj,
 }
 
 void appmgrUg_pkg_disable_enable_cb(void *data, Evas_Object *obj,
-                                    void *event_info)
+									void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "Data parameter is NULL");
@@ -743,7 +743,7 @@ void appmgrUg_pkg_stop_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 Evas_Object *appmgrUg_info_2button1_gl_icon_get(void *data, Evas_Object *obj,
-                                                const char *part)
+												const char *part)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if(data == NULL, NULL, "Data parameter is NULL");
@@ -779,13 +779,13 @@ Evas_Object *appmgrUg_info_2button1_gl_icon_get(void *data, Evas_Object *obj,
 	}
 
 	Evas_Object *button1 =
-	    setting_create_button(box, MGRAPP_STR_FORCE_STOP, NULL, appmgrUg_pkg_stop_cb, ad);
+		setting_create_button(box, MGRAPP_STR_FORCE_STOP, NULL, appmgrUg_pkg_stop_cb, ad);
 	if (!running_flag)
 		elm_object_disabled_set(button1, EINA_TRUE);
 
 	/* Disable/Enable button */
 	Evas_Object *button2 =
-	    setting_create_button(box, MGRAPP_STR_DISABLE, NULL, appmgrUg_pkg_disable_enable_cb, ad);
+		setting_create_button(box, MGRAPP_STR_DISABLE, NULL, appmgrUg_pkg_disable_enable_cb, ad);
 	if (!info->is_support_disable) {
 		elm_object_disabled_set(button2, EINA_TRUE);
 	} else if (info->is_disable) {
@@ -803,7 +803,7 @@ Evas_Object *appmgrUg_info_2button1_gl_icon_get(void *data, Evas_Object *obj,
 }
 
 Evas_Object *appmgrUg_info_2button2_gl_icon_get(void *data, Evas_Object *obj,
-                                                const char *part)
+												const char *part)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if(data == NULL, NULL, "Data parameter is NULL");
@@ -836,7 +836,7 @@ Evas_Object *appmgrUg_info_2button2_gl_icon_get(void *data, Evas_Object *obj,
 		btn_str = MGRAPP_STR_MOVE_TO_PHONE;
 
 	Evas_Object *button1 =
-	    setting_create_button(box, btn_str, NULL, appmgrUg_pkg_moveto_cb, ad);
+		setting_create_button(box, btn_str, NULL, appmgrUg_pkg_moveto_cb, ad);
 
 	if (VCONFKEY_SYSMAN_MMC_MOUNTED != mmc || !info->is_movable || info->is_preload)
 		elm_object_disabled_set(button1, EINA_TRUE);
@@ -848,7 +848,7 @@ Evas_Object *appmgrUg_info_2button2_gl_icon_get(void *data, Evas_Object *obj,
 		btn_str = MGRAPP_STR_UNINSTALL;
 
 	Evas_Object *button2 =
-	    setting_create_button(box, btn_str, NULL, appmgrUg_pkg_uninstall_click, ad);
+		setting_create_button(box, btn_str, NULL, appmgrUg_pkg_uninstall_click, ad);
 
 	if (!info->removable)
 		elm_object_disabled_set(button2, EINA_TRUE);
@@ -863,7 +863,7 @@ Evas_Object *appmgrUg_info_2button2_gl_icon_get(void *data, Evas_Object *obj,
 }
 
 Evas_Object *appmgrUg_info_1button_gl_icon_get(void *data, Evas_Object *obj,
-                                               const char *part)
+											   const char *part)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if(data == NULL, NULL, "Data parameter is NULL");
@@ -886,14 +886,14 @@ Evas_Object *appmgrUg_info_1button_gl_icon_get(void *data, Evas_Object *obj,
 	info = ad->pkginfo;
 
 	Evas_Object *button1 =
-	    setting_create_button(box, "BLANK", NULL, NULL, NULL);
+		setting_create_button(box, "BLANK", NULL, NULL, NULL);
 
 	evas_object_hide(button1);
 
 	/* Clear cache */
 
 	Evas_Object *button2 =
-	    setting_create_button(box, MGRAPP_STR_CLEAR_CACHE, NULL, appmgrUg_pkg_clear_cache_click, ad);
+		setting_create_button(box, MGRAPP_STR_CLEAR_CACHE, NULL, appmgrUg_pkg_clear_cache_click, ad);
 
 	if (info->sz_cache <= 0) {
 		elm_object_disabled_set(button2, EINA_TRUE);
@@ -910,7 +910,7 @@ Evas_Object *appmgrUg_info_1button_gl_icon_get(void *data, Evas_Object *obj,
 }
 
 char *appmgrUg_info_title_gl_label_get(void *data, Evas_Object *obj,
-                                       const char *part)
+									   const char *part)
 {
 	char *label = NULL;
 	SettingAppMgrUG *ad = data;
@@ -924,10 +924,10 @@ char *appmgrUg_info_title_gl_label_get(void *data, Evas_Object *obj,
 
 		if (APPMGRUG_TAB_RUNNING == ad->tabtype) {
 			snprintf(desc, sizeof(desc), _(MGRAPP_STR_ACTIVE_APPS_N),
-			         g_list_length(ad->runinfos));
+					 g_list_length(ad->runinfos));
 		} else {
 			snprintf(desc, sizeof(desc), _(MGRAPP_STR_VERSION_STR),
-			         ad->pkginfo->pkg_version);
+					 ad->pkginfo->pkg_version);
 		}
 
 		label = strdup(desc);
@@ -991,7 +991,7 @@ int appmgrUg_reset_app_settings(SettingAppMgrUG *ad)
 	ad->pkg_request = APPMGRUG_PKG_REQUEST_RESET;
 
 	ad->reset_worker = appmgrUg_start_async_worker(_reset_app_setting_fn,
-	                                               _reset_app_settings_cb, ad);
+												   _reset_app_settings_cb, ad);
 
 	return 0;
 }

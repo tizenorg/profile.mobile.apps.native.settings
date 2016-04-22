@@ -67,10 +67,10 @@
 #define SETTING_SIM_MSISDN_DIALING_NUMBER_LEN TAPI_SIM_MSISDN_DIALING_NUMBER_LEN+1
 
 typedef enum _SETTING_SIM_STATUS {
-    SETTING_SIM_STATUS_UNKNOWN = 0,
-    SETTING_SIM_STATUS_IN_CHECKING = 1,
-    SETTING_SIM_STATUS_LOCKED = 2,
-    SETTING_SIM_STATUS_PERM_BLOCKED = 3
+	SETTING_SIM_STATUS_UNKNOWN = 0,
+	SETTING_SIM_STATUS_IN_CHECKING = 1,
+	SETTING_SIM_STATUS_LOCKED = 2,
+	SETTING_SIM_STATUS_PERM_BLOCKED = 3
 } SETTING_SIM_STATUS;
 
 typedef struct _SettingAboutUG SettingAboutUG;
@@ -160,7 +160,7 @@ extern void setting_about_main_get_bluetooth_address_string(char *str, int size)
 * @param priv
 */
 void setting_about_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
-                                void *priv);
+								void *priv);
 
 /**
  * @}

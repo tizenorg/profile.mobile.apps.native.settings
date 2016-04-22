@@ -33,10 +33,10 @@
 */
 EXPORT_PUBLIC
 int setting_searchbar_redraw(void *data,
-                             Evas_Object *search_bar,
-                             char *search_text,
-                             Ecore_Idler **search_idler,
-                             Ecore_Task_Cb redraw_cb)
+							 Evas_Object *search_bar,
+							 char *search_text,
+							 Ecore_Idler **search_idler,
+							 Ecore_Task_Cb redraw_cb)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if(search_bar == NULL, -1, "search_bar parameter is NULL");
@@ -50,7 +50,7 @@ int setting_searchbar_redraw(void *data,
 	safeCopyStr(search_text, str, MAX_SEARCH_STR_LEN);
 
 	SETTING_TRACE("Update the search view text, search_text=%s",
-	              search_text);
+				  search_text);
 
 	if (*search_idler) {
 		ecore_idler_del(*search_idler);
@@ -136,22 +136,22 @@ static void ___searchbar_input_panel_event_cb(void *data, Ecore_IMF_Context *ctx
 static void
 _popup_block_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
-//	elm_popup_dismiss(obj);
+	/*	elm_popup_dismiss(obj); */
 }
 
 #if 0
 static void
 _popup_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	// Evas_Object *popup = data;
-	// elm_popup_dismiss(popup);
+	/* Evas_Object *popup = data; */
+	/* elm_popup_dismiss(popup); */
 }
 #endif
 
 static void
 _popup_hide_cb(void *data, Evas_Object *obj, void *event_info)
 {
-//	elm_popup_dismiss(obj);
+	/*	elm_popup_dismiss(obj); */
 }
 
 static void
@@ -198,8 +198,8 @@ static void __searchbar_entry_max_len_reached(void *data, Evas_Object *obj, void
 */
 EXPORT_PUBLIC
 Evas_Object *setting_create_searchbar(void *data, Evas_Object *parent,
-                                      Evas_Smart_Cb change_cb,
-                                      Evas_Smart_Cb cancel_cb)
+									  Evas_Smart_Cb change_cb,
+									  Evas_Smart_Cb cancel_cb)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if(parent == NULL, NULL, "parent parameter is NULL");
@@ -242,9 +242,9 @@ Evas_Object *setting_create_searchbar(void *data, Evas_Object *parent,
 	Ecore_IMF_Context *imf_context = (Ecore_IMF_Context *)elm_entry_imf_context_get(entry);
 	if (imf_context) {
 		ecore_imf_context_input_panel_event_callback_add(imf_context,
-		                                                 ECORE_IMF_INPUT_PANEL_STATE_EVENT,
-		                                                 ___searchbar_input_panel_event_cb,
-		                                                 entry);
+														 ECORE_IMF_INPUT_PANEL_STATE_EVENT,
+														 ___searchbar_input_panel_event_cb,
+														 entry);
 		SETTING_TRACE("OK to get imf_context -- elm_entry_imf_context_get");
 	} else {
 		SETTING_TRACE_ERROR("FAILED TO get imf_context -- elm_entry_imf_context_get");

@@ -62,15 +62,15 @@ Evas_Object *__get_applications_layout_to_return(app_control_h service, void *pr
 
 
 static void setting_applications_ug_cb_resize(void *data, Evas *e,
-                                              Evas_Object *obj, void *event_info)
+											  Evas_Object *obj, void *event_info)
 {
 	SettingApplicationsUG *ad = (SettingApplicationsUG *) data;
 	setting_view_update(ad->view_to_load, ad);
 }
 
 static void *setting_applications_ug_on_create(ui_gadget_h ug,
-                                               enum ug_mode mode, app_control_h service,
-                                               void *priv)
+											   enum ug_mode mode, app_control_h service,
+											   void *priv)
 {
 	setting_retvm_if((!priv), NULL, "!priv");
 	SETTING_TRACE_BEGIN;
@@ -86,7 +86,7 @@ static void *setting_applications_ug_on_create(ui_gadget_h ug,
 	applicationsUG->evas = evas_object_evas_get(applicationsUG->win_main_layout);
 
 	setting_retvm_if(applicationsUG->win_main_layout == NULL, NULL,
-	                 "cannot get main window ");
+					 "cannot get main window ");
 
 	/* register view node table */
 	setting_view_node_table_intialize();
@@ -107,25 +107,25 @@ static void *setting_applications_ug_on_create(ui_gadget_h ug,
 	setting_view_node_set_cur_view(applicationsUG->view_to_load);
 	setting_view_create(applicationsUG->view_to_load, (void *)applicationsUG);
 	evas_object_event_callback_add(applicationsUG->win_main_layout,
-	                               EVAS_CALLBACK_RESIZE,
-	                               setting_applications_ug_cb_resize, applicationsUG);
+								   EVAS_CALLBACK_RESIZE,
+								   setting_applications_ug_cb_resize, applicationsUG);
 	return __get_applications_layout_to_return(service, applicationsUG);
 }
 
 static void setting_applications_ug_on_start(ui_gadget_h ug, app_control_h service,
-                                             void *priv)
+											 void *priv)
 {
 }
 
 static void setting_applications_ug_on_pause(ui_gadget_h ug, app_control_h service,
-                                             void *priv)
+											 void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
 }
 
 static void setting_applications_ug_on_resume(ui_gadget_h ug, app_control_h service,
-                                              void *priv)
+											  void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
@@ -145,7 +145,7 @@ static void setting_applications_ug_on_resume(ui_gadget_h ug, app_control_h serv
 }
 
 static void setting_applications_ug_on_destroy(ui_gadget_h ug, app_control_h service,
-                                               void *priv)
+											   void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
@@ -173,57 +173,57 @@ static void setting_applications_ug_on_destroy(ui_gadget_h ug, app_control_h ser
 }
 
 static void setting_applications_ug_on_message(ui_gadget_h ug, app_control_h msg,
-                                               app_control_h service, void *priv)
+											   app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 }
 
 static void setting_applications_ug_on_event(ui_gadget_h ug,
-                                             enum ug_event event, app_control_h service,
-                                             void *priv)
+											 enum ug_event event, app_control_h service,
+											 void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SettingApplicationsUG *ad = priv;
 	setting_retm_if(NULL == ad, "ad is NULL");
 	switch (event) {
-		case UG_EVENT_LOW_MEMORY:
-			break;
-		case UG_EVENT_LOW_BATTERY:
-			break;
-		case UG_EVENT_LANG_CHANGE:
-			setting_navi_items_update(ad->navi_bar);
-			break;
-		case UG_EVENT_ROTATE_PORTRAIT:
-			break;
-		case UG_EVENT_ROTATE_LANDSCAPE:
-		case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-			break;
-		case UG_EVENT_REGION_CHANGE:
-			break;
-		default:
-			break;
+	case UG_EVENT_LOW_MEMORY:
+		break;
+	case UG_EVENT_LOW_BATTERY:
+		break;
+	case UG_EVENT_LANG_CHANGE:
+		setting_navi_items_update(ad->navi_bar);
+		break;
+	case UG_EVENT_ROTATE_PORTRAIT:
+		break;
+	case UG_EVENT_ROTATE_LANDSCAPE:
+	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
+		break;
+	case UG_EVENT_REGION_CHANGE:
+		break;
+	default:
+		break;
 	}
 }
 
 static void setting_applications_ug_on_key_event(ui_gadget_h ug,
-                                                 enum ug_key_event event,
-                                                 app_control_h service, void *priv)
+												 enum ug_key_event event,
+												 app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SettingApplicationsUG *ad = (SettingApplicationsUG *) priv;
 
 	switch (event) {
-		case UG_KEY_EVENT_END: {
-				if (elm_naviframe_top_item_get(ad->navi_bar) ==
-				    elm_naviframe_bottom_item_get(ad->navi_bar)) {
-					ug_destroy_me(ug);
-				} else {
-					setting_view_cb_at_endKey(ad);
-				}
+	case UG_KEY_EVENT_END: {
+			if (elm_naviframe_top_item_get(ad->navi_bar) ==
+				elm_naviframe_bottom_item_get(ad->navi_bar)) {
+				ug_destroy_me(ug);
+			} else {
+				setting_view_cb_at_endKey(ad);
 			}
-			break;
-		default:
-			break;
+		}
+		break;
+	default:
+		break;
 	}
 }
 
@@ -290,26 +290,26 @@ static UNUSED int __append_param(DBusMessage *msg, const char *sig, char *param[
 	for (ch = (char *)sig, i = 0; *ch != '\0'; ++i, ++ch) {
 		SETTING_TRACE_DEBUG("sig : %c", *ch);
 		switch (*ch) {
-			case 'i':
-				int_type = atoi(param[i]);
-				SETTING_TRACE_DEBUG("param[%2d] : %d", i, int_type);
-				dbus_message_iter_append_basic(&iter, DBUS_TYPE_INT32, &int_type);
-				break;
-			case 's':
-				str_type = param[i];
-				SETTING_TRACE_DEBUG("param[%2d] : %s", i, str_type);
-				dbus_message_iter_append_basic(&iter, DBUS_TYPE_STRING, &str_type);
-				break;
-			default:
-				break;
+		case 'i':
+			int_type = atoi(param[i]);
+			SETTING_TRACE_DEBUG("param[%2d] : %d", i, int_type);
+			dbus_message_iter_append_basic(&iter, DBUS_TYPE_INT32, &int_type);
+			break;
+		case 's':
+			str_type = param[i];
+			SETTING_TRACE_DEBUG("param[%2d] : %s", i, str_type);
+			dbus_message_iter_append_basic(&iter, DBUS_TYPE_STRING, &str_type);
+			break;
+		default:
+			break;
 		}
 	}
 	return 0;
 }
 
 static UNUSED DBusMessage *__invoke_dbus_method(const char *dest, const char *path,
-                                         const char *interface, const char *method,
-                                         const char *sig, char *param[])
+												const char *interface, const char *method,
+												const char *sig, char *param[])
 {
 	DBusError err;
 	DBusConnection *conn;
@@ -345,7 +345,7 @@ static UNUSED DBusMessage *__invoke_dbus_method(const char *dest, const char *pa
 }
 
 void setting_applications_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
-                                       void *priv)
+									   void *priv)
 {
 	/*SettingApplicationsUG *ad = (SettingApplicationsUG *) priv; */
 	Evas_Object *base;
@@ -361,13 +361,13 @@ void setting_applications_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
 	}
 
 	switch (mode) {
-		case UG_MODE_FULLVIEW:
-			evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-			                                 EVAS_HINT_EXPAND);
-			evas_object_show(base);
-			break;
-		default:
-			break;
+	case UG_MODE_FULLVIEW:
+		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
+										 EVAS_HINT_EXPAND);
+		evas_object_show(base);
+		break;
+	default:
+		break;
 	}
 
 	SETTING_TRACE_END;

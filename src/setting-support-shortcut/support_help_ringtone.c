@@ -97,10 +97,10 @@ static Evas_Object *support_help_create_win(const char *name)
 		elm_win_title_set(eo, name);
 		elm_win_borderless_set(eo, EINA_TRUE);
 		evas_object_smart_callback_add(eo, "delete,request",
-		                               support_help_del_win, NULL);
+									   support_help_del_win, NULL);
 #ifdef ECORE_X
 		ecore_x_window_size_get(ecore_x_window_root_first_get(),
-		                        &w, &h);
+								&w, &h);
 #else
 		elm_win_screen_size_get(eo, NULL, NULL, &w, &h);
 #endif
@@ -242,7 +242,7 @@ void support_help_app_end_ug_cb(ui_gadget_h ug, void *priv)
 }
 
 void support_help_app_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
-                                   void *priv)
+								   void *priv)
 {
 	Evas_Object *base;
 
@@ -254,14 +254,14 @@ void support_help_app_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
 		return;
 
 	switch (mode) {
-		case UG_MODE_FULLVIEW:
-			evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-			                                 EVAS_HINT_EXPAND);
-			ug_disable_effect(ug);
-			evas_object_show(base);
-			break;
-		default:
-			break;
+	case UG_MODE_FULLVIEW:
+		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
+										 EVAS_HINT_EXPAND);
+		ug_disable_effect(ug);
+		evas_object_show(base);
+		break;
+	default:
+		break;
 	}
 }
 

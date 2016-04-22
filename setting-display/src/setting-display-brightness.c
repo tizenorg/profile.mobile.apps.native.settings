@@ -111,8 +111,8 @@ static DBusHandlerResult setting_brightness_dbus_signal_filter(DBusConnection *c
 		int value = 0;
 
 		if (dbus_message_get_args(message, &error,
-		                          DBUS_TYPE_INT32, &brightness_level,
-		                          DBUS_TYPE_INVALID) == FALSE) {
+								  DBUS_TYPE_INT32, &brightness_level,
+								  DBUS_TYPE_INVALID) == FALSE) {
 			SETTING_TRACE_ERROR("Fail to get data : %s", error.message);
 			dbus_error_free(&error);
 			return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
@@ -232,16 +232,16 @@ static void _brightness_register_event_cb(void *data)
 
 	if (ad->is_event_registered == 0) {
 		ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_LCD_BRIGHTNESS,
-		                               __display_int_vconf_cb, ad);
+									   __display_int_vconf_cb, ad);
 		if (ret != 0)
 			SETTING_TRACE_ERROR("failed to register a cb key:%s err:%d",
-			                    "VCONFKEY_SETAPPL_LCD_BRIGHTNESS", ret);
+								"VCONFKEY_SETAPPL_LCD_BRIGHTNESS", ret);
 
 		ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_LCD_AUTOMATIC_BRIGHTNESS,
-		                               __display_int_vconf_cb, ad);
+									   __display_int_vconf_cb, ad);
 		if (ret != 0)
 			SETTING_TRACE_ERROR("failed to register a cb key:%s err:%d",
-			                    "VCONFKEY_SETAPPL_LCD_AUTOMATIC_BRIGHTNESS", ret);
+								"VCONFKEY_SETAPPL_LCD_AUTOMATIC_BRIGHTNESS", ret);
 
 		ad->is_event_registered = 1;
 
@@ -274,8 +274,8 @@ static void _brightness_deregister_event_cb(void *data)
 
 static void
 _brightness_slider_delayed_changed_cb(void *data,
-                                      Evas_Object *obj,
-                                      void *event_info)
+									  Evas_Object *obj,
+									  void *event_info)
 {
 	int value = 0;
 	SettingDisplayUG *ad = NULL;
@@ -480,7 +480,7 @@ void __display_int_vconf_cb(keynode_t *key, void *data)
 			if (err != DEVICE_ERROR_NONE) {
 				SETTING_TRACE(" device_display_set_brightness : failed[ret=%d]", err);
 				setting_create_popup(ad, ad->win_get, NULL, "IDS_CST_POP_FAILED",
-				                                 NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
+									 NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
 			}
 
 		}
@@ -554,23 +554,23 @@ static Evas_Object *__setting_brightness_add_slider(void *data, Evas_Object *obj
 
 		Evas_Object *layout, *label;
 
-		// Set custom layout style
+		/* Set custom layout style */
 		layout = elm_layout_add(obj);
 		elm_layout_file_set(layout, SETTING_SLIDER_EDJ_NAME, "gl_custom_item");
 		evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
 		evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 
-		// Set text into layout
+		/* Set text into layout */
 		label = elm_label_add(obj);
 		evas_object_size_hint_weight_set(label, EVAS_HINT_EXPAND, 0);
 		evas_object_size_hint_align_set(label, EVAS_HINT_FILL, EVAS_HINT_FILL);
 		elm_object_text_set(label, _("IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING"));
 		elm_object_part_content_set(layout, "elm.text", label);
 
-		//elm_atspi_accessible_relationship_append(id->item, ELM_ATSPI_RELATION_LABELLED_BY, label);
-		//elm_atspi_accessible_relationship_append(label, ELM_ATSPI_RELATION_CONTROLLED_BY, id->item);
+		/*elm_atspi_accessible_relationship_append(id->item, ELM_ATSPI_RELATION_LABELLED_BY, label); */
+		/*elm_atspi_accessible_relationship_append(label, ELM_ATSPI_RELATION_CONTROLLED_BY, id->item); */
 
-		// Set slider into layout
+		/* Set slider into layout */
 #if 0
 		slider = elm_slider_add(obj);
 		elm_slider_indicator_show_set(slider, EINA_FALSE);
@@ -580,7 +580,7 @@ static Evas_Object *__setting_brightness_add_slider(void *data, Evas_Object *obj
 		elm_object_part_content_set(layout, "elm.swallow.content", slider);
 #endif
 
-		
+
 		int auto_value = SETTING_BRIGHTNESS_AUTOMATIC_ON;
 		int err, ret;
 		Evas_Object *slider = elm_slider_add(obj);	/*  "elm/slider/horizontal/default" */
@@ -664,7 +664,7 @@ void construct_brightness(void *data, Evas_Object *genlist)
 	SETTING_TRACE_BEGIN;
 	ret_if(data == NULL);
 
-	//setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(ad->itc_1icon));
+	/*setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(ad->itc_1icon)); */
 	setting_create_Gendial_itc(SETTING_GENLIST_LEFT_ICON_CONTENT_ICON_STYLE, &(ad->itc_1icon));
 
 	ad->itc_1icon.func.content_get = __setting_brightness_add_slider;
@@ -689,12 +689,12 @@ void construct_brightness(void *data, Evas_Object *genlist)
 
 	/* [UI] Slider control for Bightness */
 	ad->data_br_sli =
-	    setting_create_Gendial_field_def(genlist, &(ad->itc_1icon), NULL,
-	                                     NULL, SWALLOW_Type_LAYOUT_SLIDER,
-	                                     (char*)left_icon,
-	                                     NULL, value, "IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING",
-	                                     NULL,
-	                                     setting_display_birghtness_bright_slider_value_change_cb);
+		setting_create_Gendial_field_def(genlist, &(ad->itc_1icon), NULL,
+										 NULL, SWALLOW_Type_LAYOUT_SLIDER,
+										 (char *)left_icon,
+										 NULL, value, "IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING",
+										 NULL,
+										 setting_display_birghtness_bright_slider_value_change_cb);
 
 	if (ad->data_br_sli) {
 		ad->data_br_sli->win_main = ad->win_main_layout;
@@ -770,20 +770,20 @@ static int setting_display_brightness_create(void *cb)
 	/* add basic layout */
 	if (&setting_view_display_brightness == ad->view_to_load) {
 		ad->ly_main =
-		    setting_create_layout_navi_bar(ad->win_main_layout,
-		                                   ad->win_get,
-		                                   "IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING",
-		                                   _("IDS_ST_BUTTON_BACK"),
-		                                   setting_display_brightness_click_softkey_cancel_cb,
-		                                   ad,
-		                                   genlist,
-		                                   &ad->navi_bar, NULL);
+			setting_create_layout_navi_bar(ad->win_main_layout,
+										   ad->win_get,
+										   "IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING",
+										   _("IDS_ST_BUTTON_BACK"),
+										   setting_display_brightness_click_softkey_cancel_cb,
+										   ad,
+										   genlist,
+										   &ad->navi_bar, NULL);
 	} else {
 		setting_push_layout_navi_bar("IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING",
-		                             _("IDS_ST_BUTTON_BACK"), NULL, NULL,
-		                             setting_display_brightness_click_softkey_cancel_cb,
-		                             NULL,
-		                             NULL, ad, genlist, ad->navi_bar, NULL);
+									 _("IDS_ST_BUTTON_BACK"), NULL, NULL,
+									 setting_display_brightness_click_softkey_cancel_cb,
+									 NULL,
+									 NULL, ad, genlist, ad->navi_bar, NULL);
 	}
 
 	evas_object_smart_callback_add(genlist, "realized", __gl_realized_cb, ad);
@@ -856,8 +856,8 @@ static int setting_display_brightness_cleanup(void *cb)
 
 static void
 setting_display_brightness_click_softkey_cancel_cb(void *data,
-                                                   Evas_Object *obj,
-                                                   void *event_info)
+												   Evas_Object *obj,
+												   void *event_info)
 {
 	SettingDisplayUG *ad = (SettingDisplayUG *) data;
 
@@ -871,7 +871,7 @@ setting_display_brightness_click_softkey_cancel_cb(void *data,
 	}
 
 	setting_view_change(&setting_view_display_brightness,
-	                    &setting_view_display_main, ad);
+						&setting_view_display_main, ad);
 }
 
 /**
@@ -894,7 +894,7 @@ static void setting_display_set_slider_value(void *data, Evas_Object *obj, doubl
 		if (ret == DEVICE_ERROR_NONE) {
 #else
 		ret == vconf_set_int(VCONFKEY_SETAPPL_LCD_BRIGHTNESS, (int)value);;
-		if (ret == 0) {		
+		if (ret == 0) {
 #endif
 			ad->data_br_sli->chk_status = (int)value;
 			SETTING_TRACE("value:%f", value);
@@ -906,22 +906,22 @@ static void setting_display_set_slider_value(void *data, Evas_Object *obj, doubl
 			vconf_get_int(VCONFKEY_SETAPPL_LCD_BRIGHTNESS, &tmp);
 			elm_slider_value_set(obj, tmp);
 			setting_create_popup(ad, ad->win_get, NULL, "IDS_CST_POP_FAILED",
-			                                 NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
+								 NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
 		}
 	} else {
 		int ret = vconf_set_int(VCONFKEY_SETAPPL_LCD_AUTOMATIC_BRIGHTNESS, value);
 		/*add error handle.. */
 		if (0 != ret) {
 			setting_create_popup(ad, ad->win_get, NULL, "IDS_CST_POP_FAILED",
-			                                 NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
+								 NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
 		}
 	}
 }
 
 static void
 setting_display_birghtness_bright_slider_value_change_cb(void *data,
-                                                         Evas_Object *obj,
-                                                         void *event_info)
+														 Evas_Object *obj,
+														 void *event_info)
 {
 	SettingDisplayUG *ad = NULL;
 	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
@@ -946,14 +946,14 @@ setting_display_birghtness_bright_slider_value_change_cb(void *data,
 	SETTING_TRACE("value:%d, list_item->slider_max:%lf", value, list_item->slider_max);
 
 	if (value != ad->last_requested_level && value >= list_item->slider_min &&
-		  value <= list_item->slider_max) {
-				ad->last_requested_level = value;
-				SETTING_TRACE("value:%d", value);
+		value <= list_item->slider_max) {
+		ad->last_requested_level = value;
+		SETTING_TRACE("value:%d", value);
 
-				if (time_current - time_before >= 0.1) {
-					setting_display_set_slider_value(ad, obj, value);
-					setting_display_update_slider_icon(ad->data_br_sli, value);
-					time_before = time_current;
-				}
+		if (time_current - time_before >= 0.1) {
+			setting_display_set_slider_value(ad, obj, value);
+			setting_display_update_slider_icon(ad->data_br_sli, value);
+			time_before = time_current;
+		}
 	}
 }

@@ -70,13 +70,13 @@ static int setting_fileview_create(void *cb)
 	Evas_Object *scroller = NULL;
 
 	ad->ly_main = setting_create_layout_navi_bar_scroller(ad->win_main_layout,
-	                                                      ad->win_get,
-	                                                      _(ad->input_title),/*_("IDS_ST_BODY_OPEN_SOURCE_LICENCES"), */
-	                                                      _("IDS_ST_BUTTON_BACK"),
-	                                                      NULL,
-	                                                      setting_fileview_click_back_cb,
-	                                                      NULL, ad, &scroller,
-	                                                      &(ad->navi_bar));
+														  ad->win_get,
+														  _(ad->input_title),/*_("IDS_ST_BODY_OPEN_SOURCE_LICENCES"), */
+														  _("IDS_ST_BUTTON_BACK"),
+														  NULL,
+														  setting_fileview_click_back_cb,
+														  NULL, ad, &scroller,
+														  &(ad->navi_bar));
 
 
 
@@ -168,7 +168,7 @@ static int setting_fileview_cleanup(void *cb)
 
 static void
 setting_fileview_click_back_cb(void *data, Evas_Object *obj,
-                               void *event_info)
+							   void *event_info)
 {
 	/* error check */
 	setting_retm_if(data == NULL, " Data parameter is NULL");

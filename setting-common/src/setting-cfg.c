@@ -46,7 +46,7 @@ EXPORT_PUBLIC
 char *setting_cfg_get_path()
 {
 	if (!cfg_file_path) {
-		char* path = setting_cfg_get_dir_path();
+		char *path = setting_cfg_get_dir_path();
 		if (!path) {
 			return NULL;
 		}
@@ -79,7 +79,7 @@ int setting_cfg_file_write(JsonNode *node);
 		json_object_set_string_member(object, "uuid", uuid); \
 		json_array_add_element(menu, menu_item); \
 	} while (0);\
-
+	 
 #define __create_a_menu(menu_name)\
 	{\
 		category = json_node_new(JSON_NODE_OBJECT);\
@@ -221,7 +221,7 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 	{KeyStr_Storage, IMG_Storage, "setting-storage-efl|caller:setting", Cfg_Item_Pos_Level0, Cfg_Item_unResetable, 0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_System, NULL, uuid_Storage, 0, "setting-storage-efl"},
 #endif
 	{KeyStr_DateTime, IMG_DateTime, "setting-time-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_System, NULL, uuid_DateTime, 0, NULL},
-	//{KeyStr_DeveloperOption, IMG_USBconnection, "setting-developeroption-efl|viewtype:usb", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_DeviceMange, NULL, uuid_DeveloperOption, 0, "org.tizen.setting.developeroptions"},
+	/*{KeyStr_DeveloperOption, IMG_USBconnection, "setting-developeroption-efl|viewtype:usb", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_DeviceMange, NULL, uuid_DeveloperOption, 0, "org.tizen.setting.developeroptions"}, */
 	{KeyStr_AboutDevice, IMG_AboutDevice, "setting-about-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_System, NULL, uuid_AboutPhone, 0, NULL},
 
 #if 0
@@ -237,16 +237,16 @@ EXPORT_PUBLIC Setting_Cfg_Node_T *get_cfg_node_by_keystr(const char *keystr)
 
 	int i;
 	for (i = 0; i < size; i++) {
-		#if 0
+#if 0
 		SETTING_TRACE("keystr: %s",keystr);
 		SETTING_TRACE("s_cfg_node_array[i].key_name: %s",s_cfg_node_array[i].key_name);
 		SETTING_TRACE("---------> _(keystr): %s",_(keystr));
 		SETTING_TRACE("---------> _(s_cfg_node_array[i].key_name): %s",_(s_cfg_node_array[i].key_name));
-		#endif
+#endif
 		if (0 == safeStrCmp(_(keystr), _(s_cfg_node_array[i].key_name))) {
-		#if 0
+#if 0
 			SETTING_TRACE("MATCH !!!!!!!!!!!!!!");
-		#endif
+#endif
 			return &(s_cfg_node_array[i]);
 		}
 	}
@@ -401,7 +401,7 @@ int setting_cfg_create(bool check_ug_exist)
 	for (i = 0; i < size; i++) {
 		/* Check Emul and block Wifi & Bluetooth menu */
 		if (isEmulBin() &&
-		    (!safeStrCmp(pitem[i].key_name, KeyStr_Bluetooth) || !safeStrCmp(pitem[i].key_name, KeyStr_WiFi))) {
+			(!safeStrCmp(pitem[i].key_name, KeyStr_Bluetooth) || !safeStrCmp(pitem[i].key_name, KeyStr_WiFi))) {
 			SETTING_TRACE("Skip %s", pitem[i].key_name);
 			continue;
 		}
@@ -415,8 +415,8 @@ int setting_cfg_create(bool check_ug_exist)
 			__create_a_menu(pitem[i].key_name);
 
 		} else if (item_type == Cfg_Item_App_Node
-		           || item_type == Cfg_Item_Ui_Node
-		           || item_type == Cfg_Item_AppLauncher_Node) {
+				   || item_type == Cfg_Item_Ui_Node
+				   || item_type == Cfg_Item_AppLauncher_Node) {
 
 			__create_an_item(pitem[i].key_name, pitem[i].icon_path, pitem[i].ug_args, pitem[i].shortcut_appid, pitem[i].pos, pitem[i].item_type, pitem[i].reset_type, false, pitem[i].uuid, pitem[i].click_times, pitem[i].last_clicked);
 			/*SETTING_TRACE(" add menu - name : %s (%d) - APP ", pitem[i].key_name,pitem[i].item_type); */
@@ -460,11 +460,11 @@ int setting_cfg_file_read(void)
 		 * damaged(not the normal formatting ), we need to remove
 		 * the file and recreate in next running time*/
 		SETTING_TRACE_ERROR("The file[%s] is existing and can be accessed "\
-		                    "normally, but it was 0 size or loaded failed as a json "\
-		                    "script, it means setting.cfg is damaged (the "\
-		                    "formatting ia abnormal), we need to remove the"\
-		                    " file and recreate in next running time!",
-		                    setting_cfg_get_path());
+							"normally, but it was 0 size or loaded failed as a json "\
+							"script, it means setting.cfg is damaged (the "\
+							"formatting ia abnormal), we need to remove the"\
+							" file and recreate in next running time!",
+							setting_cfg_get_path());
 
 		SETTING_TRACE("Trying to removing the damaged file.");
 		if (remove(setting_cfg_get_path()) != 0) {
@@ -527,38 +527,38 @@ int setting_cfg_init(void)
 		return Cfg_Error_Type_Sucess;
 	} else { /* fail to access */
 		switch (errno) {
-				/* file non-existing case */
-			case ENOENT:
-				SETTING_TRACE_ERROR("non-existing [%s]", setting_cfg_get_path());
-				if (!ecore_file_is_dir(setting_cfg_get_dir_path())) {
-					SETTING_TRACE_ERROR("non-existing [%s]", setting_cfg_get_dir_path());
-					Eina_Bool flag = ecore_file_mkdir(setting_cfg_get_dir_path());
-					if (flag == EINA_FALSE) {
-						SETTING_TRACE_ERROR(">failed to create dir");
-					} else {
-						SETTING_TRACE_ERROR(">OK to create dir");
-					}
+		/* file non-existing case */
+		case ENOENT:
+			SETTING_TRACE_ERROR("non-existing [%s]", setting_cfg_get_path());
+			if (!ecore_file_is_dir(setting_cfg_get_dir_path())) {
+				SETTING_TRACE_ERROR("non-existing [%s]", setting_cfg_get_dir_path());
+				Eina_Bool flag = ecore_file_mkdir(setting_cfg_get_dir_path());
+				if (flag == EINA_FALSE) {
+					SETTING_TRACE_ERROR(">failed to create dir");
+				} else {
+					SETTING_TRACE_ERROR(">OK to create dir");
 				}
+			}
 
-				if (!setting_cfg_create(true)) { /* return FALSE */
-					SETTING_TRACE_ERROR("Error to create a new config file");
-					return Cfg_Error_Type_CreateCfg_Failed;
+			if (!setting_cfg_create(true)) { /* return FALSE */
+				SETTING_TRACE_ERROR("Error to create a new config file");
+				return Cfg_Error_Type_CreateCfg_Failed;
+			}
+
+			if (!setting_cfg_file_read()) { /* return FALSE */
+				SETTING_TRACE_ERROR("Error to read config file");
+				if (remove(setting_cfg_get_path())) {
+					return Cfg_Error_Type_RemoveCfg_Failed;
 				}
+				return Cfg_Error_Type_ReadCfg_Failed;
+			}
 
-				if (!setting_cfg_file_read()) { /* return FALSE */
-					SETTING_TRACE_ERROR("Error to read config file");
-					if (remove(setting_cfg_get_path())) {
-						return Cfg_Error_Type_RemoveCfg_Failed;
-					}
-					return Cfg_Error_Type_ReadCfg_Failed;
-				}
-
-				return Cfg_Error_Type_Sucess;
-				/* other cases */
-			case EACCES:
-			case EROFS:
-			default:
-				return Cfg_Error_Type_DirPermissionDenied;
+			return Cfg_Error_Type_Sucess;
+		/* other cases */
+		case EACCES:
+		case EROFS:
+		default:
+			return Cfg_Error_Type_DirPermissionDenied;
 		}
 	}
 }
@@ -935,7 +935,7 @@ EXPORT_PUBLIC
 int setting_cfg_get_resetable_flag_idx(int category_index, int menu_index)
 {
 	return setting_cfg_get_int_field_idx(category_index, menu_index,
-	                                     "is_resetable");
+										 "is_resetable");
 }
 
 EXPORT_PUBLIC

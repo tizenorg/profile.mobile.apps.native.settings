@@ -36,23 +36,23 @@
 
 void setting_time_main_launch_worldclock_sg(void *data);
 void setting_time_main_close_worldclock_sg(gpointer cb_data, gint argc,
-                                           gchar **argv);
+										   gchar **argv);
 
 void setting_time_main_click_softkey_left_cb(void *data, Evas_Object *obj,
-                                             void *event_info);
+											 void *event_info);
 void setting_time_main_click_softkey_caller_exist_left_cb(void *data,
-                                                          Evas_Object *obj,
-                                                          void *event_info);
+														  Evas_Object *obj,
+														  void *event_info);
 void setting_time_main_click_softkey_caller_exist_right_cb(void *data,
-                                                           Evas_Object *obj,
-                                                           void *event_info);
+														   Evas_Object *obj,
+														   void *event_info);
 static void setting_time_main_chk_btn_cb(void *data, Evas_Object *obj,
-                                         void *event_info);
+										 void *event_info);
 void setting_time_main_item_mouse_up_cb(void *data, Evas *e, Evas_Object *obj,
-                                        void *event_info);
+										void *event_info);
 static void setting_time_main_mouse_up_Gendial_list_cb(void *data,
-                                                       Evas_Object *obj,
-                                                       void *event_info);
+													   Evas_Object *obj,
+													   void *event_info);
 void setting_time_main_btn_update_ok_cb(void *cb);
 void setting_time_main_btn_update_cancel_cb(void *cb);
 void setting_time_update_time_date_format_string(SettingTimeUG *ad);

@@ -77,7 +77,7 @@ static void __encrypting_key_grab(SettingSecurityUG *ad)
 	if (ret)
 		return;
 #else
-	// @todo : repace codes using X with codes tizen 3.0 API
+	/* @todo : repace codes using X with codes tizen 3.0 API */
 #endif
 	ad->event_handler = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, NULL, NULL);
 	SETTING_TRACE_END;
@@ -113,7 +113,7 @@ static void __encrypting_key_ungrab(SettingSecurityUG *ad)
 	if (ret)
 		return;
 #else
-	// @todo : repace codes using X with codes tizen 3.0 API
+	/* @todo : repace codes using X with codes tizen 3.0 API */
 #endif
 	ecore_event_handler_del(ad->event_handler);
 }
@@ -172,9 +172,9 @@ int __listen_vconf_change(void *data)
 	int ret = 0;
 
 	ret = vconf_notify_key_changed(VCONFKEY_ODE_ENCRYPT_PROGRESS,
-	                               __vconf_change_cb, data);
+								   __vconf_change_cb, data);
 	setting_retvm_if(ret < 0, ret, "%s notifications Failed(%d)",
-	                 (char *)VCONFKEY_ODE_ENCRYPT_PROGRESS, ret);
+					 (char *)VCONFKEY_ODE_ENCRYPT_PROGRESS, ret);
 
 	return ret;
 }

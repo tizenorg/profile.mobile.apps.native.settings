@@ -55,58 +55,58 @@
 #define ATTEMPT_INFINITE	999999
 
 typedef enum {
-    SETTING_PW_TYPE_PASSWORD = 1,			/* Final type to verify current password */
-    SETTING_PW_TYPE_SET_PASSWORD,		/* This view type is used when click "password" and "change password" items in screen lock type view */
-    SETTING_PW_TYPE_SIMPLE_PASSWORD,	/* Final type to verify current simple password */
-    SETTING_PW_TYPE_SET_SIMPLE_PASSWORD, /* This view type is used when click "simple password" and "change simple password" items in screen lock type view */
-    SETTING_PW_TYPE_ENTER_LOCK_TYPE,	/* This view type is used when enter screen lock type menu to verify current password lock type */
-    SETTING_PW_TYPE_SIM_LOCK_ON = 6,		/* No use : Do not support SIM LOCK */
-    SETTING_PW_TYPE_SIM_LOCK_OFF,		/* No use : Do not support SIM LOCK */
-    SETTING_PW_TYPE_PIN_LOCK_ON,		/* This view type is used when try to turn PIN LOCK on */
-    SETTING_PW_TYPE_PIN_LOCK_OFF,		/* This view type is used when try to turn PIN LOCK off */
-    SETTING_PW_TYPE_CHANGE_PIN,
-    SETTING_PW_TYPE_CHANGE_PIN2 = 11,
-    SETTING_PW_TYPE_PIN_BLOCKED,	/* No use : PIN1 must be unblocked through pwlock app */
-    SETTING_PW_TYPE_PIN2_BLOCKED,
-    SETTING_PW_TYPE_MAX,
+	SETTING_PW_TYPE_PASSWORD = 1,			/* Final type to verify current password */
+	SETTING_PW_TYPE_SET_PASSWORD,		/* This view type is used when click "password" and "change password" items in screen lock type view */
+	SETTING_PW_TYPE_SIMPLE_PASSWORD,	/* Final type to verify current simple password */
+	SETTING_PW_TYPE_SET_SIMPLE_PASSWORD, /* This view type is used when click "simple password" and "change simple password" items in screen lock type view */
+	SETTING_PW_TYPE_ENTER_LOCK_TYPE,	/* This view type is used when enter screen lock type menu to verify current password lock type */
+	SETTING_PW_TYPE_SIM_LOCK_ON = 6,		/* No use : Do not support SIM LOCK */
+	SETTING_PW_TYPE_SIM_LOCK_OFF,		/* No use : Do not support SIM LOCK */
+	SETTING_PW_TYPE_PIN_LOCK_ON,		/* This view type is used when try to turn PIN LOCK on */
+	SETTING_PW_TYPE_PIN_LOCK_OFF,		/* This view type is used when try to turn PIN LOCK off */
+	SETTING_PW_TYPE_CHANGE_PIN,
+	SETTING_PW_TYPE_CHANGE_PIN2 = 11,
+	SETTING_PW_TYPE_PIN_BLOCKED,	/* No use : PIN1 must be unblocked through pwlock app */
+	SETTING_PW_TYPE_PIN2_BLOCKED,
+	SETTING_PW_TYPE_MAX,
 } setting_pw_type;
 
 typedef enum {
-    SETTING_PW_ERROR_INVALID_LENGTH = -1,			/* if length of password is wrong, */
-    SETTING_PW_ERROR_INCLUDE_NO_LETTER = -2,		/* if password that user enter has no letter, */
-    SETTING_PW_ERROR_NO_MATCH_WITH_POLICY = -3,		/* if password that user enter does not match with policy, */
-    SETTING_PW_ERROR_NO_MATCH_MIN_COMPLEX = -4,		/* if password that user enter has no letter, */
-    SETTING_PW_ERROR_EXIST_FORBIDDEN_STRING = -5,
-    SETTING_PW_ERROR_NO_MATCH_MAX_REPEAT_COUNT = -6,
-    SETTING_PW_ERROR_NO_MATCH_CUR_PASSWORD = -7,
-    SETTING_PW_ERROR_SIMPLE_STYLE = -8,
-    SETTING_PW_ERROR_REUSED = -9,
-    SETTING_PW_ERROR_INCLUDE_DIGIT = -10,
-    SETTING_PW_ERROR_NO_MATCH_WITH_PATTERN = -11,
-    SETTING_PW_ERROR_NO_DIGIT = -12,
-    SETTING_PW_ERROR_DO_NOT_MATCH = -13,
-    SETTING_PW_ERROR_UNKNOWN = -50,
+	SETTING_PW_ERROR_INVALID_LENGTH = -1,			/* if length of password is wrong, */
+	SETTING_PW_ERROR_INCLUDE_NO_LETTER = -2,		/* if password that user enter has no letter, */
+	SETTING_PW_ERROR_NO_MATCH_WITH_POLICY = -3,		/* if password that user enter does not match with policy, */
+	SETTING_PW_ERROR_NO_MATCH_MIN_COMPLEX = -4,		/* if password that user enter has no letter, */
+	SETTING_PW_ERROR_EXIST_FORBIDDEN_STRING = -5,
+	SETTING_PW_ERROR_NO_MATCH_MAX_REPEAT_COUNT = -6,
+	SETTING_PW_ERROR_NO_MATCH_CUR_PASSWORD = -7,
+	SETTING_PW_ERROR_SIMPLE_STYLE = -8,
+	SETTING_PW_ERROR_REUSED = -9,
+	SETTING_PW_ERROR_INCLUDE_DIGIT = -10,
+	SETTING_PW_ERROR_NO_MATCH_WITH_PATTERN = -11,
+	SETTING_PW_ERROR_NO_DIGIT = -12,
+	SETTING_PW_ERROR_DO_NOT_MATCH = -13,
+	SETTING_PW_ERROR_UNKNOWN = -50,
 } setting_pw_errors;
 
 typedef enum {
-    SETTING_PW_STATUS_OK = 0,
-    SETTING_PW_STATUS_EXPIRED,
-    SETTING_PW_STATUS_MAX_FAILED,
-    SETTING_PW_STATUS_EMPTY,
-    SETTING_PW_STATUS_DEFAULT,
-    SETTING_PW_STATUS_NON_PW_TYPE,
-    SETTING_PW_STATUS_MAX,
+	SETTING_PW_STATUS_OK = 0,
+	SETTING_PW_STATUS_EXPIRED,
+	SETTING_PW_STATUS_MAX_FAILED,
+	SETTING_PW_STATUS_EMPTY,
+	SETTING_PW_STATUS_DEFAULT,
+	SETTING_PW_STATUS_NON_PW_TYPE,
+	SETTING_PW_STATUS_MAX,
 } setting_pw_status;
 
 enum {
-    SETTING_PW_CATEGORY_LOCK = 0x100,
-    SETTING_PW_CATEGORY_SIM = 0x200,
-    SETTING_PW_CATEGORY_MAX,
+	SETTING_PW_CATEGORY_LOCK = 0x100,
+	SETTING_PW_CATEGORY_SIM = 0x200,
+	SETTING_PW_CATEGORY_MAX,
 };
 
 enum {
-    SETTING_PW_SUB_CATEGORY_SIMPLE = 0x01,
-    SETTING_PW_SUB_CATEGORY_MAX,
+	SETTING_PW_SUB_CATEGORY_SIMPLE = 0x01,
+	SETTING_PW_SUB_CATEGORY_MAX,
 };
 
 
@@ -119,40 +119,40 @@ struct _pw_item {
 
 /* For Tapi */
 typedef enum {
-    SIM_OPERATION_OK,
-    SIM_ERROR,
-    SIM_REQ_PIN,
-    SIM_OPERATION_OFF,
-    SIM_LOCK_ON_SUCCESS,
-    SIM_LOCK_OFF_SUCCESS,
-    SIM_PIN_LOCK_ON_SUCCESS,
-    SIM_PIN_LOCK_OFF_SUCCESS,
-    SIM_LOCK_ON_FAIL,
-    SIM_LOCK_INCORRECT_PASSWORD,
-    SIM_INCORRECT_PIN1_CODE,
-    SIM_INCORRECT_PIN2_CODE,
-    SIM_INCORRECT_PUK1_CODE,
-    SIM_INCORRECT_PUK2_CODE,
-    SIM_PIN1_CHANGE_SUCCESS,
-    SIM_PIN2_CHANGE_SUCCESS,
-    SIM_PIN1_CHANGE_FAIL,
-    SIM_PIN2_CHANGE_FAIL,
-    SIM_PIN1_BLOCKED,
-    SIM_PIN2_BLOCKED,
-    SIM_PIN1_UNBLOCKED,
-    SIM_PIN2_UNBLOCKED,
-    SIM_PUK1_BLOCKED,
-    SIM_PUK2_BLOCKED,
-    SIM_REQUIRED_PUK_CODE,
-    SIM_OPERATION_UNAVAILABLE,
-    SIM_UNKNOWN_ERROR,
+	SIM_OPERATION_OK,
+	SIM_ERROR,
+	SIM_REQ_PIN,
+	SIM_OPERATION_OFF,
+	SIM_LOCK_ON_SUCCESS,
+	SIM_LOCK_OFF_SUCCESS,
+	SIM_PIN_LOCK_ON_SUCCESS,
+	SIM_PIN_LOCK_OFF_SUCCESS,
+	SIM_LOCK_ON_FAIL,
+	SIM_LOCK_INCORRECT_PASSWORD,
+	SIM_INCORRECT_PIN1_CODE,
+	SIM_INCORRECT_PIN2_CODE,
+	SIM_INCORRECT_PUK1_CODE,
+	SIM_INCORRECT_PUK2_CODE,
+	SIM_PIN1_CHANGE_SUCCESS,
+	SIM_PIN2_CHANGE_SUCCESS,
+	SIM_PIN1_CHANGE_FAIL,
+	SIM_PIN2_CHANGE_FAIL,
+	SIM_PIN1_BLOCKED,
+	SIM_PIN2_BLOCKED,
+	SIM_PIN1_UNBLOCKED,
+	SIM_PIN2_UNBLOCKED,
+	SIM_PUK1_BLOCKED,
+	SIM_PUK2_BLOCKED,
+	SIM_REQUIRED_PUK_CODE,
+	SIM_OPERATION_UNAVAILABLE,
+	SIM_UNKNOWN_ERROR,
 } sim_stat_value;
 
 typedef enum {
-    SETTING_PW_NAVIBAR_WITH_NO_BTN,
-    SETTING_PW_NAVIBAR_WITH_LEFT_BTN,
-    SETTING_PW_NAVIBAR_WITH_RIGHT_BTN,
-    SETTING_PW_NAVIBAR_WITH_BOTH_BTN,
+	SETTING_PW_NAVIBAR_WITH_NO_BTN,
+	SETTING_PW_NAVIBAR_WITH_LEFT_BTN,
+	SETTING_PW_NAVIBAR_WITH_RIGHT_BTN,
+	SETTING_PW_NAVIBAR_WITH_BOTH_BTN,
 } setting_pw_navibar_style_t;
 
 typedef struct _tapi_request_event {

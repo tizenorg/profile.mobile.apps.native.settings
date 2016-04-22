@@ -24,20 +24,20 @@
 #include <setting-network.h>
 static void setting_network_connection_check_entry_empty(SettingNetworkUG *ad);
 static void setting_network_connection_display_auth_type(SettingNetworkUG *
-                                                         ad,
-                                                         int auth_type);
+														 ad,
+														 int auth_type);
 
 static void setting_network_connection_entry_changed_cb(void *data,
-                                                        Evas_Object *obj,
-                                                        void *event_info);
+														Evas_Object *obj,
+														void *event_info);
 static void setting_network_connection_click_softkey_save_cb(void *data,
-                                                             Evas_Object *
-                                                             obj, void
-                                                             *event_info);
+															 Evas_Object *
+															 obj, void
+															 *event_info);
 static void setting_network_connection_click_softkey_cancel_cb(void *data,
-                                                               Evas_Object
-                                                               *obj, void
-                                                               *event_info);
+															   Evas_Object
+															   *obj, void
+															   *event_info);
 static Eina_Bool setting_network_connection_click_softkey_back_cb(void *data, Elm_Object_Item *it);
 /*
 static void setting_network_connection_click_softkey_done_cb(void *data,

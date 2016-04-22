@@ -28,15 +28,15 @@
 static void setting_display_main_auto_rotate_chk_btn_cb(void *data, Evas_Object *obj, void *event_info);
 
 static void setting_display_main_mouse_up_Gendial_list_cb(void *data,
-                                                          Evas_Object *obj,
-                                                          void *event_info);
+														  Evas_Object *obj,
+														  void *event_info);
 static Eina_Bool setting_display_main_click_softkey_back_cb(void *data,
-                                                            Evas_Object *obj,
-                                                            void *event_info);
+															Evas_Object *obj,
+															void *event_info);
 #ifdef UNUSED_VCONFKEY
 static void setting_display_main_launch_image_chk_btn_cb(void *data,
-                                                         Evas_Object *obj,
-                                                         void *event_info);
+														 Evas_Object *obj,
+														 void *event_info);
 #endif
 
 #endif				/* __SETTING_DISPLAY_MAIN_H__ */

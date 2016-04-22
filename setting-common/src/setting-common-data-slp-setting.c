@@ -43,9 +43,9 @@
 
 
 typedef enum {
-    eBOOL,
-    eINT,
-    eSTRING,
+	eBOOL,
+	eINT,
+	eSTRING,
 } vconftype;
 
 typedef union {
@@ -88,38 +88,38 @@ void export_default(VconfNode *node, void *root)
 		if (node->vconf_key == NULL) return; /* NO DOTHING IF null */
 		VconfNode result;
 		switch (node->type) {
-			case eBOOL:
-				SETTING_TRACE("EXPORTING key : %s : %d : %d", node->vconf_key, node->type, node->value.b);
-				/* call vconf_get */
+		case eBOOL:
+			SETTING_TRACE("EXPORTING key : %s : %d : %d", node->vconf_key, node->type, node->value.b);
+			/* call vconf_get */
 
-				get_vconf(*node, &result);
+			get_vconf(*node, &result);
 
-				val = "boolval";
-				type = "bool";
-				if (result.value.b)
-					val = "true";
-				else
-					val = "false";
+			val = "boolval";
+			type = "bool";
+			if (result.value.b)
+				val = "true";
+			else
+				val = "false";
 
-				break;
-			case eINT:
-				SETTING_TRACE("EXPORTING key : %s : %d : %d", node->vconf_key, node->type, node->value.i);
-				/* call vconf_get */
-				get_vconf(*node, &result);
-				type = "int";
+			break;
+		case eINT:
+			SETTING_TRACE("EXPORTING key : %s : %d : %d", node->vconf_key, node->type, node->value.i);
+			/* call vconf_get */
+			get_vconf(*node, &result);
+			type = "int";
 
-				SETTING_TRACE(">>(%d)<<", result.value.i);
-				snprintf(arr,1024, "%d", result.value.i);
-				/*node->value.i */
-				val = arr;
-				break;
-			case eSTRING:
-				SETTING_TRACE("EXPORTING key : %s : %d : %s", node->vconf_key, node->type, node->value.c);
-				/* call vconf_get */
-				get_vconf(*node, &result);
-				val = result.value.c;
-				type = "string";
-				break;
+			SETTING_TRACE(">>(%d)<<", result.value.i);
+			snprintf(arr,1024, "%d", result.value.i);
+			/*node->value.i */
+			val = arr;
+			break;
+		case eSTRING:
+			SETTING_TRACE("EXPORTING key : %s : %d : %s", node->vconf_key, node->type, node->value.c);
+			/* call vconf_get */
+			get_vconf(*node, &result);
+			val = result.value.c;
+			type = "string";
+			break;
 		}
 
 		xmlNodePtr xmlnode = xmlNewChild(*root_node, NULL, BAD_CAST "config", BAD_CAST val);
@@ -145,38 +145,38 @@ void export_json(VconfNode *node, void *root)
 		if (node->vconf_key == NULL) return; /* NO DOTHING IF null */
 		VconfNode result;
 		switch (node->type) {
-			case eBOOL:
-				SETTING_TRACE("EXPORTING key : %s : %d : %d", node->vconf_key, node->type, node->value.b);
-				/* call vconf_get */
+		case eBOOL:
+			SETTING_TRACE("EXPORTING key : %s : %d : %d", node->vconf_key, node->type, node->value.b);
+			/* call vconf_get */
 
-				get_vconf(*node, &result);
+			get_vconf(*node, &result);
 
-				val = "boolval";
-				/*type = "bool"; */
-				if (result.value.b)
-					val = "true";
-				else
-					val = "false";
+			val = "boolval";
+			/*type = "bool"; */
+			if (result.value.b)
+				val = "true";
+			else
+				val = "false";
 
-				break;
-			case eINT:
-				SETTING_TRACE("EXPORTING key : %s : %d : %d", node->vconf_key, node->type, node->value.i);
-				/* call vconf_get */
-				get_vconf(*node, &result);
-				/*type = "int"; */
+			break;
+		case eINT:
+			SETTING_TRACE("EXPORTING key : %s : %d : %d", node->vconf_key, node->type, node->value.i);
+			/* call vconf_get */
+			get_vconf(*node, &result);
+			/*type = "int"; */
 
-				SETTING_TRACE(">>(%d)<<", result.value.i);
-				snprintf(arr,1024, "%d", result.value.i);
-				/*node->value.i */
-				val = arr;
-				break;
-			case eSTRING:
-				SETTING_TRACE("EXPORTING key : %s : %d : %s", node->vconf_key, node->type, node->value.c);
-				/* call vconf_get */
-				get_vconf(*node, &result);
-				val = result.value.c;
-				/*type = "string"; */
-				break;
+			SETTING_TRACE(">>(%d)<<", result.value.i);
+			snprintf(arr,1024, "%d", result.value.i);
+			/*node->value.i */
+			val = arr;
+			break;
+		case eSTRING:
+			SETTING_TRACE("EXPORTING key : %s : %d : %s", node->vconf_key, node->type, node->value.c);
+			/* call vconf_get */
+			get_vconf(*node, &result);
+			val = result.value.c;
+			/*type = "string"; */
+			break;
 		}
 
 		JsonNode *item = json_node_new(JSON_NODE_OBJECT);
@@ -197,15 +197,15 @@ void import_default(VconfNode *node, void *data)
 	/*xmlNodePtr* root_node =(xmlNodePtr*)data; */
 
 	switch (node->type) {
-		case eBOOL:
-			SETTING_TRACE("IMPORTING key : %s : %d : %d", node->vconf_key, node->type, node->value);
-			break;
-		case eINT:
-			SETTING_TRACE("IMPORTING key : %s : %d : %d", node->vconf_key, node->type, node->value);
-			break;
-		case eSTRING:
-			SETTING_TRACE("IMPORTING key : %s : %d : %s", node->vconf_key, node->type, node->value);
-			break;
+	case eBOOL:
+		SETTING_TRACE("IMPORTING key : %s : %d : %d", node->vconf_key, node->type, node->value);
+		break;
+	case eINT:
+		SETTING_TRACE("IMPORTING key : %s : %d : %d", node->vconf_key, node->type, node->value);
+		break;
+	case eSTRING:
+		SETTING_TRACE("IMPORTING key : %s : %d : %s", node->vconf_key, node->type, node->value);
+		break;
 	}
 }
 
@@ -380,9 +380,9 @@ void __foreach_attr(JsonObject *object, const gchar *public_key, JsonNode *membe
 		/*SETTING_TRACE(" >> public_key : %s",public_key ); */
 
 		if (g_sortedarr[i].public_groupkey &&
-		    safeStrCmp(g_sortedarr[i].public_groupkey, public_groupname) == 0 &&
-		    g_sortedarr[i].public_key &&
-		    safeStrCmp(g_sortedarr[i].public_key, public_key) == 0) {
+			safeStrCmp(g_sortedarr[i].public_groupkey, public_groupname) == 0 &&
+			g_sortedarr[i].public_key &&
+			safeStrCmp(g_sortedarr[i].public_key, public_key) == 0) {
 			ncount += 1;
 			SETTING_TRACE(" FOUND ---> group name %s : public key %s --- vconf key (%s) - type (%d) -- strval : [%s] ", g_sortedarr[i].public_groupkey, g_sortedarr[i].public_key, g_sortedarr[i].vconf_key, g_sortedarr[i].type, retstr);
 
@@ -390,31 +390,31 @@ void __foreach_attr(JsonObject *object, const gchar *public_key, JsonNode *membe
 			/* retstr */
 			VconfNode result;
 			switch (g_sortedarr[i].type) {
-				case eBOOL:
-					/* "true"  --> 1  "false" --> 0 */
-					if (retstr && safeStrCmp(retstr, "true") == 0) {
-						g_sortedarr[i].value.b = 1;
-					}	else if (retstr && safeStrCmp(retstr, "false") == 0) {
-						g_sortedarr[i].value.b = 0;
-					}
-					break;
+			case eBOOL:
+				/* "true"  --> 1  "false" --> 0 */
+				if (retstr && safeStrCmp(retstr, "true") == 0) {
+					g_sortedarr[i].value.b = 1;
+				}	else if (retstr && safeStrCmp(retstr, "false") == 0) {
+					g_sortedarr[i].value.b = 0;
+				}
+				break;
 
-				case eINT: {
-						int num = -1;
-						/* "111" --> 1111 */
-						if (retstr)
-							num = atoi(retstr);
-						g_sortedarr[i].value.i = num;
-					}
-					break;
-
-				case eSTRING:
-					/* "hello world"  --> "hello world" */
+			case eINT: {
+					int num = -1;
+					/* "111" --> 1111 */
 					if (retstr)
-						g_sortedarr[i].value.c = retstr;
-					else
-						g_sortedarr[i].value.c = "";	/* error handler */
-					break;
+						num = atoi(retstr);
+					g_sortedarr[i].value.i = num;
+				}
+				break;
+
+			case eSTRING:
+				/* "hello world"  --> "hello world" */
+				if (retstr)
+					g_sortedarr[i].value.c = retstr;
+				else
+					g_sortedarr[i].value.c = "";	/* error handler */
+				break;
 
 			}
 
@@ -560,26 +560,26 @@ char *setting_export_json(status_handler_fp fp, void *data)
 			char arr[1024];
 			VconfNode result;
 			switch (arr3[i].type) {
-				case eBOOL:
-					get_vconf(arr3[i], &result);
-					if (result.value.b)
-						val = "true";
-					else
-						val = "false";
-					break;
-				case eINT:
-					get_vconf(arr3[i], &result);
-					snprintf(arr, 1024, "%d", result.value.i);
-					val = arr;
-					/*if (val == NULL) val = "-100"; */
-					break;
-				case eSTRING:
-					get_vconf(arr3[i], &result);
-					val = result.value.c;
-					if (val == NULL) val = "";
-					break;
-				default:
-					val = "error";
+			case eBOOL:
+				get_vconf(arr3[i], &result);
+				if (result.value.b)
+					val = "true";
+				else
+					val = "false";
+				break;
+			case eINT:
+				get_vconf(arr3[i], &result);
+				snprintf(arr, 1024, "%d", result.value.i);
+				val = arr;
+				/*if (val == NULL) val = "-100"; */
+				break;
+			case eSTRING:
+				get_vconf(arr3[i], &result);
+				val = result.value.c;
+				if (val == NULL) val = "";
+				break;
+			default:
+				val = "error";
 			}
 
 			json_object_set_string_member(obj, arr3[i].public_key, val);
@@ -617,31 +617,31 @@ int set_vconf(VconfNode node, VconfNode *result)
 	/*node.vconf_key */
 	*result = node;
 	switch (node.type) {
-		case eBOOL:
-			/*SETTING_TRACE("begin case eBOOL[%s=\"%d\"]", node.vconf_key, node.value.b); */
-			ret = vconf_set_bool(node.vconf_key, node.value.b);
-			result->type = eBOOL;
-			result->value.b = node.value.b;
-			break;
-		case eINT:
-			/*SETTING_TRACE("begin case eINT[%s=\"%d\"]", node.vconf_key, node.value.i); */
-			ret = vconf_set_int(node.vconf_key, node.value.i);
-			result->type = eINT;
-			result->value.i = node.value.i;
-			break;
-		case eSTRING:
-			if (node.key == STR_SLP_LIST_PHONE_PASSWORD) {
-				ret = setting_store_init_password(node.value.c);
-			} else {
-				/*SETTING_TRACE("begin case eSTRING[%s=\"%s\"]", node.vconf_key, node.value.c); */
-				ret = vconf_set_str(node.vconf_key, node.value.c);
-			}
-			result->type = eSTRING;
-			result->value.c = node.value.c;
-			break;
-		default:
-			SETTING_TRACE_ERROR(">>>>>>>>>> node.type is NOT DEFINED");
-			break;
+	case eBOOL:
+		/*SETTING_TRACE("begin case eBOOL[%s=\"%d\"]", node.vconf_key, node.value.b); */
+		ret = vconf_set_bool(node.vconf_key, node.value.b);
+		result->type = eBOOL;
+		result->value.b = node.value.b;
+		break;
+	case eINT:
+		/*SETTING_TRACE("begin case eINT[%s=\"%d\"]", node.vconf_key, node.value.i); */
+		ret = vconf_set_int(node.vconf_key, node.value.i);
+		result->type = eINT;
+		result->value.i = node.value.i;
+		break;
+	case eSTRING:
+		if (node.key == STR_SLP_LIST_PHONE_PASSWORD) {
+			ret = setting_store_init_password(node.value.c);
+		} else {
+			/*SETTING_TRACE("begin case eSTRING[%s=\"%s\"]", node.vconf_key, node.value.c); */
+			ret = vconf_set_str(node.vconf_key, node.value.c);
+		}
+		result->type = eSTRING;
+		result->value.c = node.value.c;
+		break;
+	default:
+		SETTING_TRACE_ERROR(">>>>>>>>>> node.type is NOT DEFINED");
+		break;
 	}
 
 	if (0 != ret) {
@@ -663,48 +663,48 @@ int get_vconf(VconfNode node, VconfNode *result)
 	*result = node;
 
 	switch (node.type) {
-		case eBOOL:
-			ret = vconf_get_bool(node.vconf_key, (int *)(&(node.value.b)));
-			result->type = eBOOL;
-			result->value.b = node.value.b;
-			break;
-		case eINT:
-			ret = vconf_get_int(node.vconf_key, &(node.value.i));
-			result->type = eINT;
-			result->value.i = node.value.i;
-			break;
-		case eSTRING:
-			if (node.key == STR_SLP_LIST_PHONE_PASSWORD) {
-				node.value.c = (char *)malloc(sizeof(char)*SHA256_DIGEST_LENGTH);
-				if (node.value.c) {
-					memset(node.value.c, 0x0, SHA256_DIGEST_LENGTH);
-				} else {
-					SETTING_TRACE_ERROR(" malloc filed : eSTRING, node.value.c ");
-					ret = SETTING_RETURN_FAIL;
-					goto endtag;
-				}
-
-				if (setting_read_password(md_result) == 0) {
-					safeCopyStr(node.value.c, md_result, SHA256_DIGEST_LENGTH); /*  un-safe */
-
-					result->type = eSTRING;
-					result->value.c = node.value.c;
-					ret = SETTING_RETURN_SUCCESS;
-				} else {
-					/*do nothing */
-					ret = SETTING_RETURN_FAIL;
-					goto endtag;
-				}
+	case eBOOL:
+		ret = vconf_get_bool(node.vconf_key, (int *)(&(node.value.b)));
+		result->type = eBOOL;
+		result->value.b = node.value.b;
+		break;
+	case eINT:
+		ret = vconf_get_int(node.vconf_key, &(node.value.i));
+		result->type = eINT;
+		result->value.i = node.value.i;
+		break;
+	case eSTRING:
+		if (node.key == STR_SLP_LIST_PHONE_PASSWORD) {
+			node.value.c = (char *)malloc(sizeof(char)*SHA256_DIGEST_LENGTH);
+			if (node.value.c) {
+				memset(node.value.c, 0x0, SHA256_DIGEST_LENGTH);
 			} else {
-				node.value.c = vconf_get_str(node.vconf_key);
-				SETTING_TRACE("string type ---> %s ", node.value.c);
+				SETTING_TRACE_ERROR(" malloc filed : eSTRING, node.value.c ");
+				ret = SETTING_RETURN_FAIL;
+				goto endtag;
+			}
+
+			if (setting_read_password(md_result) == 0) {
+				safeCopyStr(node.value.c, md_result, SHA256_DIGEST_LENGTH); /*  un-safe */
+
 				result->type = eSTRING;
 				result->value.c = node.value.c;
 				ret = SETTING_RETURN_SUCCESS;
+			} else {
+				/*do nothing */
+				ret = SETTING_RETURN_FAIL;
+				goto endtag;
 			}
-			break;
-		default:
-			SETTING_TRACE_ERROR(">>>>>>>>>>>>>>>>>>>>>>> get vconf ERROR : %s ", node.vconf_key);
+		} else {
+			node.value.c = vconf_get_str(node.vconf_key);
+			SETTING_TRACE("string type ---> %s ", node.value.c);
+			result->type = eSTRING;
+			result->value.c = node.value.c;
+			ret = SETTING_RETURN_SUCCESS;
+		}
+		break;
+	default:
+		SETTING_TRACE_ERROR(">>>>>>>>>>>>>>>>>>>>>>> get vconf ERROR : %s ", node.vconf_key);
 	}
 endtag:
 	return ret;
@@ -956,7 +956,7 @@ static void _parseLangListXML(char *docname)
 
 	/*SETTING_TRACE("ROOT NODE : %s ", cur->name); */
 	/* make sure root node is "settings" */
-	if (xmlStrcmp(cur->name, (const xmlChar*) "langlist")) {
+	if (xmlStrcmp(cur->name, (const xmlChar *) "langlist")) {
 		SETTING_TRACE("document of the wrong type, root node != settings");
 		xmlFreeDoc(doc);
 		return;
@@ -987,10 +987,10 @@ static void __tree_walk_langlist(xmlNodePtr cur)
 		if (cur_node->type == XML_ELEMENT_NODE) {
 
 			/*SETTING_TRACE(" name=%s title=%s \n", xmlGetProp(cur_node, (const xmlChar *)"id"), xmlGetProp(cur_node, (const xmlChar *)"string")); */
-			id = (char *)g_strdup((char *)xmlGetProp(cur_node, (const xmlChar*)"id"));
-			string = (char *)g_strdup((char *) xmlGetProp(cur_node, (const xmlChar*)"string"));
+			id = (char *)g_strdup((char *)xmlGetProp(cur_node, (const xmlChar *)"id"));
+			string = (char *)g_strdup((char *) xmlGetProp(cur_node, (const xmlChar *)"string"));
 			/*SETTING_TRACE_DEBUG("lang: %s", xmlGetProp(cur_node, (const xmlChar *)"lang")); */
-			mcc = (char *)g_strdup((char *) xmlGetProp(cur_node, (const xmlChar*)"mcc"));
+			mcc = (char *)g_strdup((char *) xmlGetProp(cur_node, (const xmlChar *)"mcc"));
 			/*number = atoi((char*) xmlGetProp(cur_node, (const xmlChar *)"no")); */
 
 			setting_lang_entry *pitem = (setting_lang_entry *)calloc(1, sizeof(setting_lang_entry));

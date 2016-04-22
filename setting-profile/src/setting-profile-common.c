@@ -126,11 +126,11 @@ char *setting_media_basename(char *path)
 	}
 }
 
-// -------------------------------------------------------------------------------------------
-// |                  | elm.swallow.icon.0 | elm.text | elm.swallow.icon.1 |                 |
-// | elm.swallow.icon |----------------------------------------------------| elm.swallow.end |
-// |                  |         elm.text.sub          | elm.text.sub.end   |                 |
-// -------------------------------------------------------------------------------------------
+/* ------------------------------------------------------------------------------------------- */
+/* |                  | elm.swallow.icon.0 | elm.text | elm.swallow.icon.1 |                 | */
+/* | elm.swallow.icon |----------------------------------------------------| elm.swallow.end | */
+/* |                  |         elm.text.sub          | elm.text.sub.end   |                 | */
+/* ------------------------------------------------------------------------------------------- */
 static Evas_Object *__sound_slider_new_icon_get(void *data, Evas_Object *obj, const char *part)
 {
 	SETTING_TRACE_BEGIN;
@@ -141,7 +141,7 @@ static Evas_Object *__sound_slider_new_icon_get(void *data, Evas_Object *obj, co
 	if (! safeStrCmp(part, "elm.swallow.content")) {
 
 		Evas_Object *layout;
-		// Set custom layout style
+		/* Set custom layout style */
 		layout = elm_layout_add(obj);
 
 		Setting_GenGroupItem_Data *item_data = (Setting_GenGroupItem_Data *)data;
@@ -160,7 +160,7 @@ static Evas_Object *__sound_slider_new_icon_get(void *data, Evas_Object *obj, co
 		if (slider == NULL)
 			return NULL;
 
-		char* gl_style = "gl_custom_item";
+		char *gl_style = "gl_custom_item";
 		elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME, gl_style);
 		evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
 		evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
@@ -189,10 +189,10 @@ static Evas_Object *__sound_slider_new_icon_get(void *data, Evas_Object *obj, co
 			return NULL;
 
 		/* Set text into layout */
-		//if (0 == safeStrCmp(item_data->keyStr, "IDS_ST_BODY_MEDIA")
-		//	|| 0 == safeStrCmp(item_data->keyStr, "IDS_ST_BODY_SYSTEM")) {
-			elm_object_part_text_set(layout, "elm.text", _(item_data->keyStr));
-		//}
+		/*if (0 == safeStrCmp(item_data->keyStr, "IDS_ST_BODY_MEDIA") */
+		/*	|| 0 == safeStrCmp(item_data->keyStr, "IDS_ST_BODY_SYSTEM")) { */
+		elm_object_part_text_set(layout, "elm.text", _(item_data->keyStr));
+		/*} */
 		elm_object_part_content_set(layout, "elm.swallow.content", slider);
 		return layout;
 	}
@@ -294,7 +294,7 @@ static void __enable_sound_menu(void *data)
 	item_to_update = ad->data_call_volume;
 	if (item_to_update && item_to_update->eo_check) {
 		SETTING_TRACE("....ad->is_ringtone_slidering:%d, ad->data_call_volume->chk_status:%d",
-		              ad->is_ringtone_slidering, item_to_update->chk_status);
+					  ad->is_ringtone_slidering, item_to_update->chk_status);
 		if (ad->is_ringtone_slidering) return;/*do need to restore from BACKUP VOLUME */
 
 		int mm_value = 0;
@@ -744,9 +744,9 @@ static Eina_Bool __volume_key_down_cb(void *data, int type, void *event)
 				setting_sound_close_other_mm_players_but_type(ad, SOUND_TYPE_RINGTONE);
 				if (volume > 0) {
 					setting_sound_play_sound_origin(&(ad->mp_ringtone), ad, NULL,
-					                                _TZ_SYS_SHARE"/settings/Sys/Volume_control.ogg",
-					                                volume,
-					                                SOUND_TYPE_RINGTONE);
+													_TZ_SYS_SHARE"/settings/Sys/Volume_control.ogg",
+													volume,
+													SOUND_TYPE_RINGTONE);
 				}
 			} else {
 				player_state_e state;
@@ -820,9 +820,9 @@ static Eina_Bool __volume_key_down_cb(void *data, int type, void *event)
 				setting_sound_close_other_mm_players_but_type(ad, SOUND_TYPE_RINGTONE);
 				if (volume > 0) {
 					setting_sound_play_sound_origin(&(ad->mp_ringtone), ad, NULL,
-					                                _TZ_SYS_SHARE"/settings/Sys/Volume_control.ogg",
-					                                volume,
-					                                SOUND_TYPE_RINGTONE);
+													_TZ_SYS_SHARE"/settings/Sys/Volume_control.ogg",
+													volume,
+													SOUND_TYPE_RINGTONE);
 				}
 			} else {
 				player_state_e state;
@@ -952,19 +952,19 @@ Evas_Object *setting_sound_init(void *data)
 
 	setting_create_Gendial_itc(SETTING_GENLIST_LEFT_ICON_CONTENT_ICON_STYLE, &(ad->itc_layout));
 
-	#ifdef OLD_GENLIST_STYLE
+#ifdef OLD_GENLIST_STYLE
 	ad->itc_layout.func.content_get = __sound_slider_icon_get;
-	#else
+#else
 	ad->itc_layout.func.content_get = __sound_slider_new_icon_get;
-	#endif
+#endif
 
 	setting_create_Gendial_itc(SETTING_GENLIST_LEFT_ICON_CONTENT_ICON_STYLE, &(ad->itc_layout_1icon));
 
-	#ifdef OLD_GENLIST_STYLE
+#ifdef OLD_GENLIST_STYLE
 	ad->itc_layout_1icon.func.content_get = __sound_slider_icon_get;
-	#else
+#else
 	ad->itc_layout_1icon.func.content_get = __sound_slider_new_icon_get;
-	#endif
+#endif
 
 	/* register view node table */
 	setting_view_node_table_intialize();
@@ -1051,11 +1051,11 @@ void setting_sound_create_warning_popup_during_call(void *data)
 		SETTING_TRACE("Call status is not OFF (%d)", call_status);
 		if (!ad->calling_popup) {
 			ad->calling_popup = setting_create_popup(ad, ad->win_get,
-			                                         "IDS_ST_HEADER_UNABLE_TO_PLAY_SAMPLE_ABB",
-			                                         "IDS_ST_POP_SAMPLES_CANNOT_BE_PLAYED_DURING_CALLS",
-			                                         __calling_popup_cb, 0,
+													 "IDS_ST_HEADER_UNABLE_TO_PLAY_SAMPLE_ABB",
+													 "IDS_ST_POP_SAMPLES_CANNOT_BE_PLAYED_DURING_CALLS",
+													 __calling_popup_cb, 0,
 													 false, false,
-			                                         1, "IDS_ST_BUTTON_OK");
+													 1, "IDS_ST_BUTTON_OK");
 		}
 	}
 }
@@ -1175,9 +1175,9 @@ static void __mm_player_prepared_cb(void *user_data)
 }
 
 player_h *setting_sound_play_sound(void *data, void *cb,
-                                   char *ringtone_file,
-                                   int vol,
-                                   sound_type_e sound_type)
+								   char *ringtone_file,
+								   int vol,
+								   sound_type_e sound_type)
 {
 	/* error check */
 	retv_if(data == NULL, NULL);
@@ -1186,27 +1186,27 @@ player_h *setting_sound_play_sound(void *data, void *cb,
 	int is_existing = setting_sound_check_file_exist(ad, ringtone_file);
 	if (is_existing == SETTING_RETURN_FAIL || NULL == ringtone_file) {
 		switch (sound_type) {
-			case SOUND_TYPE_RINGTONE:
-				if (isEmulBin())
-					ad->song_playing = (char *)g_strdup(SETTING_DEFAULT_CALL_TONE_SDK);
-				else
-					ad->song_playing = (char *)g_strdup(SETTING_DEFAULT_CALL_TONE);
-				break;
-			case SOUND_TYPE_MEDIA:
-				if (isEmulBin())
-					ad->song_playing = (char *)g_strdup(SETTING_DEFAULT_CALL_TONE_SDK);
-				else
-					ad->song_playing = (char *)g_strdup(SETTING_DEFAULT_MEDIA_TONE);
-				break;
-			case SOUND_TYPE_NOTIFICATION:
-				ad->song_playing = (char *)g_strdup(SETTING_DEFAULT_MSG_TONE);
-				break;
-			default:
-				if (isEmulBin())
-					ad->song_playing = (char *)g_strdup(SETTING_DEFAULT_CALL_TONE_SDK);
-				else
-					ad->song_playing = (char *)g_strdup(SETTING_DEFAULT_CALL_TONE);
-				break;
+		case SOUND_TYPE_RINGTONE:
+			if (isEmulBin())
+				ad->song_playing = (char *)g_strdup(SETTING_DEFAULT_CALL_TONE_SDK);
+			else
+				ad->song_playing = (char *)g_strdup(SETTING_DEFAULT_CALL_TONE);
+			break;
+		case SOUND_TYPE_MEDIA:
+			if (isEmulBin())
+				ad->song_playing = (char *)g_strdup(SETTING_DEFAULT_CALL_TONE_SDK);
+			else
+				ad->song_playing = (char *)g_strdup(SETTING_DEFAULT_MEDIA_TONE);
+			break;
+		case SOUND_TYPE_NOTIFICATION:
+			ad->song_playing = (char *)g_strdup(SETTING_DEFAULT_MSG_TONE);
+			break;
+		default:
+			if (isEmulBin())
+				ad->song_playing = (char *)g_strdup(SETTING_DEFAULT_CALL_TONE_SDK);
+			else
+				ad->song_playing = (char *)g_strdup(SETTING_DEFAULT_CALL_TONE);
+			break;
 		}
 
 	} else {
@@ -1334,10 +1334,10 @@ player_h *setting_sound_play_sound(void *data, void *cb,
 }
 
 void setting_sound_play_sound_origin(player_h **mp_handle, void *data,
-                                     void *cb, char *ringtone_file,
-                                     /* int vol, */
-                                     float vol,
-                                     sound_type_e sound_type)
+									 void *cb, char *ringtone_file,
+									 /* int vol, */
+									 float vol,
+									 sound_type_e sound_type)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -1421,42 +1421,42 @@ int __close_player(void *data, SoundType type)
 	player_h *tmp = NULL;
 
 	switch (type) {
-		case SND_SLIDER_CALL:
-			retv_if(ad->mp_ringtone == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-			SETTING_TRACE("ringtone player (%x)", ad->mp_ringtone);
-			if (ad->mp_prepare_async == ad->mp_ringtone) {
-				ad->mp_prepare_async = NULL;
-			}
-			/*player_unprepare take so much time, so if __mm_player_msg_cb was invokeing(it will trigger invoking setting_sound_stop_sound), */
-			/*in this time user click Back key to exit(setting_sound_deinit will trigger setting_sound_stop_sound() too) */
-			/*if not set ad->mp_ringtone to NULL in advance, ad->mp_ringtone will be repeatly released */
-			tmp = ad->mp_ringtone;
-			ad->mp_ringtone = NULL;
-			setting_sound_stop_sound(ad, tmp);
-			break;
-		case SND_SLIDER_NOTI:
-			retv_if(ad->mp_noti == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-			SETTING_TRACE("noti player (%x)", ad->mp_noti);
-			if (ad->mp_prepare_async == ad->mp_noti) {
-				ad->mp_prepare_async = NULL;
-			}
-			tmp = ad->mp_noti;
-			ad->mp_noti = NULL;
-			setting_sound_stop_sound(ad, tmp);
-			break;
-		case SND_SLIDER_MEDIA:
-			retv_if(ad->mp_media == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-			SETTING_TRACE("media player (%x)", ad->mp_media);
-			if (ad->mp_prepare_async == ad->mp_media) {
-				ad->mp_prepare_async = NULL;
-			}
-			tmp = ad->mp_media;
-			ad->mp_media = NULL;
-			setting_sound_stop_sound(ad, tmp);
-			break;
-		case SND_SLIDER_SYSTEM:
-		default:
-			return SETTING_RETURN_FAIL;
+	case SND_SLIDER_CALL:
+		retv_if(ad->mp_ringtone == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+		SETTING_TRACE("ringtone player (%x)", ad->mp_ringtone);
+		if (ad->mp_prepare_async == ad->mp_ringtone) {
+			ad->mp_prepare_async = NULL;
+		}
+		/*player_unprepare take so much time, so if __mm_player_msg_cb was invokeing(it will trigger invoking setting_sound_stop_sound), */
+		/*in this time user click Back key to exit(setting_sound_deinit will trigger setting_sound_stop_sound() too) */
+		/*if not set ad->mp_ringtone to NULL in advance, ad->mp_ringtone will be repeatly released */
+		tmp = ad->mp_ringtone;
+		ad->mp_ringtone = NULL;
+		setting_sound_stop_sound(ad, tmp);
+		break;
+	case SND_SLIDER_NOTI:
+		retv_if(ad->mp_noti == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+		SETTING_TRACE("noti player (%x)", ad->mp_noti);
+		if (ad->mp_prepare_async == ad->mp_noti) {
+			ad->mp_prepare_async = NULL;
+		}
+		tmp = ad->mp_noti;
+		ad->mp_noti = NULL;
+		setting_sound_stop_sound(ad, tmp);
+		break;
+	case SND_SLIDER_MEDIA:
+		retv_if(ad->mp_media == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+		SETTING_TRACE("media player (%x)", ad->mp_media);
+		if (ad->mp_prepare_async == ad->mp_media) {
+			ad->mp_prepare_async = NULL;
+		}
+		tmp = ad->mp_media;
+		ad->mp_media = NULL;
+		setting_sound_stop_sound(ad, tmp);
+		break;
+	case SND_SLIDER_SYSTEM:
+	default:
+		return SETTING_RETURN_FAIL;
 	}
 
 	return SETTING_RETURN_SUCCESS;
@@ -1473,26 +1473,26 @@ setting_sound_close_other_mm_players_but_type(void *data, sound_type_e type)
 	int ret = 0;
 
 	switch (type) {
-		case SOUND_TYPE_RINGTONE:	/*  close noti, media and system players */
-			if (__close_player(ad, SND_SLIDER_NOTI) != SETTING_RETURN_SUCCESS)
-				ret++;
-			if (__close_player(ad, SND_SLIDER_MEDIA) != SETTING_RETURN_SUCCESS)
-				ret++;
-			break;
-		case SOUND_TYPE_NOTIFICATION:	/*  close ringtone, media and system players */
-			if (__close_player(ad, SND_SLIDER_CALL) != SETTING_RETURN_SUCCESS)
-				ret++;
-			if (__close_player(ad, SND_SLIDER_MEDIA) != SETTING_RETURN_SUCCESS)
-				ret++;
-			break;
-		case SOUND_TYPE_MEDIA:	/*  close ringtone, noti and system players */
-			if (__close_player(ad, SND_SLIDER_CALL) != SETTING_RETURN_SUCCESS)
-				ret++;
-			if (__close_player(ad, SND_SLIDER_NOTI) != SETTING_RETURN_SUCCESS)
-				ret++;
-			break;
-		default:		/*  if unknown type, dont close any player */
-			break;
+	case SOUND_TYPE_RINGTONE:	/*  close noti, media and system players */
+		if (__close_player(ad, SND_SLIDER_NOTI) != SETTING_RETURN_SUCCESS)
+			ret++;
+		if (__close_player(ad, SND_SLIDER_MEDIA) != SETTING_RETURN_SUCCESS)
+			ret++;
+		break;
+	case SOUND_TYPE_NOTIFICATION:	/*  close ringtone, media and system players */
+		if (__close_player(ad, SND_SLIDER_CALL) != SETTING_RETURN_SUCCESS)
+			ret++;
+		if (__close_player(ad, SND_SLIDER_MEDIA) != SETTING_RETURN_SUCCESS)
+			ret++;
+		break;
+	case SOUND_TYPE_MEDIA:	/*  close ringtone, noti and system players */
+		if (__close_player(ad, SND_SLIDER_CALL) != SETTING_RETURN_SUCCESS)
+			ret++;
+		if (__close_player(ad, SND_SLIDER_NOTI) != SETTING_RETURN_SUCCESS)
+			ret++;
+		break;
+	default:		/*  if unknown type, dont close any player */
+		break;
 	}
 
 	SETTING_TRACE_DEBUG("ret: %d", ret);

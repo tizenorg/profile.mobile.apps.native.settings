@@ -100,7 +100,7 @@
 	action: STATE_SET "default" 0.0;\
 	target: "focus_bg";\
 	}\
-
+	 
 
 #define ADD_PART_CLICKED_SOUND_HEADER \
 	sounds {\

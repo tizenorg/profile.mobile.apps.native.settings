@@ -35,8 +35,8 @@
 #define DEVOPTION_STR_ACCESSIBILITY_MAGNIFIER   "IDS_ST_BODY_MAGNIFIER"
 #define DEVOPTION_STR_ACCESSIBILITY_SCREENREADER "IDS_ST_MBODY_SCREEN_READER_HTTS"
 #define DEVOPTION_STR_ACCESSIBILITY_SCREEN_READER_DESCRIPTION "While Screen reader is enabled, your device provides spoken feedback." \
-								" For example, Screen reader tells you what you can tap, select, or enable." \
-								" Basic interactions include tapping an item to select it and double tapping the item to enable its function." //english only translation
+	" For example, Screen reader tells you what you can tap, select, or enable." \
+	" Basic interactions include tapping an item to select it and double tapping the item to enable its function." /*english only translation */
 #define DEVOPTION_STR_ACCESSIBILITY_SCREEN_READER_SETTINGS_OTHER_FEEDBACK "IDS_ACCS_OPT_OTHER_FEEDBACK_TTS"
 #define DEVOPTION_STR_ACCESSIBILITY_SCREEN_READER_SETTINGS_STATUS_BAR_INFORMATION "IDS_ACCS_TMBODY_STATUS_BAR_INFORMATION"
 #define DEVOPTION_STR_ACCESSIBILITY_SCREEN_READER_SETTINGS_STATUS_BAR_INFORMATION_DESCRIPTION \

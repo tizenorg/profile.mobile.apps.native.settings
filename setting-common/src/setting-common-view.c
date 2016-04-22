@@ -85,7 +85,7 @@ EXPORT_PUBLIC int setting_view_node_table_register(setting_view *view, setting_v
 	int idx = 0;
 	for (; idx < g_view_node_table_cur_size; idx++) {
 		if (view == g_view_node_table[idx].view
-		    && topview == g_view_node_table[idx].topview) {
+			&& topview == g_view_node_table[idx].topview) {
 			SETTING_TRACE("view node has been registered, ignore");
 			return SETTING_RETURN_FAIL;
 		}
@@ -276,8 +276,8 @@ int setting_view_change(setting_view *from_view, setting_view *to_view, void *cb
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	setting_retvm_if(!from_view || !to_view || !cb ,
-	                 SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
-	                 "Invalid arguement");
+					 SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
+					 "Invalid arguement");
 
 	int ret = SETTING_RETURN_SUCCESS;
 	if (from_view == setting_view_get_topview(to_view)) {

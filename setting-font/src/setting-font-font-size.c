@@ -96,10 +96,10 @@ static int setting_font_font_size_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	/*error check */
-    if (!cb) {
-        SETTING_TRACE_ERROR("cb == NULL");
-        return SETTING_GENERAL_ERR_NULL_DATA_PARAMETER;
-    }
+	if (!cb) {
+		SETTING_TRACE_ERROR("cb == NULL");
+		return SETTING_GENERAL_ERR_NULL_DATA_PARAMETER;
+	}
 
 
 	SettingFontUG *ad = (SettingFontUG *) cb;
@@ -107,32 +107,32 @@ static int setting_font_font_size_create(void *cb)
 	setting_create_Gendial_itc("dialogue/1text.1icon.3.tb", &(ad->itc_1text_1icon_2_font_size));
 	ad->itc_1text_1icon_2_font_size.func.text_get = _item_text_font_size_keystr2_get;
 	retvm_if(ad->win_main_layout == NULL, SETTING_DRAW_ERR_FAIL_LOAD_EDJ,
-	         "win_main_layout is NULL");
+			 "win_main_layout is NULL");
 
 	/* create a navigation bar */
 	if (ad->view_to_load == &setting_view_font_font_size) {
 		ad->ly_main = setting_create_layout_navi_bar_genlist(ad->win_main_layout,
-		                                                     ad->win_get,
-		                                                     "IDS_ST_MBODY_FONT_SIZE",
-		                                                     _("IDS_ST_BUTTON_BACK"), NULL,
-		                                                     (setting_call_back_func)__setting_font_font_size_click_softkey_back_cb, NULL,
-		                                                     ad, &scroller, &ad->navibar);
+															 ad->win_get,
+															 "IDS_ST_MBODY_FONT_SIZE",
+															 _("IDS_ST_BUTTON_BACK"), NULL,
+															 (setting_call_back_func)__setting_font_font_size_click_softkey_back_cb, NULL,
+															 ad, &scroller, &ad->navibar);
 		ad->navi_it_font_size = elm_naviframe_top_item_get(ad->navibar);
 	} else {
 		ad->navi_it_font_size = setting_push_layout_navi_bar_genlist(ad->win_main_layout,
-		                                                             ad->win_get,
-		                                                             "IDS_ST_MBODY_FONT_SIZE",
-		                                                             _("IDS_ST_BUTTON_BACK"),
-		                                                             NULL,
-		                                                             (setting_call_back_func)__setting_font_font_size_click_softkey_back_cb,
-		                                                             NULL,
-		                                                             ad, &scroller, ad->navibar);
+																	 ad->win_get,
+																	 "IDS_ST_MBODY_FONT_SIZE",
+																	 _("IDS_ST_BUTTON_BACK"),
+																	 NULL,
+																	 (setting_call_back_func)__setting_font_font_size_click_softkey_back_cb,
+																	 NULL,
+																	 ad, &scroller, ad->navibar);
 	}
 
 	/* [UI] separator */
 	Elm_Object_Item *item =
-	    elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
-	                            ELM_GENLIST_ITEM_NONE, NULL, NULL);
+		elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
+								ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	/* [UI] create the font list */
@@ -154,7 +154,7 @@ static int setting_font_font_size_create(void *cb)
 		item_data->userdata = ad;
 
 		item_data->item = elm_genlist_item_append(scroller, &(ad->itc_1text_1icon_2_font_size), item_data, NULL,
-		                                          ELM_GENLIST_ITEM_NONE, setting_font_font_size_list_mouse_up_cb, ad->size_rdg);
+												  ELM_GENLIST_ITEM_NONE, setting_font_font_size_list_mouse_up_cb, ad->size_rdg);
 
 		idx++;
 	}
@@ -320,8 +320,8 @@ void setting_font_font_size_list_mouse_up_cb(void *data, Evas_Object *obj, void 
 	/* original popup */
 	ad->size_rdg = NULL;
 	ad->size_popup = setting_create_popup_with_progressbar(ad, ad->win_get,
-	                                                       PROGRESSBAR_STYLE,
-	                                                       NULL, KeyStr_Loading, __setting_font_size_progress_popup_cb, 3/*0*/, TRUE, TRUE, 0);	/* 3 seconds to wait in maximum */
+														   PROGRESSBAR_STYLE,
+														   NULL, KeyStr_Loading, __setting_font_size_progress_popup_cb, 3/*0*/, TRUE, TRUE, 0);	/* 3 seconds to wait in maximum */
 	ad->font_size_idler = ecore_timer_add(1, (Ecore_Task_Cb)__font_change_call, ad);
 }
 

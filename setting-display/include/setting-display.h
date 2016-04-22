@@ -62,17 +62,17 @@
 #define SETTING_DISPLAY_ICON_PATH 12
 
 typedef enum {
-    SCREENMODE_DYNAMIC = 0,
-    SCREENMODE_STANDARD,
-    SCREENMODE_NATURAL,
-    SCREENMODE_MOVIE,
-    SCREENMODE_MAX
+	SCREENMODE_DYNAMIC = 0,
+	SCREENMODE_STANDARD,
+	SCREENMODE_NATURAL,
+	SCREENMODE_MOVIE,
+	SCREENMODE_MAX
 } screenmode_t;
 
 typedef enum {
-    DISPLAY_EXPAND_NONE = 0,
-    DISPLAY_EXPAND_BACKLIGHT,
-    DISPLAY_EXPAND_TOUCH_KEY_LIGHT_DURATION
+	DISPLAY_EXPAND_NONE = 0,
+	DISPLAY_EXPAND_BACKLIGHT,
+	DISPLAY_EXPAND_TOUCH_KEY_LIGHT_DURATION
 } DisplayExpandState;
 
 
@@ -82,11 +82,11 @@ typedef struct _Ctxpopup_Data {
 } Ctxpopup_Data;
 
 typedef enum {
-    SETTING_DISPLAY_VIEWTYPE_MAIN,
-    SETTING_DISPLAY_VIEWTYPE_BRIGHTNESS,
-    SETTING_DISPLAY_VIEWTYPE_BACKLIGHT,
-    SETTING_DISPLAY_VIEWTYPE_SMARTSCREEN,
-    SETTING_DISPLAY_VIEWTYPE_MAX,
+	SETTING_DISPLAY_VIEWTYPE_MAIN,
+	SETTING_DISPLAY_VIEWTYPE_BRIGHTNESS,
+	SETTING_DISPLAY_VIEWTYPE_BACKLIGHT,
+	SETTING_DISPLAY_VIEWTYPE_SMARTSCREEN,
+	SETTING_DISPLAY_VIEWTYPE_MAX,
 } display_viewtype;
 
 typedef struct _SettingDisplayUG SettingDisplayUG;
@@ -122,7 +122,7 @@ struct _SettingDisplayUG {
 	Setting_GenGroupItem_Data *data_br;
 	Setting_GenGroupItem_Data *data_font;
 	Setting_GenGroupItem_Data *data_back;
-	//Setting_GenGroupItem_Data *data_touchkey_light_duration;
+	/*Setting_GenGroupItem_Data *data_touchkey_light_duration; */
 	Setting_GenGroupItem_Data *data_br_auto;
 	Setting_GenGroupItem_Data *data_br_sli;
 	Setting_GenGroupItem_Data *data_adjust;
@@ -211,7 +211,7 @@ extern setting_view setting_view_display_brightness;
 extern setting_view setting_view_display_backlight;
 
 void setting_display_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
-                                  void *priv);
+								  void *priv);
 
 Eina_Bool __show_smartstay_guide_popup(void *data);
 Eina_Bool __show_smartrotation_guide_popup(void *data);

@@ -179,7 +179,7 @@ static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 	cairo_fill(cr);
 	account_size -= cache_sz;
 
-	//evas_object_image_alpha_set(pie_image, EINA_FALSE);
+	/*evas_object_image_alpha_set(pie_image, EINA_FALSE); */
 	evas_object_image_alpha_set(pie_image, EINA_TRUE);
 	evas_object_image_size_set(pie_image, cairo_w, cairo_h);
 	evas_object_image_data_set(pie_image, cairo_image_surface_get_data(cairo_surface));
@@ -621,10 +621,10 @@ static int storageUg_main_create(void *data)
 	retv_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 	retv_if(NULL == ad->lo_parent, SETTING_DRAW_ERR_FAIL_LOAD_EDJ);
 
-	ad->gl_main = storageUg_main_genlist (ad->navi);
+	ad->gl_main = storageUg_main_genlist(ad->navi);
 	setting_create_navi_bar_buttons(STORAGEUG_STR_STORAGE, NULL, /* arrow style */
 									(setting_call_back_func)storageUg_main_back_cb,
-									 ad,
+									ad,
 									ad->gl_main, ad->navi, NULL);
 
 	storageUg_get_internal_storage_status(&ad->sz_inter_total, &ad->sz_inter_avail);

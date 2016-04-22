@@ -42,7 +42,7 @@ setting_view setting_view_moreconnections_main = {
  ************************************************/
 static Eina_Bool
 setting_moreconnections_main_click_softkey_back_cb(void *data, Evas_Object *obj,
-                                                   void *event_info)
+												   void *event_info)
 {
 	setting_retvm_if(data == NULL, EINA_FALSE, "Data parameter is NULL");
 	SettingMoreConnectionsUG *ad = (SettingMoreConnectionsUG *) data;
@@ -56,16 +56,16 @@ setting_moreconnections_main_click_softkey_back_cb(void *data, Evas_Object *obj,
 }
 
 static void setting_moreconnections_main_mouse_up_Gendial_list_cb(void *data,
-                                                                  Evas_Object *obj, void *event_info)
+																  Evas_Object *obj, void *event_info)
 {
 	setting_retm_if(NULL == data, "data is NULL");
 	setting_retm_if(NULL == event_info, "event_info is NULL");
 	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
 	elm_genlist_item_selected_set(item, 0);
 	Setting_GenGroupItem_Data *list_item =
-	    (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
+		(Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
 
-	//SettingMoreConnectionsUG *ad = (SettingMoreConnectionsUG *)data;
+	/*SettingMoreConnectionsUG *ad = (SettingMoreConnectionsUG *)data; */
 
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 
@@ -127,7 +127,7 @@ char *setting_location_is_enable(void *data)
 	else if (0 == is_enabled)
 		return KeyStr_Off;
 	else
-		return KeyStr_Off;	// @todo : need to check and modify - old return was KeyStr_OffSETTING_VCONF_ERR_RETURN_STR_NULL
+		return KeyStr_Off;	/* @todo : need to check and modify - old return was KeyStr_OffSETTING_VCONF_ERR_RETURN_STR_NULL */
 #endif
 }
 
@@ -148,10 +148,10 @@ int setting_moreconnections_main_generate_genlist(void *data)
 	char *sub_desc = setting_location_is_enable(data);
 
 	ad->location_service = setting_create_Gendial_field_def(scroller, &(ad->itc_2text_2),
-	                                                        setting_moreconnections_main_mouse_up_Gendial_list_cb,
-	                                                        ad, SWALLOW_Type_INVALID,
-	                                                        NULL, NULL, 0,
-	                                                        KeyStr_LocationService, sub_desc, NULL);
+															setting_moreconnections_main_mouse_up_Gendial_list_cb,
+															ad, SWALLOW_Type_INVALID,
+															NULL, NULL, 0,
+															KeyStr_LocationService, sub_desc, NULL);
 	if (ad->location_service) {
 		ad->location_service->sub_desc = (char *)strdup(sub_desc);
 		ad->location_service->userdata = ad;
@@ -162,10 +162,10 @@ int setting_moreconnections_main_generate_genlist(void *data)
 #if 0
 	/* VPN */
 	ad->VPN = setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
-	                                           setting_moreconnections_main_mouse_up_Gendial_list_cb,
-	                                           ad, SWALLOW_Type_INVALID,
-	                                           NULL, NULL, 0,
-	                                           KeyStr_VPN, NULL, NULL);
+											   setting_moreconnections_main_mouse_up_Gendial_list_cb,
+											   ad, SWALLOW_Type_INVALID,
+											   NULL, NULL, 0,
+											   KeyStr_VPN, NULL, NULL);
 	if (ad->VPN) {
 		ad->VPN->userdata = ad;
 	} else {
@@ -190,20 +190,20 @@ static int setting_moreconnections_main_create(void *cb)
 	SettingMoreConnectionsUG *ad = (SettingMoreConnectionsUG *) cb;
 	Evas_Object *scroller = elm_genlist_add(ad->win_main_layout);
 	setting_retvm_if(NULL == scroller, SETTING_DRAW_ERR_FAIL_SCROLLER,
-	                 "Scroller is NULL");
+					 "Scroller is NULL");
 	elm_object_style_set(scroller, "dialogue");
 	elm_genlist_clear(scroller);
 
 	ad->genlist = scroller;
 	ad->ly_main =
-	    setting_create_layout_navi_bar_genlist(ad->win_main_layout,
-	                                           ad->win_get,
-	                                           KeyStr_MoreConnectionSetting,
-	                                           NULL,/* Arrow Back button */
-	                                           NULL,
-	                                           (setting_call_back_func)setting_moreconnections_main_click_softkey_back_cb,
-	                                           NULL, ad, &scroller,
-	                                           &(ad->navi_bar));
+		setting_create_layout_navi_bar_genlist(ad->win_main_layout,
+											   ad->win_get,
+											   KeyStr_MoreConnectionSetting,
+											   NULL,/* Arrow Back button */
+											   NULL,
+											   (setting_call_back_func)setting_moreconnections_main_click_softkey_back_cb,
+											   NULL, ad, &scroller,
+											   &(ad->navi_bar));
 	ad->genlist = scroller;
 
 	setting_moreconnections_main_generate_genlist((void *)ad);

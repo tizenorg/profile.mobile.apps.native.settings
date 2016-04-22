@@ -128,11 +128,11 @@
 #define SETTING_NETWORK_POP_RESPONSE_ACTION_CANCEL  10	/*  the popupresponse action ID */
 #define SETTING_NETWORK_SUBS_ID_NET_LEN 7
 typedef enum {
-    SETTING_NETWORK_PREFERRED_NETWORK_NONE,
-    SETTING_NETWORK_PREFERRED_NETWORK_NEW,
-    SETTING_NETWORK_PREFERRED_NETWORK_EDIT,
-    SETTING_NETWORK_PREFERRED_NETWORK_LIST,
-    SETTING_NETWORK_PREFERRED_NETWORK_DELETE,
+	SETTING_NETWORK_PREFERRED_NETWORK_NONE,
+	SETTING_NETWORK_PREFERRED_NETWORK_NEW,
+	SETTING_NETWORK_PREFERRED_NETWORK_EDIT,
+	SETTING_NETWORK_PREFERRED_NETWORK_LIST,
+	SETTING_NETWORK_PREFERRED_NETWORK_DELETE,
 
 } setting_network_preferred_network_operation_type_t;
 
@@ -144,11 +144,11 @@ struct gl_network_data {
 };
 
 typedef enum {
-    ERROR_STATE = 0,
-    MAIN_ONLY = 1,
-    CONNECTIONS_MAIN = 2,
-    CREATE_CONNECTIONS_MAIN = 3,
-    CREATE_CONLIST_CONNECTIONS_MAIN = 4
+	ERROR_STATE = 0,
+	MAIN_ONLY = 1,
+	CONNECTIONS_MAIN = 2,
+	CREATE_CONNECTIONS_MAIN = 3,
+	CREATE_CONLIST_CONNECTIONS_MAIN = 4
 } setting_network_view_type_t;
 
 #define MAX_PROFILE_NUM 100
@@ -183,7 +183,7 @@ struct _SettingNetworkUG {
 	Evas_Object *win_get;
 	Evas_Object *navi_bar;
 
-	Evas_Object* network_mode_popup;
+	Evas_Object *network_mode_popup;
 
 	Evas_Object *popup_concreate;
 	Evas_Object *popup_conlist;
@@ -372,7 +372,7 @@ void setting_network_set_state_mobile_data(ButtonState state);
 int setting_network_get_state_mobile_data();
 
 void setting_network_set_state_data_roaming(ButtonState state);
-int setting_network_get_state_data_roaming(int* value);
+int setting_network_get_state_data_roaming(int *value);
 
 
 #endif				/* __SETTING_NETWORK_H__ */

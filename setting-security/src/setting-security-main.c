@@ -45,8 +45,8 @@ setting_view setting_view_security_main = {
 
 static Eina_Bool setting_security_main_click_softkey_back_cb(void *data, Elm_Object_Item *it);
 static void setting_security_main_mouse_up_Gendial_list_cb(void *data,
-                                                           Evas_Object *obj,
-                                                           void *event_info);
+														   Evas_Object *obj,
+														   void *event_info);
 
 void __security_sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info);
 
@@ -77,29 +77,29 @@ static int setting_security_main_create(void *cb)
 	/* add basic layout */
 	char setBtnStr[MAX_DISPLAY_NAME_LEN_ON_UI];
 	snprintf(setBtnStr, sizeof(setBtnStr), "%s",
-	         (char *)dgettext("sys_string", "IDS_ST_BUTTON_BACK"));
+			 (char *)dgettext("sys_string", "IDS_ST_BUTTON_BACK"));
 	ad->ly_main =
-	    setting_create_layout_navi_bar_genlist(ad->win_main_layout,
-	                                           ad->win_get,
-	                                           KeyStr_LockScreen,
-	                                           setBtnStr, NULL,
-	                                           (setting_call_back_func)setting_security_main_click_softkey_back_cb,
-	                                           NULL, ad, &scroller,
-	                                           &ad->navi_bar);
+		setting_create_layout_navi_bar_genlist(ad->win_main_layout,
+											   ad->win_get,
+											   KeyStr_LockScreen,
+											   setBtnStr, NULL,
+											   (setting_call_back_func)setting_security_main_click_softkey_back_cb,
+											   NULL, ad, &scroller,
+											   &ad->navi_bar);
 
 	/*setting_enable_expandable_genlist(scroller, ad, __security_exp_cb, NULL); */
 
 	/* Group List: Lock screen */
 	(void)setting_create_Gendial_field_titleItem(scroller,
-	                                             &itc_group_item,
-	                                             KeyStr_LockScreen, NULL);
+												 &itc_group_item,
+												 KeyStr_LockScreen, NULL);
 
 	/* Lockscreen */
 	setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
-	                                 setting_security_main_mouse_up_Gendial_list_cb, ad,
-	                                 SWALLOW_Type_INVALID,
-	                                 NULL, NULL,
-	                                 0, KeyStr_LockScreen, NULL, NULL);
+									 setting_security_main_mouse_up_Gendial_list_cb, ad,
+									 SWALLOW_Type_INVALID,
+									 NULL, NULL,
+									 0, KeyStr_LockScreen, NULL, NULL);
 
 	/*Security update*/
 	app_info_h app_info = NULL;
@@ -111,10 +111,10 @@ static int setting_security_main_create(void *cb)
 		SETTING_TRACE("No corresponding app_id for [%s]\n", "org.tizen.msa");
 	} else {
 		ad->data_security_update = setting_create_Gendial_field_def(scroller, &(ad->itc_1text_1icon),
-		                                                            setting_security_main_mouse_up_Gendial_list_cb, ad,
-		                                                            SWALLOW_Type_INVALID,
-		                                                            NULL, NULL,
-		                                                            value, _(SECURITY_UPDATE_TEXT), NULL, NULL);
+																	setting_security_main_mouse_up_Gendial_list_cb, ad,
+																	SWALLOW_Type_INVALID,
+																	NULL, NULL,
+																	value, _(SECURITY_UPDATE_TEXT), NULL, NULL);
 
 		if (app_info_destroy(app_info) != 0) {
 			SETTING_TRACE_ERROR("app_info_destroy error for org.tizen.msa");
@@ -129,8 +129,8 @@ static int setting_security_main_create(void *cb)
 			ret = setting_get_int_slp_key(INT_SLP_SETTING_SIM_SLOT, &value, &err);
 			tapi_ret = tel_check_modem_power_status(ad->handle, &b_status);
 			if ((tapi_ret != TAPI_API_SUCCESS)
-			    || (b_status != TAPI_PHONE_POWER_STATUS_ON)
-			    || (value != VCONFKEY_TELEPHONY_SIM_INSERTED)) {
+				|| (b_status != TAPI_PHONE_POWER_STATUS_ON)
+				|| (value != VCONFKEY_TELEPHONY_SIM_INSERTED)) {
 				setting_disable_genlist_item(ad->data_sim_settings->item);
 			}
 			TelSimCardType_t cardInfo;
@@ -153,9 +153,9 @@ static int setting_security_main_create(void *cb)
 	memcpy(g_ad, ad, sizeof(SettingSecurityUG));
 
 	vconf_notify_key_changed(VCONFKEY_TELEPHONY_FLIGHT_MODE,
-	                         setting_security_main_vconf_change_cb, ad);
+							 setting_security_main_vconf_change_cb, ad);
 	vconf_notify_key_changed(VCONFKEY_WIFI_STATE,
-	                         setting_security_main_vconf_change_cb, ad);
+							 setting_security_main_vconf_change_cb, ad);
 
 	SETTING_TRACE_END;
 	return SETTING_RETURN_SUCCESS;
@@ -192,9 +192,9 @@ static int setting_security_main_destroy(void *cb)
 	}
 
 	vconf_ignore_key_changed(VCONFKEY_TELEPHONY_FLIGHT_MODE,
-	                         setting_security_main_vconf_change_cb);
+							 setting_security_main_vconf_change_cb);
 	vconf_ignore_key_changed(VCONFKEY_WIFI_STATE,
-	                         setting_security_main_vconf_change_cb);
+							 setting_security_main_vconf_change_cb);
 	if (ad->secrity_engine_list) {
 		g_list_free(ad->secrity_engine_list);
 	}
@@ -265,33 +265,33 @@ int _handle_sim_exception(void *data, int sim_status)
 	SettingSecurityUG *ad = (SettingSecurityUG *) data;
 
 	switch (sim_status) {
-		case VCONFKEY_TELEPHONY_SIM_INSERTED:
-			break;
+	case VCONFKEY_TELEPHONY_SIM_INSERTED:
+		break;
 
-		case VCONFKEY_TELEPHONY_SIM_NOT_PRESENT:
+	case VCONFKEY_TELEPHONY_SIM_NOT_PRESENT:
 
-			setting_create_popup(NULL, ad->win_get,
-			                            NULL, _(SECURITY_SIM_NOT_PRESENT_MSG), NULL, 0, false, false, 0);
-			SETTING_TRACE_DEBUG
-			("%s*** [ERR] INCORRECTED SIM. sim_slot_type=%d ***%s",
-			 SETTING_FONT_RED, sim_status, SETTING_FONT_BLACK);
-			return SETTING_RETURN_FAIL;
+		setting_create_popup(NULL, ad->win_get,
+							 NULL, _(SECURITY_SIM_NOT_PRESENT_MSG), NULL, 0, false, false, 0);
+		SETTING_TRACE_DEBUG
+		("%s*** [ERR] INCORRECTED SIM. sim_slot_type=%d ***%s",
+		 SETTING_FONT_RED, sim_status, SETTING_FONT_BLACK);
+		return SETTING_RETURN_FAIL;
 
-			break;
+		break;
 
-		case VCONFKEY_TELEPHONY_SIM_CARD_ERROR:
-		case VCONFKEY_TELEPHONY_SIM_UNKNOWN:
+	case VCONFKEY_TELEPHONY_SIM_CARD_ERROR:
+	case VCONFKEY_TELEPHONY_SIM_UNKNOWN:
 
-			setting_create_popup(NULL, ad->win_get,
-			                            NULL, _("IDS_SIM_BODY_INVALID_SIM_CARD"), NULL, 0, false, false, 0);
-			SETTING_TRACE_DEBUG
-			("%s*** [ERR] INCORRECTED SIM. sim_slot_type=%d ***%s",
-			 SETTING_FONT_RED, sim_status, SETTING_FONT_BLACK);
-			return SETTING_RETURN_FAIL;
+		setting_create_popup(NULL, ad->win_get,
+							 NULL, _("IDS_SIM_BODY_INVALID_SIM_CARD"), NULL, 0, false, false, 0);
+		SETTING_TRACE_DEBUG
+		("%s*** [ERR] INCORRECTED SIM. sim_slot_type=%d ***%s",
+		 SETTING_FONT_RED, sim_status, SETTING_FONT_BLACK);
+		return SETTING_RETURN_FAIL;
 
-			break;
-		default:
-			break;
+		break;
+	default:
+		break;
 	}
 	return SETTING_RETURN_SUCCESS;
 }
@@ -320,9 +320,9 @@ static UNUSED Eina_Bool _check_tapi_async_cb_is_called(void *data)
 
 	if (!ad->enter_tapi_async_cb_flag) {
 		ad->sim_popup = setting_create_popup(ad, ad->win_get,
-		                                     NULL, KeyStr_Security_Waiting_Sim,
-		                                     (setting_call_back_func)__remove_sim_popup_cb,
-		                                     0, FALSE, FALSE, 0);
+											 NULL, KeyStr_Security_Waiting_Sim,
+											 (setting_call_back_func)__remove_sim_popup_cb,
+											 0, FALSE, FALSE, 0);
 		ad->remove_sim_popup_timer = ecore_timer_add(1, __remove_sim_popup_cb, ad);
 	}
 	ad->tapi_async_cb_check_timer = NULL;
@@ -343,8 +343,8 @@ static Eina_Bool __freeze_event_timer_cb(void *cb)
 }
 
 void setting_security_lockscreen_layout_ug_cb(ui_gadget_h ug,
-                                              enum ug_mode mode,
-                                              void *priv)
+											  enum ug_mode mode,
+											  void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	Evas_Object *base;
@@ -357,13 +357,13 @@ void setting_security_lockscreen_layout_ug_cb(ui_gadget_h ug,
 		return;
 
 	switch (mode) {
-		case UG_MODE_FULLVIEW:
-			evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-			                                 EVAS_HINT_EXPAND);
-			evas_object_show(base);
-			break;
-		default:
-			break;
+	case UG_MODE_FULLVIEW:
+		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
+										 EVAS_HINT_EXPAND);
+		evas_object_show(base);
+		break;
+	default:
+		break;
 	}
 	SETTING_TRACE_END;
 }
@@ -381,7 +381,7 @@ static UNUSED void setting_security_lockscreen_destroy_ug_cb(ui_gadget_h ug, voi
 
 static void
 setting_security_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
-                                               void *event_info)
+											   void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -391,7 +391,7 @@ setting_security_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
 	elm_genlist_item_selected_set(item, 0);
 	Setting_GenGroupItem_Data *list_item =
-	    (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
+		(Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
 	setting_retm_if(NULL == list_item, "list_item is NULL");
 
 	SettingSecurityUG *ad = (SettingSecurityUG *) data;
@@ -401,7 +401,7 @@ setting_security_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 	if (!safeStrCmp(KeyStr_LockScreen, list_item->keyStr)) {
 #if 1
 		if (0 == app_launcher("lockscreen-options")) {
-		//if (0 == app_launcher("setting-lockscreen-options-efl")) {
+			/*if (0 == app_launcher("setting-lockscreen-options-efl")) { */
 			ad->update_view_timer = ecore_timer_add(1, __freeze_event_timer_cb, ad);
 			evas_object_freeze_events_set(ad->navi_bar, EINA_TRUE);
 		}

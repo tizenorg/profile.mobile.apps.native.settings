@@ -149,7 +149,7 @@ struct _SettingPhoneUG {
 	app_control_h bundle_data;
 	setting_view *view_to_load;
 	TelSimImsiInfo_t imsi;
-	const char *sim_lang; 
+	const char *sim_lang;
 	Elm_Genlist_Item_Class itc_1text;
 	Elm_Genlist_Item_Class itc_1text_tb;
 	Elm_Genlist_Item_Class itc_1text_1icon_2;
@@ -224,10 +224,10 @@ extern setting_view setting_view_phone_region_format;
 int app_terminate_dead_cb(int pid, void *data);
 extern char *setting_phone_lang_get_region_str(const char *region);
 extern char *setting_phone_lang_get_by_pattern(const char *locale,
-                                               const char *skeleton,
-                                               void *data);
+											   const char *skeleton,
+											   void *data);
 extern char *setting_phone_lang_get_example_desc(const char *region,
-                                                 void *data);
+												 void *data);
 /**
 * Change language string to UTF8 format, the invoker need to free the return string
 *

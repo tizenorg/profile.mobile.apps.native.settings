@@ -204,30 +204,30 @@ struct _security_item {
 
 #if SUPPORT_SECURITY_FIREWALL
 typedef enum {
-    SETTING_SEC_FIREWALL_BLOCK_IP,
-    SETTING_SEC_FIREWALL_BLOCK_URL,
-    SETTING_SEC_FIREWALL_BLOCK_PORT,
-    SETTING_SEC_FIREWALL_BLOCK_3G,
-    SETTING_SEC_FIREWALL_BLOCK_WIFI,
-    SETTING_SEC_FIREWALL_BLOCK_TCP,
-    SETTING_SEC_FIREWALL_BLOCK_UDP,
-    SETTING_SEC_FIREWALL_BLOCK_MAX
+	SETTING_SEC_FIREWALL_BLOCK_IP,
+	SETTING_SEC_FIREWALL_BLOCK_URL,
+	SETTING_SEC_FIREWALL_BLOCK_PORT,
+	SETTING_SEC_FIREWALL_BLOCK_3G,
+	SETTING_SEC_FIREWALL_BLOCK_WIFI,
+	SETTING_SEC_FIREWALL_BLOCK_TCP,
+	SETTING_SEC_FIREWALL_BLOCK_UDP,
+	SETTING_SEC_FIREWALL_BLOCK_MAX
 } setting_sec_firewall_blcok_type;
 
 typedef enum {
-    SETTING_SEC_FIREWALL_NETWORK_BLOCK_ALLOW_ALL = 0,
-    SETTING_SEC_FIREWALL_NETWORK_BLOCK_WIFI,
-    SETTING_SEC_FIREWALL_NETWORK_BLOCK_3G,
-    SETTING_SEC_FIREWALL_NETWORK_BLOCK_ALL,
-    SETTING_SEC_FIREWALL_NETWORK_BLOCK_MAX
+	SETTING_SEC_FIREWALL_NETWORK_BLOCK_ALLOW_ALL = 0,
+	SETTING_SEC_FIREWALL_NETWORK_BLOCK_WIFI,
+	SETTING_SEC_FIREWALL_NETWORK_BLOCK_3G,
+	SETTING_SEC_FIREWALL_NETWORK_BLOCK_ALL,
+	SETTING_SEC_FIREWALL_NETWORK_BLOCK_MAX
 } setting_sec_firewall_network_block_type;
 
 typedef enum {
-    SETTING_SEC_FIREWALL_PROTOCOL_BLOCK_ALLOW_ALL  = 0,
-    SETTING_SEC_FIREWALL_PROTOCOL_BLOCK_TCP,
-    SETTING_SEC_FIREWALL_PROTOCOL_BLOCK_UDP,
-    SETTING_SEC_FIREWALL_PROTOCOL_BLOCK_ALL,
-    SETTING_SEC_FIREWALL_PROTOCOL_BLOCK_MAX
+	SETTING_SEC_FIREWALL_PROTOCOL_BLOCK_ALLOW_ALL  = 0,
+	SETTING_SEC_FIREWALL_PROTOCOL_BLOCK_TCP,
+	SETTING_SEC_FIREWALL_PROTOCOL_BLOCK_UDP,
+	SETTING_SEC_FIREWALL_PROTOCOL_BLOCK_ALL,
+	SETTING_SEC_FIREWALL_PROTOCOL_BLOCK_MAX
 } setting_sec_firewall_protocol_block_type;
 
 typedef struct _bs firewall_db;
@@ -265,11 +265,11 @@ COMMAND *g_portHead, *g_portTail;
 
 
 enum {
-    SETTING_SEC_VIEWTYPE_MAIN = 0,
-    SETTING_SEC_VIEWTYPE_ENCRYPTION,
-    SETTING_SEC_VIEWTYPE_LOCKTYPE,
-    SETTING_SEC_VIEWTYPE_UPDATE,
-    SETTING_SEC_VIEWTYPE_MAX
+	SETTING_SEC_VIEWTYPE_MAIN = 0,
+	SETTING_SEC_VIEWTYPE_ENCRYPTION,
+	SETTING_SEC_VIEWTYPE_LOCKTYPE,
+	SETTING_SEC_VIEWTYPE_UPDATE,
+	SETTING_SEC_VIEWTYPE_MAX
 };
 
 /**
@@ -458,7 +458,7 @@ SettingSecurityUG *g_ad;	/* for tapi callback */
 
 /*char *get_screen_lock_type_str(void * priv); */
 void setting_security_result_password_ug_cb(ui_gadget_h ug,
-                                            app_control_h service, void *priv);
+											app_control_h service, void *priv);
 void setting_security_sim_get_facility_cb(TapiHandle *handle, int result, void *data, void *user_data);
 void setting_security_pin_get_facility_cb(TapiHandle *handle, int result, void *data, void *user_data);
 void setting_security_pin2_get_lock_info_cb(TapiHandle *handle, int result, void *data, void *user_data);
@@ -466,9 +466,9 @@ void setting_security_pin2_get_lock_info_cb(TapiHandle *handle, int result, void
 gboolean setting_security_create_password_sg(void *data);
 
 void setting_security_destroy_password_ug_cb(ui_gadget_h ug,
-                                             void *priv);
+											 void *priv);
 void setting_security_layout_passwd_ug_cb(ui_gadget_h ug,
-                                          enum ug_mode mode, void *priv);
+										  enum ug_mode mode, void *priv);
 
 gboolean setting_security_create_lockscreen_options_sg(void *data);
 gboolean setting_security_create_mmc_encryption_sg(void *data);

@@ -142,20 +142,20 @@
 #define SETTING_TRACE(fmt, arg...) \
 	do {\
 		printf("\n[SETTING]\033[0;36m" fmt "\033[0m\t%s:%d\n", \
-		       ##arg, (char*)(strrchr(__FILE__, '/')+1), __LINE__);\
+			   ##arg, (char*)(strrchr(__FILE__, '/')+1), __LINE__);\
 	}while(0);
 
 #define SETTING_TRACE_SECURE_DEBUG(fmt, arg...) \
 	do {\
 		printf("\n[SETTING]\033[0;32mDEBUG: " fmt "\033[0m\t%s:%d\n", \
-		       ##arg, (char*)(strrchr(__FILE__, '/')+1), __LINE__);\
+			   ##arg, (char*)(strrchr(__FILE__, '/')+1), __LINE__);\
 	}while(0);
 
 
 #define SETTING_TRACE_DEBUG(fmt, arg...) \
 	do {\
 		printf("\n[SETTING]\033[0;32mDEBUG: " fmt "\033[0m\t%s:%d\n", \
-		       ##arg, (char*)(strrchr(__FILE__, '/')+1), __LINE__);\
+			   ##arg, (char*)(strrchr(__FILE__, '/')+1), __LINE__);\
 	}while(0);
 
 #define SETTING_TRACE_WARNING(fmt, arg...) \
@@ -172,14 +172,14 @@
 #define SETTING_TRACE_BEGIN do {\
 		{\
 			printf("\n[SETTING]\033[0;35mENTER FUNCTION: %s. \033[0m\t%s:%d\n", \
-			       __FUNCTION__, (char*)(strrchr(__FILE__, '/')+1), __LINE__);\
+				   __FUNCTION__, (char*)(strrchr(__FILE__, '/')+1), __LINE__);\
 		}\
 	}while(0);
 
 #define SETTING_TRACE_END  do {\
 		{\
 			printf("\n[SETTING]\033[0;35mEXIT FUNCTION: %s. \033[0m\t%s:%d\n", \
-			       __FUNCTION__, (char*)(strrchr(__FILE__, '/')+1), __LINE__);\
+				   __FUNCTION__, (char*)(strrchr(__FILE__, '/')+1), __LINE__);\
 		}\
 	}while(0);
 #endif

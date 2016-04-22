@@ -34,18 +34,18 @@ typedef struct _Setting_Region_Table {
 #define SETTING_PHONE_REGION_FORMAT_ANIMATOR_START_INDEX 30
 
 static int setting_phone_region_format_get_region_fmt(char *list[],
-                                                      int item_idx[],
-                                                      char *region_keyStr[],
-                                                      int *region_num);
+													  int item_idx[],
+													  char *region_keyStr[],
+													  int *region_num);
 static Eina_Bool setting_phone_region_format_click_softkey_cancel_cb(void *data, Elm_Object_Item *it);
 static void setting_phone_region_format_mouse_up_Gendial_list_radio_cb(void
-                                                                       *data,
-                                                                       Evas_Object
-                                                                       *obj,
-                                                                       void
-                                                                       *event_info);
+																	   *data,
+																	   Evas_Object
+																	   *obj,
+																	   void
+																	   *event_info);
 static int setting_phone_region_format_compare_cb(const void *d1,
-                                                  const void *d2);
+												  const void *d2);
 int setting_phone_region_format_set_dateformat(const char *region,
-                                               void *data);
+											   void *data);
 #endif				/* __SETTING_PHONE_REGION_FORMAT_H__ */

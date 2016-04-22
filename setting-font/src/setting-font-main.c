@@ -62,24 +62,24 @@ static void setting_font_rot_changed_cb(void *data, Evas_Object *obj, void *even
 	int change_ang = elm_win_rotation_get(ad->win_get);
 
 	switch (change_ang) {
-		case APP_DEVICE_ORIENTATION_0:
-			//SETTING_TRACE("change_ang : 0");
-			ad->rotate_angle = 0;
-			break;
-		case APP_DEVICE_ORIENTATION_180:
-			//SETTING_TRACE("change_ang : 180");
-			ad->rotate_angle = 180;
-			break;
-		case APP_DEVICE_ORIENTATION_270:
-			//SETTING_TRACE("change_ang : 270");
-			ad->rotate_angle = 270;
-			break;
-		case APP_DEVICE_ORIENTATION_90:
-			//SETTING_TRACE("change_ang : 90");
-			ad->rotate_angle = 90;
-			break;
-		default:
-			return;
+	case APP_DEVICE_ORIENTATION_0:
+		/*SETTING_TRACE("change_ang : 0"); */
+		ad->rotate_angle = 0;
+		break;
+	case APP_DEVICE_ORIENTATION_180:
+		/*SETTING_TRACE("change_ang : 180"); */
+		ad->rotate_angle = 180;
+		break;
+	case APP_DEVICE_ORIENTATION_270:
+		/*SETTING_TRACE("change_ang : 270"); */
+		ad->rotate_angle = 270;
+		break;
+	case APP_DEVICE_ORIENTATION_90:
+		/*SETTING_TRACE("change_ang : 90"); */
+		ad->rotate_angle = 90;
+		break;
+	default:
+		return;
 	}
 }
 
@@ -87,11 +87,11 @@ char *get_example_style_text(const char *font_size, const char *font_type)
 {
 	char default_example_str[MAX_COMMON_BUFFER_LEN + 1] = {0, };
 	snprintf(default_example_str, MAX_COMMON_BUFFER_LEN,
-	         "<color=#000000><font_size=%s><font=%s>%s<br>%s<br>%s</font></font_size></color>",
-	         font_size, font_type,
-	         "<align=middle>ABCDE</align>",
-	         "<align=middle>abcde</align>",
-	         "<align=middle>12345!@#$</align>");
+			 "<color=#000000><font_size=%s><font=%s>%s<br>%s<br>%s</font></font_size></color>",
+			 font_size, font_type,
+			 "<align=middle>ABCDE</align>",
+			 "<align=middle>abcde</align>",
+			 "<align=middle>12345!@#$</align>");
 
 	return (char *)g_strdup(default_example_str);
 
@@ -161,7 +161,7 @@ char *_item_text_keystr2_get(void *data, Evas_Object *obj, const char *part)
 
 
 static Evas_Object *_font_size_slider_get(void *data, Evas_Object *obj,
-                                          const char *part)
+										  const char *part)
 {
 	SETTING_TRACE_BEGIN;
 
@@ -169,9 +169,9 @@ static Evas_Object *_font_size_slider_get(void *data, Evas_Object *obj,
 	Setting_GenGroupItem_Data *item_data = data;
 	SETTING_TRACE(" --------------------> part:%s", part);
 
-	//if (!safeStrCmp(part, "elm.icon")) { /* CENTER WHOLE */
+	/*if (!safeStrCmp(part, "elm.icon")) { /* CENTER WHOLE * / */
 	if (!safeStrCmp(part, "elm.swallow.content")) {
-		
+
 		if (SWALLOW_Type_LAYOUT_5STEP_SLIDER == item_data->swallow_type) {
 			SETTING_TRACE("Add 5Step Slider");
 
@@ -194,17 +194,17 @@ static Evas_Object *_font_size_slider_get(void *data, Evas_Object *obj,
 			evas_object_show(label2);
 			elm_object_part_content_set(layout, "right_text", label2);
 			Evas_Object *li_slider =
-			    setting_create_5step_slider(obj, item_data->evas,
-			                                item_data->l_swallow_path,
-			                                item_data->r_swallow_path,
-			                                item_data->chk_status,
-			                                item_data->isIndicatorVisible,
-			                                item_data->slider_min,
-			                                item_data->slider_max,
-			                                item_data->chk_change_cb,
-			                                item_data->start_change_cb,
-			                                item_data->stop_change_cb,
-			                                item_data);
+				setting_create_5step_slider(obj, item_data->evas,
+											item_data->l_swallow_path,
+											item_data->r_swallow_path,
+											item_data->chk_status,
+											item_data->isIndicatorVisible,
+											item_data->slider_min,
+											item_data->slider_max,
+											item_data->chk_change_cb,
+											item_data->start_change_cb,
+											item_data->stop_change_cb,
+											item_data);
 			item_data->eo_check = li_slider;
 			item_data->mouse_up_cb = _slider_mouse_cb;
 			evas_object_event_callback_add(li_slider, EVAS_CALLBACK_MOUSE_UP, _eo_slider_mouse_cb, item_data);
@@ -296,7 +296,7 @@ static Eina_List *__setting_font_main_available_list_get()
 				int preload_path_len = safeStrLen(SETTING_FONT_PRELOAD_FONT_PATH);
 				int download_path_len = safeStrLen(SETTING_FONT_DOWNLOADED_FONT_PATH);
 				if (!safeStrNCmp((const char *)file, SETTING_FONT_PRELOAD_FONT_PATH, preload_path_len) ||
-				    !safeStrNCmp((const char *)file, SETTING_FONT_DOWNLOADED_FONT_PATH, download_path_len)) {
+					!safeStrNCmp((const char *)file, SETTING_FONT_DOWNLOADED_FONT_PATH, download_path_len)) {
 					char *family_result = NULL;
 					FcChar8 *lang = NULL;
 					int id = 0;
@@ -590,20 +590,19 @@ static void __font_vconf_change_cb(keynode_t *key, void *data)
 #define SLIDER_LENGTH(ad) (SLIDER_END_POINT_X(ad) - SLIDER_START_POINT_X(ad))
 
 
-static int _slider_get_width(void* data)
+static int _slider_get_width(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	SettingFontUG *ad = (SettingFontUG *)data;
 
 	int x, y, w, h;
-	elm_win_screen_size_get	(ad->win_get, &x, &y, &w, &h);
+	elm_win_screen_size_get(ad->win_get, &x, &y, &w, &h);
 	SETTING_TRACE("-------> x : %d ", x);
 	SETTING_TRACE("-------> y : %d ", y);
 	SETTING_TRACE("-------> w : %d ", w);
 	SETTING_TRACE("-------> h : %d ", h);
 
-	switch (ad->rotate_angle)
-	{
+	switch (ad->rotate_angle) {
 	case 0:
 	case 360:
 		return w;
@@ -620,7 +619,7 @@ static int _slider_get_width(void* data)
 
 
 #if 0
-// 720, 1280
+/* 720, 1280 */
 static int _slider_endpoint_x()
 {
 #ifdef ECORE_X
@@ -628,7 +627,7 @@ static int _slider_endpoint_x()
 	ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
 	return w;
 #else
-	int w, h;	
+	int w, h;
 	elm_win_screen_size_get(win, NULL, NULL, &w, &h);
 	return w;
 #endif
@@ -639,15 +638,15 @@ static int _slider_endpoint_x()
  * ad->rotate_angle = 90;	// do it
  * ad->rotate_angle = 270;  // do it
  */
-static int _slider_startpoint_x(void* data)
+static int _slider_startpoint_x(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	int width = 47;
-	#if 0
+#if 0
 	SettingFontUG *ad = (SettingFontUG *)data;
 	if (_slider_get_width(ad) == 720)		/* M0 */
 		return 47;
-	#endif
+#endif
 	return width;
 }
 
@@ -739,8 +738,8 @@ static void setting_font_done_click_cb(void *data, Evas_Object *obj, void *event
 
 		ad->font_change_status = SELECTED_FONT_CHANGE_IN_PROCESS;
 		ad->main_popup = setting_create_popup_with_progressbar(ad, ad->win_get,
-		                                                       PROGRESSBAR_STYLE,
-		                                                       NULL, KeyStr_Loading, __setting_progress_popup_cb, 3/*0*/, TRUE, TRUE, 0);	/* 3 seconds to wait in maximum */
+															   PROGRESSBAR_STYLE,
+															   NULL, KeyStr_Loading, __setting_progress_popup_cb, 3/*0*/, TRUE, TRUE, 0);	/* 3 seconds to wait in maximum */
 
 		/* ecore timer for change actual font */
 		ad->font_type_timer = ecore_timer_add(1, (Ecore_Task_Cb)__font_change_call, ad);
@@ -769,23 +768,23 @@ static void __setting_get_font_size_str(void *data, int size)
 	SettingFontUG *ad = (SettingFontUG *) data;
 
 	switch (size) {
-		case 0:
-			ad->font_size_str = (char *)g_strdup("24");
-			break;
-		case 1:
-			ad->font_size_str = (char *)g_strdup("30");
-			break;
-		case 2:
-			ad->font_size_str = (char *)g_strdup("44");
-			break;
-		case 3:
-			ad->font_size_str = (char *)g_strdup("56");
-			break;
-		case 4:
-			ad->font_size_str = (char *)g_strdup("70");
-			break;
-		default:
-			ad->font_size_str = (char *)g_strdup("30");
+	case 0:
+		ad->font_size_str = (char *)g_strdup("24");
+		break;
+	case 1:
+		ad->font_size_str = (char *)g_strdup("30");
+		break;
+	case 2:
+		ad->font_size_str = (char *)g_strdup("44");
+		break;
+	case 3:
+		ad->font_size_str = (char *)g_strdup("56");
+		break;
+	case 4:
+		ad->font_size_str = (char *)g_strdup("70");
+		break;
+	default:
+		ad->font_size_str = (char *)g_strdup("30");
 	}
 }
 
@@ -843,28 +842,28 @@ static int setting_font_main_create(void *cb)
 	ad->itc_bg_1icon.func.content_get = _font_size_slider_get;
 
 	retvm_if(ad->win_main_layout == NULL, SETTING_DRAW_ERR_FAIL_LOAD_EDJ,
-	         "win_main_layout is NULL");
+			 "win_main_layout is NULL");
 	ad->font_change_status = SELECTED_FONT_CHANGE_NONE;
 	ad->ly_main =
-	    setting_create_layout_navi_bar_genlist(ad->win_main_layout,
-	                                           ad->win_get,
-	                                           "IDS_ST_BODY_FONT",
-	                                           _("IDS_ST_BUTTON_BACK"),
-	                                           NULL,
-	                                           (setting_call_back_func)__setting_font_main_click_softkey_back_cb,
-	                                           NULL,
-	                                           ad, &ad->genlist, &ad->navibar);
+		setting_create_layout_navi_bar_genlist(ad->win_main_layout,
+											   ad->win_get,
+											   "IDS_ST_BODY_FONT",
+											   _("IDS_ST_BUTTON_BACK"),
+											   NULL,
+											   (setting_call_back_func)__setting_font_main_click_softkey_back_cb,
+											   NULL,
+											   ad, &ad->genlist, &ad->navibar);
 	ad->navi_it_font = elm_naviframe_top_item_get(ad->navibar);
 
 	/* Title Cancel Button */
 	ad->btn_cancel = setting_create_button(ad->navibar, "IDS_MSG_ACBUTTON_CANCEL_ABB",
-	                                       "naviframe/title_cancel",
-	                                       setting_font_cancel_click_cb, ad);
+										   "naviframe/title_cancel",
+										   setting_font_cancel_click_cb, ad);
 	elm_object_item_part_content_set(ad->navi_it_font, "title_left_btn", ad->btn_cancel);
 	/* Title Done Button */
 	ad->btn_done = setting_create_button(ad->navibar, "IDS_MSG_ACBUTTON_DONE_ABB",
-	                                     "naviframe/title_done",
-	                                     setting_font_done_click_cb, ad);
+										 "naviframe/title_done",
+										 setting_font_done_click_cb, ad);
 	elm_object_item_part_content_set(ad->navi_it_font, "title_right_btn", ad->btn_done);
 
 	elm_genlist_mode_set(ad->genlist, ELM_LIST_COMPRESS);
@@ -890,11 +889,11 @@ static int setting_font_main_create(void *cb)
 	char *default_example_str = get_example_style_text(ad->font_size_str, ad->font_type_str);
 
 	ad->font_example =
-	    setting_create_Gendial_field_def(ad->genlist, &(ad->itc_1icon),
-	                                     NULL,
-	                                     ad, SWALLOW_Type_INVALID, NULL,
-	                                     NULL, 0, NULL,
-	                                     default_example_str, NULL);
+		setting_create_Gendial_field_def(ad->genlist, &(ad->itc_1icon),
+										 NULL,
+										 ad, SWALLOW_Type_INVALID, NULL,
+										 NULL, 0, NULL,
+										 default_example_str, NULL);
 
 	if (ad->font_example) {
 		__BACK_POINTER_SET(ad->font_example);
@@ -911,12 +910,12 @@ static int setting_font_main_create(void *cb)
 	setting_retvm_if(ret != 0, SETTING_RETURN_SUCCESS, "fail to get vconf");
 	ad->init_font_size = size;
 	ad->font_size =
-	    setting_create_Gendial_field_def(ad->genlist, &(ad->itc_bg_1icon), NULL,
-	                                     NULL, SWALLOW_Type_LAYOUT_5STEP_SLIDER,
-	                                     NULL,
-	                                     NULL, size, "IDS_ST_BODY_SIZE",
-	                                     NULL,
-	                                     __font_size_slider_value_change_cb);
+		setting_create_Gendial_field_def(ad->genlist, &(ad->itc_bg_1icon), NULL,
+										 NULL, SWALLOW_Type_LAYOUT_5STEP_SLIDER,
+										 NULL,
+										 NULL, size, "IDS_ST_BODY_SIZE",
+										 NULL,
+										 __font_size_slider_value_change_cb);
 
 	if (ad->font_size) {
 		ad->font_size->win_main = ad->win_main_layout;
@@ -1022,12 +1021,12 @@ static int setting_font_main_create(void *cb)
 
 
 	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_FONT_NAME,
-	                               __font_vconf_change_cb, ad);
+								   __font_vconf_change_cb, ad);
 	if (ret != 0) {
 		SETTING_TRACE_ERROR("call vconf_notify_key_changed failed");
 	}
 	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_FONT_SIZE,
-	                               __font_vconf_change_cb, ad);
+								   __font_vconf_change_cb, ad);
 	if (ret != 0) {
 		SETTING_TRACE_ERROR("call vconf_notify_key_changed failed");
 	}
@@ -1035,7 +1034,7 @@ static int setting_font_main_create(void *cb)
 
 	evas_font_reinit();
 
-	//------------------------------------------------------------------------------------
+	/*------------------------------------------------------------------------------------ */
 	evas_object_smart_callback_add(ad->win_get, "wm,rotation,changed", setting_font_rot_changed_cb, ad);
 
 
@@ -1051,12 +1050,12 @@ static int setting_font_main_destroy(void *cb)
 
 	SettingFontUG *ad = (SettingFontUG *) cb;
 	int ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_FONT_NAME,
-	                                   __font_vconf_change_cb);
+									   __font_vconf_change_cb);
 	if (ret != 0) {
 		SETTING_TRACE_ERROR("call vconf_ignore_key_changed failed");
 	}
 	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_FONT_SIZE,
-	                               __font_vconf_change_cb);
+								   __font_vconf_change_cb);
 	if (ret != 0) {
 		SETTING_TRACE_ERROR("call vconf_ignore_key_changed failed");
 	}

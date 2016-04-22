@@ -47,7 +47,7 @@ void setting_main_genlist_handler_reset(void *data)
 void setting_main_genlist_handler_set(void *data, int viewtype)
 {
 	retm_if(data == NULL, "Invalid argument: data is NULL");
-	// setting_main_appdata *ad = data;
+	/* setting_main_appdata *ad = data; */
 
 }
 
@@ -56,27 +56,27 @@ bool is_searchmode_app(Cfg_Item_Type type)
 	bool ret = false;
 
 	switch (type % 10) {
-		case Cfg_Item_Ug_Node:				/* ug run */
-		case Cfg_Item_App_Node:				/* docomo run */
-		case Cfg_Item_View_Node:			/* n-depth search */
-		case Cfg_Item_AppLauncher_Node:		/* app launch */
-			ret = true;
-			break;
+	case Cfg_Item_Ug_Node:				/* ug run */
+	case Cfg_Item_App_Node:				/* docomo run */
+	case Cfg_Item_View_Node:			/* n-depth search */
+	case Cfg_Item_AppLauncher_Node:		/* app launch */
+		ret = true;
+		break;
 
-		case Cfg_Item_Ui_Node:
-		case Cfg_Item_Title_Node:
-			ret = false;
-			break;
+	case Cfg_Item_Ui_Node:
+	case Cfg_Item_Title_Node:
+		ret = false;
+		break;
 
-		default:
-			ret = false;
-			break;
+	default:
+		ret = false;
+		break;
 	}
 	return ret;
 }
 
 void setting_main_click_list_item_reset_data(void *data,
-                                             Evas_Object *obj)
+											 Evas_Object *obj)
 {
 	/*SETTING_TRACE_BEGIN; */
 	setting_main_appdata *ad = (setting_main_appdata *) data;
@@ -116,7 +116,7 @@ void setting_main_destroy_ug_cb(ui_gadget_h ug, void *priv)
 	}
 
 	elm_object_tree_focus_allow_set(ad->ly_main, TRUE);
-	//ea_screen_reader_support_set(ad->ly_main, TRUE);
+	/*ea_screen_reader_support_set(ad->ly_main, TRUE); */
 
 	setting_main_click_list_item_reset_data(ad, NULL);
 	SETTING_TRACE("update main genlist in unloading UG");
@@ -127,19 +127,19 @@ void setting_main_destroy_ug_cb(ui_gadget_h ug, void *priv)
 }
 
 void setting_main_result_ug_cb(ui_gadget_h ug, app_control_h service,
-                               void *priv)
+							   void *priv)
 {
 	if (!priv) {
 		return;
 	}
 	SETTING_TRACE_BEGIN;
-	// setting_main_appdata *ad = (setting_main_appdata *) priv;
+	/* setting_main_appdata *ad = (setting_main_appdata *) priv; */
 
 	SETTING_TRACE_END;
 }
 
 void setting_main_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
-                               void *priv)
+							   void *priv)
 {
 	/*setting_main_appdata *ad = (setting_main_appdata *) priv; */
 	Evas_Object *base;
@@ -159,14 +159,14 @@ void setting_main_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
 
 
 	switch (mode) {
-		case UG_MODE_FULLVIEW:
-			evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-			                                 EVAS_HINT_EXPAND);
-			/*elm_win_resize_object_add(ad->win_main, base); */
-			evas_object_show(base);
-			break;
-		default:
-			break;
+	case UG_MODE_FULLVIEW:
+		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
+										 EVAS_HINT_EXPAND);
+		/*elm_win_resize_object_add(ad->win_main, base); */
+		evas_object_show(base);
+		break;
+	default:
+		break;
 	}
 
 	/*SETTING_TRACE_END; */

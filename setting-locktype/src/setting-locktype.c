@@ -64,8 +64,8 @@ int pwd_handler_sec_pw_passwd(SettingLocktypeUG *data, void *arg)
 			elm_radio_value_set(ad->lock_type_rd, SETTING_SCREEN_LOCK_TYPE_PASSWORD);
 
 		ad->save_popup = setting_create_popup(ad, ad->win_get, NULL, "IDS_ST_POP_NEW_PASSWD_SAVED",
-		                                      setting_locktype_ug_popup_resp_cb,
-		                                      POPUP_INTERVAL, FALSE, FALSE, 0);
+											  setting_locktype_ug_popup_resp_cb,
+											  POPUP_INTERVAL, FALSE, FALSE, 0);
 	} else {
 		SETTING_TRACE_ERROR("setting vconf value failed : screen_lock_type");
 	}
@@ -87,8 +87,8 @@ int pwd_handler_sec_pw_simple_passwd(SettingLocktypeUG *data, void *arg)
 			elm_radio_value_set(ad->lock_type_rd, lock_type);
 
 		ad->save_popup = setting_create_popup(ad, ad->win_get, NULL, "IDS_ST_POP_NEW_PASSWD_SAVED",
-		                                      setting_locktype_ug_popup_resp_cb,
-		                                      POPUP_INTERVAL, FALSE, FALSE, 0);
+											  setting_locktype_ug_popup_resp_cb,
+											  POPUP_INTERVAL, FALSE, FALSE, 0);
 	} else {
 		SETTING_TRACE_ERROR("setting vconf value failed : screen_lock_type");
 	}
@@ -105,7 +105,7 @@ static struct _locktype_item locktype_table[] = {
 };
 
 static void setting_locktype_ug_cb_resize(void *data, Evas *e,
-                                          Evas_Object *obj, void *event_info)
+										  Evas_Object *obj, void *event_info)
 {
 	ret_if(data == NULL);
 
@@ -114,8 +114,8 @@ static void setting_locktype_ug_cb_resize(void *data, Evas *e,
 }
 
 static void *setting_locktype_ug_on_create(ui_gadget_h ug,
-                                           enum ug_mode mode, app_control_h service,
-                                           void *priv)
+										   enum ug_mode mode, app_control_h service,
+										   void *priv)
 {
 	setting_retvm_if((!priv), NULL, "!priv");
 
@@ -128,7 +128,7 @@ static void *setting_locktype_ug_on_create(ui_gadget_h ug,
 	locktypeUG->evas = evas_object_evas_get(locktypeUG->win_main_layout);
 
 	setting_retvm_if(locktypeUG->win_main_layout == NULL, NULL,
-	                 "[Setting >> About] cannot get main window ");
+					 "[Setting >> About] cannot get main window ");
 
 	/*setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR); */
 	bindtextdomain(SETTING_PACKAGE, SETTING_LOCALEDIR);
@@ -167,29 +167,29 @@ static void *setting_locktype_ug_on_create(ui_gadget_h ug,
 	setting_view_node_set_cur_view(&setting_view_locktype_main);
 	setting_view_create(&setting_view_locktype_main, (void *)locktypeUG);
 	evas_object_event_callback_add(locktypeUG->win_main_layout,
-	                               EVAS_CALLBACK_RESIZE,
-	                               setting_locktype_ug_cb_resize, locktypeUG);
+								   EVAS_CALLBACK_RESIZE,
+								   setting_locktype_ug_cb_resize, locktypeUG);
 
 	return locktypeUG->ly_main;
 }
 
 static void setting_locktype_ug_on_start(ui_gadget_h ug, app_control_h service,
-                                         void *priv)
+										 void *priv)
 {
 }
 
 static void setting_locktype_ug_on_pause(ui_gadget_h ug, app_control_h service,
-                                         void *priv)
+										 void *priv)
 {
 }
 
 static void setting_locktype_ug_on_resume(ui_gadget_h ug, app_control_h service,
-                                          void *priv)
+										  void *priv)
 {
 }
 
 static void setting_locktype_ug_on_destroy(ui_gadget_h ug, app_control_h service,
-                                           void *priv)
+										   void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
@@ -216,58 +216,58 @@ static void setting_locktype_ug_on_destroy(ui_gadget_h ug, app_control_h service
 }
 
 static void setting_locktype_ug_on_message(ui_gadget_h ug, app_control_h msg,
-                                           app_control_h service, void *priv)
+										   app_control_h service, void *priv)
 {
 
 }
 
 static void setting_locktype_ug_on_event(ui_gadget_h ug,
-                                         enum ug_event event, app_control_h service,
-                                         void *priv)
+										 enum ug_event event, app_control_h service,
+										 void *priv)
 {
 	switch (event) {
-		case UG_EVENT_LOW_MEMORY:
-				break;
-		case UG_EVENT_LOW_BATTERY:
-			break;
-		case UG_EVENT_LANG_CHANGE:
-			break;
-		case UG_EVENT_ROTATE_PORTRAIT:
-			break;
-		case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-			break;
-		case UG_EVENT_ROTATE_LANDSCAPE:
-			break;
-		case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-			break;
-		case UG_EVENT_REGION_CHANGE:
-			break;
-		default:
-			break;
+	case UG_EVENT_LOW_MEMORY:
+		break;
+	case UG_EVENT_LOW_BATTERY:
+		break;
+	case UG_EVENT_LANG_CHANGE:
+		break;
+	case UG_EVENT_ROTATE_PORTRAIT:
+		break;
+	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
+		break;
+	case UG_EVENT_ROTATE_LANDSCAPE:
+		break;
+	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
+		break;
+	case UG_EVENT_REGION_CHANGE:
+		break;
+	default:
+		break;
 	}
 }
 
 static void setting_locktype_ug_on_key_event(ui_gadget_h ug,
-                                             enum ug_key_event event,
-                                             app_control_h service, void *priv)
+											 enum ug_key_event event,
+											 app_control_h service, void *priv)
 {
 	if (!priv)
 		return;
 	SettingLocktypeUG *ad = (SettingLocktypeUG *) priv;	/* ad is point to priv */
 	switch (event) {
-		case UG_KEY_EVENT_END: {
-				if (elm_naviframe_top_item_get(ad->navi_bar) ==
-				    elm_naviframe_bottom_item_get(ad->navi_bar)) {
-					ug_destroy_me(ug);
-				} else {
-					/* elm_naviframe_item_pop(ad->navi_bar); */
-					setting_view_cb_at_endKey(ad);
-				}
+	case UG_KEY_EVENT_END: {
+			if (elm_naviframe_top_item_get(ad->navi_bar) ==
+				elm_naviframe_bottom_item_get(ad->navi_bar)) {
+				ug_destroy_me(ug);
+			} else {
+				/* elm_naviframe_item_pop(ad->navi_bar); */
+				setting_view_cb_at_endKey(ad);
 			}
-			break;
+		}
+		break;
 
-		default:
-			break;
+	default:
+		break;
 	}
 }
 
@@ -275,7 +275,7 @@ UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
 {
 	SettingLocktypeUG *locktypeUG = calloc(1, sizeof(SettingLocktypeUG));
 	setting_retvm_if(!locktypeUG, -1,
-	                 "Create SettingLocktypeUG obj failed");
+					 "Create SettingLocktypeUG obj failed");
 
 	memset(locktypeUG, 0x00, sizeof(SettingLocktypeUG));
 
@@ -310,7 +310,7 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
  ***************************************************/
 
 void setting_locktype_layout_passwd_ug_cb(ui_gadget_h ug,
-                                          enum ug_mode mode, void *priv)
+										  enum ug_mode mode, void *priv)
 {
 	if (!priv)
 		return;
@@ -320,20 +320,20 @@ void setting_locktype_layout_passwd_ug_cb(ui_gadget_h ug,
 		return;
 
 	switch (mode) {
-		case UG_MODE_FULLVIEW:
-			evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-			                                 EVAS_HINT_EXPAND);
-			evas_object_show(base);
-			break;
-		default:
-			break;
+	case UG_MODE_FULLVIEW:
+		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
+										 EVAS_HINT_EXPAND);
+		evas_object_show(base);
+		break;
+	default:
+		break;
 	}
 
 	return;
 }
 
 void setting_locktype_destroy_password_ug_cb(ui_gadget_h ug,
-                                             void *priv)
+											 void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(priv == NULL);
@@ -347,7 +347,7 @@ void setting_locktype_destroy_password_ug_cb(ui_gadget_h ug,
 }
 
 void setting_locktype_end_password_ug_cb(ui_gadget_h ug,
-                                         void *priv)
+										 void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(priv == NULL);
@@ -431,7 +431,7 @@ int _get_locktype_table_index(char *name)
 
 void
 setting_locktype_result_password_ug_cb(ui_gadget_h ug, app_control_h service,
-                                       void *priv)
+									   void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */

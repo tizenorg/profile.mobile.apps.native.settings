@@ -25,7 +25,7 @@
 #endif
 
 static void setting_flightmode_ug_cb_resize(void *data, Evas *e,
-                                            Evas_Object *obj, void *event_info)
+											Evas_Object *obj, void *event_info)
 {
 	SettingFlightModeUG *ad = (SettingFlightModeUG *) data;
 	setting_view_update(&setting_view_flightmode_main, ad);
@@ -44,8 +44,8 @@ setting_view *__get_flightmode_view_to_load(void *data, app_control_h service)
 }
 
 static void *setting_flightmode_ug_on_create(ui_gadget_h ug,
-                                             enum ug_mode mode, app_control_h service,
-                                             void *priv)
+											 enum ug_mode mode, app_control_h service,
+											 void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if((!priv), NULL, "!priv");
@@ -61,7 +61,7 @@ static void *setting_flightmode_ug_on_create(ui_gadget_h ug,
 	flightmodeUG->evas = evas_object_evas_get(flightmodeUG->win_main_layout);
 
 	setting_retvm_if(flightmodeUG->win_main_layout == NULL, NULL,
-	                 "cannot get main window ");
+					 "cannot get main window ");
 
 	/* register view node table */
 	flightmodeUG->view_to_load = __get_flightmode_view_to_load(flightmodeUG, service);
@@ -74,8 +74,8 @@ static void *setting_flightmode_ug_on_create(ui_gadget_h ug,
 	setting_view_create(flightmodeUG->view_to_load, (void *)flightmodeUG);
 
 	evas_object_event_callback_add(flightmodeUG->win_main_layout,
-	                               EVAS_CALLBACK_RESIZE,
-	                               setting_flightmode_ug_cb_resize, flightmodeUG);
+								   EVAS_CALLBACK_RESIZE,
+								   setting_flightmode_ug_cb_resize, flightmodeUG);
 
 	/*---------------------------------------------------------------- */
 	/* add genlist */
@@ -84,22 +84,22 @@ static void *setting_flightmode_ug_on_create(ui_gadget_h ug,
 }
 
 static void setting_flightmode_ug_on_start(ui_gadget_h ug, app_control_h service,
-                                           void *priv)
+										   void *priv)
 {
 }
 
 static void setting_flightmode_ug_on_pause(ui_gadget_h ug, app_control_h service,
-                                           void *priv)
+										   void *priv)
 {
 }
 
 static void setting_flightmode_ug_on_resume(ui_gadget_h ug, app_control_h service,
-                                            void *priv)
+											void *priv)
 {
 }
 
 static void setting_flightmode_ug_on_destroy(ui_gadget_h ug, app_control_h service,
-                                             void *priv)
+											 void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
@@ -121,59 +121,59 @@ static void setting_flightmode_ug_on_destroy(ui_gadget_h ug, app_control_h servi
 }
 
 static void setting_flightmode_ug_on_message(ui_gadget_h ug, app_control_h msg,
-                                             app_control_h service, void *priv)
+											 app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 }
 
 static void setting_flightmode_ug_on_event(ui_gadget_h ug,
-                                           enum ug_event event, app_control_h service,
-                                           void *priv)
+										   enum ug_event event, app_control_h service,
+										   void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	switch (event) {
-		case UG_EVENT_LOW_MEMORY:
-			break;
-		case UG_EVENT_LOW_BATTERY:
-			break;
-		case UG_EVENT_LANG_CHANGE:
-			break;
-		case UG_EVENT_ROTATE_PORTRAIT:
-			break;
-		case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-			break;
-		case UG_EVENT_ROTATE_LANDSCAPE:
-			break;
-		case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-			break;
-		case UG_EVENT_REGION_CHANGE:
-			break;
-		default:
-			break;
+	case UG_EVENT_LOW_MEMORY:
+		break;
+	case UG_EVENT_LOW_BATTERY:
+		break;
+	case UG_EVENT_LANG_CHANGE:
+		break;
+	case UG_EVENT_ROTATE_PORTRAIT:
+		break;
+	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
+		break;
+	case UG_EVENT_ROTATE_LANDSCAPE:
+		break;
+	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
+		break;
+	case UG_EVENT_REGION_CHANGE:
+		break;
+	default:
+		break;
 	}
 }
 
 static void setting_flightmode_ug_on_key_event(ui_gadget_h ug,
-                                               enum ug_key_event event,
-                                               app_control_h service, void *priv)
+											   enum ug_key_event event,
+											   app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SettingFlightModeUG *ad = (SettingFlightModeUG *) priv;
 
 	switch (event) {
-		case UG_KEY_EVENT_END: {
-				if (elm_naviframe_top_item_get(ad->navi_bar) ==
-				    elm_naviframe_bottom_item_get(ad->
-				                                  navi_bar)) {
-					ug_destroy_me(ug);
-				} else {
+	case UG_KEY_EVENT_END: {
+			if (elm_naviframe_top_item_get(ad->navi_bar) ==
+				elm_naviframe_bottom_item_get(ad->
+											  navi_bar)) {
+				ug_destroy_me(ug);
+			} else {
 
-					setting_view_cb_at_endKey(ad);
-				}
+				setting_view_cb_at_endKey(ad);
 			}
-			break;
-		default:
-			break;
+		}
+		break;
+	default:
+		break;
 	}
 }
 

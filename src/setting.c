@@ -101,20 +101,20 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 	/*Send the rotation event to UGs.. */
 	enum ug_event event = UG_EVENT_ROTATE_PORTRAIT;
 	switch (change_ang) {
-		case APP_DEVICE_ORIENTATION_0:
-			event = UG_EVENT_ROTATE_PORTRAIT;
-			break;
-		case APP_DEVICE_ORIENTATION_180:
-			event = UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN;
-			break;
-		case APP_DEVICE_ORIENTATION_270:
-			event = UG_EVENT_ROTATE_LANDSCAPE;
-			break;
-		case APP_DEVICE_ORIENTATION_90:
-			event = UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN;
-			break;
-		default:
-			return;
+	case APP_DEVICE_ORIENTATION_0:
+		event = UG_EVENT_ROTATE_PORTRAIT;
+		break;
+	case APP_DEVICE_ORIENTATION_180:
+		event = UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN;
+		break;
+	case APP_DEVICE_ORIENTATION_270:
+		event = UG_EVENT_ROTATE_LANDSCAPE;
+		break;
+	case APP_DEVICE_ORIENTATION_90:
+		event = UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN;
+		break;
+	default:
+		return;
 	}
 	SETTING_TRACE_DEBUG("diff:%d", elm_win_rotation_get(ad->win_main) - ad->current_rotation);
 
@@ -213,15 +213,15 @@ static void setting_main_lang_changed_cb(app_event_info_h event_info, void *data
 	setting_main_appdata *ad = g_main_ad;
 
 	elm_object_item_part_text_set(ad->navibar_main_it, "elm.text.title", _("IDS_ST_OPT_SETTINGS"));
-	//setting_navi_items_update(ad->navibar_main);
+	/*setting_navi_items_update(ad->navibar_main); */
 
-	char* localeLanguage = NULL;
+	char *localeLanguage = NULL;
 	system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, &localeLanguage);
 	elm_language_set(localeLanguage);
 	free(localeLanguage);
 
 	if (ad->isInUGMode && ad->ug) {
-		// app launching
+		/* app launching */
 		Evas_Object *layout = (Evas_Object *)ug_get_layout(ad->ug);
 		if (layout) {
 			Evas_Object *navi_bar = NULL;
@@ -239,7 +239,7 @@ static void setting_main_lang_changed_cb(app_event_info_h event_info, void *data
 */
 static void setting_int_vconf_change_cb(keynode_t *key, void *data)
 {
-	// setting_main_appdata *ad = data;
+	/* setting_main_appdata *ad = data; */
 	retm_if(!data, "Invalid argument: data is NULL");
 
 	int status = vconf_keynode_get_int(key);
@@ -254,7 +254,7 @@ static void setting_int_vconf_change_cb(keynode_t *key, void *data)
 */
 static void setting_string_vconf_change_cb(keynode_t *key, void *data)
 {
-	// setting_main_appdata *ad = data;
+	/* setting_main_appdata *ad = data; */
 	retm_if(!data, "Invalid argument: data is NULL");
 
 	char *value = vconf_keynode_get_str(key);
@@ -345,39 +345,39 @@ static bool setting_main_app_create(void *data)
 		const char *notifyStr = NULL;
 		switch (cfg_operation_ret) {
 
-			case Cfg_Error_Type_CreateCfg_Failed: {
-					notifyStr = _("failed to create config file, <br>re-install org.tizen.setting please");
-					break;
-				}
-			case Cfg_Error_Type_Mkdir_Failed: {
-					notifyStr = _("file system missed<br>"_TZ_SYS_DATA"/setting, <br>re-install org.tizen.setting please");
-					break;
-				}
-			case Cfg_Error_Type_RemoveCfg_Failed: {
-					notifyStr = _("config file size 0 byte<br>and failed to re-create it.<br>try to startup the app again");
-					break;
-				}
-			case Cfg_Error_Type_ReadCfg_Failed: {
-					notifyStr = _("failed to read config file, <br>try to startup the app again");
-					break;
-				}
-			case Cfg_Error_Type_DirPermissionDenied: {
-					notifyStr =
-					    _("the dir of config file permission denied");
-					break;
-				}
-			case Cfg_Error_Type_FilePermissionDenied: {
-					notifyStr = _("config file permission denied");
-					break;
-				}
-			case Cfg_Error_Type_OutOfMemory: {
-					notifyStr = _("out of memory");
-					break;
-				}
-			default: {
-					notifyStr = _("Invalid Result, try to startup the app again");
-					break;
-				}
+		case Cfg_Error_Type_CreateCfg_Failed: {
+				notifyStr = _("failed to create config file, <br>re-install org.tizen.setting please");
+				break;
+			}
+		case Cfg_Error_Type_Mkdir_Failed: {
+				notifyStr = _("file system missed<br>"_TZ_SYS_DATA"/setting, <br>re-install org.tizen.setting please");
+				break;
+			}
+		case Cfg_Error_Type_RemoveCfg_Failed: {
+				notifyStr = _("config file size 0 byte<br>and failed to re-create it.<br>try to startup the app again");
+				break;
+			}
+		case Cfg_Error_Type_ReadCfg_Failed: {
+				notifyStr = _("failed to read config file, <br>try to startup the app again");
+				break;
+			}
+		case Cfg_Error_Type_DirPermissionDenied: {
+				notifyStr =
+					_("the dir of config file permission denied");
+				break;
+			}
+		case Cfg_Error_Type_FilePermissionDenied: {
+				notifyStr = _("config file permission denied");
+				break;
+			}
+		case Cfg_Error_Type_OutOfMemory: {
+				notifyStr = _("out of memory");
+				break;
+			}
+		default: {
+				notifyStr = _("Invalid Result, try to startup the app again");
+				break;
+			}
 		}
 		setting_create_popup(ad, ad->win_main, NULL, (char *)notifyStr, NULL, 10, FALSE, FALSE, 0);
 		return SETTING_RETURN_FAIL;

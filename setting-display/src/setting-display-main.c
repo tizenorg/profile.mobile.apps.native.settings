@@ -26,7 +26,7 @@
 #include <bundle_internal.h>
 #include <system_settings.h>
 
-// elm_layout_file_set
+/* elm_layout_file_set */
 
 
 static int setting_display_main_create(void *cb);
@@ -108,7 +108,7 @@ static void setting_display_screen_timeout_popup(void *data)
 	setting_retm_if(data == NULL, "data is NULL");
 
 	ad->screen_timeout_popup = setting_create_popup_with_list(&menu_glist, ad, ad->win_get,
-	                                                          KeyStr_BacklightTime, NULL, 0, false, false, 0);
+															  KeyStr_BacklightTime, NULL, 0, false, false, 0);
 	_P(ad->screen_timeout_popup);
 
 	rdg = elm_radio_add(menu_glist);
@@ -119,10 +119,10 @@ static void setting_display_screen_timeout_popup(void *data)
 	ad->screen_timeout_rdg = rdg;
 
 	ad->data_backlight_15sec = setting_create_Gendial_field_1radio(menu_glist, &(ad->itc_1text_1icon),
-	                                                               __screen_timeout_cb, ad,
-	                                                               SWALLOW_Type_1RADIO_RIGHT,
-	                                                               rdg, 0, KeyStr_Backlight_15_SEC_STR,
-	                                                               NULL);
+																   __screen_timeout_cb, ad,
+																   SWALLOW_Type_1RADIO_RIGHT,
+																   rdg, 0, KeyStr_Backlight_15_SEC_STR,
+																   NULL);
 	if (ad->data_backlight_15sec) {
 		ad->data_backlight_15sec->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_15sec);
@@ -131,10 +131,10 @@ static void setting_display_screen_timeout_popup(void *data)
 	}
 
 	ad->data_backlight_30sec = setting_create_Gendial_field_1radio(menu_glist, &(ad->itc_1text_1icon),
-	                                                               __screen_timeout_cb, ad,
-	                                                               SWALLOW_Type_1RADIO_RIGHT,
-	                                                               rdg, 1, KeyStr_Backlight_30_SEC_STR,
-	                                                               NULL);
+																   __screen_timeout_cb, ad,
+																   SWALLOW_Type_1RADIO_RIGHT,
+																   rdg, 1, KeyStr_Backlight_30_SEC_STR,
+																   NULL);
 	if (ad->data_backlight_30sec) {
 		ad->data_backlight_30sec->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_30sec);
@@ -143,10 +143,10 @@ static void setting_display_screen_timeout_popup(void *data)
 	}
 
 	ad->data_backlight_1min = setting_create_Gendial_field_1radio(menu_glist, &(ad->itc_1text_1icon),
-	                                                              __screen_timeout_cb, ad,
-	                                                              SWALLOW_Type_1RADIO_RIGHT,
-	                                                              rdg, 2, KeyStr_Backlight_1_MIN_STR,
-	                                                              NULL);
+																  __screen_timeout_cb, ad,
+																  SWALLOW_Type_1RADIO_RIGHT,
+																  rdg, 2, KeyStr_Backlight_1_MIN_STR,
+																  NULL);
 	if (ad->data_backlight_1min) {
 		ad->data_backlight_1min->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_1min);
@@ -155,10 +155,10 @@ static void setting_display_screen_timeout_popup(void *data)
 	}
 
 	ad->data_backlight_2min = setting_create_Gendial_field_1radio(menu_glist, &(ad->itc_1text_1icon),
-	                                                              __screen_timeout_cb, ad,
-	                                                              SWALLOW_Type_1RADIO_RIGHT,
-	                                                              rdg, 3, KeyStr_Backlight_2_MIN_STR,
-	                                                              NULL);
+																  __screen_timeout_cb, ad,
+																  SWALLOW_Type_1RADIO_RIGHT,
+																  rdg, 3, KeyStr_Backlight_2_MIN_STR,
+																  NULL);
 	if (ad->data_backlight_2min) {
 		ad->data_backlight_2min->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_2min);
@@ -167,10 +167,10 @@ static void setting_display_screen_timeout_popup(void *data)
 	}
 
 	ad->data_backlight_5min = setting_create_Gendial_field_1radio(menu_glist, &(ad->itc_1text_1icon),
-	                                                              __screen_timeout_cb, ad,
-	                                                              SWALLOW_Type_1RADIO_RIGHT,
-	                                                              rdg, 4, KeyStr_Backlight_5_MIN_STR,
-	                                                              NULL);
+																  __screen_timeout_cb, ad,
+																  SWALLOW_Type_1RADIO_RIGHT,
+																  rdg, 4, KeyStr_Backlight_5_MIN_STR,
+																  NULL);
 	if (ad->data_backlight_5min) {
 		ad->data_backlight_5min->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_5min);
@@ -179,10 +179,10 @@ static void setting_display_screen_timeout_popup(void *data)
 	}
 
 	ad->data_backlight_10min = setting_create_Gendial_field_1radio(menu_glist, &(ad->itc_1text_1icon),
-	                                                               __screen_timeout_cb, ad,
-	                                                               SWALLOW_Type_1RADIO_RIGHT,
-	                                                               rdg, 5, KeyStr_Backlight_10_MIN_STR,
-	                                                               NULL);
+																   __screen_timeout_cb, ad,
+																   SWALLOW_Type_1RADIO_RIGHT,
+																   rdg, 5, KeyStr_Backlight_10_MIN_STR,
+																   NULL);
 	if (ad->data_backlight_10min) {
 		ad->data_backlight_10min->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_10min);
@@ -300,41 +300,41 @@ static int setting_display_main_create(void *cb)
 
 	/* add basic layout */
 	ad->ly_main =
-	    setting_create_layout_navi_bar_genlist(ad->win_main_layout,
-	                                           ad->win_get,
-	                                           KeyStr_Display,
-	                                           NULL,
-	                                           NULL,
-	                                           (setting_call_back_func)setting_display_main_click_softkey_back_cb,
-	                                           NULL, ad, &scroller,
-	                                           &(ad->navi_bar));
+		setting_create_layout_navi_bar_genlist(ad->win_main_layout,
+											   ad->win_get,
+											   KeyStr_Display,
+											   NULL,
+											   NULL,
+											   (setting_call_back_func)setting_display_main_click_softkey_back_cb,
+											   NULL, ad, &scroller,
+											   &(ad->navi_bar));
 
 	ad->genlist = scroller;
 	elm_genlist_mode_set(ad->genlist, ELM_LIST_COMPRESS);
 	/*register vconf key */
 
 	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_AUTO_ROTATE_SCREEN_BOOL,
-	                               setting_display_main_vconf_change_cb, ad);
+								   setting_display_main_vconf_change_cb, ad);
 	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf notifications Failed %d", ret);
 
 	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_LCD_AUTO_DISPLAY_ADJUSTMENT,
-	                               setting_display_main_vconf_change_cb, ad);
+								   setting_display_main_vconf_change_cb, ad);
 	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf notifications Failed %d", ret);
 
 	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_DYNAMIC_STATUS_BAR,
-	                               setting_display_main_vconf_change_cb, ad);
+								   setting_display_main_vconf_change_cb, ad);
 	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf notifications Failed %d", ret);
 
 	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_SCREEN_CAPTURE_EDIT_AFTER_CAPTURE,
-	                               setting_display_main_vconf_change_cb, ad);
+								   setting_display_main_vconf_change_cb, ad);
 	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf notifications Failed %d", ret);
 
 	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_LCD_TIMEOUT_NORMAL,
-	                               setting_display_main_vconf_change_cb, ad);
+								   setting_display_main_vconf_change_cb, ad);
 	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf notifications Failed %d", ret);
 
@@ -343,11 +343,11 @@ static int setting_display_main_create(void *cb)
 
 	/* FONT */
 	ad->data_font =
-	    setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
-	                                     setting_display_main_mouse_up_Gendial_list_cb,
-	                                     ad, SWALLOW_Type_INVALID, NULL,
-	                                     NULL, 0, KeyStr_Font,
-	                                     NULL, NULL);
+		setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
+										 setting_display_main_mouse_up_Gendial_list_cb,
+										 ad, SWALLOW_Type_INVALID, NULL,
+										 NULL, 0, KeyStr_Font,
+										 NULL, NULL);
 	if (ad->data_font) {
 		ad->data_font->userdata = ad;
 		__BACK_POINTER_SET(ad->data_font);
@@ -358,12 +358,12 @@ static int setting_display_main_create(void *cb)
 	/* AUTO ROTATE */
 	ret = vconf_get_bool(VCONFKEY_SETAPPL_AUTO_ROTATE_SCREEN_BOOL, &value);
 	ad->data_auto_rotate =
-	    setting_create_Gendial_field_def(scroller, &(ad->itc_1text_1icon),
-	                                     setting_display_main_mouse_up_Gendial_list_cb,
-	                                     ad, SWALLOW_Type_1ICON_1RADIO, NULL,
-	                                     NULL, value, "IDS_ST_HEADER_AUTO_ROTATE_SCREEN_ABB",
-	                                     NULL,
-	                                     setting_display_main_auto_rotate_chk_btn_cb);
+		setting_create_Gendial_field_def(scroller, &(ad->itc_1text_1icon),
+										 setting_display_main_mouse_up_Gendial_list_cb,
+										 ad, SWALLOW_Type_1ICON_1RADIO, NULL,
+										 NULL, value, "IDS_ST_HEADER_AUTO_ROTATE_SCREEN_ABB",
+										 NULL,
+										 setting_display_main_auto_rotate_chk_btn_cb);
 	if (ad->data_auto_rotate) {
 		ad->data_auto_rotate->userdata = ad;
 		__BACK_POINTER_SET(ad->data_auto_rotate);
@@ -374,13 +374,13 @@ static int setting_display_main_create(void *cb)
 	/* BACKLIGHTTIME */
 	char *pa_backlight_time = get_pa_backlight_time_str();
 	ad->data_back =
-	    setting_create_Gendial_field_def(scroller,
-	                                     &itc_2text_3_parent,
-	                                     setting_display_main_mouse_up_Gendial_list_cb, ad,
-	                                     SWALLOW_Type_INVALID, NULL, NULL,
-	                                     0, KeyStr_BacklightTime,
-	                                     pa_backlight_time,
-	                                     NULL);
+		setting_create_Gendial_field_def(scroller,
+										 &itc_2text_3_parent,
+										 setting_display_main_mouse_up_Gendial_list_cb, ad,
+										 SWALLOW_Type_INVALID, NULL, NULL,
+										 0, KeyStr_BacklightTime,
+										 pa_backlight_time,
+										 NULL);
 
 	if (ad->data_back) {
 		ad->data_back->int_slp_setting_binded = INT_SLP_SETTING_LCD_TIMEOUT_NORMAL;
@@ -413,8 +413,8 @@ static int setting_display_main_create(void *cb)
 
 	/* eventsystem */
 	if (eventsystem_register_event(SYS_EVENT_SCREEN_AUTOROTATE_STATE,
-	                               &auto_rotate_event_reg_id,
-	                               (eventsystem_handler)auto_rotate_event_handler, cb) != ES_R_OK) {
+								   &auto_rotate_event_reg_id,
+								   (eventsystem_handler)auto_rotate_event_handler, cb) != ES_R_OK) {
 		SETTING_TRACE_ERROR("error");
 	}
 
@@ -443,27 +443,27 @@ static int setting_display_main_destroy(void *cb)
 	vconf_ignore_key_changed(VCONFKEY_SETAPPL_BRIGHTNESS_AUTOMATIC_INT, __display_int_vconf_cb);
 
 	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_AUTO_ROTATE_SCREEN_BOOL,
-	                               setting_display_main_vconf_change_cb);
+								   setting_display_main_vconf_change_cb);
 	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf ignore Failed %d", ret);
 
 	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_LCD_AUTO_DISPLAY_ADJUSTMENT,
-	                               setting_display_main_vconf_change_cb);
+								   setting_display_main_vconf_change_cb);
 	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf ignore Failed %d", ret);
 
 	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_DYNAMIC_STATUS_BAR,
-	                               setting_display_main_vconf_change_cb);
+								   setting_display_main_vconf_change_cb);
 	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf ignore Failed %d", ret);
 
 	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_SCREEN_CAPTURE_EDIT_AFTER_CAPTURE,
-	                               setting_display_main_vconf_change_cb);
+								   setting_display_main_vconf_change_cb);
 	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf ignore Failed %d", ret);
 
 	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_LCD_TIMEOUT_NORMAL,
-	                               setting_display_main_vconf_change_cb);
+								   setting_display_main_vconf_change_cb);
 	if (ret != 0)
 		SETTING_TRACE_ERROR("vconf ignore Failed %d", ret);
 
@@ -536,7 +536,7 @@ static int setting_display_main_cleanup(void *cb)
  ***************************************************/
 
 void setting_display_destroy_font_ug_cb(ui_gadget_h ug,
-                                        void *priv)
+										void *priv)
 {
 	SettingDisplayUG *ad = (SettingDisplayUG *) priv;
 	ret_if(priv == NULL);
@@ -584,7 +584,7 @@ gboolean setting_display_create_font_sg(void *data)
 }
 
 void setting_display_destroy_ledindicator_ug_cb(ui_gadget_h ug,
-                                                void *priv)
+												void *priv)
 {
 	SettingDisplayUG *ad = (SettingDisplayUG *) priv;
 
@@ -632,7 +632,7 @@ gboolean setting_display_create_ledindicator_sg(void *data)
 
 static void
 setting_display_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
-                                              void *event_info)
+											  void *event_info)
 {
 	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
 	SettingDisplayUG *ad = (SettingDisplayUG *) data;
@@ -650,7 +650,7 @@ setting_display_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 
 	if (!safeStrCmp("IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING", list_item->keyStr)) {
 		setting_view_change(&setting_view_display_main,
-		                    &setting_view_display_brightness, ad);
+							&setting_view_display_brightness, ad);
 	} else if (!safeStrCmp("IDS_ST_HEADER_AUTO_ROTATE_SCREEN_ABB", list_item->keyStr)) {
 		setting_update_gl_item_chk_status(list_item, !(list_item->chk_status));
 		vconf_set_bool(VCONFKEY_SETAPPL_AUTO_ROTATE_SCREEN_BOOL, list_item->chk_status);
@@ -663,14 +663,14 @@ setting_display_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 
 static Eina_Bool
 setting_display_main_click_softkey_back_cb(void *data, Evas_Object *obj,
-                                           void *event_info)
+										   void *event_info)
 {
 	SettingDisplayUG *ad = (SettingDisplayUG *) data;
 
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	setting_retvm_if(data == NULL, EINA_FALSE,
-	                 "[Setting > Display] Data parameter is NULL");
+					 "[Setting > Display] Data parameter is NULL");
 
 	/* Send destroy request */
 	ug_destroy_me(ad->ug);
@@ -702,7 +702,7 @@ static void setting_display_main_auto_rotate_chk_btn_cb(void *data, Evas_Object 
 	} else {
 		elm_win_rotation_with_resize_set(ad->win_main_layout, 0);
 		if (system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_DISPLAY_SCREEN_ROTATION_AUTO,
-																			 false) == SYSTEM_SETTINGS_ERROR_NONE)
+										   false) == SYSTEM_SETTINGS_ERROR_NONE)
 			SETTING_TRACE("SYSTEM_SETTINGS_KEY_DISPLAY_SCREEN_ROTATION_AUTO is OK");
 	}
 }

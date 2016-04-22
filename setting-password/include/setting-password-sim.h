@@ -38,10 +38,10 @@ int setting_password_sim_check_2line_entry(void *data);
 int setting_password_sim_check_3line_entry(void *data);
 
 void setting_password_sim_click_softkey_done_cb(void *data,
-                                                Evas_Object *obj,
-                                                void *event_info);
+												Evas_Object *obj,
+												void *event_info);
 void setting_password_sim_warning_entry_added_byte_popup(SettingPasswordUG *ad,
-                                                         int min, int max);
+														 int min, int max);
 
 
 void setting_get_pin_lock_info_cb(TapiHandle *handle, int result, void *data, void *user_data);

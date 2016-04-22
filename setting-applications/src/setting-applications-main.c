@@ -73,13 +73,13 @@ static int setting_applications_main_create(void *cb)
 	Evas_Object *scroller = NULL;
 
 	ad->ly_main =
-	    setting_create_layout_navi_bar_genlist(ad->win_main_layout,
-	                                           ad->win_get,
-	                                           KeyStr_Applications, NULL,/* ARROW */
-	                                           NULL,
-	                                           (setting_call_back_func)setting_applications_main_click_softkey_back_cb,
-	                                           NULL, ad, &scroller,
-	                                           &(ad->navi_bar));
+		setting_create_layout_navi_bar_genlist(ad->win_main_layout,
+											   ad->win_get,
+											   KeyStr_Applications, NULL,/* ARROW */
+											   NULL,
+											   (setting_call_back_func)setting_applications_main_click_softkey_back_cb,
+											   NULL, ad, &scroller,
+											   &(ad->navi_bar));
 
 	ad->genlist = scroller;
 	elm_genlist_mode_set(ad->genlist, ELM_LIST_COMPRESS);
@@ -88,16 +88,16 @@ static int setting_applications_main_create(void *cb)
 	evas_object_smart_callback_add(ad->genlist, "realized", __gl_realized_cb, NULL);
 
 	setting_create_Gendial_field_def(ad->genlist, &itc_1text,
-	                                 setting_applications_main_mouse_up_Gendial_list_cb,
-	                                 ad, SWALLOW_Type_INVALID, NULL,
-	                                 NULL, 0,
-	                                 KeyStr_ApplicationManager, NULL, NULL);
+									 setting_applications_main_mouse_up_Gendial_list_cb,
+									 ad, SWALLOW_Type_INVALID, NULL,
+									 NULL, 0,
+									 KeyStr_ApplicationManager, NULL, NULL);
 
 	setting_create_Gendial_field_def(ad->genlist, &itc_1text,
-	                                 setting_applications_main_mouse_up_Gendial_list_cb,
-	                                 ad, SWALLOW_Type_INVALID, NULL,
-	                                 NULL, 0,
-	                                 KeyStr_DefaultApplications, NULL, NULL);
+									 setting_applications_main_mouse_up_Gendial_list_cb,
+									 ad, SWALLOW_Type_INVALID, NULL,
+									 NULL, 0,
+									 KeyStr_DefaultApplications, NULL, NULL);
 
 
 	setting_view_applications_main.is_create = 1;
@@ -137,7 +137,7 @@ static int setting_applications_main_update(void *cb)
 		evas_object_show(ad->ly_main);
 		if (ad->data_br) {
 			ad->data_br->sub_desc =
-			    (char *)g_strdup(get_brightness_mode_str());
+				(char *)g_strdup(get_brightness_mode_str());
 			elm_object_item_data_set(ad->data_br->item, ad->data_br);
 			elm_genlist_item_update(ad->data_br->item);
 
@@ -185,7 +185,7 @@ static void setting_applications_manage_apps_ug(SettingApplicationsUG *ad)
 
 static void
 setting_applications_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
-                                                   void *event_info)
+												   void *event_info)
 {
 	/* error check */
 	setting_retm_if(data == NULL, "Data parameter is NULL");
@@ -194,7 +194,7 @@ setting_applications_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
 	elm_genlist_item_selected_set(item, 0);
 	Setting_GenGroupItem_Data *list_item =
-	    (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
+		(Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
 
 	SettingApplicationsUG *ad = (SettingApplicationsUG *) data;
 
@@ -204,7 +204,7 @@ setting_applications_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 		setting_applications_manage_apps_ug(ad);
 	} else if (!safeStrCmp(KeyStr_DefaultApplications, list_item->keyStr)) {
 		setting_view_change(&setting_view_applications_main,
-		                    &setting_view_applications_defaultapp, ad);
+							&setting_view_applications_defaultapp, ad);
 	}
 }
 
@@ -213,7 +213,7 @@ static Eina_Bool setting_applications_main_click_softkey_back_cb(void *data, Elm
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	setting_retvm_if(data == NULL, EINA_FALSE,
-	                 "[Setting > Applications] Data parameter is NULL");
+					 "[Setting > Applications] Data parameter is NULL");
 
 	SettingApplicationsUG *ad = (SettingApplicationsUG *) data;
 

@@ -97,13 +97,13 @@ char *_ringtone_gl_label_get(void *data, Evas_Object *obj, const char *part)
 }
 
 Evas_Object *_ringtone_gl_icon_get(void *data, Evas_Object *obj,
-                                   const char *part)
+								   const char *part)
 {
 	retvm_if(data == NULL, NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *item_data = (Setting_GenGroupItem_Data *) data;
 	/*SettingRingtoneUG *ad = (SettingRingtoneUG *) (item_data->userdata); */
 
-	if (safeStrCmp(part, "elm.swallow.end"))	
+	if (safeStrCmp(part, "elm.swallow.end"))
 		return NULL;
 
 	Evas_Object *radio = elm_radio_add(obj);
@@ -121,7 +121,7 @@ Evas_Object *_ringtone_gl_icon_get(void *data, Evas_Object *obj,
 static void _ringtone_gl_del(void *data, Evas_Object *obj)
 {
 	Setting_GenGroupItem_Data *item_data =
-	    (Setting_GenGroupItem_Data *) data;
+		(Setting_GenGroupItem_Data *) data;
 
 	if (item_data) {
 		G_FREE(item_data->keyStr);
@@ -149,7 +149,7 @@ static void ringtone_item_sel(void *data, Evas_Object *obj, void *event_info)
 	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
 	elm_genlist_item_selected_set(item, 0);
 	Setting_GenGroupItem_Data *list_item =
-	    (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
+		(Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
 	setting_retm_if(NULL == list_item, "list_item is NULL");
 
 	SettingRingtoneUG *ad = (SettingRingtoneUG *)data;
@@ -172,8 +172,8 @@ static void ringtone_item_sel(void *data, Evas_Object *obj, void *event_info)
 
 static int _compare_cb(const void *d1, const void *d2)
 {
-	fileNodeInfo *pNode1 = (fileNodeInfo*) d1;
-	fileNodeInfo *pNode2 = (fileNodeInfo*) d2;
+	fileNodeInfo *pNode1 = (fileNodeInfo *) d1;
+	fileNodeInfo *pNode2 = (fileNodeInfo *) d2;
 
 	return safeStrCmp(pNode1->media_name, pNode2->media_name);
 }
@@ -185,7 +185,7 @@ char *get_default_filepath(SettingRingtoneUG *ad)
 	char *default_ringtone = NULL;
 
 	if (!safeStrCmp(ad->dir_path, RINGTONE_FILE_PATH) ||
-	    !safeStrCmp(ad->dir_path, RINGTONE_FILE_PATH_1)) {
+		!safeStrCmp(ad->dir_path, RINGTONE_FILE_PATH_1)) {
 
 		default_ringtone = vconf_get_str(VCONFKEY_SETAPPL_CALL_RINGTONE_PATH_STR);
 		if (default_ringtone && ecore_file_exists(default_ringtone)) {
@@ -223,13 +223,13 @@ static int setting_ringtone_create(void *cb)
 	SettingRingtoneUG *ad = (SettingRingtoneUG *) cb;
 
 	ad->ly_main = setting_create_layout_navi_bar_genlist(ad->win_main_layout,
-	                                                     ad->win_get,
-	                                                     STR_RINGTONE_SELECT,
-	                                                     "IDS_ST_BUTTON_BACK",
-	                                                     NULL,
-	                                                     NULL,
-	                                                     NULL, ad, &ad->scroller,
-	                                                     &(ad->navi_bar));
+														 ad->win_get,
+														 STR_RINGTONE_SELECT,
+														 "IDS_ST_BUTTON_BACK",
+														 NULL,
+														 NULL,
+														 NULL, ad, &ad->scroller,
+														 &(ad->navi_bar));
 	Elm_Object_Item *navi_it;
 	navi_it = elm_naviframe_top_item_get(ad->navi_bar);
 	elm_naviframe_item_pop_cb_set(navi_it, setting_ringtone_click_back_cb, ad);
@@ -253,9 +253,9 @@ static int setting_ringtone_create(void *cb)
 		SETTING_TRACE_ERROR("Failed to get filelist, ret = %d %s", ret, RINGTONE_FILE_PATH);
 	}
 	SETTING_TRACE("file path = %d : %s", ret, RINGTONE_FILE_PATH);
-	
+
 	filelist = eina_list_sort(filelist,
-	                          eina_list_count(filelist), _compare_cb);
+							  eina_list_count(filelist), _compare_cb);
 	ad->filelist = filelist;
 
 	Eina_List *l;
@@ -279,9 +279,9 @@ static int setting_ringtone_create(void *cb)
 			item_data->chk_status = cnt;
 			item_data->filepath = get_default_filepath(ad);
 			SETTING_TRACE("item_data->filepath = %s", item_data->filepath);
-			
+
 			item_data->item = elm_genlist_item_append(ad->scroller, &(ad->itc_ring), item_data, NULL,
-			                                          ELM_GENLIST_ITEM_NONE, ringtone_item_sel, ad);
+													  ELM_GENLIST_ITEM_NONE, ringtone_item_sel, ad);
 
 			if (!safeStrCmp("default", ad->file_path)) {
 				cur_pos = cnt;
@@ -303,7 +303,7 @@ static int setting_ringtone_create(void *cb)
 			item_data->chk_status = cnt;
 			item_data->filepath = g_strdup("silent");
 			item_data->item = elm_genlist_item_append(ad->scroller, &(ad->itc_ring), item_data, NULL,
-			                                          ELM_GENLIST_ITEM_NONE, ringtone_item_sel, ad);
+													  ELM_GENLIST_ITEM_NONE, ringtone_item_sel, ad);
 
 			if (!safeStrCmp("silent", ad->file_path)) {
 				cur_pos = cnt;
@@ -333,9 +333,9 @@ static int setting_ringtone_create(void *cb)
 			item_data->chk_status = cnt;
 			item_data->filepath = g_strdup(fullPath);
 			SETTING_TRACE("item_data->filepath = %s", item_data->filepath);
-			
+
 			item_data->item = elm_genlist_item_append(ad->scroller, &(ad->itc_ring), item_data, NULL,
-			                                          ELM_GENLIST_ITEM_NONE, ringtone_item_sel, ad);
+													  ELM_GENLIST_ITEM_NONE, ringtone_item_sel, ad);
 
 			if (!safeStrCmp(fullPath, ad->file_path)) {
 				cur_pos = cnt;

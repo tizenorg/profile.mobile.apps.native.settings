@@ -74,8 +74,8 @@ static void __all_gl_group_clicked_cb(void *data, Evas_Object *obj, void *event_
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	/*setting_retm_if(data == NULL, "Data parameter is NULL"); */
-	// int view_type = (int)data;
-	// setting_main_appdata *ad = g_main_ad;
+	/* int view_type = (int)data; */
+	/* setting_main_appdata *ad = g_main_ad; */
 	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
 	elm_genlist_item_selected_set(item, 0);
 	Setting_GenGroupItem_Data *data_parentItem = (Setting_GenGroupItem_Data *)elm_object_item_data_get(item);
@@ -83,8 +83,8 @@ static void __all_gl_group_clicked_cb(void *data, Evas_Object *obj, void *event_
 
 
 	Elm_Object_Item *start_item = NULL;
-	// Elm_Object_Item *end_item = NULL;
-	// Elm_Object_Item *it;
+	/* Elm_Object_Item *end_item = NULL; */
+	/* Elm_Object_Item *it; */
 
 	data_parentItem->isPlaying = !data_parentItem->isPlaying;
 	int hide_flag = !(data_parentItem->isPlaying);
@@ -118,8 +118,8 @@ Evas_Object *_view_list_geter(void *data)
 	retvm_if(genlist == NULL, NULL, "Cannot set genlist object as contento of layout");
 
 	ad->sc_gl[SC_All_List] = genlist;
-	//elm_genlist_block_count_set(genlist, 2);
-	//elm_object_style_set(genlist, "dialogue");
+	/*elm_genlist_block_count_set(genlist, 2); */
+	/*elm_object_style_set(genlist, "dialogue"); */
 	elm_genlist_clear(genlist);	/* first to clear list */
 	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);	/* resolve abnormal height issue */
 	evas_object_smart_callback_add(genlist, "realized", __all_gl_realized_cb, ad);
@@ -140,17 +140,17 @@ Evas_Object *_view_list_geter(void *data)
 		group_name = setting_cfg_get_category_name(i);
 		group_dx++;/*from the first */
 		item_data = setting_create_Gendial_field_def(
-		                genlist,
-		                &(ad->itc_table[GENDIAL_Type_expandable_proc]),
-		                __all_gl_group_clicked_cb,
-		                (void *)NULL,
-		                SWALLOW_Type_INVALID,
-		                NULL, /* l_icon */
-		                NULL, /* r_icon */
-		                0,
-		                group_name,
-		                NULL, /* r_icon */
-		                NULL);
+						genlist,
+						&(ad->itc_table[GENDIAL_Type_expandable_proc]),
+						__all_gl_group_clicked_cb,
+						(void *)NULL,
+						SWALLOW_Type_INVALID,
+						NULL, /* l_icon */
+						NULL, /* r_icon */
+						0,
+						group_name,
+						NULL, /* r_icon */
+						NULL);
 		if (item_data) {
 			item_data->isPlaying = TRUE;/*expandable ? */
 			item_data->chk_status = group_dx;/*keep the group idx */
@@ -447,7 +447,7 @@ static int setting_main_destroy(void *cb)
 		ecore_timer_del(ad->event_freeze_timer);
 		ad->event_freeze_timer = NULL;
 	}
-	//evas_object_smart_callback_del(ad->main_genlist, "realized", __gl_realized_cb);
+	/*evas_object_smart_callback_del(ad->main_genlist, "realized", __gl_realized_cb); */
 
 	elm_object_part_content_unset(ad->view_layout, "elm.swallow.content");
 	elm_object_item_part_content_unset(ad->navibar_main_it, "tabbar");

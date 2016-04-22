@@ -33,7 +33,7 @@
 * @param data user data (SettingTimeUG *)
 */
 static void setting_time_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
-                                      void *event_info)
+									  void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	SettingTimeUG *ad = (SettingTimeUG *) data;
@@ -51,7 +51,7 @@ static void setting_time_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
 * @return
 */
 static void *setting_time_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
-                                       app_control_h service, void *priv)
+									   app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if((!priv), NULL, "!priv");
@@ -95,33 +95,33 @@ static void *setting_time_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	setting_view_node_set_cur_view(&setting_view_time_main);
 	setting_view_create(&setting_view_time_main, (void *)timeUG);
 	evas_object_event_callback_add(timeUG->win_main_layout,
-	                               EVAS_CALLBACK_RESIZE,
-	                               setting_time_ug_cb_resize, timeUG);
+								   EVAS_CALLBACK_RESIZE,
+								   setting_time_ug_cb_resize, timeUG);
 	return timeUG->ly_main;
 }
 
 static void setting_time_ug_on_start(ui_gadget_h ug, app_control_h service,
-                                     void *priv)
+									 void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	/*  do nothing */
 }
 
 static void setting_time_ug_on_pause(ui_gadget_h ug, app_control_h service,
-                                     void *priv)
+									 void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	/*  do nothing */
 }
 
 static void setting_time_ug_on_resume(ui_gadget_h ug, app_control_h service,
-                                      void *priv)
+									  void *priv)
 {
 	/*  do nothing */
 }
 
 static void setting_time_ug_on_destroy(ui_gadget_h ug, app_control_h service,
-                                       void *priv)
+									   void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
@@ -142,49 +142,49 @@ static void setting_time_ug_on_destroy(ui_gadget_h ug, app_control_h service,
 }
 
 static void setting_time_ug_on_message(ui_gadget_h ug, app_control_h msg,
-                                       app_control_h service, void *priv)
+									   app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 }
 
 static void setting_time_ug_on_event(ui_gadget_h ug, enum ug_event event,
-                                     app_control_h service, void *priv)
+									 app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SettingTimeUG *ad = (SettingTimeUG *) priv;
 
 	switch (event) {
-		case UG_EVENT_LOW_MEMORY:
-			break;
-		case UG_EVENT_LOW_BATTERY:
-			break;
-		case UG_EVENT_LANG_CHANGE: {
-				const char *pa_lang = vconf_get_str(VCONFKEY_LANGSET);
-				if (pa_lang) {
-					char *q = strchr(pa_lang, '.');
-					if (q) {
-						*q = '\0';
-					}
+	case UG_EVENT_LOW_MEMORY:
+		break;
+	case UG_EVENT_LOW_BATTERY:
+		break;
+	case UG_EVENT_LANG_CHANGE: {
+			const char *pa_lang = vconf_get_str(VCONFKEY_LANGSET);
+			if (pa_lang) {
+				char *q = strchr(pa_lang, '.');
+				if (q) {
+					*q = '\0';
 				}
-				int err = -1;
-
-				uloc_setDefault(pa_lang, &err);
-				FREE(pa_lang);
-				setting_view_update(&setting_view_time_main, ad);
 			}
-			break;
-		case UG_EVENT_ROTATE_PORTRAIT:
-			break;
-		case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-			break;
-		case UG_EVENT_ROTATE_LANDSCAPE:
-			break;
-		case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-			break;
-		case UG_EVENT_REGION_CHANGE:
-			break;
-		default:
-			break;
+			int err = -1;
+
+			uloc_setDefault(pa_lang, &err);
+			FREE(pa_lang);
+			setting_view_update(&setting_view_time_main, ad);
+		}
+		break;
+	case UG_EVENT_ROTATE_PORTRAIT:
+		break;
+	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
+		break;
+	case UG_EVENT_ROTATE_LANDSCAPE:
+		break;
+	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
+		break;
+	case UG_EVENT_REGION_CHANGE:
+		break;
+	default:
+		break;
 	}
 }
 
@@ -192,40 +192,40 @@ static void setting_time_ug_on_event(ui_gadget_h ug, enum ug_event event,
 * @brief key event handler for UG
 */
 static void setting_time_ug_on_key_event(ui_gadget_h ug,
-                                         enum ug_key_event event, app_control_h service,
-                                         void *priv)
+										 enum ug_key_event event, app_control_h service,
+										 void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SettingTimeUG *ad = (SettingTimeUG *) priv;
 
 	switch (event) {
-		case UG_KEY_EVENT_END: {
+	case UG_KEY_EVENT_END: {
 #if 0
-				if (0 == safeStrCmp(ad->caller, "pwlock")) {
-					/*  Create Bundle and send message */
+			if (0 == safeStrCmp(ad->caller, "pwlock")) {
+				/*  Create Bundle and send message */
 
-					app_control_h svc;
-					if (app_control_create(&svc))
-						return;
+				app_control_h svc;
+				if (app_control_create(&svc))
+					return;
 
-					app_control_add_extra_data(svc, "result", "lbutton_click");
-					ug_send_result(ad->ug, svc);
+				app_control_add_extra_data(svc, "result", "lbutton_click");
+				ug_send_result(ad->ug, svc);
 
-					app_control_destroy(svc);
-				}
+				app_control_destroy(svc);
+			}
 #endif
 
-				if (elm_naviframe_top_item_get(ad->navi_bar) ==
-				    elm_naviframe_bottom_item_get(ad->navi_bar)) {
-					ug_destroy_me(ug);
-				} else {
-					/* elm_naviframe_item_pop(ad->navi_bar); */
-					setting_view_cb_at_endKey(ad);
-				}
+			if (elm_naviframe_top_item_get(ad->navi_bar) ==
+				elm_naviframe_bottom_item_get(ad->navi_bar)) {
+				ug_destroy_me(ug);
+			} else {
+				/* elm_naviframe_item_pop(ad->navi_bar); */
+				setting_view_cb_at_endKey(ad);
 			}
-			break;
-		default:
-			break;
+		}
+		break;
+	default:
+		break;
 	}
 }
 
@@ -268,7 +268,7 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 }
 
 UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
-                                             char **applocale)
+											 char **applocale)
 {
 	int i, size;
 	Setting_Cfg_Node_T *node;
@@ -292,12 +292,12 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
 
 	for (i = 0; i < size; i++) {
 		node = setting_plugin_search_item_subindex_add(
-		           search_configs[i].key_name,
-		           search_configs[i].ug_args,
-		           IMG_DateTime,
-		           search_configs[i].item_type,
-		           search_configs[i].data,
-		           search_configs[i].sub_index);
+				   search_configs[i].key_name,
+				   search_configs[i].ug_args,
+				   IMG_DateTime,
+				   search_configs[i].item_type,
+				   search_configs[i].data,
+				   search_configs[i].sub_index);
 
 		*pplist = eina_list_append(*pplist, node);
 	}

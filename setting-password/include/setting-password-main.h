@@ -33,12 +33,12 @@ int setting_password_main_check_1line_password(void *data);
 int setting_password_main_check_2line_password(void *data);
 
 void setting_password_main_click_softkey_done_cb(void *data,
-                                                 Evas_Object *obj,
-                                                 void *event_info);
+												 Evas_Object *obj,
+												 void *event_info);
 void setting_password_main_click_softkey_continue_cb(void *data, Evas_Object *obj,
-                                                     void *event_info);
+													 void *event_info);
 
 void setting_password_main_warning_entry_added_byte_popup(SettingPasswordUG *ad,
-                                                          int min, int max);
+														  int min, int max);
 
 #endif

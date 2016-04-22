@@ -27,7 +27,7 @@
 
 
 static void setting_sound_ug_cb_resize(void *data, Evas *e,
-                                       Evas_Object *obj, void *event_info)
+									   Evas_Object *obj, void *event_info)
 {
 	ret_if(data == NULL);
 
@@ -36,8 +36,8 @@ static void setting_sound_ug_cb_resize(void *data, Evas *e,
 }
 
 static void *setting_sound_ug_on_create(ui_gadget_h ug,
-                                        enum ug_mode mode, app_control_h service,
-                                        void *priv)
+										enum ug_mode mode, app_control_h service,
+										void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	/*appcore_measure_start(); */
@@ -55,8 +55,8 @@ static void *setting_sound_ug_on_create(ui_gadget_h ug,
 	app_control_get_caller(service, &(profileUG->viewtype));
 	setting_sound_init(profileUG);
 	evas_object_event_callback_add(profileUG->win_main_layout,
-	                               EVAS_CALLBACK_RESIZE,
-	                               setting_sound_ug_cb_resize, profileUG);
+								   EVAS_CALLBACK_RESIZE,
+								   setting_sound_ug_cb_resize, profileUG);
 	return profileUG->ly_main;
 }
 
@@ -192,48 +192,48 @@ static void setting_sound_ug_on_destroy(ui_gadget_h ug, app_control_h service, v
 }
 
 static void setting_sound_ug_on_message(ui_gadget_h ug, app_control_h msg,
-                                        app_control_h service, void *priv)
+										app_control_h service, void *priv)
 {
 }
 
 static void setting_sound_ug_on_event(ui_gadget_h ug,
-                                      enum ug_event event, app_control_h service, void *priv)
+									  enum ug_event event, app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	/*SettingProfileUG *ad = (SettingProfileUG *)priv; */
 
 	switch (event) {
-		case UG_EVENT_LOW_MEMORY:
-			break;
-		case UG_EVENT_LOW_BATTERY:
-			break;
-		case UG_EVENT_LANG_CHANGE:
-			break;
-		case UG_EVENT_ROTATE_PORTRAIT:
-		case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-			break;
-		case UG_EVENT_ROTATE_LANDSCAPE:
-		case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-			break;
-		case UG_EVENT_REGION_CHANGE:
-			break;
-		default:
-			break;
+	case UG_EVENT_LOW_MEMORY:
+		break;
+	case UG_EVENT_LOW_BATTERY:
+		break;
+	case UG_EVENT_LANG_CHANGE:
+		break;
+	case UG_EVENT_ROTATE_PORTRAIT:
+	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
+		break;
+	case UG_EVENT_ROTATE_LANDSCAPE:
+	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
+		break;
+	case UG_EVENT_REGION_CHANGE:
+		break;
+	default:
+		break;
 	}
 }
 
 static void setting_sound_ug_on_key_event(ui_gadget_h ug,
-                                          enum ug_key_event event, app_control_h service, void *priv)
+										  enum ug_key_event event, app_control_h service, void *priv)
 {
 	ret_if(priv == NULL);
 
 	/*SettingProfileUG *ad = (SettingProfileUG *) priv; */
 
 	switch (event) {
-		case UG_KEY_EVENT_END:
-			break;
-		default:
-			break;
+	case UG_KEY_EVENT_END:
+		break;
+	default:
+		break;
 	}
 }
 

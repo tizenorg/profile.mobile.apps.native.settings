@@ -53,7 +53,7 @@ static Evas_Object *vp_create_win(const char *name, bool transparent)
 			Ecore_X_Window xwin = elm_win_xwindow_get(eo);
 			ecore_x_window_prop_card32_set(xwin, opaqueAtom, &opaqueVal, 1);
 #else
-	// @todo : repace codes using X with codes tizen 3.0 API
+			/* @todo : repace codes using X with codes tizen 3.0 API */
 #endif
 		}
 

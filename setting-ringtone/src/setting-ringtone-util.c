@@ -92,8 +92,8 @@ int get_filelist_from_dir_path(char *path, Eina_List **file_list)
 	}
 
 	while (readdir_r(pDir,&ent,&result) ==0) {
-		if(result == NULL) break;
-			
+		if (result == NULL) break;
+
 		fileNodeInfo *pNode = NULL;
 
 		if (strncmp(ent.d_name, ".", 1) == 0 || strcmp(ent.d_name, "..") == 0) {
@@ -137,7 +137,7 @@ void ringtone_play_sound(const char *sound_file, player_h **mp_handle)
 	int err = player_create(player);
 	if (err != PLAYER_ERROR_NONE) {
 		SETTING_TRACE_ERROR("creating the player handle failed[%d]",
-		                    err);
+							err);
 		FREE(player);
 		return;
 	}
@@ -145,7 +145,7 @@ void ringtone_play_sound(const char *sound_file, player_h **mp_handle)
 	err = player_set_uri(*player, sound_file);
 	if (err != PLAYER_ERROR_NONE) {
 		SETTING_TRACE_ERROR("error to set attribute---profile_uri[%d]",
-		                    err);
+							err);
 		player_destroy(*player);
 		FREE(player);
 		return;
@@ -154,7 +154,7 @@ void ringtone_play_sound(const char *sound_file, player_h **mp_handle)
 	err = player_prepare(*player);
 	if (err != PLAYER_ERROR_NONE) {
 		SETTING_TRACE_ERROR("realizing the player handle failed[%d]",
-		                    err);
+							err);
 		player_destroy(*player);
 		FREE(player);
 		return;

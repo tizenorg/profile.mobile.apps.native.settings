@@ -37,34 +37,34 @@
 
 /*****/
 typedef enum _Cfg_Item_Position_Type {
-    Cfg_Item_Pos_Uninstall = -1,
-    Cfg_Item_Pos_Level0 = 0,
-    Cfg_Item_Pos_Level1 = 1,
-    Cfg_Item_Pos_Level_All = 2,
+	Cfg_Item_Pos_Uninstall = -1,
+	Cfg_Item_Pos_Level0 = 0,
+	Cfg_Item_Pos_Level1 = 1,
+	Cfg_Item_Pos_Level_All = 2,
 } Cfg_Item_Position;
 
 typedef enum _Cfg_Item_State {
-    Cfg_Item_Error = -1,
-    Cfg_Item_Off = 0,		/* same order - vconf 0 (boolean) */
-    Cfg_Item_On = 1			/* same order - vconf 1 (boolean) */
+	Cfg_Item_Error = -1,
+	Cfg_Item_Off = 0,		/* same order - vconf 0 (boolean) */
+	Cfg_Item_On = 1			/* same order - vconf 1 (boolean) */
 } Cfg_Item_State;
 
 
 
 typedef enum _Cfg_Item_Reset_Type {
-    Cfg_Item_unResetable = 0,
-    Cfg_Item_Resetable = 1,
+	Cfg_Item_unResetable = 0,
+	Cfg_Item_Resetable = 1,
 } Cfg_Item_Reset_Type;
 
 typedef enum _cfg_error_type {
-    Cfg_Error_Type_Sucess = 0,
-    Cfg_Error_Type_CreateCfg_Failed = -1,
-    Cfg_Error_Type_Mkdir_Failed = -2,
-    Cfg_Error_Type_RemoveCfg_Failed = -3,
-    Cfg_Error_Type_ReadCfg_Failed = -4,
-    Cfg_Error_Type_DirPermissionDenied = -5,
-    Cfg_Error_Type_FilePermissionDenied = -6,
-    Cfg_Error_Type_OutOfMemory = -7,
+	Cfg_Error_Type_Sucess = 0,
+	Cfg_Error_Type_CreateCfg_Failed = -1,
+	Cfg_Error_Type_Mkdir_Failed = -2,
+	Cfg_Error_Type_RemoveCfg_Failed = -3,
+	Cfg_Error_Type_ReadCfg_Failed = -4,
+	Cfg_Error_Type_DirPermissionDenied = -5,
+	Cfg_Error_Type_FilePermissionDenied = -6,
+	Cfg_Error_Type_OutOfMemory = -7,
 } Cfg_Error_Type;
 
 
@@ -88,21 +88,21 @@ typedef enum _cfg_error_type {
  * 2, 3,
  */
 typedef enum _Cfg_Item_Type {
-    Cfg_Item_Node_Error = 0,		/** Error                                     - no action */
-    Cfg_Item_Ug_Node = 1,			/** general UG                                - don't create Grid */
-    Cfg_Item_Ui_Node = 2,			/** no UG, no app launching, just menu name   - create Grid */
-    Cfg_Item_Title_Node = 3,		/** view name                                 - create Grid */
-    Cfg_Item_App_Node = 4,			/** app type - by launcher - read doc '4' */
-    Cfg_Item_View_Node = 5,			/** view name - 2depth search */
-    Cfg_Item_AppLauncher_Node = 6,	/** app launcher (NOT Ug)                     - don't create Grid */
-    Cfg_Item_AppLauncher_View_Node = 7,	/** view name - 2depth search by app-launcher */
+	Cfg_Item_Node_Error = 0,		/** Error                                     - no action */
+	Cfg_Item_Ug_Node = 1,			/** general UG                                - don't create Grid */
+	Cfg_Item_Ui_Node = 2,			/** no UG, no app launching, just menu name   - create Grid */
+	Cfg_Item_Title_Node = 3,		/** view name                                 - create Grid */
+	Cfg_Item_App_Node = 4,			/** app type - by launcher - read doc '4' */
+	Cfg_Item_View_Node = 5,			/** view name - 2depth search */
+	Cfg_Item_AppLauncher_Node = 6,	/** app launcher (NOT Ug)                     - don't create Grid */
+	Cfg_Item_AppLauncher_View_Node = 7,	/** view name - 2depth search by app-launcher */
 
-    /*------------------------------------------------------------------------------- */
-    /* (Cfg_Item_Ug_Node_Toggle/10 > 0 ) --> toggle style */
-    Cfg_Item_Ug_Node_Toggle = Cfg_Item_Ug_Node + 10,			/** general UG                                - don't create Grid */
-    Cfg_Item_Ui_Node_Toggle = Cfg_Item_Ui_Node + 10,			/** no UG, no app launching, just menu name   - create Grid */
-    Cfg_Item_View_Node_Toggle =  Cfg_Item_View_Node + 10,		/** view name - 2depth search with toggle button */
-    Cfg_Item_AppLauncher_Node_Toggle = Cfg_Item_AppLauncher_Node + 10,	/** app launcher (NOT Ug)                     - don't create Grid */
+	/*------------------------------------------------------------------------------- */
+	/* (Cfg_Item_Ug_Node_Toggle/10 > 0 ) --> toggle style */
+	Cfg_Item_Ug_Node_Toggle = Cfg_Item_Ug_Node + 10,			/** general UG                                - don't create Grid */
+	Cfg_Item_Ui_Node_Toggle = Cfg_Item_Ui_Node + 10,			/** no UG, no app launching, just menu name   - create Grid */
+	Cfg_Item_View_Node_Toggle =  Cfg_Item_View_Node + 10,		/** view name - 2depth search with toggle button */
+	Cfg_Item_AppLauncher_Node_Toggle = Cfg_Item_AppLauncher_Node + 10,	/** app launcher (NOT Ug)                     - don't create Grid */
 
 } Cfg_Item_Type;
 

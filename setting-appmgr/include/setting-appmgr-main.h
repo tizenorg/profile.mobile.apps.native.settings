@@ -25,7 +25,7 @@ void appmgrUg_main_init(SettingAppMgrUG *ad);
 void appmgrUg_main_genlist_append_items(SettingAppMgrUG *ad);
 char *appmgrUg_main_gl_label_get(void *data, Evas_Object *obj, const char *part);
 Evas_Object *appmgrUg_main_gl_icon_get(void *data, Evas_Object *obj,
-                                       const char *part);
+									   const char *part);
 
 char *appmgrUg_main_gl_label_new_get(void *data, Evas_Object *obj, const char *part);
 Evas_Object *appmgrUg_main_gl_icon_new_get(void *data, Evas_Object *obj, const char *part);

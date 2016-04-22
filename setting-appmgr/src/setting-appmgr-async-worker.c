@@ -95,11 +95,11 @@ static void *_async_worker_thread(void *data)
 	worker->worker_idler = ecore_idler_add(_async_worker_idler, worker);
 	if (worker->worker_idler == NULL) {
 		SETTING_TRACE_ERROR("worker->worker_idler == NULL");
-		//worker->alive = FALSE;
+		/*worker->alive = FALSE; */
 		/*----------------------------------- */
 		/* work around */
 		/*----------------------------------- */
-	//	_async_worker_idler(worker);
+		/*	_async_worker_idler(worker); */
 	}
 
 	SETTING_TRACE(" --------------------------- thread worker : END ");
@@ -123,7 +123,7 @@ static void _async_worker_hash_free_key(gpointer data)
 }
 
 void *appmgrUg_start_async_worker(async_fn fn, callback_fn cb,
-                                  SettingAppMgrUG *ad)
+								  SettingAppMgrUG *ad)
 {
 	int ret;
 	appmgrUg_worker *worker;
@@ -132,7 +132,7 @@ void *appmgrUg_start_async_worker(async_fn fn, callback_fn cb,
 
 	if (NULL == async_worker_hashT) {
 		async_worker_hashT = g_hash_table_new_full(NULL, NULL,
-		                                           _async_worker_hash_free_key, NULL);
+												   _async_worker_hash_free_key, NULL);
 	}
 
 	worker = calloc(1, sizeof(appmgrUg_worker));

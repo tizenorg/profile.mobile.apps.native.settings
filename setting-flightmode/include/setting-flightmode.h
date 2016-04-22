@@ -35,9 +35,9 @@
 typedef struct _SettingFlightModeUG SettingFlightModeUG;
 
 typedef enum _MODE_OPEARTION {
-    MODE_INVALID = 0, /*< There is no request waiting for processing */
-    MODE_ENTER = 1,	/*< Some "flightmode enter" request is waiting for processing */
-    MODE_LEAVE,		/*< Some "flightmode leave" request is waiting for processing */
+	MODE_INVALID = 0, /*< There is no request waiting for processing */
+	MODE_ENTER = 1,	/*< Some "flightmode enter" request is waiting for processing */
+	MODE_LEAVE,		/*< Some "flightmode leave" request is waiting for processing */
 } MODE_OPEARTION;
 
 

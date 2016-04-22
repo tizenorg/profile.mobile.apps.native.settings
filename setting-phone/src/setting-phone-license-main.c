@@ -51,19 +51,19 @@ static int setting_phone_license_main_create(void *cb)
 	/* add basic layout */
 	char setBtnStr[MAX_DISPLAY_NAME_LEN_ON_UI];
 	snprintf(setBtnStr, sizeof(setBtnStr), "%s",
-	         (char *)dgettext("sys_string", "IDS_ST_BUTTON_BACK"));
+			 (char *)dgettext("sys_string", "IDS_ST_BUTTON_BACK"));
 	/* scroller is a genlist */
 	ad->ly_license = setting_create_layout_navi_bar_genlist(ad->win_main_layout, ad->win_get, "IDS_ST_MBODY_LEGAL_INFORMATION_ABB", setBtnStr, NULL,	/* dgettext("sys_string", "IDS_ST_SK_SET_LITE"), */
-	                                                        setting_phone_license_main_click_softkey_cancel, NULL,	/* setting_phone_license_main_click_softkey_set, */
-	                                                        ad, &scroller,
-	                                                        &
-	                                                        (ad->navi_bar));
+															setting_phone_license_main_click_softkey_cancel, NULL,	/* setting_phone_license_main_click_softkey_set, */
+															ad, &scroller,
+															&
+															(ad->navi_bar));
 	/* [UI] open source license */
 	setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
-	                                             setting_phone_license_main_mouse_up_Gendial_list_cb,
-	                                             ad, SWALLOW_Type_INVALID, NULL, NULL,
-	                                             0, "IDS_ST_BODY_OPEN_SOURCE_LICENCES",
-	                                             NULL, NULL);
+									 setting_phone_license_main_mouse_up_Gendial_list_cb,
+									 ad, SWALLOW_Type_INVALID, NULL, NULL,
+									 0, "IDS_ST_BODY_OPEN_SOURCE_LICENCES",
+									 NULL, NULL);
 
 	setting_view_phone_license_main.is_create = 1;
 
@@ -141,14 +141,14 @@ static void __ug_layout_cb(ui_gadget_h ug, enum ug_mode mode, void *priv)
 	}
 
 	switch (mode) {
-		case UG_MODE_FULLVIEW:
-			evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-			                                 EVAS_HINT_EXPAND);
-			/*elm_win_resize_object_add(ad->win_get, base); */
-			evas_object_show(base);
-			break;
-		default:
-			break;
+	case UG_MODE_FULLVIEW:
+		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
+										 EVAS_HINT_EXPAND);
+		/*elm_win_resize_object_add(ad->win_get, base); */
+		evas_object_show(base);
+		break;
+	default:
+		break;
 	}
 
 	SETTING_TRACE_END;
@@ -232,8 +232,8 @@ static void __main_license_clicked(void *data)
 
 void
 setting_phone_license_main_mouse_up_Gendial_list_cb(void *data,
-                                                    Evas_Object *obj,
-                                                    void *event_info)
+													Evas_Object *obj,
+													void *event_info)
 {
 	/* error check */
 	setting_retm_if(data == NULL, "Data parameter is NULL");
@@ -242,7 +242,7 @@ setting_phone_license_main_mouse_up_Gendial_list_cb(void *data,
 	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
 	elm_genlist_item_selected_set(item, 0);
 	Setting_GenGroupItem_Data *list_item =
-	    (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
+		(Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
 	setting_retm_if(NULL == list_item, "list_item is NULL");
 
 	/*SettingPhoneUG *ad = (SettingPhoneUG *) data; */
@@ -255,7 +255,7 @@ setting_phone_license_main_mouse_up_Gendial_list_cb(void *data,
 }
 
 void setting_phone_license_main_popup_resp_cb(void *data, Evas_Object *obj,
-                                              void *event_info)
+											  void *event_info)
 {
 	int response_type = btn_type(obj);
 	if (POPUP_RESPONSE_OK == response_type) {
@@ -272,7 +272,7 @@ void setting_phone_license_main_popup_resp_cb(void *data, Evas_Object *obj,
 
 void
 setting_phone_license_main_click_softkey_cancel(void *data, Evas_Object *obj,
-                                                void *event_info)
+												void *event_info)
 {
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");

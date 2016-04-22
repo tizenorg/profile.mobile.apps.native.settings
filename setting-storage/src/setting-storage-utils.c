@@ -51,13 +51,13 @@ void storageUg_get_internal_storage_status(double *total, double *avail)
 	ret = storage_get_internal_memory_size(&s);
 	if (0 == ret) {
 		SETTING_TRACE("Total = %lu, Available = %lu", (s.f_frsize * s.f_blocks),
-		              (s.f_bsize * s.f_bavail));
+					  (s.f_bsize * s.f_bavail));
 		tmp_total = (double)s.f_frsize * s.f_blocks;
-		#if 0
+#if 0
 		*avail = (double)s.f_bfree * s.f_frsize;
-		#else
+#else
 		*avail = (double)s.f_bsize * s.f_bavail;
-		#endif
+#endif
 		if (sz_16G < tmp_total)
 			*total = sz_32G;
 		else if (sz_8G < tmp_total)
@@ -68,7 +68,7 @@ void storageUg_get_internal_storage_status(double *total, double *avail)
 }
 
 void storageUg_get_external_storage_status(const char *path, double *total,
-                                           double *avail)
+										   double *avail)
 {
 	struct statvfs s;
 
@@ -78,14 +78,14 @@ void storageUg_get_external_storage_status(const char *path, double *total,
 
 	if (!storage_get_external_memory_size(&s)) {
 		SETTING_TRACE("f_frsize = %ld f_blocks = %ld f_bsize = %ld f_bavail = %ld ",
-		              s.f_frsize, s.f_blocks, s.f_bsize, s.f_bavail);
+					  s.f_frsize, s.f_blocks, s.f_bsize, s.f_bavail);
 		*total = (double)s.f_frsize * s.f_blocks;
-		#if 0
+#if 0
 		*avail = (double)s.f_bsize * s.f_bavail;
-		#else
+#else
 		*avail = (double)s.f_bfree * s.f_frsize;
 		SETTING_TRACE("NEW STYLE, %ld", *avail);
-		#endif
+#endif
 	}
 }
 
@@ -122,13 +122,13 @@ void storageUg_ug_layout_cb(ui_gadget_h ug, enum ug_mode mode, void *priv)
 	}
 
 	switch (mode) {
-		case UG_MODE_FULLVIEW:
-			evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-			evas_object_show(base);
-			break;
-		default:
-			/* do nothing */
-			break;
+	case UG_MODE_FULLVIEW:
+		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+		evas_object_show(base);
+		break;
+	default:
+		/* do nothing */
+		break;
 	}
 }
 
@@ -177,7 +177,7 @@ void storageUg_manage_app_ug(SettingStorageUG *ad)
 
 	elm_object_tree_focus_allow_set(ad->lo_main, EINA_FALSE);
 	ug = setting_ug_create(ad->ug, "setting-manage-applications-efl", UG_MODE_FULLVIEW,
-	                       svc, &cbs);
+						   svc, &cbs);
 	warn_if(NULL == ug, "setting_ug_create() Fail");
 
 	app_control_destroy(svc);
@@ -223,31 +223,31 @@ static bool storageUg_get_media_item(media_info_h media, void *data)
 	media_info_get_size(media, &size);
 	media_info_get_media_type(media, &type);
 	switch (type) {
-		case MEDIA_CONTENT_TYPE_IMAGE:
-		case MEDIA_CONTENT_TYPE_VIDEO:
-			sizes->video_total += size;
-			break;
-		case MEDIA_CONTENT_TYPE_SOUND:
-		case MEDIA_CONTENT_TYPE_MUSIC:
-			sizes->audio_total += size;
-			break;
-		default:
-			SETTING_TRACE_ERROR("Invalid Type(%d)", type);
-			break;
+	case MEDIA_CONTENT_TYPE_IMAGE:
+	case MEDIA_CONTENT_TYPE_VIDEO:
+		sizes->video_total += size;
+		break;
+	case MEDIA_CONTENT_TYPE_SOUND:
+	case MEDIA_CONTENT_TYPE_MUSIC:
+		sizes->audio_total += size;
+		break;
+	default:
+		SETTING_TRACE_ERROR("Invalid Type(%d)", type);
+		break;
 	}
 
 	return true;
 }
 
 enum {
-    STORAGEUG_TYPE_APP,
-    STORAGEUG_TYPE_PIC_VIDEO,
-    STORAGEUG_TYPE_AUDIO,
-    STORAGEUG_TYPE_MISCES,
+	STORAGEUG_TYPE_APP,
+	STORAGEUG_TYPE_PIC_VIDEO,
+	STORAGEUG_TYPE_AUDIO,
+	STORAGEUG_TYPE_MISCES,
 };
 
 void storageug_genlist_text_update(Setting_GenGroupItem_Data *item_data,
-                                   double size)
+								   double size)
 {
 	char desc[STORAGEUG_MAX_STR_LEN] = {0};
 
@@ -258,11 +258,11 @@ void storageug_genlist_text_update(Setting_GenGroupItem_Data *item_data,
 
 	G_FREE(item_data->sub_desc);
 	item_data->sub_desc = (char *)g_strdup(desc);
-	#if OLD_GENLIST_STYLE
-		elm_genlist_item_fields_update(item_data->item, "elm.text.sub.left.bottom", ELM_GENLIST_ITEM_FIELD_TEXT);
-	#else
-		elm_genlist_item_fields_update(item_data->item, "elm.text.sub", ELM_GENLIST_ITEM_FIELD_TEXT);
-	#endif
+#if OLD_GENLIST_STYLE
+	elm_genlist_item_fields_update(item_data->item, "elm.text.sub.left.bottom", ELM_GENLIST_ITEM_FIELD_TEXT);
+#else
+	elm_genlist_item_fields_update(item_data->item, "elm.text.sub", ELM_GENLIST_ITEM_FIELD_TEXT);
+#endif
 }
 
 void storageUg_get_internal_detail_cb(int fn_result, SettingStorageUG *ad)
@@ -277,7 +277,7 @@ void storageUg_get_internal_detail_cb(int fn_result, SettingStorageUG *ad)
 	}
 
 	ad->sz_sys = ad->sz_inter_total - ad->sz_apps - ad->sz_pics_videos
-	             - ad->sz_audio - ad->sz_misces - ad->sz_inter_avail;
+				 - ad->sz_audio - ad->sz_misces - ad->sz_inter_avail;
 
 	storageug_genlist_text_update(ad->sys_mem, ad->sz_sys);
 	storageug_genlist_text_update(ad->pics_videos, ad->sz_pics_videos);
@@ -289,7 +289,7 @@ void storageUg_get_internal_detail_cb(int fn_result, SettingStorageUG *ad)
 }
 
 static int storageUG_get_media_info(const char *cond, media_info_cb cb,
-                                    struct _calculated_sizes *sizes)
+									struct _calculated_sizes *sizes)
 {
 	int ret;
 	filter_h filter = NULL;
@@ -362,8 +362,8 @@ int storageUg_get_internal_detail(SettingStorageUG *ad)
 	storageUG_STOP_POINT;
 
 	snprintf(cond_str,1024, "(MEDIA_TYPE = 4) and MEDIA_PATH LIKE \'%s/%%\'", tzplatform_getenv(TZ_USER_CONTENT));
-	//cond = "(MEDIA_TYPE = 4) and MEDIA_PATH LIKE \'"_TZ_USER_CONTENT"/%%\'";
-	//ret = storageUG_get_media_info(cond, storageUg_get_misces_item, &sizes);
+	/*cond = "(MEDIA_TYPE = 4) and MEDIA_PATH LIKE \'"_TZ_USER_CONTENT"/%%\'"; */
+	/*ret = storageUG_get_media_info(cond, storageUg_get_misces_item, &sizes); */
 	ret = storageUG_get_media_info(cond_str, storageUg_get_misces_item, &sizes);
 	warn_if(MEDIA_CONTENT_ERROR_NONE != ret, "storageUG_get_media_info() Fail(%d)", ret);
 
@@ -399,7 +399,7 @@ void storageUG_update_cache_info(SettingStorageUG *ad)
 }
 
 static int storageUg_get_apps_info(uid_t target_uid, int req_id, const char *pkg_type,
-                                   const char *pkgid, const char *key, const char *val, const void *pmsg, void *data)
+								   const char *pkgid, const char *key, const char *val, const void *pmsg, void *data)
 {
 	SettingStorageUG *ad = data;
 
@@ -430,7 +430,7 @@ void storageUG_update_apps_info(SettingStorageUG *ad)
 	}
 
 	ret = pkgmgr_client_get_size(ad->pc, "get", PM_GET_ALL_PKGS, &storageUg_get_apps_info,
-	                             ad);
+								 ad);
 	warn_if(ret, "pkgmgr_client_get_size() Fail(%d)", ret);
 }
 

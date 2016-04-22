@@ -15,16 +15,16 @@ static Setting_GenGroupItem_Data *__mobileap_handler(void *data, char *keyStr, c
 	Setting_GenGroupItem_Data *obj = NULL;
 
 	obj = setting_create_Gendial_field_def(genlist,
-												&(ad->itc_table[GENDIAL_Type_1text_1icon_2]),
-												setting_main_click_list_ex_ug_cb,
-												ug_args,
-												SWALLOW_Type_1ICON_1IMAGE,
-												icon_path,
-												NULL,
-												0,
-												keyStr,
-												NULL,
-												NULL);
+										   &(ad->itc_table[GENDIAL_Type_1text_1icon_2]),
+										   setting_main_click_list_ex_ug_cb,
+										   ug_args,
+										   SWALLOW_Type_1ICON_1IMAGE,
+										   icon_path,
+										   NULL,
+										   0,
+										   keyStr,
+										   NULL,
+										   NULL);
 	__BACK_POINTER_SET(obj);
 	if (obj) {
 		obj->userdata = ad;
@@ -41,21 +41,21 @@ static Setting_GenGroupItem_Data *__backlight_time_handler(void *data, char *key
 
 	char *pa_backlight = get_pa_backlight_time_str();
 	obj = setting_create_Gendial_field_def(genlist,
-	                                             &(ad->itc_table[GENDIAL_Type_1icon_2text]),
-	                                             setting_main_click_list_ex_ug_cb,
-	                                             ug_args,
-	                                             SWALLOW_Type_1ICON_1IMAGE,
-	                                             icon_path,
-	                                             NULL,
-	                                             0,
-	                                             keyStr,
-	                                             pa_backlight,
-	                                             NULL);
+										   &(ad->itc_table[GENDIAL_Type_1icon_2text]),
+										   setting_main_click_list_ex_ug_cb,
+										   ug_args,
+										   SWALLOW_Type_1ICON_1IMAGE,
+										   icon_path,
+										   NULL,
+										   0,
+										   keyStr,
+										   pa_backlight,
+										   NULL);
 	G_FREE(pa_backlight);
 	__BACK_POINTER_SET(obj);
 	if (obj) {
 		obj->userdata = ad;
-//		ad->data_backlight = obj;
+		/*		ad->data_backlight = obj; */
 	}
 
 	return obj;
@@ -69,15 +69,15 @@ static Setting_GenGroupItem_Data *__developer_option_handler(void *data, char *k
 #ifdef BINARY_RELEASE_TYPE_ENG
 	/*for eng binary: always show <developer option>*/
 	obj = setting_create_Gendial_field_def(genlist,
-	                                             &(ad->itc_table[GENDIAL_Type_1text_1icon_2]),
-	                                             setting_main_click_list_ex_ug_cb,
-	                                             ug_args,
-	                                             SWALLOW_Type_1ICON_1IMAGE,
-	                                             icon_path,
-	                                             NULL, 0,
-	                                             keyStr,
-	                                             NULL,
-	                                             NULL);
+										   &(ad->itc_table[GENDIAL_Type_1text_1icon_2]),
+										   setting_main_click_list_ex_ug_cb,
+										   ug_args,
+										   SWALLOW_Type_1ICON_1IMAGE,
+										   icon_path,
+										   NULL, 0,
+										   keyStr,
+										   NULL,
+										   NULL);
 
 #else
 	/*for user binary: need to check develop_option_state vconf value*/
@@ -89,16 +89,16 @@ static Setting_GenGroupItem_Data *__developer_option_handler(void *data, char *k
 	}
 	if (dev_op_state) {
 		obj = setting_create_Gendial_field_def(genlist,
-		                                             &(ad->itc_table[GENDIAL_Type_1text_1icon_2]),
-		                                             setting_main_click_list_ex_ug_cb,
-		                                             ug_args,
-		                                             SWALLOW_Type_1ICON_1IMAGE,
+											   &(ad->itc_table[GENDIAL_Type_1text_1icon_2]),
+											   setting_main_click_list_ex_ug_cb,
+											   ug_args,
+											   SWALLOW_Type_1ICON_1IMAGE,
 
-		                                             icon_path,
-		                                             NULL, 0,
-		                                             keyStr,
-		                                             NULL,
-		                                             NULL);
+											   icon_path,
+											   NULL, 0,
+											   keyStr,
+											   NULL,
+											   NULL);
 	} else {
 		SETTING_TRACE("dev_op_state is 0");
 	}
@@ -111,15 +111,15 @@ static Setting_GenGroupItem_Data *__default_handler(void *data, char *keyStr, ch
 	/*SETTING_TRACE_BEGIN; */
 	setting_main_appdata *ad = (setting_main_appdata *)data;
 	Setting_GenGroupItem_Data *obj = setting_create_Gendial_field_def(genlist,
-	                                                                        &(ad->itc_table[GENDIAL_Type_1text_1icon_2]),
-	                                                                        setting_main_click_list_ex_ug_cb,
-	                                                                        ug_args,
-	                                                                        SWALLOW_Type_1ICON_1IMAGE,
-	                                                                        icon_path,
-	                                                                        NULL, 0,
-	                                                                        keyStr,
-	                                                                        NULL,
-	                                                                        NULL);
+																	  &(ad->itc_table[GENDIAL_Type_1text_1icon_2]),
+																	  setting_main_click_list_ex_ug_cb,
+																	  ug_args,
+																	  SWALLOW_Type_1ICON_1IMAGE,
+																	  icon_path,
+																	  NULL, 0,
+																	  keyStr,
+																	  NULL,
+																	  NULL);
 
 	return obj;
 }
@@ -192,8 +192,8 @@ mainlist_entry *settinig_drawer_hash_find(void *cb, char *search_str)
 /* obj is the layout clicked */
 void
 setting_main_click_list_item_ug_cb(void *data, Evas_Object *obj,
-                                   char *ug_to_load, app_control_h svc,
-                                   struct ug_cbs *cbs)
+								   char *ug_to_load, app_control_h svc,
+								   struct ug_cbs *cbs)
 {
 	SETTING_TRACE_BEGIN;
 	setting_main_appdata *ad = (setting_main_appdata *) data;
@@ -220,7 +220,7 @@ setting_main_click_list_item_ug_cb(void *data, Evas_Object *obj,
 }
 
 void setting_main_click_list_ex_ug_cb(void *data, Evas_Object *obj,
-                                      void *event_info)
+									  void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(event_info == NULL, "Invalid argument: event info is NULL");
@@ -247,11 +247,11 @@ void setting_main_click_list_ex_ug_cb(void *data, Evas_Object *obj,
 		ad->isInUGMode = FALSE;
 		return;
 	} else {
-		SETTING_TRACE ("isInUGMode : FALSE - another UG is NOT running now.")
+		SETTING_TRACE("isInUGMode : FALSE - another UG is NOT running now.")
 	}
 
 	Setting_GenGroupItem_Data *selected_item_data =
-	    (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
+		(Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
 	setting_retm_if(NULL == selected_item_data, "selected_item_data is NULL");
 	setting_main_click_list_item_reset_data(ad, obj);
 	const char *item_name = _(selected_item_data->keyStr);
@@ -261,7 +261,7 @@ void setting_main_click_list_ex_ug_cb(void *data, Evas_Object *obj,
 	/* if current selection is for App control lauching style */
 	Setting_Cfg_Node_T *pnode = get_cfg_node_by_keystr(selected_item_data->keyStr);
 	if (pnode == NULL) {
-		SETTING_TRACE_ERROR (" *** pnode is NULL *** ");
+		SETTING_TRACE_ERROR(" *** pnode is NULL *** ");
 		return;
 	}
 	if (pnode && pnode->item_type == Cfg_Item_AppLauncher_Node) {

@@ -33,7 +33,7 @@ static void appmgrUg_main_sort_sel(void *data, Evas_Object *obj, void *event_inf
 	Elm_Object_Item *item = event_info;
 	elm_genlist_item_selected_set(item, 0);
 	Setting_GenGroupItem_Data *list_item =
-	    (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
+		(Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
 
 	ret_if(data == NULL);
 	ret_if(event_info == NULL);
@@ -65,7 +65,7 @@ static void appmgrUg_main_sort_sel(void *data, Evas_Object *obj, void *event_inf
 }
 
 static void appmgrUg_main_sort_popup(void *data, Evas_Object *obj,
-                                     void *event_info)
+									 void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "data is NULL");
@@ -77,7 +77,7 @@ static void appmgrUg_main_sort_popup(void *data, Evas_Object *obj,
 
 	Evas_Object *menu_glist = NULL;
 	ad->popup = setting_create_popup_with_list(&menu_glist, ad, ad->win,
-												MGRAPP_STR_SORT_BY, NULL, 0, false, false, 0);
+											   MGRAPP_STR_SORT_BY, NULL, 0, false, false, 0);
 
 	Evas_Object *rdg = elm_radio_add(menu_glist);
 	elm_object_style_set(rdg, "list");
@@ -120,7 +120,7 @@ static void appmgrUg_main_sort_popup(void *data, Evas_Object *obj,
 }
 
 static void appmgrUg_main_more_popup_rotate(void *data, Evas_Object *obj,
-                                            void *event_info)
+											void *event_info)
 {
 	int pos;
 	Evas_Coord w, h;
@@ -132,28 +132,28 @@ static void appmgrUg_main_more_popup_rotate(void *data, Evas_Object *obj,
 
 	pos = elm_win_rotation_get(ad->win);
 	switch (pos) {
-		case 90:
-			evas_object_move(ad->popup, 0, w);
-			break;
-		case 270:
-			evas_object_move(ad->popup, h, w);
-			break;
-		case 180:
-		default:
-			evas_object_move(ad->popup, 0, h);
-			break;
+	case 90:
+		evas_object_move(ad->popup, 0, w);
+		break;
+	case 270:
+		evas_object_move(ad->popup, h, w);
+		break;
+	case 180:
+	default:
+		evas_object_move(ad->popup, 0, h);
+		break;
 	}
 }
 
 static void appmgrUg_main_more_popup_del_cb(void *data, Evas *e,
-                                            Evas_Object *obj, void *event_info)
+											Evas_Object *obj, void *event_info)
 {
 	SettingAppMgrUG *ad = data;
 
 	ret_if(data == NULL);
 
 	evas_object_smart_callback_del(elm_object_top_widget_get(ad->popup),
-	                               "rotation,changed", appmgrUg_main_more_popup_rotate);
+								   "rotation,changed", appmgrUg_main_more_popup_rotate);
 }
 
 static UNUSED char *_appmgrUg_access_info_prepend_cb(void *data, Evas_Object *obj)
@@ -167,7 +167,7 @@ static UNUSED char *_appmgrUg_access_info_prepend_cb(void *data, Evas_Object *ob
 }
 
 static void appmgrUg_main_create_more_popup(void *data, Evas_Object *obj,
-                                            void *event_info)
+											void *event_info)
 {
 	Elm_Object_Item *it;
 	Evas_Object *ctxpopup;
@@ -183,12 +183,12 @@ static void appmgrUg_main_create_more_popup(void *data, Evas_Object *obj,
 
 	evas_object_smart_callback_add(ctxpopup, "dismissed", appmgrUg_popup_del, ad);
 	evas_object_smart_callback_add(elm_object_top_widget_get(ctxpopup),
-	                               "rotation,changed", appmgrUg_main_more_popup_rotate, ad);
+								   "rotation,changed", appmgrUg_main_more_popup_rotate, ad);
 	evas_object_event_callback_add(ctxpopup, EVAS_CALLBACK_DEL,
-	                               appmgrUg_main_more_popup_del_cb, ad);
+								   appmgrUg_main_more_popup_del_cb, ad);
 
 	it = elm_ctxpopup_item_append(ctxpopup, MGRAPP_STR_SORT_BY, NULL,
-	                              appmgrUg_main_sort_popup, ad);
+								  appmgrUg_main_sort_popup, ad);
 	elm_object_item_domain_text_translatable_set(it, SETTING_PACKAGE, EINA_TRUE);
 
 	if (ad->popup)
@@ -201,7 +201,7 @@ static void appmgrUg_main_create_more_popup(void *data, Evas_Object *obj,
 }
 
 static void appmgrUg_main_gl_realized(void *data, Evas_Object *obj,
-                                      void *event_info)
+									  void *event_info)
 {
 	setting_retm_if(event_info == NULL, "invalid parameter: event_info is NULL");
 }
@@ -269,18 +269,18 @@ static inline Evas_Object *appmgrUg_main_no_item_handle(SettingAppMgrUG *ad)
 	Evas_Object *lo = NULL;
 
 	switch (ad->tabtype) {
-		case APPMGRUG_TAB_RUNNING:
-			text = MGRAPP_STR_LOADING;
-			break;
-		case APPMGRUG_TAB_DISABLED:
-			text = MGRAPP_STR_NO_APPS;
-			break;
-		case APPMGRUG_TAB_DOWNLOAD:
-		case APPMGRUG_TAB_ALL:
-		default:
-			text = MGRAPP_STR_NO_APPS;
-			help_txt = MGRAPP_STR_NO_DOWNLOAD_APPS_HELP;
-			break;
+	case APPMGRUG_TAB_RUNNING:
+		text = MGRAPP_STR_LOADING;
+		break;
+	case APPMGRUG_TAB_DISABLED:
+		text = MGRAPP_STR_NO_APPS;
+		break;
+	case APPMGRUG_TAB_DOWNLOAD:
+	case APPMGRUG_TAB_ALL:
+	default:
+		text = MGRAPP_STR_NO_APPS;
+		help_txt = MGRAPP_STR_NO_DOWNLOAD_APPS_HELP;
+		break;
 	}
 
 	if (NULL == ad->lo_noitem || ad->noitem_type != ad->tabtype) {
@@ -328,18 +328,18 @@ void appmgrUg_main_genlist_append_items(SettingAppMgrUG *ad)
 
 		invalid = 0;
 		switch (ad->tabtype) {
-			case APPMGRUG_TAB_DOWNLOAD:
-				if (info->is_preload && !info->is_update)
-					invalid = 1;
-				break;
-			case APPMGRUG_TAB_RUNNING:
-				if (NULL == info->runinfos)
-					invalid = 1;
-				break;
-			case APPMGRUG_TAB_DISABLED:
-				if (0 == info->is_disabled)
-					invalid = 1;
-				break;
+		case APPMGRUG_TAB_DOWNLOAD:
+			if (info->is_preload && !info->is_update)
+				invalid = 1;
+			break;
+		case APPMGRUG_TAB_RUNNING:
+			if (NULL == info->runinfos)
+				invalid = 1;
+			break;
+		case APPMGRUG_TAB_DISABLED:
+			if (0 == info->is_disabled)
+				invalid = 1;
+			break;
 		}
 		if (invalid) {
 			info->item = NULL;
@@ -348,7 +348,7 @@ void appmgrUg_main_genlist_append_items(SettingAppMgrUG *ad)
 
 		if (ad->gl_main) {
 			info->item = elm_genlist_item_append(ad->gl_main, &ad->itc_main, info, NULL,
-			                                     ELM_GENLIST_ITEM_NONE, appmgrUg_main_gl_sel, ad);
+												 ELM_GENLIST_ITEM_NONE, appmgrUg_main_gl_sel, ad);
 			item_cnt++;
 		}
 	}
@@ -469,7 +469,7 @@ Evas_Object *appmgrUg_main_gl_icon_new_get(void *data, Evas_Object *obj, const c
 
 
 Evas_Object *appmgrUg_main_gl_icon_get(void *data, Evas_Object *obj,
-                                       const char *part)
+									   const char *part)
 {
 	Evas_Object *icon = NULL;
 	Evas_Object *lay = NULL;
@@ -520,7 +520,7 @@ static Eina_Bool appmgrUg_main_back_cb(void *data, Elm_Object_Item *it)
 }
 
 static void appmgrUg_main_clear_defapp(void *data, Evas_Object *obj,
-                                       void *event_info)
+									   void *event_info)
 {
 	int ret;
 	char *btn_str;
@@ -550,7 +550,7 @@ static void appmgrUg_main_clear_defapp(void *data, Evas_Object *obj,
 }
 
 static void appmgrUg_main_clear_defapp_click(void *data, Evas_Object *obj,
-                                             void *event_info)
+											 void *event_info)
 {
 	SettingAppMgrUG *ad = data;
 
@@ -565,7 +565,7 @@ static void appmgrUg_main_clear_defapp_click(void *data, Evas_Object *obj,
 }
 
 static inline Evas_Object *appmgrUg_main_clear_defapp_toolbar(
-    Evas_Object *parent, SettingAppMgrUG *ad)
+	Evas_Object *parent, SettingAppMgrUG *ad)
 {
 	Evas_Object *toolbar;
 	Elm_Object_Item *tool_it;
@@ -578,7 +578,7 @@ static inline Evas_Object *appmgrUg_main_clear_defapp_toolbar(
 	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
 
 	tool_it = elm_toolbar_item_append(toolbar, NULL, MGRAPP_STR_CLEAR_DEFAULT_APPS,
-	                                  appmgrUg_main_clear_defapp_click, ad);
+									  appmgrUg_main_clear_defapp_click, ad);
 	elm_object_item_domain_text_translatable_set(tool_it, SETTING_PACKAGE, EINA_TRUE);
 
 	evas_object_show(toolbar);
@@ -587,7 +587,7 @@ static inline Evas_Object *appmgrUg_main_clear_defapp_toolbar(
 }
 
 static void appmgrUg_download_create(void *data, Evas_Object *obj,
-                                     void *event_info)
+									 void *event_info)
 {
 	SettingAppMgrUG *ad = data;
 
@@ -600,7 +600,7 @@ static void appmgrUg_download_create(void *data, Evas_Object *obj,
 }
 
 static void appmgrUg_disabled_create(void *data, Evas_Object *obj,
-                                     void *event_info)
+									 void *event_info)
 {
 	SettingAppMgrUG *ad = data;
 
@@ -613,7 +613,7 @@ static void appmgrUg_disabled_create(void *data, Evas_Object *obj,
 }
 
 static void appmgrUg_running_create(void *data, Evas_Object *obj,
-                                    void *event_info)
+									void *event_info)
 {
 	SettingAppMgrUG *ad = data;
 
@@ -642,7 +642,7 @@ static void appmgrUg_all_create(void *data, Evas_Object *obj, void *event_info)
 }
 
 static inline Evas_Object *appmgrUg_main_create_top_tabbar(
-    Evas_Object *parent, SettingAppMgrUG *ad)
+	Evas_Object *parent, SettingAppMgrUG *ad)
 {
 	int tabtype;
 	Evas_Object *toolbar;
@@ -664,19 +664,19 @@ static inline Evas_Object *appmgrUg_main_create_top_tabbar(
 	elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
 
 	it[APPMGRUG_TAB_DOWNLOAD] = elm_toolbar_item_append(toolbar, NULL,
-	                                                    MGRAPP_STR_DOWNLOADS, appmgrUg_download_create, ad);
+														MGRAPP_STR_DOWNLOADS, appmgrUg_download_create, ad);
 	elm_object_item_domain_text_translatable_set(it[APPMGRUG_TAB_DOWNLOAD], SETTING_PACKAGE, EINA_TRUE);
 
 	it[APPMGRUG_TAB_RUNNING] = elm_toolbar_item_append(toolbar, NULL,
-	                                                   MGRAPP_STR_RUNNING, appmgrUg_running_create, ad);
+													   MGRAPP_STR_RUNNING, appmgrUg_running_create, ad);
 	elm_object_item_domain_text_translatable_set(it[APPMGRUG_TAB_RUNNING], SETTING_PACKAGE, EINA_TRUE);
 
 	it[APPMGRUG_TAB_ALL] = elm_toolbar_item_append(toolbar, NULL,
-	                                               MGRAPP_STR_ALL, appmgrUg_all_create, ad);
+												   MGRAPP_STR_ALL, appmgrUg_all_create, ad);
 	elm_object_item_domain_text_translatable_set(it[APPMGRUG_TAB_ALL], SETTING_PACKAGE, EINA_TRUE);
 
 	it[APPMGRUG_TAB_DISABLED] = elm_toolbar_item_append(toolbar, NULL,
-	                                                    MGRAPP_STR_DISABLED, appmgrUg_disabled_create, ad);
+														MGRAPP_STR_DISABLED, appmgrUg_disabled_create, ad);
 	elm_object_item_domain_text_translatable_set(it[APPMGRUG_TAB_DISABLED], SETTING_PACKAGE, EINA_TRUE);
 
 	elm_toolbar_item_selected_set(it[tabtype], EINA_TRUE);
@@ -687,7 +687,7 @@ static inline Evas_Object *appmgrUg_main_create_top_tabbar(
 }
 
 static inline Evas_Object *appmgrUg_main_creat_more_btn(Evas_Object *parent,
-                                                        SettingAppMgrUG *ad)
+														SettingAppMgrUG *ad)
 {
 	Evas_Object *btn;
 
@@ -701,12 +701,12 @@ static inline Evas_Object *appmgrUg_main_creat_more_btn(Evas_Object *parent,
 
 static Eina_Bool
 setting_appmgr_main_click_softkey_back_cb(void *data, Evas_Object *obj,
-                                          void *event_info)
+										  void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	setting_retvm_if(data == NULL, EINA_FALSE,
-	                 "[Setting > APPMGR] Data parameter is NULL");
+					 "[Setting > APPMGR] Data parameter is NULL");
 	SettingAppMgrUG *ad = (SettingAppMgrUG *) data;
 
 	/* Send destroy request */
@@ -725,16 +725,16 @@ static int appmgrUg_main_create(void *data)
 	retv_if(NULL == ad->navi, SETTING_GENERAL_ERR_WRONG_PARAMETER);
 
 	ad->list_worker = appmgrUg_start_async_worker(appmgrUg_get_listinfos,
-	                                              appmgrUg_get_listinfos_cb, ad);
+												  appmgrUg_get_listinfos_cb, ad);
 
 	/* back button */
 	back_btn = setting_create_button(ad->navi, MGRAPP_STR_APP_MANAGER,
-	                                 NAVI_BACK_ARROW_BUTTON_STYLE,
-	                                 (setting_call_back_func)setting_appmgr_main_click_softkey_back_cb,
-	                                 ad);
+									 NAVI_BACK_ARROW_BUTTON_STYLE,
+									 (setting_call_back_func)setting_appmgr_main_click_softkey_back_cb,
+									 ad);
 
 	navi_it = elm_naviframe_item_push(ad->navi, MGRAPP_STR_APP_MANAGER,
-	                                  back_btn, NULL, NULL, "tabbar");
+									  back_btn, NULL, NULL, "tabbar");
 	elm_object_item_domain_text_translatable_set(navi_it, SETTING_PACKAGE, EINA_TRUE);
 	elm_naviframe_item_pop_cb_set(navi_it, appmgrUg_main_back_cb, ad);
 	ad->navi_main_it = navi_it;

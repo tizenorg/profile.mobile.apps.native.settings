@@ -22,11 +22,11 @@
 #include "setting-storage-USB.h"
 
 enum {
-    STORAGEUG_USB_REQ_NONE,
-    STORAGEUG_USB_REQ_MOUNT,
-    STORAGEUG_USB_REQ_UNMOUNT,
-    STORAGEUG_USB_REQ_UNMOUNT_BEFORE_FORMAT,
-    STORAGEUG_USB_REQ_FORMAT
+	STORAGEUG_USB_REQ_NONE,
+	STORAGEUG_USB_REQ_MOUNT,
+	STORAGEUG_USB_REQ_UNMOUNT,
+	STORAGEUG_USB_REQ_UNMOUNT_BEFORE_FORMAT,
+	STORAGEUG_USB_REQ_FORMAT
 };
 
 static inline void storageUg_USB_unmount(SettingStorageUG *ad)
@@ -39,7 +39,7 @@ static inline void storageUg_USB_unmount(SettingStorageUG *ad)
 		ad->usb_request = STORAGEUG_USB_REQ_NONE;
 	} else {
 		ad->popup = setting_create_popup_with_progressbar(ad, ad->win, PROGRESSBAR_STYLE,
-		                                                  NULL, STORAGEUG_STR_UNMOUNTING, storageUg_popup_del, 0, TRUE, TRUE, 0);
+														  NULL, STORAGEUG_STR_UNMOUNTING, storageUg_popup_del, 0, TRUE, TRUE, 0);
 	}
 }
 
@@ -54,7 +54,7 @@ static inline void storageUg_USB_mount(SettingStorageUG *ad)
 		ad->usb_request = STORAGEUG_USB_REQ_NONE;
 	} else {
 		ad->popup = setting_create_popup_with_progressbar(ad, ad->win, PROGRESSBAR_STYLE,
-		                                                  NULL, NULL, storageUg_popup_del, 2, TRUE, TRUE, 0);
+														  NULL, NULL, storageUg_popup_del, 2, TRUE, TRUE, 0);
 		ad->usb_request = STORAGEUG_USB_REQ_MOUNT;
 	}
 }
@@ -70,13 +70,13 @@ static inline int storageUg_USB_format(SettingStorageUG *ad)
 		return SETTING_RETURN_FAIL;
 	} else {
 		ad->popup = setting_create_popup_with_progressbar(ad, ad->win, PROGRESSBAR_STYLE,
-		                                                  NULL, STORAGEUG_STR_FORMATTING, storageUg_popup_del, 0, TRUE, TRUE, 0);
+														  NULL, STORAGEUG_STR_FORMATTING, storageUg_popup_del, 0, TRUE, TRUE, 0);
 	}
 	return SETTING_RETURN_SUCCESS;
 }
 
 static void storageUg_USB_unmount_resp(void *data, Evas_Object *obj,
-                                       void *event_info)
+									   void *event_info)
 {
 	int response_type;
 	SettingStorageUG *ad = data;
@@ -96,7 +96,7 @@ static void storageUg_USB_unmount_resp(void *data, Evas_Object *obj,
 }
 
 static void storageUg_USB_format_se_confirm(void *data, Evas_Object *obj,
-                                            void *event_info)
+											void *event_info)
 {
 	int response_type;
 	SettingStorageUG *ad = data;
@@ -116,7 +116,7 @@ static void storageUg_USB_format_se_confirm(void *data, Evas_Object *obj,
 }
 
 static void storageUg_USB_format_first_confirm(void *data,
-                                               Evas_Object *obj, void *event_info)
+											   Evas_Object *obj, void *event_info)
 {
 	int response_type;
 	SettingStorageUG *ad = data;
@@ -222,8 +222,8 @@ static inline void storageUg_USB_append_mounted_info(SettingStorageUG *ad)
 
 	/* Total space */
 	ad->usb_total = setting_create_Gendial_field_def(ad->gl_main, &(ad->itc_2text_2),
-	                                                 NULL, ad, SWALLOW_Type_INVALID, NULL, NULL, 0, STORAGEUG_STR_TOTAL,
-	                                                 total_str, NULL);
+													 NULL, ad, SWALLOW_Type_INVALID, NULL, NULL, 0, STORAGEUG_STR_TOTAL,
+													 total_str, NULL);
 	if (ad->usb_total) {
 		ad->usb_total->userdata = ad;
 		elm_genlist_item_select_mode_set(ad->usb_total->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
@@ -233,20 +233,20 @@ static inline void storageUg_USB_append_mounted_info(SettingStorageUG *ad)
 
 	/* Avaliable */
 	ad->usb_available = setting_create_Gendial_field_def(ad->gl_main, &(ad->itc_2text_2),
-	                                                     NULL, ad, SWALLOW_Type_INVALID, NULL, NULL, 0, STORAGEUG_STR_AVAIL_SPACE,
-	                                                     avail_str, NULL);
+														 NULL, ad, SWALLOW_Type_INVALID, NULL, NULL, 0, STORAGEUG_STR_AVAIL_SPACE,
+														 avail_str, NULL);
 	if (ad->usb_available) {
 		ad->usb_available->userdata = ad;
 		elm_genlist_item_select_mode_set(ad->usb_available->item,
-		                                 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+										 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 	} else {
 		SETTING_TRACE_ERROR("ad->usb_available is NULL");
 	}
 
 	/* Usb Unmount*/
 	ad->usb_unmount = setting_create_Gendial_field_def(ad->gl_main, &(ad->itc_1text),
-	                                                   storageUg_main_USB_sel, ad, SWALLOW_Type_INVALID, NULL, NULL, 0,
-	                                                   STORAGEUG_STR_UNMOUNT_USB, NULL, NULL);
+													   storageUg_main_USB_sel, ad, SWALLOW_Type_INVALID, NULL, NULL, 0,
+													   STORAGEUG_STR_UNMOUNT_USB, NULL, NULL);
 	if (ad->usb_unmount) {
 		ad->usb_unmount->userdata = ad;
 	} else {
@@ -255,8 +255,8 @@ static inline void storageUg_USB_append_mounted_info(SettingStorageUG *ad)
 
 	/* Usb Format*/
 	ad->usb_format = setting_create_Gendial_field_def(ad->gl_main, &(ad->itc_1text),
-	                                                  storageUg_main_USB_sel, ad, SWALLOW_Type_INVALID, NULL, NULL, 0,
-	                                                  STORAGEUG_STR_FORMAT_USB, NULL, NULL);
+													  storageUg_main_USB_sel, ad, SWALLOW_Type_INVALID, NULL, NULL, 0,
+													  STORAGEUG_STR_FORMAT_USB, NULL, NULL);
 	if (ad->usb_format) {
 		ad->usb_format->userdata = ad;
 	} else {
@@ -276,15 +276,15 @@ static inline void storageUg_main_append_USB_info(SettingStorageUG *ad)
 
 	/* USB OTG storage */
 	ad->usb_card = setting_create_Gendial_field_titleItem(ad->gl_main,
-	                                                      &(ad->itc_group_item), STORAGEUG_STR_USB, NULL);
+														  &(ad->itc_group_item), STORAGEUG_STR_USB, NULL);
 
 	if (SETTING_STORAGE_USB_OTG_MOUNT == ad->usb_otg_status) {
 		storageUg_USB_append_mounted_info(ad);
 	} else {
 		/* Usb Mount*/
 		ad->usb_mount = setting_create_Gendial_field_def(ad->gl_main, &(ad->itc_1text),
-		                                                 storageUg_main_USB_sel, ad, SWALLOW_Type_INVALID, NULL, NULL, 0,
-		                                                 STORAGEUG_STR_MOUNT_USB, NULL, NULL);
+														 storageUg_main_USB_sel, ad, SWALLOW_Type_INVALID, NULL, NULL, 0,
+														 STORAGEUG_STR_MOUNT_USB, NULL, NULL);
 		if (ad->usb_mount) {
 			ad->usb_mount->userdata = ad;
 		} else {

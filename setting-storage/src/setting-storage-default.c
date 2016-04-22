@@ -22,21 +22,21 @@
 #include "setting-storage-default.h"
 
 enum {
-    STORAGEUG_DEFAULT_STORAGE_PHONE,
-    STORAGEUG_DEFAULT_STORAGE_SD
+	STORAGEUG_DEFAULT_STORAGE_PHONE,
+	STORAGEUG_DEFAULT_STORAGE_SD
 };
 
 enum {
-    SETTING_DEF_MEMORY_PHONE = 0,
-    SETTING_DEF_MEMORY_MMC,
-    SETTING_DEF_MEMORY_MAX
+	SETTING_DEF_MEMORY_PHONE = 0,
+	SETTING_DEF_MEMORY_MMC,
+	SETTING_DEF_MEMORY_MAX
 };
 
 static setting_view setting_view_storage_default;
 
 
 Evas_Object *storageUg_default_notice_get_icon(void *data, Evas_Object *obj,
-                                               const char *part)
+											   const char *part)
 {
 	Evas_Object *layout;
 	Evas_Coord height, width;
@@ -51,7 +51,7 @@ Evas_Object *storageUg_default_notice_get_icon(void *data, Evas_Object *obj,
 	elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME, "default_storage");
 	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, 0.0);
 	elm_object_part_text_set(layout, "application_desp.text",
-	                         _(STORAGEUG_STR_APP_LOC_NOTICE));
+							 _(STORAGEUG_STR_APP_LOC_NOTICE));
 
 	/* in landscape mode, the size should be resize */
 	evas_object_geometry_get(obj, NULL, NULL, &width, NULL);
@@ -82,14 +82,14 @@ static Eina_Bool storageUg_default_back_cb(void *data, Elm_Object_Item *it)
 }
 
 static void _storageUg_default_set_value(Elm_Object_Item *parentItem,
-                                         Setting_GenGroupItem_Data *d_subItem, Setting_GenGroupItem_Data *d_parentItem)
+										 Setting_GenGroupItem_Data *d_subItem, Setting_GenGroupItem_Data *d_parentItem)
 {
 	int err;
 
 	setting_set_int_slp_key(d_parentItem->int_slp_setting_binded, d_subItem->chk_status,
-	                        &err);
+							&err);
 	retm_if(0 != err, "setting_set_int_slp_key(%d) Fail(%d)",
-	        d_parentItem->int_slp_setting_binded, err);
+			d_parentItem->int_slp_setting_binded, err);
 
 	G_FREE(d_parentItem->sub_desc);
 	d_parentItem->sub_desc = (char *)g_strdup(d_subItem->keyStr);
@@ -104,7 +104,7 @@ static void _storageUg_default_set_value(Elm_Object_Item *parentItem,
 }
 
 static void storageUg_default_expand_item_sel(void *data, Evas_Object *obj,
-                                              void *event_info)
+											  void *event_info)
 {
 	Elm_Object_Item *parentItem;
 	Elm_Object_Item *subitem = event_info;
@@ -136,7 +136,7 @@ static void storageUg_default_expand_item_sel(void *data, Evas_Object *obj,
 
 
 static void storageUg_default_radio_change(void *data, Evas_Object *obj,
-                                           void *event_info)
+										   void *event_info)
 {
 	Elm_Object_Item *subItem, *parentItem;
 	Setting_GenGroupItem_Data *list_item = data;
@@ -174,12 +174,12 @@ static void storageUg_default_reset_vconf(Setting_GenGroupItem_Data *data_item)
 
 		setting_get_int_slp_key(data_item->int_slp_setting_binded, &value, &err);
 		retm_if(0 != err, "setting_get_int_slp_key(%d) Fail(%d)",
-		        data_item->int_slp_setting_binded, err);
+				data_item->int_slp_setting_binded, err);
 		if (value != STORAGEUG_DEFAULT_STORAGE_PHONE) {
 			setting_set_int_slp_key(data_item->int_slp_setting_binded,
-			                        STORAGEUG_DEFAULT_STORAGE_PHONE, &err);
+									STORAGEUG_DEFAULT_STORAGE_PHONE, &err);
 			retm_if(0 != err, "setting_set_int_slp_key(%d) Fail(%d)",
-			        data_item->int_slp_setting_binded, err);
+					data_item->int_slp_setting_binded, err);
 		}
 
 		G_FREE(data_item->sub_desc);
@@ -209,7 +209,7 @@ static void storageUg_default_mmc_changed_cb(keynode_t *node, void *data)
 }
 
 static const char *storageUg_default_cur_storage_get(int mmc_status,
-                                                     setting_int_slp_list slp_key)
+													 setting_int_slp_list slp_key)
 {
 	int err, value = 0;
 	const char *phone = STORAGEUG_STR_INTERNAL_STORAGE;
@@ -241,7 +241,7 @@ void __storageUg_default_popup_del(void *data, Evas_Object *obj, void *event_inf
 }
 
 static void storageUg_default_main_item_sel(void *data, Evas_Object *obj,
-                                            void *event_info)
+											void *event_info)
 {
 
 	ret_if(NULL == data || NULL == event_info);
@@ -259,7 +259,7 @@ static void storageUg_default_main_item_sel(void *data, Evas_Object *obj,
 
 	Evas_Object *scroller = NULL;
 	ad->popup = setting_create_popup_with_list(&scroller, ad, ad->win,
-	                                           data_parentItem->keyStr, NULL, 0, false, false, 0);
+											   data_parentItem->keyStr, NULL, 0, false, false, 0);
 	_P(ad->popup);
 
 
@@ -270,8 +270,8 @@ static void storageUg_default_main_item_sel(void *data, Evas_Object *obj,
 
 
 	if (data_parentItem == ad->data_bt || data_parentItem == ad->data_nfc
-	    || data_parentItem == ad->data_wifidirect
-	    || data_parentItem == ad->data_installapp) {
+		|| data_parentItem == ad->data_wifidirect
+		|| data_parentItem == ad->data_installapp) {
 		SETTING_TRACE("POPUP ITEMS IS CREATED");
 		rgd = elm_radio_add(scroller);
 		elm_object_style_set(rgd, "list");
@@ -281,12 +281,12 @@ static void storageUg_default_main_item_sel(void *data, Evas_Object *obj,
 				storageUg_default_expand_item_sel, ad, parentItem, SWALLOW_Type_1RADIO_RIGHT,
 				rgd, SETTING_DEF_MEMORY_PHONE, STORAGEUG_STR_INTERNAL_STORAGE, NULL);*/
 		phone = setting_create_Gendial_field_1radio(scroller,
-		                                            &itc_multiline_1text_1icon,
-		                                            storageUg_default_expand_item_sel, data_parentItem,
-		                                            SWALLOW_Type_1RADIO_RIGHT, rgd,
-		                                            SETTING_DEF_MEMORY_PHONE,
-		                                            STORAGEUG_STR_INTERNAL_STORAGE,
-		                                            NULL);
+													&itc_multiline_1text_1icon,
+													storageUg_default_expand_item_sel, data_parentItem,
+													SWALLOW_Type_1RADIO_RIGHT, rgd,
+													SETTING_DEF_MEMORY_PHONE,
+													STORAGEUG_STR_INTERNAL_STORAGE,
+													NULL);
 		setting_retm_if(NULL == phone, "phone is NULL");
 		phone->disableflag = EINA_FALSE;
 
@@ -295,12 +295,12 @@ static void storageUg_default_main_item_sel(void *data, Evas_Object *obj,
 				parentItem, SWALLOW_Type_1RADIO_RIGHT, rgd, SETTING_DEF_MEMORY_MMC,
 				STORAGEUG_STR_SD_CARD, storageUg_default_radio_change);*/
 		memory_card = setting_create_Gendial_field_1radio(scroller,
-		                                                  &itc_multiline_1text_1icon,
-		                                                  storageUg_default_expand_item_sel, data_parentItem,
-		                                                  SWALLOW_Type_1RADIO_RIGHT, rgd,
-		                                                  SETTING_DEF_MEMORY_MMC,
-		                                                  STORAGEUG_STR_SD_CARD,
-		                                                  storageUg_default_radio_change);
+														  &itc_multiline_1text_1icon,
+														  storageUg_default_expand_item_sel, data_parentItem,
+														  SWALLOW_Type_1RADIO_RIGHT, rgd,
+														  SETTING_DEF_MEMORY_MMC,
+														  STORAGEUG_STR_SD_CARD,
+														  storageUg_default_radio_change);
 		retm_if(NULL == memory_card, "setting_create_Gendial_exp_sub_field() Fail");
 
 		memory_card->disableflag = EINA_FALSE;
@@ -330,20 +330,20 @@ static int storageUg_default_create(void *data)
 	}
 
 	setting_push_layout_navi_bar_genlist(ad->lo_parent, ad->win,
-	                                     STORAGEUG_STR_DEF_STORAGE, STORAGEUG_STR_BACK, NULL,
-	                                     (setting_call_back_func)storageUg_default_back_cb,
-	                                     NULL, ad, &genlist, ad->navi);
+										 STORAGEUG_STR_DEF_STORAGE, STORAGEUG_STR_BACK, NULL,
+										 (setting_call_back_func)storageUg_default_back_cb,
+										 NULL, ad, &genlist, ad->navi);
 
 	/*Shared contents */
 	setting_create_Gendial_field_titleItem(genlist, &itc_group_item,
-	                                       STORAGEUG_STR_SHARED_CONTENTS, NULL);
+										   STORAGEUG_STR_SHARED_CONTENTS, NULL);
 
 	/* bluetooth */
 	cur_storage = storageUg_default_cur_storage_get(ad->mmc_status,
-	                                                INT_SLP_SETTING_DEFAULT_MEM_BLUETOOTH);
+													INT_SLP_SETTING_DEFAULT_MEM_BLUETOOTH);
 	ad->data_bt = setting_create_Gendial_field_def(genlist, &(itc_2text), storageUg_default_main_item_sel,
-	                                               ad, SWALLOW_Type_INVALID, NULL,
-	                                               NULL, 0, STORAGEUG_STR_BT, (char *)cur_storage, NULL);
+												   ad, SWALLOW_Type_INVALID, NULL,
+												   NULL, 0, STORAGEUG_STR_BT, (char *)cur_storage, NULL);
 	if (ad->data_bt) {
 		ad->data_bt->int_slp_setting_binded = INT_SLP_SETTING_DEFAULT_MEM_BLUETOOTH;
 		ad->data_bt->userdata = ad;
@@ -353,10 +353,10 @@ static int storageUg_default_create(void *data)
 
 	/* Wifi Direct */
 	cur_storage = storageUg_default_cur_storage_get(ad->mmc_status,
-	                                                INT_SLP_SETTING_DEFAULT_MEM_WIFIDIRECT);
+													INT_SLP_SETTING_DEFAULT_MEM_WIFIDIRECT);
 	ad->data_wifidirect = setting_create_Gendial_field_def(genlist, &(itc_2text), storageUg_default_main_item_sel,
-	                                                       ad, SWALLOW_Type_INVALID, NULL,
-	                                                       NULL, 0, STORAGEUG_STR_WIFI, (char *)cur_storage, NULL);
+														   ad, SWALLOW_Type_INVALID, NULL,
+														   NULL, 0, STORAGEUG_STR_WIFI, (char *)cur_storage, NULL);
 	if (ad->data_wifidirect) {
 		ad->data_wifidirect->int_slp_setting_binded = INT_SLP_SETTING_DEFAULT_MEM_WIFIDIRECT;
 		ad->data_wifidirect->userdata = ad;
@@ -369,16 +369,16 @@ static int storageUg_default_create(void *data)
 	item_title = STORAGEUG_STR_INSTALLED_APP_B;
 
 	setting_create_Gendial_field_titleItem(genlist, &itc_group_item, grp_title,
-	                                       NULL);
+										   NULL);
 
 	cur_storage = storageUg_default_cur_storage_get(ad->mmc_status,
-	                                                INT_SLP_SETTING_DEFAULT_MEM_INSTALLAPPLICATIONS);
+													INT_SLP_SETTING_DEFAULT_MEM_INSTALLAPPLICATIONS);
 	ad->data_installapp = setting_create_Gendial_field_def(genlist, &(itc_2text), storageUg_default_main_item_sel,
-	                                                       ad, SWALLOW_Type_INVALID, NULL,
-	                                                       NULL, 0, item_title, (char *)cur_storage, NULL);
+														   ad, SWALLOW_Type_INVALID, NULL,
+														   NULL, 0, item_title, (char *)cur_storage, NULL);
 	if (ad->data_installapp) {
 		ad->data_installapp->int_slp_setting_binded =
-		    INT_SLP_SETTING_DEFAULT_MEM_INSTALLAPPLICATIONS;
+			INT_SLP_SETTING_DEFAULT_MEM_INSTALLAPPLICATIONS;
 		ad->data_installapp->userdata = ad;
 	} else {
 		SETTING_TRACE_ERROR("ad->data_installapp is NULL");
@@ -387,10 +387,10 @@ static int storageUg_default_create(void *data)
 	ADD_GL_HELP(genlist, STORAGEUG_STR_APP_LOC_NOTICE);
 
 	ret = vconf_notify_key_changed(storageUg_MMC_stat, storageUg_default_mmc_changed_cb,
-	                               ad);
+								   ad);
 	if (ret != 0) {
 		SETTING_TRACE_ERROR("vconf_notify_key_changed(%s) Fail(%d)", storageUg_MMC_stat,
-		                    ret);
+							ret);
 	}
 
 	setting_view_storage_default.is_create = 1;

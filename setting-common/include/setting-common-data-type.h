@@ -161,7 +161,7 @@
 */
 
 typedef void (*setting_call_back_func)(void *data, Evas_Object *obj, void *event_info);
-typedef Eina_Bool (*setting_naviframe_cb)(void *data, Elm_Object_Item *it);
+typedef Eina_Bool(*setting_naviframe_cb)(void *data, Elm_Object_Item *it);
 
 #define WIDGET_SCALE_FACTOR				(get_widgets_factor())
 #define SETTING_PADDING_WIDTH			(8 * WIDGET_SCALE_FACTOR)
@@ -209,9 +209,9 @@ typedef Eina_Bool (*setting_naviframe_cb)(void *data, Elm_Object_Item *it);
 #define MIN_MOVE_DISTANCE 30
 
 typedef enum _button_state {
-    SETTING_ON_OFF_BTN_OFF = 0,
-    SETTING_ON_OFF_BTN_ON,
-    SETTING_ON_OFF_BTN_MAX
+	SETTING_ON_OFF_BTN_OFF = 0,
+	SETTING_ON_OFF_BTN_ON,
+	SETTING_ON_OFF_BTN_MAX
 } ButtonState ;
 
 
@@ -223,63 +223,63 @@ typedef struct {
 } setting_lang_entry;
 
 typedef enum _Theme_Type {
-    Theme_Invalid = -1,
-    Theme_Tizen = 0,
-    Theme_Tizen_Black = 1,
-    Theme_Tizen_Blue,
-    Theme_ERROR
+	Theme_Invalid = -1,
+	Theme_Tizen = 0,
+	Theme_Tizen_Black = 1,
+	Theme_Tizen_Blue,
+	Theme_ERROR
 } Theme_Type;
 
 typedef enum _GENDIAL_Type {
-    GENDIAL_Type_1text_1icon_2 = 0,
-    GENDIAL_Type_1icon_2text = 1,
-    GENDIAL_Type_expandable_proc = 2,
-    GENDIAL_Type_MAX
+	GENDIAL_Type_1text_1icon_2 = 0,
+	GENDIAL_Type_1icon_2text = 1,
+	GENDIAL_Type_expandable_proc = 2,
+	GENDIAL_Type_MAX
 } GENDIAL_Type;
 
 typedef enum _SWALLOW_Type {
-    SWALLOW_Type_INVALID = -1,
-    SWALLOW_Type_1ICON_1RADIO = 2,
-    SWALLOW_Type_1CHECK = 3,
-    SWALLOW_Type_1CHECK_RIGHT = 4,
-    SWALLOW_Type_1CHECKICON = 5,
-    SWALLOW_Type_1RADIO = 6,
-    SWALLOW_Type_1TOGGLE =  7,
+	SWALLOW_Type_INVALID = -1,
+	SWALLOW_Type_1ICON_1RADIO = 2,
+	SWALLOW_Type_1CHECK = 3,
+	SWALLOW_Type_1CHECK_RIGHT = 4,
+	SWALLOW_Type_1CHECKICON = 5,
+	SWALLOW_Type_1RADIO = 6,
+	SWALLOW_Type_1TOGGLE =  7,
 	SWALLOW_Type_1CHECK_RIGHT_INVISIBLE,
-    SWALLOW_Type_1ICON_1DOTTOOGLE,
+	SWALLOW_Type_1ICON_1DOTTOOGLE,
 	SWALLOW_Type_1ICON_SMALL_ICON,
 
-    SWALLOW_Type_1ICON_1IMAGE,
-    SWALLOW_Type_1GIF,
-    SWALLOW_Type_1BUTTON,
+	SWALLOW_Type_1ICON_1IMAGE,
+	SWALLOW_Type_1GIF,
+	SWALLOW_Type_1BUTTON,
 
 	SWALLOW_TYPE_1RADIO_RIGHT_PROPAGATE_EVENTS_SET,
-    SWALLOW_Type_1RADIO_RIGHT,
-    SWALLOW_Type_1RADIO_1BTN,
-    SWALLOW_Type_1RADIO_1TEXT,
+	SWALLOW_Type_1RADIO_RIGHT,
+	SWALLOW_Type_1RADIO_1BTN,
+	SWALLOW_Type_1RADIO_1TEXT,
 
-    SWALLOW_Type_1LINE_LAYOUT,
-    SWALLOW_Type_LAYOUT_EDITFIELD,
-    SWALLOW_Type_LAYOUT_SIMPLE_PASSWORD, /* for simple password */
-    SWALLOW_Type_LAYOUT_DATEFIELD,
-    SWALLOW_Type_LAYOUT_SLIDER,
-    SWALLOW_Type_LAYOUT_5STEP_SLIDER,
-    SWALLOW_Type_LAYOUT_SPECIALIZTION,
-    SWALLOW_Type_LAYOUT_SPECIALIZTION_X,/*extension */
+	SWALLOW_Type_1LINE_LAYOUT,
+	SWALLOW_Type_LAYOUT_EDITFIELD,
+	SWALLOW_Type_LAYOUT_SIMPLE_PASSWORD, /* for simple password */
+	SWALLOW_Type_LAYOUT_DATEFIELD,
+	SWALLOW_Type_LAYOUT_SLIDER,
+	SWALLOW_Type_LAYOUT_5STEP_SLIDER,
+	SWALLOW_Type_LAYOUT_SPECIALIZTION,
+	SWALLOW_Type_LAYOUT_SPECIALIZTION_X,/*extension */
 
-    SWALLOW_Type_MAX
+	SWALLOW_Type_MAX
 } SWALLOW_Type;
 
 typedef enum {
-    UNDEFINED_LIB_SYMBOL = -2,/*  undefined symbol : -2 */
-    LOAD_LIB_FAILED = -1,/*  load failed : -1 */
-    OPERATE_LIB_SUCESS = 0,
+	UNDEFINED_LIB_SYMBOL = -2,/*  undefined symbol : -2 */
+	LOAD_LIB_FAILED = -1,/*  load failed : -1 */
+	OPERATE_LIB_SUCESS = 0,
 } OPERATE_LIB_ERROR;
 
 typedef enum _POPUP_BTN_RESPONSE_TYPE {
-    POPUP_RESPONSE_INVALID = -1,
-    POPUP_RESPONSE_OK = 0,
-    POPUP_RESPONSE_CANCEL = 1,
+	POPUP_RESPONSE_INVALID = -1,
+	POPUP_RESPONSE_OK = 0,
+	POPUP_RESPONSE_CANCEL = 1,
 } POPUP_BTN_RESPONSE_TYPE;
 
 /**
@@ -383,9 +383,9 @@ typedef struct _Setting_GenGroupItem_Data {
 } Setting_GenGroupItem_Data;
 
 typedef enum {
-    SETTING_VCONF_INT_TYPE = 0,
-    SETTING_VCONF_BOOL_TYPE,
-    SETTING_VCONF_STR_TYPE
+	SETTING_VCONF_INT_TYPE = 0,
+	SETTING_VCONF_BOOL_TYPE,
+	SETTING_VCONF_STR_TYPE
 } setting_vconf_type;
 
 #define MAX_RESET_MENU_NUM 100

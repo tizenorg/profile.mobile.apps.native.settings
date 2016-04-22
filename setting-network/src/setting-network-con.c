@@ -42,7 +42,7 @@ static void __setting_network_con_genlist_create(void *data)
 
 	Elm_Object_Item *item = NULL;
 	item = elm_genlist_item_append(ad->connections_gl, &itc_seperator, NULL, NULL,
-	                               ELM_GENLIST_ITEM_NONE, NULL, NULL);
+								   ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	/* scroller is a genlist */
@@ -51,10 +51,10 @@ static void __setting_network_con_genlist_create(void *data)
 	SETTING_TRACE("ad->apn_internet:%d, ad->apn_MMS:%d", ad->apn_internet, ad->apn_MMS);
 	ad->apn_internet = __get_profile_name(CONNECTION_CELLULAR_SERVICE_TYPE_INTERNET, ad);
 	Setting_GenGroupItem_Data *internet_conn = setting_create_Gendial_field_def(ad->connections_gl, &itc_2text_3,
-	                                                                            setting_network_con_item_Gendial_mouse_up_cb,
-	                                                                            ad, SWALLOW_Type_INVALID, NULL, NULL,
-	                                                                            0, "IDS_ST_BODY_INTERNET_CONNECTION",
-	                                                                            g_strdup(ad->apn_internet), NULL);
+																				setting_network_con_item_Gendial_mouse_up_cb,
+																				ad, SWALLOW_Type_INVALID, NULL, NULL,
+																				0, "IDS_ST_BODY_INTERNET_CONNECTION",
+																				g_strdup(ad->apn_internet), NULL);
 	if (!internet_conn) {
 		SETTING_TRACE_ERROR("internet_conn is NULL");
 	}
@@ -65,26 +65,26 @@ static void __setting_network_con_genlist_create(void *data)
 	ad->apn_MMS = __get_profile_name(CONNECTION_CELLULAR_SERVICE_TYPE_MMS, ad);
 	/* [MMS Connections] Internet Connections */
 	Setting_GenGroupItem_Data *mms_conn = setting_create_Gendial_field_def(ad->connections_gl, &itc_2text_3,
-	                                                                       setting_network_con_item_Gendial_mouse_up_cb,
-	                                                                       ad, SWALLOW_Type_INVALID, NULL, NULL,
-	                                                                       0, STR_SETTING_MMS_CONNECTIONS,
-	                                                                       g_strdup(ad->apn_MMS), NULL);
+																		   setting_network_con_item_Gendial_mouse_up_cb,
+																		   ad, SWALLOW_Type_INVALID, NULL, NULL,
+																		   0, STR_SETTING_MMS_CONNECTIONS,
+																		   g_strdup(ad->apn_MMS), NULL);
 	ad->mms_conn = mms_conn;
 
 
 #ifdef ENABLED_PREFERRED_NETWORKS
 	setting_create_Gendial_field_def(ad->connections_gl, &itc_1text,
-	                                 setting_network_con_item_Gendial_mouse_up_cb,
-	                                 ad, SWALLOW_Type_INVALID, NULL, NULL,
-	                                 0, "IDS_ST_BODY_PREFERRED_NETWORKS",
-	                                 NULL, NULL);
+									 setting_network_con_item_Gendial_mouse_up_cb,
+									 ad, SWALLOW_Type_INVALID, NULL, NULL,
+									 0, "IDS_ST_BODY_PREFERRED_NETWORKS",
+									 NULL, NULL);
 #endif
 #ifdef ENABLED_2G3G_NETWORK
 	/*  create 3g connection option */
 	setting_create_Gendial_field_def(ad->connections_gl, &itc_1text,
-	                                 setting_network_con_item_Gendial_mouse_up_cb,
-	                                 ad, SWALLOW_Type_INVALID, NULL, NULL,
-	                                 0, "2G/3G Connection", NULL, NULL);
+									 setting_network_con_item_Gendial_mouse_up_cb,
+									 ad, SWALLOW_Type_INVALID, NULL, NULL,
+									 0, "2G/3G Connection", NULL, NULL);
 
 #endif
 
@@ -110,7 +110,7 @@ static void __setting_network_con_genlist_create(void *data)
  *
  ***************************************************/
 
-static Evas_Object* ctxpopup;
+static Evas_Object *ctxpopup;
 
 static void
 ctxpopup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
@@ -134,16 +134,16 @@ move_more_ctxpopup(Evas_Object *ctxpopup)
 	pos = elm_win_rotation_get(win);
 
 	switch (pos) {
-		case 0:
-		case 180:
-			evas_object_move(ctxpopup, (w / 2), h);
-			break;
-		case 90:
-			evas_object_move(ctxpopup,  (h / 2), w);
-			break;
-		case 270:
-			evas_object_move(ctxpopup, (h / 2), w);
-			break;
+	case 0:
+	case 180:
+		evas_object_move(ctxpopup, (w / 2), h);
+		break;
+	case 90:
+		evas_object_move(ctxpopup, (h / 2), w);
+		break;
+	case 270:
+		evas_object_move(ctxpopup, (h / 2), w);
+		break;
 	}
 }
 
@@ -179,9 +179,9 @@ ctxpopup_item_select_cb(void *data, Evas_Object *obj, void *event_info)
 	retm_if(data == NULL, "Data parameter is NULL");
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
 	ad->popup_conreset = setting_create_popup(ad, ad->win_get,
-	                                          NULL, _("IDS_ST_POP_RESET_TO_DEFAULT_Q"),
-	                                          setting_network_con_reset_popup_cb,
-	                                          0, false, false,
+											  NULL, _("IDS_ST_POP_RESET_TO_DEFAULT_Q"),
+											  setting_network_con_reset_popup_cb,
+											  0, false, false,
 											  2, _("IDS_ST_BUTTON_OK"), _("IDS_ST_BUTTON_CANCEL_ABB"));
 
 	if (ctxpopup != NULL) {
@@ -196,10 +196,10 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj, void *e
 {
 	SETTING_TRACE_BEGIN;
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-	//Evas_Object *it_obj;
+	/*Evas_Object *it_obj; */
 	Evas_Object *nf = ad->navi_bar;
 	Evas_Object *win;
-	//Elm_Object_Item *it;
+	/*Elm_Object_Item *it; */
 
 	if (ctxpopup != NULL) {
 		evas_object_del(ctxpopup);
@@ -236,7 +236,7 @@ static int setting_network_con_create(void *cb)
 
 	Evas_Object *scroller = elm_genlist_add(ad->win_main_layout);
 	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
-	         "Cannot set scroller object  as contento of layout");
+			 "Cannot set scroller object  as contento of layout");
 	elm_genlist_mode_set(scroller, ELM_LIST_COMPRESS);
 	elm_object_style_set(scroller, "dialogue");
 	ad->connections_gl = scroller;
@@ -244,18 +244,18 @@ static int setting_network_con_create(void *cb)
 
 	Elm_Object_Item *navi_it = setting_push_layout_navi_bar(_("IDS_ST_BODY_CONNECTIONS"),
 															NULL, /* ARROR BUTTON */
-	                                                        NULL,
-	                                                        _(KeyStr_Reset_Def),
-	                                                        setting_network_con_click_softkey_cancel_cb,
-	                                                        NULL,
-	                                                        setting_network_con_click_softkey_reset_cb,/*setting_network_con_click_softkey_create_cb, */
-	                                                        ad, scroller, ad->navi_bar, NULL);
+															NULL,
+															_(KeyStr_Reset_Def),
+															setting_network_con_click_softkey_cancel_cb,
+															NULL,
+															setting_network_con_click_softkey_reset_cb,/*setting_network_con_click_softkey_create_cb, */
+															ad, scroller, ad->navi_bar, NULL);
 
 	elm_naviframe_item_pop_cb_set(navi_it, setting_network_con_click_softkey_cancel_cb, ad);
 
 	__setting_network_con_genlist_create(ad);
 
-	Evas_Object* btn = elm_button_add(ad->navi_bar);
+	Evas_Object *btn = elm_button_add(ad->navi_bar);
 	elm_object_style_set(btn, "naviframe/more/default");
 	evas_object_smart_callback_add(btn, "clicked", create_ctxpopup_more_button_cb, ad);
 	elm_object_item_part_content_set(navi_it, "toolbar_more_btn", btn);
@@ -321,7 +321,7 @@ static int setting_network_con_cleanup(void *cb)
 
 static void
 setting_network_con_item_Gendial_mouse_up_cb(void *data, Evas_Object *obj,
-                                             void *event_info)
+											 void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -329,7 +329,7 @@ setting_network_con_item_Gendial_mouse_up_cb(void *data, Evas_Object *obj,
 	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
 	elm_genlist_item_selected_set(item, 0);
 	Setting_GenGroupItem_Data *list_item =
-	    (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
+		(Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
 	setting_retm_if(NULL == list_item, "list_item is NULL");
 
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
@@ -341,63 +341,63 @@ setting_network_con_item_Gendial_mouse_up_cb(void *data, Evas_Object *obj,
 
 	if (!safeStrCmp("IDS_COM_BODY_NETWORK_OPERATORS", list_item->keyStr)) {
 		setting_view_change(&setting_view_network_con,
-		                    &setting_view_network_select_network,
-		                    ad);
+							&setting_view_network_select_network,
+							ad);
 	}
 #ifdef ENABLED_PREFERRED_NETWORKS
 	else if (!safeStrCmp("IDS_ST_BODY_PREFERRED_NETWORKS",
-	                     list_item->keyStr)) {
+						 list_item->keyStr)) {
 
 		int value = -1;
 		int err = -1;
 
 		setting_get_int_slp_key(INT_SLP_SETTING_SIM_SLOT, &value,
-		                        &err);
+								&err);
 		/** @todo check 'err' variable for exception handling */
 		SETTING_TRACE("INT_SLP_SETTING_SIM_SLOT value:%d", value);
 		switch (value) {
-			case VCONFKEY_TELEPHONY_SIM_INSERTED:
-				/* To Recreate the view in order to search the perferred network again. */
-				/* ret = setting_view_destroy(&setting_view_network_preferred_network, ad); */
+		case VCONFKEY_TELEPHONY_SIM_INSERTED:
+			/* To Recreate the view in order to search the perferred network again. */
+			/* ret = setting_view_destroy(&setting_view_network_preferred_network, ad); */
 
-				setting_view_change(&setting_view_network_con,
-				                    &setting_view_network_preferred_network,
-				                    ad);
+			setting_view_change(&setting_view_network_con,
+								&setting_view_network_preferred_network,
+								ad);
 
-				break;
+			break;
 
-			case VCONFKEY_TELEPHONY_SIM_NOT_PRESENT:
+		case VCONFKEY_TELEPHONY_SIM_NOT_PRESENT:
 
-				setting_create_popup(NULL, ad->win_get,
-				                            NULL, _(""), NULL, 0, false, false, 0);/*this code is not used now, so remove the ID which is not in po file*/
-				SETTING_TRACE_DEBUG
-				("%s*** [ERR] INCORRECTED SIM. sim_slot_type=%d ***%s",
-				 SETTING_FONT_RED, value, SETTING_FONT_BLACK);
-				return;
+			setting_create_popup(NULL, ad->win_get,
+								 NULL, _(""), NULL, 0, false, false, 0);/*this code is not used now, so remove the ID which is not in po file*/
+			SETTING_TRACE_DEBUG
+			("%s*** [ERR] INCORRECTED SIM. sim_slot_type=%d ***%s",
+			 SETTING_FONT_RED, value, SETTING_FONT_BLACK);
+			return;
 
-				break;
+			break;
 
-			case VCONFKEY_TELEPHONY_SIM_CARD_ERROR:
-			case VCONFKEY_TELEPHONY_SIM_UNKNOWN:
+		case VCONFKEY_TELEPHONY_SIM_CARD_ERROR:
+		case VCONFKEY_TELEPHONY_SIM_UNKNOWN:
 
-				setting_create_popup(NULL, ad->win_get,
-				                            NULL, _("IDS_SIM_BODY_INVALID_SIM_CARD"), NULL, 0, false, false, 0);
-				SETTING_TRACE_DEBUG
-				("%s*** [ERR] INCORRECTED SIM. sim_slot_type=%d ***%s",
-				 SETTING_FONT_RED, value, SETTING_FONT_BLACK);
-				return;
+			setting_create_popup(NULL, ad->win_get,
+								 NULL, _("IDS_SIM_BODY_INVALID_SIM_CARD"), NULL, 0, false, false, 0);
+			SETTING_TRACE_DEBUG
+			("%s*** [ERR] INCORRECTED SIM. sim_slot_type=%d ***%s",
+			 SETTING_FONT_RED, value, SETTING_FONT_BLACK);
+			return;
 
-				break;
-			default:
-				SETTING_TRACE("Unknown SIM information from vconf");
-				break;
+			break;
+		default:
+			SETTING_TRACE("Unknown SIM information from vconf");
+			break;
 		}
 	}
 #endif
 #ifdef ENABLED_2G3G_NETWORK
 	else if (!safeStrCmp("2G/3G Connection", list_item->keyStr)) {
 		setting_view_change(&setting_view_network_con,
-		                    &setting_view_network_3gcon, ad);
+							&setting_view_network_3gcon, ad);
 	}
 #endif
 	else if (!safeStrCmp("IDS_ST_BODY_INTERNET_CONNECTION", list_item->keyStr)) {/*connections.. */
@@ -407,8 +407,8 @@ setting_network_con_item_Gendial_mouse_up_cb(void *data, Evas_Object *obj,
 		ad->con_name = strdup(list_item->keyStr);
 		ad->profile_service_type = CONNECTION_CELLULAR_SERVICE_TYPE_INTERNET;
 		setting_view_change(&setting_view_network_con,
-		                    &setting_view_network_con_list,
-		                    ad);
+							&setting_view_network_con_list,
+							ad);
 	} else if (!safeStrCmp(STR_SETTING_MMS_CONNECTIONS, list_item->keyStr)) {
 		FREE(ad->con_name);
 		ad->profile_topper_view = &setting_view_network_con;
@@ -437,9 +437,9 @@ setting_network_con_click_softkey_reset_cb(void *data, Evas_Object *obj, void *e
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
 
 	ad->popup_conreset = setting_create_popup(ad, ad->win_get,
-	                                          NULL, _("IDS_ST_POP_RESET_TO_DEFAULT_Q"),
-	                                          setting_network_con_reset_popup_cb,
-	                                          0, false, false,
+											  NULL, _("IDS_ST_POP_RESET_TO_DEFAULT_Q"),
+											  setting_network_con_reset_popup_cb,
+											  0, false, false,
 											  2, _("IDS_ST_BUTTON_OK"), _("IDS_ST_BUTTON_CANCEL_ABB"));
 	return;
 }
@@ -490,13 +490,13 @@ setting_network_con_reset_popup_cb(void *data, Evas_Object *obj, void *event_inf
 
 	if (response_type == POPUP_RESPONSE_OK) {
 
-		// waiting popup should be here
+		/* waiting popup should be here */
 		ad->popup_conreset_complete = setting_create_popup_with_progressbar(ad, ad->win_get,
-				PROGRESSBAR_STYLE, NULL, IDS_ST_SK2_PLEASE_WAIT, NULL, 0, TRUE, TRUE, 0);
+																			PROGRESSBAR_STYLE, NULL, IDS_ST_SK2_PLEASE_WAIT, NULL, 0, TRUE, TRUE, 0);
 
 		if (ad->connection) {
 			ret = connection_reset_profile(ad->connection, CONNECTION_RESET_DEFAULT_PROFILE,
-					0, _reset_do_default_cb, ad);
+										   0, _reset_do_default_cb, ad);
 			if (CONNECTION_ERROR_NONE == ret) {
 				SETTING_TRACE("Reset successfully");
 			} else {
@@ -517,6 +517,6 @@ setting_network_con_click_softkey_cancel_cb(void *data, Elm_Object_Item *it)
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
 
 	setting_view_change(&setting_view_network_con,
-	                    &setting_view_network_main, ad);
+						&setting_view_network_main, ad);
 	return EINA_TRUE;
 }
