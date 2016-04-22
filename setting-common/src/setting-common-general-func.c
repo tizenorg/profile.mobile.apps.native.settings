@@ -18,7 +18,7 @@
  * limitations under the License.
  *
  */
-#include <ail.h>
+
 #include <setting-common-general-func.h>
 #include <setting-common-data-slp-setting.h>
 

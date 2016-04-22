@@ -25,7 +25,6 @@
 
 #include <setting-locktype-main.h>
 #include <pkgmgr-info.h>
-#include <ail.h>
 #include <efl_extension.h>
 #if SUPPORT_ENCRYPTION
 #include <ode.h>
@@ -96,7 +95,7 @@ int __get_appinfo_cb(pkgmgrinfo_appinfo_h appinfo, void *user_data)
 	openlock_appdata *new_item = NULL;
 	char *app_name = NULL;
 	char *app_id = NULL;
-	ail_appinfo_h handle;
+	pkgmgrinfo_appinfo_h handle;
 	int ret = 0;
 
 	ret = pkgmgrinfo_appinfo_get_appid(appinfo, &app_id);

@@ -3,7 +3,7 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${SETTING_COMMON}/include)
 
 INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_security REQUIRED ecore evas elementary tapi dlog
-ui-gadget-1 capi-appfw-application capi-appfw-app-manager appcore-common ail
+ui-gadget-1 capi-appfw-application capi-appfw-app-manager appcore-common
 deviced capi-network-connection json-glib-1.0 efl-extension libtzplatform-config)
 
 FOREACH(flag ${pkgs_security_CFLAGS})
