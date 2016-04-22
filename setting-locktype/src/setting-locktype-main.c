@@ -112,17 +112,17 @@ int __get_appinfo_cb(pkgmgrinfo_appinfo_h appinfo, void *user_data)
 
 	SETTING_TRACE_DEBUG("app_id %s", app_id);
 
-	ret = ail_get_appinfo(app_id, &handle);
-	if (ret != AIL_ERROR_OK) {
-		SETTING_TRACE_DEBUG("ail_get_appinfo() returns error");
-		ail_destroy_appinfo(handle);
+	ret = pkgmgrinfo_appinfo_get_appinfo(app_id, &handle);
+	if (ret != PMINFO_R_OK) {
+		SETTING_TRACE_DEBUG("pkgmgrinfo_appinfo_get_appinfo() returns error");
+		pkgmgrinfo_appinfo_destroy_appinfo(handle);
 		return -1;
 	}
 
-	ail_appinfo_get_str(handle, AIL_PROP_NAME_STR, &app_name);
-	if (!app_name) {
-		SETTING_TRACE_DEBUG("ail_appinfo_get_str() returns error");
-		ail_destroy_appinfo(handle);
+	ret = pkgmgrinfo_appinfo_get_label(handle, &app_name);
+	if (ret != PMINFO_R_OK) {
+		SETTING_TRACE_DEBUG("pkgmgrinfo_appinfo_get_label() returns error");
+		pkgmgrinfo_appinfo_destroy_appinfo(handle);
 		return -1;
 	}
 
@@ -159,7 +159,7 @@ int __get_appinfo_cb(pkgmgrinfo_appinfo_h appinfo, void *user_data)
 	}
 	/*FREE(app_id); */
 	/*FREE(app_name); */
-	ail_destroy_appinfo(handle);
+	pkgmgrinfo_appinfo_destroy_appinfo(handle);
 	SETTING_TRACE_END;
 	return 0;
 }
