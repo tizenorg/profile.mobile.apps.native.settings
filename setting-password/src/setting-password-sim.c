@@ -100,11 +100,11 @@ static char *setting_password_sim_get_title_str(void *data)
 
 }
 
-static Eina_Bool setting_password_sim_click_softkey_cancel_cb(void *data, Elm_Object_Item *it)
+static void setting_password_sim_click_softkey_cancel_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
-	retvm_if(data == NULL, EINA_FALSE, "[Setting > Password] Data parameter is NULL");
+	setting_retm_if(NULL == data, "[Setting > Password] Data parameter is NULL");
 
 	SettingPasswordUG *ad = (SettingPasswordUG *) data;
 #if 0
@@ -139,8 +139,6 @@ static Eina_Bool setting_password_sim_click_softkey_cancel_cb(void *data, Elm_Ob
 	}
 	/* Send destroy request */
 	ug_destroy_me(ad->ug);
-
-	return EINA_TRUE;
 }
 
 static int __create_sim_layout(void *data)

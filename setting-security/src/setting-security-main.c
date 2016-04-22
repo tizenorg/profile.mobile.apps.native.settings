@@ -89,8 +89,6 @@ static int setting_security_main_create(void *cb)
 
 	/*setting_enable_expandable_genlist(scroller, ad, __security_exp_cb, NULL); */
 
-	Elm_Object_Item *item = NULL;
-
 	/* Group List: Lock screen */
 	(void)setting_create_Gendial_field_titleItem(scroller,
 	                                             &itc_group_item,
@@ -312,7 +310,8 @@ static Eina_Bool __remove_sim_popup_cb(void *data)
 	return EINA_FALSE;
 }
 
-static Eina_Bool _check_tapi_async_cb_is_called(void *data)
+
+static UNUSED Eina_Bool _check_tapi_async_cb_is_called(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	retv_if(data == NULL, EINA_FALSE);
@@ -369,7 +368,7 @@ void setting_security_lockscreen_layout_ug_cb(ui_gadget_h ug,
 	SETTING_TRACE_END;
 }
 
-static void setting_security_lockscreen_destroy_ug_cb(ui_gadget_h ug, void *priv)
+static UNUSED void setting_security_lockscreen_destroy_ug_cb(ui_gadget_h ug, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(priv == NULL);

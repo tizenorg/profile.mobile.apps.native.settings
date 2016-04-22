@@ -282,10 +282,8 @@ int pwd_handler_sec_pw_pin1_blocked(SettingSecurityUG *data, void *arg)
 #ifdef ECORE_X
 	Ecore_X_Window xwin = 0;
 	Ecore_X_Display *disp = NULL;
-#endif
 
 	int ret = 0;
-#ifdef ECORE_X
 	disp = ecore_x_display_get();
 	xwin = elm_win_xwindow_get(ad->win_get);
 
@@ -308,12 +306,12 @@ int pwd_handler_sec_pw_pin1_blocked(SettingSecurityUG *data, void *arg)
 	// @todo : repace codes using X with codes tizen 3.0 API
 #endif
 
+#ifdef ECORE_X
 	unsigned int val[3];
 	val[0] = 0; 	/* always enable F */
 	val[1] = 0;		/* quickpanel enable F */
 	val[2] = 0; 	/* apptray enable F */
 	/* set quickpanel disable */
-#ifdef ECORE_X
 	Ecore_X_Atom ATOM_PANEL_SCROLLABLE_STATE = 0;
 	ATOM_PANEL_SCROLLABLE_STATE = ecore_x_atom_get("_E_MOVE_PANEL_SCROLLABLE_STATE");
 	ecore_x_window_prop_card32_set(xwin, ATOM_PANEL_SCROLLABLE_STATE, val, 3);
@@ -536,7 +534,6 @@ static void setting_security_ug_on_pause(ui_gadget_h ug, app_control_h service,
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
-	SettingSecurityUG *securityUG = priv;
 
 	if (setting_view_security_sim_settings.is_create == TRUE) {
 		bool is_running = FALSE;
@@ -544,6 +541,7 @@ static void setting_security_ug_on_pause(ui_gadget_h ug, app_control_h service,
 		if (is_running) {
 			SETTING_TRACE_DEBUG("pwlock is running");
 #ifdef ECORE_X
+			SettingSecurityUG *securityUG = priv;
 			Ecore_X_Window xwin = 0;
 			Ecore_X_Display *disp = NULL;
 
@@ -568,12 +566,12 @@ static void setting_security_ug_on_pause(ui_gadget_h ug, app_control_h service,
 	// @todo : repace codes using X with codes tizen 3.0 API
 #endif
 
+#ifdef ECORE_X
 			unsigned int val[3];
 			val[0] = 1; 	/* always enable */
 			val[1] = 1;		/* quickpanel enable */
 			val[2] = 1; 	/* apptray enable */
 			/* set quickpanel enable */
-#ifdef ECORE_X
 			Ecore_X_Atom ATOM_PANEL_SCROLLABLE_STATE = 0;
 			ATOM_PANEL_SCROLLABLE_STATE = ecore_x_atom_get("_E_MOVE_PANEL_SCROLLABLE_STATE");
 			ecore_x_window_prop_card32_set(xwin, ATOM_PANEL_SCROLLABLE_STATE, val, 3);

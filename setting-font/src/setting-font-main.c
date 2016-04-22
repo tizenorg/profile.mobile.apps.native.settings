@@ -38,7 +38,8 @@ static int setting_font_main_update(void *cb);
 static int setting_font_main_cleanup(void *cb);
 
 static Eina_Bool __setting_font_main_click_softkey_back_cb(void *data, Elm_Object_Item *it);
-static void _slider_mouse_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _eo_slider_mouse_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _slider_mouse_cb(void *data, Evas_Object *obj, void *event_info);
 static int setting_font_style_is_exist_string(const Eina_List *list, const char *key);
 static void __setting_get_font_size_str(void *data, int size);
 static void __setting_get_font_type_str(void *data, char *font_data);
@@ -206,7 +207,7 @@ static Evas_Object *_font_size_slider_get(void *data, Evas_Object *obj,
 			                                item_data);
 			item_data->eo_check = li_slider;
 			item_data->mouse_up_cb = _slider_mouse_cb;
-			evas_object_event_callback_add(li_slider, EVAS_CALLBACK_MOUSE_UP, _slider_mouse_cb, item_data);
+			evas_object_event_callback_add(li_slider, EVAS_CALLBACK_MOUSE_UP, _eo_slider_mouse_cb, item_data);
 
 			elm_object_part_content_set(layout, "slider", li_slider);
 			return layout;
@@ -238,7 +239,7 @@ static int setting_font_style_is_exist_string(const Eina_List *list, const char 
 		return 0;
 	}
 
-	for (l = list; l; l = eina_list_next(l)) {
+	for (l = (Eina_List *) list ; l; l = eina_list_next(l)) {
 		if (l->data && (!strcmp((char *)l->data, key))) {
 			return 1;
 		}
@@ -329,7 +330,7 @@ static Eina_List *__setting_font_main_available_list_get()
 						}
 					}
 					if (family_result && !setting_font_style_is_exist_string(list, family_result)) {
-						list = eina_list_sorted_insert(list, safeStrCmp, strdup(family_result));
+						list = eina_list_sorted_insert(list, (Eina_Compare_Cb)safeStrCmp, strdup(family_result));
 						SETTING_TRACE_DEBUG("-------- ADDED FONT - family = %s", family_result);
 						/* list = eina_list_append(list, family_result); */
 						/* for TEST because there's 1 font on target. */
@@ -641,16 +642,21 @@ static int _slider_endpoint_x()
 static int _slider_startpoint_x(void* data)
 {
 	SETTING_TRACE_BEGIN;
-	SettingFontUG *ad = (SettingFontUG *)data;
 	int width = 47;
 	#if 0
+	SettingFontUG *ad = (SettingFontUG *)data;
 	if (_slider_get_width(ad) == 720)		/* M0 */
 		return 47;
 	#endif
 	return width;
 }
 
-static void _slider_mouse_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+static void _eo_slider_mouse_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+	_slider_mouse_cb(data, obj, event_info);
+}
+
+static void _slider_mouse_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	if (data == NULL || obj == NULL || event_info == NULL)

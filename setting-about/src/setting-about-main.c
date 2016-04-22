@@ -1737,7 +1737,6 @@ int setting_about_main_generate_genlist(void *data)
 	bool is_emul_bin = isEmulBin();
 
 	Evas_Object *scroller = ad->genlsit;
-	Elm_Object_Item *item = NULL;
 	Setting_GenGroupItem_Data *item_data = NULL;
 	char str[MAX_DISPLAY_STR_LEN_ON_PHONE_INFO] = { 0, };
 	telephony_handle_list_s tapi_handle_list;
