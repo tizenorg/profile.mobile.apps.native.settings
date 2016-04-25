@@ -201,7 +201,7 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 	/* Group:Device */
 	{KeyStr_Device, NULL, "move://Tab3.top", Cfg_Item_Pos_Level0, 0, 0, Cfg_Item_Title_Node, NULL, NULL, NULL, uuid_SoundDisplay, 0, NULL},
 	{KeyStr_Sounds, IMG_Sounds, "setting-profile-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_Device, NULL, uuid_SoundDisplay, 0, NULL},
-	{KeyStr_Display, IMG_Display, "setting-display-efl|viewtype:main", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_Device, NULL, uuid_Display, 0, "org.tizen.setting.display"},
+	{KeyStr_Display, IMG_Display, "setting-display-efl|viewtype:main", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Device, NULL, uuid_Display, 0, "org.tizen.setting-display"},
 	{KeyStr_ApplicationsItem, IMG_Applications, "setting-applications-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_Device, NULL, uuid_Display, 0, "org.tizen.setting.display"},
 
 	/* Group: Personal */

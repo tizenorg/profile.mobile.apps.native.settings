@@ -265,7 +265,8 @@ void setting_main_click_list_ex_ug_cb(void *data, Evas_Object *obj,
 		return;
 	}
 	if (pnode && pnode->item_type == Cfg_Item_AppLauncher_Node) {
-		if (app_launcher(data) == 0) {
+SETTING_TRACE_ERROR("RRRRRRRRRRR0: APPLAUNCZER NOde");
+		if (app_launcher(pnode->shortcut_appid/*data*/) == 0) {
 			ad->event_freeze_timer = ecore_timer_add(1, setting_main_freeze_event_timer_cb, ad);
 			evas_object_freeze_events_set(ad->navibar_main, EINA_TRUE);
 		}
@@ -281,8 +282,9 @@ void setting_main_click_list_ex_ug_cb(void *data, Evas_Object *obj,
 	cbs->result_cb = setting_main_result_ug_cb;
 	cbs->destroy_cb = setting_main_destroy_ug_cb;
 	cbs->priv = (void *)ad;
-
+SETTING_TRACE_ERROR("RRRRRRRRRRR1: %s", data);
 	char *path = get_ug_path_from_ug_args(data);
+SETTING_TRACE_ERROR("RRRRRRRRRRR2: %s", path);
 	app_control_h svc = get_bundle_from_ug_args(data);
 	setting_main_click_list_item_ug_cb(ad, obj, path, svc, cbs);
 	if (path) {
