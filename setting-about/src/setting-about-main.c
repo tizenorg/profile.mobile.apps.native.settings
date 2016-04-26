@@ -33,14 +33,8 @@
 #include <efl_extension.h>
 #include <ITapiModem.h>
 
-#define MAX_DEVICE_NAME_LEN		32
+#include "setting-about-controller.h"
 
-#define DEVICED_BUS_NAME			"org.tizen.system.deviced"
-#define DEVICED_OBJECT_PATH			"/Org/Tizen/System/DeviceD"
-#define DEVICED_INTERFACE_NAME		DEVICED_BUS_NAME
-#define DEVICED_PATH_BOARD			DEVICED_OBJECT_PATH"/Board"
-#define DEVICED_INTERFACE_BOARD		DEVICED_INTERFACE_NAME".Board"
-#define METHOD_GET_SERIAL			"GetSerial"
 
 
 /** @todo : need to handle unicode encoded input characters */
@@ -68,12 +62,6 @@ setting_view setting_view_about_main = {
 	.cleanup = setting_about_main_cleanup,
 };
 
-void __setting_about_gl_realized_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	/*SETTING_TRACE_BEGIN; */
-	setting_retm_if(event_info == NULL, "invalid parameter: event_info is NULL");
-}
-
 /**
  * @brief popup response callback fuc.
  *
@@ -83,14 +71,14 @@ void __setting_about_gl_realized_cb(void *data, Evas_Object *obj, void *event_in
  *
  * @return no return
  */
+/*
 static void __setting_about_popup_rsp_cb(void *data, Evas_Object *obj, void *event_info)
 {
-
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(obj == NULL, "obj parameter is NULL");
 	setting_retm_if(data == NULL, "Data parameter is NULL");
 	SettingAboutUG *ad = (SettingAboutUG *) data;
-	/*Evas_Object *popup = data; */
+
 	switch (btn_type(obj)) {
 	case POPUP_RESPONSE_OK: {
 			if (ad->popup) {
@@ -103,14 +91,14 @@ static void __setting_about_popup_rsp_cb(void *data, Evas_Object *obj, void *eve
 				char *name_value = NULL;
 				name_value = vconf_get_str(VCONFKEY_SETAPPL_DEVICE_NAME_STR);
 				if (NULL == name_value) {
-					/*use the defaule name if get vconf failed*/
+
 					name_value = (char *)g_strdup(DEVICE_NAME_DEFAULE);
 				}
 				elm_object_focus_set(ad->item_dev_name->eo_check, EINA_TRUE);
-				/*for genlist update */
+
 				elm_entry_entry_set(ad->item_dev_name->eo_check, name_value);
 				elm_entry_cursor_end_set(ad->item_dev_name->eo_check);
-				G_FREE(ad->item_dev_name->sub_desc);/*release first */
+				G_FREE(ad->item_dev_name->sub_desc);
 				ad->item_dev_name->sub_desc = (char *)g_strdup(name_value);
 				FREE(name_value);
 				SETTING_TRACE("ad->item_dev_name->sub_desc:%s", ad->item_dev_name->sub_desc);
@@ -127,14 +115,14 @@ static void __setting_about_popup_rsp_cb(void *data, Evas_Object *obj, void *eve
 	}
 
 }
-
+*/
 /**
  * @brief callback run for idler task to destroy an popup.
  *
  * @param data application context
  *
  * @return FALSE for call it once, TRUE for call once the CPU is in idler
- */
+ *//*
 static Eina_Bool __setting_about_popup_remove_delay(void *data)
 {
 	SETTING_TRACE_BEGIN;
@@ -146,7 +134,7 @@ static Eina_Bool __setting_about_popup_remove_delay(void *data)
 	}
 	return FALSE;
 }
-
+*/
 /**
  * @brief callback for popup destory.
  *
@@ -154,7 +142,7 @@ static Eina_Bool __setting_about_popup_remove_delay(void *data)
  * @param e Evas handler
  * @param obj Evas object
  * @param event_info event type
- */
+ *//*
 static void __setting_about_popup_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
 {
@@ -164,19 +152,19 @@ static void __setting_about_popup_del_cb(void *data, Evas *e, Evas_Object *obj, 
 	ad->popup = NULL;
 	ad->popup_showed_flag = FALSE;
 }
-
+*/
 /**
  * @brief callback run for idler task to show an popup.
  *
  * @param data application context
- */
+ *//*
 static Eina_Bool __setting_about_popup_show_delay(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	retvm_if(data == NULL, FALSE, "Data parameter is NULL");
 	SettingAboutUG *ad = (SettingAboutUG *)data;
 
-	/*popup the message and display the original name if the input is empty*/
+	popup the message and display the original name if the input is empty
 	SETTING_TRACE("POP UP again");
 
 	if (NULL == ad->popup) {
@@ -190,14 +178,14 @@ static Eina_Bool __setting_about_popup_show_delay(void *data)
 
 	return FALSE;
 }
-
+*/
 /**
  * @brief callback run for idler task to destroy an popup.
  *
  * @param data application context
  *
  * @return FALSE for call it once, TRUE for call once the CPU is in idler
- */
+ *//*
 static void __setting_about_popup_mobile_ap_turn_off_ask_resp_cb(void *data,
 																 Evas_Object *obj,
 																 void *event_info)
@@ -208,7 +196,7 @@ static void __setting_about_popup_mobile_ap_turn_off_ask_resp_cb(void *data,
 	int response_type = btn_type(obj);
 
 	if (POPUP_RESPONSE_OK == response_type) {
-		/* disable tehering*/
+		 disable tehering
 		if (ad->item_dev_name && ad->item_dev_name->eo_check) {
 			elm_object_focus_allow_set(ad->item_dev_name->eo_check, EINA_TRUE);
 			elm_object_focus_set(ad->item_dev_name->eo_check, EINA_TRUE);
@@ -221,7 +209,6 @@ static void __setting_about_popup_mobile_ap_turn_off_ask_resp_cb(void *data,
 		}
 	} else if (POPUP_RESPONSE_CANCEL == response_type) {
 
-		/* do nothing */
 
 	}
 
@@ -232,7 +219,7 @@ static void __setting_about_popup_mobile_ap_turn_off_ask_resp_cb(void *data,
 
 
 }
-
+*/
 /**
  * @brief regulatory popup response cp.
  *
@@ -240,19 +227,19 @@ static void __setting_about_popup_mobile_ap_turn_off_ask_resp_cb(void *data,
  * @param obj evas object
  * @param event_info event type
  */
-
+/*
 static void __setting_about_popup_regulatory_info_rsp_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	retm_if(data == NULL, "Data parameter is NULL");
 	evas_object_del(data);
 }
-
+*/
 
 /**
  * @brief show regulatory info popup.
  *
  * @param data application context
- */
+ *//*
 static void __setting_about_popup_regulatory_info(void *data)
 {
 	SETTING_TRACE_BEGIN;
@@ -291,388 +278,7 @@ static void __setting_about_popup_regulatory_info(void *data)
 
 	SETTING_TRACE_END;
 }
-
-/**
- * @brief get Model Name.
- *		- No ini: Unavailable
- *		- I9500 @ target: GT-I9500
- *		- I9500 @ emul: SDK
- *		- SLP   @ target: GT-SLP
- *		- SLP   @ emul: SDK
- *
- * @param szStr the buffer for store the model name
- * @param nSize buffer size
- */
-void setting_about_main_get_phone_model_name(char *szStr, int nSize)
-{
-	retm_if(szStr == NULL, "szStr parameter is NULL");
-
-	char *value = NULL;
-	int ret = system_info_get_platform_string("http://tizen.org/system/model_name", &value);
-	SETTING_TRACE("value : %s", value);
-	if (ret != SYSTEM_INFO_ERROR_NONE) {
-		SETTING_TRACE_ERROR("fail to call system_info_get_platform_string");
-		FREE(value);
-		snprintf(szStr, nSize, "%s", _("IDS_ST_HEADER_UNAVAILABLE"));
-		return;
-	}
-
-	if (value) {
-		snprintf(szStr, nSize, "%s", value);
-	} else {
-		snprintf(szStr, nSize, "%s", _("IDS_ST_HEADER_UNAVAILABLE"));
-	}
-
-	FREE(value);
-}
-
-/**
- * @brief get software version.
- *
- * @param szStr the buffer for store SW version
- * @param nSize buffer size
- */
-void setting_about_main_get_sw_version(char *szStr, int nSize)
-{
-	retm_if(szStr == NULL, "szStr parameter is NULL");
-
-	char *version = NULL;
-	int ret = system_info_get_platform_string("http://tizen.org/feature/platform.version", &version);
-	if (ret != SYSTEM_INFO_ERROR_NONE) {
-		SETTING_TRACE_ERROR("fail to call system_info_get_platform_string");
-		FREE(version);
-		snprintf(szStr, nSize, "%s", _("IDS_ST_HEADER_UNAVAILABLE"));
-		return;
-	}
-
-	char *build_info = NULL;
-	ret = system_info_get_platform_string("http://tizen.org/system/build.string", &build_info);
-	if (ret != SYSTEM_INFO_ERROR_NONE) {
-		SETTING_TRACE_ERROR("fail to call system_info_get_platform_string");
-		FREE(version);
-		FREE(build_info);
-		snprintf(szStr, nSize, "%s", _("IDS_ST_HEADER_UNAVAILABLE"));
-		return;
-	}
-
-#if 0
-	snprintf(szStr, nSize, "TIZEN %s (%s)", version, build_info);
-#else
-	snprintf(szStr, nSize, "TIZEN %s", version);
-#endif
-	FREE(version);
-	FREE(build_info);
-}
-
-/**
- * @brief get software version.
- *
- * @param szStr the buffer for store SW version
- * @param nSize buffer size
- */
-void setting_about_main_get_wifi_mac_address_string(char *str, int size)
-{
-	SETTING_TRACE_BEGIN;
-	setting_retm_if(str == NULL, "str parameter is NULL");
-	setting_retm_if(size < SETTING_ABOUT_WIFI_MAC_STR_LEN + 1, "size parameter is wrong");
-
-	char *mac_addr = NULL;
-	int status = wifi_get_mac_address(&mac_addr);
-	if (WIFI_ERROR_NONE != status) {
-		SETTING_TRACE_ERROR("Failed to call wifi_get_mac_address()");
-	} else {
-		SETTING_TRACE_ERROR("Success to call wifi_get_mac_address()");
-	}
-
-	if (mac_addr) {
-		safeCopyStr(str, mac_addr, SETTING_ABOUT_WIFI_MAC_STR_LEN);
-		SETTING_TRACE_DEBUG("get_wifi_mac_address : %s", mac_addr);
-		free(mac_addr);
-	}
-
-	SETTING_TRACE_DEBUG("get_wifi_mac_address : %s", str);
-
-	int state = 0;
-	int ret = vconf_get_int(VCONFKEY_WIFI_STATE, &state);
-	if (0 != ret) {
-		SETTING_TRACE_ERROR("Failed to get wifi state");
-	} else {
-		SETTING_TRACE("get wifi state: %d", state);
-	}
-
-	if ((status != WIFI_ERROR_NONE) || (safeStrLen(str) == 0) || 0 == state) {
-		snprintf(str, size, "%s", _("IDS_ST_HEADER_UNAVAILABLE"));
-	}
-}
-
-static DBusMessage *dbus_method_sync_with_reply(const char *dest, const char *path,
-												const char *interface, const char *method,
-												const char *sig, char *param[])
-{
-	DBusConnection *conn;
-	DBusMessage *msg;
-	DBusMessageIter iter;
-	DBusMessage *reply;
-	DBusError err;
-
-	conn = dbus_bus_get(DBUS_BUS_SYSTEM, NULL);
-	if (!conn) {
-		return NULL;
-	}
-
-	msg = dbus_message_new_method_call(dest, path, interface, method);
-	if (!msg) {
-		return NULL;
-	}
-
-	dbus_message_iter_init_append(msg, &iter);
-
-	dbus_error_init(&err);
-
-	reply = dbus_connection_send_with_reply_and_block(conn, msg, -1, &err);
-	if (!reply) {
-	}
-
-	if (dbus_error_is_set(&err)) {
-		SETTING_TRACE_ERROR("dbus_connection_send error(%s:%s)", err.name, err.message);
-		dbus_error_free(&err);
-		reply = NULL;
-	}
-
-	dbus_message_unref(msg);
-	return reply;
-}
-
-/**
- * @brief get serial number.
- *
- * @param szStr the buffer for store SN
- * @param nSize buffer size
- */
-void setting_about_main_get_sn(char *szStr, int nSize)
-{
-	retm_if(szStr == NULL, "szStr parameter is NULL");
-
-	DBusError err;
-	DBusMessage *msg;
-	int ret, len;
-	char *serial_num;
-
-	msg = dbus_method_sync_with_reply(DEVICED_BUS_NAME, DEVICED_PATH_BOARD,
-									  DEVICED_INTERFACE_BOARD, METHOD_GET_SERIAL, NULL, NULL);
-	if (!msg) {
-		SETTING_TRACE_ERROR("fail send message");
-		snprintf(szStr, nSize, "%s", _("IDS_ST_HEADER_UNAVAILABLE"));
-		return;
-	}
-
-	dbus_error_init(&err);
-
-
-	ret = dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &serial_num, DBUS_TYPE_INT32, &len, DBUS_TYPE_INVALID);
-	if (!ret) {
-		SETTING_TRACE_ERROR("no message : [%s:%s]", err.name, err.message);
-		snprintf(szStr, nSize, "%s", _("IDS_ST_HEADER_UNAVAILABLE"));
-		return;
-	}
-
-	dbus_message_unref(msg);
-	dbus_error_free(&err);
-
-	if (serial_num && strlen(serial_num)) {
-		snprintf(szStr, nSize, "%s", serial_num);
-	} else {
-		snprintf(szStr, nSize, "%s", _("IDS_ST_HEADER_UNAVAILABLE"));
-	}
-}
-
-
-/**
- * @brief get current battery percentage.
- *
- * @param szStr the buffer for store battery percentage
- * @param nSize buffer size
- */
-void setting_about_main_get_battery_string(char *str, int size)
-{
-	setting_retm_if(str == NULL, "str parameter is NULL");
-
-	int val = -1;
-	char file[MAX_DISPLAY_STR_LEN_ON_PHONE_INFO] = { 0, };
-	snprintf(file, MAX_DISPLAY_STR_LEN_ON_PHONE_INFO,
-			 "%s/%s/%s", SETTING_ABOUT_POWER_SUPPLY_PATH, "battery", "capacity");
-
-	char buf[MAX_DISPLAY_STR_LEN_ON_PHONE_INFO] = { 0, };
-	int fd = 0;
-	int r = 0;
-
-	fd = open(file, O_RDONLY);
-	if (fd != -1) {
-		r = read(fd, buf, MAX_DISPLAY_STR_LEN_ON_PHONE_INFO);
-		if ((r >= 0) && (r < MAX_DISPLAY_STR_LEN_ON_PHONE_INFO)) {
-			buf[r] = '\0';
-			val = atoi(buf);
-			snprintf(str, size, "%d%s", val, "\%");
-		} else {
-			SETTING_TRACE_ERROR("read file fail");
-			snprintf(str, size, "%s", _("IDS_ST_HEADER_UNAVAILABLE"));
-		}
-
-		close(fd);
-	} else {
-		SETTING_TRACE_ERROR("open file fail");
-		snprintf(str, size, "%s", _("IDS_ST_HEADER_UNAVAILABLE"));
-	}
-}
-
-/**
- * @brief get bluetooth address.
- *
- * @param szStr the buffer for store bluetooth address
- * @param nSize buffer size
- */
-void setting_about_main_get_bluetooth_address_string(char *str, int size)
-{
-	setting_retm_if(str == NULL, "str parameter is NULL");
-
-	int ret = 0;
-
-	ret = bt_initialize();
-	setting_retm_if(ret != 0, "bluetooth initialization failed");
-
-	char *local_address = NULL;
-	ret = bt_adapter_get_address(&local_address);
-
-	bt_adapter_state_e state;
-	ret = bt_adapter_get_state(&state);
-
-	bt_deinitialize();
-
-	if (ret < 0 || BT_ADAPTER_DISABLED == state) {
-		snprintf(str, size, "%s", _("IDS_ST_HEADER_UNAVAILABLE"));
-		SETTING_TRACE_DEBUG("bt address : %s failed get bt address with error code:%d", str, ret);
-	} else {
-		SETTING_TRACE_DEBUG("bt address : %s", local_address);
-		snprintf(str, size, "%s", local_address);
-	}
-
-	if (local_address) {
-		free(local_address);
-	}
-}
-
-/**
- * @brief get CPU usage.
- *
- * @param szStr the buffer for store CPU usage
- * @param nSize buffer size
- *
- * @return -ENOENT means failed to get CPU info, otherwise ok.
- */
-int setting_about_main_stat_get_cpuinfo(float *usr_pct, float *sys_pct)
-{
-	setting_retvm_if(usr_pct == NULL, -ENOENT, "param usr_pct is null");
-	setting_retvm_if(sys_pct == NULL, -ENOENT, "param sys_pct is null");
-
-	/*  default value */
-	*usr_pct = 0.0;
-	*sys_pct = 0.0;
-	static unsigned long long usr_time = 0, /*nice_time = 0,*/ sys_time = 0;
-	static unsigned long long old_usr = 0, /*old_nice = 0,*/ old_sys = 0;
-	static struct timeval old_tv, cur_tv;
-	unsigned long long elapsed_tick;
-	long tick_per_sec;
-	long cpu_num;
-	FILE *fp = NULL;
-	int ret = 0;
-
-	tick_per_sec = sysconf(_SC_CLK_TCK);
-	cpu_num = sysconf(_SC_NPROCESSORS_ONLN);
-
-	if (cpu_num < 1) {
-		cpu_num = 1;
-	}
-
-	gettimeofday(&cur_tv, NULL);
-	fp = fopen(SETTING_ABOUT_STAT_PATH, "r");
-	if (fp == NULL) {
-		SETTING_TRACE_ERROR("fp == NULL");
-		return -ENOENT;
-	}
-
-	char cpu_info[MAX_COMMON_BUFFER_LEN] = {0,};
-	char *cpu_info_p = fgets(cpu_info, MAX_COMMON_BUFFER_LEN, fp);
-
-	if (cpu_info_p == NULL) {
-		SETTING_TRACE_ERROR("fgets failed");
-		fclose(fp);   /* free - code */
-		return -ENOENT;
-	}
-
-	char *substr = NULL;
-	unsigned long long tmp_long = 0;
-	int i = 0;
-	/* split cpu_info, get 3 numbers headmost*/
-	while ((substr = strsep(&cpu_info_p, " \t")) != NULL) {
-		char *endptr = NULL;
-		tmp_long = strtoull(substr, &endptr, 10);
-		if (tmp_long != 0 && tmp_long != ULLONG_MAX) {
-			switch (i) {
-			case 0:
-				usr_time = tmp_long;
-				break;
-			case 1:
-				/*nice_time = tmp_long;*/
-				break;
-			case 2:
-				sys_time = tmp_long;
-				break;
-			default:
-				break;
-			}
-			i++;
-		}
-		if (i >= 3) {
-			break;
-		}
-	}
-
-	fclose(fp);
-	fp = NULL;
-	if (old_usr == 0) {
-		ret = -EAGAIN;
-		SETTING_TRACE_ERROR("old_usr == 0");
-		goto out;
-	}
-
-	elapsed_tick = (unsigned long long)(((long long) cur_tv.tv_sec - old_tv.tv_sec) * tick_per_sec +
-										(((long long) cur_tv.tv_usec - old_tv.tv_usec) * tick_per_sec) / 1000000);
-
-	/* REMOVE BS */
-	if (elapsed_tick != 0) {
-		*usr_pct =
-			((float)(usr_time - old_usr) * 100 / elapsed_tick) /
-			cpu_num;
-	} else {
-		*usr_pct = 0;
-	}
-	/* REMOVE BS */
-	if (elapsed_tick != 0) {
-		*sys_pct =
-			((float)(sys_time - old_sys) * 100 / elapsed_tick) /
-			cpu_num;
-	} else {
-		*sys_pct = 0;
-	}
-
-out:
-	old_usr = usr_time;
-	/*old_nice = nice_time; */
-	old_sys = sys_time;
-	old_tv = cur_tv;
-
-	return ret;
-}
+*/
 
 #if 0
 /**
@@ -720,7 +326,7 @@ static void setting_about_main_get_status_string(char *str, int size)
  * @param data application data for button click callback.
  *
  * @return new created button
- */
+ *//*
 static Evas_Object *setting_about_naviframe_btn_create(Evas_Object *parent, const char *text, Evas_Smart_Cb func, void *data)
 {
 	Evas_Object *btn = elm_button_add(parent);
@@ -732,14 +338,14 @@ static Evas_Object *setting_about_naviframe_btn_create(Evas_Object *parent, cons
 	evas_object_smart_callback_add(btn, "clicked", func, data);
 	return btn;
 }
-
+*/
 /**
  * @brief button done response callback.
  *
  * @param data application data
  * @param obj the button evas object
  * @param event_info event type
- */
+ *//*
 static void setting_about_naviframe_btn_done_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
@@ -769,14 +375,14 @@ static void setting_about_naviframe_btn_done_cb(void *data, Evas_Object *obj, vo
 	elm_naviframe_item_pop(ad->navi_bar);
 	SETTING_TRACE_END;
 }
-
+*/
 /**
  * @brief button cancel response callback.
  *
  * @param data application data
  * @param obj the button evas object
  * @param event_info event type
- */
+ *//*
 static void setting_about_naviframe_btn_cancel_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
@@ -791,7 +397,7 @@ static void setting_about_naviframe_btn_cancel_cb(void *data, Evas_Object *obj, 
 		}
 		if (pa_sub_desc) {
 			elm_entry_entry_set(ad->item_dev_name->eo_check, pa_sub_desc);
-			G_FREE(ad->item_dev_name->sub_desc);/*release first */
+			G_FREE(ad->item_dev_name->sub_desc);
 			ad->item_dev_name->sub_desc = (char *)g_strdup(pa_sub_desc);
 		}
 		FREE(pa_sub_desc);
@@ -831,7 +437,7 @@ static void __setting_about_main_popup_cb(void *data, Evas_Object *obj, void *ev
 		}
 	}
 }
-
+*/
 
 /**
  * @brief device name entry input handing
@@ -841,11 +447,10 @@ static void __setting_about_main_popup_cb(void *data, Evas_Object *obj, void *ev
  *
  * @param data application data
  * @param obj the entry evas object
- */
+ *//*
 static void __setting_about_entry_changed_cb(void *data, Evas_Object *obj)
 {
 	retm_if(!data || !obj, "Data parameter is NULL");
-	/*return if entry is not focused too */
 
 	Setting_GenGroupItem_Data *list_item =
 		(Setting_GenGroupItem_Data *) data;
@@ -858,8 +463,6 @@ static void __setting_about_entry_changed_cb(void *data, Evas_Object *obj)
 
 	SETTING_TRACE("maxLengthReachFlag:[%d], enterKeyPressFlag:%d", list_item->maxLengthReachFlag, list_item->enterKeyPressFlag);
 
-	/*fix PLM P131106-02776
-	after keyboard popup cut the entry text, the entry text don't reach max length, so need to delete popup */
 	if (ad->popup_showed_flag && ad->popup_space && !list_item->maxLengthReachFlag) {
 		evas_object_del(ad->popup_space);
 		ad->popup_space = NULL;
@@ -871,8 +474,7 @@ static void __setting_about_entry_changed_cb(void *data, Evas_Object *obj)
 	list_item->enterKeyPressFlag = FALSE;
 	list_item->spaceKeyPressFlag = FALSE;
 
-	/*for genlist update */
-	G_FREE(list_item->sub_desc);/*release first */
+	G_FREE(list_item->sub_desc);
 	list_item->sub_desc = (char *)g_strdup(entry_str);
 
 	if (isSpaceStr(entry_str)) {
@@ -881,7 +483,7 @@ static void __setting_about_entry_changed_cb(void *data, Evas_Object *obj)
 		if (ad->empty_flag) ad->empty_flag = FALSE;
 	}
 }
-
+*/
 /**
  * @brief device name entry changed callback.
  *
@@ -915,7 +517,7 @@ __setting_about_entry_device_name_changed_cb(void *data, Evas_Object *obj,
 		elm_object_item_signal_emit(list_item->item, "elm,state,guidetext,hide", "");
 	}
 
-	__setting_about_entry_changed_cb(data, obj);
+	//__setting_about_entry_changed_cb(data, obj);
 	/*SETTING_TRACE_END; */
 }
 
@@ -925,22 +527,19 @@ __setting_about_entry_device_name_changed_cb(void *data, Evas_Object *obj,
  * @param data application data
  * @param obj the entry evas object
  * @param event_info event type
- */
-static void __setting_about_entry_focused(void *data, Evas_Object *obj, void *event_info) /* Focused callback will show X marked button and hide guidetext. */
+ *//*
+static void __setting_about_entry_focused(void *data, Evas_Object *obj, void *event_info)  Focused callback will show X marked button and hide guidetext.
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(!data || !obj, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *item_dev_name = data;
 
-
-	/* accessibiliy */
 	elm_entry_cursor_end_set(obj);
 	const char *txt = elm_entry_entry_get(obj);
 	if (!txt || 0 == strlen(txt)) {
 		txt = elm_object_part_text_get(obj, "elm.guide");
 	}
 
-	/* Say entry focused */
 	Eina_Stringshare *str = eina_stringshare_printf("%s, Edit Field, Keyboard opened", txt);
 	elm_access_say((char *)str);
 	eina_stringshare_del(str);
@@ -952,14 +551,14 @@ static void __setting_about_entry_focused(void *data, Evas_Object *obj, void *ev
 		ecore_imf_context_input_panel_show(imf_context);
 	}
 }
-
+*/
 /**
  * @brief device name entry unfocus callback.
  *
  * @param data application data
  * @param obj the entry evas object
  * @param event_info event type
- */
+ *//*
 static void __setting_about_entry_unfocus_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
@@ -1002,7 +601,7 @@ static void __setting_about_entry_unfocus_cb(void *data, Evas_Object *obj, void 
 	elm_entry_select_none(obj);
 	SETTING_TRACE_END;
 }
-
+*/
 
 /**
  * @brief device name entry max length reached callback.
@@ -1010,12 +609,12 @@ static void __setting_about_entry_unfocus_cb(void *data, Evas_Object *obj, void 
  * @param data application data
  * @param obj the entry evas object
  * @param event_info event type
- */
+ *//*
 static void __setting_about_entry_max_len_reached(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
-	retm_if(!elm_object_focus_get(obj), "Entry is not focused"); /*notify only when entry is being focused on. */
+	retm_if(!elm_object_focus_get(obj), "Entry is not focused");
 
 	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
 	list_item->maxLengthReachFlag = true;
@@ -1024,7 +623,7 @@ static void __setting_about_entry_max_len_reached(void *data, Evas_Object *obj, 
 	if (list_item->maxLengthReachFlag && list_item->enterKeyPressFlag == FALSE) {
 
 		if (!ad->popup_showed_flag && NULL == ad->popup_space) {
-			ad->popup_showed_flag = TRUE;/*workaroud to fix popup blink issue. */
+			ad->popup_showed_flag = TRUE; workaroud to fix popup blink issue.
 			char strMax[BUF_SIZE] = {0,};
 			snprintf(strMax, BUF_SIZE, _("IDS_ST_POP_THE_MAXIMUM_NUMBERS_OF_CHARACTERS_FOR_YOUR_DEVICE_NAME_HPD_HAS_BEEN_EXCEEDED"),
 					 MAX_DEVICE_NAME_LEN);
@@ -1035,7 +634,7 @@ static void __setting_about_entry_max_len_reached(void *data, Evas_Object *obj, 
 		}
 	}
 }
-
+*/
 /**
  * @brief device name entry input panel state event call back
  *	- input panel state event:ECORE_IMF_INPUT_PANEL_STATE_EVENT
@@ -1043,7 +642,7 @@ static void __setting_about_entry_max_len_reached(void *data, Evas_Object *obj, 
  * @param data application data
  * @param obj the entry evas object
  * @param event_info event type
- */
+ *//*
 static void __setting_about_entry_input_panel_event_cb(void *data, Ecore_IMF_Context *ctx, int value)
 {
 	SETTING_TRACE_BEGIN;
@@ -1063,8 +662,8 @@ static void __setting_about_entry_input_panel_event_cb(void *data, Ecore_IMF_Con
 			}
 
 		}
-		/*if Setting is overlapped by other app,the entry will lost its focus,
-		the input pannel will be hided and any popup should be removed to fix blinking issue.*/
+		if Setting is overlapped by other app,the entry will lost its focus,
+		the input pannel will be hided and any popup should be removed to fix blinking issue.
 		if (ad->pause_flag) {
 			ad->idler_remove_popup = ecore_idler_add(__setting_about_popup_remove_delay, ad);
 		}
@@ -1072,7 +671,7 @@ static void __setting_about_entry_input_panel_event_cb(void *data, Ecore_IMF_Con
 
 	}
 }
-
+*/
 /**
  * @brief aboutUG vconf changed callback
  *
@@ -1093,7 +692,7 @@ static void __setting_about_main_vconf_change_cb(keynode_t *key, void *data)
 	if (!safeStrCmp(vconf_name, VCONFKEY_WIFI_STATE)) {
 		SETTING_TRACE("status:%d", status);
 		char str[MAX_DISPLAY_STR_LEN_ON_PHONE_INFO] = {0,};
-		setting_about_main_get_wifi_mac_address_string(str, sizeof(str));
+		//setting_about_main_get_wifi_mac_address_string(str, sizeof(str));
 		if (ad->item_data_wifi) {
 			G_FREE(ad->item_data_wifi->sub_desc);
 			ad->item_data_wifi->sub_desc = (char *)g_strdup(str);
@@ -1103,7 +702,7 @@ static void __setting_about_main_vconf_change_cb(keynode_t *key, void *data)
 	} else if (!safeStrCmp(vconf_name, VCONFKEY_BT_STATUS)) {
 		SETTING_TRACE("status:%d", status);
 		char str[MAX_DISPLAY_STR_LEN_ON_PHONE_INFO] = {0,};
-		setting_about_main_get_bluetooth_address_string(str, sizeof(str));
+		//setting_about_main_get_bluetooth_address_string(str, sizeof(str));
 		if (ad->item_data_bt) {
 			G_FREE(ad->item_data_bt->sub_desc);
 			ad->item_data_bt->sub_desc = (char *)g_strdup(str);
@@ -1147,31 +746,10 @@ static void __setting_about_main_vconf_change_cb(keynode_t *key, void *data)
 }
 
 /**
- * @brief UG destroy callback
- *
- * @param ug the UG which is needed to be destoried
- * @param priv application data
- */
-static void __destroy_ug_cb(ui_gadget_h ug, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-
-	/* restore the '<-' button on the navigate bar */
-	ret_if(!priv);
-	SettingAboutUG *ad = (SettingAboutUG *) priv;	/* ad is point to priv */
-
-	if (ug) {
-		setting_ug_destroy(ug);
-		ad->ug_loading = NULL;
-	}
-	elm_object_tree_focus_allow_set(ad->ly_main, EINA_TRUE);
-}
-
-/**
  * @brief Lunch cetificates UG(setting-manage-certificates-efl)
  *
  * @param data application data
- */
+ */ /*
 static void __setting_about_main_certificates_clicked(void *data)
 {
 	SETTING_TRACE_BEGIN;
@@ -1192,12 +770,12 @@ static void __setting_about_main_certificates_clicked(void *data)
 	ad->ug_loading =
 		setting_ug_create(ad->ug, "setting-manage-certificates-efl", UG_MODE_FULLVIEW, NULL, cbs);
 
-	if (NULL == ad->ug_loading) {	/* error handling */
+	if (NULL == ad->ug_loading) {
 		SETTING_TRACE_ERROR("NULL == ad->ug_loading");
 	}
 	FREE(cbs);
 }
-
+*/
 /**
  * @brief Lunch UG setting-phone-efl
  *
@@ -1224,7 +802,7 @@ static void __setting_about_main_licence_launch(void *data)
 
 	cbs->layout_cb = setting_about_layout_ug_cb;
 	cbs->result_cb = NULL;
-	cbs->destroy_cb = __destroy_ug_cb;
+//cbs->destroy_cb = __destroy_ug_cb;
 	cbs->priv = (void *)ad;
 
 
@@ -1421,7 +999,7 @@ static Eina_Bool __setting_about_name_view_key_down(void *data, int type, void *
 
 	SettingAboutUG *ad = data;
 	if (!strcmp(ev->keyname, "XF86Back")) {
-		setting_about_naviframe_btn_cancel_cb(ad, NULL, NULL);
+		//setting_about_naviframe_btn_cancel_cb(ad, NULL, NULL);
 	}
 	return ECORE_CALLBACK_RENEW;
 }
@@ -1485,10 +1063,10 @@ static void __setting_about_main_creat_name_view(void *data)
 	item_data->userdata = ad;
 	/*item_data->isSinglelineFlag = FALSE; */
 	item_data->isSinglelineFlag = TRUE;
-	item_data->stop_change_cb = __setting_about_entry_unfocus_cb;
-	item_data->maxlength_reached_cb = __setting_about_entry_max_len_reached;
-	item_data->focus_cb = __setting_about_entry_focused;
-	item_data->x_callback_cb = __setting_about_entry_input_panel_event_cb;
+//item_data->stop_change_cb = __setting_about_entry_unfocus_cb;
+//item_data->maxlength_reached_cb = __setting_about_entry_max_len_reached;
+//item_data->focus_cb = __setting_about_entry_focused;
+//item_data->x_callback_cb = __setting_about_entry_input_panel_event_cb;
 	item_data->guide_text = (char *)g_strdup(EMPTY_LIMITATION_STR);
 	item_data->focus_unallowed = get_tethering_status();
 	item_data->return_key_type = ELM_INPUT_PANEL_RETURN_KEY_TYPE_DONE;
@@ -1496,7 +1074,7 @@ static void __setting_about_main_creat_name_view(void *data)
 	item_data->limit_filter_data = calloc(1, sizeof(Elm_Entry_Filter_Limit_Size));
 	if (item_data->limit_filter_data) {
 		/*max byte len is 32 -> MAX_DEVICE_NAME_LEN */
-		item_data->limit_filter_data->max_byte_count = MAX_DEVICE_NAME_LEN;
+		//item_data->limit_filter_data->max_byte_count = MAX_DEVICE_NAME_LEN;
 		item_data->win_main = ad->win_get;
 	} else {
 		SETTING_TRACE_ERROR("fail to calloc");
@@ -1535,13 +1113,13 @@ static void __setting_about_main_creat_name_view(void *data)
 	/* Title Cancel Button */
 	btn = elm_button_add(ad->navi_bar);
 	elm_object_style_set(btn, "naviframe/title_cancel");
-	evas_object_smart_callback_add(btn, "clicked", setting_about_naviframe_btn_cancel_cb, ad);
+//evas_object_smart_callback_add(btn, "clicked", setting_about_naviframe_btn_cancel_cb, ad);
 	elm_object_item_part_content_set(navi_it, "title_left_btn", btn);
 
 	/* Title Done Button */
 	btn = elm_button_add(ad->navi_bar);
 	elm_object_style_set(btn, "naviframe/title_done");
-	evas_object_smart_callback_add(btn, "clicked", setting_about_naviframe_btn_done_cb, ad);
+//evas_object_smart_callback_add(btn, "clicked", setting_about_naviframe_btn_done_cb, ad);
 	elm_object_item_part_content_set(navi_it, "title_right_btn", btn);
 
 	ad->event_handler = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, __setting_about_name_view_key_down, ad);
@@ -1571,9 +1149,9 @@ setting_about_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 	if (!safeStrCmp("IDS_ST_HEADER_MANAGE_CERTIFICATES_ABB", list_item->keyStr)) {
-		__setting_about_main_certificates_clicked(data);
+		;//__setting_about_main_certificates_clicked(data);
 	} else if (!safeStrCmp(KeyStr_Regulatory_Info, list_item->keyStr)) {
-		__setting_about_popup_regulatory_info(data);
+		;//__setting_about_popup_regulatory_info(data);
 	} else if (!safeStrCmp("IDS_ST_MBODY_LEGAL_INFORMATION_ABB", list_item->keyStr)) {
 		__setting_about_main_licence_launch(data);
 	} else if (!safeStrCmp("IDS_ST_MBODY_SOFTWARE_UPDATE", list_item->keyStr)) {
@@ -1649,11 +1227,11 @@ setting_about_main_gl_mouse_up(void *data, Evas *e, Evas_Object *obj, void *even
 					ad->popup = NULL;
 				}
 
-				ad->popup = setting_create_popup(ad, ad->win_get,
-												 NULL, SETTING_ABOUT_MOBILE_AP_TURNED_OFF,
-												 __setting_about_popup_mobile_ap_turn_off_ask_resp_cb, 0,
-												 FALSE, FALSE,
-												 2, "IDS_ST_BODY_TURN_OFF", "IDS_ST_BUTTON_CANCEL_ABB2");
+				//ad->popup = setting_create_popup(ad, ad->win_get,
+					//							 NULL, SETTING_ABOUT_MOBILE_AP_TURNED_OFF,
+						//						 __setting_about_popup_mobile_ap_turn_off_ask_resp_cb, 0,
+							//					 FALSE, FALSE,
+								//				 2, "IDS_ST_BODY_TURN_OFF", "IDS_ST_BUTTON_CANCEL_ABB2");
 			} else {
 				elm_object_focus_set(ad->item_dev_name->eo_check, EINA_TRUE);
 				elm_entry_cursor_end_set(ad->item_dev_name->eo_check);
@@ -1686,7 +1264,8 @@ static Eina_Bool setting_about_main_timer_update_cb(const void *data)
 	char str[MAX_DISPLAY_STR_LEN_ON_PHONE_INFO] = { 0, };
 	if (ad->item_data_cpu) {
 		float usr, sys;
-		int ret = setting_about_main_stat_get_cpuinfo(&usr, &sys);
+		int ret;
+		//= setting_about_main_stat_get_cpuinfo(&usr, &sys);
 		if (ret == -ENOENT) {
 			SETTING_TRACE_ERROR("call __stat_get_cpuinfo fail");
 			snprintf(str, sizeof(str), "%s", _("IDS_ST_HEADER_UNAVAILABLE"));
@@ -1700,7 +1279,7 @@ static Eina_Bool setting_about_main_timer_update_cb(const void *data)
 	}
 
 	if (ad->item_data_battery) {
-		setting_about_main_get_battery_string(str, sizeof(str));
+		//setting_about_main_get_battery_string(str, sizeof(str));
 		/*SETTING_TRACE("str:%s", str);*/
 		ad->item_data_battery->sub_desc = (char *)g_strdup(str);
 
@@ -1848,7 +1427,7 @@ int setting_about_main_generate_genlist(void *data)
 
 	/* 3. [UI] Model number */
 	memset(str, 0x00, sizeof(str));
-	setting_about_main_get_phone_model_name(str, sizeof(str));
+	//setting_about_main_get_phone_model_name(str, sizeof(str));
 	item_data =
 		setting_create_Gendial_field_def(scroller, &(ad->itc_2text_2), NULL,
 										 NULL, SWALLOW_Type_INVALID, NULL,
@@ -1863,7 +1442,7 @@ int setting_about_main_generate_genlist(void *data)
 
 	/* 4. [UI] Tizen version */
 	memset(str, 0x00, sizeof(str));
-	setting_about_main_get_sw_version(str, sizeof(str));
+	//setting_about_main_get_sw_version(str, sizeof(str));
 	item_data =
 		setting_create_Gendial_field_def(scroller, &(ad->itc_2text_2), NULL,
 										 NULL, SWALLOW_Type_INVALID, NULL,
@@ -1909,7 +1488,7 @@ int setting_about_main_generate_genlist(void *data)
 	/* 6. [UI] Bluetooth address */
 	if (!is_emul_bin) {  /* requested by DI Kim due to BT BS on 11/26 */
 		memset(str, 0x00, sizeof(str));
-		setting_about_main_get_bluetooth_address_string(str, sizeof(str));
+		//setting_about_main_get_bluetooth_address_string(str, sizeof(str));
 		ad->item_data_bt =
 			setting_create_Gendial_field_def(scroller, &(ad->itc_2text_2), NULL,
 											 NULL, SWALLOW_Type_INVALID, NULL,
@@ -1925,7 +1504,7 @@ int setting_about_main_generate_genlist(void *data)
 
 	/* 7. [UI] Wi-Fi MAC address */
 	memset(str, 0x00, sizeof(str));
-	setting_about_main_get_wifi_mac_address_string(str, sizeof(str));
+	//setting_about_main_get_wifi_mac_address_string(str, sizeof(str));
 
 	SETTING_TRACE_DEBUG("[about main] get_wifi_mac_address : %s", str);
 
@@ -1943,7 +1522,7 @@ int setting_about_main_generate_genlist(void *data)
 
 	/* 8. [UI] Serial number */
 	memset(str, 0x00, sizeof(str));
-	setting_about_main_get_sn(str, sizeof(str));
+	//setting_about_main_get_sn(str, sizeof(str));
 	item_data =
 		setting_create_Gendial_field_def(scroller, &(ad->itc_2text_2), NULL,
 										 NULL, SWALLOW_Type_INVALID, NULL,
@@ -1958,7 +1537,7 @@ int setting_about_main_generate_genlist(void *data)
 
 	/* 9. [UI] Battery power */
 	memset(str, 0x00, sizeof(str));
-	setting_about_main_get_battery_string(str, sizeof(str));
+	//setting_about_main_get_battery_string(str, sizeof(str));
 	item_data =
 		setting_create_Gendial_field_def(scroller, &(ad->itc_2text_2), NULL,
 										 NULL, SWALLOW_Type_INVALID, NULL,
@@ -1975,7 +1554,8 @@ int setting_about_main_generate_genlist(void *data)
 	/* 10. [UI] CPU usage */
 	memset(str, 0x00, sizeof(str));
 	float usr, sys;
-	int ret = setting_about_main_stat_get_cpuinfo(&usr, &sys);
+	int ret;
+	//= setting_about_main_stat_get_cpuinfo(&usr, &sys);
 	if (ret == -ENOENT) {
 		SETTING_TRACE_ERROR("call __stat_get_cpuinfo fail");
 		snprintf(str, sizeof(str), "%s", _("IDS_ST_HEADER_UNAVAILABLE"));
@@ -2046,31 +1626,28 @@ static int setting_about_main_create(void *cb)
 
 	SettingAboutUG *ad = (SettingAboutUG *) cb;
 
-	Evas_Object *scroller = elm_genlist_add(ad->win_main_layout);
-	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
+	//ad->genlsit = elm_genlist_add(ad->win_main_layout);
+	retvm_if(ad->genlsit == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
 			 "Cannot set scroller object  as contento of layout");
-	elm_genlist_mode_set(scroller, ELM_LIST_COMPRESS);
-	elm_genlist_clear(scroller);	/* first to clear list */
-	ad->genlsit = scroller;
-	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb, NULL);
-	evas_object_smart_callback_add(scroller, "realized", __setting_about_gl_realized_cb, NULL);
+	elm_genlist_mode_set(ad->genlsit, ELM_LIST_COMPRESS);
+	elm_genlist_clear(ad->genlsit);	/* first to clear list */
+
+	evas_object_smart_callback_add(ad->genlsit, "realized", __gl_realized_cb, NULL);
 
 	ad->ly_main =
 		setting_create_layout_navi_bar(ad->win_main_layout, ad->win_get,
 									   KeyStr_AboutDevice,
 									   NULL,
 									   (setting_call_back_func)setting_about_main_click_softkey_back_cb,
-									   ad, scroller,
+									   ad, ad->genlsit,
 									   &ad->navi_bar, NULL);
-
-	ad->btn_done = setting_about_naviframe_btn_create(ad->navi_bar, _("IDS_SA_BUTTON_DONE_ABB"), setting_about_naviframe_btn_done_cb, ad);
+//ad->btn_done = setting_about_naviframe_btn_create(ad->navi_bar, _("IDS_SA_BUTTON_DONE_ABB"), setting_about_naviframe_btn_done_cb, ad);
 	/*Title Text Right Button */
-	ad->btn_cancel = setting_about_naviframe_btn_create(ad->navi_bar, _("IDS_ST_BUTTON_CANCEL_ABB"), setting_about_naviframe_btn_cancel_cb, ad);
-	ad->genlsit = scroller;
+//ad->btn_cancel = setting_about_naviframe_btn_create(ad->navi_bar, _("IDS_ST_BUTTON_CANCEL_ABB"), setting_about_naviframe_btn_cancel_cb, ad);
 
-	evas_object_smart_callback_add(scroller, "drag", setting_about_main_gl_drag, ad);
+	evas_object_smart_callback_add(ad->genlsit, "drag", setting_about_main_gl_drag, ad);
 
-	evas_object_event_callback_add(scroller, EVAS_CALLBACK_MOUSE_UP, setting_about_main_gl_mouse_up, ad);
+	evas_object_event_callback_add(ad->genlsit, EVAS_CALLBACK_MOUSE_UP, setting_about_main_gl_mouse_up, ad);
 
 	ad->navi_item = elm_naviframe_top_item_get(ad->navi_bar);
 
@@ -2216,7 +1793,6 @@ static int setting_about_main_update(void *cb)
  */
 static int setting_about_main_cleanup(void *cb)
 {
-	SETTING_TRACE_BEGIN;
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
@@ -2229,3 +1805,30 @@ static int setting_about_main_cleanup(void *cb)
 	return SETTING_RETURN_SUCCESS;
 }
 
+bool setting_about_on_create(void *priv)
+{
+	return 	setting_about_controller_init();
+}
+
+int main(int argc, char *argv[])
+{
+	app_event_handler_h ev = NULL;
+	ui_app_lifecycle_callback_s event_callback;
+	SettingAboutUG *app_data = calloc(1, sizeof(SettingAboutUG));
+	if (!app_data) {
+		SETTING_TRACE("Create SettingAboutUG failed");
+		return -1;
+	}
+	memset(&event_callback, 0, sizeof(ui_app_lifecycle_callback_s));
+
+	//event_callback.create = setting_about_ug_on_create;
+	event_callback.create = setting_about_on_create;
+	event_callback.terminate = setting_about_ug_on_destroy;
+	event_callback.pause = setting_about_ug_on_pause;
+	event_callback.resume = setting_about_ug_on_resume;
+
+	//ui_app_add_event_handler(&ev, APP_EVENT_LANGUAGE_CHANGED, NULL, app_data);
+	ui_app_add_event_handler(&ev, APP_EVENT_DEVICE_ORIENTATION_CHANGED, setting_about_ug_on_event, app_data);
+
+	return ui_app_main(argc, argv, &event_callback, app_data);
+}

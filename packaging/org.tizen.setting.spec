@@ -67,6 +67,7 @@ BuildRequires:  pkgconfig(capi-appfw-app-manager)
 BuildRequires:  pkgconfig(capi-appfw-preference)
 BuildRequires:  pkgconfig(capi-system-sensor)
 BuildRequires:  pkgconfig(capi-system-info)
+BuildRequires:  pkgconfig(capi-system-runtime-info)
 BuildRequires:  pkgconfig(capi-system-system-settings)
 BuildRequires:  pkgconfig(capi-network-wifi)
 BuildRequires:  pkgconfig(capi-network-bluetooth)
@@ -127,6 +128,13 @@ Group: Application Framework/Settings
 #Requires: %{name} = %{version}-%{release}
 #Requires: pkgconfig(setting-common-internal)
 %description devel
+
+%package about
+Summary: The setting about module
+Group: Application
+
+%description about
+Application displaying device information
 
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
@@ -339,3 +347,8 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %files ref
 %{_datadir}/mime/packages/mime.setting.xml
 %{_datadir}/packages/org.tizen.setting.xml.ref
+
+%files about
+%manifest org.tizen.setting-about.manifest
+%{_prefix}/apps/org.tizen.setting-about/bin/setting-about
+%{_datadir}/packages/org.tizen.setting-about.xml
