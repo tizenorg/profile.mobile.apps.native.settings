@@ -129,6 +129,13 @@ Group: Application Framework/Settings
 #Requires: pkgconfig(setting-common-internal)
 %description devel
 
+%package flightmode
+Summary: A setting flightmode application
+Group: Application
+
+%description flightmode
+Configuration application for flightmode
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -334,9 +341,17 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %{_includedir}/setting-common-data-type.h
 %{_includedir}/setting-common-draw-widget.h
 %{_includedir}/setting-common-general-func.h
+%{_includedir}/setting-common-init.h
 %{_includedir}/setting-common-resource.h
 %{_includedir}/setting-common-search.h
 
 %files ref
 %{_datadir}/mime/packages/mime.setting.xml
 %{_datadir}/packages/org.tizen.setting.xml.ref
+
+
+%files flightmode
+%manifest setting-flightmode/org.tizen.setting-flightmode.manifest
+%{_prefix}/apps/org.tizen.setting-flightmode/bin/setting-flightmode
+%{_datadir}/packages/org.tizen.setting-flightmode.xml
+%{_prefix}/apps/org.tizen.setting-flightmode/res/*
