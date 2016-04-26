@@ -361,7 +361,6 @@ Evas_Object *setting_main_layout_conform_create(Evas_Object *win_layout, Evas_Ob
 
 	ad->conform = conform;
 	evas_object_data_set(win_obj, "conformant", conform);
-	LAUNCH_SETTING_OUT();
 	return layout;
 }
 

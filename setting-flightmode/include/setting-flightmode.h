@@ -32,7 +32,6 @@
 #include <TapiUtility.h>
 #include <tapi_common.h>
 
-typedef struct _SettingFlightModeUG SettingFlightModeUG;
 
 typedef enum _MODE_OPEARTION {
 	MODE_INVALID = 0, /*< There is no request waiting for processing */
@@ -41,17 +40,13 @@ typedef enum _MODE_OPEARTION {
 } MODE_OPEARTION;
 
 
-struct _SettingFlightModeUG {
-	ui_gadget_h ug;
-	ui_gadget_h ug_loading;
-	/* add more variables here (move your appdata to here) */
-	app_control_h bundle_data; /**< when loading this UG, bundle is stored */
-
+typedef struct _SettingFlightMode {
 	Evas *evas;
+	Evas_Object *win_main;
 	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
 	Evas_Object *bg;
 	Evas_Object *ly_main;
+	Evas_Object *conform;
 	Evas_Object *navi_bar;	/* for navigation effect */
 	Evas_Object *scroller;
 	Evas_Object *popup_flight_mode;
@@ -73,7 +68,8 @@ struct _SettingFlightModeUG {
 	TapiHandle *handle;
 	bool b_fm_requesting; /**< whether some request is processing. 1:yes, 0:no */
 	MODE_OPEARTION fm_waiting_op;
-};
+} SettingFlightMode;
+//extern SettingFlightMode *g_main_ad;
 
 extern setting_view setting_view_flightmode_main;
 #endif

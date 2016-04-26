@@ -39,7 +39,7 @@ static void setting_flightmode_main_tapi_event_cb(TapiHandle *handle, int result
 		SETTING_TRACE_ERROR("cb == NULL");
 		return;
 	}
-	SettingFlightModeUG *ad = (SettingFlightModeUG *) user_data;
+	SettingFlightMode *ad = (SettingFlightMode *) user_data;
 	ad->b_fm_requesting = FALSE;
 	SETTING_TRACE("result:%d", result);
 
@@ -52,7 +52,7 @@ static void setting_flightmode_main_tapi_event_cb(TapiHandle *handle, int result
 	case TAPI_POWER_FLIGHT_MODE_RESP_ON:
 
 		setting_set_bool_slp_key(BOOL_SLP_SETTING_FLIGHT_MODE,
-								 SETTING_ON_OFF_BTN_ON, &err);
+					SETTING_ON_OFF_BTN_ON, &err);
 
 		/*If Setting has validate operation (fm_waiting_op == MODE_LEAVE) to process, process it. */
 		/*Otherwise, do nothing */
@@ -61,7 +61,7 @@ static void setting_flightmode_main_tapi_event_cb(TapiHandle *handle, int result
 			ad->fm_waiting_op = MODE_INVALID;
 			err = tel_set_flight_mode(ad->handle, TAPI_POWER_FLIGHT_MODE_LEAVE, setting_flightmode_main_tapi_event_cb, ad);
 			setting_retm_if(err != TAPI_API_SUCCESS,
-							"*** [ERR] tel_set_flight_mode(TAPI_POWER_FLIGHT_MODE_LEAVE) ***");
+					"*** [ERR] tel_set_flight_mode(TAPI_POWER_FLIGHT_MODE_LEAVE) ***");
 
 			/*sucessfully sent, */
 			ad->b_fm_requesting = TRUE;
@@ -72,7 +72,7 @@ static void setting_flightmode_main_tapi_event_cb(TapiHandle *handle, int result
 	case TAPI_POWER_FLIGHT_MODE_RESP_OFF:
 
 		setting_set_bool_slp_key(BOOL_SLP_SETTING_FLIGHT_MODE,
-								 SETTING_ON_OFF_BTN_OFF, &err);
+					SETTING_ON_OFF_BTN_OFF, &err);
 
 		/*If Setting has validate operation (here, fm_waiting_op == MODE_ENTER) to process,process it. */
 		/*Otherwise, do nothing */
@@ -81,7 +81,7 @@ static void setting_flightmode_main_tapi_event_cb(TapiHandle *handle, int result
 			ad->fm_waiting_op = MODE_INVALID;
 			err = tel_set_flight_mode(ad->handle, TAPI_POWER_FLIGHT_MODE_ENTER, setting_flightmode_main_tapi_event_cb, ad);
 			setting_retm_if(err != TAPI_API_SUCCESS,
-							"*** [ERR] tel_set_flight_mode(TAPI_POWER_FLIGHT_MODE_ENTER) ***");
+					"*** [ERR] tel_set_flight_mode(TAPI_POWER_FLIGHT_MODE_ENTER) ***");
 
 			/*sucessfully sent, */
 			ad->b_fm_requesting = TRUE;
@@ -105,30 +105,30 @@ static void setting_flightmode_main_tapi_event_cb(TapiHandle *handle, int result
 			setting_retm_if(err != TAPI_API_SUCCESS,
 							"*** [ERR] tel_set_flight_mode(TAPI_POWER_FLIGHT_MODE_LEAVE) ***");
 			ad->b_fm_requesting = TRUE;
-		} else { /*Current requset is the last one, Setting needs to notify user */
-			setting_create_popup(ad, ad->win_get,
-								 "IDS_ST_POP_ERROR",
-								 "IDS_ST_POP_UNABLE_TO_TURN_ON_FLIGHT_MODE_VODA",
-								 NULL, POPUP_INTERVAL,
-								 FALSE, FALSE, 0);
+		} else { /* Current request is the last one, Setting needs to notify user */
+			setting_create_popup(ad, ad->win_main,
+						"IDS_ST_POP_ERROR",
+						"IDS_ST_POP_UNABLE_TO_TURN_ON_FLIGHT_MODE_VODA",
+						NULL, POPUP_INTERVAL,
+						FALSE, FALSE, 0);
 
-			/*It is need to rollback the status, */
+			/* It is needed to roll back the status */
 			setting_update_gl_item_chk_status(ad->data_flightmode, !(ad->data_flightmode->chk_status));
 			return;
 		}
 
-		/*sucessfully sent, */
+		/* Successfully sent */
 		ad->b_fm_requesting = TRUE;
 
 		break;
 
 	case TAPI_POWER_FLIGHT_MODE_RESP_MAX:
-		setting_create_popup(ad, ad->win_get,
-							 "IDS_ST_POP_ERROR",
-							 "IDS_IM_POP_UNEXPECTED_ERROR",
-							 NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
+		setting_create_popup(ad, ad->win_main,
+					"IDS_ST_POP_ERROR",
+					"IDS_IM_POP_UNEXPECTED_ERROR",
+					NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
 
-		/*It is need to rollback the status, */
+		/* It is need to roll back the status */
 		setting_update_gl_item_chk_status(ad->data_flightmode, !(ad->data_flightmode->chk_status));
 		break;
 	default:
@@ -144,45 +144,44 @@ void __alternate_flight_mode(Evas_Object *check, void *data)
 	int ret;
 	Eina_Bool status =  elm_check_state_get(check);
 	SETTING_TRACE("flight mode status : %d", status);
-	/*SettingFlightModeUG *ad = (SettingFlightModeUG *) data; */
+	/* SettingFlightMode *ad = (SettingFlightMode *) data; */
 	ret_if(!data);
 	Setting_GenGroupItem_Data *list_item =
 		(Setting_GenGroupItem_Data *) data;
-	SettingFlightModeUG *ad = list_item->userdata;
+	SettingFlightMode *ad = list_item->userdata;
 
 	if (!ad->handle) {
 		SETTING_TRACE("ad->handle is NULL, something error happended in TAPI");
 		return;
 	}
 
-	/*Check whether some requestion is processing by TAPI */
+	/* Check whether some requestion is processing by TAPI */
 	if (ad->b_fm_requesting) {
-		/*Do nothing, just mark the lastest operation.. */
+		/* Do nothing, just mark the lastest operation.. */
 		SETTING_TRACE("Some requestion is processing by TAPI, wait to process");
 		ad->fm_waiting_op = status ? MODE_ENTER : MODE_LEAVE;
 		return;
 	}
-	/*otherwise, invalid waiting operation and send requsetion to TAPI: */
+	/* otherwise, invalid waiting operation and send requsetion to TAPI: */
 	ad->fm_waiting_op = MODE_INVALID;
 	if (status) {
 		ret = tel_set_flight_mode(ad->handle, TAPI_POWER_FLIGHT_MODE_ENTER, setting_flightmode_main_tapi_event_cb, ad);
 		setting_retm_if(ret != TAPI_API_SUCCESS,
-						"*** [ERR] tel_set_flight_mode(TAPI_POWER_FLIGHT_MODE_ENTER) ***");
+				"*** [ERR] tel_set_flight_mode(TAPI_POWER_FLIGHT_MODE_ENTER) ***");
 	} else {
 		ret = tel_set_flight_mode(ad->handle, TAPI_POWER_FLIGHT_MODE_LEAVE, setting_flightmode_main_tapi_event_cb, ad);
 		setting_retm_if(ret != TAPI_API_SUCCESS,
-						"*** [ERR] tel_set_flight_mode(TAPI_POWER_FLIGHT_MODE_LEAVE) ***");
+				"*** [ERR] tel_set_flight_mode(TAPI_POWER_FLIGHT_MODE_LEAVE) ***");
 	}
 
-	/*sucessfully sent, */
+	/* sucessfully sent */
 	ad->b_fm_requesting = TRUE;
-	/*SETTING_TRACE_END; */
 }
 
 static void _flightmode_vconf_change_cb(keynode_t *key, void *data)
 {
 	setting_retm_if(NULL == data, "NULL == data");
-	SettingFlightModeUG *ad = (SettingFlightModeUG *) data;
+	SettingFlightMode *ad = (SettingFlightMode *) data;
 	int status = vconf_keynode_get_bool(key);
 	char *vconf_name = vconf_keynode_get_name(key);
 
@@ -205,12 +204,13 @@ static int setting_flightmode_main_create(void *cb)
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingFlightModeUG *ad = (SettingFlightModeUG *) cb;
+	SettingFlightMode *ad = (SettingFlightMode *) cb;
 
 	ad->handle = tel_init(NULL);
 	if (!ad->handle) {
 		SETTING_TRACE_ERROR("*** [ERR] tel_init failed ***");
-		setting_create_popup(ad, ad->win_main_layout, _("IDS_ST_BODY_FLIGHT_MODE"), _("tel_init() failed"), NULL, 0, false, false, 0);
+		setting_create_popup(ad, ad->win_main_layout, _("IDS_ST_BODY_FLIGHT_MODE"),
+				_("tel_init() failed"), NULL, 0, false, false, 0);
 		/*return SETTING_RETURN_FAIL; */
 	} else {
 		SETTING_TRACE("tel_init ok[handle:%p]", ad->handle);
@@ -218,16 +218,17 @@ static int setting_flightmode_main_create(void *cb)
 
 	Evas_Object *genlist;
 	ad->ly_main =
-		setting_create_layout_navi_bar_genlist(ad->win_main_layout,
-											   ad->win_get,
-											   "IDS_ST_BODY_FLIGHT_MODE",
-											   _("IDS_ST_BUTTON_BACK"),
-											   NULL,
-											   (setting_call_back_func)setting_flightmode_main_click_softkey_back_cb,
-											   NULL,
-											   ad,
-											   &genlist,
-											   &(ad->navi_bar));
+		setting_create_layout_navi_bar_genlist(
+				ad->win_main_layout,
+				ad->win_main,
+				"IDS_ST_BODY_FLIGHT_MODE",
+				_("IDS_ST_BUTTON_BACK"),
+				NULL,
+				(setting_call_back_func)setting_flightmode_main_click_softkey_back_cb,
+				NULL,
+				ad,
+				&genlist,
+				&(ad->navi_bar));
 
 	/* add - flightmode setting menu list */
 	int value, err, ret;
@@ -237,17 +238,18 @@ static int setting_flightmode_main_create(void *cb)
 	}
 
 	/* create flightmode_mode */
-	ad->data_flightmode = setting_create_Gendial_field_def(genlist,
-														   &(itc_1text_1icon),
-														   setting_flightmode_main_list_Gendial_mouse_up_cb,
-														   ad,
-														   SWALLOW_Type_1ICON_1RADIO,
-														   NULL,
-														   NULL,
-														   value,
-														   "IDS_ST_BODY_FLIGHT_MODE",
-														   NULL,
-														   setting_flightmode_main_chk_btn_cb);
+	ad->data_flightmode = setting_create_Gendial_field_def(
+			genlist,
+			&(itc_1text_1icon),
+			setting_flightmode_main_list_Gendial_mouse_up_cb,
+			ad,
+			SWALLOW_Type_1ICON_1RADIO,
+			NULL,
+			NULL,
+			value,
+			"IDS_ST_BODY_FLIGHT_MODE",
+			NULL,
+			setting_flightmode_main_chk_btn_cb);
 
 	if (ad->data_flightmode) {
 		ad->data_flightmode->userdata = ad;
@@ -271,7 +273,7 @@ static int setting_flightmode_main_destroy(void *cb)
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	SettingFlightModeUG *ad = (SettingFlightModeUG *) cb;
+	SettingFlightMode *ad = (SettingFlightMode *) cb;
 
 	if (ad->popup_flight_mode) {
 		evas_object_del(ad->popup_flight_mode);
@@ -315,7 +317,7 @@ static int setting_flightmode_main_cleanup(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingFlightModeUG *ad = (SettingFlightModeUG *) cb;
+	SettingFlightMode *ad = (SettingFlightMode *) cb;
 	return setting_flightmode_main_destroy(ad);
 }
 
@@ -329,16 +331,13 @@ static Eina_Bool setting_flightmode_main_click_softkey_back_cb(void *data, Elm_O
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retvm_if(data == NULL, FALSE, "Data parameter is NULL");
-	SettingFlightModeUG *ad = (SettingFlightModeUG *) data;
 
 	/* Send destroy request */
-	ug_destroy_me(ad->ug);
-	SETTING_TRACE_END;
 	return EINA_FALSE;
 }
 
 static void setting_flightmode_main_list_Gendial_mouse_up_cb(void *data, Evas_Object *obj,
-															 void *event_info)
+								void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -356,16 +355,16 @@ static void setting_flightmode_main_list_Gendial_mouse_up_cb(void *data, Evas_Ob
 }
 
 static void setting_flightmode_main_chk_btn_cb(void *data, Evas_Object *obj,
-											   void *event_info)
+						void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item =
 		(Setting_GenGroupItem_Data *) data;
-	SettingFlightModeUG *ad = list_item->userdata;
+	SettingFlightMode *ad = list_item->userdata;
 	retm_if(ad == NULL, "ad parameter is NULL");
-	list_item->chk_status = elm_check_state_get(obj);/*  for genlist update status */
+	list_item->chk_status = elm_check_state_get(obj); /* for genlist update status */
 
 	if (list_item->chk_status) {
 		list_item->chk_status = EINA_TRUE;
