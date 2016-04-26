@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="3.0" package="org.tizen.setting-flightmode" version="0.9.5" install-location="internal-only">
+	<label>settings-flightmode</label>
+	<author email="mj2004.park@samsung.com" href="www.samsung.com">MyoungJune Park</author>
+	<description>Flightmode Setting Application</description>
+	<ui-application appid="org.tizen.setting-flightmode" exec="setting-flightmode" nodisplay="true" multiple="false" type="capp" taskmanage="false" hw-acceleration="use-GL" launch_mode="caller">
+		<category name="http://tizen.org/category/homeapp"/>
+		<metadata key="http://developer.samsung.com/tizen/metadata/legacylifecycle"/>
+		<label>Flight mode</label>
+		<label xml:lang="en-us">Flgiht mode</label>
+		<application-service>
+			<operation name="http://samsung.com/appcontrol/operation/setting/airplane_mode"/>
+		</application-service>
+		<application-service>
+			<operation name="http://tizen.org/appcontrol/operation/setting/airplane_mode"/>
+		</application-service>
+	</ui-application>
+	<privileges>
+		<privilege>http://tizen.org/privilege/appmanager.launch</privilege>
+		<privilege>http://tizen.org/privilege/appmanager.kill</privilege>
+		<privilege>http://tizen.org/privilege/account.read</privilege>
+		<privilege>http://tizen.org/privilege/account.write</privilege>
+		<privilege>http://tizen.org/privilege/notification</privilege>
+		<privilege>http://tizen.org/privilege/telephony.admin</privilege>
+		<privilege>http://tizen.org/privilege/systemsettings.admin</privilege>
+		<privilege>http://tizen.org/privilege/display</privilege>
+	</privileges>
+</manifest>
