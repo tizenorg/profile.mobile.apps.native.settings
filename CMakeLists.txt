@@ -94,6 +94,7 @@ ADD_SUBDIRECTORY(resource/po)
 
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/org.tizen.setting.xml.in ${CMAKE_SOURCE_DIR}/org.tizen.setting.xml @ONLY)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/org.tizen.setting.xml.ref.in ${CMAKE_SOURCE_DIR}/org.tizen.setting.xml.ref @ONLY)
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/setting-flightmode/org.tizen.setting-flightmode.xml.in ${CMAKE_SOURCE_DIR}/org.tizen.setting-flightmode.xml @ONLY)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/langlist_all.xml.in ${CMAKE_SOURCE_DIR}/resource/langlist_all.xml @ONLY)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/ug-setting-shortcut-efl.xml.in ${CMAKE_SOURCE_DIR}/resource/ug-setting-shortcut-efl.xml @ONLY)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/langlist.india.xml.in ${CMAKE_SOURCE_DIR}/resource/langlist.india.xml @ONLY)
@@ -128,4 +129,3 @@ ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_RINGTONE})
 ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_APPMGR})
 ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_FLIGHTMODE})
 #ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_ACCESSIBILITY})
-
