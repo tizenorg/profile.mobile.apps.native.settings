@@ -220,23 +220,6 @@ static Evas_Object *_view_list_prepare(MainData *ad)
 	return genlist;
 }
 
-/**
- * back callback func
- */
-static Eina_Bool _softkey_back_click_cb(void *data, Elm_Object_Item *it)
-{
-	SETTING_TRACE_BEGIN;
-	MainData *ad = (MainData *) data;
-	retvm_if(ad == NULL, FALSE, "Data parameter is NULL");
-
-	if (ad && ad->win_main) {
-		elm_win_lower(ad->win_main);
-	}
-
-	/* Send destroy request */
-	return EINA_FALSE;
-}
-
 EXPORT_PUBLIC
 int view_init(MainData *ad, char *name)
 {
@@ -271,7 +254,6 @@ int view_init(MainData *ad, char *name)
 	ad->navibar_main_it = navi_it;
 	elm_object_item_domain_text_translatable_set(navi_it, SETTING_PACKAGE,
 			EINA_TRUE);
-	elm_naviframe_item_pop_cb_set(navi_it, _softkey_back_click_cb, ad);
 
 	/* create genlist */
 	ad->genlist = _view_list_prepare(ad);
