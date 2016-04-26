@@ -25,15 +25,14 @@
 #ifndef __SETTING_H__
 #define __SETTING_H__
 
-#include <setting-common-view.h>
-#include <setting-common-search.h>
-
 #define EXPORT_PUBLIC __attribute__ ((visibility ("default")))
 
-/*	TAPI*/
+#include "setting-common-view.h"
+#include "setting-common-search.h"
+#include "setting-common-init.h"
+
 #include <tapi_common.h>
 #include <ITapiModem.h>
-
 #include <sensor.h>
 #include <notification.h>
 #include <account.h>
@@ -43,7 +42,7 @@
 #include <call-manager.h>
 
 
-#define NO_UG_FOUND_MSG				"IDS_MSGF_POP_UNSUPPORTED"
+#define NO_UG_FOUND_MSG 	"IDS_MSGF_POP_UNSUPPORTED"
 
 #define Keystr_Connection	"IDS_ST_BODY_CONNECTION"
 
@@ -67,12 +66,6 @@ enum {
 };
 
 enum {
-	SC_All_List,
-	SC_Max
-};
-
-
-enum {
 	GL_Group_Connection,
 	GL_Group_Device,
 	GL_Group_Personal,
@@ -86,24 +79,12 @@ enum {
  */
 typedef struct _setting_main_appdata {
 
-	ui_gadget_h ug;						/**< ug */
-
-	Evas *evas;
-	Evas_Object *win_main;
-	Evas_Object *navibar_main;
-	Elm_Object_Item *navibar_main_it;
-
-	Evas_Object *ly_main;			/**< seting view main */
-	Evas_Object *sc_gl[SC_Max];		/**< genlist array */
+	MainData md;
+	ui_gadget_h ug; 					/**< ug */
 
 	/* listen / unlisten code */
 	Eina_List *listened_list;
-	Evas_Object *conform;
-	Evas_Object *view_layout;		/* view layout */
 
-	Elm_Genlist_Item_Class itc_table[GENDIAL_Type_MAX];
-
-	TapiHandle *handle;
 	Evas_Object *popup;
 
 	Setting_GenGroupItem_Data *data_network; /** special layout */
@@ -116,8 +97,6 @@ typedef struct _setting_main_appdata {
 	/*bundle *b; */
 
 	Cfg_Item_Type is_searchmode;
-	Eina_Hash *main_list_hash;
-
 } setting_main_appdata;
 extern setting_main_appdata *g_main_ad;
 
