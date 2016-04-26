@@ -20,14 +20,7 @@
  */
 
 #include <setting-about.h>
-#include <setting-about-main.h>
 #include <setting-cfg.h>
-
-
-#ifndef UG_MODULE_API
-#define UG_MODULE_API __attribute__ ((visibility("default")))
-#endif
-
 
 void setting_about_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
 								void *priv)
@@ -84,16 +77,18 @@ static void setting_about_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
 *
 * @return
 */
-static void *setting_about_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
-										app_control_h service, void *priv)
+
+bool setting_about_ug_on_create(void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if((NULL == priv), NULL, "NULL == priv");
 	SettingAboutUG *aboutUG = priv;
-	aboutUG->ug = ug;
 
-	aboutUG->win_main_layout = (Evas_Object *) ug_get_parent_layout(ug);
-	aboutUG->win_get = (Evas_Object *) ug_get_window();
+	aboutUG->win_get = elm_win_util_standard_add("Setting about", "Setting about");
+	aboutUG->win_main_layout = elm_layout_add(aboutUG->win_get);
+	elm_win_resize_object_add(aboutUG->win_get, aboutUG->win_main_layout);
+
+	evas_object_show(aboutUG->win_get);
 	evas_object_show(aboutUG->win_main_layout);
 	aboutUG->evas = evas_object_evas_get(aboutUG->win_main_layout);
 
@@ -116,27 +111,22 @@ static void *setting_about_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 
 	setting_view_node_set_cur_view(&setting_view_about_main);
 	setting_view_create(&setting_view_about_main, (void *)aboutUG);
+
 	evas_object_event_callback_add(aboutUG->win_main_layout, EVAS_CALLBACK_RESIZE, setting_about_ug_cb_resize, aboutUG);
 
 	aboutUG->popup_showed_flag = FALSE;
-	return aboutUG->ly_main;
+
+	return true;
 }
 
-static void setting_about_ug_on_start(ui_gadget_h ug, app_control_h service,
-									  void *priv)
-{
-}
-
-static void setting_about_ug_on_pause(ui_gadget_h ug, app_control_h service,
-									  void *priv)
+void setting_about_ug_on_pause(void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SettingAboutUG *SettingAboutUG = priv;
 	SettingAboutUG->pause_flag = TRUE;
 }
 
-static void setting_about_ug_on_resume(ui_gadget_h ug, app_control_h service,
-									   void *priv)
+void setting_about_ug_on_resume(void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
@@ -178,15 +168,12 @@ static void setting_about_ug_on_resume(ui_gadget_h ug, app_control_h service,
 * @param data
 * @param priv
 */
-static void setting_about_ug_on_destroy(ui_gadget_h ug, app_control_h service,
-										void *priv)
+
+void setting_about_ug_on_destroy(void *priv)
 {
-	SETTING_TRACE_BEGIN;
-	setting_retm_if((!priv), "!priv");
 	SettingAboutUG *aboutUG = priv;
 
 	evas_object_event_callback_del(aboutUG->win_main_layout, EVAS_CALLBACK_RESIZE, setting_about_ug_cb_resize);	/* fix flash issue for gallery */
-	aboutUG->ug = ug;
 
 	/*  delete the allocated objects. */
 	setting_view_destroy(&setting_view_about_main, aboutUG);
@@ -197,13 +184,20 @@ static void setting_about_ug_on_destroy(ui_gadget_h ug, app_control_h service,
 
 	SETTING_TRACE_END;
 }
-
+/*
 static void setting_about_ug_on_message(ui_gadget_h ug, app_control_h msg,
 										app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
+	if (aboutUG) {
+		if (aboutUG->handle
+		    && tel_deinit(aboutUG->handle) == TAPI_API_SUCCESS) {
+			SETTING_TRACE("tel_deinit sucessed");
+		}
+		FREE(aboutUG);
+	}
 }
-
+*/
 /**
 * @brief ug_event processing function
 *
@@ -214,29 +208,21 @@ static void setting_about_ug_on_message(ui_gadget_h ug, app_control_h msg,
 *
 * @return
 */
-static void setting_about_ug_on_event(ui_gadget_h ug, enum ug_event event,
-									  app_control_h service, void *priv)
+
+void setting_about_ug_on_event(app_event_info_h event_info, void *priv)
 {
-	SETTING_TRACE_BEGIN;
+	int ret;
+	app_device_orientation_e ori;
 	SettingAboutUG *ad = (SettingAboutUG *)priv;
 	setting_retm_if(NULL == ad, "ad is NULL");
-	switch (event) {
-	case UG_EVENT_LOW_MEMORY:
-		break;
-	case UG_EVENT_LOW_BATTERY:
-		break;
-	case UG_EVENT_LANG_CHANGE:
-		setting_navi_items_update(ad->navi_bar);
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT:
-	/*break; */
-	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-	/*break; */
-	case UG_EVENT_ROTATE_LANDSCAPE:
-	/*break; */
-	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN: {
+
+	ret = app_event_get_device_orientation(event_info, &ori);
+	if (APP_ERROR_NONE != ret) {
+		SETTING_TRACE("setting_about_ug_on_event %s", get_error_message(ret));
+		return;
+	}
+	if (APP_DEVICE_ORIENTATION_180 == ori) {
 			/*restore the focus status */
-			SettingAboutUG *ad = (SettingAboutUG *) priv;
 			if (!ad || !ad->is_dev_name_focus || !ad->item_dev_name) {
 				return;
 			}
@@ -251,12 +237,6 @@ static void setting_about_ug_on_event(ui_gadget_h ug, enum ug_event event,
 			elm_entry_cursor_pos_set(ad->item_dev_name->eo_check, ad->cursor_pos);
 			ad->is_dev_name_focus = FALSE;
 		}
-		break;
-	case UG_EVENT_REGION_CHANGE:
-		break;
-	default:
-		break;
-	}
 }
 
 /**
@@ -301,46 +281,20 @@ static void setting_about_ug_on_key_event(ui_gadget_h ug,
 *
 * @param ops
 */
-UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
+int UG_MODULE_INIT(struct ug_module_ops *ops)
 {
-	SETTING_TRACE_BEGIN;
-	SettingAboutUG *aboutUG = calloc(1, sizeof(SettingAboutUG));
-	setting_retvm_if(!aboutUG, -1, "Create SettingAboutUG obj failed");
+	//ops->create = setting_about_ug_on_create;
 
-	ops->create = setting_about_ug_on_create;
-	ops->start = setting_about_ug_on_start;
-	ops->pause = setting_about_ug_on_pause;
-	ops->resume = setting_about_ug_on_resume;
-	ops->destroy = setting_about_ug_on_destroy;
-	ops->message = setting_about_ug_on_message;
-	ops->event = setting_about_ug_on_event;
+	//ops->pause = setting_about_ug_on_pause;
+	//ops->resume = setting_about_ug_on_resume;
+	//ops->destroy = setting_about_ug_on_destroy;
+
+	//ops->event = setting_about_ug_on_event;
 	ops->key_event = setting_about_ug_on_key_event;
-	ops->priv = aboutUG;
-	ops->opt = UG_OPT_INDICATOR_ENABLE;
 
 	return 0;
 }
 
-/**
-* @brief aboutUG exit
-*
-* @param ops
-*/
-UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
-{
-	SETTING_TRACE_BEGIN;
-	SettingAboutUG *aboutUG;
-	setting_retm_if(!ops, "ops == NULL");
-
-	aboutUG = ops->priv;
-	if (aboutUG) {
-		if (aboutUG->handle
-			&& tel_deinit(aboutUG->handle) == TAPI_API_SUCCESS) {
-			SETTING_TRACE("tel_deinit sucessed");
-		}
-		FREE(aboutUG);
-	}
-}
 
 /**
  * @brief aboutUG searchable nodes array
@@ -372,7 +326,7 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
  *
  * @return 0 for success
  */
-UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv, char **applocale)
+int setting_plugin_search_init(app_control_h service, void *priv, char **applocale)
 {
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE(">> setting-about-efl DB search code");

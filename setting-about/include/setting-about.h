@@ -151,7 +151,11 @@ extern setting_view setting_view_about_main;
 extern void setting_about_main_get_wifi_mac_address_string(char *str, int size);
 extern void setting_about_main_get_bluetooth_address_string(char *str, int size);
 
-
+extern bool setting_about_ug_on_create(void *priv);
+extern void setting_about_ug_on_destroy(void *priv);
+extern void setting_about_ug_on_pause(void *priv);
+extern void setting_about_ug_on_resume(void *priv);
+extern void setting_about_ug_on_event(app_event_info_h event_info, void *priv);
 /**
 * @brief ug layout callback
 *

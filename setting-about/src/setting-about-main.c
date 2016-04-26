@@ -1152,7 +1152,7 @@ static void __setting_about_main_vconf_change_cb(keynode_t *key, void *data)
  * @param ug the UG which is needed to be destoried
  * @param priv application data
  */
-static void __destroy_ug_cb(ui_gadget_h ug, void *priv)
+static void __destroy_ug_cb(void *priv)
 {
 	SETTING_TRACE_BEGIN;
 
@@ -1160,10 +1160,6 @@ static void __destroy_ug_cb(ui_gadget_h ug, void *priv)
 	ret_if(!priv);
 	SettingAboutUG *ad = (SettingAboutUG *) priv;	/* ad is point to priv */
 
-	if (ug) {
-		setting_ug_destroy(ug);
-		ad->ug_loading = NULL;
-	}
 	elm_object_tree_focus_allow_set(ad->ly_main, EINA_TRUE);
 }
 
@@ -2216,7 +2212,6 @@ static int setting_about_main_update(void *cb)
  */
 static int setting_about_main_cleanup(void *cb)
 {
-	SETTING_TRACE_BEGIN;
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
@@ -2229,3 +2224,24 @@ static int setting_about_main_cleanup(void *cb)
 	return SETTING_RETURN_SUCCESS;
 }
 
+int main(int argc, char *argv[])
+{
+	app_event_handler_h ev = NULL;
+	ui_app_lifecycle_callback_s event_callback;
+	SettingAboutUG *ug_data = calloc(1, sizeof(SettingAboutUG));
+	if (!ug_data) {
+		SETTING_TRACE("Create SettingAboutUG obj failed");
+		return -1;
+	}
+	memset(&event_callback, 0, sizeof(ui_app_lifecycle_callback_s));
+
+	event_callback.create = setting_about_ug_on_create;
+	event_callback.terminate = setting_about_ug_on_destroy;
+	event_callback.pause = setting_about_ug_on_pause;
+	event_callback.resume = setting_about_ug_on_resume;
+
+	//ui_app_add_event_handler(&ev, APP_EVENT_LANGUAGE_CHANGED, NULL, ug_data);
+	ui_app_add_event_handler(&ev, APP_EVENT_DEVICE_ORIENTATION_CHANGED, setting_about_ug_on_event, ug_data);
+
+	return ui_app_main(argc, argv, &event_callback, ug_data);
+}

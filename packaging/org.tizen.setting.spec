@@ -128,6 +128,13 @@ Group: Application Framework/Settings
 #Requires: pkgconfig(setting-common-internal)
 %description devel
 
+%package about
+Summary: The setting about module
+Group: Application
+
+%description about
+Application displaying device information
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -339,3 +346,8 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %files ref
 %{_datadir}/mime/packages/mime.setting.xml
 %{_datadir}/packages/org.tizen.setting.xml.ref
+
+%files about
+%manifest org.tizen.setting-about.manifest
+%{_prefix}/apps/org.tizen.setting-about/bin/setting-about
+%{_datadir}/packages/org.tizen.setting-about.xml
