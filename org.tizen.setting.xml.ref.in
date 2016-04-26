@@ -237,11 +237,6 @@
        			<label>Emergency Setting</label>
        			<label xml:lang="en-us">Emergency Setting</label>
    	</ui-application>
-	<ui-application appid="setting-flightmode-efl" exec="@TZ_SYS_RO_UG@/bin/setting-flightmode-efl" type="capp" nodisplay="true" taskmanage="false">
-       		<icon>ug-setting-flightmode-efl.png</icon>
-       		<label>Flight mode</label>
-       		<label xml:lang="en-us">Flgiht mode</label>
-   	</ui-application>
 	<ui-application appid="setting-netrestrictionmode-efl" exec="@TZ_SYS_RO_UG@/bin/setting-netrestrictionmode-efl" type="capp" nodisplay="true" taskmanage="false">
        		<icon>ug-setting-netrestrictionmode-efl.png</icon>
        		<label>Network restriction mode</label>
