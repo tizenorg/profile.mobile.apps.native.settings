@@ -135,6 +135,13 @@ Group: Application
 %description display
 replace shared library by stand alone application
 
+%package flightmode
+Summary: A setting flightmode application
+Group: Application
+
+%description flightmode
+Configuration application for flightmode
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -351,3 +358,9 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %manifest org.tizen.setting-display.manifest
 %{_prefix}/apps/org.tizen.setting-display/bin/setting-display
 %{_datadir}/packages/org.tizen.setting-display.xml
+
+%files flightmode
+%manifest setting-flightmode/org.tizen.setting-flightmode.manifest
+%{_prefix}/apps/org.tizen.setting-flightmode/bin/setting-flightmode
+%{_datadir}/packages/org.tizen.setting-flightmode.xml
+%{_prefix}/apps/org.tizen.setting-flightmode/res/*

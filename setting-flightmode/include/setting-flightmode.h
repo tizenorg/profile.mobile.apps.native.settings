@@ -22,43 +22,66 @@
 #define __SETTING_FLIGHTMODE_H__
 
 #include <Elementary.h>
-#include <notification.h>
-#include <setting-common-draw-widget.h>
-#include <setting-common-view.h>
-#include <setting-common-resource.h>
-#include <setting-common-data-slp-setting.h>
-
-#include <ITapiModem.h>
-#include <TapiUtility.h>
 #include <tapi_common.h>
+#include "setting-common-data-type.h"
+#include "setting-common-view.h"
+#include "setting-common-draw-widget.h"
 
-typedef struct _SettingFlightModeUG SettingFlightModeUG;
 
 typedef enum _MODE_OPEARTION {
-	MODE_INVALID = 0, /*< There is no request waiting for processing */
-	MODE_ENTER = 1,	/*< Some "flightmode enter" request is waiting for processing */
-	MODE_LEAVE,		/*< Some "flightmode leave" request is waiting for processing */
+	MODE_INVALID = 0,	/* There is no request waiting for
+				processing */
+	MODE_ENTER = 1,		/* Some "flightmode enter" request is waiting
+				for processing */
+	MODE_LEAVE,		/* Some "flightmode leave" request is waiting
+				for processing */
 } MODE_OPEARTION;
 
+typedef Setting_GenGroupItem_Data *(*UI_HANDLER)(void *data, char *title,
+		char *iconpath, char *ugname, Evas_Object *genlist,
+		Elm_Object_Item *parent);
 
-struct _SettingFlightModeUG {
-	ui_gadget_h ug;
-	ui_gadget_h ug_loading;
-	/* add more variables here (move your appdata to here) */
-	app_control_h bundle_data; /**< when loading this UG, bundle is stored */
+typedef enum {
+	ERROR_STATE = -1,
+	DEFAULT_UI = 0,
+	UI_PROC,
+	UG_HANDLE,
+} mainlist_entry_action_type;
 
+typedef struct _mainlist_entry {
+	char *title;
+	UI_HANDLER ui_handler;
+	mainlist_entry_action_type type;
+	/*-------------------------------------------------- */
+	void *item_data;
+} mainlist_entry;
+
+enum {
+	SC_All_List,
+	SC_Max
+};
+
+typedef struct _SettingFlightMode {
 	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
+	Evas_Object *win_main;
+	Evas_Object *view_layout;
 	Evas_Object *bg;
 	Evas_Object *ly_main;
+	Evas_Object *conform;
 	Evas_Object *navi_bar;	/* for navigation effect */
+	Elm_Object_Item *navibar_main_it;
 	Evas_Object *scroller;
 	Evas_Object *popup_flight_mode;
 
+	Evas_Object *sc_gl[SC_Max];		/**< genlist array */
+
 	Eina_List *app_list;
 	Eina_List *app_check_list;
+
 	Elm_Genlist_Item_Class itc_1text_2icon;
+	Elm_Genlist_Item_Class itc_table[GENDIAL_Type_MAX];
+	Eina_Hash *main_list_hash;
+
 	Setting_GenGroupItem_Data *data_flightmode;
 
 	/* UI elements - view main */
@@ -71,9 +94,11 @@ struct _SettingFlightModeUG {
 	 * vars for flightmode
 	 */
 	TapiHandle *handle;
-	bool b_fm_requesting; /**< whether some request is processing. 1:yes, 0:no */
+	bool b_fm_requesting; /* whether some request is processing;
+				1:yes, 0:no */
 	MODE_OPEARTION fm_waiting_op;
-};
+} SettingFlightMode;
+//extern SettingFlightMode *g_main_ad;
 
 extern setting_view setting_view_flightmode_main;
 #endif
