@@ -21,13 +21,10 @@
 #ifndef __SETTING_FLIGHTMODE_MAIN_H__
 #define __SETTING_FLIGHTMODE_MAIN_H__
 
-#include <setting-flightmode.h>
-
-static Eina_Bool setting_flightmode_main_click_softkey_back_cb(
-		void *data, Elm_Object_Item *it);
-static void setting_flightmode_main_list_Gendial_mouse_up_cb(
-		void *data, Evas_Object *obj, void *event_info);
-static void setting_flightmode_main_chk_btn_cb(
-		void *data, Evas_Object *obj, void *event_info);
+//#include <Elementary.h>
+//
+//static Eina_Bool setting_flightmode_main_click_softkey_back_cb(void *data, Elm_Object_Item *it);
+//static void setting_flightmode_main_list_Gendial_mouse_up_cb(void *data, Evas_Object *obj, void *event_info);
+//static void setting_flightmode_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info);
 
 #endif	/* __SETTING_FLIGHTMODE_MAIN_H__ */
