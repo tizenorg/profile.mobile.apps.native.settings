@@ -183,10 +183,19 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 		&bluetooth_tfunc, uuid_Bluetooth, 0,
 		"ug-bluetooth-efl"},
 #ifdef TIZEN_BUILD_TARGET
-	{	KeyStr_FlightMode, IMG_FlightMode, "setting-flightmode-efl",
-		Cfg_Item_Pos_Level0, Cfg_Item_unResetable,
-		0, Cfg_Item_Ui_Node_Toggle, NULL, KeyStr_Connections,
-		&flightmode_tfunc, uuid_FlightMode, 0, NULL},
+	{	KeyStr_FlightMode,
+		IMG_FlightMode,
+		"org.tizen.setting-flightmode",
+		Cfg_Item_Pos_Level0,
+		Cfg_Item_unResetable,
+		0,
+		Cfg_Item_AppLauncher_Node,
+		NULL,
+		KeyStr_Connections,
+		&flightmode_tfunc,
+		uuid_FlightMode,
+		0,
+		"org.tizen.setting-flightmode"},
 #endif
 
 #ifdef TIZEN_BUILD_EMULATOR
