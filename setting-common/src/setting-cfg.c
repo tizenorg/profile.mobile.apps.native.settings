@@ -182,7 +182,7 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 	{KeyStr_WiFi, IMG_WiFi, "wifi-efl-ug", Cfg_Item_Pos_Level0, Cfg_Item_Resetable,	  0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Connections, &wifi_tfunc, uuid_WiFi, 0, "wifi-efl-ug"},
 	{KeyStr_Bluetooth, IMG_Bluetooth, "ug-bluetooth-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable,	0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Connections, &bluetooth_tfunc, uuid_Bluetooth, 0, "ug-bluetooth-efl"},
 #ifdef TIZEN_BUILD_TARGET
-	{KeyStr_FlightMode, IMG_FlightMode, "setting-flightmode-efl", Cfg_Item_Pos_Level0, Cfg_Item_unResetable,  0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Connections, &flightmode_tfunc, uuid_FlightMode, 0, "org.tizen.setting-flightmode"},
+	{KeyStr_FlightMode, IMG_FlightMode, "setting-flightmode-efl", Cfg_Item_Pos_Level0, Cfg_Item_unResetable,  0, Cfg_Item_Ui_Node_Toggle, NULL, KeyStr_Connections, &flightmode_tfunc, uuid_FlightMode, 0, NULL},
 #endif
 
 #ifdef TIZEN_BUILD_EMULATOR
@@ -201,7 +201,7 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 	/* Group:Device */
 	{KeyStr_Device, NULL, "move://Tab3.top", Cfg_Item_Pos_Level0, 0, 0, Cfg_Item_Title_Node, NULL, NULL, NULL, uuid_SoundDisplay, 0, NULL},
 	{KeyStr_Sounds, IMG_Sounds, "setting-profile-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_Device, NULL, uuid_SoundDisplay, 0, NULL},
-	{KeyStr_Display, IMG_Display, "setting-display-efl|viewtype:main", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Device, NULL, uuid_Display, 0, "org.tizen.setting-display"},
+	{KeyStr_Display, IMG_Display, "setting-display-efl|viewtype:main", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_Device, NULL, uuid_Display, 0, "org.tizen.setting.display"},
 	{KeyStr_ApplicationsItem, IMG_Applications, "setting-applications-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_Device, NULL, uuid_Display, 0, "org.tizen.setting.display"},
 
 	/* Group: Personal */
@@ -222,7 +222,7 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 #endif
 	{KeyStr_DateTime, IMG_DateTime, "setting-time-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_System, NULL, uuid_DateTime, 0, NULL},
 	/*{KeyStr_DeveloperOption, IMG_USBconnection, "setting-developeroption-efl|viewtype:usb", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_DeviceMange, NULL, uuid_DeveloperOption, 0, "org.tizen.setting.developeroptions"}, */
-	{KeyStr_AboutDevice, IMG_AboutDevice, "setting-about-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_System, NULL, uuid_AboutPhone, 0, "org.tizen.setting-about"},
+	{KeyStr_AboutDevice, IMG_AboutDevice, "setting-about-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_System, NULL, uuid_AboutPhone, 0, NULL},
 
 #if 0
 	{KeyStr_Security, IMG_Security, "setting-security-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_DeviceMange, NULL, uuid_Security, 0,	 NULL},
