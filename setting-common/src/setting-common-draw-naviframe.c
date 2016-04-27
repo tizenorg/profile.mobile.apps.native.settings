@@ -175,7 +175,7 @@ void setting_navi_items_update(Evas_Object *navigate_bar)
 		const char *mbutton_str = evas_object_data_get(eo_view, "mbutton_str");
 		const char *rbutton_str = evas_object_data_get(eo_view, "rbutton_str");
 		const char *eo_view_t = evas_object_type_get(eo_view);
-		/*SETTING_TRACE("navi_title  [%s]:%s", _(navi_title), navi_title); */
+		/*SETTING_TRACE("navi_title	 [%s]:%s", _(navi_title), navi_title); */
 		/*SETTING_TRACE("eo_view_t:%s", eo_view_t); */
 		/*SETTING_TRACE("lbutton_str:%s", lbutton_str); */
 		/*SETTING_TRACE("mbutton_str:%s", mbutton_str); */
@@ -279,7 +279,7 @@ EXPORT_PUBLIC
 Evas_Object *setting_create_win_layout(Evas_Object *win_obj)
 {
 	Evas_Object *layout = NULL;
-	/*  Base Layout */
+	/*	Base Layout */
 	layout = elm_layout_add(win_obj);
 	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	setting_retvm_if(layout == NULL, FALSE, "layout == NULL");
@@ -430,29 +430,29 @@ Evas_Object *setting_create_navi_bar(Evas_Object *layout)
 * if sip is shown,the buttons created by this API will be shown,it sip is hidden,they will be hiden too
 * @return non
 * eg:
-* 	//4 common buttons
-* 	setting_append_naviframe_title_buttons(ad->navi_it, ad->navi_bar,
-* 					       "1", "2", "3" ,"4",
-* 					       _back_cb,
-* 					       _back_cb,
-* 					       _back_cb,
-* 					       _back_cb);
+*	//4 common buttons
+*	setting_append_naviframe_title_buttons(ad->navi_it, ad->navi_bar,
+*						   "1", "2", "3" ,"4",
+*						   _back_cb,
+*						   _back_cb,
+*						   _back_cb,
+*						   _back_cb);
 *
-* 	//more button +2 common buttons + '<-'button
-* 	setting_append_naviframe_title_buttons(ad->navi_it, ad->navi_bar,
-* 					       NULL, "2", "3" ,NULL,
-* 					       _back_cb,
-* 					       _back_cb,
-* 					       _back_cb,
-* 					       _back_cb);
+*	//more button +2 common buttons + '<-'button
+*	setting_append_naviframe_title_buttons(ad->navi_it, ad->navi_bar,
+*						   NULL, "2", "3" ,NULL,
+*						   _back_cb,
+*						   _back_cb,
+*						   _back_cb,
+*						   _back_cb);
 *
-* 	//1common buton + '<-'button
-* 	setting_append_naviframe_title_buttons(ad->navi_it, ad->navi_bar,
-* 					       NULL, NULL, _("IDS_SA_BUTTON_DONE_ABB") ,NULL,
-* 					       NULL,
-* 					       NULL,
-* 					       _back_cb,
-* 					       _back_cb);
+*	//1common buton + '<-'button
+*	setting_append_naviframe_title_buttons(ad->navi_it, ad->navi_bar,
+*						   NULL, NULL, _("IDS_SA_BUTTON_DONE_ABB") ,NULL,
+*						   NULL,
+*						   NULL,
+*						   _back_cb,
+*						   _back_cb);
 */
 EXPORT_PUBLIC
 void setting_append_naviframe_title_buttons(Elm_Object_Item *navi_it,
@@ -469,7 +469,7 @@ void setting_append_naviframe_title_buttons(Elm_Object_Item *navi_it,
 {
 	SETTING_TRACE_BEGIN;
 	Evas_Object *btn = NULL;
-	/*  create buttons */
+	/*	create buttons */
 	if (more_button_click_cb) {
 		if (!more_button_str) {
 
@@ -533,7 +533,7 @@ Elm_Object_Item *setting_create_navi_bar_top_buttons(char *title_str,
 	Elm_Object_Item *navi_it = NULL;
 
 	if (lbutton_str) {
-		/*  create buttons */
+		/*	create buttons */
 		l_button = setting_create_button(navigate_bar, lbutton_str,
 										 "naviframe/toolbar/default",
 										 lbutton_click_cb, cb_data);
@@ -553,7 +553,7 @@ Elm_Object_Item *setting_create_navi_bar_top_buttons(char *title_str,
 									  NULL);
 	retv_if(!navi_it, NULL);
 
-	/*  arrange buttons into  navi_it*/
+	/*	arrange buttons into  navi_it*/
 	if (l_button) { /* done */
 		elm_object_item_part_content_set(navi_it, "title_toolbar_button1", l_button);
 	}
@@ -603,7 +603,7 @@ Elm_Object_Item *__create_navi_bar_bottom_buttons(char *title_str,
 
 #define USE_BACK 0
 #if USE_BACK
-	/*  arrange buttons into  controlbar */
+	/*	arrange buttons into  controlbar */
 	if (0 == safeStrCmp(_(lbutton_str), _("IDS_ST_BUTTON_BACK"))) {
 		lbtn = setting_create_button(navigate_bar, _(lbutton_str),
 									 NAVI_BACK_BUTTON_STYLE,
@@ -652,7 +652,7 @@ Elm_Object_Item *__create_navi_bar_bottom_buttons(char *title_str,
 * Create buttons on the specialized navigation bar
 *
 * @param[in] eo_view	navigation bar's content
-* @param[in] controlbar   title obj of navigation bar
+* @param[in] controlbar	  title obj of navigation bar
 *
 */
 EXPORT_PUBLIC
@@ -672,10 +672,10 @@ void setting_create_navi_bar_buttons(char *title_str,
 
 /**
 * The general API to create a layout with navigation bar,
-*   which contents any evas container object(@param[eo_view]) as its content
+*	which contents any evas container object(@param[eo_view]) as its content
 *
 * @param[in] eo_view	navigation bar's content
-* @param[out] titleobj   title obj of navigation bar
+* @param[out] titleobj	 title obj of navigation bar
 *
 * return main layout of UG or App..
 */
@@ -704,9 +704,9 @@ Evas_Object *setting_create_layout_navi_bar(Evas_Object *win_layout,
 
 /**
 * The API to create a layout with navigation bar,
-*   which contents a scroller object as its content
+*	which contents a scroller object as its content
 *
-* @param[out] scroller   navigation bar's content
+* @param[out] scroller	 navigation bar's content
 *
 * @return a layout with a special navigation bar and at most 2 buttons
 */
@@ -729,7 +729,7 @@ Evas_Object *setting_create_layout_navi_bar_scroller(Evas_Object *win_layout,
 	*navi_bar = setting_create_navi_bar(layout);
 
 	/*****/
-	/*  create scroller as CONTENT */
+	/*	create scroller as CONTENT */
 	Evas_Object *scrl = NULL;
 	/* Evas_Object *ret = NULL; */
 	if (scroller != NULL) {
@@ -771,7 +771,7 @@ Evas_Object *setting_create_layout_navi_bar_genlist(Evas_Object *win_layout,
 													Evas_Object **genlist,
 													Evas_Object **navi_bar)
 {
-	/*  win_layout -> layout */
+	/*	win_layout -> layout */
 	Evas_Object *layout = setting_create_win_layout(win_obj);
 	*navi_bar = setting_create_navi_bar(layout);
 
@@ -792,7 +792,7 @@ Evas_Object *setting_create_layout_navi_bar_genlist(Evas_Object *win_layout,
 
 /**
 * The general API to push any evas object(@param[eo_view]) to the specialized navi_bar,
-*   which contents at most 3 buttons
+*	which contents at most 3 buttons
 */
 EXPORT_PUBLIC
 Elm_Object_Item *
@@ -814,7 +814,7 @@ setting_push_layout_navi_bar(char *title_str,
 
 /**
 * The API to push a scroller object(@param[scroller]) to the specialized navi_bar,
-*   which contents at most 2 buttons
+*	which contents at most 2 buttons
 */
 
 EXPORT_PUBLIC
@@ -827,7 +827,7 @@ setting_push_layout_navi_bar_scroller(Evas_Object *win_main, char *title_str,
 									  Evas_Object **scroller,
 									  Evas_Object *navi_bar)
 {
-	/*  create scroller */
+	/*	create scroller */
 	Evas_Object *scrl = NULL;
 	if (scroller != NULL) {
 		scrl = *scroller = elm_scroller_add(navi_bar);
@@ -849,7 +849,7 @@ setting_push_layout_navi_bar_scroller(Evas_Object *win_main, char *title_str,
 
 /**
 * @ The API to push a genlist object(@param[genlist]) to the specialized navi_bar,
-*   which contents at most 2 buttons
+*	which contents at most 2 buttons
 */
 EXPORT_PUBLIC
 Elm_Object_Item *
@@ -861,7 +861,7 @@ setting_push_layout_navi_bar_genlist(Evas_Object *win_layout,
 									 void *cb_data, Evas_Object **genlist,
 									 Evas_Object *navi_bar)
 {
-	/*  create scroller */
+	/*	create scroller */
 	Evas_Object *gl = NULL;
 	if (genlist != NULL) {
 		*genlist = elm_genlist_add(navi_bar);

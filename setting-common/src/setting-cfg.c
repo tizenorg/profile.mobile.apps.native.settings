@@ -59,7 +59,7 @@ char *setting_cfg_get_path()
 
 int setting_cfg_file_write(JsonNode *node);
 
-#define __create_an_item(item_name, icon_path, ug_args, shortcut_appid, defaultPos, item_type,  is_resetable, ug_exist, uuid, click_times, last_clicked) do\
+#define __create_an_item(item_name, icon_path, ug_args, shortcut_appid, defaultPos, item_type,	is_resetable, ug_exist, uuid, click_times, last_clicked) do\
 	{\
 		if (ug_exist) { \
 			if (!is_ug_installed_by_ug_args(ug_args)) break;\
@@ -179,21 +179,21 @@ void setting_cfg_print(void)
 /* create config file from scratch */
 static Setting_Cfg_Node_T s_cfg_node_array[] = {
 	{KeyStr_Connections, NULL, "move://Tab2.top", Cfg_Item_Pos_Level0, 0, 0, Cfg_Item_Title_Node, NULL, NULL, NULL, uuid_Connectivity, 0, NULL},
-	{KeyStr_WiFi, IMG_WiFi, "wifi-efl-ug", Cfg_Item_Pos_Level0, Cfg_Item_Resetable,   0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Connections, &wifi_tfunc, uuid_WiFi, 0, "wifi-efl-ug"},
-	{KeyStr_Bluetooth, IMG_Bluetooth, "ug-bluetooth-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable,  0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Connections, &bluetooth_tfunc, uuid_Bluetooth, 0, "ug-bluetooth-efl"},
+	{KeyStr_WiFi, IMG_WiFi, "wifi-efl-ug", Cfg_Item_Pos_Level0, Cfg_Item_Resetable,	  0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Connections, &wifi_tfunc, uuid_WiFi, 0, "wifi-efl-ug"},
+	{KeyStr_Bluetooth, IMG_Bluetooth, "ug-bluetooth-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable,	0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Connections, &bluetooth_tfunc, uuid_Bluetooth, 0, "ug-bluetooth-efl"},
 #ifdef TIZEN_BUILD_TARGET
 	{KeyStr_FlightMode, IMG_FlightMode, "setting-flightmode-efl", Cfg_Item_Pos_Level0, Cfg_Item_unResetable,  0, Cfg_Item_Ui_Node_Toggle, NULL, KeyStr_Connections, &flightmode_tfunc, uuid_FlightMode, 0, NULL},
 #endif
 
 #ifdef TIZEN_BUILD_EMULATOR
-	{KeyStr_NFC, IMG_NFC, "ug-nfc-efl|type:nfc", Cfg_Item_Pos_Level0, Cfg_Item_unResetable,  0, Cfg_Item_Ug_Node_Toggle, NULL, KeyStr_Connections, &nfc_tfunc, uuid_NFC, 0, "ug-nfc-efl"},
+	{KeyStr_NFC, IMG_NFC, "ug-nfc-efl|type:nfc", Cfg_Item_Pos_Level0, Cfg_Item_unResetable,	 0, Cfg_Item_Ug_Node_Toggle, NULL, KeyStr_Connections, &nfc_tfunc, uuid_NFC, 0, "ug-nfc-efl"},
 #endif
 
 #ifdef TIZEN_BUILD_TARGET
-	{KeyStr_MobileAP, IMG_MobileAP, "ug-setting-mobileap-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable,  0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Connections, NULL, uuid_MobileAP, 0, NULL},
+	{KeyStr_MobileAP, IMG_MobileAP, "ug-setting-mobileap-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable,	 0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Connections, NULL, uuid_MobileAP, 0, NULL},
 #endif
 #ifdef TIZEN_BUILD_TARGET
-	{KeyStr_MobileNetworks, IMG_Network, "setting-network-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0,  Cfg_Item_Ug_Node, NULL, KeyStr_Connections, NULL, uuid_Network, 0, NULL},
+	{KeyStr_MobileNetworks, IMG_Network, "setting-network-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0,	 Cfg_Item_Ug_Node, NULL, KeyStr_Connections, NULL, uuid_Network, 0, NULL},
 #endif
 	/*More connections */
 	{KeyStr_MoreConnections, IMG_More_Connections, "setting-moreconnections-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0,  Cfg_Item_Ug_Node, NULL, KeyStr_Connections, NULL, uuid_Network, 0, NULL},
@@ -215,7 +215,7 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 	{KeyStr_Accounts, IMG_Accounts, "setting-myaccount-efl|mode:account_list", Cfg_Item_Pos_Level0, Cfg_Item_unResetable, 0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Personal, NULL, uuid_Accounts, 0, "setting-myaccount-efl"},
 
 	/* Group: System */
-	{KeyStr_System, NULL, "move://Tab4.top", Cfg_Item_Pos_Level0, 0, 0, Cfg_Item_Title_Node, NULL, NULL, NULL, uuid_DeviceMange, 0,  NULL},
+	{KeyStr_System, NULL, "move://Tab4.top", Cfg_Item_Pos_Level0, 0, 0, Cfg_Item_Title_Node, NULL, NULL, NULL, uuid_DeviceMange, 0,	 NULL},
 	{KeyStr_LanguageInput, IMG_LanguageInput, "setting-phone-efl|viewtype:language", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_System, NULL, uuid_LanguageKeyboard, 0, "org.tizen.setting.language"},
 #if SUPPORT_STORAGE
 	{KeyStr_Storage, IMG_Storage, "setting-storage-efl|caller:setting", Cfg_Item_Pos_Level0, Cfg_Item_unResetable, 0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_System, NULL, uuid_Storage, 0, "setting-storage-efl"},
@@ -225,7 +225,7 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 	{KeyStr_AboutDevice, IMG_AboutDevice, "setting-about-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_System, NULL, uuid_AboutPhone, 0, NULL},
 
 #if 0
-	{KeyStr_Security, IMG_Security, "setting-security-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_DeviceMange, NULL, uuid_Security, 0,  NULL},
+	{KeyStr_Security, IMG_Security, "setting-security-efl", Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_DeviceMange, NULL, uuid_Security, 0,	 NULL},
 	/* Downloaded App */
 	{KeyStr_DownloadedAPPs, NULL, "move://Tab6.top", Cfg_Item_Pos_Level0, 0, 0, Cfg_Item_Title_Node, NULL, NULL, NULL, uuid_APP, 0, NULL},
 #endif
@@ -446,7 +446,7 @@ int setting_cfg_file_read(void)
 	}
 	SETTING_TRACE("sb.st_size:%d", sb.st_size);
 
-	parser = json_parser_new();  /* to be freed on exit */
+	parser = json_parser_new();	 /* to be freed on exit */
 	/* file -> parser */
 	GError *error = NULL;
 	/*gboolean ret = json_parser_load_from_file( parser, setting_cfg_get_path(), &error ); */
@@ -476,7 +476,7 @@ int setting_cfg_file_read(void)
 			SETTING_TRACE_ERROR("Error to create a new config file");
 			return FALSE;
 		}
-		/*if the failed is  caused by reading the file recursively invoking */
+		/*if the failed is	caused by reading the file recursively invoking */
 		return setting_cfg_file_read();
 	}
 
@@ -494,11 +494,11 @@ int setting_cfg_file_write(JsonNode *node)
 	GError *error = NULL;
 	JsonGenerator *generator = json_generator_new();
 	json_generator_set_root(generator, node);
-	g_object_set(generator, "pretty", TRUE, NULL);   /*write file in indent format */
+	g_object_set(generator, "pretty", TRUE, NULL);	 /*write file in indent format */
 	gboolean ret = json_generator_to_file(generator, setting_cfg_get_path(), &error);
 	g_object_unref(generator);
 
-	/* ***BEGIN***  DAC black screen SAMSUNG 2010/8/9 add
+	/* ***BEGIN***	DAC black screen SAMSUNG 2010/8/9 add
 	 *add read permission
 	 *chown -R inhouse:inhouse /home/inhouse/setting.cfg
 	 */
@@ -509,7 +509,7 @@ int setting_cfg_file_write(JsonNode *node)
 	return TRUE;
 }
 
-/*   public functions  */
+/*	 public functions  */
 EXPORT_PUBLIC
 int setting_cfg_init(void)
 {
@@ -654,7 +654,7 @@ int setting_cfg_migrate(void)
 			menu_item = json_array_get_object_element(menu, j);
 			uuid = (char *)json_object_get_string_member(menu_item, "uuid");
 			click_times =  json_object_get_int_member(menu_item, "click_times");
-			last_clicked =  json_object_get_int_member(menu_item, "last_clicked");
+			last_clicked =	json_object_get_int_member(menu_item, "last_clicked");
 			if (click_times != 0 || last_clicked != 0) {
 				_update_nodes_table_by_uuid(uuid, click_times, last_clicked);
 			}
@@ -1136,9 +1136,9 @@ EXPORT_PUBLIC Setting_Cfg_Node_T *setting_plugin_search_item_add(char *key_name,
 {
 	Setting_Cfg_Node_T *node = calloc(1, sizeof(Setting_Cfg_Node_T));
 	if (node) {
-		if (key_name) 	node->key_name = strdup(key_name);
-		if (url) 		node->ug_args = strdup(url);
-		if (icon_path) 	node->icon_path = strdup(icon_path);
+		if (key_name)	node->key_name = strdup(key_name);
+		if (url)		node->ug_args = strdup(url);
+		if (icon_path)	node->icon_path = strdup(icon_path);
 		node->pos = 0;
 		node->reset_type = 0;
 		node->click_times = 0;
@@ -1154,9 +1154,9 @@ EXPORT_PUBLIC Setting_Cfg_Node_T *setting_plugin_search_item_subindex_add(char *
 {
 	Setting_Cfg_Node_T *node = calloc(1, sizeof(Setting_Cfg_Node_T));
 	if (node) {
-		if (key_name) 	node->key_name = strdup(key_name);
-		if (url) 		node->ug_args = strdup(url);
-		if (icon_path) 	node->icon_path = strdup(icon_path);
+		if (key_name)	node->key_name = strdup(key_name);
+		if (url)		node->ug_args = strdup(url);
+		if (icon_path)	node->icon_path = strdup(icon_path);
 		node->pos = 0;
 		node->reset_type = 0;
 		node->click_times = 0;

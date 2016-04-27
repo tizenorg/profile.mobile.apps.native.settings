@@ -96,8 +96,8 @@
 	"Tip : improve face matching by having your face capture in different "\
 	"conditions."
 
-#define Speak_Now_Str 					"Speak now"
-#define Keystr_FDN 						"IDS_ST_BODY_FIXED_DIALLING_MODE"
+#define Speak_Now_Str					"Speak now"
+#define Keystr_FDN						"IDS_ST_BODY_FIXED_DIALLING_MODE"
 
 #define SEC_FIREWALL_DIR "/home/app/.firewall"
 
@@ -129,12 +129,12 @@ struct _BlockList_Info {
 #endif
 
 #if SUPPORT_ENCRYPTION
-#define Keystr_DeviceEncryption 			"IDS_ASEML_BODY_DEVICE_ENCRYPTION"
+#define Keystr_DeviceEncryption				"IDS_ASEML_BODY_DEVICE_ENCRYPTION"
 #define keystr_DeviceDecryption			"Device decryption"
 #define DEVICE_ENCRYPTION_DESC		"IDS_ST_BODY_PASSWORD_REQUIRED_TO_DECRYPT_DEVICE_EACH_TIME_YOU_TURN_IT_ON"
 #define DEVICE_DECRYPTION_DESC		"IDS_ST_BODY_DEVICE_ENCRYPTED"
 
-#define Keystr_ConfirmEncryption 			"IDS_ST_HEADER_CONFIRM_ENCRYPTION"
+#define Keystr_ConfirmEncryption			"IDS_ST_HEADER_CONFIRM_ENCRYPTION"
 #define Keystr_ConfirmDecryption			"IDS_ST_BODY_CONFIRM_DECRYPTION"
 #define DEVICE_ENCRYPTION_GUIDE_01	"IDS_ST_BODY_DEVICE_ENCRYPTION_HELP_MSG"
 #define DEVICE_ENCRYPTION_GUIDE_03	"IDS_ST_BODY_SET_AN_UNLOCK_PASSWORD_OF_AT_LEAST_6_CHARACTERS_CONTAINING_AT_LEAST_1_NUMBER"
@@ -154,8 +154,8 @@ struct _BlockList_Info {
 #define Keystr_DecryptDevice				"IDS_ST_BODY_DECRYPT_DEVICE"
 #endif
 
-#define USELESS_SIM_CARD 				"Not useful SIM card"
-#define KeyStr_Security_Waiting_Sim 		"IDS_ST_BODY_WAITING_FOR_RESPONSE_FROM_SIM_CARD_ING"
+#define USELESS_SIM_CARD				"Not useful SIM card"
+#define KeyStr_Security_Waiting_Sim			"IDS_ST_BODY_WAITING_FOR_RESPONSE_FROM_SIM_CARD_ING"
 #define Keystr_ScreenLockType			"IDS_ST_BODY_SCREEN_LOCK_TYPE"
 #define Keystr_LockScreenOptions			"IDS_ST_BODY_LOCK_SCREEN_OPTIONS"
 #define Keystr_Swipe						"IDS_ST_MBODY_SWIPE"
@@ -164,7 +164,7 @@ struct _BlockList_Info {
 #if SUPPORT_SECURITY_FIREWALL
 #define Keystr_Firewall				"IDS_ST_BODY_FIREWALL"
 #define Keystr_BlockIP				"IDS_ST_BODY_BLOCK_IP"
-#define Keystr_BlockedIPList 			"IDS_ST_BODY_BLOCKED_IP_LIST"
+#define Keystr_BlockedIPList			"IDS_ST_BODY_BLOCKED_IP_LIST"
 #define Keystr_BlockedIPDesc			"IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_IP_ADDRESS_MSG"
 #define Keystr_BlockURL				"IDS_ST_BODY_BLOCK_URL"
 #define Keystr_BlockedURLList		"IDS_ST_BODY_BLOCKED_URL_LIST"
@@ -188,10 +188,10 @@ struct _BlockList_Info {
 #define KeyStr_URL_removed			"IDS_ST_POP_URL_REMOVED"
 #define KeyStr_URLs_removed		"IDS_ST_POP_URLS_REMOVED"
 #endif
-#define Keystr_Security_Engine      "IDS_ST_BODY_SECURITY_ENGINE"
+#define Keystr_Security_Engine		"IDS_ST_BODY_SECURITY_ENGINE"
 #define Keystr_Security_Engine_Default "IDS_ST_BODY_ANTIVIRUS_SOFTWARE_ABB"
 #define Keystr_Security_Engine_Type_None "IDS_ST_BODY_NONE"
-#define Keystr_Security_Engine_Desc      "IDS_ST_BODY_PROTECT_YOUR_DEVICE_FROM_HARMFUL_VIRUSES_AND_MALWARE"
+#define Keystr_Security_Engine_Desc		 "IDS_ST_BODY_PROTECT_YOUR_DEVICE_FROM_HARMFUL_VIRUSES_AND_MALWARE"
 #define Keystr_Firewall_dimm_desc "IDS_IM_POP_THIS_FEATURE_IS_NOT_AVAILABLE_WHILE_FLIGHT_MODE_IS_ON"
 
 typedef struct _SettingSecurityUG SettingSecurityUG;
@@ -325,7 +325,7 @@ struct _SettingSecurityUG {
 	Evas_Object *pop_auto_update_off;
 
 #if SUPPORT_SECURITY_FIREWALL
-	Elm_Object_Item 	*navi_it;
+	Elm_Object_Item		*navi_it;
 	Evas_Object *view_layout;
 	Evas_Object *scroller;
 	Evas_Object *content;

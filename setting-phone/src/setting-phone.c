@@ -545,7 +545,7 @@ static void *setting_phone_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	/* set launguage */
 	bindtextdomain(SETTING_PACKAGE, SETTING_LOCALEDIR);
 	FREE(pa_path);
-	/* ---------------------------------------------------------     */
+	/* ---------------------------------------------------------	 */
 	int value = 0;
 	int err;
 	int ret = setting_get_int_slp_key(INT_SLP_SETTING_SIM_SLOT, &value, &err);
@@ -590,7 +590,7 @@ static void *setting_phone_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 							   &(phoneUG->itc_bg_1icon));
 	phoneUG->pattern_generator = NULL;
 	phoneUG->prev_locale = NULL;
-	/*  creating a view. */
+	/*	creating a view. */
 	phoneUG->bundle_data = service;
 	phoneUG->view_to_load = __get_phone_view_to_load(service);
 	setting_retvm_if(NULL == phoneUG->view_to_load, NULL,
@@ -639,7 +639,7 @@ static void setting_phone_ug_on_destroy(ui_gadget_h ug, app_control_h service,
 	if (phoneUG->handle && tel_deinit(phoneUG->handle) != TAPI_API_SUCCESS) {
 		SETTING_TRACE_ERROR("tel_deinit failed");
 	}
-	/*  called when this shared gadget is terminated. similar with app_exit */
+	/*	called when this shared gadget is terminated. similar with app_exit */
 	if (&setting_view_phone_language_region == phoneUG->view_to_load) {
 		setting_view_destroy(&setting_view_phone_display_language,
 							 phoneUG);
@@ -807,7 +807,7 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv, 
 	int i;
 	int size = sizeof(s_cfg_node_array) / sizeof(s_cfg_node_array[0]);
 	for (i = 0; i < size; i++) {
-		Setting_Cfg_Node_T *node = setting_plugin_search_item_subindex_add(s_cfg_node_array[i].key_name, s_cfg_node_array[i].ug_args, IMG_LanguageInput, s_cfg_node_array[i].item_type,  s_cfg_node_array[i].data, "Language and Region");
+		Setting_Cfg_Node_T *node = setting_plugin_search_item_subindex_add(s_cfg_node_array[i].key_name, s_cfg_node_array[i].ug_args, IMG_LanguageInput, s_cfg_node_array[i].item_type,	 s_cfg_node_array[i].data, "Language and Region");
 		*pplist = eina_list_append(*pplist, node);
 	}
 	return 0;

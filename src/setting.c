@@ -69,7 +69,7 @@ void termination_handler(int signum)
 
 #if LOW_BATTERY_DO_NOTHING
 
-/*  in case of low battery, don't terminate itself.*/
+/*	in case of low battery, don't terminate itself.*/
 
 /**
 * The event process when battery becomes low.
@@ -314,7 +314,7 @@ static bool setting_main_app_create(void *data)
 	ad->current_rotation = elm_win_rotation_get(ad->win_main);
 	SETTING_TRACE_DEBUG("ad->current_rotation:%d", ad->current_rotation);
 	if (elm_win_wm_rotation_supported_get(ad->win_main)) {
-		int rots[4] = { 0, 90, 180, 270 };  /* rotation value that app may want */
+		int rots[4] = { 0, 90, 180, 270 };	/* rotation value that app may want */
 		elm_win_wm_rotation_available_rotations_set(ad->win_main, rots, 4);
 	}
 	evas_object_smart_callback_add(ad->win_main, "wm,rotation,changed", _rot_changed_cb, ad);

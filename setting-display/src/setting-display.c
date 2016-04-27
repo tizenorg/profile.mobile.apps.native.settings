@@ -181,7 +181,7 @@ static void *setting_display_ug_on_create(ui_gadget_h ug,
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(displayUG->itc_1text));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(displayUG->itc_2text_3));
 
-	/*  creating a view. */
+	/*	creating a view. */
 	displayUG->view_to_load = __get_display_view_to_load(displayUG, service);
 	setting_retvm_if(NULL == displayUG->view_to_load, NULL,
 					 "NULL == displayUG->view_to_load");
@@ -227,7 +227,7 @@ static void setting_display_ug_on_destroy(ui_gadget_h ug, app_control_h service,
 		displayUG->help_popup = NULL;
 	}
 
-	/*  called when this shared gadget is terminated. similar with app_exit */
+	/*	called when this shared gadget is terminated. similar with app_exit */
 	if (&setting_view_display_main == displayUG->view_to_load) {
 		setting_view_destroy(&setting_view_display_brightness, displayUG);
 		setting_view_destroy(&setting_view_display_main, displayUG);

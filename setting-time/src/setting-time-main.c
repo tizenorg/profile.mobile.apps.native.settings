@@ -48,7 +48,7 @@
 #define PROGRESS_POPUP_SHOW 0
 #define DEF_BUF_SIZE 256
 
-/*  ICU utilities*/
+/*	ICU utilities*/
 static UChar *uastrcpy(const char *chars);
 static void ICU_set_timezone(const char *timezone);
 static void get_gmt_offset(char *str_buf, int size);
@@ -191,7 +191,7 @@ bool setting_update_timezone(SettingTimeUG *ad)
 	char gmt_offset[GMT_BUF_SIZE] = {0, };
 	int ret = 0;
 
-	/*  get time zone */
+	/*	get time zone */
 	displayTimezone = get_timezone_displayname();
 	get_gmt_offset(gmt_offset, GMT_BUF_SIZE);
 
@@ -520,7 +520,7 @@ static void setting_time_main_datefield_set_cb(void *data, Evas_Object *object, 
 	_tm.tm_isdst = -1;
 	_tm.tm_sec = 0;
 
-	/*  local time  -> gmtime */
+	/*	local time	-> gmtime */
 	time_t the_time = mktime(&_tm);	/* represent local time */
 
 	/* invoke API to change time */
@@ -586,7 +586,7 @@ static int setting_time_main_create(void *cb)
 	app_control_get_extra_data(service, "caller", &caller);
 	app_control_get_extra_data(service, "title", &title);
 
-	Evas_Object *scroller;	/*  scroller is a genlist */
+	Evas_Object *scroller;	/*	scroller is a genlist */
 
 	ad->caller = caller;
 
@@ -665,7 +665,7 @@ static int setting_time_main_create(void *cb)
 		FREE(tzpath);
 	}
 
-	/*  UI automatic */
+	/*	UI automatic */
 	/*if (!isEmulBin()) { */
 	ad->data_auto =
 		setting_create_Gendial_field_def(scroller, &(ad->itc_1text_1icon),
@@ -683,7 +683,6 @@ static int setting_time_main_create(void *cb)
 	/*ADD_GL_HELP(scroller,SETTING_TIME_AUTO_UPDATE_DESC); */
 	/*} */
 
-
 	/* create DATE_AND_TIME */
 	ad->data_time =
 		setting_create_Gendial_field_def(scroller, &(ad->itc_layout),
@@ -693,17 +692,13 @@ static int setting_time_main_create(void *cb)
 										 DATE_TIME_STR_DATE_AND_TIME,
 										 NULL,
 										 NULL);
+
 	if (ad->data_time) {
 		ad->data_time->userdata = ad;
 		ad->data_time->nf = ad->navi_bar;
 		ad->data_time->isItemDisableFlag = auto_flag;
 		ad->data_time->activated_cb = setting_time_main_datefield_set_cb;
 		elm_genlist_item_select_mode_set(ad->data_time->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-
-		Elm_Object_Item *item = elm_genlist_item_append(scroller, &(itc_bottom_line), NULL, NULL,
-														ELM_GENLIST_ITEM_NONE, NULL, NULL);
-		elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-
 	} else {
 		SETTING_TRACE_ERROR("ad->data_time is NULL");
 	}
@@ -741,7 +736,7 @@ static int setting_time_main_create(void *cb)
 	}
 	FREE(displayTimezone);
 
-	/*  UI create time zone */
+	/*	UI create time zone */
 	ad->data_tz =
 		setting_create_Gendial_field_def(scroller, &(ad->itc_2text_2),
 										 setting_time_main_mouse_up_Gendial_list_cb,
@@ -754,7 +749,7 @@ static int setting_time_main_create(void *cb)
 		SETTING_TRACE_ERROR("ad->data_tz is NULL");
 	}
 
-	/*  UI create "Time format" */
+	/*	UI create "Time format" */
 	value = VCONFKEY_TIME_FORMAT_12;
 	setting_get_int_slp_key(INT_SLP_SETTING_REGIONFORMAT_TIME1224, &value, &err);
 	ad->data_time_fmt = setting_create_Gendial_field_def(scroller,
@@ -805,9 +800,9 @@ static int setting_time_main_create(void *cb)
 	setting_view_time_main.is_create = 1;
 	vconf_notify_key_changed(VCONFKEY_SYSTEM_TIME_CHANGED, time_changed_callback, (void *)ad);
 
-	/*  register vconf key to get event callback for converting 12/24H */
+	/*	register vconf key to get event callback for converting 12/24H */
 	vconf_notify_key_changed(VCONFKEY_REGIONFORMAT_TIME1224, setting_time_main_int_vconf_change_cb, ad);
-	/*  register vconf key to get event callback for date format */
+	/*	register vconf key to get event callback for date format */
 	vconf_notify_key_changed(VCONFKEY_SETAPPL_DATE_FORMAT_INT, setting_time_main_int_vconf_change_cb, ad);
 
 	vconf_notify_key_changed(VCONFKEY_TELEPHONY_NITZ_GMT, __sim_time_info_chg_cb, ad);
@@ -1209,7 +1204,7 @@ setting_time_main_click_softkey_caller_exist_left_cb(void *data,
 
 	SettingTimeUG *ad = (SettingTimeUG *) data;
 
-	/*  Create Bundle and send message */
+	/*	Create Bundle and send message */
 	app_control_h svc;
 	if (app_control_create(&svc))
 		return;
@@ -1234,7 +1229,7 @@ setting_time_main_click_softkey_caller_exist_right_cb(void *data,
 
 	SettingTimeUG *ad = (SettingTimeUG *) data;
 
-	/*  Create Bundle and send message */
+	/*	Create Bundle and send message */
 	app_control_h svc;
 	if (app_control_create(&svc))
 		return;
@@ -1289,7 +1284,7 @@ setting_time_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 	Setting_GenGroupItem_Data *list_item =
 		(Setting_GenGroupItem_Data *) data;
 	ad = list_item->userdata;
-	list_item->chk_status = elm_check_state_get(obj);	/*  for genlist update status */
+	list_item->chk_status = elm_check_state_get(obj);	/*	for genlist update status */
 
 	int err;
 	if (obj == ad->data_auto->eo_check) {
@@ -1432,8 +1427,8 @@ void setting_time_main_btn_update_ok_cb(void *cb)
 
 	deviced_request_reboot();
 
-	/*  We'd better check return value from deviced_request_reboot() function. */
-	/*  It will return 0 on success or -1 if failed. */
+	/*	We'd better check return value from deviced_request_reboot() function. */
+	/*	It will return 0 on success or -1 if failed. */
 }
 
 
@@ -1490,7 +1485,7 @@ static void ICU_set_timezone(const char *timezone)
 static void get_gmt_offset(char *str_buf, int size)
 {
 	/* timezone string +/-<n> ex. +9, -1 */
-	time_t t = time(0); 	/* get unix time. sec. */
+	time_t t = time(0);		/* get unix time. sec. */
 
 	struct tm *pdata, data;
 	pdata = localtime_r(&t, &data);		/* save time as structure. */
@@ -1546,7 +1541,7 @@ static char *get_city_name_result()
 static bool get_city_name(char *tzname)
 {
 	sqlite3 *pSQLite3 = NULL;
-	char    *szErrMsg = NULL;
+	char	*szErrMsg = NULL;
 
 	int rst = sqlite3_open(_TZ_SYS_DB"/.worldclock.db", &pSQLite3);
 	if (rst) {

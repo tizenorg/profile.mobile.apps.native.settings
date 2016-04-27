@@ -22,9 +22,9 @@
 #include <app_preference.h>
 #include <efl_extension.h>
 
-#define MOBILE_DATA_WITHOUT_WIFI_STR 			"IDS_ST_BODY_MOBILE_DATA_WILL_BE_USED_IF_YOU_DOWNLOAD_OR_UPLOAD_DATA_WITHOUT_WI_FI_CONNECTION"
-#define UMTS_MODE_WORK_OUTSIDE_STR 					"IDS_ST_BODY_UMTS_MODE_ONLY_WORKS_INSIDE_3G_COVERAGE_AREA"
-#define BAND_OPERATE_OUTSIDE_USA_CANADA_STR	  	"IDS_ST_BODY_THIS_BAND_MAY_NOT_WORK_OUTSIDE_THE_USA_AND_CANADA"
+#define MOBILE_DATA_WITHOUT_WIFI_STR			"IDS_ST_BODY_MOBILE_DATA_WILL_BE_USED_IF_YOU_DOWNLOAD_OR_UPLOAD_DATA_WITHOUT_WI_FI_CONNECTION"
+#define UMTS_MODE_WORK_OUTSIDE_STR					"IDS_ST_BODY_UMTS_MODE_ONLY_WORKS_INSIDE_3G_COVERAGE_AREA"
+#define BAND_OPERATE_OUTSIDE_USA_CANADA_STR		"IDS_ST_BODY_THIS_BAND_MAY_NOT_WORK_OUTSIDE_THE_USA_AND_CANADA"
 
 #define __switch_radio_state(cur_data, dst_state, dst_key) do { \
 		if (cur_data) {\
@@ -380,7 +380,7 @@ static void __net_restriction_mode_vconf_change_cb(keynode_t *key, void *data)
  */
 static char *_get_network_mode_sub_desc()
 {
-	/*  ***BEGIN***  Fixed the problem of word twinkle  SAMSUNG 2010/7/21 add */
+	/*	***BEGIN***	 Fixed the problem of word twinkle	SAMSUNG 2010/7/21 add */
 	/* hide NETWORK MODE in Emulator*/
 	char *sub_des = NULL;
 	int value = TAPI_NETWORK_MODE_AUTO;
@@ -812,8 +812,8 @@ static int setting_network_main_create(void *cb)
 		SETTING_TRACE_ERROR("ad->data_net_modeis NULL");
 	}
 
-	/*  Don't need to check flight mode,if flight mode is on, thw whole Network function will be disable*/
-	/*  ***BEGIN***  Fixed the problem of word twinkle  SAMSUNG 2010/7/21 add */
+	/*	Don't need to check flight mode,if flight mode is on, thw whole Network function will be disable*/
+	/*	***BEGIN***	 Fixed the problem of word twinkle	SAMSUNG 2010/7/21 add */
 	char sel_network_desc[MAX_COMMON_BUFFER_LEN] = {0,};
 	_get_network_selected_desc(ad, sel_network_desc, MAX_COMMON_BUFFER_LEN);
 	ad->data_sel_net = setting_create_Gendial_field_def(scroller,
@@ -1193,7 +1193,7 @@ setting_network_main_item_Gendial_mouse_up_cb(void *data, Evas_Object *obj, void
 		setting_update_gl_item_chk_status(list_item, !(list_item->chk_status));
 
 		if (list_item->chk_status) {
-			ad->popup =  setting_create_popup2(ad, ad->win_get,
+			ad->popup =	 setting_create_popup2(ad, ad->win_get,
 											   "IDS_ST_HEADER_ENABLE_DATA_ROAMING",
 											   "IDS_ST_POP_ROAMING_WILL_INCUR_EXTRA_CHARGES_CONTINUE_Q",
 											   __setting_network_data_roaming_resp_cb,
@@ -1221,7 +1221,7 @@ setting_network_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 	Setting_GenGroupItem_Data *list_item =
 		(Setting_GenGroupItem_Data *) data;
 	ad = list_item->userdata;
-	list_item->chk_status = elm_check_state_get(obj);	/*  for genlist update status */
+	list_item->chk_status = elm_check_state_get(obj);	/*	for genlist update status */
 
 	int err;
 
@@ -1284,7 +1284,7 @@ setting_network_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 		SETTING_TRACE(" TOUCH HANDLING DATA ROAMING");
 		if (list_item->chk_status) {
 			SETTING_TRACE(" TOUCH HANDLING DATA ROAMING - set true");
-			ad->popup =  setting_create_popup2(ad, ad->win_get,
+			ad->popup =	 setting_create_popup2(ad, ad->win_get,
 											   "IDS_ST_HEADER_ENABLE_DATA_ROAMING",
 											   "IDS_ST_POP_ROAMING_WILL_INCUR_EXTRA_CHARGES_CONTINUE_Q",
 											   __setting_network_data_roaming_resp_cb,
@@ -1315,7 +1315,7 @@ static void setting_network_use_packet_resp_cb(void *data, Evas_Object *obj,
 	retm_if(data == NULL, "Data parameter is NULL");
 
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-	int err = 0;		/* error check   */
+	int err = 0;		/* error check	 */
 	int response_type = btn_type(obj);
 	int value = 0;
 

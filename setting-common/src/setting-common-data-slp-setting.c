@@ -39,7 +39,7 @@
 
 #define SETTING_DATA_DIR_PATH _TZ_SYS_RW_APP"/org.tizen.setting/data/"
 #define SETTING_CFG_JSON_FILE_PATH	SETTING_DATA_DIR_PATH"exported.json"
-#define EXPORT_FILE 		SETTING_DATA_DIR_PATH"setting_export.xml"
+#define EXPORT_FILE			SETTING_DATA_DIR_PATH"setting_export.xml"
 
 
 typedef enum {
@@ -492,7 +492,7 @@ void setting_import_json(status_handler_fp fp, void *data)
 	if (json_object_has_member(obj1, "value")) {
 		JsonNode *node = json_object_get_member(obj1, "value");
 		JsonObject *object2 = json_node_get_object(node);
-		json_object_foreach_member(object2, __func_cb, NULL); 	/* with g_sortedarr */
+		json_object_foreach_member(object2, __func_cb, NULL);	/* with g_sortedarr */
 	}
 	g_object_unref(parser);
 
@@ -594,7 +594,7 @@ char *setting_export_json(status_handler_fp fp, void *data)
 	gsize len;
 	char *buf = (char *)json_generator_to_data(generator, &len);
 
-	g_object_set(generator, "pretty", TRUE, NULL);   /*write file in indent format */
+	g_object_set(generator, "pretty", TRUE, NULL);	 /*write file in indent format */
 	gboolean ret = json_generator_to_file(generator, SETTING_CFG_JSON_FILE_PATH, &error);
 	g_object_unref(generator);
 
@@ -685,7 +685,7 @@ int get_vconf(VconfNode node, VconfNode *result)
 			}
 
 			if (setting_read_password(md_result) == 0) {
-				safeCopyStr(node.value.c, md_result, SHA256_DIGEST_LENGTH); /*  un-safe */
+				safeCopyStr(node.value.c, md_result, SHA256_DIGEST_LENGTH); /*	un-safe */
 
 				result->type = eSTRING;
 				result->value.c = node.value.c;
@@ -770,7 +770,7 @@ int setting_set_int_slp_key(setting_int_slp_list key, int value, int *err)
 	return ret;
 }
 
-/* return -1: fail  cannot use err to check the result, return value instead*/
+/* return -1: fail	cannot use err to check the result, return value instead*/
 EXPORT_PUBLIC
 int setting_get_int_slp_key(setting_int_slp_list key, int *value, int *err)
 {
@@ -842,22 +842,22 @@ int setting_set_string_slp_key(setting_str_slp_list key, char *value, int *err)
 
 /** @todo don't use i18n string directly. */
 static const setting_lang_entry lang_table[] = {
-	{  	"auto", 		"Automatic"},
-	{ 	"ko_KR.UTF-8", 	"한국어"},
-	{ 	"en_US.UTF-8", 	"English"},
-	{  	"zh_CN.UTF-8", 	"简体中文"},
-	{ 	"zh_HK.UTF-8", 	"繁體中文(香港)"},
-	{  	"zh_TW.UTF-8",	"繁體中文(台灣)"},
-	{  	"de_DE.UTF-8",	"Deutsch"},
-	{  	"nl_NL.UTF-8",	"Nederlands"},
-	{  	"es_ES.UTF-8",	"Español"},
-	{  	"pt_PT.UTF-8",	"Português"},
-	{  	"el_GR.UTF-8", 	"Eλληνικά"},
-	{  	"it_IT.UTF-8", 	"Italiano"},
-	{  	"fr_FR.UTF-8", 	"Français"},
-	{  	"tr_TR.UTF-8",	"Türkçe"},
-	{  	"ja_JP.UTF-8", 	"にほんご"},
-	{ 	"ru_RU.UTF-8",	"Россию"},
+	{	"auto",			"Automatic"},
+	{	"ko_KR.UTF-8",	"한국어"},
+	{	"en_US.UTF-8",	"English"},
+	{	"zh_CN.UTF-8",	"简体中文"},
+	{	"zh_HK.UTF-8",	"繁體中文(香港)"},
+	{	"zh_TW.UTF-8",	"繁體中文(台灣)"},
+	{	"de_DE.UTF-8",	"Deutsch"},
+	{	"nl_NL.UTF-8",	"Nederlands"},
+	{	"es_ES.UTF-8",	"Español"},
+	{	"pt_PT.UTF-8",	"Português"},
+	{	"el_GR.UTF-8",	"Eλληνικά"},
+	{	"it_IT.UTF-8",	"Italiano"},
+	{	"fr_FR.UTF-8",	"Français"},
+	{	"tr_TR.UTF-8",	"Türkçe"},
+	{	"ja_JP.UTF-8",	"にほんご"},
+	{	"ru_RU.UTF-8",	"Россию"},
 };
 
 setting_lang_entry *setting_get_language_table()
@@ -923,7 +923,7 @@ int _langlist_destroy()
 		}
 		li = eina_list_next(li);
 	}
-	s_langlist = eina_list_free(s_langlist); 		/* returns NULL */
+	s_langlist = eina_list_free(s_langlist);		/* returns NULL */
 
 	return 0;
 }
@@ -1032,8 +1032,8 @@ int setting_store_init_password(char *in)
 	SETTING_TRACE("]\n");
 #endif
 
-	/*  create a file or store a data */
-	/*  store_password */
+	/*	create a file or store a data */
+	/*	store_password */
 	FILE *fp = NULL;
 	int ret_fw = 0;
 	fp = fopen(PWD_FILE, "w+");

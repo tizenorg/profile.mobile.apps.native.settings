@@ -33,29 +33,29 @@
 
 #define VOLUME_APP_NAME "org.tizen.setting.volume"
 #define MAX_SAFETY_VOLUME_LEVEL 10
-#define SETTING_PROFILE_SOUND_ALERTS_PATH   _TZ_SYS_SHARE"/settings/Alerts"
-#define SETTING_PROFILE_SOUND_RINGTONES_PATH    _TZ_SYS_SHARE"/settings/Ringtones"
-#define SETTING_PROFILE_MMC_PATH        _TZ_SYS_MEDIA"/sdcard"
-#define SETTING_DEFAULT_MSG_TONE        _TZ_SYS_SHARE"/settings/Alerts/Whistle.ogg"
-#define SETTING_DEFAULT_MEDIA_TONE      _TZ_SYS_SHARE"/settings/Previews/Media_preview_Over_the_horizon.ogg"
+#define SETTING_PROFILE_SOUND_ALERTS_PATH	_TZ_SYS_SHARE"/settings/Alerts"
+#define SETTING_PROFILE_SOUND_RINGTONES_PATH	_TZ_SYS_SHARE"/settings/Ringtones"
+#define SETTING_PROFILE_MMC_PATH		_TZ_SYS_MEDIA"/sdcard"
+#define SETTING_DEFAULT_MSG_TONE		_TZ_SYS_SHARE"/settings/Alerts/Whistle.ogg"
+#define SETTING_DEFAULT_MEDIA_TONE		_TZ_SYS_SHARE"/settings/Previews/Media_preview_Over_the_horizon.ogg"
 #define SUPPORT_PLAYER_ASYNC 1
 
 /*Call ringtone:3 icon status */
-#define ICON_CALL_VIB       SETTING_ICON_PATH_CFG"B04_slider_icon_vibrate.png"
-#define ICON_CALL_NORMAL    SETTING_ICON_PATH_CFG"B04_slider_icon_ring.png"
-#define ICON_CALL_MUTE      SETTING_ICON_PATH_CFG"B04_volume_icon_mute.png"
+#define ICON_CALL_VIB		SETTING_ICON_PATH_CFG"B04_slider_icon_vibrate.png"
+#define ICON_CALL_NORMAL	SETTING_ICON_PATH_CFG"B04_slider_icon_ring.png"
+#define ICON_CALL_MUTE		SETTING_ICON_PATH_CFG"B04_volume_icon_mute.png"
 
 /*Notification: 2 icon status */
-#define ICON_NOTI_MUTE      SETTING_ICON_PATH_CFG"B04_slider_icon_notification_mute.png"
-#define ICON_NOTI_NORMAL    SETTING_ICON_PATH_CFG"B04_slider_icon_notification.png"
+#define ICON_NOTI_MUTE		SETTING_ICON_PATH_CFG"B04_slider_icon_notification_mute.png"
+#define ICON_NOTI_NORMAL	SETTING_ICON_PATH_CFG"B04_slider_icon_notification.png"
 
 /*Media: 2 icon status */
-#define ICON_MEDIA_MUTE     SETTING_ICON_PATH_CFG"B04_volume_icon_mute.png"
-#define ICON_MEDIA_NORMAL   SETTING_ICON_PATH_CFG"00_volume_icon.png"
+#define ICON_MEDIA_MUTE		SETTING_ICON_PATH_CFG"B04_volume_icon_mute.png"
+#define ICON_MEDIA_NORMAL	SETTING_ICON_PATH_CFG"00_volume_icon.png"
 
 /*System:2 icon status */
-#define ICON_SYSTEM_MUTE    SETTING_ICON_PATH_CFG"B04_slider_icon_system_mute.png"
-#define ICON_SYSTEM_NORMAL  SETTING_ICON_PATH_CFG"B04_slider_icon_system.png"
+#define ICON_SYSTEM_MUTE	SETTING_ICON_PATH_CFG"B04_slider_icon_system_mute.png"
+#define ICON_SYSTEM_NORMAL	SETTING_ICON_PATH_CFG"B04_slider_icon_system.png"
 
 
 typedef enum {

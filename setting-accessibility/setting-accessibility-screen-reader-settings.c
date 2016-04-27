@@ -30,41 +30,41 @@
 typedef struct {
 	char *label;
 	char *vconf_key;
-	int  *status;
+	int	 *status;
 } vconf_check_data_s;
 
 
 
 vconf_check_data_s vconf_check_data[] = {
 	{
-		.label     = DEVOPTION_STR_ACCESSIBILITY_INDICATOR_TIME,
+		.label	   = DEVOPTION_STR_ACCESSIBILITY_INDICATOR_TIME,
 		.vconf_key = VCONFKEY_SETAPPL_ACCESSIBILITY_TTS_INDICATOR_INFORMATION_TIME,
-		.status    = NULL
+		.status	   = NULL
 	},
 	{
-		.label     = DEVOPTION_STR_ACCESSIBILITY_INDICATOR_BATTERY,
+		.label	   = DEVOPTION_STR_ACCESSIBILITY_INDICATOR_BATTERY,
 		.vconf_key = VCONFKEY_SETAPPL_ACCESSIBILITY_TTS_INDICATOR_INFORMATION_BATTERY,
-		.status    = NULL
+		.status	   = NULL
 	},
 	{
-		.label     = DEVOPTION_STR_ACCESSIBILITY_INDICATOR_BLUETOOTH,
+		.label	   = DEVOPTION_STR_ACCESSIBILITY_INDICATOR_BLUETOOTH,
 		.vconf_key = VCONFKEY_SETAPPL_ACCESSIBILITY_TTS_INDICATOR_INFORMATION_BLUETOOTH,
-		.status    = NULL
+		.status	   = NULL
 	},
 	{
-		.label     = DEVOPTION_STR_ACCESSIBILITY_INDICATOR_SIGNAL_STRENGTH,
+		.label	   = DEVOPTION_STR_ACCESSIBILITY_INDICATOR_SIGNAL_STRENGTH,
 		.vconf_key = VCONFKEY_SETAPPL_ACCESSIBILITY_TTS_INDICATOR_INFORMATION_SIGNAL_STRENGHT,
-		.status    = NULL
+		.status	   = NULL
 	},
 	{
-		.label     = DEVOPTION_STR_ACCESSIBILITY_INDICATOR_DATE,
+		.label	   = DEVOPTION_STR_ACCESSIBILITY_INDICATOR_DATE,
 		.vconf_key = VCONFKEY_SETAPPL_ACCESSIBILITY_TTS_INDICATOR_INFORMATION_DATE,
-		.status    = NULL
+		.status	   = NULL
 	},
 	{
-		.label     = DEVOPTION_STR_ACCESSIBILITY_INDICATOR_UNREAD_NOTIFICATIONS,
+		.label	   = DEVOPTION_STR_ACCESSIBILITY_INDICATOR_UNREAD_NOTIFICATIONS,
 		.vconf_key = VCONFKEY_SETAPPL_ACCESSIBILITY_TTS_INDICATOR_INFORMATION_MISSED_EVENTS,
-		.status    = NULL
+		.status	   = NULL
 	}
 };
 static Eina_List *items = NULL;
@@ -117,7 +117,7 @@ static void _vconf_key_foreach_check_set(void)
 	char *key = NULL;
 
 	for (i = 0; i < size; ++i) {
-		key    = vconf_check_data[i].vconf_key;
+		key	   = vconf_check_data[i].vconf_key;
 		status = *(vconf_check_data[i].status);
 		_vconf_key_value_set(key, status);
 	}

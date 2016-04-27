@@ -142,7 +142,7 @@ void __alternate_flight_mode(Evas_Object *check, void *data)
 {
 	SETTING_TRACE_BEGIN;
 	int ret;
-	Eina_Bool status =  elm_check_state_get(check);
+	Eina_Bool status =	elm_check_state_get(check);
 	SETTING_TRACE("flight mode status : %d", status);
 	/*SettingFlightModeUG *ad = (SettingFlightModeUG *) data; */
 	ret_if(!data);
@@ -288,7 +288,7 @@ static int setting_flightmode_main_destroy(void *cb)
 		if (tapi_ret != TAPI_API_SUCCESS) {
 			SETTING_TRACE_DEBUG("*** [ERR] tel_deinit. [%d] ***", tapi_ret);
 		} else {
-			SETTING_TRACE("***  tel_deinit OK ");
+			SETTING_TRACE("***	tel_deinit OK ");
 		}
 		ad->handle = NULL;
 	}
@@ -365,7 +365,7 @@ static void setting_flightmode_main_chk_btn_cb(void *data, Evas_Object *obj,
 		(Setting_GenGroupItem_Data *) data;
 	SettingFlightModeUG *ad = list_item->userdata;
 	retm_if(ad == NULL, "ad parameter is NULL");
-	list_item->chk_status = elm_check_state_get(obj);/*  for genlist update status */
+	list_item->chk_status = elm_check_state_get(obj);/*	 for genlist update status */
 
 	if (list_item->chk_status) {
 		list_item->chk_status = EINA_TRUE;

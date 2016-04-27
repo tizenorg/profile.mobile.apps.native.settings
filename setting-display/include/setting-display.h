@@ -46,7 +46,7 @@
 #define LAUNCH_EFFECT_STR "IDS_ST_BODY_APP_OPENING_EFFECT"
 #define LAUNCH_IMAGE_STR  "IDS_ST_BODY_APP_OPENING_IMAGE"
 
-#define LAUNCH_BATTERY_DESC  "IDS_ST_BODY_SHOWS_BATTERY_PERCENTAGE_ON_INDICATOR" /*"Increase the screen's sensitivity so you can touch it while wearing gloves" */
+#define LAUNCH_BATTERY_DESC	 "IDS_ST_BODY_SHOWS_BATTERY_PERCENTAGE_ON_INDICATOR" /*"Increase the screen's sensitivity so you can touch it while wearing gloves" */
 
 #define SETTING_DISPLAY_TIME_15_SEC_STR "IDS_ST_BODY_15SEC"
 #define SETTING_DISPLAY_TIME_30_SEC_STR "IDS_ST_BODY_30SEC"
@@ -111,7 +111,7 @@ struct _SettingDisplayUG {
 
 	Evas_Object *ly_main;	/**< link to src/setting-display-main.c */
 
-	Evas_Object *navi_bar;	/*  for navigation effect */
+	Evas_Object *navi_bar;	/*	for navigation effect */
 	Elm_Object_Item *nf_it;
 	Ecore_Timer *event_freeze_timer;
 

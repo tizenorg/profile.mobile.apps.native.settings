@@ -88,21 +88,21 @@ typedef enum _cfg_error_type {
  * 2, 3,
  */
 typedef enum _Cfg_Item_Type {
-	Cfg_Item_Node_Error = 0,		/** Error                                     - no action */
-	Cfg_Item_Ug_Node = 1,			/** general UG                                - don't create Grid */
-	Cfg_Item_Ui_Node = 2,			/** no UG, no app launching, just menu name   - create Grid */
-	Cfg_Item_Title_Node = 3,		/** view name                                 - create Grid */
+	Cfg_Item_Node_Error = 0,		/** Error									  - no action */
+	Cfg_Item_Ug_Node = 1,			/** general UG								  - don't create Grid */
+	Cfg_Item_Ui_Node = 2,			/** no UG, no app launching, just menu name	  - create Grid */
+	Cfg_Item_Title_Node = 3,		/** view name								  - create Grid */
 	Cfg_Item_App_Node = 4,			/** app type - by launcher - read doc '4' */
 	Cfg_Item_View_Node = 5,			/** view name - 2depth search */
-	Cfg_Item_AppLauncher_Node = 6,	/** app launcher (NOT Ug)                     - don't create Grid */
+	Cfg_Item_AppLauncher_Node = 6,	/** app launcher (NOT Ug)					  - don't create Grid */
 	Cfg_Item_AppLauncher_View_Node = 7,	/** view name - 2depth search by app-launcher */
 
 	/*------------------------------------------------------------------------------- */
 	/* (Cfg_Item_Ug_Node_Toggle/10 > 0 ) --> toggle style */
-	Cfg_Item_Ug_Node_Toggle = Cfg_Item_Ug_Node + 10,			/** general UG                                - don't create Grid */
-	Cfg_Item_Ui_Node_Toggle = Cfg_Item_Ui_Node + 10,			/** no UG, no app launching, just menu name   - create Grid */
-	Cfg_Item_View_Node_Toggle =  Cfg_Item_View_Node + 10,		/** view name - 2depth search with toggle button */
-	Cfg_Item_AppLauncher_Node_Toggle = Cfg_Item_AppLauncher_Node + 10,	/** app launcher (NOT Ug)                     - don't create Grid */
+	Cfg_Item_Ug_Node_Toggle = Cfg_Item_Ug_Node + 10,			/** general UG								  - don't create Grid */
+	Cfg_Item_Ui_Node_Toggle = Cfg_Item_Ui_Node + 10,			/** no UG, no app launching, just menu name	  - create Grid */
+	Cfg_Item_View_Node_Toggle =	 Cfg_Item_View_Node + 10,		/** view name - 2depth search with toggle button */
+	Cfg_Item_AppLauncher_Node_Toggle = Cfg_Item_AppLauncher_Node + 10,	/** app launcher (NOT Ug)					  - don't create Grid */
 
 } Cfg_Item_Type;
 
@@ -114,7 +114,7 @@ typedef struct {
 
 
 /**
- *  List item
+ *	List item
  */
 typedef struct {
 	char *key_name;					/** key name */
@@ -123,7 +123,7 @@ typedef struct {
 	int pos;						/** position : 1st, 2st -- deprecated */
 	Cfg_Item_Reset_Type reset_type;	/** if ug supports Reset function */
 	int click_times;				/** UG menu need to check */
-	Cfg_Item_Type item_type;		/** 0:item 	1:header title */
+	Cfg_Item_Type item_type;		/** 0:item	1:header title */
 
 	/* app code */
 	void *data;						/** Setting_GenGroupItem_Data type ptr */

@@ -21,8 +21,8 @@
 /**
  * @file setting-about.h
  *
- * @brief      Setting > About
- * @details    'About' view object by UI gadget
+ * @brief	   Setting > About
+ * @details	   'About' view object by UI gadget
  */
 
 

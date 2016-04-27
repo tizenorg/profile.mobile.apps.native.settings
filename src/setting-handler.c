@@ -127,15 +127,15 @@ static Setting_GenGroupItem_Data *__default_handler(void *data, char *keyStr, ch
 /*//////////////////////////////////////////////////////////////////////////////////////////// */
 /* list handler */
 static mainlist_entry mainlist_table[] = {
-	{KeyStr_FlightMode, 	__default_handler, UG_HANDLE, NULL},			/* 0 --> NOT UG */
-	{KeyStr_WiFi, 			__default_handler, UI_PROC, NULL},				/* 1 --> UG */
-	{KeyStr_Bluetooth, 		__default_handler, UI_PROC, NULL},
-	{KeyStr_MobileAP, 		__mobileap_handler, UG_HANDLE, NULL},			/* 1 --> UG */
-	{KeyStr_Location, 		__default_handler, UI_PROC, NULL},				/* 1 --> UG */
-	{KeyStr_Network, 		__default_handler, UG_HANDLE, NULL},				/* 1 --> UG */
+	{KeyStr_FlightMode,		__default_handler, UG_HANDLE, NULL},			/* 0 --> NOT UG */
+	{KeyStr_WiFi,			__default_handler, UI_PROC, NULL},				/* 1 --> UG */
+	{KeyStr_Bluetooth,		__default_handler, UI_PROC, NULL},
+	{KeyStr_MobileAP,		__mobileap_handler, UG_HANDLE, NULL},			/* 1 --> UG */
+	{KeyStr_Location,		__default_handler, UI_PROC, NULL},				/* 1 --> UG */
+	{KeyStr_Network,		__default_handler, UG_HANDLE, NULL},				/* 1 --> UG */
 	{KeyStr_DeveloperOption, __developer_option_handler, UI_PROC, NULL},
 	{KeyStr_BacklightTime, __backlight_time_handler, UI_PROC, NULL},
-	{"Default", 			__default_handler, DEFAULT_UI, NULL},				/* 1 --> UG */
+	{"Default",				__default_handler, DEFAULT_UI, NULL},				/* 1 --> UG */
 	/*-------------------------------------------------------------- */
 	{NULL, NULL, ERROR_STATE, NULL},
 };
@@ -241,7 +241,7 @@ void setting_main_click_list_ex_ug_cb(void *data, Evas_Object *obj,
 
 	setting_main_appdata *ad = g_main_ad;
 
-	/*  if UG is created by Setting app, setting_main_click_list_ex_ug_cb is diabled. */
+	/*	if UG is created by Setting app, setting_main_click_list_ex_ug_cb is diabled. */
 	if (ad->isInUGMode) {
 		SETTING_TRACE("isInUGMode : TRUE - another UG is running now.");
 		ad->isInUGMode = FALSE;

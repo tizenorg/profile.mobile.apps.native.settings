@@ -47,7 +47,7 @@
 
 /* launching */
 #ifdef LAUNCHING_DEBUG_LOG
-#define LAUNCH_SETTING_IN(fmt, arg...)  LOG(LOG_DEBUG, "LAUNCH", "[setting:Application:%s:IN]" fmt, __FUNCTION__, ##arg)
+#define LAUNCH_SETTING_IN(fmt, arg...)	LOG(LOG_DEBUG, "LAUNCH", "[setting:Application:%s:IN]" fmt, __FUNCTION__, ##arg)
 #define LAUNCH_SETTING_OUT(fmt, arg...) LOG(LOG_DEBUG, "LAUNCH", "[setting:Application:%s:OUT]" fmt, __FUNCTION__, ##arg)
 #else
 #define LAUNCH_SETTING_IN(fmt, arg...)
@@ -55,11 +55,11 @@
 #endif
 
 #if !defined(LOCALEDIR)
-#define LOCALEDIR 	_TZ_SYS_RO_APP"/org.tizen.setting/res/locale"
+#define LOCALEDIR	_TZ_SYS_RO_APP"/org.tizen.setting/res/locale"
 #endif
 
 #if !defined(EDJDIR)
-#define EDJDIR 	_TZ_SYS_RO_APP"/org.tizen.setting/res/edje"
+#define EDJDIR	_TZ_SYS_RO_APP"/org.tizen.setting/res/edje"
 #endif
 
 #define SUPPORT_BOTTOM_BTNS 1
@@ -83,15 +83,15 @@
 #define SUPPORT_ACCESSIBILITY			1
 
 #define SUPPORT_STORAGE				1
-#define SUPPORT_WIFI_DIRECT                     1
-#define SUPPORT_DATA_USAGE                      1
+#define SUPPORT_WIFI_DIRECT						1
+#define SUPPORT_DATA_USAGE						1
 #define SUPPORT_TETHERING	0
 
 /*#endif*/
 
 #define SUPPORT_APP_ROATION			1
 
-#define  LOW_BATTERY_DO_NOTHING			1	/**< 1 : turn the low batter handlding off */
+#define	 LOW_BATTERY_DO_NOTHING			1	/**< 1 : turn the low batter handlding off */
 
 
 #define SUPPORT_SIMLOCK 0

@@ -51,7 +51,7 @@
 #define KeyStr_AdjustScreenTone_Dsc "IDS_ST_BODY_SAVE_POWER_BY_ADJUSTING_SCREEN_TONE_ACCORDING_TO_ANALYSIS_OF_IMAGES"
 #define KeyStr_HighTouchSensitivity_Dsc "IDS_ST_SBODY_INCREASE_THE_SENSITIVITY_OF_THE_TOUCH_SCREEN_SBODY_MSG"
 
-#define LAUNCH_BATTERY_DESC  "IDS_ST_BODY_SHOWS_BATTERY_PERCENTAGE_ON_INDICATOR" /*"Increase the screen's sensitivity so you can touch it while wearing gloves" */
+#define LAUNCH_BATTERY_DESC	 "IDS_ST_BODY_SHOWS_BATTERY_PERCENTAGE_ON_INDICATOR" /*"Increase the screen's sensitivity so you can touch it while wearing gloves" */
 
 #define SETTING_DISPLAY_TIME_15_SEC_STR "IDS_ST_BODY_15SEC"
 #define SETTING_DISPLAY_TIME_30_SEC_STR "IDS_ST_BODY_30SEC"
@@ -60,8 +60,8 @@
 #define SETTING_DISPLAY_TIME_2_MIN_STR "IDS_ST_BODY_2_MINUTES"
 #define SETTING_DISPLAY_TIME_5_MIN_STR "IDS_ST_BODY_5_MINUTES"
 #define SETTING_DISPLAY_TIME_10_MIN_STR "IDS_ST_BODY_10_MINUTES"
-#define SMART_SCREEN_TRY_IT_IMAGE_L  SETTING_ICON_PATH_CFG"air_jump_try_full_h.png"
-#define SMART_SCREEN_TRY_IT_IMAGE_P  SETTING_ICON_PATH_CFG"air_jump_try_full.png"
+#define SMART_SCREEN_TRY_IT_IMAGE_L	 SETTING_ICON_PATH_CFG"air_jump_try_full_h.png"
+#define SMART_SCREEN_TRY_IT_IMAGE_P	 SETTING_ICON_PATH_CFG"air_jump_try_full.png"
 
 #define KeyStr_ScreenCapture "IDS_MF_BODY_SCREEN_CAPTURE_M_NOUN"
 #define KeyStr_ScreenCapture_Destination "IDS_LBS_BODY_DESTINATION"
@@ -132,7 +132,7 @@ struct _SettingApplicationsUG {
 
 	Evas_Object *ly_main;
 
-	Evas_Object *navi_bar;	/*  for navigation effect */
+	Evas_Object *navi_bar;	/*	for navigation effect */
 	Elm_Object_Item *nf_it;
 	Ecore_Timer *event_freeze_timer;
 

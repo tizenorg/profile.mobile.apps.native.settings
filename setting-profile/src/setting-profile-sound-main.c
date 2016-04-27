@@ -31,7 +31,7 @@
 #include <notification_setting.h>
 #include <notification_setting_internal.h>
 
-#define DO_NOT_DISTURB_OP "http://tizen.org/appcontrol/operation/setting/do_not_disturb"	
+#define DO_NOT_DISTURB_OP "http://tizen.org/appcontrol/operation/setting/do_not_disturb"
 #define APP_NOTIFICATIONS_OP "http://tizen.org/appcontrol/operation/setting/app_notifications"
 
 #define SETTING_SOUND_VOL_MAX 15
@@ -114,7 +114,7 @@ setting_view setting_view_sound_main = {
 																					NULL,\
 																					NULL,\
 																					SWALLOW_Type_LAYOUT_SPECIALIZTION_X,\
-																					NULL, NULL, 0,  substr, NULL, NULL);\
+																					NULL, NULL, 0,	substr, NULL, NULL);\
 			setting_retm_if(NULL == item_data, "item_data is NULL");\
 			elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
 		}\
@@ -167,12 +167,12 @@ static Eina_Bool __play_ringtone_sound_idle_cb(void *data)
 	/*
 	 * S5 concept:
 	 * On the volume popup,
-	 *  1) if user controls the slider, don't play any sounds£¬just change volume.
-	 *  2) if user controls the HW volume key for ringtone sound, the beep sound is supported
+	 *	1) if user controls the slider, don't play any sounds£¬just change volume.
+	 *	2) if user controls the HW volume key for ringtone sound, the beep sound is supported
 
 	 * On Setting > Sound
-	 *  1) if user controls the slider, change volume & play sound
-	 *  2) if user controls the HW volume key, do nothing(DO NOT change volume,DO NoT play sound)
+	 *	1) if user controls the slider, change volume & play sound
+	 *	2) if user controls the HW volume key, do nothing(DO NOT change volume,DO NoT play sound)
 	*/
 	if (0 == safeStrCmp(ad->viewtype, VOLUME_APP_NAME)) {
 		return EINA_FALSE;
@@ -341,12 +341,12 @@ static void __noti_slider_change_cb(void *data, Evas_Object *obj, void *event_in
 	/*
 	 * S5 concept:
 	 * On the volume popup,
-	 *  1) if user controls the slider, don't play any sounds£¬just change volume.
-	 *  2) if user controls the HW volume key for ringtone sound, the beep sound is supported
+	 *	1) if user controls the slider, don't play any sounds£¬just change volume.
+	 *	2) if user controls the HW volume key for ringtone sound, the beep sound is supported
 
 	 * On Setting > Sound
-	 *  1) if user controls the slider, change volume & play sound
-	 *  2) if user controls the HW volume key, do nothing(DO NOT change volume,DO NoT play sound)
+	 *	1) if user controls the slider, change volume & play sound
+	 *	2) if user controls the HW volume key, do nothing(DO NOT change volume,DO NoT play sound)
 	*/
 	if (0 == safeStrCmp(ad->viewtype, VOLUME_APP_NAME)) {
 		return;
@@ -408,12 +408,12 @@ static void __media_slider_change_cb(void *data, Evas_Object *obj, void *event_i
 	/*
 	 * S5 concept:
 	 * On the volume popup,
-	 *  1) if user controls the slider, don't play any sounds£¬just change volume.
-	 *  2) if user controls the HW volume key for ringtone sound, the beep sound is supported
+	 *	1) if user controls the slider, don't play any sounds£¬just change volume.
+	 *	2) if user controls the HW volume key for ringtone sound, the beep sound is supported
 
 	 * On Setting > Sound
-	 *  1) if user controls the slider, change volume & play sound
-	 *  2) if user controls the HW volume key, do nothing(DO NOT change volume,DO NoT play sound)
+	 *	1) if user controls the slider, change volume & play sound
+	 *	2) if user controls the HW volume key, do nothing(DO NOT change volume,DO NoT play sound)
 	*/
 	if (0 == safeStrCmp(ad->viewtype, VOLUME_APP_NAME)) {
 		return;
@@ -469,12 +469,12 @@ static void __sys_slider_change_cb(void *data, Evas_Object *obj, void *event_inf
 		/*
 		 * S5 concept:
 		 * On the volume popup,
-		 *  1) if user controls the slider, don't play any sounds£¬just change volume.
-		 *  2) if user controls the HW volume key for ringtone sound, the beep sound is supported
+		 *	1) if user controls the slider, don't play any sounds£¬just change volume.
+		 *	2) if user controls the HW volume key for ringtone sound, the beep sound is supported
 
 		 * On Setting > Sound
-		 *  1) if user controls the slider, change volume & play sound
-		 *  2) if user controls the HW volume key, do nothing(DO NOT change volume,DO NoT play sound)
+		 *	1) if user controls the slider, change volume & play sound
+		 *	2) if user controls the HW volume key, do nothing(DO NOT change volume,DO NoT play sound)
 		*/
 		if (0 != safeStrCmp(ad->viewtype, VOLUME_APP_NAME)) {
 			/*Play Tap Sound,then stop at once */
@@ -538,7 +538,7 @@ __sound_chk_cb(void *data, Evas_Object *obj,
 	ret_if(ad == NULL);
 
 	setting_sound_close_all_mm_players(ad);
-	list_item->chk_status = elm_check_state_get(obj);	/*  for genlist update status */
+	list_item->chk_status = elm_check_state_get(obj);	/*	for genlist update status */
 	/* rollback */
 	setting_update_gl_item_chk_status(list_item, !list_item->chk_status);
 	setting_sound_main_mouse_up_Gendial_list_cb(ad, NULL, list_item->item);
@@ -564,7 +564,7 @@ static void __get_lite_main_list(void *data)
 	elm_genlist_homogeneous_set(genlist, 1);
 
 	if (vconf_get_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, &sound_value) < 0)
-		sound_value = TRUE;	/*  default value of sound : on */
+		sound_value = TRUE;	/*	default value of sound : on */
 
 	Elm_Genlist_Item_Class *itc_slider = NULL;
 
@@ -723,7 +723,7 @@ static void __get_lite_main_list(void *data)
 	if (0 != safeStrCmp(ad->viewtype, VOLUME_APP_NAME)) {
 		/* 7. Vibrate when ringing */
 		if (vconf_get_bool(VCONFKEY_SETAPPL_VIBRATE_WHEN_RINGING_BOOL, &vconf_value) < 0) {
-			vconf_value = TRUE;	/*  default value of vibrate sound : on */
+			vconf_value = TRUE;	/*	default value of vibrate sound : on */
 		}
 		ADD_TOGGLE_MENU2(ad->data_sound_when_ring, genlist, itc_1text_1icon, "IDS_ST_BODY_VIBRATE_WHEN_RINGING", vconf_value, ad);
 		__BACK_POINTER_SET(ad->data_sound_when_ring);
@@ -1253,17 +1253,17 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 		ADD_GENLIST2(genlist, ad->navi_bar);
 		/* 1. Touch sounds */
 		if (vconf_get_bool(VCONFKEY_SETAPPL_TOUCH_SOUNDS_BOOL, &vconf_value) < 0)
-			vconf_value = TRUE;	/*  default value of touch sounds : on */
+			vconf_value = TRUE;	/*	default value of touch sounds : on */
 		ADD_TOGGLE_MENU(ad->data_touch_sounds, genlist, itc_1text_1icon, "IDS_ST_MBODY_TOUCH_SOUND", "IDS_ST_BODY_PLAY_A_SOUND_WHEN_BUTTONS_ICONS_AND_MENU_ITEMS_ARE_TAPPED", vconf_value, ad)
 
 		/* 2. Keytones */
 		if (vconf_get_bool(VCONFKEY_SETAPPL_BUTTON_SOUNDS_BOOL, &vconf_value) < 0)
-			vconf_value = TRUE;	/*  default value of touch sounds : on */
+			vconf_value = TRUE;	/*	default value of touch sounds : on */
 		ADD_TOGGLE_MENU(ad->data_button_sounds, genlist, itc_1text_1icon, "IDS_ST_MBODY_DIALLING_KEYPAD_TONE", "IDS_ST_BODY_PLAY_TONE_WHEN_THE_DIALLING_KEYPAD_IS_TAPPED", vconf_value, ad)
 
-		/*  3. Screen lock sound */
+		/*	3. Screen lock sound */
 		if (vconf_get_bool(VCONFKEY_SETAPPL_SOUND_LOCK_BOOL, &vconf_value) < 0)
-			vconf_value = 0;	/*  default value of lock/unlock sound : off */
+			vconf_value = 0;	/*	default value of lock/unlock sound : off */
 		ADD_TOGGLE_MENU(ad->data_lock_sound, genlist, itc_1text_1icon, "IDS_ST_BODY_SCREEN_LOCK_SOUND", "IDS_ST_BODY_PLAY_SOUNDS_WHEN_LOCKING_AND_UNLOCKING_SCREEN", vconf_value, ad)
 
 		Elm_Object_Item *navi_it = elm_naviframe_item_push(ad->navi_bar, "IDS_ST_HEADER_FEEDBACK", NULL, NULL, genlist, NULL);

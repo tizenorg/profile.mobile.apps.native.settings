@@ -28,7 +28,7 @@
 #define __SETTING_COMMON_DATA_TYPE_H__
 
 #include <Elementary.h>		/* including Elementary lib */
-#include <setting-debug.h>	/*  including debuging type */
+#include <setting-debug.h>	/*	including debuging type */
 #include <setting-common-resource.h>	/* including one class of data type */
 #include <setting-common-data-error.h>	/* including another class of data type */
 
@@ -41,7 +41,7 @@
 #ifndef bool
 #define bool Eina_Bool
 #endif
-#define PWD_FILE 	_TZ_SYS_DATA"/setting/set_info"
+#define PWD_FILE	_TZ_SYS_DATA"/setting/set_info"
 
 
 #ifdef OLD_GENLIST_STYLE
@@ -66,8 +66,8 @@
 #define SYSTEM_PACKAGE			"sys_string"
 #define SETTING_LOCALEDIR		_TZ_SYS_RO_APP"/org.tizen.setting/res/locale"
 
-#define MODE_SYSPOPUP_PACKAGE                  "mode-syspopup"
-#define MODE_SYSPOPUP_LOCALEDIR                _TZ_SYS_RO_APP"/org.tizen.mode-syspopup/res/locale"
+#define MODE_SYSPOPUP_PACKAGE				   "mode-syspopup"
+#define MODE_SYSPOPUP_LOCALEDIR				   _TZ_SYS_RO_APP"/org.tizen.mode-syspopup/res/locale"
 
 #define SYSTEM_ICON_PATH		_TZ_SYS_RO_APP"/org.tizen.setting/res/icons"
 #define SETTING_ICON_PATH		_TZ_SYS_RO_APP"/org.tizen.setting/res/icons"
@@ -79,9 +79,9 @@
 /*#define SETTING_UG_PATH_OPT			"/opt/ug/lib" */
 /*#define SETTING_UG_PATH_USR_OPT		"/opt/ug/lib" */
 
-#define SETTING_PATH_MEMORY_OPT 		"/opt/usr"
+#define SETTING_PATH_MEMORY_OPT			"/opt/usr"
 #define SETTING_PATH_SDCARD_OPT			_TZ_SYS_MEDIA"/sdcard"
-#define SETTING_PATH_PARENT_SDCARD_OPT 	_TZ_SYS_MEDIA"/sdcard/.."
+#define SETTING_PATH_PARENT_SDCARD_OPT	_TZ_SYS_MEDIA"/sdcard/.."
 
 
 #define SETTING_KILOBYTE_VALUE		1024
@@ -140,12 +140,12 @@
 
 #define PROGRESSBAR_STYLE "process_medium"
 #define SETTING_FONT_CONF_FILE	_TZ_SYS_ETC"/fonts/conf.avail/99-slp.conf"
-#define SETTING_DEFAULT_FONT_CONF_FILE 	_TZ_SYS_DATA"/etc/fonts/conf.avail/99-slp.conf"
+#define SETTING_DEFAULT_FONT_CONF_FILE	_TZ_SYS_DATA"/etc/fonts/conf.avail/99-slp.conf"
 
 
 
-/*#define GENLIST_LIST_SUB_TEXT_SETTINGS_COLOR_STYLE          "#3B73B6FF" */
-#define BLUE_COLOR          "#3B73B6"  /*3B73B6FF <== 59 115 182 255 */
+/*#define GENLIST_LIST_SUB_TEXT_SETTINGS_COLOR_STYLE		  "#3B73B6FF" */
+#define BLUE_COLOR			"#3B73B6"  /*3B73B6FF <== 59 115 182 255 */
 #define GRAY_COLOR "#7B7B7B"
 #define RED_COLOR "#FF0000"
 #define WHITE_COLOR "#FFFFFF"
@@ -176,25 +176,25 @@ typedef Eina_Bool(*setting_naviframe_cb)(void *data, Elm_Object_Item *it);
 
 #define MAX_SEARCH_STR_LEN 40
 
-#define HELP_MSG_BUFF_SIZE   				1000
+#define HELP_MSG_BUFF_SIZE					1000
 #define MAX_SPECIALIZITION_LEN				1000
 
-#define PHONE_LOCK_ATTEMPS_MAX 				5
-#define SIM_LOCK_ATTEMPS_MAX 				5
-#define PHONE_LOCK_BLOCK_SECONDS 			30
-#define SIM_LOCK_BLOCK_SECONDS 				30
-#define LOCK_TIMESTAMP_LEN 					64
-#define MAX_DATETIME_FORMAT_LEN 			64
-#define MAX_DATE_FORMAT_LEN 				10
+#define PHONE_LOCK_ATTEMPS_MAX				5
+#define SIM_LOCK_ATTEMPS_MAX				5
+#define PHONE_LOCK_BLOCK_SECONDS			30
+#define SIM_LOCK_BLOCK_SECONDS				30
+#define LOCK_TIMESTAMP_LEN					64
+#define MAX_DATETIME_FORMAT_LEN				64
+#define MAX_DATE_FORMAT_LEN					10
 
-#define SMALL_FONT_DPI 						(-80)
-#define MIDDLE_FONT_DPI 					(-100)
+#define SMALL_FONT_DPI						(-80)
+#define MIDDLE_FONT_DPI						(-100)
 #define LARGE_FONT_DPI						(-144)
 #define HUGE_FONT_DPI						(-184)
 #define GIANT_FONT_DPI						(-240)
 
 #define LABEL_FONT_SIZE_SMALL					24
-#define LABEL_FONT_SIZE_NORMAL 					35
+#define LABEL_FONT_SIZE_NORMAL					35
 #define LABEL_FONT_SIZE_LARGE					55
 #define LABEL_FONT_SIZE_HUGE					75
 #define LABEL_FONT_SIZE_GIANT					92
@@ -219,7 +219,7 @@ typedef struct {
 	char *locale;				/* ex) "en_US.UTF" */
 	char *title;				/* "United Kingdom" */
 	char *mcc;
-	/*int number;				// no -  UI */
+	/*int number;				// no -	 UI */
 } setting_lang_entry;
 
 typedef enum _Theme_Type {
@@ -244,7 +244,7 @@ typedef enum _SWALLOW_Type {
 	SWALLOW_Type_1CHECK_RIGHT = 4,
 	SWALLOW_Type_1CHECKICON = 5,
 	SWALLOW_Type_1RADIO = 6,
-	SWALLOW_Type_1TOGGLE =  7,
+	SWALLOW_Type_1TOGGLE =	7,
 	SWALLOW_Type_1CHECK_RIGHT_INVISIBLE,
 	SWALLOW_Type_1ICON_1DOTTOOGLE,
 	SWALLOW_Type_1ICON_SMALL_ICON,
@@ -272,7 +272,7 @@ typedef enum _SWALLOW_Type {
 
 typedef enum {
 	UNDEFINED_LIB_SYMBOL = -2,/*  undefined symbol : -2 */
-	LOAD_LIB_FAILED = -1,/*  load failed : -1 */
+	LOAD_LIB_FAILED = -1,/*	 load failed : -1 */
 	OPERATE_LIB_SUCESS = 0,
 } OPERATE_LIB_ERROR;
 
@@ -298,22 +298,22 @@ typedef struct _Setting_GenGroupItem_Data {
 
 	SWALLOW_Type swallow_type;
 	const char *l_swallow_path;	 /**< left image */
-	const char *r_swallow_path;  /**< right image */
+	const char *r_swallow_path;	 /**< right image */
 
 	/* output */
 	Evas_Object *eo_check;					/**< slider, button, check, editfield, datefield */
-	int chk_status;			 				/**< represent check value, slider value, datefield value etc.. */
+	int chk_status;							/**< represent check value, slider value, datefield value etc.. */
 	setting_call_back_func chk_change_cb;
 
 	/* radio button */
 	Evas_Object *rgd;						/**< radio button */
 
 	char *keyStr;							/**< title */
-	char *keyStr2;                          /**< title for font name expanlist item*/
+	char *keyStr2;							/**< title for font name expanlist item*/
 	char *sub_desc;							/**< sub text */
 	char *guide_text;						/**< guide text for editfield */
 
-	/*  for slider control */
+	/*	for slider control */
 	bool isIndicatorVisible;				/**< indicator option (displaying number) */
 	double slider_min;						/**< to swallow a slider */
 	double slider_max;						/**< to swallow a slider */
@@ -321,19 +321,19 @@ typedef struct _Setting_GenGroupItem_Data {
 	setting_call_back_func start_change_cb;
 	setting_call_back_func stop_change_cb;
 	setting_call_back_func maxlength_reached_cb;
-	setting_call_back_func focus_cb;           /**< for entry */
+	setting_call_back_func focus_cb;		   /**< for entry */
 	setting_call_back_func activated_cb;		/**< for entry */
 	setting_call_back_func mouse_up_cb;
 
 	void *x_callback_cb;
 
 	/* sound/vibration */
-	int belongs_to; 						/**< 1: slider belongs to sound group. 0: slider belongs to vibration group */
+	int belongs_to;							/**< 1: slider belongs to sound group. 0: slider belongs to vibration group */
 
-	/*  for input panel  */
+	/*	for input panel	 */
 	Elm_Input_Panel_Layout input_type;		/**< input panel type */
 	Elm_Input_Panel_Return_Key_Type return_key_type;	/** the return key type in input method panel*/
-	bool input_panel_disable_flag;      	/** do not show the input panel automatically when the widget is clicked or has focus*/
+	bool input_panel_disable_flag;			/** do not show the input panel automatically when the widget is clicked or has focus*/
 	int disable_auto_cap; /** do not autocapital the first char in edit field*/
 
 	void *userdata;							/**< just a reference, do not need release. */
@@ -343,16 +343,16 @@ typedef struct _Setting_GenGroupItem_Data {
 	bool isItemDisableFlag;					/**< date/time UG only */
 	bool isSinglelineFlag;
 	bool maxLengthReachFlag;
-	bool enterKeyPressFlag;	                /**< for about UG, enter or space key are not allowed, if they are pressed, it is true */
-	bool spaceKeyPressFlag;                 /**<for about UG,if space key is pressed, need to popup a notification>*/
+	bool enterKeyPressFlag;					/**< for about UG, enter or space key are not allowed, if they are pressed, it is true */
+	bool spaceKeyPressFlag;					/**<for about UG,if space key is pressed, need to popup a notification>*/
 
 	bool isItemHideFlag;					/**< setting > storage only */
 
-	int int_slp_setting_binded; 			/**< its relative vconf value must increase from 0, and step is 1. eg, 0, 1, 2, 3.. */
-	bool entry_auto_focus;                  /*for enty, if this is true, then entry will be focus state when the entry is created*/
+	int int_slp_setting_binded;				/**< its relative vconf value must increase from 0, and step is 1. eg, 0, 1, 2, 3.. */
+	bool entry_auto_focus;					/*for enty, if this is true, then entry will be focus state when the entry is created*/
 
 	/* popup */
-	Evas_Object *notify; 					/**< act as any popup to show user any message */
+	Evas_Object *notify;					/**< act as any popup to show user any message */
 
 	Elm_Entry_Filter_Accept_Set *digits_filter_data;
 	Elm_Entry_Filter_Limit_Size *limit_filter_data;
@@ -436,8 +436,8 @@ typedef struct _Setting_Done_List_Data {
 #define MAX_BUTTON_NUM 20
 typedef struct _setting_btn_data {
 	Evas_Object *parent;
-	const char  *btn_text[MAX_BUTTON_NUM];
-	const char  *btn_icon[MAX_BUTTON_NUM];
+	const char	*btn_text[MAX_BUTTON_NUM];
+	const char	*btn_icon[MAX_BUTTON_NUM];
 	setting_call_back_func btn_click_cb;
 	void *btn_cb_data;
 	Evas_Object *ctxpopup;

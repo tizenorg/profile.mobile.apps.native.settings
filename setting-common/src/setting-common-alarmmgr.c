@@ -29,9 +29,9 @@
 
 /**
 * send
-* This function is  used to create mgr
-* @param           data[in]         pointer to AData
-* @return          when success, return EINA_TRUE or EINA_FALSE if error
+* This function is	used to create mgr
+* @param		   data[in]			pointer to AData
+* @return		   when success, return EINA_TRUE or EINA_FALSE if error
 * @exception
 */
 EXPORT_PUBLIC
@@ -65,7 +65,7 @@ int setting_common_alarmmgr_create(BM_AData *alarm)
 	SET_BM_TIME_DATA_T(&alarm_data, pt.tm_year + 1900, pt.tm_mon + 1, pt.tm_mday, pt.tm_hour, pt.tm_min, 0);
 	nErr |= alarmmgr_set_time(alarm_entry, alarm_data);
 
-	/*set type   */
+	/*set type	 */
 	nErr = alarmmgr_set_type(alarm_entry, ALARM_TYPE_DEFAULT);
 
 	/* bundle */
@@ -74,7 +74,7 @@ int setting_common_alarmmgr_create(BM_AData *alarm)
 	/*appsvc_set_operation(b, APPSVC_OPERATION_DEFAULT); */
 	/*appsvc_set_pkgname(b, SETTING_BM_ALARM_APP); */
 
-	/*create new    */
+	/*create new	*/
 	int alarm_mgr_id = 0;
 	nErr = alarmmgr_add_alarm_with_localtime(alarm_entry, SETTING_BM_ALARM_APP, &alarm_mgr_id);
 	/*nErr = alarmmgr_add_alarm_appsvc_with_localtime(alarm_entry, (void *)b, &alarm_mgr_id); */
@@ -94,9 +94,9 @@ int setting_common_alarmmgr_create(BM_AData *alarm)
 
 /**
 * send
-* This function is  used to update mgr
-* @param           data[in]         pointer to AData
-* @return          when success, return EINA_TRUE or EINA_FALSE if error
+* This function is	used to update mgr
+* @param		   data[in]			pointer to AData
+* @return		   when success, return EINA_TRUE or EINA_FALSE if error
 * @exception
 */
 EXPORT_PUBLIC

@@ -34,7 +34,7 @@ typedef struct _setting_view {
 	int (*cleanup)(void *cb);
 	int (*langchanged)(void *cb);
 
-	int is_create;		/*  1:exist */
+	int is_create;		/*	1:exist */
 
 } setting_view;
 /**

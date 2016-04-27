@@ -145,7 +145,7 @@ static void storageUg_default_radio_change(void *data, Evas_Object *obj,
 
 	ret_if(data == NULL);
 
-	list_item->chk_status = elm_radio_value_get(obj);	/*  for update */
+	list_item->chk_status = elm_radio_value_get(obj);	/*	for update */
 
 	subItem = list_item->item;
 

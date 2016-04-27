@@ -1010,7 +1010,7 @@ int setting_password_sim_check_1line_entry(void *data)
 	const char *entry_str = ad->ed_pw1->sub_desc;
 	ad->focus_data = ad->ed_pw1;
 
-	/*  Length Check */
+	/*	Length Check */
 	int entry_str_len = safeStrLen(entry_str);
 	switch (ad->view_type) {
 	case SETTING_PW_TYPE_PIN_LOCK_ON:
@@ -1052,7 +1052,7 @@ int setting_password_sim_check_2line_entry(void *data)
 	const char *entry_str2 = ad->ed_pw2->sub_desc;
 	ad->focus_data = ad->ed_pw1;
 
-	/*  Match Check */
+	/*	Match Check */
 	if (0 != safeStrCmp(entry_str1, entry_str2)) {
 		setting_password_sim_clear_2line_entry(ad);
 		if (ad->view_type == SETTING_PW_TYPE_PIN_BLOCKED
@@ -1067,7 +1067,7 @@ int setting_password_sim_check_2line_entry(void *data)
 	}
 
 #if SUPPORT_SIMLOCK
-	/*  Length Check */
+	/*	Length Check */
 	int entry_str_len = safeStrLen(entry_str1);
 	if (ad->view_type == SETTING_PW_TYPE_SIM_LOCK_ON) {
 		if (entry_str_len < SETTING_PW_UG_SIM_MIN_LENGTH
@@ -1103,7 +1103,7 @@ int setting_password_sim_check_3line_entry(void *data)
 	const char *entry_str3 = ad->ed_pw3->sub_desc;
 	ad->focus_data = ad->ed_pw1;
 
-	/*  Length Check */
+	/*	Length Check */
 	int entry_str1_len = safeStrLen(entry_str1);
 	int entry_str2_len = safeStrLen(entry_str2);
 	int entry_str3_len = safeStrLen(entry_str3);
@@ -1180,7 +1180,7 @@ static void setting_password_sim_done(void *data)
 										SETTING_FONT_RED, tapi_ret, SETTING_FONT_BLACK);
 					setting_password_ug_create_popup_notitle_nobtn(ad, _("IDS_ST_POP_ERROR"), FALSE);
 				} else {
-					/*  Success. Send Message to Caller for Modify Pin Lock slider status                                           */
+					/*	Success. Send Message to Caller for Modify Pin Lock slider status											*/
 				}
 			} else {
 				setting_password_sim_clear_1line_entry(ad);
@@ -1220,7 +1220,7 @@ static void setting_password_sim_done(void *data)
 										SETTING_FONT_RED, tapi_ret, SETTING_FONT_BLACK);
 					setting_password_ug_create_popup_notitle_nobtn(ad, _("IDS_ST_POP_ERROR"), FALSE);
 				} else {
-					/*  Success. Send Message to Caller for Modify Pin Lock slider status                                           */
+					/*	Success. Send Message to Caller for Modify Pin Lock slider status											*/
 				}
 			} else {
 				setting_password_sim_clear_1line_entry(ad);
@@ -1229,9 +1229,9 @@ static void setting_password_sim_done(void *data)
 		app_control_destroy(svc);
 		return;
 	case SETTING_PW_TYPE_PIN_BLOCKED: {
-			/*  PIN1 Status is "Blocked": User should input puk code and new pin1 code. */
-			/*  If puk code is correct and success to modify pin1 code, display pin1 code change popup */
-			/*  But, if this menu is "Pin Lock", pinlock status will not be changed. */
+			/*	PIN1 Status is "Blocked": User should input puk code and new pin1 code. */
+			/*	If puk code is correct and success to modify pin1 code, display pin1 code change popup */
+			/*	But, if this menu is "Pin Lock", pinlock status will not be changed. */
 			SETTING_TRACE("case SETTING_PW_TYPE_PIN_BLOCKED");
 			if (ad->cur_pwd == NULL) {
 				ret = setting_password_sim_check_1line_entry(ad);
@@ -1275,7 +1275,7 @@ static void setting_password_sim_done(void *data)
 											SETTING_FONT_RED, tapi_ret, SETTING_FONT_BLACK);
 						setting_password_ug_create_popup_notitle_nobtn(ad, _("IDS_ST_POP_ERROR"), FALSE);
 					} else {
-						/*  Success. Send Message to Caller for Modify Pin Lock slider status */
+						/*	Success. Send Message to Caller for Modify Pin Lock slider status */
 
 					}
 				} else {
@@ -1329,7 +1329,7 @@ static void setting_password_sim_done(void *data)
 										SETTING_FONT_RED, tapi_ret, SETTING_FONT_BLACK);
 					setting_password_ug_create_popup_notitle_nobtn(ad, _("IDS_ST_POP_ERROR"), FALSE);
 				} else {
-					/*  Success. Send Message to Caller for Modify Pin Lock slider status */
+					/*	Success. Send Message to Caller for Modify Pin Lock slider status */
 
 				}
 			} else {
@@ -1485,7 +1485,7 @@ static void setting_password_sim_done(void *data)
 										SETTING_FONT_RED, tapi_ret, SETTING_FONT_BLACK);
 					setting_password_ug_create_popup_notitle_nobtn(ad, _("IDS_ST_POP_ERROR"), FALSE);
 				} else {
-					/*  Success. Send Message to Caller for Modify Pin Lock slider status */
+					/*	Success. Send Message to Caller for Modify Pin Lock slider status */
 
 				}
 			} else {
@@ -1524,7 +1524,7 @@ static void setting_password_sim_done(void *data)
 										SETTING_FONT_RED, tapi_ret, SETTING_FONT_BLACK);
 					setting_password_ug_create_popup_notitle_nobtn(ad, _("IDS_ST_POP_ERROR"), FALSE);
 				} else {
-					/*  Success. Send Message to Caller for Modify Pin Lock slider status */
+					/*	Success. Send Message to Caller for Modify Pin Lock slider status */
 
 				}
 			} else {
@@ -1898,7 +1898,7 @@ void setting_sim_facility_enable_cb(TapiHandle *handle, int result, void *data, 
 	SETTING_TRACE_SECURE_DEBUG("sim_event_data->type:%d", sim_event_data->type);
 	SETTING_TRACE_SECURE_DEBUG("sim_event_data->retry_count[%d]", sim_event_data->retry_count);
 
-	/*  Sim Lock  */
+	/*	Sim Lock  */
 	if (TAPI_SIM_LOCK_PS == sim_event_data->type) {
 		SETTING_TRACE("CASE TAPI_SIM_PTYPE_SIM == sim_event_data->type");
 		if (TAPI_SIM_PIN_OPERATION_SUCCESS == result)
@@ -1912,7 +1912,7 @@ void setting_sim_facility_enable_cb(TapiHandle *handle, int result, void *data, 
 			return;
 		}
 	}
-	/*  Pin Lock */
+	/*	Pin Lock */
 	else if (TAPI_SIM_LOCK_SC == sim_event_data->type) {
 		SETTING_TRACE("CASE TAPI_SIM_PTYPE_PIN1 == sim_event_data->type");
 		if (TAPI_SIM_PIN_OPERATION_SUCCESS == result)
@@ -1923,10 +1923,10 @@ void setting_sim_facility_enable_cb(TapiHandle *handle, int result, void *data, 
 		} else if (TAPI_SIM_PUK_REQUIRED == result)
 			result_info.stat = SIM_PIN1_BLOCKED;
 
-		/*  Pre CCF */
+		/*	Pre CCF */
 		else if (TAPI_SIM_INCOMPATIBLE_PIN_OPERATION == result
 				 || TAPI_SIM_CARD_ERROR == result) {
-			/*  popup */
+			/*	popup */
 			result_info.stat = SIM_OPERATION_UNAVAILABLE;
 		} else {
 			SETTING_TRACE_DEBUG
@@ -1956,7 +1956,7 @@ void setting_sim_facility_disable_cb(TapiHandle *handle, int result, void *data,
 	SETTING_TRACE_SECURE_DEBUG("sim_event_data->type:%d", sim_event_data->type);
 	SETTING_TRACE_SECURE_DEBUG("sim_event_data->retry_count[%d]", sim_event_data->retry_count);
 
-	/*  Sim Lock  */
+	/*	Sim Lock  */
 	if (TAPI_SIM_LOCK_PS == sim_event_data->type) {
 		SETTING_TRACE_DEBUG("SIM lOCK");
 		if (TAPI_SIM_PIN_OPERATION_SUCCESS == result)
@@ -1971,7 +1971,7 @@ void setting_sim_facility_disable_cb(TapiHandle *handle, int result, void *data,
 			return;
 		}
 	}
-	/*  Pin Lock */
+	/*	Pin Lock */
 	else if (TAPI_SIM_LOCK_SC == sim_event_data->type) {
 		SETTING_TRACE_DEBUG("PIN LOCK");
 		if (TAPI_SIM_PIN_OPERATION_SUCCESS == result)
@@ -1982,10 +1982,10 @@ void setting_sim_facility_disable_cb(TapiHandle *handle, int result, void *data,
 		} else if (TAPI_SIM_PUK_REQUIRED == result)
 			result_info.stat = SIM_PIN1_BLOCKED;
 
-		/*  Pre CCF */
+		/*	Pre CCF */
 		else if (TAPI_SIM_INCOMPATIBLE_PIN_OPERATION == result
 				 || TAPI_SIM_CARD_ERROR == result) {
-			/*  popup */
+			/*	popup */
 			result_info.stat = SIM_OPERATION_UNAVAILABLE;
 		} else {
 			SETTING_TRACE_DEBUG
@@ -2011,14 +2011,14 @@ static void setting_password_ug_display_result_popup(tapi_receive_info *result,
 			if (ad->view_type ==
 				SETTING_PW_TYPE_SIM_LOCK_OFF) {
 				int err = SETTING_RETURN_SUCCESS;
-				/*  reset VCONF */
+				/*	reset VCONF */
 				setting_set_int_slp_key
 				(INT_SLP_SETTING_SIM_LOCK_ATTEMPTS_LEFT,
 				 SIM_LOCK_ATTEMPS_MAX, &err);
 				setting_retm_if(err == SETTING_RETURN_FAIL,
 								"[Error] set value of vconf fail.");
 			}
-			/*  Success to Operate */
+			/*	Success to Operate */
 			app_control_h svc;
 			if (app_control_create(&svc))
 				return;
@@ -2036,7 +2036,7 @@ static void setting_password_ug_display_result_popup(tapi_receive_info *result,
 	case SIM_PIN1_BLOCKED: {
 			SETTING_TRACE_DEBUG("SIM_PIN1_BLOCKED");
 			/*ad->view_type = SETTING_PW_TYPE_PIN_BLOCKED; */
-			/*  Success to Operate */
+			/*	Success to Operate */
 			app_control_h svc;
 			if (app_control_create(&svc))
 				return;
@@ -2066,7 +2066,7 @@ static void setting_password_ug_display_result_popup(tapi_receive_info *result,
 			ug_destroy_me(ad->ug);
 			/*safeCopyStr(ad->view_type_string, "SETTING_PW_TYPE_PIN2_BLOCKED", safeStrLen("SETTING_PW_TYPE_PIN2_BLOCKED")+1); */
 			/*setting_password_ug_create_popup_notitle_nobtn(ad, */
-			/*					       _("IDS_ST_POP_PIN2_BLOCKED"), TRUE); */
+			/*						   _("IDS_ST_POP_PIN2_BLOCKED"), TRUE); */
 		}
 		break;
 	case SIM_LOCK_INCORRECT_PASSWORD: {
@@ -2201,7 +2201,7 @@ static void setting_password_ug_display_result_popup(tapi_receive_info *result,
 	case SIM_PIN1_CHANGE_SUCCESS: {
 			SETTING_TRACE_DEBUG("SIM_PIN1_CHANGE_SUCCESS");
 			/*ad->view_type = SETTING_PW_TYPE_PIN_BLOCKED; */
-			/*  Success to Operate */
+			/*	Success to Operate */
 			app_control_h svc;
 			if (app_control_create(&svc))
 				return;
@@ -2215,7 +2215,7 @@ static void setting_password_ug_display_result_popup(tapi_receive_info *result,
 			ug_destroy_me(ad->ug);
 		}
 		/*setting_password_ug_create_popup_notitle_nobtn(ad, */
-		/*					       _("IDS_ST_POP_PIN1_CHANGED"), TRUE); */
+		/*						   _("IDS_ST_POP_PIN1_CHANGED"), TRUE); */
 		break;
 	case SIM_PIN2_CHANGE_SUCCESS:
 		setting_password_ug_create_popup_notitle_nobtn(ad,
@@ -2238,7 +2238,7 @@ static void setting_password_ug_display_result_popup(tapi_receive_info *result,
 			safeCopyStr(ad->view_type_string, "SETTING_PW_TYPE_PUK1_BLOCKED", safeStrLen("SETTING_PW_TYPE_PUK1_BLOCKED") + 1);
 			setting_password_ug_create_popup_notitle_nobtn(ad,
 														   ret_str, TRUE);
-			/*  Phone blocked. Call Permernent UG */
+			/*	Phone blocked. Call Permernent UG */
 		}
 		break;
 	case SIM_PUK2_BLOCKED: {
@@ -2254,7 +2254,7 @@ static void setting_password_ug_display_result_popup(tapi_receive_info *result,
 			/* Send destroy request */
 			ug_destroy_me(ad->ug);
 		}
-		/*  Call Permernent UG */
+		/*	Call Permernent UG */
 		break;
 	case SIM_REQUIRED_PUK_CODE:
 		SETTING_TRACE_DEBUG("SIM_REQUIRED_PUK_CODE");

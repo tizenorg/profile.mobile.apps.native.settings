@@ -274,7 +274,7 @@ int pwd_handler_sec_pw_pin1_blocked(SettingSecurityUG *data, void *arg)
 	}
 
 	/* To do : draw popup, */
-	/*         content - PIN Blocked\n The PIN is now blocked. Enter your PUK code to continue. */
+	/*		   content - PIN Blocked\n The PIN is now blocked. Enter your PUK code to continue. */
 	/*		   button - OK */
 	char popup_text[2048] = {0,};
 	snprintf(popup_text, 2048, "%s", _(PIN_BLOCKED_ENTER_PUK_DESC));
@@ -308,9 +308,9 @@ int pwd_handler_sec_pw_pin1_blocked(SettingSecurityUG *data, void *arg)
 
 #ifdef ECORE_X
 	unsigned int val[3];
-	val[0] = 0; 	/* always enable F */
+	val[0] = 0;		/* always enable F */
 	val[1] = 0;		/* quickpanel enable F */
-	val[2] = 0; 	/* apptray enable F */
+	val[2] = 0;		/* apptray enable F */
 	/* set quickpanel disable */
 	Ecore_X_Atom ATOM_PANEL_SCROLLABLE_STATE = 0;
 	ATOM_PANEL_SCROLLABLE_STATE = ecore_x_atom_get("_E_MOVE_PANEL_SCROLLABLE_STATE");
@@ -384,29 +384,29 @@ int pwd_handler_sec_pw_puk1_blocked(SettingSecurityUG *data, void *arg)
 }
 
 static struct _security_item security_table[] = {
-	{ SETTING_SEC_PW_PASSWORD, 		"SETTING_PW_TYPE_PASSWORD", 			pwd_handler_sec_pw_passwd },
-	{ SETTING_SEC_PW_SIMPLE_PASSWD, 	"SETTING_PW_TYPE_SIMPLE_PASSWORD", 		pwd_handler_sec_pw_simple_passwd },
-	{ SETTING_SEC_PW_ENTER_LOCK_TYPE, "SETTING_PW_TYPE_ENTER_LOCK_TYPE", 		pwd_handler_do_nothing},
-	{ SETTING_SEC_PW_ENCRYPTION, "SETTING_PW_TYPE_ENCRYPTION", 		pwd_handler_sec_pw_passwd},
-	{ SETTING_SEC_PW_SIM_LOCK_ON, 		"SETTING_PW_TYPE_SIM_LOCK_ON", 			pwd_handler_sec_pw_sim_lock_on },
-	{ SETTING_SEC_PW_SIM_LOCK_OFF, 		"SETTING_PW_TYPE_SIM_LOCK_OFF",			pwd_handler_sec_pw_sim_lock_off },
+	{ SETTING_SEC_PW_PASSWORD,		"SETTING_PW_TYPE_PASSWORD",				pwd_handler_sec_pw_passwd },
+	{ SETTING_SEC_PW_SIMPLE_PASSWD,		"SETTING_PW_TYPE_SIMPLE_PASSWORD",		pwd_handler_sec_pw_simple_passwd },
+	{ SETTING_SEC_PW_ENTER_LOCK_TYPE, "SETTING_PW_TYPE_ENTER_LOCK_TYPE",		pwd_handler_do_nothing},
+	{ SETTING_SEC_PW_ENCRYPTION, "SETTING_PW_TYPE_ENCRYPTION",		pwd_handler_sec_pw_passwd},
+	{ SETTING_SEC_PW_SIM_LOCK_ON,		"SETTING_PW_TYPE_SIM_LOCK_ON",			pwd_handler_sec_pw_sim_lock_on },
+	{ SETTING_SEC_PW_SIM_LOCK_OFF,		"SETTING_PW_TYPE_SIM_LOCK_OFF",			pwd_handler_sec_pw_sim_lock_off },
 	{ SETTING_SEC_PW_SIM_LOCK_DISABLED, "SETTING_PW_TYPE_SIM_LOCK_DISABLE",		pwd_handler_sec_pw_sim_lock_disabled},
-	{ SETTING_SEC_PW_PIN_LOCK_ON, 		"SETTING_PW_TYPE_PIN_LOCK_ON",			pwd_handler_sec_pw_pin_lock_on },
-	{ SETTING_SEC_PW_PIN_LOCK_OFF, 		"SETTING_PW_TYPE_PIN_LOCK_OFF",			pwd_handler_sec_pw_pin_lock_off },
-	{ SETTING_SEC_PW_CHANGE_PIN1, 		"SETTING_PW_TYPE_CHANGE_PIN",			pwd_handler_sec_pw_change_pin1},
+	{ SETTING_SEC_PW_PIN_LOCK_ON,		"SETTING_PW_TYPE_PIN_LOCK_ON",			pwd_handler_sec_pw_pin_lock_on },
+	{ SETTING_SEC_PW_PIN_LOCK_OFF,		"SETTING_PW_TYPE_PIN_LOCK_OFF",			pwd_handler_sec_pw_pin_lock_off },
+	{ SETTING_SEC_PW_CHANGE_PIN1,		"SETTING_PW_TYPE_CHANGE_PIN",			pwd_handler_sec_pw_change_pin1},
 #if SUPPORT_FDN
-	{ SETTING_SEC_PW_FDN_MODE_ON, 		"SETTING_PW_TYPE_FDN_MODE_ON",			pwd_handler_sec_pw_fdn_mode_on},
-	{ SETTING_SEC_PW_FDN_MODE_OFF, 		"SETTING_PW_TYPE_FDN_MODE_OFF",			pwd_handler_sec_pw_fdn_mode_off},
+	{ SETTING_SEC_PW_FDN_MODE_ON,		"SETTING_PW_TYPE_FDN_MODE_ON",			pwd_handler_sec_pw_fdn_mode_on},
+	{ SETTING_SEC_PW_FDN_MODE_OFF,		"SETTING_PW_TYPE_FDN_MODE_OFF",			pwd_handler_sec_pw_fdn_mode_off},
 #endif
-	{ SETTING_SEC_PW_CHANGE_PIN2, 		"SETTING_PW_TYPE_CHANGE_PIN2",			pwd_handler_sec_pw_change_pin2},
-	{ SETTING_SEC_PW_PIN1_BLOCKED, 		"SETTING_PW_TYPE_PIN_BLOCKED",			pwd_handler_sec_pw_pin1_blocked},
-	{ SETTING_SEC_PW_PIN2_BLOCKED, 		"SETTING_PW_TYPE_PIN2_BLOCKED",			pwd_handler_sec_pw_pin2_blocked},
-	{ SETTING_SEC_PW_PIN1_UNBLOCKED, 		"SETTING_PW_TYPE_PIN1_UNBLOCKED",		pwd_handler_sec_pw_pin_lock_on},
-	{ SETTING_SEC_PW_PIN2_UNBLOCKED, 		"SETTING_PW_TYPE_PIN2_UNBLOCKED",		pwd_handler_sec_pw_pin2_unblocked},
-	{ SETTING_SEC_PW_PUK1_BLOCKED, 		"SETTING_PW_TYPE_PUK1_BLOCKED",		pwd_handler_sec_pw_puk1_blocked},
-	{ SETTING_SEC_PW_PUK2_BLOCKED, 		"SETTING_PW_TYPE_PUK2_BLOCKED",		pwd_handler_do_nothing},
+	{ SETTING_SEC_PW_CHANGE_PIN2,		"SETTING_PW_TYPE_CHANGE_PIN2",			pwd_handler_sec_pw_change_pin2},
+	{ SETTING_SEC_PW_PIN1_BLOCKED,		"SETTING_PW_TYPE_PIN_BLOCKED",			pwd_handler_sec_pw_pin1_blocked},
+	{ SETTING_SEC_PW_PIN2_BLOCKED,		"SETTING_PW_TYPE_PIN2_BLOCKED",			pwd_handler_sec_pw_pin2_blocked},
+	{ SETTING_SEC_PW_PIN1_UNBLOCKED,		"SETTING_PW_TYPE_PIN1_UNBLOCKED",		pwd_handler_sec_pw_pin_lock_on},
+	{ SETTING_SEC_PW_PIN2_UNBLOCKED,		"SETTING_PW_TYPE_PIN2_UNBLOCKED",		pwd_handler_sec_pw_pin2_unblocked},
+	{ SETTING_SEC_PW_PUK1_BLOCKED,		"SETTING_PW_TYPE_PUK1_BLOCKED",		pwd_handler_sec_pw_puk1_blocked},
+	{ SETTING_SEC_PW_PUK2_BLOCKED,		"SETTING_PW_TYPE_PUK2_BLOCKED",		pwd_handler_do_nothing},
 	/*------------------------------------------------------------------------------------------------------------*/
-	{ SETTING_SEC_PW_MAX, 				NULL, 									pwd_handler_do_nothing}
+	{ SETTING_SEC_PW_MAX,				NULL,									pwd_handler_do_nothing}
 };
 
 static void setting_security_ug_cb_resize(void *data, Evas *e,
@@ -503,7 +503,7 @@ static void *setting_security_ug_on_create(ui_gadget_h ug,
 	securityUG->tapi_async_cb_check_timer = NULL;
 	securityUG->input_pwd = NULL;
 	/*securityUG->cur_enc_mode = 0; */
-	/*  creating a view. */
+	/*	creating a view. */
 	securityUG->handle =  tel_init(NULL);
 	if (!securityUG->handle) {
 		SETTING_TRACE_ERROR("*** [ERR] tel_init. ***");
@@ -568,9 +568,9 @@ static void setting_security_ug_on_pause(ui_gadget_h ug, app_control_h service,
 
 #ifdef ECORE_X
 			unsigned int val[3];
-			val[0] = 1; 	/* always enable */
+			val[0] = 1;		/* always enable */
 			val[1] = 1;		/* quickpanel enable */
-			val[2] = 1; 	/* apptray enable */
+			val[2] = 1;		/* apptray enable */
 			/* set quickpanel enable */
 			Ecore_X_Atom ATOM_PANEL_SCROLLABLE_STATE = 0;
 			ATOM_PANEL_SCROLLABLE_STATE = ecore_x_atom_get("_E_MOVE_PANEL_SCROLLABLE_STATE");
@@ -1208,8 +1208,8 @@ gboolean setting_security_create_firewall_sg(void *data)
  *call back func
  *
  ***************************************************/
-/* -1 	on fail */
-/* 0~n 	on success */
+/* -1	on fail */
+/* 0~n	on success */
 int _get_security_table_index(char *name)
 {
 	int i = 0;
@@ -1265,7 +1265,7 @@ setting_security_result_password_ug_cb(ui_gadget_h ug, app_control_h service,
 			FREE(current);
 		return;
 	} else {
-		int index =  _get_security_table_index(result);
+		int index =	 _get_security_table_index(result);
 
 		if (index != -1) {
 			security_table[index].passwd_handler(ad, NULL);

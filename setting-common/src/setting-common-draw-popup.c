@@ -409,7 +409,7 @@ Evas_Object *setting_create_popup(void *data,
 * @brief The general API to create a popup window which contents a progressbar
 *
 * @param data				application context
-* @param parent 				parent window
+* @param parent					parent window
 * @param progressbar_style		progressbar style(process_small/process_medium/process_large)
 * @param title					popup title
 * @param text				popup text
@@ -488,7 +488,7 @@ Evas_Object *setting_create_popup_with_progressbar(void *data,
 *
 * @param genlist				genlist
 * @param data				application context
-* @param parent 				parent window
+* @param parent					parent window
 * @param title					popup title
 * @param response_cb			called When btn was clicked
 * @param timeout				timeout sec

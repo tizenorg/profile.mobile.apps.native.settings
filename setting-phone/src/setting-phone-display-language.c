@@ -51,7 +51,7 @@ static void setting_phone_display_language_caller_exist_right_cb(void *data,
 	setting_retm_if(data == NULL, "Data parameter is NULL");
 
 	SettingPhoneUG *ad = (SettingPhoneUG *) data;
-	/*  Create Bundle and send message */
+	/*	Create Bundle and send message */
 	app_control_h svc;
 	if (app_control_create(&svc)) {
 		return;
@@ -207,7 +207,7 @@ static void setting_phone_display_language_close_popup_ex(void *data)
 			FREE(lang);
 		}
 
-		/*  Create Bundle and send message */
+		/*	Create Bundle and send message */
 		app_control_h svc;
 		if (app_control_create(&svc)) {
 			return;
@@ -375,7 +375,7 @@ static int setting_phone_display_language_destroy(void *cb)
 
 	evas_object_smart_callback_del(ad->gl_lang, "realized", __gl_realized_cb);
 
-	/*  FIXED : destroy only if it was created. */
+	/*	FIXED : destroy only if it was created. */
 	if (setting_view_phone_display_language.is_create) {
 		if (ad->pop_progress_lang) {
 			evas_object_del(ad->pop_progress_lang);

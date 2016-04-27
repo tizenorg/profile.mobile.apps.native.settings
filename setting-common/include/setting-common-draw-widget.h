@@ -83,6 +83,7 @@ extern const Elm_Genlist_Item_Class itc_multiline_2text;
 extern const Elm_Genlist_Item_Class itc_1text_1icon_divider;
 extern const Elm_Genlist_Item_Class itc_normal_1text;
 extern const Elm_Genlist_Item_Class itc_bottom_line;
+extern const Elm_Genlist_Item_Class itc_bottom_line1;
 
 
 #define ADD_GL_LABLE(scroller, str) \
@@ -121,7 +122,7 @@ extern const Elm_Genlist_Item_Class itc_bottom_line;
 																					NULL,\
 																					NULL,\
 																					SWALLOW_Type_LAYOUT_SPECIALIZTION_X,\
-																					NULL, NULL, 0,  str, NULL, NULL);\
+																					NULL, NULL, 0,	str, NULL, NULL);\
 			setting_retvm_if(NULL == item_data, NULL, "item_data is NULL");\
 			elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
 		}\
@@ -661,7 +662,7 @@ extern Elm_Object_Item *setting_create_navi_bar_top_buttons(char *title_str,
 /**
 * Create buttons on the specialized navigation bar
 * @param[in] eo_view	navigation bar's content
-* @param[in] controlbar   title obj of navigation bar
+* @param[in] controlbar	  title obj of navigation bar
 */
 extern void
 setting_create_navi_bar_buttons(char *title_str,
@@ -673,10 +674,10 @@ setting_create_navi_bar_buttons(char *title_str,
 
 /**
 * The general API to create a layout with navigation bar,
-*   which contents any evas container object(@param[eo_view]) as its content
+*	which contents any evas container object(@param[eo_view]) as its content
 *
 * @param[in] eo_view	navigation bar's content
-* @param[out] titleobj   title obj of navigation bar
+* @param[out] titleobj	 title obj of navigation bar
 *
 * return main layout of UG or App..
 */
@@ -693,9 +694,9 @@ Evas_Object *setting_create_layout_navi_bar(Evas_Object *win_layout,
 
 /**
 * The API to create a layout with navigation bar,
-*   which contents a scroller object as its content
+*	which contents a scroller object as its content
 *
-* @param[out] scroller   navigation bar's content
+* @param[out] scroller	 navigation bar's content
 *
 * @return a layout with a special navigation bar and at most 2 buttons
 */
@@ -729,7 +730,7 @@ extern Evas_Object *setting_create_layout_navi_bar_genlist(Evas_Object *win_layo
 
 /**
 * The general API to push any evas object(@param[in][eo_view]) to the specialized navi_bar,
-*   which contents at most 3 buttons
+*	which contents at most 3 buttons
 */
 extern Elm_Object_Item *setting_push_layout_navi_bar(char *title_str,
 													 char *lbutton_str, char *rbutton_str,
@@ -744,7 +745,7 @@ extern Elm_Object_Item *setting_push_layout_navi_bar(char *title_str,
 
 /**
 * The API to push a scroller object(@param[in][scroller]) to the specialized navi_bar,
-*   which contents at most 2 buttons
+*	which contents at most 2 buttons
 */
 extern Elm_Object_Item *setting_push_layout_navi_bar_scroller(Evas_Object *win_main,
 															  char *title_str,
@@ -758,7 +759,7 @@ extern Elm_Object_Item *setting_push_layout_navi_bar_scroller(Evas_Object *win_m
 
 /**
 * The API to push a genlist object(@param[in][genlist]) to the specialized navi_bar,
-*   which contents at most 2 buttons
+*	which contents at most 2 buttons
 */
 extern Elm_Object_Item *
 setting_push_layout_navi_bar_genlist(Evas_Object *win_layout,
@@ -1024,7 +1025,7 @@ EXPORT_PUBLIC Evas_Object *setting_create_popup2(void *data,
  * @brief The general API to create a popup window which contents a progressbar
  *
  * @param data					application context
- * @param parent 				parent window
+ * @param parent				parent window
  * @param progressbar_style		progressbar style(process_small/process_medium/process_large)
  * @param title					popup title
  * @param text					popup text
@@ -1051,7 +1052,7 @@ EXPORT_PUBLIC Evas_Object *setting_create_popup_with_progressbar(void *data,
  *
  * @param genlist			genlist
  * @param data				application context
- * @param parent 			parent window
+ * @param parent			parent window
  * @param title				popup title
  * @param response_cb		called When btn was clicked
  * @param timeout			timeout sec

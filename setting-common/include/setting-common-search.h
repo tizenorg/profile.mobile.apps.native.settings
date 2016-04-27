@@ -6,7 +6,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://floralicense.org/license/
+ *	   http://floralicense.org/license/
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an AS IS BASIS,
@@ -41,7 +41,7 @@
 #define FALSE 0
 #endif
 
-#define SEARCH_DB_PATH 	_TZ_SYS_DATA"/setting/test.db"
+#define SEARCH_DB_PATH	_TZ_SYS_DATA"/setting/test.db"
 #define SEARCH_DB_QUERY "select * from setting_search indexed by search_index where locale = %Q and keystr LIKE '%%%q%%'"
 #define SEARCH_DB_QUERY_SELECT_ALL "select * from setting_search indexed by search_index where locale = %Q"
 #define SEARCH_COUNT_DB_QUERY "select count(*) from setting_search indexed by search_index where locale = %Q and keystr LIKE '%%%q%%'"

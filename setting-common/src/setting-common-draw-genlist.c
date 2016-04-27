@@ -72,6 +72,16 @@ const Elm_Genlist_Item_Class itc_sep_line = {
 
 EXPORT_PUBLIC
 const Elm_Genlist_Item_Class itc_bottom_line = {
+	/*.item_style = "bottom_line", */
+	.item_style = "full",
+	.func.text_get = NULL,
+	.func.content_get = _gl_Gendial_new_content_get,
+	.func.state_get = NULL,
+	.func.del = _gl_Gendial_del,
+};
+
+EXPORT_PUBLIC
+const Elm_Genlist_Item_Class itc_bottom_line1 = {
 	.item_style = "bottom_line",
 	.func.text_get = NULL,
 	.func.content_get = NULL,
@@ -174,7 +184,7 @@ static void __radio_changed(void *data, Evas_Object *obj, void *event_info)
 	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item =
 		(Setting_GenGroupItem_Data *) data;
-	list_item->chk_status = elm_radio_value_get(obj);	/*  for update */
+	list_item->chk_status = elm_radio_value_get(obj);	/*	for update */
 }
 
 static void __entry_changed(void *data, Evas_Object *obj, void *event_info)
@@ -203,7 +213,7 @@ static void __chk_changed(void *data, Evas_Object *obj, void *event_info)
 	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item =
 		(Setting_GenGroupItem_Data *) data;
-	list_item->chk_status = elm_check_state_get(obj);	/*  for update */
+	list_item->chk_status = elm_check_state_get(obj);	/*	for update */
 }
 
 static void __error_popup_response_cb(void *data, Evas_Object *obj,
@@ -278,7 +288,7 @@ void setting_sub_list_rd_change(void *data, Evas_Object *obj, void *event_info)
 	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item =
 		(Setting_GenGroupItem_Data *) data;
-	list_item->chk_status = elm_radio_value_get(obj);	/*  for update */
+	list_item->chk_status = elm_radio_value_get(obj);	/*	for update */
 
 	Elm_Object_Item *subItem = list_item->item;
 	Elm_Object_Item *parentItem = elm_genlist_item_parent_get(subItem);
@@ -387,7 +397,7 @@ static char *_gl_Gendial_new_text_get(void *data, Evas_Object *obj,
 	/* style == multiline ---------> "elm.text.multiline" */
 	/*------------------------------------------------------------- */
 	/* style != multiline ---------> "elm.text" */
-	/*                               "elm.text.sub" */
+	/*								 "elm.text.sub" */
 	/*------------------------------------------------------------- */
 	if (!safeStrCmp(item_data->itc, "multiline")) {
 
@@ -1203,7 +1213,7 @@ static void __picker_popup_set_btn_clicked_cb(void *data, Evas_Object *obj, void
 
 static Evas_Object *_datefield_picker_popup_add(Evas_Object *parent, Evas_Object *datetime, void *data)
 {
-	Datefield_Paramdata  *param = (Datefield_Paramdata *)data;
+	Datefield_Paramdata	 *param = (Datefield_Paramdata *)data;
 
 	Setting_GenGroupItem_Data *item_data = param->item_data;
 
@@ -1258,7 +1268,7 @@ static void _datefield_date_btn_clicked_cb(void *data, Evas_Object *obj, void *e
 	SETTING_TRACE_BEGIN;
 
 	/*Evas_Object *parent = data; */
-	Datefield_Paramdata  *param = (Datefield_Paramdata *)data;
+	Datefield_Paramdata	 *param = (Datefield_Paramdata *)data;
 	Evas_Object *popup = _datefield_picker_popup_add(param->parent, obj/*elm_button*/, param/* context */);
 
 	elm_object_part_text_set(popup, "title,text", _("IDS_ST_BODY_SET_DATE"));
@@ -1289,7 +1299,7 @@ static void _datefield_date_btn_clicked_cb(void *data, Evas_Object *obj, void *e
 static void _datefield_time_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	Datefield_Paramdata  *param = (Datefield_Paramdata *)data;
+	Datefield_Paramdata	 *param = (Datefield_Paramdata *)data;
 
 	Evas_Object *datetime = elm_datetime_add(param->parent);
 #if 1
@@ -1389,7 +1399,7 @@ static Evas_Object *__add_datefield_new(Setting_GenGroupItem_Data *item_data, Ev
 	SETTING_TRACE_BEGIN;
 	retv_if(!item_data || !parent, NULL);
 
-	Datefield_Paramdata  *param = malloc(sizeof(Datefield_Paramdata));
+	Datefield_Paramdata	 *param = malloc(sizeof(Datefield_Paramdata));
 	setting_retvm_if(NULL == param, NULL, "param is NULL");
 
 	param->item_data = item_data;

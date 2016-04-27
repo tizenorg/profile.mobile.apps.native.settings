@@ -20,7 +20,7 @@
  */
 
 #include <setting-phone-license-main.h>
-#define TEXT_CLEAR_LICENSE   "IDS_ST_BODY_REMOVE_LICENCE"
+#define TEXT_CLEAR_LICENSE	 "IDS_ST_BODY_REMOVE_LICENCE"
 
 static int setting_phone_license_main_create(void *cb);
 static int setting_phone_license_main_destroy(void *cb);
@@ -119,7 +119,7 @@ static int setting_phone_license_main_cleanup(void *cb)
 	SettingPhoneUG *ad = (SettingPhoneUG *) cb;
 
 	if (ad->ly_license != NULL) {
-		/*  evas_object_hide(ad->ly_license); */
+		/*	evas_object_hide(ad->ly_license); */
 	}
 
 	return SETTING_RETURN_SUCCESS;

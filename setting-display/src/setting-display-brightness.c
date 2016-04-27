@@ -356,7 +356,7 @@ static void _brightness_slider_mouse_up_cb(void *data, Evas *e, Evas_Object *obj
 	SETTING_TRACE_END;
 }
 
-const char  *setting_brightness_get_slider_icon(int level)
+const char	*setting_brightness_get_slider_icon(int level)
 {
 	int mapped_level = 0;
 
@@ -475,7 +475,7 @@ void __display_int_vconf_cb(keynode_t *key, void *data)
 			}
 
 			/*set the device side value */
-			/*err =  device_display_set_brightness(0, val); */
+			/*err =	 device_display_set_brightness(0, val); */
 			err = display_set_brightness_with_setting(val);
 			if (err != DEVICE_ERROR_NONE) {
 				SETTING_TRACE(" device_display_set_brightness : failed[ret=%d]", err);
@@ -583,7 +583,7 @@ static Evas_Object *__setting_brightness_add_slider(void *data, Evas_Object *obj
 
 		int auto_value = SETTING_BRIGHTNESS_AUTOMATIC_ON;
 		int err, ret;
-		Evas_Object *slider = elm_slider_add(obj);	/*  "elm/slider/horizontal/default" */
+		Evas_Object *slider = elm_slider_add(obj);	/*	"elm/slider/horizontal/default" */
 		retv_if(slider == NULL, NULL);
 
 		ret = setting_get_int_slp_key(INT_SLP_SETTING_AUTOMATIC_BRIGHTNESS, &auto_value, &err);/*if get failed,to hold value SETTING_BRIGHTNESS_AUTOMATIC_ON */

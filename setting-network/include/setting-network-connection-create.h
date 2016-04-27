@@ -41,8 +41,8 @@ static void setting_network_connection_click_softkey_cancel_cb(void *data,
 static Eina_Bool setting_network_connection_click_softkey_back_cb(void *data, Elm_Object_Item *it);
 /*
 static void setting_network_connection_click_softkey_done_cb(void *data,
-						      Evas_Object *obj,
-						      void *event_info); */
+							  Evas_Object *obj,
+							  void *event_info); */
 static void setting_network_connection_hide_input_pannel(void *data);
 static void setting_network_connection_entry_next_activated_cb(void *data, Evas_Object *obj, void *event_info);
 
