@@ -5,7 +5,8 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${SETTING_COMMON}/include)
 
 INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_fileview REQUIRED
-	elementary appcore-common appcore-efl ui-gadget-1 capi-appfw-application evas ecore ewebkit2 libtzplatform-config)
+	elementary appcore-common appcore-efl ui-gadget-1 capi-appfw-application evas ecore
+	chromium-efl	json-glib-1.0 libtzplatform-config)
 
 
 FOREACH(flag ${pkgs_fileview_CFLAGS})
