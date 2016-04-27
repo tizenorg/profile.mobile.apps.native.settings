@@ -36,7 +36,7 @@
 #include <setting-common-view.h>
 
 #define ERR_BIGGER_THAN_2037 "Cannot Set the year bigger than 2037"
-#define AUTO_TIME_UPDATE_ON  "Automatic time update is ON!"
+#define AUTO_TIME_UPDATE_ON	 "Automatic time update is ON!"
 #define SETTING_TIME_AUTO_UPDATE_DESC  "IDS_ST_BODY_USE_TIME_PROVIDED_BY_NETWORK"
 #define NOT_SUPPORT_AUTO_UPDATE_DESC "IDS_ST_POP_AUTO_TIME_UPDATE_UNAVAILABLE_CHOOSE_ALTERNATIVE_TIME_SET_MODE_JPN_SBM"
 
@@ -44,7 +44,7 @@
 #define DATE_TIME_STR_AUTOMATIC_UPDATE "IDS_ST_MBODY_AUTO_UPDATE"
 #define DATE_TIME_STR_TIME_ZONE		"IDS_ST_BODY_TIME_ZONE"
 #define DATE_TIME_STR_DATE_AND_TIME "IDS_ST_BODY_DATE_AND_TIME"
-#define DATE_TIME_STR_TIME_FORMAT   "IDS_ST_BODY_MSG_TIME_FORMAT"
+#define DATE_TIME_STR_TIME_FORMAT	"IDS_ST_BODY_MSG_TIME_FORMAT"
 
 
 typedef struct _SettingTimeUG SettingTimeUG;
@@ -80,7 +80,7 @@ struct _SettingTimeUG {
 	Evas_Object *pop;
 	Eina_Bool is_datefield_selected;
 
-	/*  UI   */
+	/*	UI	 */
 	Setting_GenGroupItem_Data *data_auto;
 	Setting_GenGroupItem_Data *data_tz;
 	Setting_GenGroupItem_Data *data_time;
@@ -94,6 +94,7 @@ struct _SettingTimeUG {
 	Elm_Genlist_Item_Class itc_2text_arrow;
 	Elm_Genlist_Item_Class itc_1text_1icon;
 	Elm_Genlist_Item_Class itc_layout;
+	Elm_Genlist_Item_Class itc_layout_time;
 	Elm_Genlist_Item_Class itc_2text_3_parent;
 	Elm_Genlist_Item_Class itc_1icon_1text_sub;
 

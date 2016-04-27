@@ -690,7 +690,7 @@ static void setting_display_main_auto_rotate_chk_btn_cb(void *data, Evas_Object 
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");
 
-	list_item->chk_status = elm_check_state_get(obj);	/*  for genlist update status */
+	list_item->chk_status = elm_check_state_get(obj);	/*	for genlist update status */
 
 	if (list_item->chk_status == 1) {
 		int angle = elm_win_rotation_get(ad->win_main_layout);

@@ -89,7 +89,7 @@ static void *setting_fileview_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	setting_retvm_if(fileviewUG->win_main_layout == NULL, NULL,
 					 "cannot get main window ");
 
-	/*  creating a view. */
+	/*	creating a view. */
 	if (!__parse_ug_argument(service, priv)) {
 		SETTING_TRACE_ERROR("Invalid arguement");
 		return NULL;
@@ -134,7 +134,7 @@ static void setting_fileview_ug_on_destroy(ui_gadget_h ug, app_control_h service
 
 	evas_object_event_callback_del(fileviewUG->win_main_layout, EVAS_CALLBACK_RESIZE, setting_fileview_ug_cb_resize);	/* fix flash issue for gallery */
 	fileviewUG->ug = ug;
-	/*  delete the allocated objects. */
+	/*	delete the allocated objects. */
 	setting_view_destroy(&setting_view_fileview_main, fileviewUG);
 
 	if (fileviewUG->input_file)

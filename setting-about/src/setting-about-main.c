@@ -52,7 +52,7 @@
 #define EMPTY_LIMITATION_STR		"IDS_ST_BODY_THE_NAME_FIELD_CANNOT_BE_EMPTY"
 #define SOFTWARE_UPDATE_STR		"IDS_ST_MBODY_SOFTWARE_UPDATE"
 #define DEVICE_NAME_UNALLOWED_SPACE_KEY_STR "Device name cannot contain spaces"
-#define DEVICE_NAME_DEFAULE     "Redwood"
+#define DEVICE_NAME_DEFAULE		"Redwood"
 
 #define APP_NAME "Settings"
 
@@ -297,8 +297,8 @@ static void __setting_about_popup_regulatory_info(void *data)
  *		- No ini: Unavailable
  *		- I9500 @ target: GT-I9500
  *		- I9500 @ emul: SDK
- *		- SLP   @ target: GT-SLP
- *		- SLP   @ emul: SDK
+ *		- SLP	@ target: GT-SLP
+ *		- SLP	@ emul: SDK
  *
  * @param szStr the buffer for store the model name
  * @param nSize buffer size
@@ -574,7 +574,7 @@ int setting_about_main_stat_get_cpuinfo(float *usr_pct, float *sys_pct)
 	setting_retvm_if(usr_pct == NULL, -ENOENT, "param usr_pct is null");
 	setting_retvm_if(sys_pct == NULL, -ENOENT, "param sys_pct is null");
 
-	/*  default value */
+	/*	default value */
 	*usr_pct = 0.0;
 	*sys_pct = 0.0;
 	static unsigned long long usr_time = 0, /*nice_time = 0,*/ sys_time = 0;
@@ -605,7 +605,7 @@ int setting_about_main_stat_get_cpuinfo(float *usr_pct, float *sys_pct)
 
 	if (cpu_info_p == NULL) {
 		SETTING_TRACE_ERROR("fgets failed");
-		fclose(fp);   /* free - code */
+		fclose(fp);	  /* free - code */
 		return -ENOENT;
 	}
 
@@ -835,9 +835,9 @@ static void __setting_about_main_popup_cb(void *data, Evas_Object *obj, void *ev
 
 /**
  * @brief device name entry input handing
- * 	- get the current entry text
- * 	- check if the current input text is reached to max length
- *    and show messge to user
+ *	- get the current entry text
+ *	- check if the current input text is reached to max length
+ *	  and show messge to user
  *
  * @param data application data
  * @param obj the entry evas object
@@ -1255,7 +1255,7 @@ static void __setting_about_sub_list_sel_cb(void *data, Evas_Object *obj, void *
 	Elm_Object_Item *parentItem = elm_genlist_item_parent_get(subitem);
 	elm_genlist_item_selected_set(subitem, 0);
 	Setting_GenGroupItem_Data *data_subItem = elm_object_item_data_get(subitem);
-	Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(parentItem);  /* parent data */
+	Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(parentItem);	/* parent data */
 	ret_if(NULL == data_subItem || NULL == data_parentItem);
 
 
@@ -1287,7 +1287,7 @@ static void __setting_about_sub_list_rd_change(void *data, Evas_Object *obj, voi
 	Elm_Object_Item *parentItem = elm_genlist_item_parent_get(subItem);
 
 	Setting_GenGroupItem_Data *data_subItem = elm_object_item_data_get(subItem);	 /* subItem data */
-	Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(parentItem);  /* parent data */
+	Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(parentItem);	/* parent data */
 	ret_if(NULL == data_subItem || NULL == data_parentItem);
 
 	int err;
@@ -1907,7 +1907,7 @@ int setting_about_main_generate_genlist(void *data)
 	/*ad->item_data_imei = item_data; */
 
 	/* 6. [UI] Bluetooth address */
-	if (!is_emul_bin) {  /* requested by DI Kim due to BT BS on 11/26 */
+	if (!is_emul_bin) {	 /* requested by DI Kim due to BT BS on 11/26 */
 		memset(str, 0x00, sizeof(str));
 		setting_about_main_get_bluetooth_address_string(str, sizeof(str));
 		ad->item_data_bt =
@@ -2223,7 +2223,7 @@ static int setting_about_main_cleanup(void *cb)
 	SettingAboutUG *ad = (SettingAboutUG *) cb;
 
 	if (ad->ly_main != NULL) {
-		/*  evas_object_hide(ad->ly_main); */
+		/*	evas_object_hide(ad->ly_main); */
 	}
 
 	return SETTING_RETURN_SUCCESS;

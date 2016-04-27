@@ -58,9 +58,9 @@
 #define VCONFKEY_SETAPPL_DATA_EACH_MONTH_INT		VCONFKEY_SETAPPL_PREFIX"/data_each_month"
 #define VCONFKEY_SETAPPL_DATA_EACH_MONTH_APP_INT	VCONFKEY_SETAPPL_PREFIX"/data_each_month_app"
 
-#define VCONFKEY_SETAPPL_TAP_TWIST          VCONFKEY_SETAPPL_PREFIX"/motion/tap_twist"
+#define VCONFKEY_SETAPPL_TAP_TWIST			VCONFKEY_SETAPPL_PREFIX"/motion/tap_twist"
 #ifndef VCONFKEY_SETAPPL_USE_MUTE_PAUSE
-#define VCONFKEY_SETAPPL_USE_MUTE_PAUSE     VCONFKEY_SETAPPL_PREFIX"db/setting/use_mute_pause"
+#define VCONFKEY_SETAPPL_USE_MUTE_PAUSE		VCONFKEY_SETAPPL_PREFIX"db/setting/use_mute_pause"
 #endif
 
 /*Driving Mode(DM) */
@@ -81,11 +81,11 @@
 #define VCONFKEY_SETAPPL_FIREWALL_PROTOCOL_BLOCK_TYPE	VCONFKEY_SETAPPL_PREFIX"/firewall_protocol_block"
 
 #ifndef VCONFKEY_SETAPPL_DEFAULT_MEM_WIFI_DIRECT_INT
-#define VCONFKEY_SETAPPL_DEFAULT_MEM_WIFI_DIRECT_INT      VCONFKEY_SETAPPL_PREFIX"/default_memory/wifi_direct"
+#define VCONFKEY_SETAPPL_DEFAULT_MEM_WIFI_DIRECT_INT	  VCONFKEY_SETAPPL_PREFIX"/default_memory/wifi_direct"
 #endif
 
 #ifndef VCONFKEY_SETAPPL_DEFAULT_MEM_INSTALL_APPLICATIONS_INT
-#define VCONFKEY_SETAPPL_DEFAULT_MEM_INSTALL_APPLICATIONS_INT      VCONFKEY_SETAPPL_PREFIX"/default_memory/install_applications"
+#define VCONFKEY_SETAPPL_DEFAULT_MEM_INSTALL_APPLICATIONS_INT	   VCONFKEY_SETAPPL_PREFIX"/default_memory/install_applications"
 #endif
 
 
@@ -277,7 +277,7 @@ extern int setting_compare_password(char *md_result, const char *in_later);
 extern setting_lang_entry *setting_get_language_table();
 extern Eina_List *setting_get_language_list();
 extern Eina_List *setting_get_language_list2();
-extern void  setting_get_language_list_destroy();
+extern void	 setting_get_language_list_destroy();
 
 /*---------------------------------------------------------------------------------------------- */
 /* export&import function */

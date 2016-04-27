@@ -396,7 +396,7 @@ static void storageUg_misces_handle_selecting(SettingStorageUG *ad)
 	else
 		ad->misces_is_select_all = EINA_FALSE;
 
-	/*  text set and timeout set */
+	/*	text set and timeout set */
 	if (0 < ad->misces_checked) {
 		char text[MAX_DISPLAY_NAME_LEN_ON_UI] = {0};
 
@@ -530,7 +530,7 @@ static inline void setting_storage_select_all_chk_btn_cb(void *data, Evas_Object
 	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
 	SettingStorageUG *ad = (SettingStorageUG *)list_item->userdata;
 
-	list_item->chk_status = elm_check_state_get(obj);	/*  for genlist update status */
+	list_item->chk_status = elm_check_state_get(obj);	/*	for genlist update status */
 	ad->misces_is_select_all = elm_check_state_get(obj);
 
 	SETTING_TRACE_ERROR("1");

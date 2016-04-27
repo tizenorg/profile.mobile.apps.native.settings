@@ -106,7 +106,7 @@ static int _format_font_name_by_id(char *font_data, char *font_name_id, char *te
 	int count = 0;
 	while (*pos != '\0') {
 		if (*pos == ' ') {
-			SETTING_TRACE(">>>  empty ' ' ");
+			SETTING_TRACE(">>>	empty ' ' ");
 			new_name[count] = '\\';
 			count++;
 			new_name[count] = ' ';
@@ -467,7 +467,7 @@ void setting_font_main_list_sel_cb(void *data, Evas_Object *obj, void *event_inf
 	SettingFontUG *ad = (SettingFontUG *) data;
 
 
-	/*  if not change, return */
+	/*	if not change, return */
 	if (ad->prev_font == data_subItem->chk_status) {
 		SETTING_TRACE("NOT CHANGED ");
 		return;
@@ -585,7 +585,7 @@ static void __font_vconf_change_cb(keynode_t *key, void *data)
 
 #define SLIDER_MAX_VALUE 4
 
-#define SLIDER_START_POINT_X( ad )  _slider_startpoint_x(ad)
+#define SLIDER_START_POINT_X( ad )	_slider_startpoint_x(ad)
 #define SLIDER_END_POINT_X( ad ) (_slider_get_width(ad) - SLIDER_START_POINT_X(ad))
 #define SLIDER_LENGTH(ad) (SLIDER_END_POINT_X(ad) - SLIDER_START_POINT_X(ad))
 
@@ -636,7 +636,7 @@ static int _slider_endpoint_x()
 
 /**
  * ad->rotate_angle = 90;	// do it
- * ad->rotate_angle = 270;  // do it
+ * ad->rotate_angle = 270;	// do it
  */
 static int _slider_startpoint_x(void *data)
 {
@@ -802,7 +802,7 @@ static void __setting_get_font_type_str(void *data, char *font_data)
 	int count = 0;
 	while (*pos != '\0') {
 		if (*pos == ' ') {
-			SETTING_TRACE(">>>  empty ' ' ");
+			SETTING_TRACE(">>>	empty ' ' ");
 			new_name[count] = '\\';
 			count++;
 			new_name[count] = ' ';

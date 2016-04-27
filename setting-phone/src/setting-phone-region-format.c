@@ -237,25 +237,25 @@ static int setting_phone_region_format_get_region_fmt(char *list[],
 		uloc_getDisplayLanguage(loc_list, localeID, lang, LANGUAGE_STR_LEN, &language_status);
 		if (U_FAILURE(language_status)) {
 			SETTING_TRACE_ERROR("language_status got an error %s:%d ", language_status, language_status);
-			language_status = U_ZERO_ERROR;   /* set the value to the initial value */
+			language_status = U_ZERO_ERROR;	  /* set the value to the initial value */
 		}
 
 		uloc_getDisplayCountry(loc_list, localeID, country, COUNTRY_STR_LEN, &country_status);
 		if (U_FAILURE(country_status)) {
 			SETTING_TRACE_ERROR("country_status got an error %s:%d ", country, country_status);
-			country_status = U_ZERO_ERROR; 	/* set the value to the initial value */
+			country_status = U_ZERO_ERROR;	/* set the value to the initial value */
 		}
 
 		uloc_getDisplayVariant(loc_list, localeID, variant, SETTING_STR_SLP_LEN, &variant_status);
 		if (U_FAILURE(variant_status)) {
 			SETTING_TRACE_ERROR("variant_status got an error %s:%d ", variant, variant_status);
-			variant_status = U_ZERO_ERROR; 	/* set the value to the initial value */
+			variant_status = U_ZERO_ERROR;	/* set the value to the initial value */
 		}
 
 		uloc_getDisplayName(loc_list, localeID, displayname, SETTING_STR_SLP_LEN, &displayname_status);
 		if (U_FAILURE(displayname_status)) {
 			SETTING_TRACE_ERROR("displayname_status got an error %s:%d ", displayname, displayname_status);
-			displayname_status = U_ZERO_ERROR; 	/* set the value to the initial value */
+			displayname_status = U_ZERO_ERROR;	/* set the value to the initial value */
 		}
 		UErrorCode errcode;
 		u_strToUpper(displayname, 1, displayname, 1, "", &errcode);
@@ -292,7 +292,7 @@ static int setting_phone_region_format_get_region_fmt(char *list[],
 			continue;
 		}
 
-		/*  filter which has variant */
+		/*	filter which has variant */
 		if (str_lang != NULL && str_country != NULL
 			&& safeStrLen(str_country) > 1 && safeStrLen(str_variant) == 0) {
 			Setting_Region_Table *item_data = (Setting_Region_Table *) calloc(1, sizeof(Setting_Region_Table));
@@ -398,7 +398,7 @@ EXPORT_PUBLIC int setting_phone_region_format_set_dateformat(const char *region,
 	int len = safeStrLen(bestPatternString);
 	char region_format[4] = {0, };
 	int ymd[3] = {0, };
-	/*  only save 'y', 'M', 'd' charactor */
+	/*	only save 'y', 'M', 'd' charactor */
 	for (; i < len; i++) {
 		if (bestPatternString[i] == 'y' && ymd[0] == 0) {
 			region_format[j++] = bestPatternString[i];
@@ -417,7 +417,7 @@ EXPORT_PUBLIC int setting_phone_region_format_set_dateformat(const char *region,
 	char *date_format_str[DATA_FORMAT_CATEGORY_NUM] = {
 		"dMy", "Mdy", "yMd", "ydM"
 	};
-	int date_format_vconf_value = DATA_FORMAT_DEFAULT;	/*  default is "Mdy" */
+	int date_format_vconf_value = DATA_FORMAT_DEFAULT;	/*	default is "Mdy" */
 	for (i = 0; i < DATA_FORMAT_CATEGORY_NUM; i++) {
 		if (!safeStrCmp(region_format, date_format_str[i])) {
 			date_format_vconf_value = i;
@@ -465,7 +465,7 @@ static char *__region_format_vconf_str_get()
 			str_region = (char *)g_strdup(tempstr);
 			SETTING_TRACE_ERROR("region format vconf stored error");
 		}
-	} else  {
+	} else	{
 		str_region = (char *)g_strdup("en_US");
 	}
 
@@ -752,7 +752,7 @@ static Eina_Bool __region_animator_cb(void *data)
 	SettingPhoneUG *ad = (SettingPhoneUG *) data;
 
 	Setting_GenGroupItem_Data *item_data = NULL;
-	if (ad->gl_region_cur_index >=  ad->region_num) {
+	if (ad->gl_region_cur_index >=	ad->region_num) {
 		/*? Setting_GenGroupItem_Data *last_item = (Setting_GenGroupItem_Data *) */
 		elm_object_item_data_get(elm_genlist_last_item_get(ad->gl_region));
 
@@ -984,7 +984,7 @@ static Eina_Bool setting_phone_region_format_caller_exist_right_cb(void *data, E
 	setting_retvm_if(data == NULL, EINA_FALSE, "Data parameter is NULL");
 
 	SettingPhoneUG *ad = (SettingPhoneUG *) data;
-	/*  Create Bundle and send message */
+	/*	Create Bundle and send message */
 	app_control_h svc;
 	if (app_control_create(&svc)) {
 		return EINA_FALSE;
@@ -1133,7 +1133,7 @@ static int setting_phone_region_format_destroy(void *cb)
 	/*Apply new SIP concept */
 	evas_object_data_set(ad->navi_bar, "sip.naviframe.title_obj", NULL);
 
-	/*  FIXED : destroy only if it was created. */
+	/*	FIXED : destroy only if it was created. */
 	if (setting_view_phone_region_format.is_create) {
 		if (ad->region_search_id) {
 			FREE(ad->region_search_id);

@@ -24,7 +24,7 @@
 
 
 #define GROUP_MAX	30
-#define USB_BTN_NO  0
+#define USB_BTN_NO	0
 #define SETTING_CPU_USAGE_PKG_NAME "org.tizen.dispcpuinfo"
 
 #define DIAGNOSTICS_USAGE_STR						"IDS_ST_BODY_CRASH_VIEWER"
@@ -36,8 +36,8 @@
 #define HARDWARE_STR								"IDS_ST_BODY_HARDWARE"
 #else
 #define NONE_STR									"NONE"	/* -1 */
-#define SOFTWARE_STR								"OFF"	/*  0 */
-#define HARDWARE_STR								"ON"	/*  1 */
+#define SOFTWARE_STR								"OFF"	/*	0 */
+#define HARDWARE_STR								"ON"	/*	1 */
 #endif
 #define CONNECTTIVITY_SELECT_INFO_POPUP_STR		"IDS_HS_HEADER_USB_DEBUGGING_CONNECTED"
 
@@ -164,8 +164,8 @@ static void __setting_devoptions_main_exp_cb(void *data, Evas_Object *obj, void 
 	SETTING_TRACE_BEGIN;
 	SettingConnectivityUG *ad = (SettingConnectivityUG *) data;
 
-	Elm_Object_Item *parentItem = event_info;   /*parent item */
-	Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(parentItem);  /*parent data */
+	Elm_Object_Item *parentItem = event_info;	/*parent item */
+	Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(parentItem);	/*parent data */
 	Evas_Object *scroller = elm_object_item_widget_get(parentItem);
 
 	Evas_Object *rgd;
@@ -341,7 +341,7 @@ static void setting_connectivity_main_chk_btn_cb(void *data, Evas_Object *obj, v
 
 	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
 
-	list_item->chk_status = elm_check_state_get(obj);   /* for genlist update status */
+	list_item->chk_status = elm_check_state_get(obj);	/* for genlist update status */
 
 	int opposite  = (list_item->chk_status == 1) ? SETTING_ON_OFF_BTN_ON : SETTING_ON_OFF_BTN_OFF;
 
@@ -570,7 +570,7 @@ static int setting_connectivity_usb_create(void *cb)
 #if 1
 		/* Get GPU Rendering state */
 
-		const char *render_engine =  _get_graphic_engine();
+		const char *render_engine =	 _get_graphic_engine();
 
 		/* [UI] Force GPU rendering */
 		ad->gpu_render = setting_create_Gendial_exp_parent_field(scroller,

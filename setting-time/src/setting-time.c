@@ -65,7 +65,7 @@ static void *setting_time_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	timeUG->evas = evas_object_evas_get(timeUG->win_main_layout);
 
 	timeUG->pop_progress = NULL;
-	/*  Initialize Caller value */
+	/*	Initialize Caller value */
 	timeUG->caller = NULL;
 
 	setting_retvm_if(timeUG->win_main_layout == NULL, NULL, "cannot get main window ");
@@ -91,7 +91,7 @@ static void *setting_time_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 		timeUG->is_expand_time_format_list = 1;
 	}
 
-	/*  creating a view. */
+	/*	creating a view. */
 	setting_view_node_set_cur_view(&setting_view_time_main);
 	setting_view_create(&setting_view_time_main, (void *)timeUG);
 	evas_object_event_callback_add(timeUG->win_main_layout,
@@ -104,20 +104,20 @@ static void setting_time_ug_on_start(ui_gadget_h ug, app_control_h service,
 									 void *priv)
 {
 	SETTING_TRACE_BEGIN;
-	/*  do nothing */
+	/*	do nothing */
 }
 
 static void setting_time_ug_on_pause(ui_gadget_h ug, app_control_h service,
 									 void *priv)
 {
 	SETTING_TRACE_BEGIN;
-	/*  do nothing */
+	/*	do nothing */
 }
 
 static void setting_time_ug_on_resume(ui_gadget_h ug, app_control_h service,
 									  void *priv)
 {
-	/*  do nothing */
+	/*	do nothing */
 }
 
 static void setting_time_ug_on_destroy(ui_gadget_h ug, app_control_h service,
@@ -130,7 +130,7 @@ static void setting_time_ug_on_destroy(ui_gadget_h ug, app_control_h service,
 	evas_object_event_callback_del(timeUG->win_main_layout, EVAS_CALLBACK_RESIZE, setting_time_ug_cb_resize);	/* fix flash issue for gallery */
 	timeUG->ug = ug;
 
-	/*  delete the allocated objects. */
+	/*	delete the allocated objects. */
 	setting_view_destroy(&setting_view_time_main, timeUG);
 
 	if (NULL != ug_get_layout(timeUG->ug)) {
@@ -202,7 +202,7 @@ static void setting_time_ug_on_key_event(ui_gadget_h ug,
 	case UG_KEY_EVENT_END: {
 #if 0
 			if (0 == safeStrCmp(ad->caller, "pwlock")) {
-				/*  Create Bundle and send message */
+				/*	Create Bundle and send message */
 
 				app_control_h svc;
 				if (app_control_create(&svc))
@@ -267,8 +267,7 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 		FREE(timeUG);
 }
 
-UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
-											 char **applocale)
+UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv, char **applocale)
 {
 	int i, size;
 	Setting_Cfg_Node_T *node;
@@ -276,7 +275,7 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
 
 	const Setting_Cfg_Node_T search_configs[] = {
 		{DATE_TIME_STR_AUTOMATIC_UPDATE, NULL, NULL, 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node, NULL, DATE_TIME_STR_DATE_AND_TIME, NULL, NULL },
-		{DATE_TIME_STR_TIME_ZONE, NULL, NULL, 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node, NULL,  DATE_TIME_STR_DATE_AND_TIME, NULL, NULL },
+		{DATE_TIME_STR_TIME_ZONE, NULL, NULL, 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node, NULL,	 DATE_TIME_STR_DATE_AND_TIME, NULL, NULL },
 
 		/* Duplicated title name : 'Date and time' with UG name : 'Date and time' */
 		{DATE_TIME_STR_DATE_AND_TIME, NULL, NULL,  0, Cfg_Item_unResetable, 0,		Cfg_Item_View_Node, NULL,  DATE_TIME_STR_DATE_AND_TIME, NULL, NULL },

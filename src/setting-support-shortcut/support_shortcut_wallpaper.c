@@ -42,7 +42,7 @@ typedef struct _support_display_appdata {
 	Evas *evas;
 	Evas_Object *win_main;
 	Evas_Object *navibar_main;
-	Evas_Object *ly_main;                   /**< seting view main */
+	Evas_Object *ly_main;					/**< seting view main */
 	app_control_h service;
 	Ecore_Event_Handler *event_handler;
 } support_display_appdata;
@@ -224,7 +224,7 @@ void support_display_app_destroy_ug_cb(ui_gadget_h ug, void *priv)
 {
 	support_display_appdata *ad = (support_display_appdata *) priv;
 	if (!ad)
-		return;		/*  do nothing if ad is NULL */
+		return;		/*	do nothing if ad is NULL */
 
 	elm_win_lower(ad->win_main);
 
@@ -240,7 +240,7 @@ void support_display_app_end_ug_cb(ui_gadget_h ug, void *priv)
 		return;
 	support_display_appdata *ad = (support_display_appdata *) priv;
 	if (!ad)
-		return;		/*  do nothing if ad is NULL */
+		return;		/*	do nothing if ad is NULL */
 	support_display_app_terminate(ad);
 }
 

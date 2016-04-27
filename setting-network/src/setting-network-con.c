@@ -80,7 +80,7 @@ static void __setting_network_con_genlist_create(void *data)
 									 NULL, NULL);
 #endif
 #ifdef ENABLED_2G3G_NETWORK
-	/*  create 3g connection option */
+	/*	create 3g connection option */
 	setting_create_Gendial_field_def(ad->connections_gl, &itc_1text,
 									 setting_network_con_item_Gendial_mouse_up_cb,
 									 ad, SWALLOW_Type_INVALID, NULL, NULL,

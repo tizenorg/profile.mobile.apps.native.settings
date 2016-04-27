@@ -169,7 +169,7 @@ Evas_Object *_view_list_geter(void *data)
 			ug_args = setting_cfg_get_ug_args_idx(i, j);
 			icon_path = setting_cfg_get_icon_path_idx(i, j);
 
-			mainlist_entry *entry =  settinig_drawer_hash_find(ad, keyStr);
+			mainlist_entry *entry =	 settinig_drawer_hash_find(ad, keyStr);
 
 			if (entry) {
 				if (entry->type == UG_HANDLE) {
@@ -251,7 +251,7 @@ static void _setting_tapi_deinit(void *cb)
 		if (tapi_ret != TAPI_API_SUCCESS) {
 			SETTING_TRACE_DEBUG("*** [ERR] tel_deinit. [%d] ***", tapi_ret);
 		} else {
-			SETTING_TRACE("***  tel_deinit OK ");
+			SETTING_TRACE("***	tel_deinit OK ");
 		}
 		ad->handle = NULL;
 	}
@@ -332,7 +332,7 @@ Evas_Object *setting_main_layout_conform_create(Evas_Object *win_layout, Evas_Ob
 
 	SETTING_TRACE_DEBUG("Add conformant!!!!!");
 
-	/*  Base Layout */
+	/*	Base Layout */
 	layout = elm_layout_add(conform);
 	setting_retvm_if(layout == NULL, FALSE, "layout == NULL");
 
@@ -371,9 +371,9 @@ Evas_Object *setting_main_layout_conform_create(Evas_Object *win_layout, Evas_Ob
 * win_main
 * conformant
 * ly_main
-* navibar <- view_layout 	<- "elm.swallow.bg" 		: bg
-* 					  		<- "elm.swallow.content" 	: all_list
-*                        	<- "elm.swallow.left"		: left_panel
+* navibar <- view_layout	<- "elm.swallow.bg"			: bg
+*							<- "elm.swallow.content"	: all_list
+*							<- "elm.swallow.left"		: left_panel
 */
 static int setting_main_create(void *cb)
 {

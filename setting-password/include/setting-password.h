@@ -51,7 +51,7 @@
 #define SETTING_PW_MAX_TITLE_LENGTH MAX_DISPLAY_NAME_LEN_ON_UI
 
 #define PW_NORMAL_CONTAIN_ALPHANUMERIC 4
-#define PW_ERR_DELAY_TIME 	30
+#define PW_ERR_DELAY_TIME	30
 #define ATTEMPT_INFINITE	999999
 
 typedef enum {
@@ -290,7 +290,7 @@ void setting_password_ug_display_desc(void *data, char *desc, int destroy);
 
 extern void setting_password_ug_check_attemps_left(void *data);
 
-int setting_password_check_password(const char *challenge,  unsigned int *remain_attempt, unsigned int *valid_sec);
+int setting_password_check_password(const char *challenge,	unsigned int *remain_attempt, unsigned int *valid_sec);
 int setting_password_set_password(const char *cur_pwd, const char *new_pwd, void *data);
 
 #endif

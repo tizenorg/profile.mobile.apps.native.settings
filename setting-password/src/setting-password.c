@@ -156,7 +156,7 @@ static void __destroy_view(SettingPasswordUG *ad)
 	if (pw_its[ad->view_type].category & SETTING_PW_SUB_CATEGORY_SIMPLE) {
 		setting_view_destroy(&setting_view_password_simple, ad);
 	} else {
-		/*  delete the allocated objects. */
+		/*	delete the allocated objects. */
 		setting_view_destroy(&setting_view_password_main, ad);
 	}
 }
@@ -279,7 +279,7 @@ static void *setting_password_ug_on_create(ui_gadget_h ug,
 
 	setting_view *main_view = __initialize_view_node_table(pw_its[passwordUG->view_type].category);
 
-	/*  creating a view. */
+	/*	creating a view. */
 	setting_view_create(main_view, (void *)passwordUG);
 	evas_object_event_callback_add(passwordUG->win_main_layout,
 								   EVAS_CALLBACK_RESIZE,
@@ -466,7 +466,7 @@ void setting_password_ug_popup_resp_cb(void *data, Evas_Object *obj,
 	app_control_h svc;
 	SettingPasswordUG *ad = (SettingPasswordUG *) data;
 	if (ad->destroy) {
-		/*  Success to Operate */
+		/*	Success to Operate */
 
 		if (app_control_create(&svc))
 			return;
@@ -493,7 +493,7 @@ void setting_password_ug_popup_resp_cb(void *data, Evas_Object *obj,
 		}
 
 		if (diable_view_type) {
-			/*  Success to Operate */
+			/*	Success to Operate */
 
 			if (app_control_create(&svc))
 				return;
@@ -609,7 +609,7 @@ void setting_password_ug_check_attemps_left(void *data)
 
 		setting_password_ug_display_desc(ad, temp_str, FALSE);
 	} else if (value == 0) {
-		/*  store the lock timestamp */
+		/*	store the lock timestamp */
 		time_t cur_time = time(NULL);
 		char cur_timestamp[LOCK_TIMESTAMP_LEN] = { 0, };
 		int ret = snprintf(cur_timestamp, sizeof(cur_timestamp), "%ld", cur_time);

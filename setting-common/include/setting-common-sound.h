@@ -26,7 +26,7 @@
  *
  * @return #0 on success, else on failed
  */
-int  effect_playsound_init();
+int	 effect_playsound_init();
 /**
  * @brief Check whether system is in mute mode
  *
@@ -55,8 +55,8 @@ void effect_playsound_close();
  * the the life of playing is limited by the life of layout.
  * eg, you have a popup which has 2 customized icons in its content, the icon
  * should be clickable. The following requirements was demaned too:
- *   1.view will be changed to another if you click any icon of the popup
- *   2.the popup will be disappeared after you click any icon of the popup
+ *	 1.view will be changed to another if you click any icon of the popup
+ *	 2.the popup will be disappeared after you click any icon of the popup
  * if you add the sound code in edc, the normally case is the tap sound is not
  * played in time before the popup was destroyed, and once popup was destroyed,
  * the edc sound code won't work because the layout was destoryed in that time

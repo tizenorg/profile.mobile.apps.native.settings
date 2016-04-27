@@ -69,7 +69,7 @@
 #define IMG_Font		SETTING_ICON_PATH_CFG"org.tizen.setting.png"
 #define IMG_SmartScreen		SETTING_ICON_PATH_CFG"org.tizen.setting.png"
 #define IMG_USBconnection		SETTING_LIST_ICON_PATH_CFG"settings_list_developer.png"
-#define IMG_SereenMode 	SETTING_ICON_PATH_CFG"org.tizen.setting.png"
+#define IMG_SereenMode	SETTING_ICON_PATH_CFG"org.tizen.setting.png"
 #define IMG_Easy_Mode		SETTING_ICON_PATH_CFG"org.tizen.setting.png"
 #define IMG_MutiWindow			SETTING_ICON_PATH_CFG"org.tizen.setting.png"
 
@@ -108,12 +108,12 @@
 #define IMG_PANNING_CENTER	SETTING_ICON_PATH_CFG "org.tizen.setting.png"
 #define IMG_Panning		SETTING_ICON_PATH_CFG"org.tizen.setting.png"
 #define IMG_Tilt		SETTING_ICON_PATH_CFG"org.tizen.setting.png" /*vconf_get_str(VCONFKEY_BGSET) */
-#define IMG_Palm_MutPause_P     SETTING_ICON_PATH_CFG"org.tizen.setting.png"
-#define IMG_Palm_MutPause_L     SETTING_ICON_PATH_CFG"org.tizen.setting.png"
-#define IMG_Palm_MutPause_Stop_P     SETTING_ICON_PATH_CFG"org.tizen.setting.png"
-#define IMG_Palm_MutPause_Stop_L     SETTING_ICON_PATH_CFG"org.tizen.setting.png"
-#define IMG_Palm_Capture_L     SETTING_ICON_PATH_CFG"org.tizen.setting.png"
-#define IMG_Palm_Capture_P     SETTING_ICON_PATH_CFG"org.tizen.setting.png"
+#define IMG_Palm_MutPause_P		SETTING_ICON_PATH_CFG"org.tizen.setting.png"
+#define IMG_Palm_MutPause_L		SETTING_ICON_PATH_CFG"org.tizen.setting.png"
+#define IMG_Palm_MutPause_Stop_P	 SETTING_ICON_PATH_CFG"org.tizen.setting.png"
+#define IMG_Palm_MutPause_Stop_L	 SETTING_ICON_PATH_CFG"org.tizen.setting.png"
+#define IMG_Palm_Capture_L	   SETTING_ICON_PATH_CFG"org.tizen.setting.png"
+#define IMG_Palm_Capture_P	   SETTING_ICON_PATH_CFG"org.tizen.setting.png"
 
 
 
@@ -125,7 +125,7 @@
 /* screen timeout IMG*/
 #define IMG_SCREEN_TIMEOUT_LEFT	 SETTING_ICON_PATH_CFG"org.tizen.setting.png"
 
-/*  SOUND IMG*/
+/*	SOUND IMG*/
 #define IMG_SLIDER_BTN_VOLUME01 \
 	SETTING_ICON_PATH_CFG"org.tizen.setting.png"
 
@@ -154,7 +154,7 @@
 	SETTING_ICON_PATH_CFG"org.tizen.setting.png"
 
 
-/*  touch IMG*/
+/*	touch IMG*/
 #define IMG_VIBRATION_ICON_01 \
 	SETTING_ICON_PATH_CFG"org.tizen.setting.png"
 #define IMG_VIBRATION_ICON_02 \
@@ -162,7 +162,7 @@
 #define IMG_VIBRATION_ICON_03 \
 	SETTING_ICON_PATH_CFG"org.tizen.setting.png"
 
-/*  Sensitivity IMG*/
+/*	Sensitivity IMG*/
 #define IMG_SENSITIVITY_ICON_01 \
 	SETTING_ICON_PATH_CFG"org.tizen.setting.png"
 #define IMG_SENSITIVITY_ICON_02 \
@@ -172,7 +172,7 @@
 #define IMG_SENSITIVITY_PRESSED_ICON_02 \
 	SETTING_ICON_PATH_CFG"org.tizen.setting.png"
 
-/*  pdf */
+/*	pdf */
 #define PDF_SOURCE_ANNOUNCEMENT \
 	_TZ_SYS_RO_APP"/org.tizen.setting/data/Open_Source_Announcement.pdf"
 
@@ -192,11 +192,11 @@
 #define IMG_SYSTEM_MYFILE_ICON	SYSTEM_ICON_PATH"org.tizen.setting.png"
 
 /* IO profile*/
-#define IMG_INOFFICE_HOMESCREEN_PROFILE 	SETTING_ICON_PATH_CFG"org.tizen.setting.png"
-#define IMG_OUTDOOR_HOMESCREEN_PROFILE 	SETTING_ICON_PATH_CFG"org.tizen.setting.png"
-#define IMG_INOFFICE_FONT_PROFILE 	SETTING_ICON_PATH_CFG"org.tizen.setting.png"
-#define IMG_OUTDOOR_FONT_PROFILE 	SETTING_ICON_PATH_CFG"org.tizen.setting.png"
-#define IMG_EMPTY_PROFILE 	SETTING_ICON_PATH_CFG"org.tizen.setting.png"
+#define IMG_INOFFICE_HOMESCREEN_PROFILE		SETTING_ICON_PATH_CFG"org.tizen.setting.png"
+#define IMG_OUTDOOR_HOMESCREEN_PROFILE	SETTING_ICON_PATH_CFG"org.tizen.setting.png"
+#define IMG_INOFFICE_FONT_PROFILE	SETTING_ICON_PATH_CFG"org.tizen.setting.png"
+#define IMG_OUTDOOR_FONT_PROFILE	SETTING_ICON_PATH_CFG"org.tizen.setting.png"
+#define IMG_EMPTY_PROFILE	SETTING_ICON_PATH_CFG"org.tizen.setting.png"
 
 /* plug in*/
 #define IMG_GREEN_SWITCH	SETTING_ICON_PATH_CFG"org.tizen.setting.png"
@@ -205,17 +205,17 @@
 #define IMG_ICON_EMAIL		"org.tizen.setting.png"
 #define IMG_ICON_SPLITBER_HOR	"org.tizen.setting.png"
 
-#define IMG_SCREEN_MODE 	SETTING_ICON_PATH_CFG"org.tizen.setting.png"
+#define IMG_SCREEN_MODE		SETTING_ICON_PATH_CFG"org.tizen.setting.png"
 
 /*****/
 
 /****Others****/
 
-/*  network*/
+/*	network*/
 extern const char *STR_SETTING_MMS_CONNECTIONS;
 extern const char *STR_SETTING_NEW_CONNECTIONS;
 
-/*  phone > langauge*/
+/*	phone > langauge*/
 extern const char *STR_SETTING_LANG_ENGLISH;
 extern const char *STR_SETTING_LANG_GERMAN;
 extern const char *STR_SETTING_LANG_DUTCH;
@@ -234,41 +234,41 @@ extern const char *STR_SETTING_LANG_RUSSIAN;
 
 
 /* uuid as Setting_Cfg_Node_T primary key */
-#define uuid_Connectivity              "1c83e280-3111-42d7-825f-a8f0f2e79577"
-#define uuid_Joyn                      "7a837bc3-06c0-7d9f-2ef8-49ebaa4aae2a"
-#define uuid_WiFi                      "14cd6b4c-9133-c571-c11f-8cbca16a025a"
-#define uuid_DownloadBooster                   "4984d3de-c8c7-11e3-9436-7446a08e0712"
-#define uuid_Bluetooth                 "beaf505a-d83c-938d-e9f5-44a5638e75db"
-#define uuid_MobileAP                  "1a9b3432-f7a9-0391-134e-03c5a8cab5ba"
-#define uuid_FlightMode                        "0f357cea-91bf-0485-2a8b-53569b490827"
-#define uuid_DataUsage                 "673eda22-db3e-c12b-b0f6-485867760a11"
-#define uuid_Location                  "86029052-c87e-ab5c-2a09-2c1fef36a524"
-#define uuid_Network                   "14dacb84-ec2c-d371-1865-a1509d9d95ac"
-#define uuid_NFC                       "d5a369bc-f241-9ccc-013b-7aab4bf182c8"
-#define uuid_WiFiDirect                        "6f83b633-dbfe-d056-af33-ff624d48d866"
-#define uuid_SoundDisplay              "d22ac480-21b3-e81f-a2fd-f232d06b8a0f"
-#define uuid_Sounds                    "addd75c8-da64-53ae-e866-019ea8f66f08"
-#define uuid_Display                   "4340842d-09d1-2dba-ab2a-283763ec4ec2"
-#define uuid_Personal                  "cca58ed0-53f0-d1ca-3a81-2e3171c9a13f"
-#define uuid_HomeAndLockscreen         "1708b9fa-b802-9a30-9ae7-ae3574533b3e"
-#define uuid_HomeScreen                        "931b0266-c78a-0923-21c0-9ed22b263706"
-#define uuid_LockedScreen              "f75bf0dd-744e-3212-c522-a7c25af41c9f"
-#define uuid_Menuscreen                        "76f9bb4c-fdd8-a1c2-1a36-be5156b32e28"
-#define uuid_Wallpaper                 "345d2710-13cc-875a-b367-a7b0d6b7ef0b"
-#define uuid_Accessibility             "6167dc9e-6c41-7970-bd12-c34ba3c6961e"
-#define uuid_Call                      "7935d4dc-0ac0-665b-995c-e6d038a34643"
-#define uuid_Motions                   "0c5981e6-fe5f-fc79-2e75-1389409fbbdb"
-#define uuid_Accounts                  "af754880-549f-9b0f-2b6e-611e0f824135"
-#define uuid_Reset                     "a5535088-601b-05bb-3bc6-7b6667f3270a"
-#define uuid_DeviceMange               "bc11e5c6-7837-5801-8eac-57504093e285"
-#define uuid_LanguageKeyboard          "624e0a2c-10c3-3b46-8665-4f60bf875bbe"
-#define uuid_DateTime                  "c79eae8d-8eec-5bf8-9f94-4ecfad09e4ee"
-#define uuid_ManageApps                        "c3e7db1d-cb96-b52e-f8ea-6be02ceebe8d"
-#define uuid_APP                               "62B00308-89CA-453D-96AC-1C3B6E42BF41"
-#define uuid_Storage                   "a5a4121c-0c7b-d6ed-81b6-0f4118aad364"
-#define uuid_Security                  "8a684695-8396-cd24-dd7d-c8a3643beca5"
-#define uuid_DeveloperOption           "380f3cfb-0f06-cc99-fe58-96f830e0630e"
-#define uuid_AboutPhone                        "4d02a807-d0c4-0b0c-8497-5133eebed91a"
+#define uuid_Connectivity			   "1c83e280-3111-42d7-825f-a8f0f2e79577"
+#define uuid_Joyn					   "7a837bc3-06c0-7d9f-2ef8-49ebaa4aae2a"
+#define uuid_WiFi					   "14cd6b4c-9133-c571-c11f-8cbca16a025a"
+#define uuid_DownloadBooster				   "4984d3de-c8c7-11e3-9436-7446a08e0712"
+#define uuid_Bluetooth				   "beaf505a-d83c-938d-e9f5-44a5638e75db"
+#define uuid_MobileAP				   "1a9b3432-f7a9-0391-134e-03c5a8cab5ba"
+#define uuid_FlightMode						   "0f357cea-91bf-0485-2a8b-53569b490827"
+#define uuid_DataUsage				   "673eda22-db3e-c12b-b0f6-485867760a11"
+#define uuid_Location				   "86029052-c87e-ab5c-2a09-2c1fef36a524"
+#define uuid_Network				   "14dacb84-ec2c-d371-1865-a1509d9d95ac"
+#define uuid_NFC					   "d5a369bc-f241-9ccc-013b-7aab4bf182c8"
+#define uuid_WiFiDirect						   "6f83b633-dbfe-d056-af33-ff624d48d866"
+#define uuid_SoundDisplay			   "d22ac480-21b3-e81f-a2fd-f232d06b8a0f"
+#define uuid_Sounds					   "addd75c8-da64-53ae-e866-019ea8f66f08"
+#define uuid_Display				   "4340842d-09d1-2dba-ab2a-283763ec4ec2"
+#define uuid_Personal				   "cca58ed0-53f0-d1ca-3a81-2e3171c9a13f"
+#define uuid_HomeAndLockscreen		   "1708b9fa-b802-9a30-9ae7-ae3574533b3e"
+#define uuid_HomeScreen						   "931b0266-c78a-0923-21c0-9ed22b263706"
+#define uuid_LockedScreen			   "f75bf0dd-744e-3212-c522-a7c25af41c9f"
+#define uuid_Menuscreen						   "76f9bb4c-fdd8-a1c2-1a36-be5156b32e28"
+#define uuid_Wallpaper				   "345d2710-13cc-875a-b367-a7b0d6b7ef0b"
+#define uuid_Accessibility			   "6167dc9e-6c41-7970-bd12-c34ba3c6961e"
+#define uuid_Call					   "7935d4dc-0ac0-665b-995c-e6d038a34643"
+#define uuid_Motions				   "0c5981e6-fe5f-fc79-2e75-1389409fbbdb"
+#define uuid_Accounts				   "af754880-549f-9b0f-2b6e-611e0f824135"
+#define uuid_Reset					   "a5535088-601b-05bb-3bc6-7b6667f3270a"
+#define uuid_DeviceMange			   "bc11e5c6-7837-5801-8eac-57504093e285"
+#define uuid_LanguageKeyboard		   "624e0a2c-10c3-3b46-8665-4f60bf875bbe"
+#define uuid_DateTime				   "c79eae8d-8eec-5bf8-9f94-4ecfad09e4ee"
+#define uuid_ManageApps						   "c3e7db1d-cb96-b52e-f8ea-6be02ceebe8d"
+#define uuid_APP							   "62B00308-89CA-453D-96AC-1C3B6E42BF41"
+#define uuid_Storage				   "a5a4121c-0c7b-d6ed-81b6-0f4118aad364"
+#define uuid_Security				   "8a684695-8396-cd24-dd7d-c8a3643beca5"
+#define uuid_DeveloperOption		   "380f3cfb-0f06-cc99-fe58-96f830e0630e"
+#define uuid_AboutPhone						   "4d02a807-d0c4-0b0c-8497-5133eebed91a"
 
 
 #endif				/* end of __SETTING_COMMON_RESOURCE */

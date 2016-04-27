@@ -72,7 +72,7 @@ static int setting_display_backlight_create(void *cb)
 																		   &itc_1text_1icon_2,
 																		   setting_display_backlight_mouse_up_Gendial_list_cb, ad,
 																		   SWALLOW_Type_1RADIO, rgd,
-																		   0, 			/* Always ON */
+																		   0,			/* Always ON */
 																		   "IDS_ST_BODY_ALWAYS_ON", NULL);
 
 		if (ad->data_backlight_always_on) {

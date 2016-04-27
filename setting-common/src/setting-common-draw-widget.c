@@ -115,7 +115,7 @@ EXPORT_PUBLIC Evas_Object *setting_create_5step_slider(Evas_Object *parent, Evas
 		return NULL;
 	}
 
-	Evas_Object *slider = elm_slider_add(layout);	/*  "elm/slider/horizontal/default" */
+	Evas_Object *slider = elm_slider_add(layout);	/*	"elm/slider/horizontal/default" */
 	retv_if(slider == NULL, NULL);
 	elm_object_style_set(slider, "music/soundalive");
 
@@ -167,7 +167,7 @@ EXPORT_PUBLIC Evas_Object *setting_create_slider(Evas_Object *parent, Evas *evas
 												 setting_call_back_func slider_stop_change_cb,
 												 void *cb_data)
 {
-	Evas_Object *slider = elm_slider_add(parent);	/*  "elm/slider/horizontal/default" */
+	Evas_Object *slider = elm_slider_add(parent);	/*	"elm/slider/horizontal/default" */
 	retv_if(slider == NULL, NULL);
 
 	if (indicator) {
@@ -346,8 +346,8 @@ Evas_Object *setting_create_lable(Evas_Object *parent, const char *text,
 #define DEMO_STEP 0.8
 typedef struct _setting_gif_data {
 	Ecore_Timer *update_timer;
-	const char  **png_list;
-	int	    cur_png_idx;
+	const char	**png_list;
+	int		cur_png_idx;
 } setting_gif_data;
 
 static void __gif_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
@@ -366,7 +366,7 @@ static void __gif_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 Eina_Bool __gif_updater(void *data)
 {
 	retv_if(!data, FALSE);
-	Evas_Object *gif =  data;
+	Evas_Object *gif =	data;
 	setting_gif_data *gif_data = evas_object_data_get(gif, "gif_data");
 	retv_if(!gif_data, FALSE);
 	/*SETTING_TRACE_BEGIN; */
@@ -989,7 +989,7 @@ void __toogle_chk_changed(void *data, Evas_Object *obj, void *event_info)
 	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item =
 		(Setting_GenGroupItem_Data *) data;
-	list_item->chk_status = elm_check_state_get(obj);	/*  for update */
+	list_item->chk_status = elm_check_state_get(obj);	/*	for update */
 
 	/*int err = 0; */
 	/*int ret = setting_set_bool_slp_key(list_item->int_slp_setting_binded, list_item->chk_status, &err); */

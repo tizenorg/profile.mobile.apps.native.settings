@@ -260,7 +260,7 @@ static void __change_simple_password_cb(void *data, Evas_Object *obj, void *even
 	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item =
 		(Setting_GenGroupItem_Data *) data;
-	/*  for update */
+	/*	for update */
 
 	SettingLocktypeUG *ad = (SettingLocktypeUG *)list_item->userdata;
 	if (ad == NULL)
@@ -275,7 +275,7 @@ static void __change_password_cb(void *data, Evas_Object *obj, void *event_info)
 	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item =
 		(Setting_GenGroupItem_Data *) data;
-	/*  for update */
+	/*	for update */
 
 	SettingLocktypeUG *ad = (SettingLocktypeUG *)list_item->userdata;
 	if (ad == NULL)

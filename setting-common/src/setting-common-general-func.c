@@ -69,7 +69,7 @@ char *setting_file_basename(char *path)
 	}
 	char *p = strrchr(path, '/');
 	if (!p) {
-		return (char *)g_strdup(path);	/*  cannot find '/' */
+		return (char *)g_strdup(path);	/*	cannot find '/' */
 	}
 	if ('\0' == p[1]) {
 		return NULL;	/* end with '/' */
@@ -511,12 +511,12 @@ char *get_Mobile_AP_on_off_str()
 		setting_get_int_slp_key(INT_SLP_SETTING_MOBILE_AP_STATUS, &value,
 								&err);
 
-	/*  7 means bitwise-operation */
+	/*	7 means bitwise-operation */
 	/*
-	      - 1 : wi-fi
-	      - 2 : bluetooth
-	      - 4 : USB
-	      4, 2, 1 = 7
+		  - 1 : wi-fi
+		  - 2 : bluetooth
+		  - 4 : USB
+		  4, 2, 1 = 7
 	*/
 	if (0 != ret || value < 0 || value > 7) {
 		value = 0;
@@ -526,7 +526,7 @@ char *get_Mobile_AP_on_off_str()
 
 	if (value != 0) {
 		return setting_gettext("IDS_ST_BODY_ON");
-	} else {		/*  0 */
+	} else {		/*	0 */
 		return setting_gettext("IDS_ST_BODY_ALERTTYPE_OFF");
 	}
 }
@@ -586,12 +586,12 @@ char *get_pa_time_format_str()
 								&value, &err);
 	setting_retvm_if(SETTING_RETURN_FAIL == ret, NULL, "Failed to get vconf value");	/* file system exceptional handle */
 
-	/*  scope */
-	/*  value 1:12H  2:24H */
-	if (value > 0 && value <= 2)	/*  1, 2 */
+	/*	scope */
+	/*	value 1:12H	 2:24H */
+	if (value > 0 && value <= 2)	/*	1, 2 */
 		return (char *)g_strdup(format_str[value - 1]);
 	else
-		return (char *)g_strdup(format_str[0]);	/*  set to 12H compelsery */
+		return (char *)g_strdup(format_str[0]);	/*	set to 12H compelsery */
 }
 
 
@@ -1088,9 +1088,9 @@ bool isSpaceStr(const char *str)
 	return TRUE;
 }
 
-int  EXPORT_PUBLIC safeStrCmp(const char *s1, const char *s2)
+int	 EXPORT_PUBLIC safeStrCmp(const char *s1, const char *s2)
 {
-	/*  Check NULL value first */
+	/*	Check NULL value first */
 	if (isEmptyStr(s1) && isEmptyStr(s2)) {
 		return 0;
 	} else if (isEmptyStr(s1)) {
@@ -1107,7 +1107,7 @@ EXPORT_PUBLIC
 int safeStrNCmp(const char *s1, const char *s2, int len)
 {
 
-	/*  Check NULL value first */
+	/*	Check NULL value first */
 	if (isEmptyStr(s1) && isEmptyStr(s2)) {
 		return 0;
 	} else if (isEmptyStr(s1)) {
@@ -1369,7 +1369,7 @@ int setting_invoke_reset_function(char *ug_name, app_control_h service, void *ex
 	}
 
 	if (reset)
-		ret = (*reset)(service, ext);    /*  CALL */
+		ret = (*reset)(service, ext);	 /*	 CALL */
 
 	if (ret < 0) ret += UNDEFINED_LIB_SYMBOL;/*from -2 on */
 
@@ -1418,7 +1418,7 @@ char *get_icon_path(const char *package)
 		return NULL;
 	}
 
-	r =  pkgmgrinfo_appinfo_get_icon(handle, &icon_path);
+	r =	 pkgmgrinfo_appinfo_get_icon(handle, &icon_path);
 	if (r != PMINFO_R_OK) {
 		SETTING_TRACE_ERROR("failed pkgmgrinfo_appinfo_get_icon.");
 		pkgmgrinfo_appinfo_destroy_appinfo(handle);
@@ -1658,10 +1658,10 @@ EXPORT_PUBLIC void font_config_set(char *font_name)
 		elm_config_font_overlay_set("tizen_medium", (const char *)font_name,  MIDDLE_FONT_DPI);
 	}
 	if (slp_roman_exist == EINA_FALSE) {
-		elm_config_font_overlay_set("tizen_roman", (const char *)font_name,  MIDDLE_FONT_DPI);
+		elm_config_font_overlay_set("tizen_roman", (const char *)font_name,	 MIDDLE_FONT_DPI);
 	}
 	if (slp_bold_exist == EINA_FALSE) {
-		elm_config_font_overlay_set("tizen_bold", (const char *)font_name,  MIDDLE_FONT_DPI);
+		elm_config_font_overlay_set("tizen_bold", (const char *)font_name,	MIDDLE_FONT_DPI);
 	}
 	if (slp_regular_exist == EINA_FALSE) {
 		elm_config_font_overlay_set("tizen_regular", (const char *)font_name,  MIDDLE_FONT_DPI);
@@ -2004,7 +2004,7 @@ EXPORT_PUBLIC char *__get_font_size_str(int font_size)
 	const char *font_size_arr[] = {
 		"IDS_ST_BODY_SMALL_M_TEXTSIZE", /* 0 */
 		"IDS_ST_BODY_MEDIUM", /* 1 */
-		"IDS_ST_BODY_TEXTSTYLE_LARGE",  /* 2 */
+		"IDS_ST_BODY_TEXTSTYLE_LARGE",	/* 2 */
 		"IDS_EMAIL_OPT_HUGE_M_TEXTSIZE",			   /* 3 */
 		"IDS_EMAIL_POP_GIANT_M_TEXTSIZE",			   /* 4 */
 	};

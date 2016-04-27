@@ -68,7 +68,7 @@
 
 #define SUPPORT_CON_RESET
 /*#define NET_CON_RESET_DBUS_PARA  "--system --print-reply --dest=com.tcore.ps / com.tcore.ps.master.ResetProfile" */
-#define NET_CON_RESET_DBUS_PARA  "--system --print-reply --dest=com.tcore.ps / com.tcore.ps.master.ResetProfile int32:0"
+#define NET_CON_RESET_DBUS_PARA	 "--system --print-reply --dest=com.tcore.ps / com.tcore.ps.master.ResetProfile int32:0"
 
 #define Data_packet_Sub_desc "IDS_ST_BODY_ENABLE_DATA_ACCESS_OVER_MOBILE_NETWORK"
 #define Data_packet_Popup_desc "IDS_ST_POP_MOBILE_DATA_ENABLED_CONNECTING_TO_MOBILE_NETWORKS_MAY_INCUR_EXTRA_CHARGES_DEPENDING_ON_YOUR_DATA_PLAN_CONTINUE_Q"
@@ -98,7 +98,7 @@
 #define keyStr_Failed_Get_PreferNetwork "Get preferred network failed"
 #define keyStr_Forbidden_Network _("IDS_ST_BODY_FORBIDDEN_NETWORK")
 #define keyStr_OK _("IDS_ST_BUTTON_OK_ABB")
-#define keyStr_CANCEL   _("IDS_ST_BUTTON_CANCEL_ABB2")
+#define keyStr_CANCEL	_("IDS_ST_BUTTON_CANCEL_ABB2")
 
 #define KeyStr_No_Profile _("IDS_ST_BODY_EMPTY")
 #define keyStr_No_Other_Network "IDS_ST_BODY_THERE_ARE_NO_NETWORKS_NEARBY"
@@ -125,7 +125,7 @@
 #define NETWORK_CODE_LEN	3
 #define PRE_NETWORK_NAME_MAX 256
 
-#define SETTING_NETWORK_POP_RESPONSE_ACTION_CANCEL  10	/*  the popupresponse action ID */
+#define SETTING_NETWORK_POP_RESPONSE_ACTION_CANCEL	10	/*	the popupresponse action ID */
 #define SETTING_NETWORK_SUBS_ID_NET_LEN 7
 typedef enum {
 	SETTING_NETWORK_PREFERRED_NETWORK_NONE,
@@ -203,7 +203,7 @@ struct _SettingNetworkUG {
 	Evas_Object *bottom_btn;
 
 	/*connection-create */
-	Evas_Object *con_create_gl;  /* connection create */
+	Evas_Object *con_create_gl;	 /* connection create */
 
 	/*Evas_Object *conformant; */
 	Evas_Object *back_btn;
@@ -227,7 +227,7 @@ struct _SettingNetworkUG {
 	Evas_Object *ly_main;
 	unsigned int subs_id_net[SETTING_NETWORK_SUBS_ID_NET_LEN];
 
-	Evas_Point        point_down;
+	Evas_Point		  point_down;
 
 	Setting_GenGroupItem_Data *data_auto_network_item;
 	Setting_GenGroupItem_Data *data_search_network_item;

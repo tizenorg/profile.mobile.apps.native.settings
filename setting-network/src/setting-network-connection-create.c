@@ -57,7 +57,7 @@ void __sub_list_rd_change(void *data, Evas_Object *obj, void *event_info)
 	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item =
 		(Setting_GenGroupItem_Data *) data;
-	list_item->chk_status = elm_radio_value_get(obj);	/*  for update */
+	list_item->chk_status = elm_radio_value_get(obj);	/*	for update */
 
 	Elm_Object_Item *subItem = list_item->item;
 	Elm_Object_Item *parentItem = elm_genlist_item_parent_get(subItem);
@@ -1083,7 +1083,7 @@ static int setting_network_connection_create(void *cb)
 
 
 	/* if current view is "MMS connection" */
-	if (!safeStrCmp(ad->con_name, STR_SETTING_MMS_CONNECTIONS)) {	/*  mms Connection */
+	if (!safeStrCmp(ad->con_name, STR_SETTING_MMS_CONNECTIONS)) {	/*	mms Connection */
 
 #if 0
 		if (ad->data_pxy_port) {

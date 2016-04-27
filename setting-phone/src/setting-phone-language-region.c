@@ -95,7 +95,7 @@ static int _find_appid_ime_list(const pkgmgrinfo_appinfo_h handle, void *user_da
 		LOGW("user_data is null!");
 	}
 
-	return -1;  /* This callback is no longer called. */
+	return -1;	/* This callback is no longer called. */
 }
 
 /**
@@ -129,7 +129,7 @@ static void setting_phone_lang_create_keyboard_ug(SettingPhoneUG *ad)
 		if (ret == APP_CONTROL_ERROR_NONE) {
 			app_control_set_operation(app_control, APP_CONTROL_OPERATION_DEFAULT);
 			app_control_set_app_id(app_control, app_id);
-			app_control_add_extra_data(app_control, "caller", "settings");  /* Indicates Settings application is caller. */
+			app_control_add_extra_data(app_control, "caller", "settings");	/* Indicates Settings application is caller. */
 			app_control_set_launch_mode(app_control, APP_CONTROL_LAUNCH_MODE_GROUP);
 			ret = app_control_send_launch_request(app_control, NULL, NULL);
 			if (ret != APP_CONTROL_ERROR_NONE) {

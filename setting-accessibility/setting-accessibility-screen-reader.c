@@ -57,7 +57,7 @@ static void setting_accessibility_main_chk_screenreader_cb(void *data,
 	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
 
-	list_item->chk_status = elm_check_state_get(obj);   /* for genlist update status */
+	list_item->chk_status = elm_check_state_get(obj);	/* for genlist update status */
 
 	SETTING_TRACE_DEBUG("check_status: %i", list_item->chk_status);
 	setting_accessibility_main_chk_screenreader_vconf_update(list_item->chk_status);

@@ -39,20 +39,20 @@
 #define SETTING_LIST_ICON_PATH_CFG					SETTING_ICON_PATH_CFG"list_icon/"
 
 #define SETTING_IMAGE_PATH_CFG				_TZ_SYS_RO_APP"/org.tizen.setting/res/images/"
-#define SETTING_OPEN_SOURCE_LICENSE_PATH 	"file:///usr/share/license.html"
+#define SETTING_OPEN_SOURCE_LICENSE_PATH	"file:///usr/share/license.html"
 
 #define SETTING_OTHER_UG_ICON_PATH			_TZ_SYS_RO_ICONS"/default/small/"
 #define SETTING_DEFAULT_CALL_TONE			_TZ_SYS_SHARE"/settings/Ringtones/Over_the_horizon.ogg"
 #define SETTING_DEFAULT_CALL_TONE_SDK	_TZ_SYS_SHARE"/settings/Ringtones/Over_the_horizon.ogg"
 #define SETTING_DEFAULT_CALL_VIB			_TZ_SYS_SHARE"/settings/Vibrations/haptic/default/Ticktock.ivt"
-#define DEF_RINGTONE 						_TZ_SYS_SHARE"/settings/Ringtones/Over_the_horizon.ogg"
-#define SETTING_MMC_PATH 				_TZ_SYS_MEDIA"/sdcard/"
+#define DEF_RINGTONE						_TZ_SYS_SHARE"/settings/Ringtones/Over_the_horizon.ogg"
+#define SETTING_MMC_PATH				_TZ_SYS_MEDIA"/sdcard/"
 
 /***************new V7.0*************/
-#define KeyStr_Emulator 				"Emulator" /* be used to compare with model_str from system_info_get_platform_string(SYSTEM_INFO_KEY_MODEL, &model_str) */
+#define KeyStr_Emulator					"Emulator" /* be used to compare with model_str from system_info_get_platform_string(SYSTEM_INFO_KEY_MODEL, &model_str) */
 #define KeyStr_Back					"IDS_ST_BUTTON_BACK"
 /* connectivity keyStr*/
-#define KeyStr_Accessibility        "IDS_ST_BODY_ACCESSIBILITY"
+#define KeyStr_Accessibility		"IDS_ST_BODY_ACCESSIBILITY"
 #define KeyStr_Connections			"IDS_ST_BODY_CONNECTIONS"
 #define KeyStr_MoreConnections		"IDS_ST_HEADER_MORE_CONNECTION_SETTINGS"
 #define KeyStr_Personal				"IDS_ST_HEADER_PERSONALISATION"
@@ -74,8 +74,8 @@
 
 /* system keyStr*/
 #define KeyStr_System				"IDS_ST_BODY_SYSTEM"
-#define KeyStr_Menuscreen 			"IDS_ST_HEADER_HOME_SCREEN_ABB"
-#define KeyStr_Homescreen 			"IDS_ST_HEADER_HOME_SCREEN_ABB"
+#define KeyStr_Menuscreen			"IDS_ST_HEADER_HOME_SCREEN_ABB"
+#define KeyStr_Homescreen			"IDS_ST_HEADER_HOME_SCREEN_ABB"
 #define KeyStr_Sounds				"IDS_ST_HEADER_SOUND"
 #define KeyStr_Wallpaper				"IDS_LCKSCN_BODY_WALLPAPERS"
 #define KeyStr_LockScreen			"IDS_ST_HEADER_LOCK_SCREEN"
@@ -95,9 +95,9 @@
 #define KeyStr_Backlight_Alays_On	"IDS_ST_BODY_ALWAYS_ON"
 #define KeyStr_Backlight_15_SEC_STR "IDS_ST_BODY_15SEC"
 #define KeyStr_Backlight_30_SEC_STR "IDS_ST_BODY_30SEC"
-#define KeyStr_Backlight_1_MIN_STR 	"IDS_ST_BODY_1_MINUTE"
-#define KeyStr_Backlight_2_MIN_STR 	"IDS_ST_BODY_2_MINUTES"
-#define KeyStr_Backlight_5_MIN_STR 	"IDS_ST_BODY_5_MINUTES"
+#define KeyStr_Backlight_1_MIN_STR	"IDS_ST_BODY_1_MINUTE"
+#define KeyStr_Backlight_2_MIN_STR	"IDS_ST_BODY_2_MINUTES"
+#define KeyStr_Backlight_5_MIN_STR	"IDS_ST_BODY_5_MINUTES"
 #define KeyStr_Backlight_10_MIN_STR "IDS_ST_BODY_10_MINUTES"
 
 #define KeyStr_DateTime				"IDS_ST_BODY_DATE_AND_TIME"
@@ -114,11 +114,11 @@
 #define KeyStr_MenuWidgets			"IDS_ST_BODY_MENU_AND_WIDGETS"
 #define KeyStr_Accessibility		"IDS_ST_BODY_ACCESSIBILITY"
 #define KeyStr_Screen_reader		"IDS_ST_MBODY_SCREEN_READER_HTTS"
-#define KeyStr_Guestmode 			"Guest mode"	/*unused 2.0 */
+#define KeyStr_Guestmode			"Guest mode"	/*unused 2.0 */
 #define KeyStr_Accessories			"IDS_HEALTH_OPT_ACCESSORIES"
 #define keystr_LedIndicator			"IDS_ST_BODY_LED_INDICATOR"
-#define KeyStr_EasyMode   			"IDS_ST_BODY_EASY_MODE"
-#define KeyStr_FingerScanner   		"IDS_ST_HEADER_FINGER_SCANNER_ABB"
+#define KeyStr_EasyMode				"IDS_ST_BODY_EASY_MODE"
+#define KeyStr_FingerScanner		"IDS_ST_HEADER_FINGER_SCANNER_ABB"
 
 
 
@@ -135,14 +135,14 @@
 #define KeyStr_ManageApps			"IDS_ST_BODY_APPLICATION_MANAGER"
 
 
-#define KeyStr_Save                    		 "IDS_ST_BODY_SAVE"
+#define KeyStr_Save							 "IDS_ST_BODY_SAVE"
 
 /*//////////////Common Strings/////////////// */
-#define KeyStr_Item_Sel 				"Item(s) Selected"
-#define UNSUPPORTED_FUNCTION 		"IDS_MSGF_POP_UNSUPPORTED"
+#define KeyStr_Item_Sel					"Item(s) Selected"
+#define UNSUPPORTED_FUNCTION		"IDS_MSGF_POP_UNSUPPORTED"
 #define KeyStr_Select_All				"IDS_ST_BODY_SELECT_ALL"
 #define KeyStr_Select_Item				"IDS_ST_HEADER_SELECT_VIBRATION_PATTERNS_ABB"
-#define KeyStr_INFO 					"IDS_PB_BODY_INFO"
+#define KeyStr_INFO						"IDS_PB_BODY_INFO"
 #define KeyStr_DeviceMange			"IDS_ST_HEADER_DEVICE_MANAGER"
 #define KeyStr_Regulatory_Info			"IDS_ST_BODY_REGULATORY_INFORMATION_ABB"
 #define KeyStr_Loading				"IDS_ST_POP_LOADING_ING"

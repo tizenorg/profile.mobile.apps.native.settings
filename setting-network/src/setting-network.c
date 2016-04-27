@@ -212,7 +212,7 @@ void ___popup_view_resp_cb(void *data, Evas_Object *obj, void *event_info)
 	retm_if(data == NULL, "Data parameter is NULL");
 
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-	int err = 0;		/* error check   */
+	int err = 0;		/* error check	 */
 	int response_type = btn_type(obj);
 
 	int value = 0;
@@ -329,7 +329,7 @@ static void *setting_network_ug_on_create(ui_gadget_h ug,
 	ecore_imf_init();
 
 	/*pass NULL to let TAPI access default module */
-	networkUG->handle =  tel_init(NULL);
+	networkUG->handle =	 tel_init(NULL);
 	if (!networkUG->handle) {
 		SETTING_TRACE_DEBUG("%s*** [ERR] tel_init. ***%s",
 							SETTING_FONT_RED, SETTING_FONT_BLACK);
@@ -353,7 +353,7 @@ static void *setting_network_ug_on_create(ui_gadget_h ug,
 	/*SETTING_TRACE("ad->whitelist_doc:%p", networkUG->whitelist_doc); */
 	/*SETTING_TRACE("ad->whitelist_root_node:%p", networkUG->whitelist_root_node); */
 
-	/*  creating a view. */
+	/*	creating a view. */
 	setting_view_node_set_cur_view(networkUG->view_to_load);
 	/*fix load network ug repeatedly issue */
 	if (networkUG->view_to_load == &setting_view_network_main
@@ -440,7 +440,7 @@ static void setting_network_ug_on_destroy(ui_gadget_h ug, app_control_h service,
 	/* release */
 	ecore_imf_shutdown();
 
-	/*  unregister dnet client */
+	/*	unregister dnet client */
 	if (networkUG->connection) {
 		connection_destroy(networkUG->connection);
 		networkUG->connection = NULL;
@@ -457,7 +457,7 @@ static void setting_network_ug_on_destroy(ui_gadget_h ug, app_control_h service,
 	}
 
 	setting_network_popup_delete(networkUG);
-	/*  delete the allocated objects. */
+	/*	delete the allocated objects. */
 	setting_view_destroy(&setting_view_network_select_network, networkUG);
 
 	setting_view_destroy(&setting_view_network_con, networkUG);
@@ -687,7 +687,7 @@ void setting_tapi_get_band_cb(TapiHandle *handle, int result, void *data, void *
 
 		temp_net_mode = band;
 
-		/*  ***BEGIN***  Fixed the problem of word twinkle  SAMSUNG 2010/7/21 modify */
+		/*	***BEGIN***	 Fixed the problem of word twinkle	SAMSUNG 2010/7/21 modify */
 		ad->net_mode = temp_net_mode;
 
 		const char *sub_desc = NULL;
@@ -739,7 +739,7 @@ void setting_tapi_get_band_cb(TapiHandle *handle, int result, void *data, void *
 
 		vconf_set_int(VCONFKEY_SETAPPL_NETWORK_MODE_INT, ad->net_mode);
 		/*} */
-		/*  ****END****  Fixed the problem of word twinkle  SAMSUNG 2010/7/21 modify */
+		/*	****END****	 Fixed the problem of word twinkle	SAMSUNG 2010/7/21 modify */
 	} else {
 		SETTING_TRACE("tel_get_network_mode() callback error(%d)", result);
 	}
@@ -751,7 +751,7 @@ void setting_tapi_get_band_cb(TapiHandle *handle, int result, void *data, void *
 void setting_tapi_set_band_cb(TapiHandle *handle, int result, void *data, void *user_data)
 {
 	SETTING_TRACE_BEGIN;
-	SETTING_TRACE(" - result = 0x%x  , %d", result, result);
+	SETTING_TRACE(" - result = 0x%x	 , %d", result, result);
 	ret_if(!user_data);
 	SettingNetworkUG *ad = user_data;
 	ret_if(NULL == ad->data_net_mode);
@@ -1184,7 +1184,7 @@ void __register_network(Setting_GenGroupItem_Data *list_item)
 			char speciliztion[MAX_COMMON_BUFFER_LEN] = {0, };
 			__process_special_char(speciliztion, name);
 
-			SETTING_TRACE("  name:%s", speciliztion);
+			SETTING_TRACE("	 name:%s", speciliztion);
 
 			if (!safeStrCmp(list_item->keyStr, speciliztion)) {
 				SETTING_TRACE("find the right item");
@@ -2021,7 +2021,7 @@ int setting_network_get_state_mobile_data(int *value)
 	if (ret == SYSTEM_SETTINGS_ERROR_NONE) {
 		int temp = (int)val;
 		*value = temp;
-		return 	SYSTEM_SETTINGS_ERROR_NONE;
+		return	SYSTEM_SETTINGS_ERROR_NONE;
 	} else {
 		return -1;
 	}

@@ -30,7 +30,7 @@
 
 #define EXPORT_PUBLIC __attribute__ ((visibility ("default")))
 
-/*  TAPI*/
+/*	TAPI*/
 #include <tapi_common.h>
 #include <ITapiModem.h>
 
@@ -43,7 +43,7 @@
 #include <call-manager.h>
 
 
-#define NO_UG_FOUND_MSG 			"IDS_MSGF_POP_UNSUPPORTED"
+#define NO_UG_FOUND_MSG				"IDS_MSGF_POP_UNSUPPORTED"
 
 #define Keystr_Connection	"IDS_ST_BODY_CONNECTION"
 
@@ -86,7 +86,7 @@ enum {
  */
 typedef struct _setting_main_appdata {
 
-	ui_gadget_h ug; 					/**< ug */
+	ui_gadget_h ug;						/**< ug */
 
 	Evas *evas;
 	Evas_Object *win_main;
@@ -99,7 +99,7 @@ typedef struct _setting_main_appdata {
 	/* listen / unlisten code */
 	Eina_List *listened_list;
 	Evas_Object *conform;
-	Evas_Object *view_layout;       /* view layout */
+	Evas_Object *view_layout;		/* view layout */
 
 	Elm_Genlist_Item_Class itc_table[GENDIAL_Type_MAX];
 

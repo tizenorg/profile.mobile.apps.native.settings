@@ -96,12 +96,12 @@ int pwd_handler_sec_pw_simple_passwd(SettingLocktypeUG *data, void *arg)
 }
 
 static struct _locktype_item locktype_table[] = {
-	{ SETTING_LOCKTYPE_PW_PASSWORD, 		"SETTING_PW_TYPE_SET_PASSWORD", 			pwd_handler_sec_pw_passwd },
-	{ SETTING_LOCKTYPE_PW_SIMPLE_PASSWD, 	"SETTING_PW_TYPE_SET_SIMPLE_PASSWORD", 		pwd_handler_sec_pw_simple_passwd },
-	{ SETTING_LOCKTYPE_PW_CHANGE_PASSWD, 	"SETTING_PW_TYPE_SET_PASSWORD", 		pwd_handler_sec_pw_passwd },
-	{ SETTING_LOCKTYPE_PW_CHANGE_SIMPLE_PASSWD, 	"SETTING_PW_TYPE_SET_SIMPLE_PASSWORD", 		pwd_handler_sec_pw_simple_passwd },
+	{ SETTING_LOCKTYPE_PW_PASSWORD,			"SETTING_PW_TYPE_SET_PASSWORD",				pwd_handler_sec_pw_passwd },
+	{ SETTING_LOCKTYPE_PW_SIMPLE_PASSWD,	"SETTING_PW_TYPE_SET_SIMPLE_PASSWORD",		pwd_handler_sec_pw_simple_passwd },
+	{ SETTING_LOCKTYPE_PW_CHANGE_PASSWD,	"SETTING_PW_TYPE_SET_PASSWORD",			pwd_handler_sec_pw_passwd },
+	{ SETTING_LOCKTYPE_PW_CHANGE_SIMPLE_PASSWD,		"SETTING_PW_TYPE_SET_SIMPLE_PASSWORD",		pwd_handler_sec_pw_simple_passwd },
 	/*------------------------------------------------------------------------------------------------------------*/
-	{ SETTING_LOCKTYPE_PW_MAX, 				NULL, 									pwd_handler_do_nothing}
+	{ SETTING_LOCKTYPE_PW_MAX,				NULL,									pwd_handler_do_nothing}
 };
 
 static void setting_locktype_ug_cb_resize(void *data, Evas *e,
@@ -416,8 +416,8 @@ gboolean setting_locktype_create_password_sg(void *data)
  *call back func
  *
  ***************************************************/
-/* -1 	on fail */
-/* 0~n 	on success */
+/* -1	on fail */
+/* 0~n	on success */
 int _get_locktype_table_index(char *name)
 {
 	int i = 0;
@@ -448,7 +448,7 @@ setting_locktype_result_password_ug_cb(ui_gadget_h ug, app_control_h service,
 	ret_if(NULL == result);
 
 	if (safeStrCmp(result, "Cancel")) {
-		int index =  _get_locktype_table_index(result);
+		int index =	 _get_locktype_table_index(result);
 
 		if (index != -1) {
 			locktype_table[index].passwd_handler(ad, NULL);

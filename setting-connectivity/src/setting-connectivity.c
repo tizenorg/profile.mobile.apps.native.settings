@@ -42,9 +42,9 @@ int check_usb_jack_status()
 	bool usb_connection = false;
 	int ret = runtime_info_get_value_bool(RUNTIME_INFO_KEY_USB_CONNECTED, &usb_connection);
 	if (ret == RUNTIME_INFO_ERROR_NONE && usb_connection == true) {
-		return USB_CONNECTED;   /*  USB is connected */
+		return USB_CONNECTED;	/*	USB is connected */
 	} else {
-		return USB_DISCONNECTED;       /*  USB is disconnected */
+		return USB_DISCONNECTED;	   /*  USB is disconnected */
 	}
 }
 
@@ -126,7 +126,7 @@ static void *setting_connective_ug_on_create(ui_gadget_h ug,
 	setting_view_node_table_register(&setting_view_connectivity_usb_help,
 									 &setting_view_connectivity_usb);
 
-	/*  creating a view. */
+	/*	creating a view. */
 	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE, &(connectiveUG->itc_title));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(connectiveUG->itc_1text));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(connectiveUG->itc_1text_1icon));
@@ -173,7 +173,7 @@ static void setting_connective_ug_on_destroy(ui_gadget_h ug,
 	evas_object_event_callback_del(connectiveUG->win_main_layout, EVAS_CALLBACK_RESIZE, setting_connective_ug_cb_resize);	/* fix flash issue for gallery */
 	connectiveUG->ug = ug;
 
-	/*  called when this shared gadget is terminated. similar with app_exit */
+	/*	called when this shared gadget is terminated. similar with app_exit */
 	if (&setting_view_connectivity_usb == connectiveUG->view_to_load) {
 		setting_view_destroy(&setting_view_connectivity_usb_help,
 							 connectiveUG);

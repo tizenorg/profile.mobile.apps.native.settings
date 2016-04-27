@@ -42,11 +42,11 @@ typedef struct _SliderIcons {
 } SliderIcons;
 
 SliderIcons slider_icons[SND_SLIDER_MAX] = {
-	{SND_SLIDER_CALL, 	ICON_CALL_MUTE, 	ICON_CALL_NORMAL},
-	{SND_SLIDER_NOTI, 	ICON_NOTI_MUTE, 	ICON_NOTI_NORMAL},
-	{SND_SLIDER_MEDIA, 	ICON_MEDIA_MUTE, 	ICON_MEDIA_NORMAL},
+	{SND_SLIDER_CALL,	ICON_CALL_MUTE,		ICON_CALL_NORMAL},
+	{SND_SLIDER_NOTI,	ICON_NOTI_MUTE,		ICON_NOTI_NORMAL},
+	{SND_SLIDER_MEDIA,	ICON_MEDIA_MUTE,	ICON_MEDIA_NORMAL},
 	{SND_SLIDER_SYSTEM,	ICON_SYSTEM_MUTE,	ICON_SYSTEM_NORMAL},
-	/*{SND_SLIDER_MAX, 	"", 			""} */
+	/*{SND_SLIDER_MAX,	"",				""} */
 };
 
 char *setting_sound_get_slider_icon(int type, int volume)
@@ -127,9 +127,9 @@ char *setting_media_basename(char *path)
 }
 
 /* ------------------------------------------------------------------------------------------- */
-/* |                  | elm.swallow.icon.0 | elm.text | elm.swallow.icon.1 |                 | */
+/* |				  | elm.swallow.icon.0 | elm.text | elm.swallow.icon.1 |				 | */
 /* | elm.swallow.icon |----------------------------------------------------| elm.swallow.end | */
-/* |                  |         elm.text.sub          | elm.text.sub.end   |                 | */
+/* |				  |			elm.text.sub		  | elm.text.sub.end   |				 | */
 /* ------------------------------------------------------------------------------------------- */
 static Evas_Object *__sound_slider_new_icon_get(void *data, Evas_Object *obj, const char *part)
 {
@@ -325,7 +325,7 @@ static void __disable_sound_menu(void *data)
 	}
 	Setting_GenGroupItem_Data *item_to_update = NULL;
 
-	/*1.Disable  "Vibrate when ringing" */
+	/*1.Disable	 "Vibrate when ringing" */
 	item_to_update = ad->data_sound_when_ring;
 	setting_genlist_item_disabled_set(item_to_update, EINA_TRUE);
 
@@ -396,9 +396,9 @@ static void ___sound_vconf_change_cb(keynode_t *key, void *data)
 			SETTING_TRACE("song_playing:%s", ad->song_playing);
 
 			if (!safeStrNCmp(SETTING_PROFILE_MMC_PATH, ad->song_playing, safeStrLen(SETTING_PROFILE_MMC_PATH))) {
-				/*  close mm plaer */
+				/*	close mm plaer */
 				setting_sound_close_all_mm_players(ad);
-				/*  close vibration */
+				/*	close vibration */
 			}
 		}
 	} else if (!safeStrCmp(vconf_name, VCONFKEY_SETAPPL_SOUND_STATUS_BOOL)) {
@@ -677,12 +677,12 @@ static Eina_Bool __volume_key_down_cb(void *data, int type, void *event)
 		/*
 		 * S5 concept:
 		 * On the volume popup,
-		 *  1) if user controls the slider, don't play any sounds��just change volume.
-		 *  2) if user controls the HW volume key for ringtone sound, the beep sound is supported
+		 *	1) if user controls the slider, don't play any sounds��just change volume.
+		 *	2) if user controls the HW volume key for ringtone sound, the beep sound is supported
 
 		 * On Setting > Sound
-		 *  1) if user controls the slider, change volume & play sound
-		 *  2) if user controls the HW volume key, do nothing(DO NOT change volume,DO NoT play sound)
+		 *	1) if user controls the slider, change volume & play sound
+		 *	2) if user controls the HW volume key, do nothing(DO NOT change volume,DO NoT play sound)
 		*/
 		if (0 != safeStrCmp(ad->viewtype, VOLUME_APP_NAME)) {
 			return EINA_TRUE;
@@ -766,12 +766,12 @@ static Eina_Bool __volume_key_down_cb(void *data, int type, void *event)
 		/*
 		 * S5 concept:
 		 * On the volume popup,
-		 *  1) if user controls the slider, don't play any sounds��just change volume.
-		 *  2) if user controls the HW volume key for ringtone sound, the beep sound is supported
+		 *	1) if user controls the slider, don't play any sounds��just change volume.
+		 *	2) if user controls the HW volume key for ringtone sound, the beep sound is supported
 
 		 * On Setting > Sound
-		 *  1) if user controls the slider, change volume & play sound
-		 *  2) if user controls the HW volume key, do nothing(DO NOT change volume,DO NoT play sound)
+		 *	1) if user controls the slider, change volume & play sound
+		 *	2) if user controls the HW volume key, do nothing(DO NOT change volume,DO NoT play sound)
 		*/
 		if (0 != safeStrCmp(ad->viewtype, VOLUME_APP_NAME)) {
 			return EINA_TRUE;
@@ -1382,14 +1382,14 @@ int setting_sound_stop_sound(void *data, player_h *player)
 
 	player_state_e state = -1;
 	int ret = SETTING_RETURN_SUCCESS;
-	int prev_behavior = 0;	/*  instead of do_while(0) and break */
+	int prev_behavior = 0;	/*	instead of do_while(0) and break */
 
 	player_get_state(*player, &state);
 	if (state == PLAYER_STATE_PLAYING) {
 		if (player_stop(*player) != PLAYER_ERROR_NONE) {
 			SETTING_TRACE("mm player stop failed");
 			ret = SETTING_MMPLAYER_STOP_ERR;
-			prev_behavior++;	/*  instead of do_while(0) and break */
+			prev_behavior++;	/*	instead of do_while(0) and break */
 		}
 	}
 
@@ -1399,7 +1399,7 @@ int setting_sound_stop_sound(void *data, player_h *player)
 	if ((prev_behavior == 0) && (player_unprepare(*player) != PLAYER_ERROR_NONE)) {
 		SETTING_TRACE("mm player unrealize failed");
 		ret = SETTING_MMPLAYER_UNREALIZE_ERR;
-		prev_behavior++;	/*  instead of do_while(0) and break */
+		prev_behavior++;	/*	instead of do_while(0) and break */
 	}
 
 	if ((prev_behavior == 0) && (player_destroy(*player) != PLAYER_ERROR_NONE)) {
@@ -1473,25 +1473,25 @@ setting_sound_close_other_mm_players_but_type(void *data, sound_type_e type)
 	int ret = 0;
 
 	switch (type) {
-	case SOUND_TYPE_RINGTONE:	/*  close noti, media and system players */
+	case SOUND_TYPE_RINGTONE:	/*	close noti, media and system players */
 		if (__close_player(ad, SND_SLIDER_NOTI) != SETTING_RETURN_SUCCESS)
 			ret++;
 		if (__close_player(ad, SND_SLIDER_MEDIA) != SETTING_RETURN_SUCCESS)
 			ret++;
 		break;
-	case SOUND_TYPE_NOTIFICATION:	/*  close ringtone, media and system players */
+	case SOUND_TYPE_NOTIFICATION:	/*	close ringtone, media and system players */
 		if (__close_player(ad, SND_SLIDER_CALL) != SETTING_RETURN_SUCCESS)
 			ret++;
 		if (__close_player(ad, SND_SLIDER_MEDIA) != SETTING_RETURN_SUCCESS)
 			ret++;
 		break;
-	case SOUND_TYPE_MEDIA:	/*  close ringtone, noti and system players */
+	case SOUND_TYPE_MEDIA:	/*	close ringtone, noti and system players */
 		if (__close_player(ad, SND_SLIDER_CALL) != SETTING_RETURN_SUCCESS)
 			ret++;
 		if (__close_player(ad, SND_SLIDER_NOTI) != SETTING_RETURN_SUCCESS)
 			ret++;
 		break;
-	default:		/*  if unknown type, dont close any player */
+	default:		/*	if unknown type, dont close any player */
 		break;
 	}
 

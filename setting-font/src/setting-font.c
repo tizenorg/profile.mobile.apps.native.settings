@@ -190,7 +190,7 @@ static void *setting_font_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 
 	elm_theme_extension_add(NULL, SETTING_5STEP_SLIDER_EDJ_NAME);
 
-	/*  creating a view. */
+	/*	creating a view. */
 	/*setting_view_create(&setting_view_font_main, (void *)fontUG); */
 	evas_object_event_callback_add(fontUG->win_main_layout, EVAS_CALLBACK_RESIZE, setting_font_ug_cb_resize, fontUG);
 	return fontUG->ly_main;
@@ -366,7 +366,7 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv, 
 	int i;
 	int size = sizeof(s_cfg_node_array) / sizeof(s_cfg_node_array[0]);
 	for (i = 0; i < size; i++) {
-		Setting_Cfg_Node_T *node = setting_plugin_search_item_subindex_add(s_cfg_node_array[i].key_name, s_cfg_node_array[i].ug_args, IMG_Font, s_cfg_node_array[i].item_type,  s_cfg_node_array[i].data, "Font");
+		Setting_Cfg_Node_T *node = setting_plugin_search_item_subindex_add(s_cfg_node_array[i].key_name, s_cfg_node_array[i].ug_args, IMG_Font, s_cfg_node_array[i].item_type,	s_cfg_node_array[i].data, "Font");
 		*pplist = eina_list_append(*pplist, node);
 	}
 	return 0;
