@@ -28,7 +28,7 @@
 
 #include <setting.h>
 
-#define IMG_CIS_TITLE_SEARCH 				SETTING_ICON_PATH_CFG"A01-1_title_icon_search.png"
+#define IMG_CIS_TITLE_SEARCH				SETTING_ICON_PATH_CFG"A01-1_title_icon_search.png"
 #define SETTING_CIS_DRAWER_ITEM_COUNT		6
 
 

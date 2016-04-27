@@ -488,6 +488,221 @@ collections {
       }
    }
 
+//****************************************************************************//
+// Genlist
+//****************************************************************************//
+// Tizen 2.4
+#define GENLIST_ITEM_1LINE_HEIGHT_INC                      120
+#define GENLIST_ITEM_2LINE_HEIGHT_INC                      144
+#define GENLIST_ITEM_LR_PADDING_INC                        32
+#define GENLIST_ITEM_TOP_PADDING_INC                       23
+#define GENLIST_ITEM_BOTTOM_PADDING_INC                    24 // including bottom line
+#define GENLIST_ITEM_TYPE_BA_PADDING_INC                   32
+#define GENLIST_ITEM_TYPE_DC_PADDING_INC                   32
+#define GENLIST_ITEM_TYPE_AD_PADDING_INC                   32
+#define GENLIST_ITEM_MAIN_LINE_HEIGHT_INC                  54
+#define GENLIST_ITEM_MAIN_LINE_ICON_TEXT_PADDING_INC       12
+#define GENLIST_ITEM_MAIN_LINE_TEXT_END_PADDING_INC        32
+#define GENLIST_ITEM_SUB_LINE_HEIGHT_INC                   43
+#define GENLIST_ITEM_SUB_LINE_TEXT_END_PADDING_INC         32
+#define GENLIST_ITEM_END_TEXT_WIDTH_INC                    121
+#define GENLIST_ITEM_GROUP_INDEX_HEIGHT_INC                64
+#define GENLIST_ITEM_GROUP_INDEX_TOP_PADDING_INC           10
+#define GENLIST_ITEM_GROUP_INDEX_BOTTOM_PADDING_INC        11
+#define GENLIST_ITEM_GROUP_INDEX_RIGHT_PADDING_INC         17
+#define GENLIST_ITEM_GROUP_INDEX_END_TEXT_WIDTH_INC        218
+#define GENLIST_ITEM_GROUP_INDEX_EXPAND_TOP_PADDING_INC    12
+#define GENLIST_ITEM_GROUP_INDEX_EXPAND_BOTTOM_PADDING_INC 12
+#define GENLIST_ITEM_GROUP_INDEX_EXPAND_ICON_SIZE_INC      64 64
+#define GENLIST_ITEM_MULTILINE_1LINE_HEIGHT_INC            120
+
+//No use to Combination
+#define LIST_BOTTOMLINE_HEIGHT               2
+
+#define STYLE_TAGS \
+   tag:  "br" "\n";\
+   tag:  "ps" "ps";\
+   tag:  "tab" "\t";\
+   tag:  "b" "+ font_weight=Bold";
+
+#define STYLE_TAG_MATCH \
+   tag:  "match" "+ color=#3db8cc";
+
+   styles {
+      // ************* list main text ********** //
+      style { name: "list_text_main";
+         base: "color=#070707FF font=Tizen:style=Regular font_size=40 text_class=list_item ellipsis=1.0";
+         STYLE_TAGS
+         STYLE_TAG_MATCH
+      }
+      style { name: "list_text_main_dim";
+         base: "color=#0707077F font=Tizen:style=Regular font_size=40 text_class=list_item ellipsis=1.0";
+         STYLE_TAGS
+         STYLE_TAG_MATCH
+      }
+      style { name: "list_text_main_press";
+         base: "color=#070707FF font=Tizen:style=Regular font_size=40 text_class=list_item ellipsis=1.0";
+         STYLE_TAGS
+         STYLE_TAG_MATCH
+      }
+   }
+
+   group { name: "elm/genlist/item/entry.main/default";
+      alias: "elm/genlist/item_compress/entry.main/default";
+      alias: "elm/layout/entry.main/default";
+
+      data.item: "banded_bg_area" "elm.swallow.bg";
+      data.item: "texts" "elm.text.main";
+      data.item: "contents" "elm.icon.1 elm.icon.2 elm.icon.entry";
+
+      parts {
+         spacer { "base"; }
+         // background of item
+         rect { "bg";
+            desc { "default";
+               rel.to: "base";
+               color: 0 0 0 0;
+            }
+            desc { "pressed"; inherit;
+               color: 0 0 0 10;
+            }
+            desc { "disabled"; inherit;
+         color: 0 0 0 0;
+            }
+         }
+         // swallow area for banded color
+         swallow { "elm.swallow.bg"; scale;
+            desc { "default";
+               rel.to: "bg";
+            }
+         }
+         swallow { "elm.icon.1";
+            desc { "default";
+               rel2.relative: 0.0 1.0;
+               align: 0.0 0.5;
+            }
+         }
+         swallow { "elm.icon.2";
+            desc { "default";
+               rel1.relative: 1.0 0.0;
+               align: 1.0 0.5;
+            }
+         }
+         spacer { "elm.padding.left";
+            desc { "default";
+               min: GENLIST_ITEM_LR_PADDING_INC 0;
+               max: GENLIST_ITEM_LR_PADDING_INC -1;
+               rel1 {
+                  to_x: "elm.icon.1";
+                  relative: 1.0 0.0;
+               }
+               rel2 {
+                  to_x: "elm.icon.1";
+                  relative: 1.0 1.0;
+               }
+               align: 0.0 0.5;
+            }
+         }
+         spacer { "elm.padding.right";
+            desc { "default";
+               min: GENLIST_ITEM_LR_PADDING_INC 0;
+               max: GENLIST_ITEM_LR_PADDING_INC -1;
+               rel1 {
+                  to_x: "elm.icon.2";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to_x: "elm.icon.2";
+                  relative: 0.0 1.0;
+               }
+               align: 1.0 0.5;
+            }
+         }
+         spacer { "elm.padding.top";
+            desc { "default";
+               min: 0 GENLIST_ITEM_TOP_PADDING_INC;
+               max: -1 GENLIST_ITEM_TOP_PADDING_INC;
+               rel1.relative: 0.0 0.0;
+               rel2.relative: 1.0 0.0;
+               align: 0.5 0.0;
+            }
+         }
+         spacer { "elm.padding.bottom";
+            desc { "default";
+               min: 0 GENLIST_ITEM_BOTTOM_PADDING_INC;
+               max: -1 GENLIST_ITEM_BOTTOM_PADDING_INC;
+               rel1.relative: 0.0 1.0;
+               rel2.relative: 1.0 1.0;
+               align: 0.5 1.0;
+            }
+         }
+         textblock { "elm.text.main";
+            desc { "default";
+               rel1 {
+                  to_x: "elm.padding.left";
+                  to_y: "elm.padding.top";
+                  relative: 1.0 1.0;
+               }
+               rel2 {
+                  to_x: "elm.padding.right";
+                  to_y: "elm.padding.top";
+                  relative: 0.0 1.0;
+               }
+               align: 0.5 0.0;
+               min: 0 GENLIST_ITEM_MAIN_LINE_HEIGHT_INC;
+               text.min: 0 1;
+               text.style: "list_text_main";
+            }
+            desc { "disabled"; inherit;
+               text.style: "list_text_main_dim";
+            }
+         }
+         swallow { "elm.icon.entry";
+            desc { "default";
+               rel1 {
+                  to_x: "elm.icon.1";
+                  to_y: "elm.text.main";
+                  relative: 1.0 1.0;
+               }
+               rel2 {
+                  to_x: "elm.icon.2";
+                  to_y: "elm.padding.bottom";
+                  relative: 0.0 0.0;
+               }
+               min: 0 96;
+            }
+         }
+         rect { "elm.bottomline"; scale;
+            desc { "default";
+               fixed: 0 1;
+               min: 0 LIST_BOTTOMLINE_HEIGHT;
+               max: -1  LIST_BOTTOMLINE_HEIGHT;
+               align: 0.5 0.0;
+               rel1.relative: 0.0 0.0;
+               rel2.relative: 1.0 0.0;
+               color: 204 204 204 255;
+            }
+            desc { "hidden"; inherit: "default";
+                visible: 0;
+            }
+         }
+      }
+      programs {
+         program {
+            signal: "elm,state,elm.swallow.bg,visible";
+            source: "elm";
+            action: STATE_SET "hidden" 0.0;
+            target: "elm.bottomline";
+         }
+      }
+      GENLIST_PROGRAM_DEFAULT(
+        target: "elm.text.main";
+        target: "elm.bottomline";
+      )
+      GENLIST_PROGRAM_DISABLED(
+        target: "elm.text.main";
+      )
+   }
 
 #define GENLIST_PART_DIALOGUE_GROUP_DIVIDER_R(RIGHT) \
 	   GENLIST_PART_DIVIDER_PADDING \

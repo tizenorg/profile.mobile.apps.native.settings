@@ -89,7 +89,7 @@
 	"Tip : improve face matching by having your face capture in different "\
 	"conditions."
 
-#define Speak_Now_Str 					"Speak now"
+#define Speak_Now_Str					"Speak now"
 
 #define Keystr_ScreenLockType			"IDS_ST_BODY_SCREEN_LOCK_TYPE"
 #define Keystr_LockScreenOptions			"IDS_ST_BODY_LOCK_SCREEN_OPTIONS"

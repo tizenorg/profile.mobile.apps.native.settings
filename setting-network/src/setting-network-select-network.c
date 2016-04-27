@@ -201,7 +201,7 @@ static int setting_network_select_network_create(void *cb)
 
 	} else if (TAPI_NETWORK_SELECTIONMODE_MANUAL == ad->sel_net) {
 
-		ad->data_auto_network_item  = setting_create_Gendial_field_1radio(
+		ad->data_auto_network_item	= setting_create_Gendial_field_1radio(
 										  ad->genlist_sel_network,
 										  &(itc_1text_1icon),
 										  setting_network_Gendial_select_plmn_cb,
@@ -233,14 +233,14 @@ static int setting_network_select_network_create(void *cb)
 
 		/*
 		if (0 == safeStrCmp("IDS_ST_BODY_NOSERVICE", ad->sel_network)
-		    || 0 == safeStrCmp(_("IDS_ST_BODY_NOSERVICE"), _(ad->sel_network))
-		    || 0 == safeStrCmp("EMERGENCY", ad->sel_network)
-		    || 0 == safeStrCmp(_("EMERGENCY"), ad->sel_network)
-		    || 0 == safeStrCmp("No service", ad->sel_network)
-		    || 0 == safeStrCmp("No service", _(ad->sel_network))
-		    || 0 == safeStrCmp(_("IDS_CALL_POP_CALLING_EMERG_ONLY"), _(ad->sel_network))
-		    || 0 == safeStrCmp("Emergency calls only", _(ad->sel_network))
-		    )
+			|| 0 == safeStrCmp(_("IDS_ST_BODY_NOSERVICE"), _(ad->sel_network))
+			|| 0 == safeStrCmp("EMERGENCY", ad->sel_network)
+			|| 0 == safeStrCmp(_("EMERGENCY"), ad->sel_network)
+			|| 0 == safeStrCmp("No service", ad->sel_network)
+			|| 0 == safeStrCmp("No service", _(ad->sel_network))
+			|| 0 == safeStrCmp(_("IDS_CALL_POP_CALLING_EMERG_ONLY"), _(ad->sel_network))
+			|| 0 == safeStrCmp("Emergency calls only", _(ad->sel_network))
+			)
 		{
 			//no service case:
 			ad->data_search_network_item = setting_create_Gendial_field_1radio(

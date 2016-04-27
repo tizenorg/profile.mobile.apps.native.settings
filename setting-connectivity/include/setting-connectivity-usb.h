@@ -35,9 +35,9 @@ enum progressbar_status {
 typedef struct _button_status button_status;
 
 struct _button_status {
-	Evas_Object *progressbar;	/*  progressbar */
-	Elm_Object_Item *item;	/*  button */
-	int pstate;		/*  progressbar status to show or hide */
+	Evas_Object *progressbar;	/*	progressbar */
+	Elm_Object_Item *item;	/*	button */
+	int pstate;		/*	progressbar status to show or hide */
 };
 
 static void setting_connectivity_usb_click_softkey_cancel_cb(void *data,

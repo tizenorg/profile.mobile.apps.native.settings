@@ -717,7 +717,7 @@ static void setting_security_update_mouse_up_Gendial_chk_cb(void *data, Evas_Obj
 	Setting_GenGroupItem_Data *list_item =
 		(Setting_GenGroupItem_Data *) data;
 	SettingSecurityUG *ad = list_item->userdata;
-	list_item->chk_status = elm_check_state_get(obj);	/*  for genlist update status */
+	list_item->chk_status = elm_check_state_get(obj);	/*	for genlist update status */
 	SETTING_TRACE_DEBUG("auto update toggle cb");
 
 	/* enable /disable toggle button */

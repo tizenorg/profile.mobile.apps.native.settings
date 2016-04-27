@@ -100,7 +100,7 @@ static void *setting_applications_ug_on_create(ui_gadget_h ug,
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(applicationsUG->itc_2text_3));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(applicationsUG->itc_1text_1icon_divider));
 
-	/*  creating a view. */
+	/*	creating a view. */
 	applicationsUG->view_to_load = __get_applications_view_to_load(applicationsUG, service);
 	setting_retvm_if(NULL == applicationsUG->view_to_load, NULL, "NULL == applicationsUG->view_to_load");
 
@@ -157,7 +157,7 @@ static void setting_applications_ug_on_destroy(ui_gadget_h ug, app_control_h ser
 
 	FREE(applicationsUG->uri);
 
-	/*  called when this shared gadget is terminated. similar with app_exit */
+	/*	called when this shared gadget is terminated. similar with app_exit */
 	if (&setting_view_applications_main == applicationsUG->view_to_load) {
 		setting_view_destroy(&setting_view_applications_main, applicationsUG);
 	} else {
@@ -267,12 +267,12 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
  *
  ***************************************************/
 
-#define BUS_NAME       				"org.tizen.system.deviced"
-#define INTERFACE_NAME 				BUS_NAME
-#define OBJECT_PATH    				"/Org/Tizen/System/DeviceD"
-#define DEVICED_PATH_DISPLAY        OBJECT_PATH"/Applications"
-#define DEVICED_INTERFACE_DISPLAY   INTERFACE_NAME".applications"
-#define DBUS_REPLY_TIMEOUT 			(120 * 1000)
+#define BUS_NAME					"org.tizen.system.deviced"
+#define INTERFACE_NAME				BUS_NAME
+#define OBJECT_PATH					"/Org/Tizen/System/DeviceD"
+#define DEVICED_PATH_DISPLAY		OBJECT_PATH"/Applications"
+#define DEVICED_INTERFACE_DISPLAY	INTERFACE_NAME".applications"
+#define DBUS_REPLY_TIMEOUT			(120 * 1000)
 
 static UNUSED int __append_param(DBusMessage *msg, const char *sig, char *param[])
 {

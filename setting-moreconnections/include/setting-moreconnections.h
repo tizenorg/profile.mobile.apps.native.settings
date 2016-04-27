@@ -53,7 +53,7 @@ struct _SettingMoreConnectionsUG {
 
 	Evas_Object *ly_main;
 
-	/*  for navigation effect */
+	/*	for navigation effect */
 	Evas_Object *navi_bar;
 	Elm_Object_Item *navi_item;
 

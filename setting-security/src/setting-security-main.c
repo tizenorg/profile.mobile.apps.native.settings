@@ -105,7 +105,7 @@ static int setting_security_main_create(void *cb)
 	app_info_h app_info = NULL;
 	/* replace deprecated API :
 					from app_manager_get_app_info()
-					to app_info_create() 			*/
+					to app_info_create()			*/
 	ret = app_info_create("org.tizen.msa", &app_info);
 	if (ret != APP_MANAGER_ERROR_NONE) {
 		SETTING_TRACE("No corresponding app_id for [%s]\n", "org.tizen.msa");

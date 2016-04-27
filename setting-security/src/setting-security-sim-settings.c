@@ -518,7 +518,7 @@ setting_security_sim_settings_chk_btn_cb(void *data, Evas_Object *obj,
 	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
 	SettingSecurityUG *ad = list_item->userdata;
 
-	list_item->chk_status = elm_check_state_get(obj);	/*  for genlist update status */
+	list_item->chk_status = elm_check_state_get(obj);	/*	for genlist update status */
 	if (!safeStrCmp("IDS_ST_BODY_PIN_LOCK", list_item->keyStr)) {
 		/*Rollback state of toggle. */
 		/*it invokes async TAPIs to enable/disable, so don't change the status at first to avoid rollback */
@@ -541,7 +541,7 @@ setting_security_sim_settings_chk_btn_cb(void *data, Evas_Object *obj,
 
 /*static void */
 /*setting_security_sim_settings_click_softkey_back_cb(void *data, Evas_Object *obj, */
-/*					    void *event_info) */
+/*						void *event_info) */
 Eina_Bool setting_security_sim_settings_click_softkey_back_cb(void *data, Elm_Object_Item *it)
 {
 	SETTING_TRACE_BEGIN;

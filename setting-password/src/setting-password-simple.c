@@ -356,7 +356,7 @@ static Eina_Bool setting_password_simple_check_4entries(void *data)
 			snprintf(speciliztion, sizeof(speciliztion), temp, value);
 			setting_password_simple_add_description(ad->simple_layout, speciliztion);
 		} else if (value == 0) {
-			/*  store the lock timestamp */
+			/*	store the lock timestamp */
 			elm_object_focus_set(ad->sp_entry1, EINA_FALSE);
 			time_t cur_time = time(NULL);
 			char cur_timestamp[LOCK_TIMESTAMP_LEN] = { 0, };

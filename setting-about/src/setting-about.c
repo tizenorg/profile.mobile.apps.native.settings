@@ -106,7 +106,7 @@ static void *setting_about_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	setting_view_node_table_intialize();
 	setting_view_node_table_register(&setting_view_about_main, NULL);
 
-	/*  creating a view. */
+	/*	creating a view. */
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(aboutUG->itc_1text));
 	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(aboutUG->itc_2text_2));
 	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(aboutUG->itc_2text_3_parent));
@@ -188,7 +188,7 @@ static void setting_about_ug_on_destroy(ui_gadget_h ug, app_control_h service,
 	evas_object_event_callback_del(aboutUG->win_main_layout, EVAS_CALLBACK_RESIZE, setting_about_ug_cb_resize);	/* fix flash issue for gallery */
 	aboutUG->ug = ug;
 
-	/*  delete the allocated objects. */
+	/*	delete the allocated objects. */
 	setting_view_destroy(&setting_view_about_main, aboutUG);
 	if (NULL != ug_get_layout(aboutUG->ug)) {
 		evas_object_hide((Evas_Object *) ug_get_layout(aboutUG->ug));
@@ -348,9 +348,9 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
  * @see the struct Setting_Cfg_Node_T
  */
 static Setting_Cfg_Node_T s_cfg_node_array[] = {
-	{"IDS_ST_BODY_IMEI", NULL, "viewtype:frontpage;tab:first;keyword:IDS_ST_BODY_IMEI", 0, 0, 0, Cfg_Item_View_Node, NULL,  NULL, NULL, NULL},
+	{"IDS_ST_BODY_IMEI", NULL, "viewtype:frontpage;tab:first;keyword:IDS_ST_BODY_IMEI", 0, 0, 0, Cfg_Item_View_Node, NULL,	NULL, NULL, NULL},
 	{"IDS_ST_BODY_MY_NUMBER", NULL, "viewtype:frontpage;tab:first;keyword:IDS_ST_BODY_MY_NUMBER", 0, 0, 0, Cfg_Item_View_Node, NULL,  NULL, NULL, NULL},
-	{"IDS_CAM_POP_MODEL", NULL, "viewtype:frontpage;tab:first;keyword:IDS_CAM_POP_MODEL", 0, 0, 0, Cfg_Item_View_Node,  NULL, NULL, NULL, NULL},
+	{"IDS_CAM_POP_MODEL", NULL, "viewtype:frontpage;tab:first;keyword:IDS_CAM_POP_MODEL", 0, 0, 0, Cfg_Item_View_Node,	NULL, NULL, NULL, NULL},
 	{"IDS_ST_BODY_VERSION", NULL, "viewtype:frontpage;tab:first;keyword:IDS_ST_BODY_VERSION", 0, 0, 0, Cfg_Item_View_Node, NULL, NULL, NULL, NULL},
 	{"IDS_ST_BODY_BLUETOOTH", NULL, "viewtype:frontpage;tab:first;keyword:IDS_ST_BODY_BLUETOOTH", 0, 0, 0, Cfg_Item_View_Node, NULL, NULL, NULL, NULL},
 	{"IDS_ST_HEADER_WI_FI", NULL, "viewtype:frontpage;tab:first;keyword:IDS_ST_HEADER_WI_FI", 0, 0, 0, Cfg_Item_View_Node, NULL, NULL, NULL, NULL},

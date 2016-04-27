@@ -115,7 +115,7 @@ static void storageUg_SD_handle_mount_unmount(void *data)
 		ad->mmc_content.mmc_cb = storageUg_SD_finish_progress;
 		ad->mmc_content.user_data = ad;
 		ret = deviced_request_mount_mmc(&ad->mmc_content);
-		/*  if fail, popup failed info */
+		/*	if fail, popup failed info */
 		if (ret == -1) {
 			SETTING_TRACE_ERROR("deviced_request_mount_mmc() Fail");
 			storageUg_fail_popup(ad);

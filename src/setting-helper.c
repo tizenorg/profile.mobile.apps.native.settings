@@ -90,7 +90,7 @@ void setting_main_destroy_ug_cb(ui_gadget_h ug, void *priv)
 	setting_main_appdata *ad = (setting_main_appdata *) priv;
 
 	if (!ad) {
-		return; 	/*  do nothing if ad is NULL */
+		return;		/*	do nothing if ad is NULL */
 	}
 
 	evas_object_show(ad->navibar_main);

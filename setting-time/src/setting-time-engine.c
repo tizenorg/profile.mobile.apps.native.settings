@@ -20,7 +20,7 @@
  */
 #include <setting-time-engine.h>
 
-/*  To set system time takes some time. It makes some time before firing vconf event */
+/*	To set system time takes some time. It makes some time before firing vconf event */
 int setting_time_update_cb(void *data)
 {
 	retv_if(data == NULL, -1);

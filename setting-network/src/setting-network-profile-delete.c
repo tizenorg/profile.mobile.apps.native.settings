@@ -395,7 +395,7 @@ setting_network_profile_delete_check_cb(void *data, Evas_Object *obj,
 	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item =
 		(Setting_GenGroupItem_Data *) data;
-	list_item->chk_status = elm_check_state_get(obj);	/*  for genlist update status */
+	list_item->chk_status = elm_check_state_get(obj);	/*	for genlist update status */
 	___profile_selected(list_item->userdata);
 }
 
