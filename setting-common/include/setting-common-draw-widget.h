@@ -43,7 +43,6 @@
 
 extern const Elm_Genlist_Item_Class itc_seperator;
 extern const Elm_Genlist_Item_Class itc_bottom_seperator;
-extern const Elm_Genlist_Item_Class itc_sep_line;
 
 extern const Elm_Genlist_Item_Class itc_1text;
 extern const Elm_Genlist_Item_Class itc_1text_1icon_2;

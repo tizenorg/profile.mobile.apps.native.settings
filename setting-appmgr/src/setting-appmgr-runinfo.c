@@ -323,8 +323,7 @@ Evas_Object *appmgrUg_run_gl_stop_btn(void *data, Evas_Object *obj,
 	SettingAppMgrUG *ad = data;
 
 	retv_if(NULL == data, NULL);
-	if (0 != safeStrCmp(part, "elm.icon"))
-		return NULL;
+//	if (0 != safeStrCmp(part, "elm.icon"))	return NULL;
 
 	Evas_Object *box = elm_box_add(obj);
 	elm_box_horizontal_set(box, 1);

@@ -28,13 +28,9 @@
 
 #define DEF_BUF_SIZE 32
 
-#ifdef OLD_GENLIST_STYLE
-static Evas_Object *_gl_Gendial_content_get(void *data, Evas_Object *obj, const char *part);
-#endif
-
 static char *_gl_Gendial_text_get(void *data, Evas_Object *obj, const char *part);
 
-static Evas_Object *_gl_Gendial_new_content_get(void *data, Evas_Object *obj, const char *part);
+static Evas_Object *_gl_Gendial_content_get(void *data, Evas_Object *obj, const char *part);
 static char *_gl_Gendial_new_text_get(void *data, Evas_Object *obj, const char *part);
 
 #if 0
@@ -62,15 +58,6 @@ const Elm_Genlist_Item_Class itc_bottom_seperator = {
 };
 
 EXPORT_PUBLIC
-const Elm_Genlist_Item_Class itc_sep_line = {
-	.item_style = "dialogue/separator.transparent.2",
-	.func.text_get = _gl_Gendial_text_get,
-	.func.content_get = NULL,
-	.func.state_get = NULL,
-	.func.del = NULL,
-};
-
-EXPORT_PUBLIC
 const Elm_Genlist_Item_Class itc_bottom_line = {
 	/*.item_style = "bottom_line", */
 	.item_style = "full",
@@ -89,25 +76,14 @@ const Elm_Genlist_Item_Class itc_bottom_line1 = {
 	.func.del = NULL,
 };
 
-#ifdef OLD_GENLIST_STYLE
-#define DEFINE_ITC1(style, name) \
-	EXPORT_PUBLIC const Elm_Genlist_Item_Class name = {\
-													   .item_style = style,\
-													   .func.text_get = _gl_Gendial_text_get,\
-													   .func.content_get = _gl_Gendial_content_get,\
-													   .func.state_get = NULL,\
-													   .func.del = _gl_Gendial_del,\
-													  };
-#else
 #define DEFINE_ITC1(style, name) \
 	EXPORT_PUBLIC const Elm_Genlist_Item_Class name = {\
 													   .item_style = style,\
 													   .func.text_get = _gl_Gendial_new_text_get,\
-													   .func.content_get = _gl_Gendial_new_content_get,\
+													   .func.content_get = _gl_Gendial_content_get,\
 													   .func.state_get = NULL,\
 													   .func.del = _gl_Gendial_del,\
 													  };
-#endif
 
 DEFINE_ITC1(SETTING_GENLIST_ICON_1LINE_STYLE, itc_1text);
 DEFINE_ITC1(SETTING_GENLIST_ICON_1LINE_STYLE, itc_1text_1icon_2);
@@ -1635,7 +1611,7 @@ static void __multiline_eraser_clicked(void *data, Evas_Object *obj, void *event
 	elm_entry_entry_set(entry, "");
 }
 
-static Evas_Object *_gl_Gendial_new_content_get(void *data, Evas_Object *obj,
+static Evas_Object *_gl_Gendial_content_get(void *data, Evas_Object *obj,
 												const char *part)
 {
 	retv_if(!data, NULL);
@@ -1708,73 +1684,6 @@ static Evas_Object *_gl_Gendial_new_content_get(void *data, Evas_Object *obj,
 }
 
 
-#ifdef OLD_GENLIST_STYLE
-static Evas_Object *_gl_Gendial_content_get(void *data, Evas_Object *obj,
-											const char *part)
-{
-	retv_if(!data, NULL);
-	Setting_GenGroupItem_Data *item_data = data;
-	retv_if(!data, NULL);
-	__Content_Drawer *cd_list = NULL;
-	__drawer_fp fp = NULL;
-	/*SETTING_TRACE("content get [%s]",part); */
-
-
-	if (!safeStrCmp(part, "elm.icon.1")) { /* LEFT AREA */
-		if (item_data->swallow_type == SWALLOW_Type_LAYOUT_EDITFIELD
-			&& item_data->isPasswordFlag == TRUE)
-			return NULL;
-		fp = __add_left_default; /*hold default drawer */
-		cd_list = __cd_left;
-	} else if (!safeStrCmp(part, "elm.icon.2")) { /* RIGHT AREA */
-		if (item_data->swallow_type == SWALLOW_Type_LAYOUT_EDITFIELD
-			&& item_data->isPasswordFlag == TRUE)
-			return NULL;
-		fp = __add_right_default; /*hold default drawer */
-		cd_list = __cd_right;
-	} else if (!safeStrCmp(part, "elm.icon")) { /* CENTER WHOLE */
-		fp = __add_left_default; /*hold default drawer */
-		cd_list = __cd_left;
-	} else if (!safeStrCmp(part, "elm.swallow.end")) {
-		/*the default value of fp is NULL here */
-		cd_list = __cd_end;
-	}
-	/* To do : add code for editfield */
-	else if (!safeStrCmp(part, "elm.icon.entry")) {
-		if (item_data->swallow_type == SWALLOW_Type_LAYOUT_DATEFIELD) {
-			/*fp = __add_datefield; */
-			fp = __add_datefield_new;
-		} else {
-			/*fp = __add_entry_without_layout; */
-			fp = __add_entry_padding;
-		}
-	} else if (!safeStrCmp(part, "elm.icon.eraser")) {
-		/*fp = __add_button_eraser; */
-		Evas_Object *btn = elm_button_add(obj);
-		elm_object_style_set(btn, "editfield_clear"); /*Make "X" marked button by changing style. */
-		evas_object_smart_callback_add(btn, "clicked", __multiline_eraser_clicked, item_data);
-		return btn;
-	} else if (!safeStrCmp(part, "elm.icon.edit")) {
-		Evas_Object *btn = elm_button_add(obj);
-		elm_object_style_set(btn, "minus");
-		evas_object_propagate_events_set(btn, EINA_FALSE);
-		return btn;
-	}
-	/* End. */
-
-	if (cd_list) {
-		int idx = 0;
-		for (; idx < SWALLOW_Type_MAX; idx++) {
-			if (item_data->swallow_type == cd_list[idx].type) { /*match using swallow type */
-				fp = cd_list[idx].draw;
-				break;
-			}
-		}
-	}
-	return fp ? fp(item_data, obj) : NULL;
-}
-#endif	/* OLD_GENLIST_STYLE */
-
 static void _gl_Gendial_del(void *data, Evas_Object *obj)
 {
 	/* SETTING_TRACE_BEGIN; */
@@ -1816,21 +1725,12 @@ EXPORT_PUBLIC
 bool setting_create_Gendial_itc(const char *item_style,
 								Elm_Genlist_Item_Class *itc)
 {
-#ifdef OLD_GENLIST_STYLE
 	itc->item_style = item_style;
-	itc->func.text_get = _gl_Gendial_text_get;
+	itc->func.text_get = _gl_Gendial_new_text_get;
 	itc->func.content_get = _gl_Gendial_content_get;
 	itc->func.state_get = NULL;
 	itc->func.del = _gl_Gendial_del;	/* _gl_Gendial_del; */
 	return TRUE;
-#else
-	itc->item_style = item_style;
-	itc->func.text_get = _gl_Gendial_new_text_get;
-	itc->func.content_get = _gl_Gendial_new_content_get;
-	itc->func.state_get = NULL;
-	itc->func.del = _gl_Gendial_del;	/* _gl_Gendial_del; */
-	return TRUE;
-#endif
 }
 
 /**

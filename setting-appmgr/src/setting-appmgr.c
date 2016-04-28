@@ -77,19 +77,11 @@ static inline void appmgrUg_init_itcs(SettingAppMgrUG *ad)
 	ad->itc_sep.func.state_get = NULL;
 	ad->itc_sep.func.del = NULL;
 
-#if OLD_GENLIST_STYLE
-	ad->itc_main.item_style = SETTING_GENLIST_2LINE_STYLE;
-	ad->itc_main.func.text_get = appmgrUg_main_gl_label_get;
-	ad->itc_main.func.content_get = appmgrUg_main_gl_icon_get;
-	ad->itc_main.func.state_get = NULL;
-	ad->itc_main.func.del = _main_gl_del_cb;
-#else
 	ad->itc_main.item_style = SETTING_GENLIST_2LINE_STYLE;
 	ad->itc_main.func.text_get = appmgrUg_main_gl_label_new_get;
 	ad->itc_main.func.content_get = appmgrUg_main_gl_icon_new_get;
 	ad->itc_main.func.state_get = NULL;
 	ad->itc_main.func.del = _main_gl_del_cb;
-#endif
 
 	ad->itc_1ic.item_style = "1icon";
 	ad->itc_1ic.func.text_get = NULL;
@@ -97,19 +89,11 @@ static inline void appmgrUg_init_itcs(SettingAppMgrUG *ad)
 	ad->itc_1ic.func.state_get = NULL;
 	ad->itc_1ic.func.del = NULL;
 
-#if OLD_GENLIST_STYLE
 	ad->itc_info_title.item_style = SETTING_GENLIST_2LINE_STYLE;
 	ad->itc_info_title.func.text_get = appmgrUg_info_title_gl_label_get;
 	ad->itc_info_title.func.content_get = appmgrUg_info_title_gl_icon_get;
 	ad->itc_info_title.func.state_get = NULL;
 	ad->itc_info_title.func.del = NULL;
-#else
-	ad->itc_info_title.item_style = SETTING_GENLIST_2LINE_STYLE;
-	ad->itc_info_title.func.text_get = appmgrUg_info_title_gl_label_get;
-	ad->itc_info_title.func.content_get = appmgrUg_info_title_gl_icon_get;
-	ad->itc_info_title.func.state_get = NULL;
-	ad->itc_info_title.func.del = NULL;
-#endif
 
 	ad->itc_2button1.item_style = "1icon";
 	ad->itc_2button1.func.text_get = NULL;

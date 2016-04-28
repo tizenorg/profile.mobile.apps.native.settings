@@ -28,6 +28,7 @@
 
 #if 1
 #include <EWebKit.h>
+#include <ewk_chromium.h>
 #else
 #include <ewk_auth_challenge.h>
 #include <ewk_certificate.h>

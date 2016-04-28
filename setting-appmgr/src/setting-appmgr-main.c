@@ -396,38 +396,21 @@ char *appmgrUg_main_gl_label_new_get(void *data, Evas_Object *obj, const char *p
 	return label;
 }
 
-char *appmgrUg_main_gl_label_get(void *data, Evas_Object *obj, const char *part)
-{
-	char *label = NULL;
-	appmgr_listinfo *info = data;
-
-	retv_if(data == NULL, NULL);
-
-	if (0 == strcmp(part, "elm.text.main.left.top")) {
-		label = SAFE_STRDUP(info->pkg_label);
-	} else if (0 == strcmp(part, "elm.text.sub.left.bottom")) {
-		char desc[APPMGRUG_MAX_STR_LEN] = {0};
-		if (info->valid_size) {
-			appmgrUg_size_to_str(info->total_size, desc, sizeof(desc));
-			label = strdup(desc);
-		} else {
-			label = strdup(_(MGRAPP_STR_COMPUTING));
-		}
-	}
-
-	return label;
-}
-
 static inline char *appmgrUg_get_listinfo_default_icon(const char *appid)
 {
+
+	
 	int ret;
 	char *icon;
 	pkgmgrinfo_appinfo_h handle = NULL;
 
 	ret = pkgmgrinfo_appinfo_get_appinfo(appid, &handle);
 	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_appinfo_get_appinfo() Fail(%d)", ret);
+	
 
 	icon = appmgrUg_get_defualt_icon(handle);
+
+	SETTING_TRACE(" ==> appid [%s], icon [%s]", appid, icon);
 
 	pkgmgrinfo_appinfo_destroy_appinfo(handle);
 
@@ -440,7 +423,6 @@ Evas_Object *appmgrUg_main_gl_icon_new_get(void *data, Evas_Object *obj, const c
 	SETTING_TRACE(" ------------> content get [%s]",part);
 
 	Evas_Object *icon = NULL;
-	Evas_Object *lay = NULL;
 	appmgr_listinfo *info = data;
 
 	retv_if(data == NULL, NULL);
@@ -448,51 +430,31 @@ Evas_Object *appmgrUg_main_gl_icon_new_get(void *data, Evas_Object *obj, const c
 	if (!safeStrCmp(part, "elm.swallow.icon")) {
 		icon = elm_icon_add(obj);
 
+		SETTING_TRACE(" -------> info->icon_path : %s",info->icon_path);
+
 		if (NULL == info->icon_path)
 			info->icon_path = appmgrUg_get_listinfo_default_icon(info->mainappid);
 
 		elm_image_file_set(icon, info->icon_path, NULL);
+		elm_image_resizable_set(icon, EINA_TRUE, EINA_TRUE);
+		
 		evas_object_size_hint_weight_set(icon, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 		evas_object_size_hint_align_set(icon, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
+		
+
+
+#if 1
+		return icon;
+#else
+		Evas_Object *lay = NULL;
 		lay = elm_layout_add(obj);
 		retv_if(lay == NULL, NULL);
 		elm_layout_theme_set(lay, "layout", "list/B/type.2", "default");
 		elm_layout_content_set(lay, "elm.swallow.content", icon);
 
 		return lay;
-	} else {
-		return NULL;
-	}
-}
-
-
-
-Evas_Object *appmgrUg_main_gl_icon_get(void *data, Evas_Object *obj,
-									   const char *part)
-{
-	Evas_Object *icon = NULL;
-	Evas_Object *lay = NULL;
-	appmgr_listinfo *info = data;
-
-	retv_if(data == NULL, NULL);
-
-	if (!safeStrCmp(part, "elm.icon.1")) {
-		icon = elm_icon_add(obj);
-
-		if (NULL == info->icon_path)
-			info->icon_path = appmgrUg_get_listinfo_default_icon(info->mainappid);
-
-		elm_image_file_set(icon, info->icon_path, NULL);
-		evas_object_size_hint_weight_set(icon, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-		evas_object_size_hint_align_set(icon, EVAS_HINT_FILL, EVAS_HINT_FILL);
-
-		lay = elm_layout_add(obj);
-		retv_if(lay == NULL, NULL);
-		elm_layout_theme_set(lay, "layout", "list/B/type.2", "default");
-		elm_layout_content_set(lay, "elm.swallow.content", icon);
-
-		return lay;
+#endif
 	} else {
 		return NULL;
 	}
