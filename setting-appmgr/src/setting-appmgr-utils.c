@@ -666,6 +666,11 @@ Evas_Object *appmgrUg_info_title_gl_icon_get(void *data, Evas_Object *obj,
 	evas_object_size_hint_weight_set(icon, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(icon, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
+#if 1
+	evas_object_show(icon);
+	return icon;
+
+#else
 	lay = elm_layout_add(obj);
 	elm_layout_theme_set(lay, "layout", "list/B/type.2", "default");
 	elm_layout_content_set(lay, "elm.swallow.content", icon);
@@ -673,6 +678,7 @@ Evas_Object *appmgrUg_info_title_gl_icon_get(void *data, Evas_Object *obj,
 	evas_object_show(icon);
 
 	return lay;
+#endif
 }
 
 void appmgrUg_pkg_disable_enable_cb(void *data, Evas_Object *obj,

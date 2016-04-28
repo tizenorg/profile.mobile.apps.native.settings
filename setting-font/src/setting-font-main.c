@@ -169,7 +169,6 @@ static Evas_Object *_font_size_slider_get(void *data, Evas_Object *obj,
 	Setting_GenGroupItem_Data *item_data = data;
 	SETTING_TRACE(" --------------------> part:%s", part);
 
-	/*if (!safeStrCmp(part, "elm.icon")) { /* CENTER WHOLE * / */
 	if (!safeStrCmp(part, "elm.swallow.content")) {
 
 		if (SWALLOW_Type_LAYOUT_5STEP_SLIDER == item_data->swallow_type) {
