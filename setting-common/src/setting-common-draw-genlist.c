@@ -474,8 +474,11 @@ static Evas_Object *__add_check_invisible(Setting_GenGroupItem_Data *item_data, 
 
 	if (item_data->isItemHideFlag) return NULL;
 
+#if 0
 	Evas_Object *content = elm_layout_add(parent);
 	Evas_Object *check = elm_check_add(content);
+#else
+	Evas_Object *check = elm_check_add(parent);
 
 	/* To fix check button flicker issue when rotate the screen*/
 	if (item_data->isItemDisableFlag)
@@ -497,11 +500,15 @@ static Evas_Object *__add_check_invisible(Setting_GenGroupItem_Data *item_data, 
 	}
 	evas_object_show(check);
 
+#if 0
 	/*"list/B/type.3" */
 	elm_layout_theme_set(content, "layout", "list/B/type.4", "default");
 	elm_layout_content_set(content, "elm.swallow.content", check);
 
 	return content;
+#else
+	return check;
+#endif
 }
 
 
@@ -509,8 +516,13 @@ static Evas_Object *__add_check_invisible(Setting_GenGroupItem_Data *item_data, 
 static Evas_Object *__add_check(Setting_GenGroupItem_Data *item_data, Evas_Object *parent)
 {
 	retv_if(!item_data || !parent, NULL);
+
+#if 0 
 	Evas_Object *content = elm_layout_add(parent);
 	Evas_Object *check = elm_check_add(content);
+#else
+	Evas_Object *check = elm_check_add(parent);
+#endif
 
 	/* To fix check button flicker issue when rotate the screen*/
 	if (item_data->isItemDisableFlag)
@@ -538,10 +550,14 @@ static Evas_Object *__add_check(Setting_GenGroupItem_Data *item_data, Evas_Objec
 	}
 	evas_object_show(check);
 
+#if 0
 	/*"list/B/type.3" */
 	elm_layout_theme_set(content, "layout", "list/B/type.4", "default");
 	elm_layout_content_set(content, "elm.swallow.content", check);
 	return content;
+#else
+	return check;
+#endif
 }
 
 static Evas_Object *__add_toggle(Setting_GenGroupItem_Data *item_data, Evas_Object *parent)
@@ -594,9 +610,15 @@ static Evas_Object *__add_radio(Setting_GenGroupItem_Data *item_data, Evas_Objec
 		item_data->rgd = elm_radio_add(parent);
 		elm_radio_state_value_set(item_data->rgd, -1);
 	}
+
+#if 0
 	Evas_Object *ly_radio = elm_layout_add(parent);
 	elm_layout_theme_set(ly_radio, "layout", "list/B/type.4", "default");
 	Evas_Object *radio = elm_radio_add(ly_radio);
+#else
+	Evas_Object *radio = elm_radio_add(parent);
+#endif
+
 	evas_object_propagate_events_set(radio, EINA_FALSE);
 	evas_object_repeat_events_set(radio, EINA_TRUE);
 	elm_radio_state_value_set(radio,
@@ -615,9 +637,14 @@ static Evas_Object *__add_radio(Setting_GenGroupItem_Data *item_data, Evas_Objec
 									   __radio_changed,
 									   item_data);
 	}
+
+#if 0
 	elm_layout_content_set(ly_radio, "elm.swallow.content", radio);
 	/*return check; */
 	return ly_radio;
+#else
+	return radio;
+#endif
 }
 
 
@@ -632,13 +659,19 @@ static Evas_Object *__add_radio_right_propagate_events_set(Setting_GenGroupItem_
 		item_data->rgd = elm_radio_add(parent);
 		elm_radio_state_value_set(item_data->rgd, -1);
 	}
-	Evas_Object *ly_radio = elm_layout_add(parent);
 
+#if 0
+	Evas_Object *ly_radio = elm_layout_add(parent);
 	elm_layout_theme_set(ly_radio, "layout", "list/C/type.2", "default");
 	Evas_Object *radio = elm_radio_add(ly_radio);
+#else
+	Evas_Object *radio = elm_radio_add(parent);
+#endif
 
 #if 1
+	#if 0
 	evas_object_propagate_events_set(ly_radio, EINA_FALSE);
+	#endif
 	evas_object_propagate_events_set(radio, EINA_FALSE);
 #endif
 	elm_radio_state_value_set(radio,
@@ -657,9 +690,13 @@ static Evas_Object *__add_radio_right_propagate_events_set(Setting_GenGroupItem_
 									   __radio_changed,
 									   item_data);
 	}
+#if 0
 	elm_layout_content_set(ly_radio, "elm.swallow.content", radio);
 
 	return ly_radio;
+#else
+	return radio;
+#endif
 }
 
 static Evas_Object *__add_radio_right(Setting_GenGroupItem_Data *item_data, Evas_Object *parent)
@@ -1488,32 +1525,30 @@ static Evas_Object *__add_left_default(Setting_GenGroupItem_Data *item_data, Eva
 		evas_object_size_hint_aspect_set(icon, EVAS_ASPECT_CONTROL_VERTICAL, 1, 1);
 		return icon;
 	} else if (SWALLOW_Type_1ICON_SMALL_ICON == item_data->swallow_type) {
-		/*Evas_Object *ic = NULL; */
-		/*ic = elm_layout_add(parent); */
-		Evas_Object *c = NULL;
 
-		/*elm_layout_theme_set(ic, "layout", "list/B/type.4", "default"); */
-		c = elm_image_add(parent);
+		Evas_Object *c = elm_image_add(parent);
 		elm_image_file_set(c, item_data->l_swallow_path, NULL);
 		evas_object_size_hint_align_set(c, EVAS_HINT_FILL, EVAS_HINT_FILL);
 		evas_object_size_hint_weight_set(c, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-		/*elm_layout_content_set(ic, "elm.swallow.content", c); */
-		/*return ic; */
 		return c;
 	} else {
-		Evas_Object *ic = NULL;
-		ic = elm_layout_add(parent);
-		Evas_Object *c = NULL;
-
+#if 0
+		Evas_Object *ic = elm_layout_add(parent);
 		elm_layout_theme_set(ic, "layout", "list/B/type.4", "default");
-		c = elm_image_add(parent);
+		Evas_Object * c = elm_image_add(parent);
+#else
+		Evas_Object * c = elm_image_add(parent);
+#endif
 		elm_image_file_set(c, item_data->l_swallow_path, NULL);
 		setting_decorate_image_RGBA(c, 14, 41, 73, 255);
 		evas_object_size_hint_align_set(c, EVAS_HINT_FILL, EVAS_HINT_FILL);
 		evas_object_size_hint_weight_set(c, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+#if 0
 		elm_layout_content_set(ic, "elm.swallow.content", c);
-
 		return ic;
+#else
+		return c;
+#endif
 	}
 
 }
@@ -1525,19 +1560,13 @@ static Evas_Object *__add_right_default(Setting_GenGroupItem_Data *item_data, Ev
 	}
 
 #if 0
-	Evas_Object *icon = elm_icon_add(parent);
-	elm_image_file_set(icon, item_data->r_swallow_path, NULL);
-	evas_object_size_hint_aspect_set(icon, EVAS_ASPECT_CONTROL_VERTICAL, 1, 1);
-	if (!safeStrCmp(item_data->r_swallow_path, SETTING_IMAGE_PATH_CFG"00_list_button_expand_closed.png"))
-		else if (!safeStrCmp(item_data->r_swallow_path, SETTING_IMAGE_PATH_CFG"00_list_button_expand_opened.png"))
-			return icon;
-#else
-	Evas_Object *ic = NULL;
-	ic = elm_layout_add(parent);
-	Evas_Object *icon = NULL;
-
+	Evas_Object *ic = elm_layout_add(parent);
 	elm_layout_theme_set(ic, "layout", "list/C/type.3", "default");
-	icon = elm_image_add(parent);
+	Evas_Object *icon = elm_image_add(parent);
+#else
+	Evas_Object *icon = elm_image_add(parent);
+#endif
+
 	if (!safeStrCmp(item_data->r_swallow_path, SETTING_IMAGE_PATH_CFG"00_list_button_expand_closed.png"))
 		setting_decorate_image_RGBA(icon, 14, 41, 73, 255);
 	else if (!safeStrCmp(item_data->r_swallow_path, SETTING_IMAGE_PATH_CFG"00_list_button_expand_opened.png"))
@@ -1545,8 +1574,13 @@ static Evas_Object *__add_right_default(Setting_GenGroupItem_Data *item_data, Ev
 	elm_image_file_set(icon, item_data->r_swallow_path, NULL);
 	evas_object_size_hint_align_set(icon, 0.0, EVAS_HINT_FILL);
 	evas_object_size_hint_weight_set(icon, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+
+#if 0
 	elm_layout_content_set(ic, "elm.swallow.content", icon);
 	return ic;
+#else
+	return icon;
+#endif
 
 #endif
 }

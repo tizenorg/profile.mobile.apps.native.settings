@@ -442,9 +442,8 @@ Evas_Object *appmgrUg_main_gl_icon_new_get(void *data, Evas_Object *obj, const c
 		evas_object_size_hint_align_set(icon, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
 		
-
-
 #if 1
+		evas_object_show(icon);
 		return icon;
 #else
 		Evas_Object *lay = NULL;
