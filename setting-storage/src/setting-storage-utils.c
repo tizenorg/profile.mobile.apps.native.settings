@@ -258,11 +258,9 @@ void storageug_genlist_text_update(Setting_GenGroupItem_Data *item_data,
 
 	G_FREE(item_data->sub_desc);
 	item_data->sub_desc = (char *)g_strdup(desc);
-#if OLD_GENLIST_STYLE
-	elm_genlist_item_fields_update(item_data->item, "elm.text.sub.left.bottom", ELM_GENLIST_ITEM_FIELD_TEXT);
-#else
+
 	elm_genlist_item_fields_update(item_data->item, "elm.text.sub", ELM_GENLIST_ITEM_FIELD_TEXT);
-#endif
+
 }
 
 void storageUg_get_internal_detail_cb(int fn_result, SettingStorageUG *ad)

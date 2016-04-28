@@ -765,11 +765,6 @@ static int setting_network_main_create(void *cb)
 		SETTING_TRACE_ERROR("ad->data_mobile_data is NULL");
 	}
 
-#ifdef OLD_GENLIST_STYLE
-	/* [UI] "Mobile Data" descrition */
-	const char *title = Data_packet_Sub_desc;
-	ADD_GL_HELP(scroller, title);
-#endif
 
 	/* [UI] Data Roaming - TITLE : "Data Roaming" */
 	int value_data_roaming;
@@ -792,9 +787,6 @@ static int setting_network_main_create(void *cb)
 	}
 
 
-#ifdef OLD_GENLIST_STYLE
-	ADD_GL_HELP(scroller, SETTING_NETWORK_DATA_ROMING_DESC);
-#endif
 	/* [UI] Network Mode */
 	ad->data_net_mode =
 		setting_create_Gendial_field_def(scroller,

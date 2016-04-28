@@ -44,21 +44,19 @@
 #define PWD_FILE 	_TZ_SYS_DATA"/setting/set_info"
 
 
-#ifdef OLD_GENLIST_STYLE
+#if 0 /* OLD_GENLIST_STYLE */
 #define SETTING_GENLIST_GROUP_INDEX_STYLE "groupindex"
 #define SETTING_GENLIST_ICON_1LINE_STYLE "1line"
 #define SETTING_GENLIST_2LINE_STYLE "2line.top"
 #define SETTING_GENLIST_MULTILINE_STYLE "multiline_sub"
 #define SETTING_GENLIST_LEFT_ICON_CONTENT_ICON_STYLE "1icon"
+#endif
 
-#else
 #define SETTING_GENLIST_GROUP_INDEX_STYLE "group_index"
 #define SETTING_GENLIST_ICON_1LINE_STYLE "type1"
 #define SETTING_GENLIST_2LINE_STYLE "type1"
 #define SETTING_GENLIST_MULTILINE_STYLE "multiline"
 #define SETTING_GENLIST_LEFT_ICON_CONTENT_ICON_STYLE "full"
-#endif
-
 
 
 #define SETTING_POSTINST_FILE "/var/lib/dpkg/info/org.tizen.setting.postinst"

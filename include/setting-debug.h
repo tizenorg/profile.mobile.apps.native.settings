@@ -68,9 +68,6 @@
 /*macros to control program flow*/
 
 /* Genlist Update is in progress. */
-#if 0
-#define OLD_GENLIST_STYLE
-#endif
 
 #define FUNCTION_SYSTEM_SETTING 1
 #define SETTING_SEARCH 1

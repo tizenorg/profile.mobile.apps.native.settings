@@ -131,7 +131,7 @@ char *setting_media_basename(char *path)
 /* | elm.swallow.icon |----------------------------------------------------| elm.swallow.end | */
 /* |                  |         elm.text.sub          | elm.text.sub.end   |                 | */
 /* ------------------------------------------------------------------------------------------- */
-static Evas_Object *__sound_slider_new_icon_get(void *data, Evas_Object *obj, const char *part)
+static Evas_Object *__sound_slider_icon_get(void *data, Evas_Object *obj, const char *part)
 {
 	SETTING_TRACE_BEGIN;
 	/*appcore_measure_start(); */
@@ -952,19 +952,11 @@ Evas_Object *setting_sound_init(void *data)
 
 	setting_create_Gendial_itc(SETTING_GENLIST_LEFT_ICON_CONTENT_ICON_STYLE, &(ad->itc_layout));
 
-#ifdef OLD_GENLIST_STYLE
 	ad->itc_layout.func.content_get = __sound_slider_icon_get;
-#else
-	ad->itc_layout.func.content_get = __sound_slider_new_icon_get;
-#endif
 
 	setting_create_Gendial_itc(SETTING_GENLIST_LEFT_ICON_CONTENT_ICON_STYLE, &(ad->itc_layout_1icon));
 
-#ifdef OLD_GENLIST_STYLE
 	ad->itc_layout_1icon.func.content_get = __sound_slider_icon_get;
-#else
-	ad->itc_layout_1icon.func.content_get = __sound_slider_new_icon_get;
-#endif
 
 	/* register view node table */
 	setting_view_node_table_intialize();
