@@ -69,23 +69,26 @@ static void __screen_timeout_cb(void *data, Evas_Object *obj, void *event_info)
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 
 	if (!safeStrCmp(KeyStr_Backlight_15_SEC_STR, list_item->keyStr)) {
-		elm_radio_value_set(ad->screen_timeout_rdg, 0);
+		elm_radio_value_set(ad->screen_timeout_rdg, 1);
 		value = 15;
 	} else if (!safeStrCmp(KeyStr_Backlight_30_SEC_STR, list_item->keyStr)) {
-		elm_radio_value_set(ad->screen_timeout_rdg, 1);
+		elm_radio_value_set(ad->screen_timeout_rdg, 2);
 		value = 30;
 	} else if (!safeStrCmp(KeyStr_Backlight_1_MIN_STR, list_item->keyStr)) {
-		elm_radio_value_set(ad->screen_timeout_rdg, 2);
+		elm_radio_value_set(ad->screen_timeout_rdg, 3);
 		value = 60;
 	} else if (!safeStrCmp(KeyStr_Backlight_2_MIN_STR, list_item->keyStr)) {
-		elm_radio_value_set(ad->screen_timeout_rdg, 3);
+		elm_radio_value_set(ad->screen_timeout_rdg, 4);
 		value = 120;
 	} else if (!safeStrCmp(KeyStr_Backlight_5_MIN_STR, list_item->keyStr)) {
-		elm_radio_value_set(ad->screen_timeout_rdg, 4);
+		elm_radio_value_set(ad->screen_timeout_rdg, 5);
 		value = 300;
 	} else if (!safeStrCmp(KeyStr_Backlight_10_MIN_STR, list_item->keyStr)) {
-		elm_radio_value_set(ad->screen_timeout_rdg, 5);
+		elm_radio_value_set(ad->screen_timeout_rdg, 6);
 		value = 600;
+    } else if (!safeStrCmp(KeyStr_Backlight_Alays_On, list_item->keyStr)) {
+        elm_radio_value_set(ad->screen_timeout_rdg, 0);
+        value = 0;
 	}
 
 	setting_set_int_slp_key(ad->data_back->int_slp_setting_binded, value, &err);
@@ -118,10 +121,32 @@ static void setting_display_screen_timeout_popup(void *data)
 	evas_object_data_set(menu_glist, "radio", rdg);
 	ad->screen_timeout_rdg = rdg;
 
+    int is_emul_bin = FALSE;
+    int radio_num =0;
+    if (isEmulBin()) {
+			SETTING_TRACE_ERROR(">>>>>>>>>>>>>>>>>>>>>>> EMULATOR is on!!");
+            is_emul_bin = TRUE;
+            radio_num  = 0;
+            ad->data_backlight_always_on = setting_create_Gendial_field_1radio(menu_glist, &(ad->itc_1text_1icon),
+                                                                               __screen_timeout_cb,ad,
+																			   SWALLOW_Type_1RADIO_RIGHT,
+                                                                               rdg, radio_num,                  /* Always ON */
+                                                                               KeyStr_Backlight_Alays_On, NULL);
+
+            if (ad->data_backlight_always_on) {
+                    ad->data_backlight_always_on->userdata = ad;
+                    __BACK_POINTER_SET(ad->data_backlight_always_on);
+            } else {
+                    SETTING_TRACE_ERROR("ad->data_backlight_always_on is NULL");
+            }
+
+            radio_num++;
+    }
+
 	ad->data_backlight_15sec = setting_create_Gendial_field_1radio(menu_glist, &(ad->itc_1text_1icon),
 																   __screen_timeout_cb, ad,
 																   SWALLOW_Type_1RADIO_RIGHT,
-																   rdg, 0, KeyStr_Backlight_15_SEC_STR,
+																   rdg, radio_num, KeyStr_Backlight_15_SEC_STR,
 																   NULL);
 	if (ad->data_backlight_15sec) {
 		ad->data_backlight_15sec->userdata = ad;
@@ -129,11 +154,12 @@ static void setting_display_screen_timeout_popup(void *data)
 	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_15sec is NULL");
 	}
+	radio_num++;
 
 	ad->data_backlight_30sec = setting_create_Gendial_field_1radio(menu_glist, &(ad->itc_1text_1icon),
 																   __screen_timeout_cb, ad,
 																   SWALLOW_Type_1RADIO_RIGHT,
-																   rdg, 1, KeyStr_Backlight_30_SEC_STR,
+																   rdg, radio_num, KeyStr_Backlight_30_SEC_STR,
 																   NULL);
 	if (ad->data_backlight_30sec) {
 		ad->data_backlight_30sec->userdata = ad;
@@ -141,11 +167,12 @@ static void setting_display_screen_timeout_popup(void *data)
 	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_30sec is NULL");
 	}
+	radio_num++;
 
 	ad->data_backlight_1min = setting_create_Gendial_field_1radio(menu_glist, &(ad->itc_1text_1icon),
 																  __screen_timeout_cb, ad,
 																  SWALLOW_Type_1RADIO_RIGHT,
-																  rdg, 2, KeyStr_Backlight_1_MIN_STR,
+																  rdg, radio_num, KeyStr_Backlight_1_MIN_STR,
 																  NULL);
 	if (ad->data_backlight_1min) {
 		ad->data_backlight_1min->userdata = ad;
@@ -153,11 +180,12 @@ static void setting_display_screen_timeout_popup(void *data)
 	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_1min is NULL");
 	}
+	radio_num++;
 
 	ad->data_backlight_2min = setting_create_Gendial_field_1radio(menu_glist, &(ad->itc_1text_1icon),
 																  __screen_timeout_cb, ad,
 																  SWALLOW_Type_1RADIO_RIGHT,
-																  rdg, 3, KeyStr_Backlight_2_MIN_STR,
+																  rdg, radio_num, KeyStr_Backlight_2_MIN_STR,
 																  NULL);
 	if (ad->data_backlight_2min) {
 		ad->data_backlight_2min->userdata = ad;
@@ -165,11 +193,12 @@ static void setting_display_screen_timeout_popup(void *data)
 	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_2min is NULL");
 	}
+	radio_num++;
 
 	ad->data_backlight_5min = setting_create_Gendial_field_1radio(menu_glist, &(ad->itc_1text_1icon),
 																  __screen_timeout_cb, ad,
 																  SWALLOW_Type_1RADIO_RIGHT,
-																  rdg, 4, KeyStr_Backlight_5_MIN_STR,
+																  rdg, radio_num, KeyStr_Backlight_5_MIN_STR,
 																  NULL);
 	if (ad->data_backlight_5min) {
 		ad->data_backlight_5min->userdata = ad;
@@ -177,11 +206,12 @@ static void setting_display_screen_timeout_popup(void *data)
 	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_5min is NULL");
 	}
+	radio_num++;
 
 	ad->data_backlight_10min = setting_create_Gendial_field_1radio(menu_glist, &(ad->itc_1text_1icon),
 																   __screen_timeout_cb, ad,
 																   SWALLOW_Type_1RADIO_RIGHT,
-																   rdg, 5, KeyStr_Backlight_10_MIN_STR,
+																   rdg, radio_num, KeyStr_Backlight_10_MIN_STR,
 																   NULL);
 	if (ad->data_backlight_10min) {
 		ad->data_backlight_10min->userdata = ad;
@@ -189,21 +219,36 @@ static void setting_display_screen_timeout_popup(void *data)
 	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_10min is NULL");
 	}
+	radio_num++;
 
 	/* update radio */
 	setting_get_int_slp_key(ad->data_back->int_slp_setting_binded, &value, &err);
+    if (isEmulBin()) {
+            if (0 == value) {
+                    elm_radio_value_set(rdg, 0);
+            }
+            radio_num = 1;
+    } else {
+            radio_num = 0;
+    }
 	if (15 == value) {
-		elm_radio_value_set(rdg, 0);
+		radio_num = 0 + radio_num;
+		elm_radio_value_set(rdg, radio_num);
 	} else if (30 == value) {
-		elm_radio_value_set(rdg, 1);
+		radio_num = 1 + radio_num;
+		elm_radio_value_set(rdg, radio_num);
 	} else if (60 == value) {
-		elm_radio_value_set(rdg, 2);
+		radio_num = 2 + radio_num;
+		elm_radio_value_set(rdg, radio_num);
 	} else if (120 == value) {
-		elm_radio_value_set(rdg, 3);
+		radio_num = 3 + radio_num;
+		elm_radio_value_set(rdg, radio_num);
 	} else if (300 == value) {
-		elm_radio_value_set(rdg, 4);
+		radio_num = 4 + radio_num;
+		elm_radio_value_set(rdg, radio_num);
 	} else if (600 == value) {
-		elm_radio_value_set(rdg, 5);
+		radio_num = 5 + radio_num;
+		elm_radio_value_set(rdg, radio_num);
 	}
 }
 
