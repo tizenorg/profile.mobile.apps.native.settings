@@ -71,19 +71,12 @@ extern const Elm_Genlist_Item_Class itc_1text_1icon_3_tb;
 extern const Elm_Genlist_Item_Class itc_cm_1text_1icon_2;
 extern const Elm_Genlist_Item_Class itc_bg_1icon;
 extern const Elm_Genlist_Item_Class itc_1icon_with_no_line;
-extern const Elm_Genlist_Item_Class itc_1icon_with_no_padding;
 extern const Elm_Genlist_Item_Class itc_group_item;
 extern const Elm_Genlist_Item_Class itc_multiline_1text_1icon;
-extern const Elm_Genlist_Item_Class itc_1text_2icon_divider;
-extern const Elm_Genlist_Item_Class itc_no_group_1text_1icon_2;
 
 extern const Elm_Genlist_Item_Class itc_editfield;
 extern const Elm_Genlist_Item_Class itc_multiline_2text;
 extern const Elm_Genlist_Item_Class itc_1text_1icon_divider;
-extern const Elm_Genlist_Item_Class itc_normal_1text;
-extern const Elm_Genlist_Item_Class itc_bottom_line;
-extern const Elm_Genlist_Item_Class itc_bottom_line1;
-
 
 #define ADD_GL_LABLE(scroller, str) \
 	{\

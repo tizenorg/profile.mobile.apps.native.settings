@@ -57,25 +57,6 @@ const Elm_Genlist_Item_Class itc_bottom_seperator = {
 	.func.del = NULL,
 };
 
-EXPORT_PUBLIC
-const Elm_Genlist_Item_Class itc_bottom_line = {
-	/*.item_style = "bottom_line", */
-	.item_style = "full",
-	.func.text_get = NULL,
-	.func.content_get = _gl_Gendial_new_content_get,
-	.func.state_get = NULL,
-	.func.del = _gl_Gendial_del,
-};
-
-EXPORT_PUBLIC
-const Elm_Genlist_Item_Class itc_bottom_line1 = {
-	.item_style = "bottom_line",
-	.func.text_get = NULL,
-	.func.content_get = NULL,
-	.func.state_get = NULL,
-	.func.del = NULL,
-};
-
 #define DEFINE_ITC1(style, name) \
 	EXPORT_PUBLIC const Elm_Genlist_Item_Class name = {\
 													   .item_style = style,\
@@ -101,7 +82,6 @@ DEFINE_ITC1(SETTING_GENLIST_ICON_1LINE_STYLE, itc_multiline_1text_1icon);
 
 DEFINE_ITC1("1icon", itc_bg_1icon);
 DEFINE_ITC1("1icon", itc_1icon_with_no_line);
-DEFINE_ITC1("1icon", itc_1icon_with_no_padding);
 DEFINE_ITC1("1icon", itc_1icon);
 
 DEFINE_ITC1("1text", itc_normal_1text);
