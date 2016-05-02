@@ -25,8 +25,9 @@
 #ifndef __SETTING_H__
 #define __SETTING_H__
 
-#include <setting-common-view.h>
-#include <setting-common-search.h>
+#include "setting-common-init.h"
+#include "setting-common-view.h"
+#include "setting-common-search.h"
 
 #define EXPORT_PUBLIC __attribute__ ((visibility ("default")))
 
@@ -64,11 +65,6 @@ enum {
 	OP_WIFI_TURNING_INVALID = 0x00,
 	OP_WIFI_TURNING_OFF,
 	OP_WIFI_TURNING_ON,
-};
-
-enum {
-	SC_All_List,
-	SC_Max
 };
 
 
