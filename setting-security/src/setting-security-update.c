@@ -96,8 +96,8 @@ static int setting_view_security_update_create(void *cb)
 	evas_object_smart_callback_add(ad->genlist, "realized", __gl_realized_cb, ad);
 
 	/* separator */
-	item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+	/*em = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
+	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
 
 
 	/* Update button */
@@ -112,8 +112,9 @@ static int setting_view_security_update_create(void *cb)
 	/* Update button desc*/
 	/*D_GL_HELP(scroller,CHECK_UPDATES); */
 	/* separator */
-	item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+	/*em = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
+	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
+	
 	/*button with toggle*/
 	ad->data_security_update_chk =
 		setting_create_Gendial_field_def(scroller, &itc_1text_1icon,
@@ -132,8 +133,8 @@ static int setting_view_security_update_create(void *cb)
 	setting_add_gl_help(scroller, CHECK_UPDATE_AUTO_MSG);
 
 	/* separator */
-	item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+	/*em = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
+	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
 
 	/*via wifi only*/
 	ad->data_security_wifi_update_chk =

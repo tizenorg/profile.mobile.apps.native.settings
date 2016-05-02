@@ -71,12 +71,13 @@ static inline void appmgrUg_init_itcs(SettingAppMgrUG *ad)
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(ad->itc_1txt));
 	setting_create_Gendial_itc("multiline_sub.main", &(ad->itc_multiline_2txt));
 
+/*
 	ad->itc_sep.item_style = "dialogue/separator.transparent.2";
 	ad->itc_sep.func.text_get = NULL;
 	ad->itc_sep.func.content_get = NULL;
 	ad->itc_sep.func.state_get = NULL;
 	ad->itc_sep.func.del = NULL;
-
+*/
 	ad->itc_main.item_style = SETTING_GENLIST_2LINE_STYLE;
 	ad->itc_main.func.text_get = appmgrUg_main_gl_label_new_get;
 	ad->itc_main.func.content_get = appmgrUg_main_gl_icon_new_get;

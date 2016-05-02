@@ -39,6 +39,7 @@ static char *_gl_Gendial_text2_get(void *data, Evas_Object *obj, const char *par
 
 static void _gl_Gendial_del(void *data, Evas_Object *obj);
 
+/*
 EXPORT_PUBLIC
 const Elm_Genlist_Item_Class itc_seperator = {
 	.item_style = "dialogue/separator.transparent.2",
@@ -47,6 +48,7 @@ const Elm_Genlist_Item_Class itc_seperator = {
 	.func.state_get = NULL,
 	.func.del = NULL,
 };
+*/
 
 EXPORT_PUBLIC
 const Elm_Genlist_Item_Class itc_bottom_seperator = {

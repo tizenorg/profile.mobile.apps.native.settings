@@ -65,7 +65,7 @@ static UNUSED int appmgrUg_pkg_get_privileges_help(const char *privilege,
 	free(help);
 	free(name);
 
-	appmgrUg_append_separator(info->gl_prv, ad);
+	/*appmgrUg_append_separator(info->gl_prv, ad);*/
 	setting_create_Gendial_field_titleItem(info->gl_prv, &ad->itc_multiline, desc, NULL);
 
 	g_free(desc);

@@ -500,9 +500,9 @@ static int setting_connectivity_usb_create(void *cb)
 	Elm_Object_Item *item = NULL;;
 #if 1
 	/* [UI] separator */
-	item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
+	/*item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
 								   ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
 
 	/* [UI] USB debugging */
 	int vconf_val;
@@ -612,9 +612,9 @@ static int setting_connectivity_usb_create(void *cb)
 			return SETTING_RETURN_FAIL;
 		}
 
-		item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
+		/*item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
 									   ELM_GENLIST_ITEM_NONE, NULL, NULL);
-		elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+		elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
 
 		/* [UI] Diagnostics and Usage */
 		setting_create_Gendial_field_def(scroller, &(ad->itc_1text),

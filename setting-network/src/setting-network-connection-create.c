@@ -842,12 +842,12 @@ static int setting_network_connection_create(void *cb)
 									  __setting_network_connection_exp_cb,
 									  NULL);
 	__get_connection_info(ad);
-	Elm_Object_Item *item;
+	Elm_Object_Item *item=NULL;
 
-	item =
+	/*item =
 		elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
 								ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
 
 
 	if (!safeStrCmp(STR_SETTING_NEW_CONNECTIONS, ad->con_name)) { /*new a profile,need to select the "Service type" */
@@ -941,10 +941,10 @@ static int setting_network_connection_create(void *cb)
 		SETTING_TRACE_ERROR("ad->data_acs_name is NULL");
 	}
 
-	item =
+	/*item =
 		elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
 								ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
 
 	ad->data_auth_type =
 		setting_create_Gendial_field_def(scroller,
@@ -962,10 +962,10 @@ static int setting_network_connection_create(void *cb)
 		SETTING_TRACE_ERROR("ad->data_auth_type is NULL");
 	}
 
-	ad->item_above_user_name = item =
-								   elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
+	ad->item_above_user_name = ad->data_auth_type->item;
+		/*item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
 														   ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
 
 	ad->is_show_user = 0;
 	if (CONNECTION_CELLULAR_AUTH_TYPE_NONE != ad->chkType) {
@@ -1019,11 +1019,12 @@ static int setting_network_connection_create(void *cb)
 			SETTING_TRACE_ERROR("ad->data_pwd is NULL");
 		}
 
-		ad->item_above_proxy_add = item =
+		ad->item_above_proxy_add = ad->data_pwd->item;
+			/*item =
 									   elm_genlist_item_append(scroller, &itc_seperator,
 															   NULL, NULL, ELM_GENLIST_ITEM_NONE,
 															   NULL, NULL);
-		elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+		elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
 	}
 
 	/* [UI] Proxy address */
@@ -1872,15 +1873,15 @@ setting_network_connection_display_auth_type(SettingNetworkUG *ad,
 											  ELM_GENLIST_ITEM_NONE,
 											  NULL, ad);
 
-			ad->item_above_proxy_add =
-				elm_genlist_item_insert_after(ad->scl_edit,
+			ad->item_above_proxy_add = ad->data_pwd->item;
+				/*item = st_item_insert_after(ad->scl_edit,
 											  &itc_seperator,
 											  NULL, NULL,
 											  ad->data_pwd->item,
 											  ELM_GENLIST_ITEM_NONE,
 											  NULL, NULL);
 			elm_genlist_item_select_mode_set
-			(ad->item_above_proxy_add, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+			(item , ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
 
 			ad->has_form_changed  = TRUE;
 			setting_network_connection_check_entry_empty(ad);

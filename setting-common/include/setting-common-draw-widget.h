@@ -41,7 +41,7 @@
 #define SETTING_COMMON_DRAW_WIDGET_CONTROLBAR_ITEM_LEN 3
 #define POPUP_INTERVAL 2.0
 
-extern const Elm_Genlist_Item_Class itc_seperator;
+/*extern const Elm_Genlist_Item_Class itc_seperator;*/
 extern const Elm_Genlist_Item_Class itc_bottom_seperator;
 
 extern const Elm_Genlist_Item_Class itc_1text;

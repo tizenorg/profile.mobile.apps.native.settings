@@ -66,8 +66,8 @@ static int setting_security_sim_settings_create(void *cb)
 	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb, NULL);
 
 	/* separator */
-	item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+	/*em = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
+	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
 
 	/* to do : sim settings menu */
 	/* g. pin lock */

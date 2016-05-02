@@ -421,7 +421,7 @@ typedef struct _Setting_Done_List_Data {
 	Evas_Object *selInfoPop_layout;
 	Elm_Genlist_Item_Class itc_1text_1icon;
 	Elm_Genlist_Item_Class itc_1text_2icon;
-	Elm_Genlist_Item_Class itc_seperator;
+	/*Elm_Genlist_Item_Class itc_seperator;*/
 	Evas_Object *select_all_checkbox;
 	Eina_Bool select_all_checked;
 	Eina_List *list;

@@ -155,10 +155,11 @@ static int setting_network_select_network_create(void *cb)
 											 NULL,
 											 ad, &ad->genlist_sel_network, ad->navi_bar);
 	}
-	Elm_Object_Item *item = elm_genlist_item_append(ad->genlist_sel_network,
+
+	/*m_Object_Item *item = elm_genlist_item_append(ad->genlist_sel_network,
 													&(itc_seperator), NULL, NULL,
 													ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
 
 	/* scroller is a genlist */
 	ad->chk_sel = elm_radio_add(ad->genlist_sel_network);

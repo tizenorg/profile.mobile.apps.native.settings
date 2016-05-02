@@ -41,9 +41,9 @@ static void __setting_network_con_genlist_create(void *data)
 	elm_genlist_clear(ad->connections_gl);	/* first to clear list */
 
 	Elm_Object_Item *item = NULL;
-	item = elm_genlist_item_append(ad->connections_gl, &itc_seperator, NULL, NULL,
+	/*item = elm_genlist_item_append(ad->connections_gl, &itc_seperator, NULL, NULL,
 								   ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
 
 	/* scroller is a genlist */
 

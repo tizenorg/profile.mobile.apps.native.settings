@@ -273,28 +273,8 @@ static gboolean setting_applications_create_homescreen_setting_ug(void *data)
 	}
 
 
-#if 0
-	struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
-
-	if (!cbs) {
-		return FALSE;
-	}
-	cbs->layout_cb = setting_applications_layout_ug_cb;
-	cbs->result_cb = NULL;
-	cbs->destroy_cb = setting_applications_destroy_homescreen_setting_ug_cb;
-	cbs->priv = (void *)ad;
-
-	elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
-
-	ad->ug_homescreen = setting_ug_create(ad->ug, "setting-homescreen-efl", UG_MODE_FULLVIEW, NULL, cbs);
-	if (NULL == ad->ug_homescreen) {	/* error handling */
-		SETTING_TRACE_ERROR("NULL == ad->ug_homescreen");
-		evas_object_show(ad->ly_main);
-	}
-	FREE(cbs);
-#else
 	app_launcher("org.tizen.setting-homescreen");
-#endif
+
 	return TRUE;
 }
 

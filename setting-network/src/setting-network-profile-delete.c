@@ -49,11 +49,12 @@ static void __profile_delete_list_draw(SettingNetworkUG *ad)
 		ad->profile_del_list = NULL;
 	}
 	elm_genlist_clear(ad->gl_profile_del);	/* first to clear list */
-	Elm_Object_Item *first_item;
+	
 	/* item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL, ELM_GENLIST_ITEM_GROUP, NULL, NULL); */
+	/*m_Object_Item *first_item;
 	first_item = elm_genlist_item_append(ad->gl_profile_del, &itc_seperator, NULL, NULL,
 										 ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(first_item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+	elm_genlist_item_select_mode_set(first_item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
 
 	Eina_List *elist = NULL;
 	connection_profile_h profile_h = NULL;

@@ -244,6 +244,7 @@ Evas_Object *appmgrUg_loading_item(Evas_Object *parent, const char *text,
 	return layout;
 }
 
+/*
 Elm_Object_Item *appmgrUg_append_separator(Evas_Object *genlist,
 										   SettingAppMgrUG *ad)
 {
@@ -254,6 +255,7 @@ Elm_Object_Item *appmgrUg_append_separator(Evas_Object *genlist,
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 	return item;
 }
+*/
 
 char *appmgrUg_get_defualt_icon(pkgmgrinfo_appinfo_h handle)
 {

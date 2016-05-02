@@ -179,7 +179,7 @@ typedef struct _SettingAppMgrUG {
 
 	Elm_Genlist_Item_Class itc_main;
 	Elm_Genlist_Item_Class info_itc;
-	Elm_Genlist_Item_Class itc_sep;
+	/*Elm_Genlist_Item_Class itc_sep;*/
 	Elm_Genlist_Item_Class itc_1txt_1ic_2;
 	Elm_Genlist_Item_Class itc_1txt;
 	Elm_Genlist_Item_Class itc_priv;
