@@ -7,11 +7,41 @@ PROJECT(${LIB_SETTING_COMMON})
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 INCLUDE(FindPkgConfig)
-pkg_check_modules(pkgs_common_data REQUIRED appcore-efl elementary vconf openssl evas
-ecore ecore-imf json-glib-1.0 edje glib-2.0 libxml-2.0 ui-gadget-1 alarm-service cairo
-capi-appfw-application capi-system-info capi-system-system-settings pkgmgr-info efl-extension libtzplatform-config
-capi-appfw-app-common notification feedback capi-media-player capi-media-sound-manager dbus-1 icu-i18n icu-io icu-le icu-lx icu-uc libtzplatform-config)
-
+pkg_check_modules(pkgs_common_data REQUIRED
+	alarm-service
+	appcore-efl
+	cairo
+	callmgr_client
+	capi-appfw-app-common
+	capi-appfw-application
+	capi-media-player
+	capi-media-sound-manager
+	capi-system-info
+	capi-system-system-settings
+	dbus-1
+	deviced
+	ecore
+	ecore-imf
+	edje
+	efl-extension
+	elementary
+	evas
+	feedback
+	glib-2.0
+	icu-i18n icu-io icu-le icu-lx icu-uc
+	json-glib-1.0
+	libtzplatform-config
+	libxml-2.0
+	notification
+	openssl
+	pkgmgr-info
+	tapi
+	ui-gadget-1
+	vconf
+	)
+#	appcore-common
+#	aul
+#	dlog
 
 FOREACH(flag ${pkgs_common_data_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
@@ -35,32 +65,34 @@ ADD_DEFINITIONS("-shared")
 
 #make lib-${LIB_SETTING_COMMON}.so files
 ADD_LIBRARY(${LIB_SETTING_COMMON} SHARED
-	./src/setting-common-data-slp-setting.c
-	./src/setting-common-resource.c
-	./src/setting-common-view.c
-	./src/setting-common-draw-widget.c
-	./src/setting-common-draw-searchbar.c
-	./src/setting-common-draw-popup.c
-	./src/setting-common-draw-naviframe.c
-	./src/setting-common-draw-genlist.c
-	./src/setting-common-general-func.c
-	./src/setting-common-search.c
-	./src/setting-common-sound.c
-	./src/setting-common-alarmmgr.c
 	./src/setting-cfg.c
 #	./src/setting-backup-restore.c
+	./src/setting-common-alarmmgr.c
+	./src/setting-common-data-slp-setting.c
+	./src/setting-common-draw-genlist.c
+	./src/setting-common-draw-naviframe.c
+	./src/setting-common-draw-popup.c
+	./src/setting-common-draw-searchbar.c
+	./src/setting-common-draw-widget.c
+	./src/setting-common-general-func.c
+	./src/setting-common-init.c
+	./src/setting-common-resource.c
+	./src/setting-common-search.c
+	./src/setting-common-sound.c
+	./src/setting-common-view.c
 )
 
 TARGET_LINK_LIBRARIES(${LIB_SETTING_COMMON} ${pkgs_common_data_LDFLAGS})
 SET_TARGET_PROPERTIES(${LIB_SETTING_COMMON} PROPERTIES VERSION 0.1.0 SOVERSION 1)
 INSTALL(TARGETS ${LIB_SETTING_COMMON} DESTINATION ${LIBDIR})
 
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-data-type.h DESTINATION ${INCLUDEDIR})
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-draw-widget.h DESTINATION ${INCLUDEDIR})
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-general-func.h DESTINATION ${INCLUDEDIR})
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-resource.h DESTINATION ${INCLUDEDIR})
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-cfg.h DESTINATION ${INCLUDEDIR})
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-data-edj-define.h DESTINATION ${INCLUDEDIR})
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-data-error.h DESTINATION ${INCLUDEDIR})
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-data-type.h DESTINATION ${INCLUDEDIR})
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-draw-widget.h DESTINATION ${INCLUDEDIR})
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-general-func.h DESTINATION ${INCLUDEDIR})
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-init.h DESTINATION ${INCLUDEDIR})
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-resource.h DESTINATION ${INCLUDEDIR})
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-search.h DESTINATION ${INCLUDEDIR})
 
