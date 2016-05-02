@@ -43,7 +43,7 @@
 #include <call-manager.h>
 
 
-#define NO_UG_FOUND_MSG				"IDS_MSGF_POP_UNSUPPORTED"
+#define NO_UG_FOUND_MSG 	"IDS_MSGF_POP_UNSUPPORTED"
 
 #define Keystr_Connection	"IDS_ST_BODY_CONNECTION"
 
