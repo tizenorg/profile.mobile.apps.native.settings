@@ -335,6 +335,7 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %{_includedir}/setting-common-data-type.h
 %{_includedir}/setting-common-draw-widget.h
 %{_includedir}/setting-common-general-func.h
+%{_includedir}/setting-common-init.h
 %{_includedir}/setting-common-resource.h
 %{_includedir}/setting-common-search.h
 
