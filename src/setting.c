@@ -17,29 +17,26 @@
  * limitations under the License.
  *
  */
-#include <setting.h>
+#include "setting.h"
+#include "setting-helper.h"
+#include "setting-main.h"
+#include "setting-cfg.h"
+#include "setting-common-init.h"
+#include "setting-common-search.h"
+
 #include <app.h>
 #include <sound_manager.h>
-
 #include <appcore-common.h>
 #include <sensor.h>
 #include <aul.h>
 #include <app_preference.h>
-
-#include "setting-helper.h"
-#include "setting-main.h"
-#include <setting-cfg.h>
-
-#include <setting-common-search.h>
 #include <elm_object.h>
 #include <appsvc.h>
-/*#include <nfc.h> */
 #include <signal.h>
 #include <system_settings.h>
 #include <bundle_internal.h>
 
 /*#define SUPPORT_UG_MESSAGE */
-
 
 #define SETTING_SOUND_VOL_MAX 15
 #define SETTING_DEFAULT_RINGTONE_VOL_INT	11
@@ -47,13 +44,6 @@
 #define SETTING_DEFAULT_MEDIA_VOL_INT		9
 
 int g_geometry_x, g_geometry_y, g_geometry_w, g_geometry_h;
-extern int aul_listen_app_dead_signal(int (*func)(int signal, void *data), void *data);
-
-/* This API is defined in <app_service_private.h>. But, cannot include and it is not a managed API.
-	The way to resolve : 1. Add extern.
-						 2. Use bundle pointer originally
-	At first, choose No.1 */
-extern int app_control_create_request(bundle *data, app_control_h *service);
 
 setting_main_appdata *g_main_ad;
 
@@ -91,10 +81,10 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	setting_main_appdata *ad = (setting_main_appdata *)data;
-	if (ad == NULL || ad->win_main == NULL) {
+	if (ad == NULL || ad->md.win_main == NULL) {
 		return;
 	}
-	int change_ang = elm_win_rotation_get(ad->win_main);
+	int change_ang = elm_win_rotation_get(ad->md.win_main);
 	SETTING_TRACE_DEBUG("....change_ang:%d", change_ang);
 	SETTING_TRACE_DEBUG("current_rotation:%d", ad->current_rotation);
 	/*Send the rotation event to UGs.. */
@@ -115,9 +105,7 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 	default:
 		return;
 	}
-	SETTING_TRACE_DEBUG("diff:%d",
-			elm_win_rotation_get(ad->win_main)
-					- ad->current_rotation);
+	SETTING_TRACE_DEBUG("diff:%d", elm_win_rotation_get(ad->md.win_main) - ad->current_rotation);
 
 	if (change_ang != ad->current_rotation) {
 		int diff = change_ang - ad->current_rotation;
@@ -152,56 +140,6 @@ static void setting_main_region_changed_cb(app_event_info_h event_info,
 }
 
 /**
-* The event process when win object is destroyed
-*/
-static void setting_main_del_win(void *data, Evas_Object *obj, void *event)
-{
-	elm_exit();
-}
-
-/**
-* To create a win object, the win is shared between the App and all its UGs
-*/
-static Evas_Object *setting_main_create_win(const char *name)
-{
-	SETTING_TRACE_BEGIN;
-	LAUNCH_SETTING_IN();
-	Evas_Object *win;
-	int w, h;
-
-	win = (Evas_Object *) elm_win_add(NULL, name, ELM_WIN_BASIC);
-	if (!win)
-		win = elm_win_util_standard_add(name, name);
-	else {
-		/* elm_win_util_standard_add creates bg inside */
-		Evas_Object *bg;
-
-		bg = elm_bg_add(win);
-
-		if (!bg) {
-			evas_object_del(win);
-			return NULL;
-		}
-		evas_object_size_hint_weight_set(bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-		elm_win_resize_object_add(win, bg);
-		evas_object_show(bg);
-	}
-	if (win) {
-		elm_win_title_set(win, name);
-		evas_object_smart_callback_add(win, "delete,request", setting_main_del_win, NULL);
-#ifdef ECORE_X
-		ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
-#else
-		elm_win_screen_size_get(win, NULL, NULL, &w, &h);
-#endif
-		evas_object_resize(win, w, h);
-	}
-	LAUNCH_SETTING_OUT();
-	return win;
-}
-
-
-/**
  * exceptional process, reset the env vars by Setting vconf VCONFKEY_LANGSET
  */
 static void setting_main_lang_changed_cb(app_event_info_h event_info,
@@ -215,10 +153,9 @@ static void setting_main_lang_changed_cb(app_event_info_h event_info,
 	/*setting_main_appdata *ad = data; */
 	setting_main_appdata *ad = g_main_ad;
 
-	elm_object_item_part_text_set(ad->navibar_main_it, "elm.text.title",
-			_("IDS_ST_OPT_SETTINGS"));
-	/*setting_navi_items_update(ad->win_main);*/
-	elm_genlist_realized_items_update(ad->sc_gl[SC_All_List]);
+	elm_object_item_part_text_set(ad->md.navibar_main_it, "elm.text.title", _("IDS_ST_OPT_SETTINGS"));
+	/*setting_navi_items_update(ad->md.navibar_main); */
+	elm_genlist_realized_items_update(ad->md.sc_gl[SC_All_List]);
 
 	char *localeLanguage = NULL;
 	system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE,
@@ -318,32 +255,20 @@ static bool setting_main_app_create(void *data)
 #endif
 	/*------------------------------------------------------------------ */
 
-	elm_app_base_scale_set(2.4);
+	if (app_init(&ad->md, SETTING_PACKAGE) != SETTING_RETURN_SUCCESS)
+		return false;
 
-	/* create window */
-	ad->win_main = setting_main_create_win(SETTING_PACKAGE);
-	setting_retvm_if(ad->win_main == NULL, SETTING_RETURN_FAIL, "window is null");
-	UG_INIT_EFL(ad->win_main, UG_OPT_INDICATOR_ENABLE);
-	ad->evas = evas_object_evas_get(ad->win_main);
-	ad->current_rotation = elm_win_rotation_get(ad->win_main);
+	UG_INIT_EFL(ad->md.win_main, UG_OPT_INDICATOR_ENABLE);
+	ad->current_rotation = elm_win_rotation_get(ad->md.win_main);
 	SETTING_TRACE_DEBUG("ad->current_rotation:%d", ad->current_rotation);
-	if (elm_win_wm_rotation_supported_get(ad->win_main)) {
-		/* rotation value that app may want */
-		int rots[4] = { 0, 90, 180, 270 };
-		elm_win_wm_rotation_available_rotations_set(ad->win_main, rots, 4);
+	if (elm_win_wm_rotation_supported_get(ad->md.win_main)) {
+		int rots[4] = { 0, 90, 180, 270 };	/* rotation value that app may want */
+		elm_win_wm_rotation_available_rotations_set(ad->md.win_main, rots, 4);
 	}
-	evas_object_smart_callback_add(ad->win_main, "wm,rotation,changed", _rot_changed_cb, ad);
+	evas_object_smart_callback_add(ad->md.win_main, "wm,rotation,changed", _rot_changed_cb, ad);
 
 	/* load config file */
 	int cfg_operation_ret = setting_cfg_init();
-
-	elm_theme_extension_add(NULL, SETTING_THEME_EDJ_NAME);
-	elm_theme_extension_add(NULL, SETTING_GENLIST_EDJ_NAME);
-
-	elm_win_indicator_mode_set(ad->win_main, ELM_WIN_INDICATOR_SHOW);
-	elm_win_indicator_opacity_set(ad->win_main, ELM_WIN_INDICATOR_OPAQUE);
-
-	evas_object_show(ad->win_main);
 
 	g_main_ad = ad;
 	setting_view_create(&setting_view_main, ad);
@@ -396,7 +321,7 @@ static bool setting_main_app_create(void *data)
 			break;
 		}
 		}
-		setting_create_popup(ad, ad->win_main, NULL, (char *)notifyStr, NULL, 10, FALSE, FALSE, 0);
+		setting_create_popup(ad, ad->md.win_main, NULL, (char *)notifyStr, NULL, 10, FALSE, FALSE, 0);
 		return SETTING_RETURN_FAIL;
 	}
 
@@ -415,7 +340,7 @@ static void setting_main_app_terminate(void *data)
 	SETTING_TRACE_BEGIN;
 	setting_main_appdata *ad = data;
 	vconf_set_bool(VCONFKEY_SETAPPL_ROTATE_HOLD_BOOL, FALSE);
-	evas_object_smart_callback_del(ad->win_main, "wm,rotation,changed", _rot_changed_cb);
+	evas_object_smart_callback_del(ad->md.win_main, "wm,rotation,changed", _rot_changed_cb);
 
 #if 1
 	/*PLUGIN_FINI; */
@@ -431,9 +356,9 @@ static void setting_main_app_terminate(void *data)
 	setting_view_destroy(&setting_view_main, ad);
 
 	SETTING_TRACE_DEBUG("!!! After setting_view_destroy");
-	if (ad->win_main) {
-		evas_object_del(ad->win_main);
-		ad->win_main = NULL;
+	if (ad->md.win_main) {
+		evas_object_del(ad->md.win_main);
+		ad->md.win_main = NULL;
 	}
 
 	SETTING_TRACE_END;
@@ -460,7 +385,7 @@ static void setting_main_app_resume(void *data)
 	SETTING_TRACE_BEGIN;
 	setting_main_appdata *ad = data;
 
-	_rot_changed_cb(ad, ad->win_main, NULL);/*to fix P131121-02103 */
+	_rot_changed_cb(ad, ad->md.win_main, NULL);/*to fix P131121-02103 */
 
 	if (ad->is_searchmode % 10 == Cfg_Item_AppLauncher_Node) {
 		/* app-launching exit */
@@ -469,10 +394,10 @@ static void setting_main_app_resume(void *data)
 
 	if (!(ad->isInUGMode && ad->ug)) { /* top-level view is not on UG */
 		SETTING_TRACE("update main genlist in resuming app without UG");
-		Eina_Bool is_freezed = evas_object_freeze_events_get(ad->navibar_main);
+		Eina_Bool is_freezed = evas_object_freeze_events_get(ad->md.navibar_main);
 		SETTING_TRACE_DEBUG("is_freezed : %d", is_freezed);
 		if (is_freezed) {
-			evas_object_freeze_events_set(ad->navibar_main, EINA_FALSE);
+			evas_object_freeze_events_set(ad->md.navibar_main, EINA_FALSE);
 		}
 
 	} else if (ad->ug) {
@@ -490,9 +415,9 @@ static void setting_main_app_reset(app_control_h service, void *data)
 	setting_main_appdata *ad = data;
 
 	if (is_searchmode_app(ad->is_searchmode)) {
-		evas_object_hide(ad->view_layout);
+		evas_object_hide(ad->md.view_layout);
 	} else {
-		evas_object_show(ad->view_layout);
+		evas_object_show(ad->md.view_layout);
 	}
 	vconf_callback_fn cb = NULL;
 
@@ -533,8 +458,8 @@ static void setting_main_app_reset(app_control_h service, void *data)
 
 	/*------------------------------------------------------------------ */
 
-	if (ad->win_main) {
-		elm_win_activate(ad->win_main);
+	if (ad->md.win_main) {
+		elm_win_activate(ad->md.win_main);
 	}
 
 	/* Disable data_network if flight mode is ON */

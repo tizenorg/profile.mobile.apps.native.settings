@@ -16,7 +16,7 @@ static Setting_GenGroupItem_Data *__mobileap_handler(void *data, char *keyStr,
 	Setting_GenGroupItem_Data *obj = NULL;
 
 	obj = setting_create_Gendial_field_def(genlist,
-			&(ad->itc_table[GENDIAL_Type_1text_1icon_2]),
+			&(ad->md.itc_table[GENDIAL_Type_1text_1icon_2]),
 			setting_main_click_list_ex_ug_cb, ug_args,
 			SWALLOW_Type_1ICON_1IMAGE, icon_path,
 			NULL, 0, keyStr,
@@ -40,7 +40,7 @@ static Setting_GenGroupItem_Data *__backlight_time_handler(void *data,
 
 	char *pa_backlight = get_pa_backlight_time_str();
 	obj = setting_create_Gendial_field_def(genlist,
-			&(ad->itc_table[GENDIAL_Type_1icon_2text]),
+			&(ad->md.itc_table[GENDIAL_Type_1icon_2text]),
 			setting_main_click_list_ex_ug_cb, ug_args,
 			SWALLOW_Type_1ICON_1IMAGE, icon_path,
 			NULL, 0, keyStr, pa_backlight,
@@ -65,7 +65,7 @@ static Setting_GenGroupItem_Data *__developer_option_handler(void *data,
 #ifdef BINARY_RELEASE_TYPE_ENG
 	/*for eng binary: always show <developer option>*/
 	obj = setting_create_Gendial_field_def(genlist,
-			&(ad->itc_table[GENDIAL_Type_1text_1icon_2]),
+			&(ad->md.itc_table[GENDIAL_Type_1text_1icon_2]),
 			setting_main_click_list_ex_ug_cb,
 			ug_args,
 			SWALLOW_Type_1ICON_1IMAGE,
@@ -86,7 +86,7 @@ static Setting_GenGroupItem_Data *__developer_option_handler(void *data,
 	}
 	if (dev_op_state) {
 		obj = setting_create_Gendial_field_def(genlist,
-				&(ad->itc_table[GENDIAL_Type_1text_1icon_2]),
+				&(ad->md.itc_table[GENDIAL_Type_1text_1icon_2]),
 				setting_main_click_list_ex_ug_cb, ug_args,
 				SWALLOW_Type_1ICON_1IMAGE,
 
@@ -108,10 +108,15 @@ static Setting_GenGroupItem_Data *__default_handler(void *data, char *keyStr,
 	/*SETTING_TRACE_BEGIN; */
 	setting_main_appdata *ad = (setting_main_appdata *) data;
 	Setting_GenGroupItem_Data *obj = setting_create_Gendial_field_def(
-			genlist, &(ad->itc_table[GENDIAL_Type_1text_1icon_2]),
-			setting_main_click_list_ex_ug_cb, ug_args,
-			SWALLOW_Type_1ICON_1IMAGE, icon_path,
-			NULL, 0, keyStr,
+			genlist,
+			&(ad->md.itc_table[GENDIAL_Type_1text_1icon_2]),
+			setting_main_click_list_ex_ug_cb,
+			ug_args,
+			SWALLOW_Type_1ICON_1IMAGE,
+			icon_path,
+			NULL,
+			0,
+			keyStr,
 			NULL,
 			NULL);
 
@@ -144,10 +149,11 @@ static mainlist_entry mainlist_table[] = { {
 
 /*--------------------------------------------------------------------------- */
 /* hash table utility */
+
+/* hash table utility */
 static void __list_hash_free_cb(void *obj)
 {
-	SETTING_TRACE_BEGIN
-	;
+	SETTING_TRACE_BEGIN;
 	/*const char *name = key; */
 	/*const char *number = data; */
 	/*printf("%s: %s\n", name, number); */
@@ -157,24 +163,22 @@ static void __list_hash_free_cb(void *obj)
 /* hash table utility */
 void settinig_drawer_hash_init(void *cb)
 {
-	SETTING_TRACE_BEGIN
-	;
+	SETTING_TRACE_BEGIN;
 
 	setting_main_appdata *ad = (setting_main_appdata *) cb;
 	eina_init();
 
 	mainlist_entry *pnode = NULL;
-	ad->main_list_hash = eina_hash_string_superfast_new(
+	ad->md.main_list_hash = eina_hash_string_superfast_new(
 			__list_hash_free_cb);
 
 	for (pnode = &mainlist_table[0]; pnode->title != NULL; pnode++) {
-		eina_hash_add(ad->main_list_hash, pnode->title, pnode);
+		eina_hash_add(ad->md.main_list_hash, pnode->title, pnode);
 		/*SETTING_TRACE("init and add data to hash : %s ",
 		 * pnode->title); */
 	}
 }
 
-/* hash table utility */
 mainlist_entry *settinig_drawer_hash_find(void *cb, char *search_str)
 {
 	/*SETTING_TRACE_BEGIN; */
@@ -183,7 +187,7 @@ mainlist_entry *settinig_drawer_hash_find(void *cb, char *search_str)
 	setting_main_appdata *ad = (setting_main_appdata *) cb;
 	mainlist_entry *pnode = NULL;
 
-	pnode = eina_hash_find(ad->main_list_hash, search_str);
+	pnode = eina_hash_find(ad->md.main_list_hash, search_str);
 	return pnode; /* statically allocated */
 }
 /*-------------------------------------------------------------------------- */
@@ -201,27 +205,27 @@ void setting_main_click_list_item_ug_cb(void *data, Evas_Object *obj,
 	SETTING_TRACE_BEGIN;
 	setting_main_appdata *ad = (setting_main_appdata *) data;
 	if (!ug_to_load) {
-		setting_create_popup(ad, ad->win_main, NULL, NO_UG_FOUND_MSG,
+		setting_create_popup(ad, ad->md.win_main, NULL, NO_UG_FOUND_MSG,
 				NULL, 0, false, false, 0);
 		return;
 	}
 	SETTING_TRACE("to create libug-%s.so", ug_to_load);
-	elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
+	elm_object_tree_focus_allow_set(ad->md.ly_main, EINA_FALSE);
 
-	/*setting_conformant_keypad_state(ad->win_main, TRUE); */
+	/*setting_conformant_keypad_state(ad->md.win_main, TRUE); */
 	ad->ug = setting_ug_create(NULL, ug_to_load, UG_MODE_FULLVIEW, svc,
 			cbs);
 	if (ad->ug) {
 		ad->isInUGMode = TRUE;
 	} else {
-		elm_object_tree_focus_allow_set(ad->ly_main, EINA_TRUE);
-		evas_object_show(ad->ly_main);
+		elm_object_tree_focus_allow_set(ad->md.ly_main, EINA_TRUE);
+		evas_object_show(ad->md.ly_main);
 		/*don't going to access globle var errno */
 		/*SETTING_TRACE_ERROR("errno:%d", errno); */
 		/*SETTING_TRACE_ERROR("Failed to load _TZ_SYS_RO_UG/lib/libug-
 		 * %s.so", ug_to_load); */
 		/*SETTING_TRACE_ERROR("Failed to load lib-%s.so", ug_to_load);*/
-		setting_create_popup(ad, ad->win_main, NULL, NO_UG_FOUND_MSG,
+		setting_create_popup(ad, ad->md.win_main, NULL, NO_UG_FOUND_MSG,
 				NULL, 0, false, false, 0);
 	}
 }
@@ -275,9 +279,10 @@ void setting_main_click_list_ex_ug_cb(void *data, Evas_Object *obj,
 	}
 	if (pnode && pnode->item_type == Cfg_Item_AppLauncher_Node) {
 		if (app_launcher(data) == 0) {
-			ad->event_freeze_timer = ecore_timer_add(1,
-					setting_main_freeze_event_timer_cb, ad);
-			evas_object_freeze_events_set(ad->navibar_main,
+			ad->event_freeze_timer = ecore_timer_add(
+					1, setting_main_freeze_event_timer_cb,
+					ad);
+			evas_object_freeze_events_set(ad->md.navibar_main,
 					EINA_TRUE);
 		}
 		int click_times = setting_cfg_get_click_times(

@@ -20,7 +20,7 @@ Eina_Bool setting_main_freeze_event_timer_cb(void *cb)
 
 	setting_main_appdata *ad = (setting_main_appdata *)cb;
 
-	evas_object_freeze_events_set(ad->navibar_main, EINA_FALSE);
+	evas_object_freeze_events_set(ad->md.navibar_main, EINA_FALSE);
 	ad->event_freeze_timer = NULL;
 	return EINA_FALSE;
 }
@@ -90,7 +90,7 @@ void setting_main_destroy_ug_cb(ui_gadget_h ug, void *priv)
 		return; /*	do nothing if ad is NULL */
 	}
 
-	evas_object_show(ad->navibar_main);
+	evas_object_show(ad->md.navibar_main);
 
 	if (ug) {
 		setting_ug_destroy(ug);
@@ -112,8 +112,8 @@ void setting_main_destroy_ug_cb(ui_gadget_h ug, void *priv)
 		return;
 	}
 
-	elm_object_tree_focus_allow_set(ad->ly_main, TRUE);
-	/*ea_screen_reader_support_set(ad->ly_main, TRUE); */
+	elm_object_tree_focus_allow_set(ad->md.ly_main, TRUE);
+	/*ea_screen_reader_support_set(ad->md.ly_main, TRUE); */
 
 	setting_main_click_list_item_reset_data(ad, NULL);
 	SETTING_TRACE("update main genlist in unloading UG");
@@ -146,7 +146,7 @@ void setting_main_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode, void *priv)
 	SETTING_TRACE_BEGIN;
 
 	setting_main_appdata *ad = (setting_main_appdata *)priv;
-	evas_object_hide(ad->navibar_main);
+	evas_object_hide(ad->md.navibar_main);
 
 	base = (Evas_Object *)ug_get_layout(ug);
 	if (!base) {
@@ -157,7 +157,7 @@ void setting_main_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode, void *priv)
 	case UG_MODE_FULLVIEW:
 		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
 				EVAS_HINT_EXPAND);
-		/*elm_win_resize_object_add(ad->win_main, base); */
+		/*elm_win_resize_object_add(ad->md.win_main, base); */
 		evas_object_show(base);
 		break;
 	default:
