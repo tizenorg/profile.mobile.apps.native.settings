@@ -102,46 +102,31 @@ static void __all_gl_group_clicked_cb(void *data, Evas_Object *obj,
 		SETTING_TRACE_ERROR(" ------------------> start_item IS NULL");
 }
 
-Evas_Object *_view_list_geter(void *data)
+void _view_list_geter(void *data)
 {
 	SETTING_TRACE_BEGIN;
-	retvm_if(data == NULL, NULL, "Invalid argument: data is NULL");
-	setting_main_appdata *ad = (setting_main_appdata *)data;
-	SETTING_TRACE("ad->sc_gl[SC_All]:%p", ad->sc_gl[SC_All_List]);
-
-	if (ad->sc_gl[SC_All_List]) {
-		evas_object_show(ad->sc_gl[SC_All_List]);
-		return ad->sc_gl[SC_All_List];
-	}
-
-	Evas_Object *genlist = elm_genlist_add(ad->win_main);
-	retvm_if(genlist == NULL, NULL, "Cannot set genlist object as contento of layout");
-
-	ad->sc_gl[SC_All_List] = genlist;
-	/*elm_genlist_block_count_set(genlist, 2); */
-	/*elm_object_style_set(genlist, "dialogue"); */
-	elm_genlist_clear(genlist);	/* first to clear list */
-	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);	/* resolve abnormal height issue */
-	evas_object_smart_callback_add(genlist, "realized", __all_gl_realized_cb, ad);
-	evas_object_show(genlist);
-
-	Setting_GenGroupItem_Data *item_data = NULL;
 	int group_dx = GL_Group_Connection;
-	/*---------------------------------------------------------------------------------------- */
-	/* 2.category name loop */
-	/*---------------------------------------------------------------------------------------- */
 	int i, j;
 	char *keyStr = NULL;
 	char *icon_path = NULL;
 	char *ug_args = NULL;
 	char *group_name = NULL;
 	int index = 0;
+	Evas_Object *genlist = NULL;
+	Setting_GenGroupItem_Data *item_data = NULL;
+	setting_main_appdata *ad = (setting_main_appdata *)data;
+
+	retm_if(ad == NULL, "Invalid argument: data is NULL");
+	genlist = ad->md.genlist;
+	/*------------------------------------------------------------------ */
+	/* category name loop */
+	/*------------------------------------------------------------------ */
 	for (i = 0; i < setting_cfg_get_category_length(); i++) {
 		group_name = setting_cfg_get_category_name(i);
 		group_dx++;/*from the first */
 		item_data = setting_create_Gendial_field_def(
 				genlist,
-				&(ad->itc_table[GENDIAL_Type_expandable_proc]),
+				&(ad->md.itc_table[GENDIAL_Type_expandable_proc]),
 				__all_gl_group_clicked_cb,
 				(void *)NULL,
 				SWALLOW_Type_INVALID,
@@ -206,7 +191,6 @@ Evas_Object *_view_list_geter(void *data)
 			}
 		}
 	}
-	return genlist;
 }
 
 static Eina_Bool _navibar_back_pop_cb(void *data, Elm_Object_Item *it)
@@ -215,20 +199,14 @@ static Eina_Bool _navibar_back_pop_cb(void *data, Elm_Object_Item *it)
 	retv_if(!data, EINA_FALSE);
 	setting_main_appdata *ad = (setting_main_appdata *) data;
 
-	if (ad && ad->win_main)
-		elm_win_lower(ad->win_main);
+	if (ad && ad->md.win_main)
+		elm_win_lower(ad->md.win_main);
 
 	SETTING_TRACE_END;
 	return EINA_FALSE;
 }
 
-
-/**
- *
- * old : 1line -----------> new : type1
- * old : groupindex ------> new : group_index
- */
-void _setting_genlist_itc_init(void *cb)
+static void _setting_genlist_itc_init(void *cb)
 {
 	setting_main_appdata *ad = (setting_main_appdata *) cb;
 
@@ -281,7 +259,7 @@ static void ___title_toolbar_show(void *data, Evas_Object *obj,
 					"elm.swallow.content");
 		}
 	} else {
-		navi_bar = ad->navibar_main;
+		navi_bar = ad->md.navibar_main;
 	}
 
 	const char *support = evas_object_data_get(navi_bar,
@@ -314,7 +292,7 @@ static void ___title_toolbar_hide(void *data, Evas_Object *obj,
 					"elm.swallow.content");
 		}
 	} else {
-		navi_bar = ad->navibar_main;
+		navi_bar = ad->md.navibar_main;
 	}
 
 	const char *support = evas_object_data_get(navi_bar,
@@ -368,7 +346,7 @@ Evas_Object *setting_main_layout_conform_create(Evas_Object *win_layout,
 	evas_object_smart_callback_add(conform, "virtualkeypad,state,off",
 			___title_toolbar_hide, ad);
 
-	elm_win_conformant_set(ad->win_main, EINA_TRUE);
+	elm_win_conformant_set(ad->md.win_main, EINA_TRUE);
 	evas_object_show(conform);
 
 	/* Indicator bg */
@@ -378,9 +356,8 @@ Evas_Object *setting_main_layout_conform_create(Evas_Object *win_layout,
 			indicator_bg);
 	evas_object_show(indicator_bg);
 
-	ad->conform = conform;
+	ad->md.conform = conform;
 	evas_object_data_set(win_obj, "conformant", conform);
-	LAUNCH_SETTING_OUT();
 	return layout;
 }
 
@@ -398,47 +375,23 @@ static int setting_main_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	LAUNCH_SETTING_IN();
-	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 	setting_main_appdata *ad = (setting_main_appdata *) cb;
+	int ret = 0;
+	retv_if(!ad, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
 	_setting_tapi_init(ad);
 	_setting_genlist_itc_init(ad);
 	settinig_drawer_hash_init(ad);
 
-	/* create a layout conformant */
-	ad->ly_main = setting_main_layout_conform_create(ad->win_main, ad->win_main, ad);
-	setting_retvm_if(ad->ly_main == NULL, FALSE, "ly_main == NULL");
+	ret = view_init(&ad->md, _("IDS_ST_OPT_SETTINGS"));
+	if (ret != SETTING_RETURN_SUCCESS)
+			return ret;
 
-	/* create a navibar */
-	ad->navibar_main = setting_create_navi_bar(ad->ly_main);
-	setting_retvm_if(ad->navibar_main == NULL, FALSE, "navibar_main == NULL");
-	setting_conformant_keypad_state(ad->win_main, TRUE);
+	elm_naviframe_item_pop_cb_set(ad->md.navibar_main_it,
+			_navibar_back_pop_cb, ad);
 
-
-	/* LAYOUT */
-	Evas_Object *view_layout = elm_layout_add(ad->navibar_main);
-	setting_retvm_if(view_layout == NULL, FALSE, "view_layout == NULL");
-	elm_layout_theme_set(view_layout, "layout", "application", "default");
-	evas_object_show(view_layout);
-	ad->view_layout = view_layout;
-
-	/* push a view to the naviframe */
-	Elm_Object_Item *navi_it = elm_naviframe_item_push(ad->navibar_main, "IDS_ST_OPT_SETTINGS", NULL, NULL, view_layout, NULL);
-	elm_naviframe_item_title_enabled_set(navi_it, EINA_TRUE, EINA_TRUE);
-	ad->navibar_main_it = navi_it;
-	elm_object_item_domain_text_translatable_set(navi_it, SETTING_PACKAGE, EINA_TRUE);
-	elm_naviframe_item_pop_cb_set(navi_it, _navibar_back_pop_cb, ad);
-
-	if (!is_searchmode_app(ad->is_searchmode)) {
-
-		Evas_Object *all_list = NULL;
-
-		all_list = _view_list_geter(ad);
-
-		setting_retvm_if(all_list == NULL, FALSE, "all_list == NULL");
-		elm_object_part_content_set(view_layout, "elm.swallow.content", all_list);
-
-	}
+	if (!is_searchmode_app(ad->is_searchmode))
+		_view_list_geter(ad);
 
 	setting_view_main.is_create = 1;
 	LAUNCH_SETTING_OUT();
@@ -457,33 +410,36 @@ static int setting_main_destroy(void *cb)
 		/*already not exsit */
 		return SETTING_RETURN_SUCCESS;
 	}
-	evas_object_smart_callback_del(ad->conform, "virtualkeypad,state,on", ___title_toolbar_show);
-	evas_object_smart_callback_del(ad->conform, "virtualkeypad,state,off", ___title_toolbar_hide);
-	evas_object_data_set(ad->win_main, "conformant", NULL);
+	evas_object_smart_callback_del(ad->md.conform,
+			"virtualkeypad,state,on", ___title_toolbar_show);
+	evas_object_smart_callback_del(ad->md.conform,
+			"virtualkeypad,state,off", ___title_toolbar_hide);
+	evas_object_data_set(ad->md.win_main, "conformant", NULL);
 	_setting_tapi_deinit(ad);
 
 	if (ad->event_freeze_timer) {
 		ecore_timer_del(ad->event_freeze_timer);
 		ad->event_freeze_timer = NULL;
 	}
-	/*evas_object_smart_callback_del(ad->main_genlist, "realized",
+	/*evas_object_smart_callback_del(ad->md.main_genlist, "realized",
 	 * __gl_realized_cb); */
 
-	elm_object_part_content_unset(ad->view_layout, "elm.swallow.content");
-	elm_object_item_part_content_unset(ad->navibar_main_it, "tabbar");
+	elm_object_part_content_unset(ad->md.view_layout,
+			"elm.swallow.content");
+	elm_object_item_part_content_unset(ad->md.navibar_main_it, "tabbar");
 #if 0
-	if (ad->sc_gl[SC_All_List]) {
-		evas_object_del(ad->sc_gl[SC_All_List]);
-		ad->sc_gl[SC_All_List] = NULL;
+	if (ad->md.sc_gl[SC_All_List]) {
+		evas_object_del(ad->md.sc_gl[SC_All_List]);
+		ad->md.sc_gl[SC_All_List] = NULL;
 	}
 #endif
 	/* sound */
 	effect_playsound_close();
 
 	/* then destroy the UI object. */
-	if (ad->ly_main) {
-		evas_object_del(ad->ly_main);
-		ad->ly_main = NULL;
+	if (ad->md.ly_main) {
+		evas_object_del(ad->md.ly_main);
+		ad->md.ly_main = NULL;
 	}
 
 	setting_view_main.is_create = 0;
@@ -500,8 +456,8 @@ static int setting_main_update(void *cb)
 
 	/* setting_main_appdata *ad = (setting_main_appdata *)cb;
 
-	if (ad->ly_main != NULL)
-		evas_object_show(ad->ly_main); */
+	if (ad->md.ly_main != NULL)
+		evas_object_show(ad->md.ly_main); */
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -514,8 +470,8 @@ static int setting_main_cleanup(void *cb)
 
 	/* setting_main_appdata *ad = (setting_main_appdata *)cb;
 
-	if (ad->ly_main != NULL) {
-		evas_object_hide(ad->ly_main); */
+	if (ad->md.ly_main != NULL) {
+		evas_object_hide(ad->md.ly_main); */
 
 	return SETTING_RETURN_SUCCESS;
 }
