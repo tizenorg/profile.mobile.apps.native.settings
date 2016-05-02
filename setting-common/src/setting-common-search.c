@@ -531,8 +531,8 @@ int setting_search_get_module_item_state(char *keyword, char *ug_name, Cfg_Item_
 	if (query_ops && keyword) {
 		/* OPS RETURNS NULL, IT'S PROBLEM */
 		cfg_func_table *ops = NULL;
-		/* ret = (*query_ops) ("MOCK_STR_ID", &ops);   /*  CALL * / */
-		ret = (*query_ops)(keyword, (void **)&ops);	  /*  CALL */
+		/* ret = (*query_ops) ("MOCK_STR_ID", &ops); */	/*  CALL * /
+		ret = (*query_ops)(keyword, (void **)&ops);	/*  CALL */
 		SETTING_TRACE(" ops = %x ", ops);
 		/*------------------------------------------------------------- */
 		/* ACTUAL PROCESSING */
