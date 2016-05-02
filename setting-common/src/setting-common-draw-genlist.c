@@ -1626,7 +1626,7 @@ static void __multiline_eraser_clicked(void *data, Evas_Object *obj, void *event
 }
 
 static Evas_Object *_gl_Gendial_content_get(void *data, Evas_Object *obj,
-												const char *part)
+						const char *part)
 {
 	retv_if(!data, NULL);
 	Setting_GenGroupItem_Data *item_data = data;
@@ -1931,8 +1931,8 @@ static Setting_GenGroupItem_Data *setting_create_Gendial_field_groupitem(
 	chk_change_cb)
 {
 	/*	SETTING_TRACE_BEGIN; */
-	Setting_GenGroupItem_Data *item_data = (
-											   Setting_GenGroupItem_Data *) calloc(1, sizeof(Setting_GenGroupItem_Data));
+	Setting_GenGroupItem_Data *item_data =
+			(Setting_GenGroupItem_Data *) calloc(1, sizeof(Setting_GenGroupItem_Data));
 	setting_retvm_if(!item_data, NULL, "calloc failed");
 
 	/* to do formatting customizition in one place */
