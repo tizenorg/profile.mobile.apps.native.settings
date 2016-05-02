@@ -25,13 +25,12 @@
 #ifndef __SETTING_H__
 #define __SETTING_H__
 
-#include <setting-common-view.h>
-#include <setting-common-search.h>
+#include "setting-common-init.h"
+#include "setting-common-view.h"
+#include "setting-common-search.h"
 
-/*	TAPI*/
 #include <tapi_common.h>
 #include <ITapiModem.h>
-
 #include <sensor.h>
 #include <notification.h>
 #include <account.h>
@@ -87,20 +86,13 @@ enum {
  */
 typedef struct _setting_main_appdata {
 
-	ui_gadget_h ug;						/**< ug */
+	MainData md;
+	ui_gadget_h ug;				/**< ug */
 
-	Evas *evas;
-	Evas_Object *win_main;
-	Evas_Object *navibar_main;
-	Elm_Object_Item *navibar_main_it;
-
-	Evas_Object *ly_main;			/**< seting view main */
 	Evas_Object *sc_gl[SC_Max];		/**< genlist array */
 
 	/* listen / unlisten code */
 	Eina_List *listened_list;
-	Evas_Object *conform;
-	Evas_Object *view_layout;		/* view layout */
 
 	Elm_Genlist_Item_Class itc_table[GENDIAL_Type_MAX];
 
@@ -118,7 +110,6 @@ typedef struct _setting_main_appdata {
 
 	Cfg_Item_Type is_searchmode;
 	Eina_Hash *main_list_hash;
-
 } setting_main_appdata;
 extern setting_main_appdata *g_main_ad;
 
