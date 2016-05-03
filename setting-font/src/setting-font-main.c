@@ -510,7 +510,7 @@ void setting_font_main_list_sel_cb(void *data, Evas_Object *obj, void *event_inf
 	}
 
 	/* sub - descc */
-	char *font_name = g_strdup(ad->subitem->sub_desc);
+	char *font_name = ad->subitem->sub_desc;
 
 	ad->prev_font = ad->subitem->chk_status;
 	G_FREE(ad->font_name);
