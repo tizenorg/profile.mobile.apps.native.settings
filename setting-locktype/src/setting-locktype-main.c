@@ -30,6 +30,8 @@
 #include <ode.h>
 #endif
 
+#include <auth-passwd.h>
+
 #define TBD 0
 
 static int setting_locktype_main_create(void *cb);
@@ -574,7 +576,8 @@ setting_locktype_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 		if (old_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD
 			|| old_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
 #if SECURITY_SERVER
-			int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
+			//int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
+			int result = auth_passwd_set_passwd(AUTH_PWD_NORMAL,ad->input_pwd, "0000");
 			SETTING_TRACE_DEBUG("set_pwd result : %d", result);
 #endif
 
@@ -634,7 +637,8 @@ setting_locktype_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
 		if (old_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD
 			|| old_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
 #if SECURITY_SERVER
-			int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
+			//int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
+			int result = auth_passwd_set_passwd(AUTH_PWD_NORMAL,ad->input_pwd, "0000");
 			SETTING_TRACE_DEBUG("set_pwd result : %d", result);
 #endif
 #if 0
@@ -683,7 +687,8 @@ setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj, void *event_i
 		if (old_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD
 			|| old_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
 #if SECURITY_SERVER
-			int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
+//			int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
+			int result = auth_passwd_set_passwd(AUTH_PWD_NORMAL,ad->input_pwd, "0000");
 			SETTING_TRACE_DEBUG("set_pwd result : %d", result);
 #endif
 #if 0
@@ -735,7 +740,8 @@ setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj, void *event_i
 			if (old_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD
 				|| old_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
 #if SECURITY_SERVER
-				int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
+//				int result = security_server_set_pwd(ad->input_pwd, "0000", 0, 0);
+				int result = auth_passwd_set_passwd(AUTH_PWD_NORMAL,ad->input_pwd, "0000");
 				SETTING_TRACE_DEBUG("set_pwd result : %d", result);
 #endif
 #if 0

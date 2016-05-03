@@ -21,6 +21,8 @@
 #include <setting-password.h>
 #include <setting-password-main.h>
 
+#include <auth-passwd.h>
+
 extern void setting_get_pin_lock_info_cb(TapiHandle *handle, int result, void *data, void *user_data);
 
 #ifndef UG_MODULE_API
@@ -63,11 +65,11 @@ void __chk_cur_pw_status(SettingPasswordUG *ad, app_control_h service)
 	ad->pw_status = SETTING_PW_STATUS_DEFAULT;
 
 #if SECURITY_SERVER
-	ret = security_server_is_pwd_valid(&attempt, &max_attempt, &expire_sec);
+	ret = auth_passwd_check_passwd_state(AUTH_PWD_NORMAL,&attempt, &max_attempt, &expire_sec);
 	SETTING_TRACE_DEBUG("status of password : %d (cur attempt %d, max %d, expire %d", ret, attempt, max_attempt, expire_sec);
 
-	if (ret == SECURITY_SERVER_API_ERROR_NO_PASSWORD) {
-		SETTING_TRACE("security-server has no password!");
+	if (ret == AUTH_PASSWD_API_ERROR_NO_PASSWORD) {
+		SETTING_TRACE("auth fw has no password!");
 		ad->pw_status = SETTING_PW_STATUS_EMPTY;
 	}
 #endif
@@ -652,7 +654,7 @@ int setting_password_check_password(const char *challenge, unsigned int *remain_
 	SETTING_TRACE_DEBUG("check pwd : %s", challenge);
 
 #if SECURITY_SERVER
-	inner_ret = security_server_chk_pwd(challenge, &current_attempt, &max_attempt, &valid_secs);
+	inner_ret = auth_passwd_check_passwd(AUTH_PWD_NORMAL,challenge, &current_attempt, &max_attempt, &valid_secs);
 
 	SETTING_TRACE_DEBUG("chk password : %d", inner_ret);
 	SETTING_TRACE_SECURE_DEBUG("current_attempt : %d, max_attempt : %d, valid_secs : %d secs", current_attempt, max_attempt, valid_secs);
@@ -660,7 +662,7 @@ int setting_password_check_password(const char *challenge, unsigned int *remain_
 	if (valid_sec != NULL)
 		*valid_sec = valid_secs;
 
-	if (inner_ret == SECURITY_SERVER_API_SUCCESS) {
+	if (inner_ret == AUTH_PASSWD_API_SUCCESS) {
 		ret = SETTING_RETURN_SUCCESS;
 	} else {
 		if (remain_attempt != NULL) {
@@ -688,9 +690,9 @@ int setting_password_set_password(const char *cur_pwd, const char *new_pwd, void
 
 	/* max attempt count will be handled in passwordug for a while. */
 	if (ad->pw_status == SETTING_PW_STATUS_EMPTY) {
-		ret = security_server_set_pwd(NULL, new_pwd, 0, 0);
-		SETTING_TRACE_DEBUG("[security_server_set_pwd() + empty current] returns %d, INFINITE", ret);
-		if (ret == SECURITY_SERVER_API_SUCCESS) {
+		ret = auth_passwd_set_passwd(AUTH_PWD_NORMAL,NULL, new_pwd);
+		SETTING_TRACE_DEBUG("[auth_passwd_set_passwd() + empty current] returns %d, INFINITE", ret);
+		if (ret == AUTH_PASSWD_API_SUCCESS) {
 #if 0
 			/* To support key manager */
 			uid_t user = 5000;
@@ -706,9 +708,9 @@ int setting_password_set_password(const char *cur_pwd, const char *new_pwd, void
 
 	}
 
-	ret = security_server_set_pwd(cur_pwd, new_pwd, 0, 0);
-	SETTING_TRACE_DEBUG("[security_server_set_pwd()] returns %d, INFINITE", ret);
-	if (ret == SECURITY_SERVER_API_SUCCESS) {
+	ret = auth_passwd_set_passwd(AUTH_PWD_NORMAL,cur_pwd, new_pwd);
+	SETTING_TRACE_DEBUG("[auth_passwd_set_passwd()] returns %d, INFINITE", ret);
+	if (ret == AUTH_PASSWD_API_SUCCESS) {
 #if 0
 		ckmc_ret = ckmc_change_user_password(user, cur_pwd, new_pwd);
 		SETTING_TRACE("ckmc_change_user_password() returns %d", ckmc_ret);
