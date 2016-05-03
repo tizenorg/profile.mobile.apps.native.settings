@@ -510,6 +510,7 @@ static void __update_mobile_data_off_popup(void *data)
 		elm_object_part_text_set(ad->popup_data_off, "title,text", _(pop_title));
 	}
 	G_FREE(pop_title);
+	G_FREE(pop_info);
 }
 
 static void setting_network_ug_on_event(ui_gadget_h ug,

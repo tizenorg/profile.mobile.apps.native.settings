@@ -45,6 +45,8 @@
 
 #define USE_TIMER_UPDATE_TIME_IN_TIME_VIEW
 
+#define SECURITY_SERVER			1
+
 /* launching */
 #ifdef LAUNCHING_DEBUG_LOG
 #define LAUNCH_SETTING_IN(fmt, arg...)	LOG(LOG_DEBUG, "LAUNCH", "[setting:Application:%s:IN]" fmt, __FUNCTION__, ##arg)
