@@ -84,10 +84,10 @@ extern const Elm_Genlist_Item_Class itc_1text_1icon_divider;
 			Elm_Object_Item *item = elm_genlist_item_append(scroller, &(itc_bottom_seperator), NULL, NULL,ELM_GENLIST_ITEM_NONE, NULL, NULL);\
 			elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
 			Setting_GenGroupItem_Data *item_data = setting_create_Gendial_field_def(scroller, &itc_multiline_text,\
-																					NULL,\
-																					NULL,\
-																					SWALLOW_Type_LAYOUT_SPECIALIZTION,\
-																					NULL, NULL, 0, str, NULL, NULL);\
+					NULL,\
+					NULL,\
+					SWALLOW_Type_LAYOUT_SPECIALIZTION,\
+					NULL, NULL, 0, str, NULL, NULL);\
 			setting_retvm_if(NULL == item_data, NULL, "item_data is NULL");\
 			elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
 		}\
@@ -97,10 +97,10 @@ extern const Elm_Genlist_Item_Class itc_1text_1icon_divider;
 	{\
 		if (str) {\
 			Setting_GenGroupItem_Data *item_data = setting_create_Gendial_field_def(scroller, &itc_multiline_text,\
-																					NULL,\
-																					NULL,\
-																					SWALLOW_Type_LAYOUT_SPECIALIZTION_X,\
-																					NULL, NULL, 0, str, NULL, NULL);\
+					NULL,\
+					NULL,\
+					SWALLOW_Type_LAYOUT_SPECIALIZTION_X,\
+					NULL, NULL, 0, str, NULL, NULL);\
 			setting_retvm_if(NULL == item_data, -1, "item_data is NULL");\
 			elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
 		}\
@@ -111,10 +111,10 @@ extern const Elm_Genlist_Item_Class itc_1text_1icon_divider;
 	{\
 		if (str) {\
 			Setting_GenGroupItem_Data *item_data = setting_create_Gendial_field_def(scroller, &itc_multiline_text,\
-																					NULL,\
-																					NULL,\
-																					SWALLOW_Type_LAYOUT_SPECIALIZTION_X,\
-																					NULL, NULL, 0,	str, NULL, NULL);\
+					NULL,\
+					NULL,\
+					SWALLOW_Type_LAYOUT_SPECIALIZTION_X,\
+					NULL, NULL, 0, str, NULL, NULL);\
 			setting_retvm_if(NULL == item_data, NULL, "item_data is NULL");\
 			elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
 		}\
@@ -124,9 +124,9 @@ extern const Elm_Genlist_Item_Class itc_1text_1icon_divider;
 	{\
 		if (btn_str) {\
 			Setting_GenGroupItem_Data *item_data = setting_create_Gendial_field_def(scroller, &(itc_1icon_with_no_line),\
-																					NULL,cb_data, SWALLOW_Type_1BUTTON,\
-																					NULL, NULL, 0, btn_str, NULL,\
-																					btn_cb);\
+					NULL,cb_data, SWALLOW_Type_1BUTTON,\
+					NULL, NULL, 0, btn_str, NULL,\
+					btn_cb);\
 			setting_retvm_if(NULL == item_data, NULL, "item_data is NULL");\
 			item_data->userdata = cb_data;\
 		}\
@@ -136,9 +136,9 @@ extern const Elm_Genlist_Item_Class itc_1text_1icon_divider;
 	{\
 		if (png_list && *png_list) {\
 			Setting_GenGroupItem_Data *item_data = setting_create_Gendial_field_def(scroller, &(itc_1icon_with_no_line),\
-																					NULL,NULL, SWALLOW_Type_1GIF,\
-																					NULL, NULL, 0, NULL, NULL,\
-																					NULL);\
+					NULL,NULL, SWALLOW_Type_1GIF,\
+					NULL, NULL, 0, NULL, NULL,\
+					NULL);\
 			setting_retvm_if(NULL == item_data, NULL, "item_data is NULL");\
 			item_data->belongs_to = (int)png_list;\
 			if (item_data)\
@@ -148,9 +148,9 @@ extern const Elm_Genlist_Item_Class itc_1text_1icon_divider;
 #define ADD_GL_GIF_2(scroller, png_array) \
 	{\
 		Setting_GenGroupItem_Data *item_data = setting_create_Gendial_field_def(scroller, &(itc_1icon_with_no_line),\
-																				NULL,NULL, SWALLOW_Type_1GIF,\
-																				NULL, NULL, 0, NULL, NULL,\
-																				NULL);\
+				NULL,NULL, SWALLOW_Type_1GIF,\
+				NULL, NULL, 0, NULL, NULL,\
+				NULL);\
 		item_data->belongs_to = (int)png_array;\
 		elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
 	}
@@ -165,12 +165,12 @@ extern const Elm_Genlist_Item_Class itc_1text_1icon_divider;
 		if (keyStr && rdg)\
 		{\
 			Setting_GenGroupItem_Data *item_data = setting_create_Gendial_field_1radio(scroller, &(itc_1text_1icon_2),\
-																					   sel_cb,\
-																					   cb_data,\
-																					   SWALLOW_Type_1RADIO,\
-																					   rdg, radio_idx,\
-																					   keyStr,\
-																					   NULL);\
+					sel_cb,\
+					cb_data,\
+					SWALLOW_Type_1RADIO,\
+					rdg, radio_idx,\
+					keyStr,\
+					NULL);\
 			if (item_data) {\
 				item_data->userdata = cb_data;\
 			}\
@@ -192,15 +192,15 @@ void __toogle_chk_changed(void *data, Evas_Object *obj, void *event_info);
 			if (!chk_cb) chk_cb = __toogle_chk_changed;\
 			\
 			item_data = setting_create_Gendial_field_def(scroller,\
-														 &itc_1text_2icon,\
-														 sel_cb,\
-														 cb_data,\
-														 SWALLOW_Type_1ICON_1RADIO,\
-														 NULL, NULL,\
-														 value,\
-														 keyStr,\
-														 NULL,\
-														 chk_cb);\
+					&itc_1text_2icon,\
+					sel_cb,\
+					cb_data,\
+					SWALLOW_Type_1ICON_1RADIO,\
+					NULL, NULL,\
+					value,\
+					keyStr,\
+					NULL,\
+					chk_cb);\
 			if (item_data) {\
 				item_data->userdata = cb_data;\
 				item_data->int_slp_setting_binded = (int)use_vconf;\
@@ -216,7 +216,7 @@ void __toogle_chk_changed(void *data, Evas_Object *obj, void *event_info);
  * Do process when clicking radio in subitem of expandable item
  */
 extern void setting_sub_list_rd_change(void *data, Evas_Object *obj,
-									   void *event_info);
+		void *event_info);
 
 /**
  * Hide the input pannel
@@ -226,21 +226,24 @@ extern void setting_hide_input_pannel_cb(Evas_Object *entry);
 /**
  * Do process when clicking on subitem of expandable item
  */
-extern void setting_sub_list_sel_cb(void *data, Evas_Object *obj,
-									void *event_info);
+extern void setting_sub_list_sel_cb(
+		void *data, Evas_Object *obj,
+		void *event_info);
 
 /**
  * Do process when clicking on a common genlist item
  */
-extern void setting_mouse_up_Gendial_list_radio_cb(void *data,
-												   Evas_Object *obj,
-												   void *event_info);
+extern void setting_mouse_up_Gendial_list_radio_cb(
+		void *data,
+		Evas_Object *obj,
+		void *event_info);
 
 /**
  * To intialize an Elm_Genlist_Item_Class, according to item style
  */
-extern bool setting_create_Gendial_itc(const char *item_style,
-									   Elm_Genlist_Item_Class *itc);
+extern bool setting_create_Gendial_itc(
+		const char *item_style,
+		Elm_Genlist_Item_Class *itc);
 
 
 /**
@@ -248,75 +251,75 @@ extern bool setting_create_Gendial_itc(const char *item_style,
  * @return a pointer to Setting_GenGroupItem_Data
  */
 extern Setting_GenGroupItem_Data *setting_create_Gendial_field_titleItem(
-	Evas_Object *genlist,
-	const Elm_Genlist_Item_Class *itc,
-	const char *keyStr,
-	setting_call_back_func gl_sel);
+		Evas_Object *genlist,
+		const Elm_Genlist_Item_Class *itc,
+		const char *keyStr,
+		setting_call_back_func gl_sel);
 
 /**
  * Create 1radion-1text style item
  * @return a pointer to Setting_GenGroupItem_Data
  */
 extern Setting_GenGroupItem_Data *setting_create_Gendial_field_1radio(
-	Evas_Object *genlist,
-	const Elm_Genlist_Item_Class *itc,
-	setting_call_back_func gl_sel,
-	void *sel_data,
-	SWALLOW_Type swallow_type,
-	Evas_Object *rgd, int chk_status,
-	const char *keyStr,
-	setting_call_back_func chk_change_cb);
+		Evas_Object *genlist,
+		const Elm_Genlist_Item_Class *itc,
+		setting_call_back_func gl_sel,
+		void *sel_data,
+		SWALLOW_Type swallow_type,
+		Evas_Object *rgd, int chk_status,
+		const char *keyStr,
+		setting_call_back_func chk_change_cb);
 
 /**
  * Create 1radio-1button style item
  * @return a pointer to Setting_GenGroupItem_Data
  */
 extern Setting_GenGroupItem_Data *setting_create_Gendial_field_1radio_1button(
-	Evas_Object *genlist,
-	const Elm_Genlist_Item_Class *itc,
-	setting_call_back_func gl_sel,
-	void *sel_data,
-	SWALLOW_Type swallow_type,
-	char *button_style,
-	Evas_Object *rgd, int chk_status,
-	const char *keyStr,
-	setting_call_back_func chk_change_cb,
-	setting_call_back_func btn_clicked_cb);
+		Evas_Object *genlist,
+		const Elm_Genlist_Item_Class *itc,
+		setting_call_back_func gl_sel,
+		void *sel_data,
+		SWALLOW_Type swallow_type,
+		char *button_style,
+		Evas_Object *rgd, int chk_status,
+		const char *keyStr,
+		setting_call_back_func chk_change_cb,
+		setting_call_back_func btn_clicked_cb);
 
 
 extern Setting_GenGroupItem_Data *setting_create_Gendial_field_helpitem_without_bottom_separator(
-	Evas_Object *genlist,
-	const Elm_Genlist_Item_Class *itc,
-	SWALLOW_Type swallow_type,
-	const char *keyStr);
+		Evas_Object *genlist,
+		const Elm_Genlist_Item_Class *itc,
+		SWALLOW_Type swallow_type,
+		const char *keyStr);
 
 extern Setting_GenGroupItem_Data *setting_create_Gendial_field_insert_help_without_bottom_separator(
-	Evas_Object *genlist,
-	const Elm_Genlist_Item_Class *itc,
-	Elm_Object_Item *after_it,
-	SWALLOW_Type swallow_type,
-	const char *keyStr);
+		Evas_Object *genlist,
+		const Elm_Genlist_Item_Class *itc,
+		Elm_Object_Item *after_it,
+		SWALLOW_Type swallow_type,
+		const char *keyStr);
 
 /**
  * Common function to create a genlist item
  * @return a pointer to Setting_GenGroupItem_Data
  */
-extern Setting_GenGroupItem_Data *setting_create_Gendial_field_def(Evas_Object *
-																   genlist,
-																   const Elm_Genlist_Item_Class *itc,
-																   setting_call_back_func gl_sel,
-																   void *sel_data,
-																   SWALLOW_Type swallow_type,
-																   char *l_icon_path,
-																   char *r_icon_path,
-																   int chk_status,
-																   const char *keyStr,
-																   char *sub_desc,
-																   setting_call_back_func chk_change_cb);
+extern Setting_GenGroupItem_Data *setting_create_Gendial_field_def(
+		Evas_Object *genlist,
+		const Elm_Genlist_Item_Class *itc,
+		setting_call_back_func gl_sel,
+		void *sel_data,
+		SWALLOW_Type swallow_type,
+		char *l_icon_path,
+		char *r_icon_path,
+		int chk_status,
+		const char *keyStr,
+		char *sub_desc,
+		setting_call_back_func chk_change_cb);
 extern void setting_add_gl_help(Evas_Object *scroller, const char *str);
 
-extern Setting_GenGroupItem_Data *setting_create_Gendial_field_entry_with_return_key(Evas_Object *
-		genlist,
+extern Setting_GenGroupItem_Data *setting_create_Gendial_field_entry_with_return_key(
+		Evas_Object *genlist,
 		const Elm_Genlist_Item_Class *itc,
 		setting_call_back_func gl_sel,
 		void *sel_data,
@@ -340,33 +343,33 @@ extern Setting_GenGroupItem_Data *setting_create_Gendial_field_entry_with_return
 		setting_call_back_func activated_cb,
 		setting_call_back_func x_callback_cb);
 
-extern Setting_GenGroupItem_Data *setting_create_Gendial_field_editfield(Evas_Object *
-																		 genlist,
-																		 const Elm_Genlist_Item_Class *itc,
-																		 setting_call_back_func gl_sel,
-																		 void *sel_data,
-																		 SWALLOW_Type
-																		 swallow_type,
-																		 const char *keyStr,
-																		 char *sub_desc,
-																		 setting_call_back_func
-																		 chk_change_cb,
-																		 setting_call_back_func
-																		 focused_cb,
-																		 setting_call_back_func
-																		 unfocused_cb,
-																		 setting_call_back_func
-																		 activated_cb,
-																		 setting_call_back_func
-																		 max_reached_cb,
-																		 Elm_Input_Panel_Layout
-																		 input_type,
-																		 bool isPasswordFlag,
-																		 bool isFocusFlag,
-																		 int max_char_count,
-																		 int max_byte_count,
-																		 char *accepted,
-																		 char *rejected);
+extern Setting_GenGroupItem_Data *setting_create_Gendial_field_editfield(
+		Evas_Object *genlist,
+		const Elm_Genlist_Item_Class *itc,
+		setting_call_back_func gl_sel,
+		void *sel_data,
+		SWALLOW_Type
+		swallow_type,
+		const char *keyStr,
+		char *sub_desc,
+		setting_call_back_func
+		chk_change_cb,
+		setting_call_back_func
+		focused_cb,
+		setting_call_back_func
+		unfocused_cb,
+		setting_call_back_func
+		activated_cb,
+		setting_call_back_func
+		max_reached_cb,
+		Elm_Input_Panel_Layout
+		input_type,
+		bool isPasswordFlag,
+		bool isFocusFlag,
+		int max_char_count,
+		int max_byte_count,
+		char *accepted,
+		char *rejected);
 
 /**
  * General function to create a subitem of expandable item
@@ -374,16 +377,16 @@ extern Setting_GenGroupItem_Data *setting_create_Gendial_field_editfield(Evas_Ob
  * @return a pointer to Setting_GenGroupItem_Data
  */
 extern Setting_GenGroupItem_Data *setting_create_Gendial_exp_sub_field(
-	Evas_Object *genlist,
-	const Elm_Genlist_Item_Class *itc,
-	setting_call_back_func gl_sel,
-	void *sel_data,
-	Elm_Object_Item *parent,
-	SWALLOW_Type swallow_type,
-	Evas_Object *rgd,
-	int chk_status,
-	const char *keyStr,
-	setting_call_back_func chk_change_cb);
+		Evas_Object *genlist,
+		const Elm_Genlist_Item_Class *itc,
+		setting_call_back_func gl_sel,
+		void *sel_data,
+		Elm_Object_Item *parent,
+		SWALLOW_Type swallow_type,
+		Evas_Object *rgd,
+		int chk_status,
+		const char *keyStr,
+		setting_call_back_func chk_change_cb);
 
 /**
  * General function to create a parent item of expandable item
@@ -391,89 +394,96 @@ extern Setting_GenGroupItem_Data *setting_create_Gendial_exp_sub_field(
  * @return a pointer to Setting_GenGroupItem_Data
  */
 extern Setting_GenGroupItem_Data *setting_create_Gendial_exp_parent_field(
-	Evas_Object *genlist,
-	const Elm_Genlist_Item_Class *itc,
-	setting_call_back_func gl_sel,
-	void *sel_data,
-	SWALLOW_Type swallow_type,
-	const char *keyStr,
-	char *sub_desc);
+		Evas_Object *genlist,
+		const Elm_Genlist_Item_Class *itc,
+		setting_call_back_func gl_sel,
+		void *sel_data,
+		SWALLOW_Type swallow_type,
+		const char *keyStr,
+		char *sub_desc);
 
 /**
  * To make genlist support expandable style item
  */
-extern void setting_enable_expandable_genlist(Evas_Object *genlist, void *data,
-											  setting_call_back_func gl_exp_cb,
-											  setting_call_back_func
-											  gl_smart_cb);
+extern void setting_enable_expandable_genlist(
+		Evas_Object *genlist, void *data,
+		setting_call_back_func gl_exp_cb,
+		setting_call_back_func
+		gl_smart_cb);
 
 
 /**
  * To create slider object of a genlist item
  * @return a slider container object
  */
-extern Evas_Object *setting_create_slider(Evas_Object *win_main, Evas *evas,
-										  const char *l_swallow_path,
-										  const char *r_swallow_path,
-										  double value,
-										  bool indicator,
-										  double slider_min,
-										  double slider_max,
-										  setting_call_back_func
-										  slider_change_cb,
-										  setting_call_back_func
-										  slider_start_change_cb,
-										  setting_call_back_func
-										  slider_stop_change_cb, void *cb_data);
+extern Evas_Object *setting_create_slider(
+		Evas_Object *win_main, Evas *evas,
+		const char *l_swallow_path,
+		const char *r_swallow_path,
+		double value,
+		bool indicator,
+		double slider_min,
+		double slider_max,
+		setting_call_back_func
+		slider_change_cb,
+		setting_call_back_func
+		slider_start_change_cb,
+		setting_call_back_func
+		slider_stop_change_cb, void *cb_data);
 
 /**
  * To create slider object of a genlist item
  * @return a slider container object
  */
-extern Evas_Object *setting_create_5step_slider(Evas_Object *win_main, Evas *evas,
-												const char *l_swallow_path,
-												const char *r_swallow_path,
-												double value,
-												bool indicator,
-												double slider_min,
-												double slider_max,
-												setting_call_back_func
-												slider_change_cb,
-												setting_call_back_func
-												slider_start_change_cb,
-												setting_call_back_func
-												slider_stop_change_cb, void *cb_data);
+extern Evas_Object *setting_create_5step_slider(
+		Evas_Object *win_main,
+		Evas *evas,
+		const char *l_swallow_path,
+		const char *r_swallow_path,
+		double value,
+		bool indicator,
+		double slider_min,
+		double slider_max,
+		setting_call_back_func
+		slider_change_cb,
+		setting_call_back_func
+		slider_start_change_cb,
+		setting_call_back_func
+		slider_stop_change_cb, void *cb_data);
 
 /**
  * The main implement body of create a certain size icon
  */
-extern void create_image_box_add_ex(void *data, Evas_Object *win_main,
-									Evas *evas, char *img_path, int img_w,
-									int img_h,
-									Evas_Object_Event_Cb mouse_down_cb,
-									Evas_Object_Event_Cb mouse_up_cb,
-									Evas_Object **image_box,
-									Evas_Object **img);
+extern void create_image_box_add_ex(
+		void *data, Evas_Object *win_main,
+		Evas *evas, char *img_path, int img_w,
+		int img_h,
+		Evas_Object_Event_Cb mouse_down_cb,
+		Evas_Object_Event_Cb mouse_up_cb,
+		Evas_Object **image_box,
+		Evas_Object **img);
 
 /**
  * To create a size fixed icon
  * @return a image container object
  */
-extern Evas_Object *create_image_box_add(void *data, Evas_Object *win_main,
-										 Evas *evas, char *img_path, int img_w,
-										 int img_h,
-										 Evas_Object_Event_Cb mouse_down_cb,
-										 Evas_Object_Event_Cb mouse_up_cb);
+extern Evas_Object *create_image_box_add(
+		void *data, Evas_Object *win_main,
+		Evas *evas, char *img_path, int img_w,
+		int img_h,
+		Evas_Object_Event_Cb mouse_down_cb,
+		Evas_Object_Event_Cb mouse_up_cb);
 
 /**
 * @ To create a size specialized icon
 * @return a image container object
 */
-extern Evas_Object *create_bgimage_box_add(void *data, Evas_Object *win_main,
-										   Evas *evas, char *img_path,
-										   int img_w, int img_h,
-										   Evas_Object_Event_Cb mouse_down_cb,
-										   Evas_Object_Event_Cb mouse_up_cb);
+extern Evas_Object *create_bgimage_box_add(
+		void *data, Evas_Object *win_main,
+		Evas *evas, char *img_path,
+		int img_w, int img_h,
+		Evas_Object_Event_Cb mouse_down_cb,
+		Evas_Object_Event_Cb mouse_up_cb);
 
 /**
 * @ create a box container
@@ -488,7 +498,9 @@ extern Evas_Object *setting_create_client_bx(Evas_Object *win_main);
 * The API to Create a lable
 * @return a lable
 */
-extern Evas_Object *setting_create_lable(Evas_Object *parent, const char *text, const char *style, const char *align);
+extern Evas_Object *setting_create_lable(
+		Evas_Object *parent, const char *text,
+		const char *style, const char *align);
 
 /**
 * The API to Create an object to show an image
@@ -512,35 +524,35 @@ extern Evas_Object *setting_create_gif(Evas_Object *parent, const char **png_lis
 * Alternate the check object status and its binded vcof value via original vcofn value
 */
 extern int setting_draw_onoff_status(Evas_Object *obj,
-									 setting_bool_slp_list key);
+					setting_bool_slp_list key);
 
 /**
 * Set the vconf value via its binded check object.
 * @return 0: sucess, other: failed
 */
 extern int setting_reset_slp_key_by_status(Evas_Object *obj,
-										   setting_bool_slp_list key);
+						setting_bool_slp_list key);
 
 /**
 * Set the status of check object via its binded vconf value.
 * @return  0: sucess, other: failed
 */
 extern int setting_check_onoff_status(Evas_Object *obj,
-									  setting_bool_slp_list key);
+					setting_bool_slp_list key);
 
 /**
 * Set the status of radio group object via its binded vconf value.
 * @return  0: sucess, other: failed
 */
 extern int setting_update_chk_status(Evas_Object *chk,
-									 setting_int_slp_list type);
+					setting_int_slp_list type);
 
 /**
 * Create a size specilized rectangle object
 * @return a size specilized rectangle object
 */
 extern Evas_Object *setting_create_blank_rect_customize(Evas_Object *layout,
-														int w, int h);
+							int w, int h);
 
 /**
 * Create a size fixed rectangle object
@@ -554,7 +566,7 @@ extern Evas_Object *setting_create_blank_rect(Evas_Object *layout);
 * @return an editfiled object
 */
 extern Evas_Object *setting_create_editfiled(Evas_Object *win_main,
-											 char *title, char *def_str, char *guide_text);
+						char *title, char *def_str, char *guide_text);
 /**
 * The API to Create a standard layout
 * @return a standard layout
@@ -566,44 +578,47 @@ extern Evas_Object *setting_create_win_layout(Evas_Object *win_obj);
 */
 extern Evas_Object *setting_create_navi_bar(Evas_Object *layout);
 
-extern Elm_Object_Item *setting_create_guild_layout(Evas_Object *navi_bar,
-													char *title_str,
-													char *lbutton_str,
-													char *rbutton_str,
-													char *mbutton_str,
-													setting_call_back_func lbutton_click_cb,
-													setting_call_back_func rbutton_click_cb,
-													setting_call_back_func mbutton_click_cb,
-													char *content_str1,
-													char **png_list,
-													char *content_str2,
-													char *content_button_str,
-													setting_call_back_func content_button_click_cb,
-													void *cb_data);
+extern Elm_Object_Item *setting_create_guild_layout(
+		Evas_Object *navi_bar,
+		char *title_str,
+		char *lbutton_str,
+		char *rbutton_str,
+		char *mbutton_str,
+		setting_call_back_func lbutton_click_cb,
+		setting_call_back_func rbutton_click_cb,
+		setting_call_back_func mbutton_click_cb,
+		char *content_str1,
+		char **png_list,
+		char *content_str2,
+		char *content_button_str,
+		setting_call_back_func content_button_click_cb,
+		void *cb_data);
 extern void setting_navi_items_update(Evas_Object *navigate_bar);
 
-extern Elm_Object_Item *setting_create_guild_layout2(Evas_Object *navi_bar,
-													 char *title_str,
-													 char *lbutton_str,
-													 char *rbutton_str,
-													 char *mbutton_str,
-													 setting_call_back_func lbutton_click_cb,
-													 setting_call_back_func rbutton_click_cb,
-													 setting_call_back_func mbutton_click_cb,
-													 char *content_str1,
-													 Evas_Object **ug_layout,
-													 char *content_str2,
-													 char *content_button_str,
-													 setting_call_back_func content_button_click_cb,
-													 void *cb_data);
+extern Elm_Object_Item *setting_create_guild_layout2(
+		Evas_Object *navi_bar,
+		char *title_str,
+		char *lbutton_str,
+		char *rbutton_str,
+		char *mbutton_str,
+		setting_call_back_func lbutton_click_cb,
+		setting_call_back_func rbutton_click_cb,
+		setting_call_back_func mbutton_click_cb,
+		char *content_str1,
+		Evas_Object **ug_layout,
+		char *content_str2,
+		char *content_button_str,
+		setting_call_back_func content_button_click_cb,
+		void *cb_data);
 /**
 * The API to Create a button
 * @return a button
 */
-extern Evas_Object *setting_create_button(Evas_Object *parent, const char *btn_str,
-										  const char *btn_style,
-										  void *btn_click_cb,
-										  void *cb_data);
+extern Evas_Object *setting_create_button(
+		Evas_Object *parent, const char *btn_str,
+		const char *btn_style,
+		void *btn_click_cb,
+		void *cb_data);
 
 extern void setting_nf_check_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 extern void setting_nf_check_change_cb(void *data, Evas_Object *obj, void *event_info);
@@ -626,30 +641,32 @@ extern void setting_nf_check_vconf_cb(keynode_t *key, void *data);
 * if sip is shown,the buttons created by this API will be shown,it sip is hidden,they will be hiden too
 * @return non
 */
-extern void setting_append_naviframe_title_buttons(Elm_Object_Item *navi_it,
-												   Evas_Object *navigate_bar,
-												   char *more_button_str,
-												   char *left_button_str,
-												   char *right_button_str,
-												   char *back_button_str,
-												   setting_call_back_func more_button_click_cb,
-												   setting_call_back_func left_button_click_cb,
-												   setting_call_back_func right_button_click_cb,
-												   setting_call_back_func back_button_click_cb,
-												   void *cb_data);
+extern void setting_append_naviframe_title_buttons(
+		Elm_Object_Item *navi_it,
+		Evas_Object *navigate_bar,
+		char *more_button_str,
+		char *left_button_str,
+		char *right_button_str,
+		char *back_button_str,
+		setting_call_back_func more_button_click_cb,
+		setting_call_back_func left_button_click_cb,
+		setting_call_back_func right_button_click_cb,
+		setting_call_back_func back_button_click_cb,
+		void *cb_data);
 /**
 * The API to Create top buttons onto naviframe
 * @return a naviframe item
 */
-extern Elm_Object_Item *setting_create_navi_bar_top_buttons(char *title_str,
-															char *lbutton_str,
-															char *rbutton_str,
-															char *mbutton_str,
-															setting_call_back_func lbutton_click_cb,
-															setting_call_back_func rbutton_click_cb,
-															setting_call_back_func mbutton_click_cb,
-															void *cb_data, Evas_Object *eo_view,/*any container obj */
-															Evas_Object *navigate_bar);
+extern Elm_Object_Item *setting_create_navi_bar_top_buttons(
+		char *title_str,
+		char *lbutton_str,
+		char *rbutton_str,
+		char *mbutton_str,
+		setting_call_back_func lbutton_click_cb,
+		setting_call_back_func rbutton_click_cb,
+		setting_call_back_func mbutton_click_cb,
+		void *cb_data, Evas_Object *eo_view,/*any container obj */
+		Evas_Object *navigate_bar);
 
 /**
 * Create buttons on the specialized navigation bar
@@ -657,12 +674,13 @@ extern Elm_Object_Item *setting_create_navi_bar_top_buttons(char *title_str,
 * @param[in] controlbar	  title obj of navigation bar
 */
 extern void
-setting_create_navi_bar_buttons(char *title_str,
-								char *lbutton_str,
-								setting_call_back_func lbutton_click_cb,
-								void *cb_data, Evas_Object *eo_view,
-								Evas_Object *navigate_bar,
-								Evas_Object *titleobj);
+setting_create_navi_bar_buttons(
+		char *title_str,
+		char *lbutton_str,
+		setting_call_back_func lbutton_click_cb,
+		void *cb_data, Evas_Object *eo_view,
+		Evas_Object *navigate_bar,
+		Evas_Object *titleobj);
 
 /**
 * The general API to create a layout with navigation bar,
@@ -674,15 +692,16 @@ setting_create_navi_bar_buttons(char *title_str,
 * return main layout of UG or App..
 */
 
-Evas_Object *setting_create_layout_navi_bar(Evas_Object *win_layout,
-											Evas_Object *win_obj,
-											char *title_str,
-											char *lbutton_str,
-											setting_call_back_func lbutton_click_cb,
-											void *cb_data,
-											Evas_Object *eo_view,
-											Evas_Object **navi_bar,
-											Evas_Object **titleobj);
+Evas_Object *setting_create_layout_navi_bar(
+		Evas_Object *win_layout,
+		Evas_Object *win_obj,
+		char *title_str,
+		char *lbutton_str,
+		setting_call_back_func lbutton_click_cb,
+		void *cb_data,
+		Evas_Object *eo_view,
+		Evas_Object **navi_bar,
+		Evas_Object **titleobj);
 
 /**
 * The API to create a layout with navigation bar,
@@ -692,16 +711,17 @@ Evas_Object *setting_create_layout_navi_bar(Evas_Object *win_layout,
 *
 * @return a layout with a special navigation bar and at most 2 buttons
 */
-extern Evas_Object *setting_create_layout_navi_bar_scroller(Evas_Object *win_layout,
-															Evas_Object *win_obj,
-															char *title_str,
-															char *lbutton_str,
-															char *rbutton_str,
-															setting_call_back_func lbutton_click_cb,
-															setting_call_back_func rbutton_click_cb,
-															void *cb_data,
-															Evas_Object **scroller,
-															Evas_Object **navi_bar);
+extern Evas_Object *setting_create_layout_navi_bar_scroller(
+		Evas_Object *win_layout,
+		Evas_Object *win_obj,
+		char *title_str,
+		char *lbutton_str,
+		char *rbutton_str,
+		setting_call_back_func lbutton_click_cb,
+		setting_call_back_func rbutton_click_cb,
+		void *cb_data,
+		Evas_Object **scroller,
+		Evas_Object **navi_bar);
 
 /**
 * The API to create a layout with navigation bar,
@@ -709,68 +729,72 @@ extern Evas_Object *setting_create_layout_navi_bar_scroller(Evas_Object *win_lay
 *
 * @return a layout with a special navigation bar and at most 2 buttons
 */
-extern Evas_Object *setting_create_layout_navi_bar_genlist(Evas_Object *win_layout,
-														   Evas_Object *win_obj,
-														   char *title_str,
-														   char *lbutton_str,
-														   char *rbutton_str,
-														   void *lbutton_click_cb,
-														   void *rbutton_click_cb,
-														   void *cb_data,
-														   Evas_Object **genlist,
-														   Evas_Object **navi_bar);
+extern Evas_Object *setting_create_layout_navi_bar_genlist(
+		Evas_Object *win_layout,
+		Evas_Object *win_obj,
+		char *title_str,
+		char *lbutton_str,
+		char *rbutton_str,
+		void *lbutton_click_cb,
+		void *rbutton_click_cb,
+		void *cb_data,
+		Evas_Object **genlist,
+		Evas_Object **navi_bar);
 
 /**
 * The general API to push any evas object(@param[in][eo_view]) to the specialized navi_bar,
 *	which contents at most 3 buttons
 */
-extern Elm_Object_Item *setting_push_layout_navi_bar(char *title_str,
-													 char *lbutton_str, char *rbutton_str,
-													 char *mbutton_str,
-													 void *lbutton_click_cb,
-													 void *rbutton_click_cb,
-													 void *mbutton_click_cb,
-													 void *cb_data,
-													 Evas_Object *eo_view,
-													 Evas_Object *navi_bar,
-													 Evas_Object **titleobj);
+extern Elm_Object_Item *setting_push_layout_navi_bar(
+		char *title_str,
+		char *lbutton_str, char *rbutton_str,
+		char *mbutton_str,
+		void *lbutton_click_cb,
+		void *rbutton_click_cb,
+		void *mbutton_click_cb,
+		void *cb_data,
+		Evas_Object *eo_view,
+		Evas_Object *navi_bar,
+		Evas_Object **titleobj);
 
 /**
 * The API to push a scroller object(@param[in][scroller]) to the specialized navi_bar,
 *	which contents at most 2 buttons
 */
-extern Elm_Object_Item *setting_push_layout_navi_bar_scroller(Evas_Object *win_main,
-															  char *title_str,
-															  char *lbutton_str,
-															  char *rbutton_str,
-															  setting_call_back_func lbutton_click_cb,
-															  setting_call_back_func rbutton_click_cb,
-															  void *cb_data,
-															  Evas_Object **scroller,
-															  Evas_Object *navi_bar);
+extern Elm_Object_Item *setting_push_layout_navi_bar_scroller(
+		Evas_Object *win_main,
+		char *title_str,
+		char *lbutton_str,
+		char *rbutton_str,
+		setting_call_back_func lbutton_click_cb,
+		setting_call_back_func rbutton_click_cb,
+		void *cb_data,
+		Evas_Object **scroller,
+		Evas_Object *navi_bar);
 
 /**
 * The API to push a genlist object(@param[in][genlist]) to the specialized navi_bar,
 *	which contents at most 2 buttons
 */
 extern Elm_Object_Item *
-setting_push_layout_navi_bar_genlist(Evas_Object *win_layout,
-									 Evas_Object *win_obj,
-									 char *title_str,
-									 char *lbutton_str,
-									 char *rbutton_str,
-									 void *lbutton_click_cb,
-									 void *rbutton_click_cb,
-									 void *cb_data,
-									 Evas_Object **genlist,
-									 Evas_Object *navi_bar);
+setting_push_layout_navi_bar_genlist(
+		Evas_Object *win_layout,
+		Evas_Object *win_obj,
+		char *title_str,
+		char *lbutton_str,
+		char *rbutton_str,
+		void *lbutton_click_cb,
+		void *rbutton_click_cb,
+		void *cb_data,
+		Evas_Object **genlist,
+		Evas_Object *navi_bar);
 
 /**
 * Create a text box, which cannot be edited
 * @return a text box, which cannot be edited
 */
 extern Evas_Object *setting_create_textbox(Evas_Object *parent,
-										   const char *content);
+						const char *content);
 
 /****done_list****/
 
@@ -792,11 +816,12 @@ extern Evas_Object *setting_create_done_list_with_image(Setting_Done_List_Data *
 * @param[in] search_idler
 * @param[in] redraw_cb
 */
-extern int setting_searchbar_redraw(void *data,
-									Evas_Object *search_bar,
-									char *search_text,
-									Ecore_Idler **search_idler,
-									Ecore_Task_Cb redraw_cb);
+extern int setting_searchbar_redraw(
+		void *data,
+		Evas_Object *search_bar,
+		char *search_text,
+		Ecore_Idler **search_idler,
+		Ecore_Task_Cb redraw_cb);
 
 /**
 * Create searchar, register change cb and cancel cb.
@@ -807,8 +832,8 @@ extern int setting_searchbar_redraw(void *data,
 * @param[in] cancel_cb
 */
 extern Evas_Object *setting_create_searchbar(void *data, Evas_Object *parent,
-											 Evas_Smart_Cb change_cb,
-											 Evas_Smart_Cb cancel_cb);
+		Evas_Smart_Cb change_cb,
+		Evas_Smart_Cb cancel_cb);
 
 /**
 * Make it no effect when clicking on a evas object, such as, layout, genlist
@@ -885,11 +910,12 @@ extern void setting_make_evas_object_clickable(Evas_Object *obj);
 * @param[in] move_cb
 * @param[in] data
 */
-extern Evas_Object *setting_create_icon(Evas_Object *parent, const char *img_path,
-										Evas_Object_Event_Cb up_cb,
-										Evas_Object_Event_Cb down_cb,
-										Evas_Object_Event_Cb move_cb,
-										void *data);
+extern Evas_Object *setting_create_icon(
+		Evas_Object *parent, const char *img_path,
+		Evas_Object_Event_Cb up_cb,
+		Evas_Object_Event_Cb down_cb,
+		Evas_Object_Event_Cb move_cb,
+		void *data);
 /**
 * to make sbu-obj the same size as parent-obj.Notice: subobj is the only sub-obj @parent wants to display
 *
@@ -907,11 +933,12 @@ extern Evas_Object *setting_create_icon(Evas_Object *parent, const char *img_pat
 * @param[in] move_cb
 * @param[in] data
 */
-extern Evas_Object *setting_create_image_button(Evas_Object *parent,
-												const char *btn_img,
-												setting_call_back_func clicked_cb,
-												setting_call_back_func unpressed_cb,
-												void *data);
+extern Evas_Object *setting_create_image_button(
+		Evas_Object *parent,
+		const char *btn_img,
+		setting_call_back_func clicked_cb,
+		setting_call_back_func unpressed_cb,
+		void *data);
 
 /*
 * set font_size, color or align(right, left, middle),if need, you
@@ -919,7 +946,7 @@ extern Evas_Object *setting_create_image_button(Evas_Object *parent,
 * the text will take the same effect until the end of text.
 */
 extern char *setting_customize_text(const char *input_str, const int font_size,
-									const char *color, const char *align);
+		const char *color, const char *align);
 
 extern void setting_go_to_top(Evas_Object *content);
 
@@ -949,12 +976,13 @@ extern char *__setting_phone_lang_get_by_pattern(const char *locale, const char 
 
 /*///////////////////////////////////////////////////// */
 extern void setting_popup_del_cb(void *data, Evas_Object *obj, void *event_info);
-extern void setting_popup_event_set(Evas_Object *popup, void *data,
-									setting_call_back_func response_cb,
-									int timeout,/*to control the timeout time */
-									bool blocked_flag,/*to control whether to block the screen */
-									bool keygrab_flag/*to control whether to block the 'Home key' */
-								   );
+extern void setting_popup_event_set(
+		Evas_Object *popup, void *data,
+		setting_call_back_func response_cb,
+		int timeout,/*to control the timeout time */
+		bool blocked_flag,/*to control whether to block the screen */
+		bool keygrab_flag/*to control whether to block the 'Home key' */
+		);
 
 /*********************************************************
  * @brief The general API to create a default popup window
@@ -972,15 +1000,16 @@ extern void setting_popup_event_set(Evas_Object *popup, void *data,
  *
  * @return a certain popup window
  **********************************************************/
-EXPORT_PUBLIC Evas_Object *setting_create_popup(void *data,
-												Evas_Object *parent,
-												const char *title,
-												const char *text,
-												setting_call_back_func response_cb,
-												int timeout,
-												bool blocked_flag,
-												bool keygrab_flag,
-												int btn_num, ...);
+EXPORT_PUBLIC Evas_Object *setting_create_popup(
+		void *data,
+		Evas_Object *parent,
+		const char *title,
+		const char *text,
+		setting_call_back_func response_cb,
+		int timeout,
+		bool blocked_flag,
+		bool keygrab_flag,
+		int btn_num, ...);
 
 
 /*********************************************************
@@ -1000,16 +1029,17 @@ EXPORT_PUBLIC Evas_Object *setting_create_popup(void *data,
  *
  * @return a certain popup window
  **********************************************************/
-EXPORT_PUBLIC Evas_Object *setting_create_popup2(void *data,
-												 Evas_Object *parent,
-												 char *title,
-												 char *text,
-												 setting_call_back_func response_cb,
-												 setting_call_back_func back_cb,
-												 int timeout,
-												 bool blocked_flag,
-												 bool keygrab_flag,
-												 int btn_num, ...);
+EXPORT_PUBLIC Evas_Object *setting_create_popup2(
+		void *data,
+		Evas_Object *parent,
+		char *title,
+		char *text,
+		setting_call_back_func response_cb,
+		setting_call_back_func back_cb,
+		int timeout,
+		bool blocked_flag,
+		bool keygrab_flag,
+		int btn_num, ...);
 
 
 
@@ -1028,16 +1058,17 @@ EXPORT_PUBLIC Evas_Object *setting_create_popup2(void *data,
  *
  * @return a popup window which contents a progressbar
  *******************************************************************/
-EXPORT_PUBLIC Evas_Object *setting_create_popup_with_progressbar(void *data,
-																 Evas_Object *parent,
-																 char *progressbar_style,
-																 char *title,
-																 char *text,
-																 setting_call_back_func response_cb,
-																 int timeout,
-																 bool blocked_flag,
-																 bool keygrab_flag,
-																 int btn_num, ...);
+EXPORT_PUBLIC Evas_Object *setting_create_popup_with_progressbar(
+		void *data,
+		Evas_Object *parent,
+		char *progressbar_style,
+		char *title,
+		char *text,
+		setting_call_back_func response_cb,
+		int timeout,
+		bool blocked_flag,
+		bool keygrab_flag,
+		int btn_num, ...);
 
 /******************************************************************
  * @brief The general API to create a popup window which contents a genlist
@@ -1053,14 +1084,15 @@ EXPORT_PUBLIC Evas_Object *setting_create_popup_with_progressbar(void *data,
  *
  * @return a popup window which contents a genlist
  *******************************************************************/
-EXPORT_PUBLIC Evas_Object *setting_create_popup_with_list(Evas_Object **genlist,
-														  void *data,
-														  Evas_Object *parent,
-														  const char *title,
-														  setting_call_back_func response_cb,
-														  int timeout,
-														  bool blocked_flag,
-														  bool keygrab_flag,
-														  int btn_num, ...);
+EXPORT_PUBLIC Evas_Object *setting_create_popup_with_list(
+		Evas_Object **genlist,
+		void *data,
+		Evas_Object *parent,
+		const char *title,
+		setting_call_back_func response_cb,
+		int timeout,
+		bool blocked_flag,
+		bool keygrab_flag,
+		int btn_num, ...);
 
-#endif				/* __SETTING_COMMON_DRAW_WIDGET_H__ */
+#endif		/* __SETTING_COMMON_DRAW_WIDGET_H__ */

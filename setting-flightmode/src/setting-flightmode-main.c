@@ -90,46 +90,59 @@ static void setting_flightmode_main_tapi_event_cb(TapiHandle *handle, int result
 		break;
 
 	case TAPI_POWER_FLIGHT_MODE_RESP_FAIL:
-		/*Setting has a validate operation to process, Send the operation request */
+		/*Setting has a validate operation to process, Send the
+		 * operation request */
 		if (MODE_ENTER == ad->fm_waiting_op) {
 			ad->fm_waiting_op = MODE_INVALID;
-			err = tel_set_flight_mode(ad->handle, TAPI_POWER_FLIGHT_MODE_ENTER, setting_flightmode_main_tapi_event_cb, ad);
+			err = tel_set_flight_mode(ad->handle,
+					TAPI_POWER_FLIGHT_MODE_ENTER,
+					setting_flightmode_main_tapi_event_cb,
+					ad);
 
 			setting_retm_if(err != TAPI_API_SUCCESS,
-							"*** [ERR] tel_set_flight_mode(TAPI_POWER_FLIGHT_MODE_ENTER) ***");
+					"*** [ERR] tel_set_flight_mode "
+					"(TAPI_POWER_FLIGHT_MODE_ENTER) ***");
 			ad->b_fm_requesting = TRUE;
 		} else if (MODE_LEAVE == ad->fm_waiting_op) {
 			ad->fm_waiting_op = MODE_INVALID;
-			err = tel_set_flight_mode(ad->handle, TAPI_POWER_FLIGHT_MODE_LEAVE, setting_flightmode_main_tapi_event_cb, ad);
+			err = tel_set_flight_mode(ad->handle,
+					TAPI_POWER_FLIGHT_MODE_LEAVE,
+					setting_flightmode_main_tapi_event_cb,
+					ad);
 
 			setting_retm_if(err != TAPI_API_SUCCESS,
-							"*** [ERR] tel_set_flight_mode(TAPI_POWER_FLIGHT_MODE_LEAVE) ***");
+					"*** [ERR] tel_set_flight_mode "
+					"(TAPI_POWER_FLIGHT_MODE_LEAVE) ***");
 			ad->b_fm_requesting = TRUE;
-		} else { /*Current requset is the last one, Setting needs to notify user */
+		} else { /* Current request is the last one, Setting needs
+				to notify user */
 			setting_create_popup(ad, ad->win_get,
-								 "IDS_ST_POP_ERROR",
-								 "IDS_ST_POP_UNABLE_TO_TURN_ON_FLIGHT_MODE_VODA",
-								 NULL, POPUP_INTERVAL,
-								 FALSE, FALSE, 0);
+					"IDS_ST_POP_ERROR",
+					"IDS_ST_POP_UNABLE_TO_TURN_ON_FLIGHT_"
+						"MODE_VODA",
+					NULL, POPUP_INTERVAL,
+					FALSE, FALSE, 0);
 
-			/*It is need to rollback the status, */
-			setting_update_gl_item_chk_status(ad->data_flightmode, !(ad->data_flightmode->chk_status));
+			/* It is needed to roll back the status */
+			setting_update_gl_item_chk_status(ad->data_flightmode,
+					!(ad->data_flightmode->chk_status));
 			return;
 		}
 
-		/*sucessfully sent, */
+		/* Successfully sent */
 		ad->b_fm_requesting = TRUE;
 
 		break;
 
 	case TAPI_POWER_FLIGHT_MODE_RESP_MAX:
 		setting_create_popup(ad, ad->win_get,
-							 "IDS_ST_POP_ERROR",
-							 "IDS_IM_POP_UNEXPECTED_ERROR",
-							 NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
+					"IDS_ST_POP_ERROR",
+					"IDS_IM_POP_UNEXPECTED_ERROR",
+					NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
 
-		/*It is need to rollback the status, */
-		setting_update_gl_item_chk_status(ad->data_flightmode, !(ad->data_flightmode->chk_status));
+		/* It is need to roll back the status */
+		setting_update_gl_item_chk_status(ad->data_flightmode,
+				!(ad->data_flightmode->chk_status));
 		break;
 	default:
 		/* do nothing */
