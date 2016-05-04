@@ -213,7 +213,9 @@ static void setting_main_lang_changed_cb(app_event_info_h event_info, void *data
 	setting_main_appdata *ad = g_main_ad;
 
 	elm_object_item_part_text_set(ad->navibar_main_it, "elm.text.title", _("IDS_ST_OPT_SETTINGS"));
-	/*setting_navi_items_update(ad->navibar_main); */
+
+	/*	setting_navi_items_update(ad->win_main);*/
+	elm_genlist_realized_items_update(ad->sc_gl[SC_All_List]);
 
 	char *localeLanguage = NULL;
 	system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, &localeLanguage);
