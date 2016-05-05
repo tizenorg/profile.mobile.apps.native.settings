@@ -33,7 +33,7 @@
 * @param data user data (SettingTimeUG *)
 */
 static void setting_time_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
-									  void *event_info)
+		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	SettingTimeUG *ad = (SettingTimeUG *) data;
@@ -51,7 +51,7 @@ static void setting_time_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
 * @return
 */
 static void *setting_time_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
-									   app_control_h service, void *priv)
+		app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if((!priv), NULL, "!priv");
@@ -68,7 +68,8 @@ static void *setting_time_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	/*	Initialize Caller value */
 	timeUG->caller = NULL;
 
-	setting_retvm_if(timeUG->win_main_layout == NULL, NULL, "cannot get main window ");
+	setting_retvm_if(timeUG->win_main_layout == NULL, NULL,
+			"cannot get main window ");
 
 	/* set launguage */
 	setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR);
@@ -77,11 +78,15 @@ static void *setting_time_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	setting_view_node_table_intialize();
 	setting_view_node_table_register(&setting_view_time_main, NULL);
 
-	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(timeUG->itc_1text_1icon));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
+			&(timeUG->itc_1text_1icon));
 	setting_create_Gendial_itc("entry.main", &(timeUG->itc_layout));
-	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(timeUG->itc_2text_2));
-	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(timeUG->itc_2text_3_parent));
-	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(timeUG->itc_1icon_1text_sub));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
+			&(timeUG->itc_2text_2));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
+			&(timeUG->itc_2text_3_parent));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
+			&(timeUG->itc_1icon_1text_sub));
 
 	timeUG->is_expand_time_format_list = 0;
 
@@ -95,39 +100,41 @@ static void *setting_time_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	setting_view_node_set_cur_view(&setting_view_time_main);
 	setting_view_create(&setting_view_time_main, (void *)timeUG);
 	evas_object_event_callback_add(timeUG->win_main_layout,
-								   EVAS_CALLBACK_RESIZE,
-								   setting_time_ug_cb_resize, timeUG);
+			EVAS_CALLBACK_RESIZE,
+			setting_time_ug_cb_resize, timeUG);
 	return timeUG->ly_main;
 }
 
 static void setting_time_ug_on_start(ui_gadget_h ug, app_control_h service,
-									 void *priv)
+			void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	/*	do nothing */
 }
 
 static void setting_time_ug_on_pause(ui_gadget_h ug, app_control_h service,
-									 void *priv)
+			void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	/*	do nothing */
 }
 
 static void setting_time_ug_on_resume(ui_gadget_h ug, app_control_h service,
-									  void *priv)
+			void *priv)
 {
 	/*	do nothing */
 }
 
 static void setting_time_ug_on_destroy(ui_gadget_h ug, app_control_h service,
-									   void *priv)
+			void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
 	SettingTimeUG *timeUG = priv;
 
-	evas_object_event_callback_del(timeUG->win_main_layout, EVAS_CALLBACK_RESIZE, setting_time_ug_cb_resize);	/* fix flash issue for gallery */
+	/* fix flash issue for gallery */
+	evas_object_event_callback_del(timeUG->win_main_layout,
+			EVAS_CALLBACK_RESIZE, setting_time_ug_cb_resize);
 	timeUG->ug = ug;
 
 	/*	delete the allocated objects. */
@@ -142,13 +149,13 @@ static void setting_time_ug_on_destroy(ui_gadget_h ug, app_control_h service,
 }
 
 static void setting_time_ug_on_message(ui_gadget_h ug, app_control_h msg,
-									   app_control_h service, void *priv)
+		app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 }
 
 static void setting_time_ug_on_event(ui_gadget_h ug, enum ug_event event,
-									 app_control_h service, void *priv)
+		app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SettingTimeUG *ad = (SettingTimeUG *) priv;
@@ -192,8 +199,8 @@ static void setting_time_ug_on_event(ui_gadget_h ug, enum ug_event event,
 * @brief key event handler for UG
 */
 static void setting_time_ug_on_key_event(ui_gadget_h ug,
-										 enum ug_key_event event, app_control_h service,
-										 void *priv)
+		enum ug_key_event event, app_control_h service,
+		void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SettingTimeUG *ad = (SettingTimeUG *) priv;
@@ -208,7 +215,8 @@ static void setting_time_ug_on_key_event(ui_gadget_h ug,
 				if (app_control_create(&svc))
 					return;
 
-				app_control_add_extra_data(svc, "result", "lbutton_click");
+				app_control_add_extra_data(svc, "result",
+						"lbutton_click");
 				ug_send_result(ad->ug, svc);
 
 				app_control_destroy(svc);
@@ -267,25 +275,36 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 		FREE(timeUG);
 }
 
-UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv, char **applocale)
+UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
+		char **applocale)
 {
 	int i, size;
 	Setting_Cfg_Node_T *node;
 	Eina_List **pplist = priv;
 
 	const Setting_Cfg_Node_T search_configs[] = {
-		{DATE_TIME_STR_AUTOMATIC_UPDATE, NULL, NULL, 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node, NULL, DATE_TIME_STR_DATE_AND_TIME, NULL, NULL },
-		{DATE_TIME_STR_TIME_ZONE, NULL, NULL, 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node, NULL,	 DATE_TIME_STR_DATE_AND_TIME, NULL, NULL },
+		{DATE_TIME_STR_AUTOMATIC_UPDATE, NULL, NULL, 0,
+				Cfg_Item_unResetable, 0, Cfg_Item_View_Node,
+				NULL, DATE_TIME_STR_DATE_AND_TIME, NULL, NULL },
+		{DATE_TIME_STR_TIME_ZONE, NULL, NULL, 0,
+				Cfg_Item_unResetable, 0, Cfg_Item_View_Node,
+				NULL, DATE_TIME_STR_DATE_AND_TIME, NULL, NULL },
 
-		/* Duplicated title name : 'Date and time' with UG name : 'Date and time' */
-		{DATE_TIME_STR_DATE_AND_TIME, NULL, NULL,  0, Cfg_Item_unResetable, 0,		Cfg_Item_View_Node, NULL,  DATE_TIME_STR_DATE_AND_TIME, NULL, NULL },
-		{DATE_TIME_STR_TIME_FORMAT, NULL, "viewtype:format_expand", 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node, NULL,  DATE_TIME_STR_DATE_AND_TIME, NULL, NULL }
+		/* Duplicated title name : 'Date and time' with
+		 * UG name : 'Date and time' */
+		{DATE_TIME_STR_DATE_AND_TIME, NULL, NULL,  0,
+				Cfg_Item_unResetable, 0, Cfg_Item_View_Node,
+				NULL, DATE_TIME_STR_DATE_AND_TIME, NULL, NULL },
+		{DATE_TIME_STR_TIME_FORMAT, NULL, "viewtype:format_expand", 0,
+				Cfg_Item_unResetable, 0, Cfg_Item_View_Node,
+				NULL, DATE_TIME_STR_DATE_AND_TIME, NULL, NULL }
 	};
 
 	retv_if(NULL == priv, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 	retv_if(NULL == applocale, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	*applocale = strdup("setting:"_TZ_SYS_RO_APP"/org.tizen.setting/res/locale");
+	*applocale = strdup("setting:"_TZ_SYS_RO_APP"/org.tizen.setting"
+			"/res/locale");
 
 	size = sizeof(search_configs) / sizeof(Setting_Cfg_Node_T);
 

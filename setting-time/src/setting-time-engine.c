@@ -20,7 +20,8 @@
  */
 #include <setting-time-engine.h>
 
-/*	To set system time takes some time. It makes some time before firing vconf event */
+/* To set system time takes some time. It makes some time before firing
+ * vconf event */
 int setting_time_update_cb(void *data)
 {
 	retv_if(data == NULL, -1);
@@ -36,7 +37,8 @@ int setting_time_update_cb(void *data)
 	ts = localtime_r(&ctime, &ts_ret);
 	retv_if(!ts, 1);
 	strftime(time_str, SETTING_TIME_ENGINE_TIME_STR_LEN, "%H:%M", &ts_ret);
-	SETTING_TRACE("After setting time ::: tm is_dst --> %d", ts_ret.tm_isdst);
+	SETTING_TRACE("After setting time ::: tm is_dst --> %d",
+			ts_ret.tm_isdst);
 	SETTING_TRACE("After Setting time time_str:%s", time_str);*/
 #if SUPPORT_SCREEN_PROTECTED
 	display_unlock_state(LCD_NORMAL, STAY_CUR_STATE);

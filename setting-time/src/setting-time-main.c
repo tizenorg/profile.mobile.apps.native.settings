@@ -59,7 +59,8 @@ static bool get_city_name(char *tzname);
 static char *get_timezone_displayname();
 
 static char *s_result;
-static int query_callback(void *NotUsed, int argc, char **argv, char **azColName);
+static int query_callback(void *NotUsed, int argc, char **argv,
+		char **azColName);
 static bool setting_update_timezone(SettingTimeUG *ad);
 static void __setting_update_datefield_cb(void *cb);
 
@@ -88,7 +89,8 @@ bool __update_timezone_idler(SettingTimeUG *ad)
 void time_changed_callback(keynode_t *key, void *data)
 {
 
-	SETTING_TRACE_DEBUG("time and timezone have been changed: TIME_CHANGED_HEYNOTY_CALLBACK");
+	SETTING_TRACE_DEBUG("time and timezone have been changed: "
+			"TIME_CHANGED_HEYNOTY_CALLBACK");
 	SettingTimeUG *ad = (SettingTimeUG *)data;
 
 	int ret = setting_time_update_cb(ad);
@@ -99,7 +101,8 @@ void time_changed_callback(keynode_t *key, void *data)
 #if 0
 	SETTING_TRACE("ad->is_datefield_selected:%d", ad->is_datefield_selected)
 	if (EINA_TRUE == ad->is_datefield_selected) {
-		/* Timezone is not changed and a selected value of the datefield is already changed */
+		/* Timezone is not changed and a selected value of the
+		 * datefield is already changed */
 		SETTING_TRACE("Datefield is selected\n");
 		return ;
 	}
@@ -108,7 +111,8 @@ void time_changed_callback(keynode_t *key, void *data)
 	tzset();
 	/* vconfset to update timezone */
 	char pTZPath[__MAX_PATH_SIZE];
-	ssize_t nLen = readlink(SETTING_TZONE_SYMLINK_PATH, pTZPath, sizeof(pTZPath) - 1);
+	ssize_t nLen = readlink(SETTING_TZONE_SYMLINK_PATH, pTZPath,
+			sizeof(pTZPath) - 1);
 	if (nLen != -1) {
 		pTZPath[nLen] = '\0';
 	} else {
@@ -137,7 +141,8 @@ void time_changed_callback(keynode_t *key, void *data)
 		ecore_idler_del(ad->refresh_time_idler);
 		ad->refresh_time_idler = NULL;
 	}
-	ad->refresh_time_idler = ecore_idler_add(setting_update_datefield_cb, ad);
+	ad->refresh_time_idler = ecore_idler_add(setting_update_datefield_cb,
+			ad);
 }
 
 void setting_time_update_time_date_format_string(SettingTimeUG *ad)
@@ -157,7 +162,8 @@ void setting_time_update_time_date_format_string(SettingTimeUG *ad)
 	ret_if(!ts);
 
 	/* set time in particular format */
-	ret = setting_get_int_slp_key(INT_SLP_SETTING_REGIONFORMAT_TIME1224, &value, &err);
+	ret = setting_get_int_slp_key(INT_SLP_SETTING_REGIONFORMAT_TIME1224,
+			&value, &err);
 	if (ret == SETTING_RETURN_FAIL)
 		value = VCONFKEY_TIME_FORMAT_12;
 
@@ -196,11 +202,14 @@ bool setting_update_timezone(SettingTimeUG *ad)
 	get_gmt_offset(gmt_offset, GMT_BUF_SIZE);
 
 	if (displayTimezone != NULL) {
-		ret = snprintf(time_zone_sub_str, CITY_BUF_SIZE + GMT_BUF_SIZE + 2, "%s, GMT %s",
-					   displayTimezone, gmt_offset);
+		ret = snprintf(time_zone_sub_str,
+				CITY_BUF_SIZE + GMT_BUF_SIZE + 2, "%s, GMT %s",
+				displayTimezone, gmt_offset);
 		retv_if(ret < 0, 0);
 	} else {
-		ret = snprintf(time_zone_sub_str, CITY_BUF_SIZE + GMT_BUF_SIZE + 2, "Korean Standard Time, GMT +9:00");
+		ret = snprintf(time_zone_sub_str,
+				CITY_BUF_SIZE + GMT_BUF_SIZE + 2,
+				"Korean Standard Time, GMT +9:00");
 		retv_if(ret < 0, 0);
 	}
 	SETTING_TRACE("ad->data_tz:%p", ad->data_tz);
@@ -230,16 +239,21 @@ static void setting_time_main_int_vconf_change_cb(keynode_t *key, void *data)
 		char *time;
 		static char time_arr[DEF_BUF_SIZE];
 		char *pa_time_format = get_pa_time_format_str();
-		setting_retm_if(NULL == pa_time_format, "pa_time_format is NULL");
+		setting_retm_if(NULL == pa_time_format,
+				"pa_time_format is NULL");
 
 		char *lang = NULL;
-		int err = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, &lang);
+		int err = system_settings_get_value_string(
+				SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, &lang);
 		if (err != SYSTEM_SETTINGS_ERROR_NONE) {
-			SETTING_TRACE("Failed to call system_settings_get_value_string with error code %d", err);
+			SETTING_TRACE("Failed to call system_settings_get_"
+					"value_string with error code %d", err);
 		}
 
-		if (!strncmp(pa_time_format, "IDS_ST_BODY_12_HOURS", strlen("IDS_ST_BODY_12_HOURS")))
-			time = __setting_phone_lang_get_by_pattern(lang, "hhmm");
+		if (!strncmp(pa_time_format, "IDS_ST_BODY_12_HOURS",
+				strlen("IDS_ST_BODY_12_HOURS")))
+			time = __setting_phone_lang_get_by_pattern(lang,
+					"hhmm");
 		else
 			time = __setting_phone_lang_get_by_pattern(lang, "Hm");
 
@@ -257,8 +271,8 @@ static int _alarmmgr_set_timezone_helper(char *tzdata)
 	if (ret) {
 		/* set event system */
 		setting_set_event_system(SYS_EVENT_TIME_ZONE,
-								 EVT_KEY_TIME_ZONE,
-								 tzdata);
+				EVT_KEY_TIME_ZONE,
+				tzdata);
 	}
 
 	return ret;
@@ -271,8 +285,8 @@ static int _alarmmgr_set_systime_helper(time_t t_current)
 	if (ret) {
 		/* set event system */
 		setting_set_event_system(SYS_EVENT_SCREEN_AUTOROTATE_STATE,
-								 EVT_KEY_TIME_CHANGED,
-								 ctime(&t_current));
+				EVT_KEY_TIME_CHANGED,
+				ctime(&t_current));
 	}
 
 	return ret;
@@ -298,7 +312,8 @@ static void __update_time_via_sim_card(void *data)
 	SETTING_TRACE("tz_path:%s", tzpath);
 
 	char tz_path[MAX_COMMON_BUFFER_LEN / 4 + 1];
-	safeCopyStr(tz_path, SETTING_TIME_ZONEINFO_PATH, MAX_COMMON_BUFFER_LEN / 4);
+	safeCopyStr(tz_path, SETTING_TIME_ZONEINFO_PATH,
+			MAX_COMMON_BUFFER_LEN / 4);
 	g_strlcat(tz_path, tzpath, sizeof(tz_path));
 	SETTING_TRACE("full tz_path:%s", tz_path);
 	ret = _alarmmgr_set_timezone_helper(tz_path);
@@ -306,7 +321,8 @@ static void __update_time_via_sim_card(void *data)
 		SETTING_TRACE("tzpath is not valid.");
 		return;
 	} else
-		SETTING_TRACE("_alarmmgr_set_timezone_helper - successful : %s \n", tz_path);
+		SETTING_TRACE("_alarmmgr_set_timezone_helper - successful : "
+				"%s \n", tz_path);
 	if (!__setting_set_city_tzone(tzpath)) {
 		SETTING_TRACE("__setting_set_city_tzone ERROR")
 		return;
@@ -316,7 +332,8 @@ static void __update_time_via_sim_card(void *data)
 	SETTING_TRACE("city:%s", city);
 	if (city) {
 		ret = vconf_set_str(VCONFKEY_SETAPPL_CITYNAME_INDEX_INT, city);
-		setting_retm_if(ret != 0, "set vconf[%s] failed", VCONFKEY_SETAPPL_CITYNAME_INDEX_INT);
+		setting_retm_if(ret != 0, "set vconf[%s] failed",
+				VCONFKEY_SETAPPL_CITYNAME_INDEX_INT);
 	}
 	setting_update_timezone(ad);
 
@@ -333,7 +350,8 @@ static void __update_time_via_sim_card(void *data)
 		SETTING_TRACE_ERROR("fopen error");
 	}
 
-	SETTING_TRACE("t_nitz:%d, t_offset:%d, t_uptime:%d", t_nitz, t_offset, t_uptime);
+	SETTING_TRACE("t_nitz:%d, t_offset:%d, t_uptime:%d", t_nitz, t_offset,
+			t_uptime);
 	time_t t_current = t_nitz + t_uptime - t_offset;
 	SETTING_TRACE("t_current:%d", t_current);
 	ret = _alarmmgr_set_systime_helper(t_current);
@@ -359,37 +377,49 @@ static void setting_time_main_bool_vconf_change_cb(keynode_t *key, void *data)
 	int status = vconf_keynode_get_bool(key);
 	char *vconf_name = vconf_keynode_get_name(key);
 
-	if (!safeStrCmp(vconf_name, VCONFKEY_SETAPPL_STATE_AUTOMATIC_TIME_UPDATE_BOOL)) {
+	if (!safeStrCmp(vconf_name,
+			VCONFKEY_SETAPPL_STATE_AUTOMATIC_TIME_UPDATE_BOOL)) {
 		if (ad->data_auto) {
 			ad->is_datefield_selected = EINA_FALSE;
 
-			setting_update_gl_item_chk_status(ad->data_auto, status);
+			setting_update_gl_item_chk_status(ad->data_auto,
+					status);
 
 			if (!ad->data_auto->chk_status) {
 				if (ad->data_tz) {
-					setting_enable_genlist_item(ad->data_tz->item);
+					setting_enable_genlist_item(
+							ad->data_tz->item);
 				}
 
 				if (ad->data_time) {
 					ad->data_time->isItemDisableFlag = FALSE;
-					/*setting_ensable_evas_object(ad->data_time->eo_check); */
-					setting_enable_evas_object(ad->data_time->btn_left);
-					setting_enable_evas_object(ad->data_time->btn_right);
-					setting_enable_genlist_item(ad->data_time->item);
+					/*setting_ensable_evas_object(
+					 * ad->data_time->eo_check); */
+					setting_enable_evas_object(
+							ad->data_time->btn_left);
+					setting_enable_evas_object(
+							ad->data_time->btn_right);
+					setting_enable_genlist_item(
+							ad->data_time->item);
 				}
 
 
 			} else {
 				if (ad->data_tz) {
-					setting_disable_genlist_item(ad->data_tz->item);
+					setting_disable_genlist_item(
+							ad->data_tz->item);
 				}
 
 				if (ad->data_time) {
 					ad->data_time->isItemDisableFlag = FALSE;
-					/*setting_disable_evas_object(ad->data_time->eo_check); */
-					setting_disable_evas_object(ad->data_time->btn_left);
-					setting_disable_evas_object(ad->data_time->btn_right);
-					setting_disable_genlist_item(ad->data_time->item);
+					/*setting_disable_evas_object(
+					 * ad->data_time->eo_check); */
+					setting_disable_evas_object(
+							ad->data_time->btn_left);
+					setting_disable_evas_object(
+							ad->data_time->btn_right);
+					setting_disable_genlist_item(
+							ad->data_time->item);
 				}
 
 				__update_time_via_sim_card(ad);
@@ -410,37 +440,47 @@ static void __sim_time_info_chg_cb(keynode_t *key, void *data)
 		|| !safeStrCmp(vconf_name, VCONFKEY_TELEPHONY_NITZ_ZONE)) {
 		int value = 0;
 		int err = 0;
-		setting_get_bool_slp_key(BOOL_SLP_SETTING_AUTOMATIC_TIME_UPDATE, &value,
-								 &err);
+		setting_get_bool_slp_key(
+				BOOL_SLP_SETTING_AUTOMATIC_TIME_UPDATE,
+				&value, &err);
 		if (value) {
 			int ret = 0;
 			int t_nitz = 0;
 			int t_offset = 0;
-			ret += vconf_get_int(VCONFKEY_TELEPHONY_NITZ_GMT, &t_nitz);
-			ret += vconf_get_int(VCONFKEY_TELEPHONY_NITZ_EVENT_GMT, &t_offset);
-			char *tzpath = vconf_get_str(VCONFKEY_TELEPHONY_NITZ_ZONE);
+			ret += vconf_get_int(VCONFKEY_TELEPHONY_NITZ_GMT,
+					&t_nitz);
+			ret += vconf_get_int(VCONFKEY_TELEPHONY_NITZ_EVENT_GMT,
+					&t_offset);
+			char *tzpath = vconf_get_str(
+					VCONFKEY_TELEPHONY_NITZ_ZONE);
 			if (ret != 0 || isEmptyStr(tzpath)) {
 				if (ad->data_auto) {
-					setting_disable_genlist_item(ad->data_auto->item);
+					setting_disable_genlist_item(
+							ad->data_auto->item);
 				}
 				if (ad->data_tz) {
-					setting_enable_genlist_item(ad->data_tz->item);
+					setting_enable_genlist_item(
+							ad->data_tz->item);
 				}
 				if (ad->data_time) {
-					setting_enable_genlist_item(ad->data_time->item);
+					setting_enable_genlist_item(
+							ad->data_time->item);
 				}
 				return;
 			}
 			FREE(tzpath);
 
 			if (ad->data_auto) {
-				setting_enable_genlist_item(ad->data_auto->item);
+				setting_enable_genlist_item(
+						ad->data_auto->item);
 			}
 			if (ad->data_tz) {
-				setting_disable_genlist_item(ad->data_tz->item);
+				setting_disable_genlist_item(
+						ad->data_tz->item);
 			}
 			if (ad->data_time) {
-				setting_disable_genlist_item(ad->data_time->item);
+				setting_disable_genlist_item(
+						ad->data_time->item);
 			}
 
 			__update_time_via_sim_card(ad);
@@ -470,7 +510,8 @@ static int __setting_time_check_enable_automatic_update()
  *basic func
  *
  ***************************************************/
-static void setting_time_main_datefield_set_cb(void *data, Evas_Object *object, void *event_info)
+static void setting_time_main_datefield_set_cb(void *data, Evas_Object *object,
+		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE("SETTING_DATETIME");
@@ -479,13 +520,15 @@ static void setting_time_main_datefield_set_cb(void *data, Evas_Object *object, 
 	/*Setting_GenGroupItem_Data *item_data = param->item_data; */
 	/* error check */
 	ret_if(data == NULL);
-	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
+	Setting_GenGroupItem_Data *list_item =
+			(Setting_GenGroupItem_Data *) data;
 	SettingTimeUG *ad = list_item->userdata;
 
 	Evas_Object *obj = list_item->eo_check;	/* elm_datetime_add */
 
 	if (obj) {
-		elm_object_signal_emit(list_item->eo_check /* elm_datetime_xxx*/, "picker,action,value,set", "");
+		elm_object_signal_emit(list_item->eo_check /*elm_datetime_xxx*/,
+				"picker,action,value,set", "");
 	} else {
 		SETTING_TRACE_ERROR("list_item->eo_check is NULL");
 	}
@@ -499,7 +542,8 @@ static void setting_time_main_datefield_set_cb(void *data, Evas_Object *object, 
 	}
 #endif
 
-	/* If auto update is on, don't anything while the datefield has been updated (i.e., time runs) */
+	/* If auto update is on, don't anything while the datefield has been
+	 * updated (i.e., time runs) */
 	if (1 == setting_time_check_automatic_time_update_state()) {
 		SETTING_TRACE("AUTO_TIME ON: no action");
 		SETTING_TRACE_END;
@@ -515,7 +559,8 @@ static void setting_time_main_datefield_set_cb(void *data, Evas_Object *object, 
 	elm_datetime_value_get(obj, &_tm);
 
 	SETTING_TRACE("year : %d, month : %d, day : %d, hour : %d, min : %d",
-				  _tm.tm_year, _tm.tm_mon, _tm.tm_mday, _tm.tm_hour, _tm.tm_min);
+				  _tm.tm_year, _tm.tm_mon, _tm.tm_mday,
+				  _tm.tm_hour, _tm.tm_min);
 
 	_tm.tm_isdst = -1;
 	_tm.tm_sec = 0;
@@ -536,8 +581,10 @@ static void setting_time_main_datefield_set_cb(void *data, Evas_Object *object, 
 	time_t cctime = time(NULL);
 	struct tm ts_ret;
 	localtime_r(&cctime, &ts_ret);
-	SETTING_TRACE("After _alarmmgr_set_systime_helper() ....year : %d, month : %d, day : %d, hour : %d, min : %d",
-				  ts_ret.tm_year, ts_ret.tm_mon, ts_ret.tm_mday, ts_ret.tm_hour, ts_ret.tm_min);
+	SETTING_TRACE("After _alarmmgr_set_systime_helper() ....year : %d, "
+			"month : %d, day : %d, hour : %d, min : %d",
+				  ts_ret.tm_year, ts_ret.tm_mon, ts_ret.tm_mday,
+				  ts_ret.tm_hour, ts_ret.tm_min);
 #endif
 	Evas_Object *popup = NULL;
 	popup = evas_object_data_get(obj, "popup");
@@ -559,7 +606,8 @@ Eina_Bool __refresh_date_timer(void *data)
 }
 #endif
 
-void hour_format_event_handler(const char *event_name, bundle *data, void *user_data)
+void hour_format_event_handler(const char *event_name, bundle *data,
+		void *user_data)
 {
 	const char *hour_format_set = NULL;
 	SETTING_TRACE("hour format set event(%s) received", event_name);
@@ -597,24 +645,27 @@ static int setting_time_main_create(void *cb)
 		title_str = title;
 
 	ad->ly_main =
-		setting_create_layout_navi_bar_genlist(ad->win_main_layout,
-											   ad->win_get, title_str,
-											   NULL,
-											   NULL,
-											   setting_time_main_click_softkey_left_cb,
-											   NULL, ad, &scroller,
-											   &ad->navi_bar);
+		setting_create_layout_navi_bar_genlist(
+				ad->win_main_layout,
+				ad->win_get, title_str,
+				NULL,
+				NULL,
+				setting_time_main_click_softkey_left_cb,
+				NULL, ad, &scroller,
+				&ad->navi_bar);
 
 	ad->scrl_main = scroller;
-	elm_scroller_policy_set(scroller, ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_OFF);
+	elm_scroller_policy_set(scroller, ELM_SCROLLER_POLICY_OFF,
+			ELM_SCROLLER_POLICY_OFF);
 
 	int value;
 	int err;
 	int ret = 0;
 	setting_get_bool_slp_key(BOOL_SLP_SETTING_AUTOMATIC_TIME_UPDATE, &value,
-							 &err);
+			&err);
 
-	/*int enable_automatic = __setting_time_check_enable_automatic_update(); */
+	/*int enable_automatic = __setting_time_check_enable_automatic_update();
+	 * */
 	bool auto_flag = value;
 
 	if (auto_flag) { /*do special process only when auto mode */
@@ -623,26 +674,30 @@ static int setting_time_main_create(void *cb)
 		int t_nitz = 0;
 		int t_offset = 0;
 		ret += vconf_get_int(VCONFKEY_TELEPHONY_NITZ_GMT, &t_nitz);
-		ret += vconf_get_int(VCONFKEY_TELEPHONY_NITZ_EVENT_GMT, &t_offset);
+		ret += vconf_get_int(VCONFKEY_TELEPHONY_NITZ_EVENT_GMT,
+				&t_offset);
 		char *tzpath = vconf_get_str(VCONFKEY_TELEPHONY_NITZ_ZONE);
 		if (ret == 0 && !isEmptyStr(tzpath)) {
 			/*1.to update timezone */
 			char tz_path[MAX_COMMON_BUFFER_LEN / 4 + 1];
-			safeCopyStr(tz_path, SETTING_TIME_ZONEINFO_PATH, MAX_COMMON_BUFFER_LEN / 4);
+			safeCopyStr(tz_path, SETTING_TIME_ZONEINFO_PATH,
+					MAX_COMMON_BUFFER_LEN / 4);
 			g_strlcat(tz_path, tzpath, sizeof(tz_path));
 			SETTING_TRACE("full tz_path:%s", tz_path);
 			ret = _alarmmgr_set_timezone_helper(tz_path);
 			if (ret < 0) {
 				SETTING_TRACE("tzpath is not valid.");
 			} else
-				SETTING_TRACE("_alarmmgr_set_timezone_helper - successful : %s \n", tz_path);
+				SETTING_TRACE("_alarmmgr_set_timezone_helper - "
+						"successful : %s \n", tz_path);
 			if (!__setting_set_city_tzone(tzpath)) {
-				SETTING_TRACE("__setting_set_city_tzone ERROR")
+				SETTING_TRACE("__setting_set_city_tzone ERROR");
 			}
 			get_city_name(tzpath);
 			char *city = get_city_name_result();
 			SETTING_TRACE("city:%s", city);
-			ret = vconf_set_str(VCONFKEY_SETAPPL_CITYNAME_INDEX_INT, city);
+			ret = vconf_set_str(VCONFKEY_SETAPPL_CITYNAME_INDEX_INT,
+					city);
 
 			/* 2.to set current time */
 			int t_uptime = 0;
@@ -657,7 +712,8 @@ static int setting_time_main_create(void *cb)
 				SETTING_TRACE_ERROR("fopen error");
 			}
 
-			SETTING_TRACE("t_nitz:%d, t_offset:%d, t_uptime:%d", t_nitz, t_offset, t_uptime);
+			SETTING_TRACE("t_nitz:%d, t_offset:%d, t_uptime:%d",
+					t_nitz, t_offset, t_uptime);
 			time_t t_current = t_nitz + t_uptime - t_offset;
 			SETTING_TRACE("t_current:%d", t_current);
 			ret = _alarmmgr_set_systime_helper(t_current);
@@ -668,12 +724,13 @@ static int setting_time_main_create(void *cb)
 	/*	UI automatic */
 	/*if (!isEmulBin()) { */
 	ad->data_auto =
-		setting_create_Gendial_field_def(scroller, &(ad->itc_1text_1icon),
-										 setting_time_main_mouse_up_Gendial_list_cb,
-										 ad, SWALLOW_Type_1ICON_1RADIO, NULL,
-										 NULL, value,
-										 DATE_TIME_STR_AUTOMATIC_UPDATE, NULL,
-										 setting_time_main_chk_btn_cb);
+		setting_create_Gendial_field_def(scroller,
+				&(ad->itc_1text_1icon),
+				setting_time_main_mouse_up_Gendial_list_cb,
+				ad, SWALLOW_Type_1ICON_1RADIO, NULL,
+				NULL, value,
+				DATE_TIME_STR_AUTOMATIC_UPDATE, NULL,
+				setting_time_main_chk_btn_cb);
 	if (ad->data_auto) {
 		ad->data_auto->userdata = ad;
 	} else {
@@ -686,19 +743,20 @@ static int setting_time_main_create(void *cb)
 	/* create DATE_AND_TIME */
 	ad->data_time =
 		setting_create_Gendial_field_def(scroller, &(ad->itc_layout),
-										 setting_time_main_mouse_up_Gendial_list_cb,
-										 ad, SWALLOW_Type_LAYOUT_DATEFIELD,
-										 NULL, NULL, 0,
-										 DATE_TIME_STR_DATE_AND_TIME,
-										 NULL,
-										 NULL);
+				setting_time_main_mouse_up_Gendial_list_cb,
+				ad, SWALLOW_Type_LAYOUT_DATEFIELD,
+				NULL, NULL, 0,
+				DATE_TIME_STR_DATE_AND_TIME,
+				NULL,
+				NULL);
 
 	if (ad->data_time) {
 		ad->data_time->userdata = ad;
 		ad->data_time->nf = ad->navi_bar;
 		ad->data_time->isItemDisableFlag = auto_flag;
 		ad->data_time->activated_cb = setting_time_main_datefield_set_cb;
-		elm_genlist_item_select_mode_set(ad->data_time->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+		elm_genlist_item_select_mode_set(ad->data_time->item,
+				ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 	} else {
 		SETTING_TRACE_ERROR("ad->data_time is NULL");
 	}
@@ -719,17 +777,21 @@ static int setting_time_main_create(void *cb)
 
 		char *timezone_str = get_timezone_str();
 
-		SETTING_TRACE("timezone : %s, displayTimezone :%s, gmt_offset : %s",
-					  timezone_str, displayTimezone, _(str_buf));
-		ret = snprintf(time_zone_sub_str, CITY_BUF_SIZE + GMT_BUF_SIZE + 2, "%s, GMT %s",
-					   displayTimezone, _(str_buf));
+		SETTING_TRACE("timezone : %s, displayTimezone :%s, "
+				"gmt_offset : %s",
+				timezone_str, displayTimezone, _(str_buf));
+		ret = snprintf(time_zone_sub_str,
+				CITY_BUF_SIZE + GMT_BUF_SIZE + 2, "%s, GMT %s",
+				displayTimezone, _(str_buf));
 		FREE(timezone_str);
 		if (ret < 0) {
 			SETTING_TRACE_ERROR("cannot snprintf");
 		}
 	} else {
 		/* default code */
-		ret = snprintf(time_zone_sub_str, CITY_BUF_SIZE + GMT_BUF_SIZE + 2, "Korean Standard Time, GMT +9:00");
+		ret = snprintf(time_zone_sub_str,
+				CITY_BUF_SIZE + GMT_BUF_SIZE + 2,
+				"Korean Standard Time, GMT +9:00");
 		if (ret < 0) {
 			SETTING_TRACE_ERROR("cannot snprintf");
 		}
@@ -739,10 +801,10 @@ static int setting_time_main_create(void *cb)
 	/*	UI create time zone */
 	ad->data_tz =
 		setting_create_Gendial_field_def(scroller, &(ad->itc_2text_2),
-										 setting_time_main_mouse_up_Gendial_list_cb,
-										 ad, SWALLOW_Type_INVALID, NULL,
-										 NULL, 0, DATE_TIME_STR_TIME_ZONE,
-										 time_zone_sub_str, NULL);
+				setting_time_main_mouse_up_Gendial_list_cb,
+				ad, SWALLOW_Type_INVALID, NULL,
+				NULL, 0, DATE_TIME_STR_TIME_ZONE,
+				time_zone_sub_str, NULL);
 	if (ad->data_tz) {
 		ad->data_tz->userdata = ad;
 	} else {
@@ -751,34 +813,37 @@ static int setting_time_main_create(void *cb)
 
 	/*	UI create "Time format" */
 	value = VCONFKEY_TIME_FORMAT_12;
-	setting_get_int_slp_key(INT_SLP_SETTING_REGIONFORMAT_TIME1224, &value, &err);
-	ad->data_time_fmt = setting_create_Gendial_field_def(scroller,
-														 &(ad->itc_1text_1icon),
-														 setting_time_main_mouse_up_Gendial_list_cb,
-														 ad,
-														 SWALLOW_Type_1ICON_1RADIO,
-														 NULL,
-														 NULL,
-														 (value == VCONFKEY_TIME_FORMAT_24),
-														 "IDS_ST_MBODY_24_HOUR_CLOCK",
-														 NULL,
-														 setting_time_main_chk_btn_cb);
+	setting_get_int_slp_key(INT_SLP_SETTING_REGIONFORMAT_TIME1224, &value,
+			&err);
+	ad->data_time_fmt = setting_create_Gendial_field_def(
+			scroller,
+			&(ad->itc_1text_1icon),
+			setting_time_main_mouse_up_Gendial_list_cb,
+			ad,
+			SWALLOW_Type_1ICON_1RADIO,
+			NULL,
+			NULL,
+			(value == VCONFKEY_TIME_FORMAT_24),
+			"IDS_ST_MBODY_24_HOUR_CLOCK",
+			NULL,
+			setting_time_main_chk_btn_cb);
 	if (ad->data_time_fmt) {
 		__BACK_POINTER_SET(ad->data_time_fmt);
 		ad->data_time_fmt->userdata = ad;
 	} else {
 		SETTING_TRACE_ERROR("ad->data_time_fmt is NULL");
 	}
-	setting_add_gl_help(scroller, "IDS_ST_SBODY_SHOW_THE_TIME_IN_24_HOUR_FORMAT_INSTEAD_OF_12_HOUR_HAM_PM_FORMAT");
+	setting_add_gl_help(scroller, "IDS_ST_SBODY_SHOW_THE_TIME_IN_24_HOUR_"
+			"FORMAT_INSTEAD_OF_12_HOUR_HAM_PM_FORMAT");
 
 #if APPLIED_DATATIME_DATA_FORMAT
 	char *pa_date_format = get_pa_date_format_str();
 	ad->data_date_fmt = setting_create_Gendial_exp_parent_field(scroller,
-																&(ad->itc_2text_3_parent),
-																setting_time_main_mouse_up_Gendial_list_cb,
-																ad, SWALLOW_Type_INVALID,
-																DATE_TIME_STR_TIME_FORMAT,
-																pa_time_format);
+			&(ad->itc_2text_3_parent),
+			setting_time_main_mouse_up_Gendial_list_cb,
+			ad, SWALLOW_Type_INVALID,
+			DATE_TIME_STR_TIME_FORMAT,
+			pa_time_format);
 	if (ad->data_date_fmt) {
 		ad->data_date_fmt->int_slp_setting_binded =
 			INT_SLP_SETTING_DATE_FORMAT;
@@ -798,29 +863,37 @@ static int setting_time_main_create(void *cb)
 	}
 
 	setting_view_time_main.is_create = 1;
-	vconf_notify_key_changed(VCONFKEY_SYSTEM_TIME_CHANGED, time_changed_callback, (void *)ad);
+	vconf_notify_key_changed(VCONFKEY_SYSTEM_TIME_CHANGED,
+			time_changed_callback, (void *)ad);
 
-	/*	register vconf key to get event callback for converting 12/24H */
-	vconf_notify_key_changed(VCONFKEY_REGIONFORMAT_TIME1224, setting_time_main_int_vconf_change_cb, ad);
-	/*	register vconf key to get event callback for date format */
-	vconf_notify_key_changed(VCONFKEY_SETAPPL_DATE_FORMAT_INT, setting_time_main_int_vconf_change_cb, ad);
+	/* register vconf key to get event callback for converting 12/24H */
+	vconf_notify_key_changed(VCONFKEY_REGIONFORMAT_TIME1224,
+			setting_time_main_int_vconf_change_cb, ad);
+	/* register vconf key to get event callback for date format */
+	vconf_notify_key_changed(VCONFKEY_SETAPPL_DATE_FORMAT_INT,
+			setting_time_main_int_vconf_change_cb, ad);
 
-	vconf_notify_key_changed(VCONFKEY_TELEPHONY_NITZ_GMT, __sim_time_info_chg_cb, ad);
-	vconf_notify_key_changed(VCONFKEY_TELEPHONY_NITZ_EVENT_GMT, __sim_time_info_chg_cb, ad);
-	vconf_notify_key_changed(VCONFKEY_TELEPHONY_NITZ_ZONE, __sim_time_info_chg_cb, ad);
+	vconf_notify_key_changed(VCONFKEY_TELEPHONY_NITZ_GMT,
+			__sim_time_info_chg_cb, ad);
+	vconf_notify_key_changed(VCONFKEY_TELEPHONY_NITZ_EVENT_GMT,
+			__sim_time_info_chg_cb, ad);
+	vconf_notify_key_changed(VCONFKEY_TELEPHONY_NITZ_ZONE,
+			__sim_time_info_chg_cb, ad);
 
-	vconf_notify_key_changed(VCONFKEY_SETAPPL_STATE_AUTOMATIC_TIME_UPDATE_BOOL,
-							 setting_time_main_bool_vconf_change_cb, ad);
+	vconf_notify_key_changed(
+			VCONFKEY_SETAPPL_STATE_AUTOMATIC_TIME_UPDATE_BOOL,
+			setting_time_main_bool_vconf_change_cb, ad);
 
 	/* to avoid update time-diff, every per 3s to update. */
 #ifdef USE_TIMER_UPDATE_TIME_IN_TIME_VIEW
-	ad->update_timer = ecore_timer_add(3, (Ecore_Task_Cb) __refresh_date_timer, ad);
+	ad->update_timer = ecore_timer_add(3,
+			(Ecore_Task_Cb) __refresh_date_timer, ad);
 #endif
 
 	/* eventsystem */
 	if (ES_R_OK != eventsystem_register_event(SYS_EVENT_HOUR_FORMAT,
-											  &hour_format_event_reg_id,
-											  (eventsystem_handler)hour_format_event_handler, cb)) {
+			&hour_format_event_reg_id,
+			(eventsystem_handler)hour_format_event_handler, cb)) {
 		SETTING_TRACE_ERROR("error");
 	}
 
@@ -865,19 +938,23 @@ static int setting_time_main_destroy(void *cb)
 	}
 
 	vconf_ignore_key_changed(VCONFKEY_SYSTEM_TIME_CHANGED,
-							 time_changed_callback);
+			time_changed_callback);
 
 	vconf_ignore_key_changed(VCONFKEY_REGIONFORMAT_TIME1224,
-							 setting_time_main_int_vconf_change_cb);
+			setting_time_main_int_vconf_change_cb);
 	vconf_ignore_key_changed(VCONFKEY_SETAPPL_DATE_FORMAT_INT,
-							 setting_time_main_int_vconf_change_cb);
+			setting_time_main_int_vconf_change_cb);
 
-	vconf_ignore_key_changed(VCONFKEY_TELEPHONY_NITZ_GMT, __sim_time_info_chg_cb);
-	vconf_ignore_key_changed(VCONFKEY_TELEPHONY_NITZ_EVENT_GMT, __sim_time_info_chg_cb);
-	vconf_ignore_key_changed(VCONFKEY_TELEPHONY_NITZ_ZONE, __sim_time_info_chg_cb);
+	vconf_ignore_key_changed(VCONFKEY_TELEPHONY_NITZ_GMT,
+			__sim_time_info_chg_cb);
+	vconf_ignore_key_changed(VCONFKEY_TELEPHONY_NITZ_EVENT_GMT,
+			__sim_time_info_chg_cb);
+	vconf_ignore_key_changed(VCONFKEY_TELEPHONY_NITZ_ZONE,
+			__sim_time_info_chg_cb);
 
-	vconf_ignore_key_changed(VCONFKEY_SETAPPL_STATE_AUTOMATIC_TIME_UPDATE_BOOL,
-							 setting_time_main_bool_vconf_change_cb);
+	vconf_ignore_key_changed(
+			VCONFKEY_SETAPPL_STATE_AUTOMATIC_TIME_UPDATE_BOOL,
+			setting_time_main_bool_vconf_change_cb);
 
 	if (ad->ly_main != NULL) {
 		evas_object_del(ad->ly_main);
@@ -907,13 +984,15 @@ static int setting_time_main_update(void *cb)
 			ad->update_timezone_idler = NULL;
 		}
 		ad->update_timezone_idler =
-			ecore_idler_add((Ecore_Task_Cb) __update_timezone_idler, ad);
+			ecore_idler_add((Ecore_Task_Cb) __update_timezone_idler,
+					ad);
 		/* update time */
 		if (ad->refresh_time_idler) {
 			ecore_idler_del(ad->refresh_time_idler);
 			ad->refresh_time_idler = NULL;
 		}
-		ad->refresh_time_idler = ecore_idler_add(setting_update_datefield_cb, ad);
+		ad->refresh_time_idler = ecore_idler_add(
+				setting_update_datefield_cb, ad);
 	}
 	return SETTING_RETURN_SUCCESS;
 }
@@ -964,7 +1043,7 @@ static int __setting_set_city_tzone(const char *pTZPath)
 
 static void
 setting_time_main_launch_worldclock_result_ug_cb(ui_gadget_h ug,
-												 app_control_h result, void *priv)
+		app_control_h result, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -986,9 +1065,10 @@ setting_time_main_launch_worldclock_result_ug_cb(ui_gadget_h ug,
 	}
 	SETTING_TRACE("city : %s", city);
 
-	/* --------------------------------------------------------------------- */
+	/* ----------------------------------------------------------------- */
 	char tz_path[MAX_COMMON_BUFFER_LEN / 4 + 1];
-	safeCopyStr(tz_path, SETTING_TIME_ZONEINFO_PATH, MAX_COMMON_BUFFER_LEN / 4);
+	safeCopyStr(tz_path, SETTING_TIME_ZONEINFO_PATH,
+			MAX_COMMON_BUFFER_LEN / 4);
 	g_strlcat(tz_path, tzpath, sizeof(tz_path));
 	SETTING_TRACE("full tz_path:%s", tz_path);
 
@@ -1001,13 +1081,15 @@ setting_time_main_launch_worldclock_result_ug_cb(ui_gadget_h ug,
 			FREE(city);
 		return;
 	} else
-		SETTING_TRACE("_alarmmgr_set_timezone_helper - successful : %s \n", tz_path);
+		SETTING_TRACE("_alarmmgr_set_timezone_helper - successful : "
+				"%s \n", tz_path);
 
 	ret = vconf_set_str(VCONFKEY_SETAPPL_CITYNAME_INDEX_INT, city);
 	setting_retm_if(ret != 0, "set vconf failed");
 
 	/* parse city and GMT offset from tzpath and system time property */
-	/* set the strings in vconf which will be used while updating display of timezone */
+	/* set the strings in vconf which will be used while updating display
+	 * of timezone */
 	if (!__setting_set_city_tzone(tzpath)) {
 		SETTING_TRACE("__setting_set_city_tzone ERROR");
 		if (tzpath)
@@ -1029,7 +1111,7 @@ setting_time_main_launch_worldclock_result_ug_cb(ui_gadget_h ug,
 }
 
 void setting_time_main_launch_worldclock_destroy_ug_cb(ui_gadget_h ug,
-													   void *priv)
+		void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	/* if(ug) ug_destroy(ug); */
@@ -1046,9 +1128,10 @@ void setting_time_main_launch_worldclock_destroy_ug_cb(ui_gadget_h ug,
 	elm_object_tree_focus_allow_set(ad->ly_main, EINA_TRUE);
 }
 
-void setting_time_main_launch_worldclock_layout_ug_cb(ui_gadget_h ug,
-													  enum ug_mode mode,
-													  void *priv)
+void setting_time_main_launch_worldclock_layout_ug_cb(
+		ui_gadget_h ug,
+		enum ug_mode mode,
+		void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	/*SettingTimeUG *ad = (SettingTimeUG *) priv; */
@@ -1064,7 +1147,7 @@ void setting_time_main_launch_worldclock_layout_ug_cb(ui_gadget_h ug,
 	switch (mode) {
 	case UG_MODE_FULLVIEW:
 		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-										 EVAS_HINT_EXPAND);
+				EVAS_HINT_EXPAND);
 		/*elm_win_resize_object_add(ad->win_get, base); */
 		evas_object_show(base);
 		break;
@@ -1093,7 +1176,8 @@ void setting_time_main_launch_worldclock_sg(void *data)
 	elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
 	SETTING_TRACE("to load ug[%s]", "worldclock-efl");
 	ad->ug_loading =
-		setting_ug_create(ad->ug, "worldclock-efl", UG_MODE_FULLVIEW, NULL, cbs);
+		setting_ug_create(ad->ug, "worldclock-efl", UG_MODE_FULLVIEW,
+				NULL, cbs);
 	if (NULL == ad->ug_loading) {	/* error handling */
 	}
 
@@ -1111,24 +1195,36 @@ static void __setting_update_datefield_cb(void *cb)
 		time_t cctime = time(NULL);
 		struct tm ts_ret;
 		struct tm *ts = localtime_r(&cctime, &ts_ret);
-		SETTING_TRACE("year : %d, month : %d, day : %d, hour : %d, min : %d",
-					  ts_ret.tm_year, ts_ret.tm_mon, ts_ret.tm_mday, ts_ret.tm_hour, ts_ret.tm_min);
+		SETTING_TRACE("year : %d, month : %d, day : %d, hour : %d, "
+				"min : %d",
+				ts_ret.tm_year, ts_ret.tm_mon, ts_ret.tm_mday,
+				ts_ret.tm_hour, ts_ret.tm_min);
 		if (ts) {
 
 			char *region = NULL;
-			int err = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, &region);
+			int err = system_settings_get_value_string(
+					SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY,
+					&region);
 			if (err != SYSTEM_SETTINGS_ERROR_NONE) {
-				SETTING_TRACE("Failed to call system_settings_get_value_string with error code %d", err);
+				SETTING_TRACE("Failed to call system_settings_"
+						"get_value_string with error "
+						"code %d", err);
 			}
-			char *date = __setting_phone_lang_get_by_pattern(region, "MMM/d/yyyy");
+			char *date = __setting_phone_lang_get_by_pattern(region,
+					"MMM/d/yyyy");
 			char *time;
-			static char date_arr[DEF_BUF_SIZE], time_arr[DEF_BUF_SIZE];
+			static char date_arr[DEF_BUF_SIZE];
+			static char time_arr[DEF_BUF_SIZE];
 			char *pa_time_format = get_pa_time_format_str();
-			setting_retm_if(NULL == pa_time_format, "pa_time_format is NULL");
-			if (!strncmp(pa_time_format, "IDS_ST_BODY_12_HOURS", strlen("IDS_ST_BODY_12_HOURS")))
-				time = __setting_phone_lang_get_by_pattern(region, "hhmm");
+			setting_retm_if(NULL == pa_time_format,
+					"pa_time_format is NULL");
+			if (!strncmp(pa_time_format, "IDS_ST_BODY_12_HOURS",
+					strlen("IDS_ST_BODY_12_HOURS")))
+				time = __setting_phone_lang_get_by_pattern(
+						region, "hhmm");
 			else
-				time = __setting_phone_lang_get_by_pattern(region, "Hm");
+				time = __setting_phone_lang_get_by_pattern(
+						region, "Hm");
 
 			strncpy(date_arr, date, DEF_BUF_SIZE);
 			strncpy(time_arr, time, DEF_BUF_SIZE);
@@ -1137,14 +1233,18 @@ static void __setting_update_datefield_cb(void *cb)
 			time_arr[DEF_BUF_SIZE - 1] = '\0';
 
 			if (ad->data_time->btn_left)
-				elm_object_text_set(ad->data_time->btn_left, date_arr);
+				elm_object_text_set(ad->data_time->btn_left,
+						date_arr);
 			else {
-				SETTING_TRACE_ERROR("ad->data_time->btn_left is NULL");
+				SETTING_TRACE_ERROR("ad->data_time->btn_left "
+						"is NULL");
 			}
 			if (ad->data_time->btn_right)
-				elm_object_text_set(ad->data_time->btn_right, time_arr);
+				elm_object_text_set(ad->data_time->btn_right,
+						time_arr);
 			else {
-				SETTING_TRACE_ERROR("ad->data_time->btn_right is NULL");
+				SETTING_TRACE_ERROR("ad->data_time->btn_right "
+						"is NULL");
 			}
 			SETTING_TRACE_BEGIN;
 			FREE(pa_time_format);
@@ -1174,7 +1274,7 @@ Eina_Bool setting_update_datefield_cb(void *data)
 
 void
 setting_time_main_click_softkey_left_cb(void *data, Evas_Object *obj,
-										void *event_info)
+		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
@@ -1195,8 +1295,8 @@ setting_time_main_click_softkey_left_cb(void *data, Evas_Object *obj,
 
 void
 setting_time_main_click_softkey_caller_exist_left_cb(void *data,
-													 Evas_Object *obj,
-													 void *event_info)
+		Evas_Object *obj,
+		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -1220,8 +1320,8 @@ setting_time_main_click_softkey_caller_exist_left_cb(void *data,
 
 void
 setting_time_main_click_softkey_caller_exist_right_cb(void *data,
-													  Evas_Object *obj,
-													  void *event_info)
+		Evas_Object *obj,
+		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -1251,7 +1351,7 @@ static void __time_auto_update(void *data)
 	SettingTimeUG *ad = (SettingTimeUG *) data;
 	int err;
 	setting_set_bool_slp_key(BOOL_SLP_SETTING_AUTOMATIC_TIME_UPDATE,
-							 SETTING_ON_OFF_BTN_ON, &err);
+			SETTING_ON_OFF_BTN_ON, &err);
 	if (ad->data_tz) {
 		setting_disable_genlist_item(ad->data_tz->item);
 	}
@@ -1284,7 +1384,8 @@ setting_time_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 	Setting_GenGroupItem_Data *list_item =
 		(Setting_GenGroupItem_Data *) data;
 	ad = list_item->userdata;
-	list_item->chk_status = elm_check_state_get(obj);	/*	for genlist update status */
+	/* for genlist update status */
+	list_item->chk_status = elm_check_state_get(obj);
 
 	int err;
 	if (obj == ad->data_auto->eo_check) {
@@ -1301,10 +1402,14 @@ setting_time_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 
 			if (ad->data_time) {
 				ad->data_time->isItemDisableFlag = FALSE;
-				/*setting_disable_evas_object(ad->data_time->eo_check); */
-				setting_enable_evas_object(ad->data_time->btn_left);
-				setting_enable_evas_object(ad->data_time->btn_right);
-				setting_enable_genlist_item(ad->data_time->item);
+				/*setting_disable_evas_object(
+				 * ad->data_time->eo_check); */
+				setting_enable_evas_object(
+						ad->data_time->btn_left);
+				setting_enable_evas_object(
+						ad->data_time->btn_right);
+				setting_enable_genlist_item(
+						ad->data_time->item);
 			}
 		} else {
 			__time_auto_update(ad);
@@ -1319,15 +1424,23 @@ setting_time_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 	if (ad->data_time_fmt == list_item) {
 		if (list_item->chk_status) {
 			int ret = SYSTEM_SETTINGS_ERROR_NONE;
-			ret = system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR, true);
+			ret = system_settings_set_value_bool(
+					SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR,
+					true);
 			if (ret != SYSTEM_SETTINGS_ERROR_NONE) {
-				SETTING_TRACE("Failed to call system_settings_set_value_bool with error code %d", ret);
+				SETTING_TRACE("Failed to call system_settings_"
+						"set_value_bool with error "
+						"code %d", ret);
 			}
 		} else {
 			int ret = SYSTEM_SETTINGS_ERROR_NONE;
-			ret = system_settings_set_value_bool(SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR, false);
+			ret = system_settings_set_value_bool(
+					SYSTEM_SETTINGS_KEY_LOCALE_TIMEFORMAT_24HOUR,
+					false);
 			if (ret != SYSTEM_SETTINGS_ERROR_NONE) {
-				SETTING_TRACE("Failed to call system_settings_set_value_bool with error code %d", ret);
+				SETTING_TRACE("Failed to call system_settings_"
+						"set_value_bool with error "
+						"code %d", ret);
 			}
 		}
 	}
@@ -1338,18 +1451,25 @@ setting_time_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 		int value = VCONFKEY_TIME_FORMAT_12;
 		if (list_item->chk_status) {
 			value = VCONFKEY_TIME_FORMAT_24;
-			setting_set_event_system(SYS_EVENT_HOUR_FORMAT, EVT_KEY_HOUR_FORMAT, EVT_VAL_HOURFORMAT_24);
+			setting_set_event_system(SYS_EVENT_HOUR_FORMAT,
+					EVT_KEY_HOUR_FORMAT,
+					EVT_VAL_HOURFORMAT_24);
 		} else {
-			setting_set_event_system(SYS_EVENT_HOUR_FORMAT, EVT_KEY_HOUR_FORMAT, EVT_VAL_HOURFORMAT_12);
+			setting_set_event_system(SYS_EVENT_HOUR_FORMAT,
+					EVT_KEY_HOUR_FORMAT,
+					EVT_VAL_HOURFORMAT_12);
 		}
-		setting_set_int_slp_key(INT_SLP_SETTING_REGIONFORMAT_TIME1224, value, &err);
+		setting_set_int_slp_key(INT_SLP_SETTING_REGIONFORMAT_TIME1224,
+				value, &err);
 	}
 #endif
 	SETTING_TRACE_END;
 }
 
-static void setting_time_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
-													   void *event_info)
+static void setting_time_main_mouse_up_Gendial_list_cb(
+		void *data,
+		Evas_Object *obj,
+		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -1368,7 +1488,9 @@ static void setting_time_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *
 	if (ad->data_tz == list_item) {
 		ad->is_datefield_selected = EINA_FALSE;
 		if (1 == setting_time_check_automatic_time_update_state()) {
-			setting_create_popup(ad, ad->win_get, NULL, _(AUTO_TIME_UPDATE_ON), NULL, 0, false, false, 0);
+			setting_create_popup(ad, ad->win_get, NULL,
+					_(AUTO_TIME_UPDATE_ON), NULL, 0, false,
+					false, 0);
 		} else {
 			setting_time_main_launch_worldclock_sg(ad);
 		}
@@ -1376,9 +1498,12 @@ static void setting_time_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *
 	} else if (ad->data_time == list_item) {
 		ad->is_datefield_selected = EINA_TRUE;
 		if (1 == setting_time_check_automatic_time_update_state()) {
-			setting_create_popup(ad, ad->win_get, NULL, _(AUTO_TIME_UPDATE_ON), NULL, 0, false, false, 0);
+			setting_create_popup(ad, ad->win_get, NULL,
+					_(AUTO_TIME_UPDATE_ON), NULL, 0, false,
+					false, 0);
 		} else {
-			/* setting_view_change(&setting_view_time_main, &setting_view_time_time, ad); */
+			/* setting_view_change(&setting_view_time_main,
+			 * &setting_view_time_time, ad); */
 		}
 	} else if (ad->data_auto == list_item) {
 		ad->is_datefield_selected = EINA_FALSE;
@@ -1398,8 +1523,10 @@ static void setting_time_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *
 
 			if (ad->data_time) {
 				ad->data_time->isItemDisableFlag = FALSE;
-				setting_enable_evas_object(ad->data_time->eo_check);
-				setting_enable_genlist_item(ad->data_time->item);
+				setting_enable_evas_object(
+						ad->data_time->eo_check);
+				setting_enable_genlist_item(
+						ad->data_time->item);
 			}
 
 		} else {
@@ -1407,11 +1534,13 @@ static void setting_time_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *
 		}
 	} else if (ad->data_time_fmt == list_item)	{
 		int err = 0;
-		setting_update_gl_item_chk_status(list_item, !list_item->chk_status);
+		setting_update_gl_item_chk_status(list_item,
+				!list_item->chk_status);
 		int value = VCONFKEY_TIME_FORMAT_12;
 		if (list_item->chk_status)
 			value = VCONFKEY_TIME_FORMAT_24;
-		setting_set_int_slp_key(INT_SLP_SETTING_REGIONFORMAT_TIME1224, value, &err);
+		setting_set_int_slp_key(INT_SLP_SETTING_REGIONFORMAT_TIME1224,
+				value, &err);
 	}
 }
 
@@ -1422,13 +1551,14 @@ void setting_time_main_btn_update_ok_cb(void *cb)
 	SettingTimeUG *ad = (SettingTimeUG *) cb;
 	int err;		/* error check */
 	setting_set_bool_slp_key(BOOL_SLP_SETTING_AUTOMATIC_TIME_UPDATE,
-							 SETTING_ON_OFF_BTN_ON, &err);
+			SETTING_ON_OFF_BTN_ON, &err);
 	setting_update_gl_item_chk_status(ad->data_auto, 1);
 
 	deviced_request_reboot();
 
-	/*	We'd better check return value from deviced_request_reboot() function. */
-	/*	It will return 0 on success or -1 if failed. */
+	/* We'd better check return value from deviced_request_reboot()
+	 * function. */
+	/* It will return 0 on success or -1 if failed. */
 }
 
 
@@ -1441,7 +1571,7 @@ void setting_time_main_btn_update_cancel_cb(void *cb)
 
 	retm_if(cb == NULL, "Data parameter is NULL");
 	setting_set_bool_slp_key(BOOL_SLP_SETTING_AUTOMATIC_TIME_UPDATE,
-							 SETTING_ON_OFF_BTN_OFF, &err);
+			SETTING_ON_OFF_BTN_OFF, &err);
 	setting_update_gl_item_chk_status(ad->data_auto, 0);
 
 }
@@ -1471,7 +1601,7 @@ static void ICU_set_timezone(const char *timezone)
 			SETTING_TRACE("ucal_setDefaultTimeZone() SUCCESS ");
 		} else {
 			SETTING_TRACE("ucal_setDefaultTimeZone() FAILED : %s ",
-						  u_errorName(ec));
+					u_errorName(ec));
 		}
 		FREE(str);
 	}
@@ -1492,8 +1622,8 @@ static void get_gmt_offset(char *str_buf, int size)
 
 	setting_retm_if(!pdata, "data is NULL");
 
-	int gmtoffset_hour = (pdata->tm_gmtoff) / 3600;		/* result : hour. */
-	int gmtoffset_min = ((pdata->tm_gmtoff) % 3600) / 60;	/* result : min. */
+	int gmtoffset_hour = (pdata->tm_gmtoff) / 3600;	/* result: hour */
+	int gmtoffset_min = ((pdata->tm_gmtoff) % 3600) / 60; /* result: min */
 
 #if 0
 	if (gmtoffset_min != 0) {
@@ -1504,7 +1634,8 @@ static void get_gmt_offset(char *str_buf, int size)
 
 	/*snprintf(str_buf, size, "%+d:%02u", gmtoffset_hour, gmtoffset_min); */
 	snprintf(str_buf, size, "%+d:%02d", gmtoffset_hour, abs(gmtoffset_min));
-	SETTING_TRACE_DEBUG("szTimezone is of a valid format: GMT: %s", str_buf);
+	SETTING_TRACE_DEBUG("szTimezone is of a valid format: GMT: %s",
+			str_buf);
 
 	int ret = vconf_set_str(VCONFKEY_SETAPPL_TIMEZONE_INT, str_buf);
 	if (ret == -1) {
@@ -1545,16 +1676,19 @@ static bool get_city_name(char *tzname)
 
 	int rst = sqlite3_open(_TZ_SYS_DB"/.worldclock.db", &pSQLite3);
 	if (rst) {
-		SETTING_TRACE("Can't open database: %s", sqlite3_errmsg(pSQLite3));
+		SETTING_TRACE("Can't open database: %s",
+				sqlite3_errmsg(pSQLite3));
 		sqlite3_close(pSQLite3);
 		pSQLite3 = NULL;
 		return false;
 	} else {
 		SETTING_TRACE("Database opened!!");
 		char query_str[DEF_BUF_SIZE];
-		snprintf(query_str, DEF_BUF_SIZE, "SELECT city FROM city_table where tz_path=\"%s\"", tzname);
+		snprintf(query_str, DEF_BUF_SIZE, "SELECT city FROM city_table"
+				" where tz_path=\"%s\"", tzname);
 		SETTING_TRACE("%s \n", query_str);
-		rst = sqlite3_exec(pSQLite3, query_str, query_callback, 0, &szErrMsg);
+		rst = sqlite3_exec(pSQLite3, query_str, query_callback, 0,
+				&szErrMsg);
 	}
 
 	sqlite3_free(szErrMsg);
@@ -1563,7 +1697,8 @@ static bool get_city_name(char *tzname)
 	return true;
 }
 
-static int query_callback(void *NotUsed, int argc, char **argv, char **azColName)
+static int query_callback(void *NotUsed, int argc, char **argv,
+		char **azColName)
 {
 	int i = 0;
 	SETTING_TRACE("%s\n", argv[i] ? argv[i] : "NULL");
@@ -1597,13 +1732,19 @@ static char *get_timezone_displayname()
 	if (cal) {
 		if (pdata) {
 			if (pdata->tm_isdst)
-				ucal_getTimeZoneDisplayName(cal, UCAL_DST, localeID, displayName, SETTING_STR_SLP_LEN, &status);
+				ucal_getTimeZoneDisplayName(cal, UCAL_DST,
+						localeID, displayName,
+						SETTING_STR_SLP_LEN, &status);
 			else
-				ucal_getTimeZoneDisplayName(cal, UCAL_STANDARD, localeID, displayName, SETTING_STR_SLP_LEN, &status);
+				ucal_getTimeZoneDisplayName(cal, UCAL_STANDARD,
+						localeID, displayName,
+						SETTING_STR_SLP_LEN, &status);
 		}
 
 		if (U_FAILURE(status)) {
-			SETTING_TRACE_ERROR("ucal_getTimeZoneDisplayName got an error : %s, %d", displayName, status);
+			SETTING_TRACE_ERROR("ucal_getTimeZoneDisplayName got "
+					"an error : %s, %d",
+					displayName, status);
 			status = U_ZERO_ERROR;
 		} else {
 			int len = 0;
@@ -1617,8 +1758,10 @@ static char *get_timezone_displayname()
 				SETTING_TRACE_ERROR("timezone string is null");
 				return NULL;
 			}
-			u_strToUTF8(timezone_str, len_str, &len_utf8, displayName, len, &status);
-			SETTING_TRACE("*************************** timezone : %s, %s", displayName, timezone_str);
+			u_strToUTF8(timezone_str, len_str, &len_utf8,
+					displayName, len, &status);
+			SETTING_TRACE("*************************** timezone : "
+					"%s, %s", displayName, timezone_str);
 		}
 		ucal_close(cal);
 	}
