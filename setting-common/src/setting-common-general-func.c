@@ -848,9 +848,13 @@ char *get_pa_select_network()
 		SETTING_TRACE("fail to get VCONFKEY_TELEPHONY_SVCTYPE");
 	}
 
-	retv_if(service_type == VCONFKEY_TELEPHONY_SVCTYPE_NOSVC, (char *)strdup(_("IDS_ST_BODY_NOSERVICE")));
-	retv_if(service_type == VCONFKEY_TELEPHONY_SVCTYPE_EMERGENCY, (char *)strdup(_("IDS_CALL_POP_CALLING_EMERG_ONLY")));
-	retv_if(service_type == VCONFKEY_TELEPHONY_SVCTYPE_SEARCH || service_type == VCONFKEY_TELEPHONY_SVCTYPE_NONE, (char *)strdup(_("IDS_COM_BODY_SEARCHING")));
+	retv_if(service_type == VCONFKEY_TELEPHONY_SVCTYPE_NOSVC,
+			(char *)strdup(_("IDS_ST_BODY_NOSERVICE")));
+	retv_if(service_type == VCONFKEY_TELEPHONY_SVCTYPE_EMERGENCY,
+			(char *)strdup(_("IDS_CALL_POP_CALLING_EMERG_ONLY")));
+	retv_if(service_type == VCONFKEY_TELEPHONY_SVCTYPE_SEARCH
+			|| service_type == VCONFKEY_TELEPHONY_SVCTYPE_NONE,
+			(char *)strdup(_("IDS_ST_POP_SEARCHING_NETWORK_ING")));
 
 	ret = vconf_get_int(VCONFKEY_TELEPHONY_SPN_DISP_CONDITION, &state);
 	if (ret == 0) {
