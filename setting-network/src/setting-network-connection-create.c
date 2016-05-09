@@ -122,7 +122,6 @@ void __sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 	/* error check */
 	retm_if(event_info == NULL, "Invalid argument: event info is NULL");
 	Elm_Object_Item *subitem = (Elm_Object_Item *) event_info;
-	/*Elm_Object_Item *parentItem = elm_genlist_item_parent_get(subitem); */
 	elm_genlist_item_selected_set(subitem, 0);
 
 	Setting_GenGroupItem_Data *data_subItem = elm_object_item_data_get(subitem);
@@ -137,7 +136,6 @@ void __sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 
 	data_parentItem->sub_desc = (char *)g_strdup(_(data_subItem->keyStr));
 	elm_object_item_data_set(data_parentItem->item, data_parentItem);
-	/*	elm_genlist_item_fields_update(data_parentItem->item, "*", ELM_GENLIST_ITEM_FIELD_TEXT); */
 
 	if (data_parentItem == ad->data_auth_type) {
 		elm_genlist_item_expanded_set(ad->data_auth_type->item, FALSE);
@@ -177,7 +175,6 @@ void __sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 					SETTING_TRACE_ERROR("ad->data_hm_url is NULL");
 				}
 			}
-
 		} else {
 			/*do need home-url */
 			if (ad->data_hm_url) {
@@ -185,17 +182,56 @@ void __sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 				ad->data_hm_url = NULL;
 			}
 		}
+	} else if (data_parentItem == ad->data_pdn_type) {
+		elm_genlist_item_expanded_set(ad->data_pdn_type->item, FALSE);
+		elm_genlist_item_update(ad->data_pdn_type->item);
+
+		if (CONNECTION_ERROR_NONE != connection_profile_set_cellular_pdn_type(ad->sel_profile_h, chk_status)) {
+			SETTING_TRACE_ERROR("Fail to set cellular pdn type!\n");
+		} else {
+			ad->chkType_pdn = chk_status;
+			connection_update_profile(ad->connection, ad->sel_profile_h);
+		}
+
+		/*remove network mode popup */
+		if (ad->popup_pdn_type) {
+			evas_object_del(ad->popup_pdn_type);
+			ad->popup_pdn_type = NULL;
+		}
+
+	} else if (data_parentItem == ad->data_roam_pdn_type) {
+		elm_genlist_item_expanded_set(ad->data_roam_pdn_type->item, FALSE);
+		elm_genlist_item_update(ad->data_roam_pdn_type->item);
+
+		if (CONNECTION_ERROR_NONE != connection_profile_set_cellular_roam_pdn_type(ad->sel_profile_h, chk_status)) {
+			SETTING_TRACE_ERROR("Fail to set cellular roam pdn type!\n");
+		} else {
+			ad->chkType_roam_pdn = chk_status;
+			connection_update_profile(ad->connection, ad->sel_profile_h);
+		}
+
+		/*remove network mode popup */
+		if (ad->popup_pdn_type) {
+			evas_object_del(ad->popup_pdn_type);
+			ad->popup_pdn_type = NULL;
+		}
+
 	}
 }
 
-void __auth_type_popup_del(void *data, Evas_Object *obj, void *event_info)
+void __popup_del(void *data, Evas_Object *obj, void *event_info)
 {
 	SettingNetworkUG *ad = data;
 
 	ret_if(data == NULL);
 
-	evas_object_del(ad->popup_auth_type);
-	ad->popup_auth_type = NULL;
+	if (ad->popup_auth_type) {
+		evas_object_del(ad->popup_auth_type);
+		ad->popup_auth_type = NULL;
+	} else if (ad->popup_pdn_type) {
+		evas_object_del(ad->popup_pdn_type);
+		ad->popup_auth_type = NULL;
+	}
 }
 
 static void __create_auth_type_popup(void *data, Evas_Object *obj,
@@ -216,7 +252,7 @@ static void __create_auth_type_popup(void *data, Evas_Object *obj,
 	Evas_Object *scroller = NULL;
 	ad->popup_auth_type = setting_create_popup_with_list(&scroller, ad, ad->win_get,
 														 data_parentItem->keyStr,
-														 __auth_type_popup_del,
+														 __popup_del,
 														 0, false, false, 0);
 	_P(ad->popup_auth_type);
 
@@ -294,6 +330,94 @@ static void __create_auth_type_popup(void *data, Evas_Object *obj,
 	}
 }
 
+static void __create_pdn_type_popup(void *data, Evas_Object *obj,
+									 void *event_info)
+{
+	ret_if(NULL == data || NULL == event_info);
+	SETTING_TRACE_BEGIN;
+	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	Elm_Object_Item *parentItem = event_info;	/* parent item */
+	elm_genlist_item_selected_set(parentItem, 0);
+	Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(parentItem);	/* parent data */
+
+	/* create popup */
+	if (ad->popup_pdn_type) {
+		evas_object_del(ad->popup_pdn_type);
+		ad->popup_pdn_type = NULL;
+	}
+	Evas_Object *scroller = NULL;
+	ad->popup_pdn_type = setting_create_popup_with_list(&scroller, ad, ad->win_get,
+			data_parentItem->keyStr,
+			__popup_del,
+			0, false, false, 0);
+	_P(ad->popup_pdn_type);
+
+	Evas_Object *rgd;
+
+	if (data_parentItem == ad->data_pdn_type) {
+		rgd = elm_radio_add(scroller);
+		elm_radio_value_set(rgd, -1);
+
+		setting_create_Gendial_field_1radio(scroller,
+				&itc_multiline_1text_1icon,
+				__sub_list_sel_cb, data_parentItem,
+				SWALLOW_Type_1RADIO_RIGHT, rgd,
+				CONNECTION_CELLULAR_PDN_TYPE_IPV4,
+				"IPv4",
+				NULL);
+
+		setting_create_Gendial_field_1radio(scroller,
+				&itc_multiline_1text_1icon,
+				__sub_list_sel_cb, data_parentItem,
+				SWALLOW_Type_1RADIO_RIGHT, rgd,
+				CONNECTION_CELLULAR_PDN_TYPE_IPV4_IPv6,
+				"IPv4v6",
+				NULL);
+
+		setting_create_Gendial_field_1radio(scroller,
+				&itc_multiline_1text_1icon,
+				__sub_list_sel_cb, data_parentItem,
+				SWALLOW_Type_1RADIO_RIGHT, rgd,
+				CONNECTION_CELLULAR_PDN_TYPE_IPV6,
+				"IPv6",
+				NULL);
+
+		elm_radio_value_set(rgd, ad->chkType_pdn);
+		elm_object_signal_emit(rgd, "elm,event,pass,enabled", "elm");
+	} else if (data_parentItem == ad->data_roam_pdn_type) {
+		rgd = elm_radio_add(scroller);
+		elm_radio_value_set(rgd, -1);
+
+		setting_create_Gendial_field_1radio(scroller,
+				&itc_multiline_1text_1icon,
+				__sub_list_sel_cb, data_parentItem,
+				SWALLOW_Type_1RADIO_RIGHT, rgd,
+				CONNECTION_CELLULAR_PDN_TYPE_IPV4,
+				"IPv4",
+				NULL);
+
+		setting_create_Gendial_field_1radio(scroller,
+				&itc_multiline_1text_1icon,
+				__sub_list_sel_cb, data_parentItem,
+				SWALLOW_Type_1RADIO_RIGHT, rgd,
+				CONNECTION_CELLULAR_PDN_TYPE_IPV4_IPv6,
+				"IPv4v6",
+				NULL);
+
+		setting_create_Gendial_field_1radio(scroller,
+				&itc_multiline_1text_1icon,
+				__sub_list_sel_cb, data_parentItem,
+				SWALLOW_Type_1RADIO_RIGHT, rgd,
+				CONNECTION_CELLULAR_PDN_TYPE_IPV6,
+				"IPv6",
+				NULL);
+
+		elm_radio_value_set(rgd, ad->chkType_roam_pdn);
+		elm_object_signal_emit(rgd, "elm,event,pass,enabled", "elm");
+
+	}
+}
+
 static void __setting_network_connection_exp_cb(void *data, Evas_Object *obj,
 												void *event_info)
 {
@@ -342,7 +466,7 @@ static void __setting_network_connection_exp_cb(void *data, Evas_Object *obj,
 											 IDS_ST_POP_CHAP,
 											 __sub_list_rd_change);
 
-		SETTING_TRACE(" ----------------------------->>> ad->chkType : %d ",ad->chkType);
+		SETTING_TRACE(" ----------------------------->>> ad->chkType : %d ", ad->chkType);
 
 		elm_radio_value_set(rgd, ad->chkType);
 	} else if (data_parentItem == ad->data_srv_type) {
@@ -400,21 +524,22 @@ void __get_connection_info(void *cb)
 	SETTING_TRACE_BEGIN;
 	ret_if(cb == NULL);
 	SettingNetworkUG *ad = (SettingNetworkUG *) cb;
-	/*int ret; */
+
 	G_FREE(ad->ed_profile_name_desc);
 	G_FREE(ad->ed_acs_name_desc);
 	G_FREE(ad->ed_user_name_desc);
 	G_FREE(ad->ed_pwd_desc);
-
 	G_FREE(ad->ed_pxy_addr_desc);
 	G_FREE(ad->ed_pxy_port_desc);
-
 	G_FREE(ad->ed_hm_url_desc);
-	ad->ed_auth_type_desc = NULL;
-	ad->chkType = CONNECTION_CELLULAR_AUTH_TYPE_NONE;
 
-	SETTING_TRACE("ad->con_name:%s, ad->profile_service_type:%d",
-				  ad->con_name, ad->profile_service_type);
+	ad->ed_auth_type_desc = NULL;
+	ad->ed_pdn_type_desc = NULL;
+	ad->ed_roam_pdn_type_desc = NULL;
+	ad->chkType = CONNECTION_CELLULAR_AUTH_TYPE_NONE;
+	ad->chkType_pdn = CONNECTION_CELLULAR_PDN_TYPE_UNKNOWN;
+
+	SETTING_TRACE("ad->con_name:%s, ad->profile_service_type:%d", ad->con_name, ad->profile_service_type);
 
 	int ServiceType = ad->profile_service_type;
 	char *con_name_utf8 = NULL;
@@ -462,22 +587,6 @@ void __get_connection_info(void *cb)
 		if (CONNECTION_PROFILE_TYPE_CELLULAR != profile_type)
 			continue;
 
-#if 0
-		if (CONNECTION_CELLULAR_SERVICE_TYPE_APPLICATION != service_type) {
-			/*match with ServiceType */
-			if (ServiceType == service_type) {
-				ad->sel_profile_h = profile_h;
-				found = TRUE;
-				break;
-			}
-		} else { /*the customer's profiles */
-			if (0 == safeStrCmp(con_name_utf8, apn)) {
-				ad->sel_profile_h = profile_h;
-				found = TRUE;
-				break;
-			}
-		}
-#endif
 		/*match with ServiceType */
 		if (ServiceType == service_type) {
 			if (ServiceType == CONNECTION_CELLULAR_SERVICE_TYPE_MMS) {
@@ -539,6 +648,55 @@ void __get_connection_info(void *cb)
 			break;
 		}
 
+		/* pdn type */
+		connection_cellular_pdn_type_e pdn_type;
+		if (CONNECTION_ERROR_NONE != connection_profile_get_cellular_pdn_type(ad->sel_profile_h, &pdn_type)) {
+			SETTING_TRACE_ERROR("Fail to get cellular pdn type!\n");
+		} else {
+			ad->chkType_pdn = pdn_type;
+			SETTING_TRACE("Cellular pdn type : %d\n", pdn_type);
+			elm_radio_value_set(ad->chk_type_pdn, ad->chkType_pdn);
+
+			switch (ad->chkType_pdn) {
+				case CONNECTION_CELLULAR_PDN_TYPE_IPV4:
+					ad->ed_pdn_type_desc = _("IPv4");
+					break;
+				case CONNECTION_CELLULAR_PDN_TYPE_IPV6:
+					ad->ed_pdn_type_desc = _("IPv6");
+					break;
+				case CONNECTION_CELLULAR_PDN_TYPE_IPV4_IPv6:
+					ad->ed_pdn_type_desc = _("IPv4v6");
+					break;
+				default:
+					ad->chkType_pdn = CONNECTION_CELLULAR_PDN_TYPE_UNKNOWN;
+					ad->ed_pdn_type_desc = _("Unknown");
+			}
+		}
+
+		/* roam_pdn_type*/
+		connection_cellular_pdn_type_e roam_pdn_type;
+		if (CONNECTION_ERROR_NONE != connection_profile_get_cellular_roam_pdn_type(ad->sel_profile_h, &roam_pdn_type)) {
+			SETTING_TRACE_ERROR("Fail to get cellular pdn type!\n");
+		} else {
+			ad->chkType_roam_pdn = roam_pdn_type;
+			SETTING_TRACE("Cellular roam pdn type : %d\n", roam_pdn_type);
+			elm_radio_value_set(ad->chk_type_roam_pdn, ad->chkType_roam_pdn);
+
+			switch (ad->chkType_roam_pdn) {
+				case CONNECTION_CELLULAR_PDN_TYPE_IPV4:
+					ad->ed_roam_pdn_type_desc = _("IPv4");
+					break;
+				case CONNECTION_CELLULAR_PDN_TYPE_IPV6:
+					ad->ed_roam_pdn_type_desc = _("IPv6");
+					break;
+				case CONNECTION_CELLULAR_PDN_TYPE_IPV4_IPv6:
+					ad->ed_roam_pdn_type_desc = _("IPv4v6");
+					break;
+				default:
+					ad->chkType_roam_pdn = CONNECTION_CELLULAR_PDN_TYPE_UNKNOWN;
+					ad->ed_roam_pdn_type_desc = _("Unknown");
+			}
+		}
 
 		char *full_addr = NULL;
 		char *addr = NULL;
@@ -575,11 +733,8 @@ void __get_connection_info(void *cb)
 		SETTING_TRACE("addr:%s", addr);
 		SETTING_TRACE("port:%s", port);
 		SETTING_TRACE("ad->ed_pxy_addr_desc:%s", ad->ed_pxy_addr_desc);
-		/*ad->ed_pxy_addr_desc = g_strdup(addr); */
 		ad->ed_pxy_port_desc = g_strdup(port);
-		/* if (ad->con_type == NET_SERVICE_MMS) {	/* Message Connection * / */
 		if (!safeStrCmp(ad->con_name, STR_SETTING_MMS_CONNECTIONS)) {	/* Message Connection */
-			/*ad->ed_hm_url_desc = ad->prof_list[ad->prof_sel_idx].ProfileInfo.Pdp.HomeURL; */
 			connection_profile_get_cellular_home_url(ad->sel_profile_h, &(ad->ed_hm_url_desc));
 		}
 	} else {
@@ -842,13 +997,7 @@ static int setting_network_connection_create(void *cb)
 									  __setting_network_connection_exp_cb,
 									  NULL);
 	__get_connection_info(ad);
-	Elm_Object_Item *item=NULL;
-
-	/*item =
-		elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
-								ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
-
+	Elm_Object_Item *item = NULL;
 
 	if (!safeStrCmp(STR_SETTING_NEW_CONNECTIONS, ad->con_name)) { /*new a profile,need to select the "Service type" */
 		ad->data_srv_type =
@@ -941,11 +1090,7 @@ static int setting_network_connection_create(void *cb)
 		SETTING_TRACE_ERROR("ad->data_acs_name is NULL");
 	}
 
-	/*item =
-		elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
-								ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
-
+	/* [UI] Authentication type */
 	ad->data_auth_type =
 		setting_create_Gendial_field_def(scroller,
 										 &itc_2text_3_parent,
@@ -954,7 +1099,6 @@ static int setting_network_connection_create(void *cb)
 										 NULL, NULL, 0,
 										 "IDS_ST_BODY_AUTH_TYPE",
 										 (char *)ad->ed_auth_type_desc, NULL);
-	/* ad->data_auth_type->int_slp_setting_binded = INT_SLP_SETTING_INVALID; */
 	if (ad->data_auth_type) {
 		ad->data_auth_type->userdata = ad;
 		__BACK_POINTER_SET(ad->data_auth_type);
@@ -963,10 +1107,6 @@ static int setting_network_connection_create(void *cb)
 	}
 
 	ad->item_above_user_name = ad->data_auth_type->item;
-		/*item = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
-														   ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
-
 	ad->is_show_user = 0;
 	if (CONNECTION_CELLULAR_AUTH_TYPE_NONE != ad->chkType) {
 		/* [UI] User ID */
@@ -1020,11 +1160,6 @@ static int setting_network_connection_create(void *cb)
 		}
 
 		ad->item_above_proxy_add = ad->data_pwd->item;
-			/*item =
-									   elm_genlist_item_append(scroller, &itc_seperator,
-															   NULL, NULL, ELM_GENLIST_ITEM_NONE,
-															   NULL, NULL);
-		elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
 	}
 
 	/* [UI] Proxy address */
@@ -1082,16 +1217,8 @@ static int setting_network_connection_create(void *cb)
 		SETTING_TRACE_ERROR("ad->data_pxy_port is NULL");
 	}
 
-
 	/* if current view is "MMS connection" */
 	if (!safeStrCmp(ad->con_name, STR_SETTING_MMS_CONNECTIONS)) {	/*	mms Connection */
-
-#if 0
-		if (ad->data_pxy_port) {
-			ad->data_pxy_port->return_key_type = ELM_INPUT_PANEL_RETURN_KEY_TYPE_DEFAULT;
-			/*SETTING_TRACE_ERROR("ad->data_pxy_port->return_key_type = ELM_INPUT_PANEL_RETURN_KEY_TYPE_DEFAULT"); */
-		}
-#endif
 		/* [UI] Home URL */
 		ad->data_hm_url =
 			setting_create_Gendial_field_entry_with_return_key(scroller,
@@ -1116,28 +1243,54 @@ static int setting_network_connection_create(void *cb)
 		} else {
 			SETTING_TRACE_ERROR("ad->data_hm_url is NULL");
 		}
-		/* ad->is_show_url = 1; */
+	}
+
+	/* [UI] APN protocol */
+	ad->data_pdn_type =
+		setting_create_Gendial_field_def(scroller,
+										 &itc_2text_3_parent,
+										 __create_pdn_type_popup, ad,
+										 SWALLOW_Type_INVALID,
+										 NULL, NULL, 0,
+										 "APN protocol",
+										 (char *)ad->ed_pdn_type_desc, NULL);
+	if (ad->data_pdn_type) {
+		ad->data_pdn_type->userdata = ad;
+	} else {
+		SETTING_TRACE_ERROR("ad->data_pdn_type is NULL");
+	}
+
+	/* [UI] APN roaming protocol */
+	ad->data_roam_pdn_type =
+		setting_create_Gendial_field_def(scroller,
+										 &itc_2text_3_parent,
+										 __create_pdn_type_popup, ad,
+										 SWALLOW_Type_INVALID,
+										 NULL, NULL, 0,
+										 "APN roaming protocol",
+										 (char *)ad->ed_roam_pdn_type_desc, NULL);
+	if (ad->data_roam_pdn_type) {
+		ad->data_roam_pdn_type->userdata = ad;
+	} else {
+		SETTING_TRACE_ERROR("ad->data_roam_pdn_type is NULL");
 	}
 
 	setting_view_network_connection_create.is_create = 1;
 	ad->scl_edit = scroller;
-	/*__genlist_disable_set(ad->scl_edit, TRUE); */
-	/*ad->is_editable = FALSE; for test */
+
 	SETTING_TRACE("==> ad->is_editable:%d", ad->is_editable);
 	if (!ad->is_editable) {
-		/*SETTING_TRACE("xxxx....."); */
 		if (ad->data_srv_type) setting_disable_genlist_item(ad->data_srv_type->item);
 		if (ad->data_profile_name) setting_disable_genlist_item(ad->data_profile_name->item);
 		if (ad->data_acs_name) setting_disable_genlist_item(ad->data_acs_name->item);
 		if (ad->data_auth_type) setting_disable_genlist_item(ad->data_auth_type->item);
-
-
 		if (ad->data_user_name) setting_disable_genlist_item(ad->data_user_name->item);
 		if (ad->data_pwd) setting_disable_genlist_item(ad->data_pwd->item);
 		if (ad->data_pxy_addr) setting_disable_genlist_item(ad->data_pxy_addr->item);
 		if (ad->data_pxy_port) setting_disable_genlist_item(ad->data_pxy_port->item);
 		if (ad->data_hm_url) setting_disable_genlist_item(ad->data_hm_url->item);
 	}
+
 	ecore_idler_add(__connection_idler, ad);
 
 	return SETTING_RETURN_SUCCESS;
@@ -1422,7 +1575,7 @@ static int __save_connection(void *data)
 	if (!safeStrCmp(pwd, "")
 		&& CONNECTION_CELLULAR_AUTH_TYPE_NONE != type) {
 		setting_create_popup(ad, ad->win_get,
-							 NULL, _(""), __setting_network_connection_popup_rsp_cb,2/*SECONDS*/, false, false, 0);/*this code is not used now, so remove the ID which is not used in po file*/
+							 NULL, _(""), __setting_network_connection_popup_rsp_cb, 2/*SECONDS*/, false, false, 0);/*this code is not used now, so remove the ID which is not used in po file*/
 		FREE(usr_name);
 		FREE(pwd);
 		FREE(addr);
@@ -1635,7 +1788,6 @@ static void __save_response_cb(void *data, Evas_Object *obj,
 		obj = NULL;
 	}
 	/*re-fetch connection info.. */
-	/*__get_connection_info(ad); */
 	SETTING_TRACE("ad->con_name:%s", ad->con_name);
 
 	ad->apn_MMS = __get_profile_name(CONNECTION_CELLULAR_SERVICE_TYPE_MMS, ad);

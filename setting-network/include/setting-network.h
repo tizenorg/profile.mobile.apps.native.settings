@@ -193,6 +193,7 @@ struct _SettingNetworkUG {
 	Evas_Object *popup_chk;
 
 	Evas_Object *popup_auth_type;
+	Evas_Object *popup_pdn_type;
 	Evas_Object *popup_data_on;
 	Evas_Object *popup_data_off;
 
@@ -276,6 +277,8 @@ struct _SettingNetworkUG {
 	char *access_name;
 
 	Evas_Object *chk_type;
+	Evas_Object *chk_type_pdn;
+	Evas_Object *chk_type_roam_pdn;
 
 	char *ed_profile_name_desc;
 	char *ed_acs_name_desc;
@@ -284,8 +287,12 @@ struct _SettingNetworkUG {
 	char *ed_pwd_desc;
 	char *ed_pxy_addr_desc;
 	char *ed_pxy_port_desc;
+	char *ed_pdn_type_desc;
+	char *ed_roam_pdn_type_desc;
 	char *ed_hm_url_desc;
 	int chkType;
+	int chkType_pdn;
+	int chkType_roam_pdn;
 	int srvType;
 	bool is_editable;
 	Elm_Object_Item *item_above_user_name;
@@ -297,6 +304,8 @@ struct _SettingNetworkUG {
 	Setting_GenGroupItem_Data *data_profile_name;
 	Setting_GenGroupItem_Data *data_pxy_addr;
 	Setting_GenGroupItem_Data *data_pxy_port;
+	Setting_GenGroupItem_Data *data_pdn_type;
+	Setting_GenGroupItem_Data *data_roam_pdn_type;
 	Setting_GenGroupItem_Data *data_hm_url;
 	Setting_GenGroupItem_Data *data_auth_type;
 	Setting_GenGroupItem_Data *data_type_nor;

@@ -868,7 +868,7 @@ void ___sort_merge_handle(void *usrdata, TelNetworkPlmnList_t *list)
 {
 	SETTING_TRACE_BEGIN;
 	SettingNetworkUG *ad = usrdata;
-	int cnt = 0, tempcount=0;
+	int cnt = 0, tempcount = 0;
 	ad->plmn_info.networks_count = list->networks_count;
 	SETTING_TRACE("list->networks_count:%d", list->networks_count);
 	int idx = 0;
