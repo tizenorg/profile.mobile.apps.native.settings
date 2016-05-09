@@ -40,26 +40,33 @@
 
 
 
-#define SETTING_STORAGE_APPS_ICON_PATH SETTING_ICON_PATH"/A01-1_icon_color_applications.png"
-#define SETTING_STORAGE_PICS_ICON_PATH SETTING_ICON_PATH"/A01-1_icon_color_pictures.png"
-#define SETTING_STORAGE_AUDIO_ICON_PATH SETTING_ICON_PATH"/A01-1_icon_color_Audio.png"
-#define SETTING_STORAGE_MISCES_ICON_PATH SETTING_ICON_PATH"/A01-1_icon_color_miscellaneous_files.png"
-#define SETTING_STORAGE_AVAIL_ICON_PATH SETTING_ICON_PATH"/A01-1_icon_color_available.png"
-#define SETTING_STORAGE_SYS_ICON_PATH SETTING_ICON_PATH"/A01-1_icon_color_system.png"
+#define SETTING_STORAGE_APPS_ICON_PATH SETTING_ICON_PATH\
+	"/A01-1_icon_color_applications.png"
+#define SETTING_STORAGE_PICS_ICON_PATH SETTING_ICON_PATH\
+	"/A01-1_icon_color_pictures.png"
+#define SETTING_STORAGE_AUDIO_ICON_PATH SETTING_ICON_PATH\
+	"/A01-1_icon_color_Audio.png"
+#define SETTING_STORAGE_MISCES_ICON_PATH SETTING_ICON_PATH\
+	"/A01-1_icon_color_miscellaneous_files.png"
+#define SETTING_STORAGE_AVAIL_ICON_PATH SETTING_ICON_PATH\
+	"/A01-1_icon_color_available.png"
+#define SETTING_STORAGE_SYS_ICON_PATH SETTING_ICON_PATH\
+	"/A01-1_icon_color_system.png"
 
 const char *storageUg_MMC_stat = VCONFKEY_SYSMAN_MMC_STATUS;
 
 static setting_view setting_view_storage_main;
 
 static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
-												  SettingStorageUG *ad)
+		SettingStorageUG *ad)
 {
 	cairo_t *cr;
 	double total_size;
 	int cairo_w, cairo_h;
 	double account_size = 0.0;
 	cairo_surface_t *cairo_surface;
-	double apps_sz = 0, pics_sz = 0, audio_size = 0, misces_sz = 0, internal_sz = 0, system_sz = 0, cache_sz = 0;;
+	double apps_sz = 0, pics_sz = 0, audio_size = 0, misces_sz = 0,
+			internal_sz = 0, system_sz = 0, cache_sz = 0;
 
 	ret_if(NULL == ad);
 
@@ -115,7 +122,8 @@ static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 		ad->cr = NULL;
 	}
 
-	cairo_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, cairo_w, cairo_h);
+	cairo_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+			cairo_w, cairo_h);
 	if (NULL == cairo_surface) {
 		SETTING_TRACE_ERROR("cairo_image_surface_create() Fail");
 		return;
@@ -133,48 +141,54 @@ static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 	/*system memory */
 	account_size = 0.75;
 	cairo_line_to(cr, cairo_w / 2, cairo_h / 2);
-	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2, account_size * 2 * M_PI,
-					   (account_size - system_sz) * 2 * M_PI);
+	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2,
+			account_size * 2 * M_PI,
+			(account_size - system_sz) * 2 * M_PI);
 	cairo_set_source_rgba(cr, 153 / 255., 66 / 255., 194 / 255., 1);
 	cairo_fill(cr);
 	account_size -= system_sz;
 
 	/*app */
 	cairo_line_to(cr, cairo_w / 2, cairo_h / 2);
-	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2, account_size * 2 * M_PI,
-					   (account_size - apps_sz) * 2 * M_PI);
+	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2,
+			account_size * 2 * M_PI,
+			(account_size - apps_sz) * 2 * M_PI);
 	cairo_set_source_rgba(cr, 255 / 255., 189 / 255., 8 / 255., 1);
 	cairo_fill(cr);
 	account_size -= apps_sz;
 
 	/*pic */
 	cairo_line_to(cr, cairo_w / 2, cairo_h / 2);
-	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2, account_size * 2 * M_PI,
-					   (account_size - pics_sz) * 2 * M_PI);
+	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2,
+			account_size * 2 * M_PI,
+			(account_size - pics_sz) * 2 * M_PI);
 	cairo_set_source_rgba(cr, 119 / 255., 222 / 255., 60 / 255., 1);
 	cairo_fill(cr);
 	account_size -= pics_sz;
 
 	/*audio */
 	cairo_line_to(cr, cairo_w / 2, cairo_h / 2);
-	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2, account_size * 2 * M_PI,
-					   (account_size - audio_size) * 2 * M_PI);
+	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2,
+			account_size * 2 * M_PI,
+			(account_size - audio_size) * 2 * M_PI);
 	cairo_set_source_rgba(cr, 28 / 255., 140 / 255., 252 / 255., 1);
 	cairo_fill(cr);
 	account_size -= audio_size;
 
 	/*miscellaneous files */
 	cairo_line_to(cr, cairo_w / 2, cairo_h / 2);
-	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2, account_size * 2 * M_PI,
-					   (account_size - misces_sz) * 2 * M_PI);
+	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2,
+			account_size * 2 * M_PI,
+			(account_size - misces_sz) * 2 * M_PI);
 	cairo_set_source_rgba(cr, 52 / 255., 220 / 255., 250 / 255., 1);
 	cairo_fill(cr);
 	account_size -= misces_sz;
 
 	/*cache files */
 	cairo_line_to(cr, cairo_w / 2, cairo_h / 2);
-	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2, account_size * 2 * M_PI,
-					   (account_size - cache_sz) * 2 * M_PI);
+	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2,
+			account_size * 2 * M_PI,
+			(account_size - cache_sz) * 2 * M_PI);
 	cairo_set_source_rgba(cr, 26 / 255., 49 / 255., 125 / 255., 1);
 	cairo_fill(cr);
 	account_size -= cache_sz;
@@ -182,14 +196,15 @@ static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 	/*evas_object_image_alpha_set(pie_image, EINA_FALSE); */
 	evas_object_image_alpha_set(pie_image, EINA_TRUE);
 	evas_object_image_size_set(pie_image, cairo_w, cairo_h);
-	evas_object_image_data_set(pie_image, cairo_image_surface_get_data(cairo_surface));
+	evas_object_image_data_set(pie_image,
+			cairo_image_surface_get_data(cairo_surface));
 	evas_object_image_fill_set(pie_image, 0, 0, cairo_w, cairo_h);
 	evas_object_resize(pie_image, cairo_w, cairo_h);
 	ad->cr = cr;
 }
 
 static inline void storageUg_main_part_pie_graph_set(Evas_Object *parent,
-													 const char *part, void *data)
+		const char *part, void *data)
 {
 	Evas *evas;
 	int cairo_w, cairo_h;
@@ -222,7 +237,7 @@ static inline void storageUg_main_part_pie_graph_set(Evas_Object *parent,
 }
 
 Evas_Object *storageUg_main_pie_item_get_icon(void *data, Evas_Object *obj,
-											  const char *part)
+		const char *part)
 {
 	double used_size;
 	Evas_Object *layout;
@@ -233,16 +248,19 @@ Evas_Object *storageUg_main_pie_item_get_icon(void *data, Evas_Object *obj,
 	retv_if(NULL == obj, NULL);
 	retv_if(NULL == data, NULL);
 
-	retvm_if(safeStrCmp(part, "elm.swallow.content"), NULL, "part(%s) Invaild", part);
+	retvm_if(safeStrCmp(part, "elm.swallow.content"), NULL,
+			"part(%s) Invaild", part);
 
 	layout = elm_layout_add(obj);
-	Eina_Bool res = elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME, "storage_pie");
+	Eina_Bool res = elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME,
+			"storage_pie");
 
-	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND,
+			EVAS_HINT_EXPAND);
 
 	/*title */
 	elm_object_part_text_set(layout, "storage_title.text",
-							 _(STORAGEUG_STR_INTERNAL_STORAGE));
+			_(STORAGEUG_STR_INTERNAL_STORAGE));
 
 	storageUg_size_to_str(ad->sz_inter_avail, size_str, sizeof(size_str));
 	snprintf(final_str, sizeof(final_str), "%s %s", size_str,
@@ -264,7 +282,7 @@ Evas_Object *storageUg_main_pie_item_get_icon(void *data, Evas_Object *obj,
 }
 
 Evas_Object *storageUg_color_item_content_get(void *data, Evas_Object *obj,
-											  const char *part)
+		const char *part)
 {
 	setting_retvm_if(data == NULL, NULL, "data is NULL");
 	Setting_GenGroupItem_Data *list_item = data;
@@ -275,35 +293,47 @@ Evas_Object *storageUg_color_item_content_get(void *data, Evas_Object *obj,
 	if (!strcmp(part, "elm.swallow.icon")) {
 		Evas_Object *layout = elm_layout_add(obj);
 
-		Eina_Bool result = elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME, "storage_edge");
-		evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-		evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
+		Eina_Bool result = elm_layout_file_set(layout,
+				SETTING_THEME_EDJ_NAME, "storage_edge");
+		evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND,
+				EVAS_HINT_EXPAND);
+		evas_object_size_hint_align_set(layout, EVAS_HINT_FILL,
+				EVAS_HINT_FILL);
 		if (!result) {
-			SETTING_TRACE_ERROR(" ERROR -- elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME, storage_edge)");
+			SETTING_TRACE_ERROR(" ERROR -- elm_layout_file_set("
+					"layout, SETTING_THEME_EDJ_NAME, "
+					"storage_edge)");
 			return NULL;
 		}
 
 		switch (color) {
 		case 1:
-			elm_object_signal_emit(layout, "elm,state,show,system", "elm");
+			elm_object_signal_emit(layout, "elm,state,show,system",
+					"elm");
 			break;
 		case 2:
-			elm_object_signal_emit(layout, "elm,state,show,app", "elm");
+			elm_object_signal_emit(layout, "elm,state,show,app",
+					"elm");
 			break;
 		case 3:
-			elm_object_signal_emit(layout, "elm,state,show,pic", "elm");
+			elm_object_signal_emit(layout, "elm,state,show,pic",
+					"elm");
 			break;
 		case 4:
-			elm_object_signal_emit(layout, "elm,state,show,audio", "elm");
+			elm_object_signal_emit(layout, "elm,state,show,audio",
+					"elm");
 			break;
 		case 5:
-			elm_object_signal_emit(layout, "elm,state,show,misc", "elm");
+			elm_object_signal_emit(layout, "elm,state,show,misc",
+					"elm");
 			break;
 		case 6:
-			elm_object_signal_emit(layout, "elm,state,show,cache", "elm");
+			elm_object_signal_emit(layout, "elm,state,show,cache",
+					"elm");
 			break;
 		case 7:
-			elm_object_signal_emit(layout, "elm,state,show,avail", "elm");
+			elm_object_signal_emit(layout, "elm,state,show,avail",
+					"elm");
 			break;
 		default:
 			break;
@@ -314,7 +344,8 @@ Evas_Object *storageUg_color_item_content_get(void *data, Evas_Object *obj,
 
 	return NULL;
 }
-static void __storage_cache_file_clean_popup_no_cache_rsp_cb(void *data, Evas_Object *obj, void *event_info)
+static void __storage_cache_file_clean_popup_no_cache_rsp_cb(void *data,
+		Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "data is NULL");
@@ -336,7 +367,8 @@ static void __storage_cache_file_clean_popup_no_cache_rsp_cb(void *data, Evas_Ob
 	SETTING_TRACE_END;
 }
 
-static void __storage_cache_file_clean_popup_rsp_cb(void *data, Evas_Object *obj, void *event_info)
+static void __storage_cache_file_clean_popup_rsp_cb(void *data,
+		Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "data is NULL");
@@ -346,9 +378,12 @@ static void __storage_cache_file_clean_popup_rsp_cb(void *data, Evas_Object *obj
 			int ret = package_manager_clear_all_cache_dir();
 			if (PACKAGE_MANAGER_ERROR_NONE == ret) {
 				ad->sz_caches = 0;
-				storageug_genlist_text_update(ad->caches, ad->sz_caches);
+				storageug_genlist_text_update(ad->caches,
+						ad->sz_caches);
 			} else {
-				SETTING_TRACE_ERROR("Failed to call package_manager_clear_all_cache_dir() with error code-%d", ret);
+				SETTING_TRACE_ERROR("Failed to call package_"
+						"manager_clear_all_cache_dir() "
+						"with error code-%d", ret);
 			}
 
 			break;
@@ -391,36 +426,39 @@ static void storageUg_main_sel(void *data, Evas_Object *obj, void *event_info)
 		setting_view_change(ad->main_view, ad->misces_view, ad);
 	} else if (!safeStrCmp(STORAGEUG_STR_CACHE, list_item->keyStr)) {
 		if (ad->sz_caches <= 0) {
-
 			ad->popup = setting_create_popup(ad, ad->win,
-											 "IDS_ST_HEADER_CLEAR_CACHE_ABB",
-											 "IDS_ST_POP_THERE_IS_NO_CACHE_DATA_TO_CLEAR",
-											 __storage_cache_file_clean_popup_no_cache_rsp_cb,
-											 0, FALSE, FALSE,
-											 1, "IDS_ST_BUTTON_OK_ABB");
+					"IDS_ST_HEADER_CLEAR_CACHE_ABB",
+					"IDS_ST_POP_THERE_IS_NO_CACHE_DATA_TO_CLEAR",
+					__storage_cache_file_clean_popup_no_cache_rsp_cb,
+					0, FALSE, FALSE,
+					1, "IDS_ST_BUTTON_OK_ABB");
 		} else {
 			ad->popup = setting_create_popup(ad, ad->win,
-											 "IDS_ST_HEADER_CLEAR_CACHE_ABB",
-											 "IDS_ST_POP_ALL_THE_CACHE_DATA_WILL_BE_CLEARED",
-											 __storage_cache_file_clean_popup_rsp_cb,
-											 0, FALSE, FALSE,
-											 2, "IDS_ST_BUTTON_CLEAR_CACHE_ABB", "IDS_ST_BUTTON_CANCEL_ABB");
+					"IDS_ST_HEADER_CLEAR_CACHE_ABB",
+					"IDS_ST_POP_ALL_THE_CACHE_DATA_WILL_BE_CLEARED",
+					__storage_cache_file_clean_popup_rsp_cb,
+					0, FALSE, FALSE,
+					2, "IDS_ST_BUTTON_CLEAR_CACHE_ABB",
+					"IDS_ST_BUTTON_CANCEL_ABB");
 		}
 	}
 }
 
 static Setting_GenGroupItem_Data *storageUg_main_append_group_mid_item(
-	SettingStorageUG *ad, int color, const char *key_str, const char *sub_str)
+	SettingStorageUG *ad, int color, const char *key_str,
+	const char *sub_str)
 {
 	Setting_GenGroupItem_Data *item_data = NULL;
-	item_data = (Setting_GenGroupItem_Data *) calloc(1, sizeof(Setting_GenGroupItem_Data));
+	item_data = (Setting_GenGroupItem_Data *) calloc(
+			1, sizeof(Setting_GenGroupItem_Data));
 	if (item_data) {
 		item_data->userdata = ad;
 		item_data->keyStr = (char *)g_strdup(key_str);
 		item_data->sub_desc = (char *)g_strdup(sub_str);
 		item_data->color = color;
-		item_data->item = elm_genlist_item_append(ad->gl_main, &(ad->itc_color_item), item_data, NULL,
-												  ELM_GENLIST_ITEM_NONE, storageUg_main_sel, ad);
+		item_data->item = elm_genlist_item_append(ad->gl_main,
+				&(ad->itc_color_item), item_data, NULL,
+				ELM_GENLIST_ITEM_NONE, storageUg_main_sel, ad);
 	} else {
 		SETTING_TRACE_ERROR("item_data is NULL");
 	}
@@ -434,53 +472,57 @@ static inline void storageUg_main_dev_memory_detail(SettingStorageUG *ad)
 	char total_desc[STORAGEUG_MAX_STR_LEN] = {0};
 
 	/* memory total */
-	storageUg_size_to_str(ad->sz_inter_total, total_desc, sizeof(total_desc));
-	ad->total_space = setting_create_Gendial_field_def(ad->gl_main, &itc_2text_2,
-													   NULL, ad, SWALLOW_Type_INVALID, NULL, NULL, 0, STORAGEUG_STR_TOTAL,
-													   total_desc, NULL);
+	storageUg_size_to_str(ad->sz_inter_total, total_desc,
+			sizeof(total_desc));
+	ad->total_space = setting_create_Gendial_field_def(ad->gl_main,
+			&itc_2text_2, NULL, ad, SWALLOW_Type_INVALID, NULL,
+			NULL, 0, STORAGEUG_STR_TOTAL, total_desc, NULL);
 	ret_if(NULL == ad->total_space);
 	ad->total_space->userdata = ad;
 	elm_genlist_item_select_mode_set(ad->total_space->item,
-									 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+			ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	/* system memory */
 	ad->sys_mem = storageUg_main_append_group_mid_item(ad,
-													   1, STORAGEUG_STR_SYS_MEM, STORAGEUG_STR_WAIT);
+			1, STORAGEUG_STR_SYS_MEM, STORAGEUG_STR_WAIT);
 	ret_if(NULL == ad->sys_mem);
-	elm_genlist_item_select_mode_set(ad->sys_mem->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+	elm_genlist_item_select_mode_set(ad->sys_mem->item,
+			ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	/* Applications */
 	ad->apps = storageUg_main_append_group_mid_item(ad,
-													2, STORAGEUG_STR_APPS, STORAGEUG_STR_WAIT);
+			2, STORAGEUG_STR_APPS, STORAGEUG_STR_WAIT);
 	ret_if(NULL == ad->apps);
 
 	/* Pictures, Videos */
 	ad->pics_videos = storageUg_main_append_group_mid_item(ad,
-														   3, STORAGEUG_STR_PICS, STORAGEUG_STR_WAIT);
+			3, STORAGEUG_STR_PICS, STORAGEUG_STR_WAIT);
 	ret_if(NULL == ad->pics_videos);
 
 	/* Audio */
 	ad->audio = storageUg_main_append_group_mid_item(ad,
-													 4, STORAGEUG_STR_AUDIO, STORAGEUG_STR_WAIT);
+			4, STORAGEUG_STR_AUDIO, STORAGEUG_STR_WAIT);
 	ret_if(NULL == ad->audio);
 
 	/* Miscellaneous files */
 	ad->misces = storageUg_main_append_group_mid_item(ad,
-													  5, STORAGEUG_STR_MISCES, STORAGEUG_STR_WAIT);
+			5, STORAGEUG_STR_MISCES, STORAGEUG_STR_WAIT);
 	ret_if(NULL == ad->misces);
 
 	/* cache files */
 	ad->caches = storageUg_main_append_group_mid_item(ad,
-													  6, STORAGEUG_STR_CACHE, STORAGEUG_STR_WAIT);
+			6, STORAGEUG_STR_CACHE, STORAGEUG_STR_WAIT);
 	ret_if(NULL == ad->caches);
 
 
 	/* Available */
-	storageUg_size_to_str(ad->sz_inter_avail, avail_desc, sizeof(avail_desc));
+	storageUg_size_to_str(ad->sz_inter_avail, avail_desc,
+			sizeof(avail_desc));
 	ad->avail = storageUg_main_append_group_mid_item(ad,
-													 7, STORAGEUG_STR_AVAIL, avail_desc);
+			7, STORAGEUG_STR_AVAIL, avail_desc);
 	ret_if(NULL == ad->avail);
-	elm_genlist_item_select_mode_set(ad->avail->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+	elm_genlist_item_select_mode_set(ad->avail->item,
+			ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 }
 
 static void storageUg_main_dev_memory_update(SettingStorageUG *ad)
@@ -489,21 +531,22 @@ static void storageUg_main_dev_memory_update(SettingStorageUG *ad)
 
 	ret_if(NULL == ad);
 
-	storageUg_get_internal_storage_status(&ad->sz_inter_total, &ad->sz_inter_avail);
+	storageUg_get_internal_storage_status(&ad->sz_inter_total,
+			&ad->sz_inter_avail);
 
 	/* update internal total size */
 	storageUg_size_to_str(ad->sz_inter_total, desc, sizeof(desc));
 	G_FREE(ad->total_space->sub_desc);
 	ad->total_space->sub_desc = (char *)g_strdup(desc);
 	elm_genlist_item_fields_update(ad->total_space->item, "elm.text.sub",
-								   ELM_GENLIST_ITEM_FIELD_TEXT);
+			ELM_GENLIST_ITEM_FIELD_TEXT);
 
 	/* update internal available size */
 	storageUg_size_to_str(ad->sz_inter_avail, desc, sizeof(desc));
 	G_FREE(ad->avail->sub_desc);
 	ad->avail->sub_desc = (char *)g_strdup(desc);
 	elm_genlist_item_fields_update(ad->avail->item, "elm.text.sub",
-								   ELM_GENLIST_ITEM_FIELD_TEXT);
+			ELM_GENLIST_ITEM_FIELD_TEXT);
 
 }
 
@@ -515,14 +558,16 @@ static Eina_Bool storageUg_update_timer(void *data)
 	retv_if(NULL == data, ECORE_CALLBACK_CANCEL);
 
 	storageUg_main_dev_memory_update(ad);
-	SETTING_TRACE_DEBUG("ad->misces_view->is_create:%d", ad->misces_view->is_create);
+	SETTING_TRACE_DEBUG("ad->misces_view->is_create:%d",
+			ad->misces_view->is_create);
 	if (ad->misces_view->is_create) {
 		/* setting_view_update(ad->misces_view, ad); */
 	}
 	if (ad->size_worker)
 		storageUg_stop_async_worker(ad->size_worker);
-	ad->size_worker = storageUg_start_async_worker(storageUg_get_internal_detail,
-												   storageUg_get_internal_detail_cb, ad);
+	ad->size_worker = storageUg_start_async_worker(
+			storageUg_get_internal_detail,
+			storageUg_get_internal_detail_cb, ad);
 
 
 	ad->update_timer = NULL;
@@ -577,7 +622,8 @@ static Eina_Bool storageUg_main_back_cb(void *data, Elm_Object_Item *it)
 
 	if (ad->size_worker) {
 		if (storageUg_worker_is_running(ad->size_worker)) {
-			SETTING_TRACE("DO NOT Close Storage UI!!!!! <<------------");
+			SETTING_TRACE("DO NOT Close Storage UI!!!!! "
+					"<<------------");
 			return EINA_FALSE;
 		}
 	} else {
@@ -603,7 +649,8 @@ static inline Evas_Object *storageUg_main_genlist(Evas_Object *parent)
 	elm_genlist_block_count_set(genlist, 2);
 	evas_object_show(genlist);
 
-	evas_object_smart_callback_add(genlist, "realized", __gl_realized_cb, NULL);
+	evas_object_smart_callback_add(genlist, "realized", __gl_realized_cb,
+			NULL);
 
 	return genlist;
 }
@@ -623,46 +670,65 @@ static int storageUg_main_create(void *data)
 	retv_if(NULL == ad->lo_parent, SETTING_DRAW_ERR_FAIL_LOAD_EDJ);
 
 	ad->gl_main = storageUg_main_genlist(ad->navi);
-	setting_create_navi_bar_buttons(STORAGEUG_STR_STORAGE, NULL, /* arrow style */
-									(setting_call_back_func)storageUg_main_back_cb,
-									ad,
-									ad->gl_main, ad->navi, NULL);
+	setting_create_navi_bar_buttons(STORAGEUG_STR_STORAGE,
+			NULL, /* arrow style */
+			(setting_call_back_func)storageUg_main_back_cb,
+			ad,
+			ad->gl_main, ad->navi, NULL);
 
-	storageUg_get_internal_storage_status(&ad->sz_inter_total, &ad->sz_inter_avail);
+	storageUg_get_internal_storage_status(&ad->sz_inter_total,
+			&ad->sz_inter_avail);
 
 	/* storage pie view */
 	pie_item = elm_genlist_item_append(ad->gl_main, &(ad->itc_pie),
-									   ad, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(pie_item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+			ad, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
+	elm_genlist_item_select_mode_set(pie_item,
+			ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 	ad->pie_it = pie_item;
 
 	storageUg_main_dev_memory_detail(ad);
 
 	if (ad->size_worker)
 		storageUg_stop_async_worker(ad->size_worker);
-	ad->size_worker = storageUg_start_async_worker(storageUg_get_internal_detail,
-												   storageUg_get_internal_detail_cb, ad);
+	ad->size_worker = storageUg_start_async_worker(
+			storageUg_get_internal_detail,
+			storageUg_get_internal_detail_cb,
+			ad);
 
 	storageUG_update_apps_info(ad);
 	storageUG_update_cache_info(ad);
 
 	if (!isEmulBin()) {
 		ret = vconf_get_int(storageUg_MMC_stat, &ad->mmc_status);
-		retvm_if(ret, SETTING_RETURN_FAIL, "vconf_get_int(%s) Fail", storageUg_MMC_stat);
+		retvm_if(ret, SETTING_RETURN_FAIL, "vconf_get_int(%s) Fail",
+				storageUg_MMC_stat);
 
 		/* Default storage */
-		setting_create_Gendial_field_def(ad->gl_main, &itc_1text,
-										 storageUg_main_sel, ad, SWALLOW_Type_INVALID, NULL, NULL, 0,
-										 STORAGEUG_STR_DEF_STORAGE, NULL, NULL);
+		setting_create_Gendial_field_def(
+				ad->gl_main,
+				&itc_1text,
+				storageUg_main_sel,
+				ad,
+				SWALLOW_Type_INVALID,
+				NULL,
+				NULL,
+				0,
+				STORAGEUG_STR_DEF_STORAGE,
+				NULL, NULL);
 
 		/* SD */
-		ad->sd_card = setting_create_Gendial_field_titleItem(ad->gl_main,
-															 &itc_group_item, STORAGEUG_STR_SD_CARD, NULL);
+		ad->sd_card = setting_create_Gendial_field_titleItem(
+				ad->gl_main,
+				&itc_group_item,
+				STORAGEUG_STR_SD_CARD,
+				NULL);
 		if (ad->sd_card)
 			storageUg_main_append_SD_info(ad);
 
-		ret = vconf_notify_key_changed(storageUg_MMC_stat, storageUg_SD_change_cb, ad);
-		warn_if(ret != 0, "vconf_notify_key_changed(%s) Fail", storageUg_MMC_stat);
+		ret = vconf_notify_key_changed(storageUg_MMC_stat,
+				storageUg_SD_change_cb, ad);
+		warn_if(ret != 0, "vconf_notify_key_changed(%s) Fail",
+				storageUg_MMC_stat);
 	}
 
 	/* usb otg storage*/
@@ -693,8 +759,10 @@ static int storageUg_main_destroy(void *data)
 
 	storageUg_deinit_USB();
 
-	ret = vconf_ignore_key_changed(storageUg_MMC_stat, storageUg_SD_change_cb);
-	warn_if(ret, "vconf_ignore_key_changed(%s) Fail(%d)", storageUg_MMC_stat, ret);
+	ret = vconf_ignore_key_changed(storageUg_MMC_stat,
+			storageUg_SD_change_cb);
+	warn_if(ret, "vconf_ignore_key_changed(%s) Fail(%d)",
+			storageUg_MMC_stat, ret);
 
 	storageUg_stop_async_worker_all();
 
