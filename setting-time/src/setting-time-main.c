@@ -55,11 +55,16 @@ static void get_gmt_offset(char *str_buf, int size);
 
 static char *get_timezone_str();
 static char *get_city_name_result();
+static char *get_gmt_timezone_result();
 static bool get_city_name(char *tzname);
+static bool get_city_gmt_timezone(char *tzname);
 static char *get_timezone_displayname();
 
 static char *s_result;
+static char *s_gmt_result;
 static int query_callback(void *NotUsed, int argc, char **argv,
+		char **azColName);
+static int query_gmt_callback(void *NotUsed, int argc, char **argv,
 		char **azColName);
 static bool setting_update_timezone(SettingTimeUG *ad);
 static void __setting_update_datefield_cb(void *cb);
@@ -145,6 +150,15 @@ void time_changed_callback(keynode_t *key, void *data)
 			ad);
 }
 
+void __time_gmt_idler(const char *gmt_offset)
+{ 
+	sprintf (gmt_offset, "%s", gmt_offset+3);
+    if((unsigned)strlen(gmt_offset) <= 3)
+    {
+        strncat(gmt_offset,":00", (unsigned)strlen(gmt_offset)+3);
+    }
+}
+
 void setting_time_update_time_date_format_string(SettingTimeUG *ad)
 {
 	SETTING_TRACE_BEGIN;
@@ -199,7 +213,9 @@ bool setting_update_timezone(SettingTimeUG *ad)
 
 	/*	get time zone */
 	displayTimezone = get_timezone_displayname();
-	get_gmt_offset(gmt_offset, GMT_BUF_SIZE);
+//	get_gmt_offset(gmt_offset, GMT_BUF_SIZE);
+	sprintf(gmt_offset, get_gmt_timezone_result());
+	__time_gmt_idler(&gmt_offset);
 
 	if (displayTimezone != NULL) {
 		ret = snprintf(time_zone_sub_str,
@@ -773,9 +789,12 @@ static int setting_time_main_create(void *cb)
 		/* get value from current timezone */
 
 		char str_buf[GMT_BUF_SIZE] = {0, };
-		get_gmt_offset(str_buf, GMT_BUF_SIZE);
-
+//		get_gmt_offset(str_buf, GMT_BUF_SIZE);
 		char *timezone_str = get_timezone_str();
+
+		get_city_gmt_timezone(timezone_str);
+		sprintf(str_buf, get_gmt_timezone_result());
+		__time_gmt_idler(&str_buf);
 
 		SETTING_TRACE("timezone : %s, displayTimezone :%s, "
 				"gmt_offset : %s",
@@ -1031,7 +1050,8 @@ static int __setting_set_city_tzone(const char *pTZPath)
 	char *pStr = strdup(pTZPath);
 
 	/* 2. timezone string +/-<n> ex. +9, -1 */
-	get_gmt_offset(szTimezone, GMT_BUF_SIZE);
+//	get_gmt_offset(szTimezone, GMT_BUF_SIZE);
+	get_city_gmt_timezone(pTZPath);
 
 	/* set timezone_id */
 	/** @todo replace with vconf ID */
@@ -1667,6 +1687,10 @@ static char *get_city_name_result()
 	return s_result;
 }
 
+static char *get_gmt_timezone_result()
+{
+	return s_gmt_result;
+}
 
 /* in_str = "Asia/Seoul" */
 static bool get_city_name(char *tzname)
@@ -1705,6 +1729,42 @@ static int query_callback(void *NotUsed, int argc, char **argv,
 	s_result = g_strdup(argv[i] ? argv[i] : "NULL");
 	return 0;
 };
+
+static bool get_city_gmt_timezone(char *tzname)
+{
+    SETTING_TRACE_BEGIN;
+    sqlite3 *pSQLite3 = NULL;
+    char    *szErrMsg = NULL;
+
+    int rst = sqlite3_open(_TZ_SYS_DB"/.worldclock.db", &pSQLite3);
+    if (rst) {
+        SETTING_TRACE("Can't open database: %s", sqlite3_errmsg(pSQLite3));
+        sqlite3_close(pSQLite3);
+        pSQLite3 = NULL;
+        return false;
+    } else {
+        SETTING_TRACE("Database opened!!");
+        char query_str[DEF_BUF_SIZE];
+        snprintf(query_str, DEF_BUF_SIZE, "SELECT timezone FROM city_table where tz_path=\"%s\"", tzname);
+        SETTING_TRACE("%s \n", query_str);
+        rst = sqlite3_exec(pSQLite3, query_str, query_gmt_callback, 0, &szErrMsg);
+    }
+
+    sqlite3_free(szErrMsg);
+    sqlite3_close(pSQLite3);
+    SETTING_TRACE("Database close!!\n");
+    return true;
+}
+
+static int query_gmt_callback(void *NotUsed, int argc, char **argv,
+		char **azColName)
+{
+	int i = 0;
+	SETTING_TRACE("%s\n", argv[i] ? argv[i] : "NULL");
+	s_gmt_result = g_strdup(argv[i] ? argv[i] : "NULL");
+	return 0;
+};
+
 
 static char *get_timezone_displayname()
 {
