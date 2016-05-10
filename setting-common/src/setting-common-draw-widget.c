@@ -183,70 +183,63 @@ EXPORT_PUBLIC Evas_Object *setting_create_5step_slider(
  */
 EXPORT_PUBLIC Evas_Object *setting_create_slider(
 		Evas_Object *parent,
-		Evas *evas,
-		const char *l_swallow_path,
-		const char *r_swallow_path,
-		double value,
-		bool indicator,
-		double slider_min,
-		double slider_max,
-		setting_call_back_func slider_change_cb,
-		setting_call_back_func slider_start_change_cb,
-		setting_call_back_func slider_stop_change_cb,
-		void *cb_data)
+		Setting_GenGroupItem_Data *item_data)
 {
 	/* "elm/slider/horizontal/default" */
 	Evas_Object *slider = elm_slider_add(parent);
 	retv_if(slider == NULL, NULL);
 
-	if (indicator) {
+	if (item_data->isIndicatorVisible) {
 		elm_slider_indicator_format_set(slider, "%1.0f");
-		elm_slider_indicator_show_set(slider, 1);
+		elm_slider_indicator_show_set(slider, EINA_TRUE);
 	} else {
 		/* for brightness slider */
-		elm_slider_indicator_show_set(slider, 0);
+		elm_slider_indicator_show_set(slider, EINA_FALSE);
 		/*elm_object_style_set(slider, "tap_to_drag");*/
 	}
 
 	evas_object_size_hint_weight_set(slider, EVAS_HINT_EXPAND, 0.0);
 	evas_object_size_hint_align_set(slider, EVAS_HINT_FILL, 0.5);
 
-	double step = _step_size_calculate(slider, slider_min, slider_max);
+	double step = _step_size_calculate(
+			slider, item_data->slider_min, item_data->slider_max);
 	elm_slider_step_set(slider, step);
 
-	SETTING_TRACE("slider_change_cb:%p", slider_change_cb);
-	if (slider_change_cb)
+	SETTING_TRACE("slider_change_cb:%p", item_data->chk_change_cb);
+	if (item_data->chk_change_cb)
 		evas_object_smart_callback_add(
-				slider, "changed", slider_change_cb, cb_data);
+				slider, "changed", item_data->chk_change_cb,
+				item_data);
 
-	if (slider_stop_change_cb)
+	if (item_data->stop_change_cb)
 		evas_object_smart_callback_add(
 				slider, "slider,drag,stop",
-				slider_stop_change_cb, cb_data);
+				item_data->stop_change_cb, item_data);
 
-	if (slider_start_change_cb)
+	if (item_data->start_change_cb)
 		evas_object_smart_callback_add(
 				slider, "slider,drag,start",
-				slider_start_change_cb, cb_data);
+				item_data->start_change_cb, item_data);
 
-	if (l_swallow_path) {
+	if (item_data->l_swallow_path) {
 		Evas_Object *icon1 = elm_icon_add(slider);
-		elm_image_file_set(icon1, l_swallow_path, NULL);
+		elm_image_file_set(icon1, item_data->l_swallow_path, NULL);
 		evas_object_size_hint_aspect_set(
 				icon1, EVAS_ASPECT_CONTROL_VERTICAL, 1, 1);
 		elm_object_content_set(slider, icon1);
 	}
 
-	if (r_swallow_path) {
+	if (item_data->r_swallow_path) {
 		Evas_Object *icon2 = elm_icon_add(slider);
-		elm_image_file_set(icon2, r_swallow_path, NULL);
+		elm_image_file_set(icon2, item_data->r_swallow_path, NULL);
 		evas_object_size_hint_aspect_set(
 				icon2, EVAS_ASPECT_CONTROL_VERTICAL, 1, 1);
 		elm_object_part_content_set(slider, "end", icon2);
 	}
 
-	elm_slider_min_max_set(slider, slider_min, slider_max);
-	elm_slider_value_set(slider, value);
+	elm_slider_min_max_set(
+			slider, item_data->slider_min, item_data->slider_max);
+	elm_slider_value_set(slider, item_data->chk_status);
 	return slider;
 }
 

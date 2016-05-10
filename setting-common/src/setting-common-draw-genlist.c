@@ -1159,18 +1159,7 @@ static Evas_Object *__add_5step_slider(Setting_GenGroupItem_Data *item_data, Eva
 static Evas_Object *__add_slider(Setting_GenGroupItem_Data *item_data, Evas_Object *parent)
 {
 	retv_if(!item_data || !parent, NULL);
-	Evas_Object *li_slider =
-		setting_create_slider(parent, item_data->evas,
-							  item_data->l_swallow_path,
-							  item_data->r_swallow_path,
-							  item_data->chk_status,
-							  item_data->isIndicatorVisible,
-							  item_data->slider_min,
-							  item_data->slider_max,
-							  item_data->chk_change_cb,
-							  item_data->start_change_cb,
-							  item_data->stop_change_cb,
-							  item_data);
+	Evas_Object *li_slider = setting_create_slider(parent, item_data);
 	evas_object_pass_events_set(li_slider, 1);
 	evas_object_propagate_events_set(li_slider, 0);
 	item_data->eo_check = li_slider;
