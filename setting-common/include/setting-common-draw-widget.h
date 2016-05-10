@@ -417,19 +417,7 @@ extern void setting_enable_expandable_genlist(
  * @return a slider container object
  */
 extern Evas_Object *setting_create_slider(
-		Evas_Object *win_main, Evas *evas,
-		const char *l_swallow_path,
-		const char *r_swallow_path,
-		double value,
-		bool indicator,
-		double slider_min,
-		double slider_max,
-		setting_call_back_func
-		slider_change_cb,
-		setting_call_back_func
-		slider_start_change_cb,
-		setting_call_back_func
-		slider_stop_change_cb, void *cb_data);
+		Evas_Object *win_main, Setting_GenGroupItem_Data *item_data);
 
 /**
  * To create slider object of a genlist item
