@@ -468,6 +468,58 @@ setting_view *__get_security_view_to_load(void *data, app_control_h service)
 	}
 }
 
+
+
+
+#if SUPPORT_APP_ROATION
+static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	SettingSecurityUG *securityUG = (SettingSecurityUG *)data;
+	if (securityUG  == NULL || securityUG ->win_get == NULL) {
+		return;
+	}
+	int change_ang = elm_win_rotation_get(securityUG->win_get);
+	SETTING_TRACE_DEBUG("....change_ang:%d", change_ang);
+	SETTING_TRACE_DEBUG("current_rotation:%d", securityUG->current_rotation);
+	/*Send the rotation event to UGs.. */
+	enum ug_event event = UG_EVENT_ROTATE_PORTRAIT;
+	switch (change_ang) {
+	case APP_DEVICE_ORIENTATION_0:
+		event = UG_EVENT_ROTATE_PORTRAIT;
+		break;
+	case APP_DEVICE_ORIENTATION_180:
+		event = UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN;
+		break;
+	case APP_DEVICE_ORIENTATION_270:
+		event = UG_EVENT_ROTATE_LANDSCAPE;
+		break;
+	case APP_DEVICE_ORIENTATION_90:
+		event = UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN;
+		break;
+	default:
+		return;
+	}
+	SETTING_TRACE_DEBUG("diff:%d", elm_win_rotation_get(securityUG->win_get) - securityUG->current_rotation);
+
+	if (change_ang != securityUG->current_rotation) {
+		int diff = change_ang - securityUG->current_rotation;
+		if (diff < 0) {
+			diff = -diff;
+		}
+		/**
+		* @todo if app didn't launch UG, is the call required to invoke?
+		*/
+		ug_send_event(event);
+		if (diff == 180) {
+			/* do nothing */
+		}
+		securityUG->current_rotation = change_ang;
+	}
+}
+#endif
+
+
 static void *setting_security_ug_on_create(ui_gadget_h ug,
 										   enum ug_mode mode, app_control_h service,
 										   void *priv)
@@ -487,6 +539,18 @@ static void *setting_security_ug_on_create(ui_gadget_h ug,
 
 	/*setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR); */
 	bindtextdomain(SETTING_PACKAGE, SETTING_LOCALEDIR);
+
+
+
+	securityUG->current_rotation = elm_win_rotation_get(securityUG->win_get);
+	SETTING_TRACE_DEBUG("ad->current_rotation:%d", securityUG->current_rotation);
+	if (elm_win_wm_rotation_supported_get(securityUG->win_get)) {
+		int rots[4] = { 0, 90, 180, 270 };	/* rotation value that app may want */
+		elm_win_wm_rotation_available_rotations_set(securityUG->win_get, rots, 4);
+	}
+	evas_object_smart_callback_add(securityUG->win_get, "wm,rotation,changed", _rot_changed_cb, securityUG);
+
+	
 
 	/* register view node table */
 	setting_view_node_table_intialize();

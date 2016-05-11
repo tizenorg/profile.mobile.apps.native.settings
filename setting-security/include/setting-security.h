@@ -434,6 +434,8 @@ struct _SettingSecurityUG {
 	bool samsung_account_is_running;
 
 	struct mmc_contents mmc_content; /* Handle exception of SD card encryption */
+
+	int current_rotation;
 };
 
 extern setting_view setting_view_security_main;
