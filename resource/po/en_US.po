@@ -1844,7 +1844,7 @@ msgid "IDS_ST_BODY_DE_REGISTRATION_CODE_NOT_FOUND"
 msgstr "De-registration code not found."
 
 msgid "IDS_ST_BODY_DEVICE_MEMORY"
-msgstr "Device memory"
+msgstr "Device storage"
 
 msgid "IDS_ST_BODY_DEVICE_INFO"
 msgstr "Device info"
