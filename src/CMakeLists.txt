@@ -128,16 +128,6 @@ ADD_DEPENDENCIES(${PROJECT_NAME} settings.edj)
 
 INSTALL(FILES ${CMAKE_BINARY_DIR}/settings.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
 
-# make setting-newux.edj
-ADD_CUSTOM_TARGET(setting-newux.edj
-		COMMAND edje_cc -id ${CMAKE_SOURCE_DIR}/resource/images -id ${CMAKE_SOURCE_DIR}/resource/icons
-		${CMAKE_SOURCE_DIR}/resource/setting-newux.edc ${CMAKE_BINARY_DIR}/setting-newux.edj
-		DEPENDS ${CMAKE_SOURCE_DIR}/resource/setting-newux.edc
-)
-
-ADD_DEPENDENCIES(${PROJECT_NAME} setting-newux.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-newux.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
-
 # make setting-genlist.edj
 ADD_CUSTOM_TARGET(setting-genlist.edj
 		COMMAND edje_cc -id ${CMAKE_SOURCE_DIR}/resource/images -sd ${CMAKE_SOURCE_DIR}/resource/sounds
@@ -147,68 +137,6 @@ ADD_CUSTOM_TARGET(setting-genlist.edj
 
 ADD_DEPENDENCIES(${PROJECT_NAME} setting-genlist.edj)
 INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-genlist.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
-
-ADD_CUSTOM_TARGET(setting-new-genlist.edj
-		COMMAND edje_cc -id ${CMAKE_SOURCE_DIR}/resource/images -sd ${CMAKE_SOURCE_DIR}/resource/sounds
-		${CMAKE_SOURCE_DIR}/resource/setting-new-genlist.edc
-		${CMAKE_BINARY_DIR}/setting-new-genlist.edj
-		DEPENDS ${CMAKE_SOURCE_DIR}/resource/setting-new-genlist.edc
-)
-
-ADD_DEPENDENCIES(${PROJECT_NAME} setting-new-genlist.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-new-genlist.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
-
-# make setting-proc.edj
-ADD_CUSTOM_TARGET(setting-proc.edj
-		COMMAND edje_cc -id ${CMAKE_SOURCE_DIR}/resource/images -id ${CMAKE_SOURCE_DIR}/resource/icons
-		${CMAKE_SOURCE_DIR}/resource/setting-proc.edc ${CMAKE_BINARY_DIR}/setting-proc.edj
-		DEPENDS ${CMAKE_SOURCE_DIR}/resource/setting-proc.edc
-)
-
-ADD_DEPENDENCIES(${PROJECT_NAME} setting-proc.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-proc.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
-
-# make setting-slider.edj
-ADD_CUSTOM_TARGET(setting-slider.edj
-		COMMAND edje_cc -id ${CMAKE_SOURCE_DIR}/resource/images -sd ${CMAKE_SOURCE_DIR}/resource/sounds
-		${CMAKE_SOURCE_DIR}/resource/setting-slider.edc
-		${CMAKE_BINARY_DIR}/setting-slider.edj
-		DEPENDS ${CMAKE_SOURCE_DIR}/resource/setting-slider.edc
-)
-
-ADD_DEPENDENCIES(${PROJECT_NAME} setting-slider.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-slider.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
-
-# make setting-eff.edj
-ADD_CUSTOM_TARGET(setting-eff.edj
-		COMMAND edje_cc -id ${CMAKE_SOURCE_DIR}/resource/images -id ${CMAKE_SOURCE_DIR}/resource/icons
-		${CMAKE_SOURCE_DIR}/resource/setting-proc.edc ${CMAKE_BINARY_DIR}/setting-eff.edj
-		DEPENDS ${CMAKE_SOURCE_DIR}/resource/setting-proc.edc
-)
-
-ADD_DEPENDENCIES(${PROJECT_NAME} setting-eff.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-eff.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
-
-# make ug-setting-manage-applications-efl.edj
-ADD_CUSTOM_TARGET(ug-setting-manage-applications-efl.edj
-		COMMAND edje_cc
-		${CMAKE_SOURCE_DIR}/resource/ug-setting-manage-applications-efl.edc ${CMAKE_BINARY_DIR}/ug-setting-manage-applications-efl.edj
-		DEPENDS ${CMAKE_SOURCE_DIR}/resource/ug-setting-manage-applications-efl.edc
-)
-
-ADD_DEPENDENCIES(${PROJECT_NAME} ug-setting-manage-applications-efl.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/ug-setting-manage-applications-efl.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
-
-# make setting-custompopup.edj
-ADD_CUSTOM_TARGET(setting-custompopup.edj
-		COMMAND edje_cc -id ${CMAKE_SOURCE_DIR}/resource/images -sd ${CMAKE_SOURCE_DIR}/resource/sounds -id ${CMAKE_SOURCE_DIR}/resource/icons
-		${CMAKE_SOURCE_DIR}/resource/setting-custompopup.edc
-		${CMAKE_BINARY_DIR}/setting-custompopup.edj
-		DEPENDS ${CMAKE_SOURCE_DIR}/resource/setting-custompopup.edc
-)
-
-ADD_DEPENDENCIES(${PROJECT_NAME} setting-custompopup.edj)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-custompopup.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/edje/)
 
 INSTALL(FILES ${CMAKE_SOURCE_DIR}/resource/langlist.xml DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/def_config)
 #------------------------------------------------------------------------------------------

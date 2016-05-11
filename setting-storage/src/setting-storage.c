@@ -207,7 +207,6 @@ static void *setting_storageUg_on_create(ui_gadget_h ug, enum ug_mode mode,
 	char *caller = NULL;
 	SettingStorageUG *ad = priv;
 	char *search_keyword = NULL;
-	const char *GENLIST_edj = EDJDIR"/setting-genlist.edj";
 	STORAGEUG_KEYWORD keyword_val = STORAGEUG_KEYWORD_NONE;
 
 	SETTING_TRACE(" -----> [TIME-1] before ");
@@ -232,7 +231,7 @@ static void *setting_storageUg_on_create(ui_gadget_h ug, enum ug_mode mode,
 	app_control_get_extra_data(service, "caller", &caller);
 	app_control_get_extra_data(service, "keyword", &search_keyword);
 	if (NULL == caller)
-		elm_theme_extension_add(NULL, GENLIST_edj);
+		elm_theme_extension_add(NULL, SETTING_GENLIST_EDJ_NAME);
 
 	/* add listening */
 	_storageUg_listen_vconf(ad);

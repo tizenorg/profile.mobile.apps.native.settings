@@ -323,15 +323,9 @@ static bool setting_main_app_create(void *data)
 
 	/* load config file */
 	int cfg_operation_ret = setting_cfg_init();
-	/*PLUGIN_INIT(ad); */
-	/*if ( ! ad->is_searchmode) */
-	/*{ */
+
 	elm_theme_extension_add(NULL, SETTING_THEME_EDJ_NAME);
-	elm_theme_extension_add(NULL, SETTING_NEWUX_EDJ_NAME);
 	elm_theme_extension_add(NULL, SETTING_GENLIST_EDJ_NAME);
-	elm_theme_extension_add(NULL, SETTING_NEW_GENLIST_EDJ_NAME);
-	elm_theme_extension_add(NULL, SETTING_SLIDER_EDJ_NAME);
-	/*} */
 
 	elm_win_indicator_mode_set(ad->win_main, ELM_WIN_INDICATOR_SHOW);
 	elm_win_indicator_opacity_set(ad->win_main, ELM_WIN_INDICATOR_OPAQUE);
