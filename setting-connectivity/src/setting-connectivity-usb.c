@@ -624,9 +624,11 @@ static int setting_connectivity_usb_create(void *cb)
 										 NULL, NULL);
 	}
 
+/*
 	item = elm_genlist_item_append(scroller, &itc_bottom_seperator, NULL, NULL,
 								   ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+*/
 
 	/*---------------------------------------------------------------------------------------------- */
 	/* Registering callback function for VCONFKEY_SETAPPL_USB_MODE_INT */

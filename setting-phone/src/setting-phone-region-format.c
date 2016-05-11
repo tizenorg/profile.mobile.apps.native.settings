@@ -763,10 +763,12 @@ static Eina_Bool __region_animator_cb(void *data)
 		elm_radio_value_set(ad->chk_region, ad->selected_region_idx);
 		ad->prev_region = ad->selected_region_idx;
 
+/*
 		Elm_Object_Item *item = NULL;
 		item = elm_genlist_item_append(ad->gl_region, &itc_bottom_seperator, NULL, NULL,
 									   ELM_GENLIST_ITEM_NONE, NULL, NULL);
 		elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+*/
 		return ECORE_CALLBACK_CANCEL;
 	}
 

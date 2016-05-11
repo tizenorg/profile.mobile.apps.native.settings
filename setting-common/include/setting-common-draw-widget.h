@@ -41,8 +41,10 @@
 #define SETTING_COMMON_DRAW_WIDGET_CONTROLBAR_ITEM_LEN 3
 #define POPUP_INTERVAL 2.0
 
-/*extern const Elm_Genlist_Item_Class itc_seperator;*/
+/*
+extern const Elm_Genlist_Item_Class itc_seperator;
 extern const Elm_Genlist_Item_Class itc_bottom_seperator;
+*/
 
 extern const Elm_Genlist_Item_Class itc_1text;
 extern const Elm_Genlist_Item_Class itc_1text_1icon_2;
@@ -78,11 +80,11 @@ extern const Elm_Genlist_Item_Class itc_editfield;
 extern const Elm_Genlist_Item_Class itc_multiline_2text;
 extern const Elm_Genlist_Item_Class itc_1text_1icon_divider;
 
+
+
 #define ADD_GL_LABLE(scroller, str) \
 	{\
 		if (str) {\
-			Elm_Object_Item *item = elm_genlist_item_append(scroller, &(itc_bottom_seperator), NULL, NULL,ELM_GENLIST_ITEM_NONE, NULL, NULL);\
-			elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
 			Setting_GenGroupItem_Data *item_data = setting_create_Gendial_field_def(scroller, &itc_multiline_text,\
 					NULL,\
 					NULL,\
@@ -92,6 +94,7 @@ extern const Elm_Genlist_Item_Class itc_1text_1icon_divider;
 			elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
 		}\
 	}
+
 /*//TODO: Remove this */
 #define ADD_GL_HELP(scroller, str) \
 	{\

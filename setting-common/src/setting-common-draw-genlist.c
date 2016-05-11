@@ -50,6 +50,7 @@ const Elm_Genlist_Item_Class itc_seperator = {
 };
 */
 
+/*
 EXPORT_PUBLIC
 const Elm_Genlist_Item_Class itc_bottom_seperator = {
 	.item_style = NULL,
@@ -58,6 +59,7 @@ const Elm_Genlist_Item_Class itc_bottom_seperator = {
 	.func.state_get = NULL,
 	.func.del = NULL,
 };
+*/
 
 #define DEFINE_ITC1(style, name) \
 	EXPORT_PUBLIC const Elm_Genlist_Item_Class name = {\
@@ -106,7 +108,7 @@ DEFINE_ITC1(SETTING_GENLIST_2LINE_STYLE, itc_2text_3_parent);
 DEFINE_ITC1(SETTING_GENLIST_MULTILINE_STYLE, itc_multiline_text);
 
 DEFINE_ITC1(SETTING_GENLIST_GROUP_INDEX_STYLE, itc_group_item);
-DEFINE_ITC1("entry.main", itc_editfield);
+DEFINE_ITC1("elm/genlist/item/entry.main/default", itc_editfield);
 
 typedef struct _tagParamData {
 	Setting_GenGroupItem_Data *item_data;
@@ -1008,6 +1010,8 @@ static Evas_Object *__add_entry_without_layout(Setting_GenGroupItem_Data *item_d
 
 static Evas_Object *__add_entry_padding(Setting_GenGroupItem_Data *item_data, Evas_Object *parent)
 {
+	SETTING_TRACE_BEGIN;
+
 	retv_if(!item_data || !parent, NULL);
 	Evas_Object *layout = elm_layout_add(parent);
 	elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME, "entry_layout");
