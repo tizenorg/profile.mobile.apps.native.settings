@@ -208,6 +208,8 @@ struct _SettingPhoneUG {
 
 	char *selected_locale;
 	char *region_search_id;
+
+	int current_rotation;
 };
 
 /* extern setting_view setting_view_phone_main; */
