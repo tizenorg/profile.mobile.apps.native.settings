@@ -55,11 +55,48 @@ static int __count_string(const char *str, int *cnt_letter, int *cnt_digit, int 
 
 extern struct _pw_item pw_its[];
 
+
+
+
+
+#include <dpm/password.h>
+
+int set_password_status_handler(int status)
+{
+    dpm_context_h handle;
+    dpm_password_policy_h password_policy_handle;
+    const char param_zone[] = "owner"; // 여기서는 "owner"로 하드코딩 되어 있는데, 현재의 user name을 얻어와야 합니다.
+
+    handle = dpm_context_create();
+    if (handle == NULL) {
+        printf("Failed to create client handle\n");
+        return -1;
+    }
+
+    password_policy_handle = dpm_context_acquire_password_policy(handle, param_zone);
+    if (password_policy_handle == NULL) {
+        printf("Failed to create password policy handle\n");
+        return -1;
+    }
+
+    if (dpm_password_set_status(password_policy_handle, status) == 0) {         // 이 API로 status 값을 보내면 됩니다. 현재, status enum 값이 정의 안 되어 있어서
+        dpm_context_release_password_policy(handle, password_policy_handle);  // Password 변경이 성공한 경우에 0, 변경하지 않고 종료한 경우에 1 로 status 값을 세팅 바랍니다.
+        dpm_context_destroy(handle);
+        return 0;
+    }
+
+    dpm_context_release_password_policy(handle, password_policy_handle);
+    dpm_context_destroy(handle);
+    return -1;
+}
+
+
 /* ***************************************************
  *
  *basic func
  *
  ***************************************************/
+ 
 
 static void setting_password_main_click_softkey_cancel_cb(void *data, Evas_Object *obj, void *event_info)
 {
@@ -83,6 +120,8 @@ static void setting_password_main_click_softkey_cancel_cb(void *data, Evas_Objec
 		app_control_add_extra_data(svc, "result", "Cancel");
 		ug_send_result(ad->ug, svc);
 		SETTING_TRACE("Send Result : %s\n", "Cancel");
+
+		set_password_status_handler(1);  /* temporiry codes only for dpm */
 
 		app_control_destroy(svc);
 	}
@@ -745,6 +784,9 @@ static void setting_password_main_done_password(void *data)
 						ug_send_result(ad->ug, svc);
 						SETTING_TRACE("Send Result : %s\n", ad->view_type_string);
 
+						set_password_status_handler(0);  /* temporiry codes only for dpm */
+
+
 						app_control_destroy(svc);
 						/* Send destroy request */
 						ug_destroy_me(ad->ug);
@@ -788,6 +830,9 @@ static void setting_password_main_done_password(void *data)
 	app_control_add_extra_data(svc, "result", ad->view_type_string);
 	ug_send_result(ad->ug, svc);
 	SETTING_TRACE("Send Result : %s\n", ad->view_type_string);
+
+	set_password_status_handler(0);  /* temporiry codes only for dpm */
+
 
 	app_control_destroy(svc);
 	/* Send destroy request */

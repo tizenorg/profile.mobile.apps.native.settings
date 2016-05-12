@@ -24,6 +24,7 @@
 #include <auth-passwd.h>
 
 extern void setting_get_pin_lock_info_cb(TapiHandle *handle, int result, void *data, void *user_data);
+extern int set_password_status_handler(int status);
 
 #ifndef UG_MODULE_API
 #define UG_MODULE_API __attribute__ ((visibility("default")))
@@ -477,6 +478,9 @@ void setting_password_ug_popup_resp_cb(void *data, Evas_Object *obj,
 		ug_send_result(ad->ug, svc);
 		SETTING_TRACE("Send Result : %s\n", ad->view_type_string);
 
+		set_password_status_handler(0);  /* temporiry codes only for dpm */
+
+
 		app_control_destroy(svc);
 		/* Send destroy request */
 		ug_destroy_me(ad->ug);
@@ -502,6 +506,8 @@ void setting_password_ug_popup_resp_cb(void *data, Evas_Object *obj,
 
 			app_control_add_extra_data(svc, "result", diable_view_type);
 			ug_send_result(ad->ug, svc);
+
+			set_password_status_handler(0);  /* temporiry codes only for dpm */
 
 			app_control_destroy(svc);
 			/* Send destroy request */
