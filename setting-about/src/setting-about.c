@@ -23,11 +23,7 @@
 #include <setting-about-main.h>
 #include <setting-cfg.h>
 
-
-#ifndef UG_MODULE_API
-#define UG_MODULE_API __attribute__ ((visibility("default")))
-#endif
-
+#define SETTING_ABOUT_PACKAGE_NAME "org.tizen.setting-about"
 
 void setting_about_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
 								void *priv)
@@ -74,67 +70,6 @@ static void setting_about_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
 	setting_view_update(&setting_view_about_main, ad);
 }
 
-/**
-* @brief on_create function of the UG
-*
-* @param ug
-* @param mode
-* @param data
-* @param priv
-*
-* @return
-*/
-static void *setting_about_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
-										app_control_h service, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-	setting_retvm_if((NULL == priv), NULL, "NULL == priv");
-	SettingAboutUG *aboutUG = priv;
-	aboutUG->ug = ug;
-
-	aboutUG->win_main_layout = (Evas_Object *) ug_get_parent_layout(ug);
-	aboutUG->win_get = (Evas_Object *) ug_get_window();
-	evas_object_show(aboutUG->win_main_layout);
-	aboutUG->evas = evas_object_evas_get(aboutUG->win_main_layout);
-
-	setting_retvm_if(aboutUG->win_main_layout == NULL, NULL,
-					 "cannot get main window ");
-
-	setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR);
-
-	/* register view node table */
-	setting_view_node_table_intialize();
-	setting_view_node_table_register(&setting_view_about_main, NULL);
-
-	/*	creating a view. */
-	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(aboutUG->itc_1text));
-	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(aboutUG->itc_2text_2));
-	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(aboutUG->itc_2text_3_parent));
-	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(aboutUG->itc_1icon_1text_sub));
-	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE, &(aboutUG->itc_group_item));
-	setting_create_Gendial_itc("multiline/1text", &(aboutUG->itc_help_style));
-
-	setting_view_node_set_cur_view(&setting_view_about_main);
-	setting_view_create(&setting_view_about_main, (void *)aboutUG);
-	evas_object_event_callback_add(aboutUG->win_main_layout, EVAS_CALLBACK_RESIZE, setting_about_ug_cb_resize, aboutUG);
-
-	aboutUG->popup_showed_flag = FALSE;
-	return aboutUG->ly_main;
-}
-
-static void setting_about_ug_on_start(ui_gadget_h ug, app_control_h service,
-									  void *priv)
-{
-}
-
-static void setting_about_ug_on_pause(ui_gadget_h ug, app_control_h service,
-									  void *priv)
-{
-	SETTING_TRACE_BEGIN;
-	SettingAboutUG *SettingAboutUG = priv;
-	SettingAboutUG->pause_flag = TRUE;
-}
-
 static void setting_about_ug_on_resume(ui_gadget_h ug, app_control_h service,
 									   void *priv)
 {
@@ -171,38 +106,6 @@ static void setting_about_ug_on_resume(ui_gadget_h ug, app_control_h service,
 	}
 }
 
-/**
-* on_destroy function of the UG
-*
-* @param ug
-* @param data
-* @param priv
-*/
-static void setting_about_ug_on_destroy(ui_gadget_h ug, app_control_h service,
-										void *priv)
-{
-	SETTING_TRACE_BEGIN;
-	setting_retm_if((!priv), "!priv");
-	SettingAboutUG *aboutUG = priv;
-
-	evas_object_event_callback_del(aboutUG->win_main_layout, EVAS_CALLBACK_RESIZE, setting_about_ug_cb_resize);	/* fix flash issue for gallery */
-	aboutUG->ug = ug;
-
-	/*	delete the allocated objects. */
-	setting_view_destroy(&setting_view_about_main, aboutUG);
-	if (NULL != ug_get_layout(aboutUG->ug)) {
-		evas_object_hide((Evas_Object *) ug_get_layout(aboutUG->ug));
-		evas_object_del((Evas_Object *) ug_get_layout(aboutUG->ug));
-	}
-
-	SETTING_TRACE_END;
-}
-
-static void setting_about_ug_on_message(ui_gadget_h ug, app_control_h msg,
-										app_control_h service, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-}
 
 /**
 * @brief ug_event processing function
@@ -295,38 +198,12 @@ static void setting_about_ug_on_key_event(ui_gadget_h ug,
 	}
 }
 
-
-/**
-* @brief aboutUG init
-*
-* @param ops
-*/
-UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
-{
-	SETTING_TRACE_BEGIN;
-	SettingAboutUG *aboutUG = calloc(1, sizeof(SettingAboutUG));
-	setting_retvm_if(!aboutUG, -1, "Create SettingAboutUG obj failed");
-
-	ops->create = setting_about_ug_on_create;
-	ops->start = setting_about_ug_on_start;
-	ops->pause = setting_about_ug_on_pause;
-	ops->resume = setting_about_ug_on_resume;
-	ops->destroy = setting_about_ug_on_destroy;
-	ops->message = setting_about_ug_on_message;
-	ops->event = setting_about_ug_on_event;
-	ops->key_event = setting_about_ug_on_key_event;
-	ops->priv = aboutUG;
-	ops->opt = UG_OPT_INDICATOR_ENABLE;
-
-	return 0;
-}
-
 /**
 * @brief aboutUG exit
 *
 * @param ops
 */
-UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
+void UG_MODULE_EXIT(struct ug_module_ops *ops)
 {
 	SETTING_TRACE_BEGIN;
 	SettingAboutUG *aboutUG;
@@ -372,7 +249,7 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
  *
  * @return 0 for success
  */
-UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv, char **applocale)
+int setting_plugin_search_init(app_control_h service, void *priv, char **applocale)
 {
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE(">> setting-about-efl DB search code");
@@ -389,4 +266,96 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv, 
 	return 0;
 }
 
+static void _lang_changed(app_event_info_h event_info, void *data)
+{
+	char *lang = NULL;
+	if (app_event_get_language(event_info, &lang) == APP_ERROR_NONE) {
+		SETTING_TRACE_DEBUG("Setting - language is changed : %s", lang);
+		elm_language_set(lang);
+		elm_config_all_flush();
+		free(lang);
+	} else {
+		SETTING_TRACE_ERROR("Cannot get language from event_info");
+	}
+}
+///////////////////////////////////////
+static bool app_create(void *data)
+{
+	SETTING_TRACE_BEGIN;
+	SettingAboutUG *ad = (SettingAboutUG *) data;
+
+	setting_retvm_if((!ad), NULL, "!priv");
+
+	setting_set_i18n(SETTING_PACKAGE, ABOUT_LOCALEDIR);
+
+	if(app_init(&ad->md, SETTING_ABOUT_PACKAGE_NAME)
+			!= SETTING_RETURN_SUCCESS) {
+		SETTING_TRACE_ERROR("Cannot initialize application");
+		return false;
+	}
+
+	setting_view_create(&setting_view_about_main, ad);
+
+	evas_object_event_callback_add(ad->md.win_main,
+					EVAS_CALLBACK_RESIZE,
+					setting_about_ug_cb_resize, ad);
+
+	SETTING_TRACE_END;
+	return true;
+}
+
+
+static void app_pause(void *data)
+{
+	SETTING_TRACE_BEGIN;
+	SettingAboutUG *SettingAboutUG = data;
+	SettingAboutUG->pause_flag = TRUE;
+}
+
+static void app_terminate(void *data)
+{
+	SETTING_TRACE_BEGIN;
+	setting_retm_if((!data), "!data");
+	SettingAboutUG *aboutUG = data;
+
+	evas_object_event_callback_del(aboutUG->win_main_layout, EVAS_CALLBACK_RESIZE, setting_about_ug_cb_resize);	/* fix flash issue for gallery */
+
+	/*	delete the allocated objects. */
+	setting_view_destroy(&setting_view_about_main, aboutUG);
+	if (NULL != ug_get_layout(aboutUG->ug)) {
+		evas_object_hide((Evas_Object *) ug_get_layout(aboutUG->ug));
+		evas_object_del((Evas_Object *) ug_get_layout(aboutUG->ug));
+	}
+
+	SETTING_TRACE_END;
+}
+
+EXPORT_PUBLIC
+int main(int argc, char *argv[])
+{
+	app_event_handler_h handlers[5] = {NULL, };
+	ui_app_lifecycle_callback_s ops = {
+		.create = app_create,
+		.pause = app_pause,
+		.resume = NULL,
+		.terminate = app_terminate,
+		.app_control = NULL
+	};
+	SettingAboutUG app_data;
+
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY],
+			APP_EVENT_LOW_MEMORY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY],
+			APP_EVENT_LOW_BATTERY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED],
+			APP_EVENT_LANGUAGE_CHANGED, _lang_changed, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED],
+			APP_EVENT_REGION_FORMAT_CHANGED, NULL, NULL);
+	ui_app_add_event_handler(
+			&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED],
+			APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
+
+	memset(&app_data, 0x0, sizeof(app_data));
+	return ui_app_main(argc, argv, &ops, &app_data);
+}
 

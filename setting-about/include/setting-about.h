@@ -53,6 +53,7 @@
 /*#include <tethering.h> */
 #include <notification.h>
 #include <dbus/dbus.h>
+#include "setting-common-init.h"
 
 #define MAX_DISPLAY_STR_LEN_ON_PHONE_INFO	256
 
@@ -82,6 +83,7 @@ typedef struct _SettingAboutUG SettingAboutUG;
  */
 struct _SettingAboutUG {
 	ui_gadget_h ug;
+	MainData md;
 	TapiHandle *handle;
 	bool tapi_responsed;
 	bool pause_flag;

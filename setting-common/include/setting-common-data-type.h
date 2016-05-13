@@ -63,6 +63,7 @@
 #define SETTING_PACKAGE			"setting"
 #define SYSTEM_PACKAGE			"sys_string"
 #define SETTING_LOCALEDIR		_TZ_SYS_RO_APP"/org.tizen.setting/res/locale"
+#define ABOUT_LOCALEDIR	_TZ_SYS_RO_APP"/org.tizen.setting-about/res/locale"
 
 #define MODE_SYSPOPUP_PACKAGE				   "mode-syspopup"
 #define MODE_SYSPOPUP_LOCALEDIR				   _TZ_SYS_RO_APP"/org.tizen.mode-syspopup/res/locale"
