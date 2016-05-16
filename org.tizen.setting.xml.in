@@ -137,9 +137,9 @@
                         <label xml:lang="en-us">Ringtone</label>
         </ui-application>
     <ui-application appid="setting-manage-applications-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-manage-applications-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
-                        <label>Application manager</label>
-                        <label xml:lang="en-us">Application manager</label>
-                        <label xml:lang="ko-kr">애플리케이션 관리자</label>
+                        <label>Settings</label>
+                        <label xml:lang="en-us">Settings</label>
+                        <label xml:lang="ko-kr">설정</label>
    </ui-application>
 	<ui-application appid="setting-security-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-security-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
                         <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
