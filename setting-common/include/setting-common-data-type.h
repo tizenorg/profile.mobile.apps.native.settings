@@ -27,10 +27,14 @@
 #ifndef __SETTING_COMMON_DATA_TYPE_H__
 #define __SETTING_COMMON_DATA_TYPE_H__
 
-#include <Elementary.h>		/* including Elementary lib */
-#include <setting-debug.h>	/*	including debuging type */
-#include <setting-common-resource.h>	/* including one class of data type */
-#include <setting-common-data-error.h>	/* including another class of data type */
+/* including Elementary lib */
+#include <Elementary.h>
+/* including debuging type */
+#include <setting-debug.h>
+/* including one class of data type */
+#include <setting-common-resource.h>
+/* including another class of data type */
+#include <setting-common-data-error.h>
 
 #include <setting-cfg.h>
 
@@ -60,25 +64,24 @@
 
 
 #define SETTING_POSTINST_FILE "/var/lib/dpkg/info/org.tizen.setting.postinst"
-#define SETTING_PACKAGE			"setting"
-#define SYSTEM_PACKAGE			"sys_string"
-#define SETTING_LOCALEDIR		_TZ_SYS_RO_APP"/org.tizen.setting/res/locale"
+#define SETTING_PACKAGE		"setting"
+#define SYSTEM_PACKAGE		"sys_string"
+#define SETTING_LOCALEDIR	_TZ_SYS_RO_APP\
+	"/org.tizen.setting/res/locale"
 
-#define MODE_SYSPOPUP_PACKAGE				   "mode-syspopup"
-#define MODE_SYSPOPUP_LOCALEDIR				   _TZ_SYS_RO_APP"/org.tizen.mode-syspopup/res/locale"
+#define MODE_SYSPOPUP_PACKAGE		"mode-syspopup"
+#define MODE_SYSPOPUP_LOCALEDIR	_TZ_SYS_RO_APP\
+	"/org.tizen.mode-syspopup/res/locale"
 
-#define SYSTEM_ICON_PATH		_TZ_SYS_RO_APP"/org.tizen.setting/res/icons"
-#define SETTING_ICON_PATH		_TZ_SYS_RO_APP"/org.tizen.setting/res/icons"
+#define SYSTEM_ICON_PATH	_TZ_SYS_RO_APP"/org.tizen.setting/res/icons"
+#define SETTING_ICON_PATH	_TZ_SYS_RO_APP"/org.tizen.setting/res/icons"
 #define SETTING_UG_ICON_PATH	_TZ_SYS_RO_UG"/res/icon/org.tizen.setting"
 
-#define SETTING_UG_PATH			_TZ_SYS_RO_UG"/lib"
-#define SETTING_UG_PATH_USR		_TZ_SYS_RO_UG"/lib"
+#define SETTING_UG_PATH		_TZ_SYS_RO_UG"/lib"
+#define SETTING_UG_PATH_USR	_TZ_SYS_RO_UG"/lib"
 
-/*#define SETTING_UG_PATH_OPT			"/opt/ug/lib" */
-/*#define SETTING_UG_PATH_USR_OPT		"/opt/ug/lib" */
-
-#define SETTING_PATH_MEMORY_OPT			"/opt/usr"
-#define SETTING_PATH_SDCARD_OPT			_TZ_SYS_MEDIA"/sdcard"
+#define SETTING_PATH_MEMORY_OPT		"/opt/usr"
+#define SETTING_PATH_SDCARD_OPT		_TZ_SYS_MEDIA"/sdcard"
 #define SETTING_PATH_PARENT_SDCARD_OPT	_TZ_SYS_MEDIA"/sdcard/.."
 
 
@@ -86,23 +89,14 @@
 #define SETTING_MEGABYTE_VALUE		1048576
 #define SETTING_GIGABYTE_VALUE		1073741824
 
-#define SETTING_MAX_STR_LEN			30
+#define SETTING_MAX_STR_LEN		30
 
 
 #define SETTING_EDJ_PATH		EDJDIR
-#define SETTINGS_EDJ				SETTING_EDJ_PATH"/settings.edj"
-#define SETTING_MEMORY_EDJ_NAME		SETTING_EDJ_PATH"/setting-memory.edj"
+#define SETTINGS_EDJ			SETTING_EDJ_PATH"/settings.edj"
 #define SETTING_THEME_EDJ_NAME		SETTING_EDJ_PATH"/setting-theme.edj"
-#define SETTING_5STEP_SLIDER_EDJ_NAME		SETTING_EDJ_PATH"/font-slider.edj"
-#define SETTING_NEWUX_EDJ_NAME		SETTING_EDJ_PATH"/setting-newux.edj"
-#define SETTING_SOUND_EDJ_NAME		SETTING_EDJ_PATH"/setting-sound.edj"
+#define SETTING_5STEP_SLIDER_EDJ_NAME	SETTING_EDJ_PATH"/font-slider.edj"
 #define SETTING_GENLIST_EDJ_NAME	SETTING_EDJ_PATH"/setting-genlist.edj"
-#define SETTING_NEW_GENLIST_EDJ_NAME	SETTING_EDJ_PATH"/setting-new-genlist.edj"
-#define SETTING_PROC_EDJ_NAME			SETTING_EDJ_PATH"/setting-proc.edj"
-#define SETTING_SLIDER_EDJ_NAME	SETTING_EDJ_PATH"/setting-slider.edj"
-#define SETTING_EFF_EDJ_NAME			SETTING_EDJ_PATH"/setting-eff.edj"
-
-#define SETTING_THEME_COLOR_THEME_EDJ_NAME		SETTING_EDJ_PATH"/setting-color-theme.edj"
 
 
 #define RCS_CHECHING_FILE		_TZ_SYS_SHARE"/ims/.RCS_ENABLED"
@@ -122,10 +116,12 @@
 
 #define SETTING_IDLE_IMAGE_PATH "/etc/idle_image/"
 
-#define NAVI_DEF_BUTTON_STYLE  "naviframe/toolbar/default"/*"naviframe_control/default" */
+/*"naviframe_control/default" */
+#define NAVI_DEF_BUTTON_STYLE  "naviframe/toolbar/default"
 #define NAVI_BACK_BUTTON_STYLE "naviframe/title_left"
 #define NAVI_BACK_ARROW_BUTTON_STYLE "naviframe/end_btn/default"
-#define NAVI_MORE_BUTTON_STYLE "naviframe/more/default"/*"naviframe_control/default" */
+/*"naviframe_control/default" */
+#define NAVI_MORE_BUTTON_STYLE "naviframe/more/default"
 
 
 #define NAVI_CONTROLBAR_PART "controlbar"
@@ -138,12 +134,13 @@
 
 #define PROGRESSBAR_STYLE "process_medium"
 #define SETTING_FONT_CONF_FILE	_TZ_SYS_ETC"/fonts/conf.avail/99-slp.conf"
-#define SETTING_DEFAULT_FONT_CONF_FILE	_TZ_SYS_DATA"/etc/fonts/conf.avail/99-slp.conf"
+#define SETTING_DEFAULT_FONT_CONF_FILE	_TZ_SYS_DATA\
+	"/etc/fonts/conf.avail/99-slp.conf"
 
 
 
-/*#define GENLIST_LIST_SUB_TEXT_SETTINGS_COLOR_STYLE		  "#3B73B6FF" */
-#define BLUE_COLOR			"#3B73B6"  /*3B73B6FF <== 59 115 182 255 */
+/*#define GENLIST_LIST_SUB_TEXT_SETTINGS_COLOR_STYLE	  "#3B73B6FF" */
+#define BLUE_COLOR		"#3B73B6" /*3B73B6FF <== 59 115 182 255 */
 #define GRAY_COLOR "#7B7B7B"
 #define RED_COLOR "#FF0000"
 #define WHITE_COLOR "#FFFFFF"
@@ -158,50 +155,52 @@
 * @return vo return
 */
 
-typedef void (*setting_call_back_func)(void *data, Evas_Object *obj, void *event_info);
+typedef void (*setting_call_back_func)(
+		void *data, Evas_Object *obj, void *event_info);
 typedef Eina_Bool(*setting_naviframe_cb)(void *data, Elm_Object_Item *it);
 
-#define WIDGET_SCALE_FACTOR				(get_widgets_factor())
-#define SETTING_PADDING_WIDTH			(8 * WIDGET_SCALE_FACTOR)
-#define SETTING_PADDING_HEIGHT			(8 * WIDGET_SCALE_FACTOR)
+#define WIDGET_SCALE_FACTOR		(get_widgets_factor())
+#define SETTING_PADDING_WIDTH		(8 * WIDGET_SCALE_FACTOR)
+#define SETTING_PADDING_HEIGHT		(8 * WIDGET_SCALE_FACTOR)
 #define SETTING_HALF_SCREEN_WIDTH \
 	(SETTING_PADDING_WIDTH * 22 * WIDGET_SCALE_FACTOR)
 
-#define SYS_NOTI_NAME_LEN					128
-#define MAX_DISPLAY_NAME_LEN_ON_UI			128
-#define MAX_COMMON_BUFFER_LEN				1024
-#define BUF_SIZE					512
+#define SYS_NOTI_NAME_LEN		128
+#define MAX_DISPLAY_NAME_LEN_ON_UI	128
+#define MAX_COMMON_BUFFER_LEN		1024
+#define BUF_SIZE			512
 
 #define MAX_SEARCH_STR_LEN 40
 
-#define HELP_MSG_BUFF_SIZE					1000
-#define MAX_SPECIALIZITION_LEN				1000
+#define HELP_MSG_BUFF_SIZE		1000
+#define MAX_SPECIALIZITION_LEN		1000
 
-#define PHONE_LOCK_ATTEMPS_MAX				5
-#define SIM_LOCK_ATTEMPS_MAX				5
-#define PHONE_LOCK_BLOCK_SECONDS			30
-#define SIM_LOCK_BLOCK_SECONDS				30
-#define LOCK_TIMESTAMP_LEN					64
-#define MAX_DATETIME_FORMAT_LEN				64
-#define MAX_DATE_FORMAT_LEN					10
+#define PHONE_LOCK_ATTEMPS_MAX		5
+#define SIM_LOCK_ATTEMPS_MAX		5
+#define PHONE_LOCK_BLOCK_SECONDS	30
+#define SIM_LOCK_BLOCK_SECONDS		30
+#define LOCK_TIMESTAMP_LEN		64
+#define MAX_DATETIME_FORMAT_LEN		64
+#define MAX_DATE_FORMAT_LEN		10
 
-#define SMALL_FONT_DPI						(-80)
-#define MIDDLE_FONT_DPI						(-100)
-#define LARGE_FONT_DPI						(-144)
-#define HUGE_FONT_DPI						(-184)
-#define GIANT_FONT_DPI						(-240)
+#define SMALL_FONT_DPI			(-80)
+#define MIDDLE_FONT_DPI			(-100)
+#define LARGE_FONT_DPI			(-144)
+#define HUGE_FONT_DPI			(-184)
+#define GIANT_FONT_DPI			(-240)
 
-#define LABEL_FONT_SIZE_SMALL					24
-#define LABEL_FONT_SIZE_NORMAL					35
-#define LABEL_FONT_SIZE_LARGE					55
-#define LABEL_FONT_SIZE_HUGE					75
-#define LABEL_FONT_SIZE_GIANT					92
+#define LABEL_FONT_SIZE_SMALL		24
+#define LABEL_FONT_SIZE_NORMAL		35
+#define LABEL_FONT_SIZE_LARGE		55
+#define LABEL_FONT_SIZE_HUGE		75
+#define LABEL_FONT_SIZE_GIANT		92
 
-#define __STR_EMUL							"emul"
-#define __LEN_STR_EMUL						4
+#define __STR_EMUL			"emul"
+#define __LEN_STR_EMUL			4
 
-#define MAX_SYSTEM_SERVICE_NUM				30
-#define SYSTEM_SERVICE_LIST_PATH "/opt/osp/system/configuration/system-services.list"
+#define MAX_SYSTEM_SERVICE_NUM		30
+#define SYSTEM_SERVICE_LIST_PATH \
+	"/opt/osp/system/configuration/system-services.list"
 #define MAX_PKG_NAME_LEN			128
 
 #define MIN_MOVE_DISTANCE 30
@@ -299,22 +298,25 @@ typedef struct _Setting_GenGroupItem_Data {
 	const char *r_swallow_path;	 /**< right image */
 
 	/* output */
-	Evas_Object *eo_check;					/**< slider, button, check, editfield, datefield */
-	int chk_status;							/**< represent check value, slider value, datefield value etc.. */
+	/**< slider, button, check, editfield, datefield */
+	Evas_Object *eo_check;
+	/**< represent check value, slider value, datefield value etc.. */
+	int chk_status;
 	setting_call_back_func chk_change_cb;
 
 	/* radio button */
-	Evas_Object *rgd;						/**< radio button */
+	/**< radio button */
+	Evas_Object *rgd;
 
-	char *keyStr;							/**< title */
-	char *keyStr2;							/**< title for font name expanlist item*/
-	char *sub_desc;							/**< sub text */
-	char *guide_text;						/**< guide text for editfield */
+	char *keyStr;		/**< title */
+	char *keyStr2;		/**< title for font name expanlist item*/
+	char *sub_desc;		/**< sub text */
+	char *guide_text;	/**< guide text for editfield */
 
 	/*	for slider control */
-	bool isIndicatorVisible;				/**< indicator option (displaying number) */
-	double slider_min;						/**< to swallow a slider */
-	double slider_max;						/**< to swallow a slider */
+	bool isIndicatorVisible;/**< indicator option (displaying number) */
+	double slider_min;	/**< to swallow a slider */
+	double slider_max;	/**< to swallow a slider */
 
 	setting_call_back_func start_change_cb;
 	setting_call_back_func stop_change_cb;
@@ -326,31 +328,44 @@ typedef struct _Setting_GenGroupItem_Data {
 	void *x_callback_cb;
 
 	/* sound/vibration */
-	int belongs_to;							/**< 1: slider belongs to sound group. 0: slider belongs to vibration group */
+	/**< 1: slider belongs to sound group.
+	 * 0: slider belongs to vibration group */
+	int belongs_to;
 
 	/*	for input panel	 */
-	Elm_Input_Panel_Layout input_type;		/**< input panel type */
-	Elm_Input_Panel_Return_Key_Type return_key_type;	/** the return key type in input method panel*/
-	bool input_panel_disable_flag;			/** do not show the input panel automatically when the widget is clicked or has focus*/
-	int disable_auto_cap; /** do not autocapital the first char in edit field*/
+	/**< input panel type */
+	Elm_Input_Panel_Layout input_type;
+	/** the return key type in input method panel*/
+	Elm_Input_Panel_Return_Key_Type return_key_type;
+	bool input_panel_disable_flag;
+	/** do not autocapital the first char in edit field*/
+	int disable_auto_cap;
 
-	void *userdata;							/**< just a reference, do not need release. */
+	void *userdata;	/**< just a reference, do not need release. */
 
 	bool isPasswordFlag;
 	bool isFocusFlag;
-	bool isItemDisableFlag;					/**< date/time UG only */
+	bool isItemDisableFlag;		/**< date/time UG only */
 	bool isSinglelineFlag;
 	bool maxLengthReachFlag;
-	bool enterKeyPressFlag;					/**< for about UG, enter or space key are not allowed, if they are pressed, it is true */
-	bool spaceKeyPressFlag;					/**<for about UG,if space key is pressed, need to popup a notification>*/
+	/**< for about UG, enter or space key are not allowed, if they are
+	 * pressed, it is true */
+	bool enterKeyPressFlag;
+	/**<for about UG,if space key is pressed, need to popup a
+	 * notification>*/
+	bool spaceKeyPressFlag;
 
-	bool isItemHideFlag;					/**< setting > storage only */
+	bool isItemHideFlag;	/**< setting > storage only */
 
-	int int_slp_setting_binded;				/**< its relative vconf value must increase from 0, and step is 1. eg, 0, 1, 2, 3.. */
-	bool entry_auto_focus;					/*for enty, if this is true, then entry will be focus state when the entry is created*/
+	/**< its relative vconf value must increase from 0, and step is 1.
+	 * eg, 0, 1, 2, 3.. */
+	int int_slp_setting_binded;
+	/*for enty, if this is true, then entry will be focus state when the
+	 * entry is created*/
+	bool entry_auto_focus;
 
 	/* popup */
-	Evas_Object *notify;					/**< act as any popup to show user any message */
+	Evas_Object *notify; /**< act as any popup to show user any message */
 
 	Elm_Entry_Filter_Accept_Set *digits_filter_data;
 	Elm_Entry_Filter_Limit_Size *limit_filter_data;
@@ -367,7 +382,8 @@ typedef struct _Setting_GenGroupItem_Data {
 	char *itc;
 
 	/* storage item style */
-	int color; /* 2: app, 3: pic,video, 4: audio, 5: Misc files, 6: Avail space */
+	/* 2: app, 3: pic,video, 4: audio, 5: Misc files, 6: Avail space */
+	int color;
 
 	/* Sound, ringtone ug, fullpath */
 	char *filepath;
@@ -448,4 +464,4 @@ typedef struct {
 	int font_size;
 } settings_font_size_table;
 
-#endif				/* __SETTING_COMMON_DATA_TYPE_H__ */
+#endif		/* __SETTING_COMMON_DATA_TYPE_H__ */
