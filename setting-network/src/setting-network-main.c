@@ -572,7 +572,7 @@ static void setting_network_mode_popup(void *data)
 
 	Evas_Object *scroller = NULL;
 	ad->network_mode_popup = setting_create_popup_with_list(&scroller , ad, ad->win_get,
-															"Network Mode", NULL, 0, false, false, 0);
+														_("IDS_ST_BODY_NETWORK_MODE"), NULL, 0, false, false, 0);
 	_P(ad->network_mode_popup);
 	/*Evas_Object *parentItem = ad->network_mode_popup; */
 
