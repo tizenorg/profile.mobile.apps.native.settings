@@ -64,6 +64,12 @@ static void setting_ringtone_done_click_cb(void *data, Evas_Object *obj, void *e
 		}
 		SETTING_TRACE("is_def_seleted: %d", is_def_seleted);
 
+		if (ad->sel_item_data && !safeStrCmp(ad->sel_item_data->keyStr,
+		"IDS_ST_BODY_PHONEPROFILES_SILENT"))
+		{
+			vconf_set_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, FALSE);
+		}
+
 		if (is_def_seleted) {
 			/*if default item is seleted, return "default" */
 			ad->rlt_file_path = strdup("default");
