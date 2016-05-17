@@ -323,27 +323,19 @@ Evas_Object *appmgrUg_run_gl_stop_btn(void *data, Evas_Object *obj,
 	SettingAppMgrUG *ad = data;
 
 	retv_if(NULL == data, NULL);
-//	if (0 != safeStrCmp(part, "elm.icon"))	return NULL;
 
-	Evas_Object *box = elm_box_add(obj);
-	elm_box_horizontal_set(box, 1);
-	elm_box_align_set(box, 0.0, 0.5);
-	elm_box_padding_set(box, 10, 0);
+	if (0 != safeStrCmp(part, "elm.swallow.content"))
+		return NULL;
+	btn = setting_create_button(obj, MGRAPP_STR_STOP, NULL, appmgrUg_run_stop_click, ad);
+	evas_object_size_hint_expand_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 
-	btn = setting_create_button(box, MGRAPP_STR_STOP, NULL, appmgrUg_run_stop_click, ad);
 
 	cur = ad->runinfos;
 	while (cur) {
-		appmgr_runinfo *info;
+		appmgr_runinfo *info = cur->data;
 
-		info = cur->data;
-
-		if (NULL == info)
-			continue;
-
-		if (info->can_kill)
+		if (info && info->can_kill)
 			break;
-
 		cur = cur->next;
 	}
 
@@ -352,10 +344,7 @@ Evas_Object *appmgrUg_run_gl_stop_btn(void *data, Evas_Object *obj,
 		elm_object_disabled_set(obj, EINA_TRUE);
 	}
 
-	elm_box_pack_end(box, btn);
-	evas_object_show(btn);
-	evas_object_show(box);
-	return box;
+	return btn;
 }
 
 int appmgrUg_get_running_list(SettingAppMgrUG *ad)
