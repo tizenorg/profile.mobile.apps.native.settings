@@ -55,27 +55,27 @@
 #define ATTEMPT_INFINITE	999999
 
 typedef enum {
-	SETTING_PW_TYPE_PASSWORD = 1,			/* Final type to verify current password */
-	SETTING_PW_TYPE_SET_PASSWORD,		/* This view type is used when click "password" and "change password" items in screen lock type view */
-	SETTING_PW_TYPE_SIMPLE_PASSWORD,	/* Final type to verify current simple password */
+	SETTING_PW_TYPE_PASSWORD = 1, /* Final type to verify current password */
+	SETTING_PW_TYPE_SET_PASSWORD, /* This view type is used when click "password" and "change password" items in screen lock type view */
+	SETTING_PW_TYPE_SIMPLE_PASSWORD, /* Final type to verify current simple password */
 	SETTING_PW_TYPE_SET_SIMPLE_PASSWORD, /* This view type is used when click "simple password" and "change simple password" items in screen lock type view */
-	SETTING_PW_TYPE_ENTER_LOCK_TYPE,	/* This view type is used when enter screen lock type menu to verify current password lock type */
-	SETTING_PW_TYPE_SIM_LOCK_ON = 6,		/* No use : Do not support SIM LOCK */
-	SETTING_PW_TYPE_SIM_LOCK_OFF,		/* No use : Do not support SIM LOCK */
-	SETTING_PW_TYPE_PIN_LOCK_ON,		/* This view type is used when try to turn PIN LOCK on */
-	SETTING_PW_TYPE_PIN_LOCK_OFF,		/* This view type is used when try to turn PIN LOCK off */
+	SETTING_PW_TYPE_ENTER_LOCK_TYPE, /* This view type is used when enter screen lock type menu to verify current password lock type */
+	SETTING_PW_TYPE_SIM_LOCK_ON = 6, /* No use : Do not support SIM LOCK */
+	SETTING_PW_TYPE_SIM_LOCK_OFF, /* No use : Do not support SIM LOCK */
+	SETTING_PW_TYPE_PIN_LOCK_ON, /* This view type is used when try to turn PIN LOCK on */
+	SETTING_PW_TYPE_PIN_LOCK_OFF, /* This view type is used when try to turn PIN LOCK off */
 	SETTING_PW_TYPE_CHANGE_PIN,
 	SETTING_PW_TYPE_CHANGE_PIN2 = 11,
-	SETTING_PW_TYPE_PIN_BLOCKED,	/* No use : PIN1 must be unblocked through pwlock app */
+	SETTING_PW_TYPE_PIN_BLOCKED, /* No use : PIN1 must be unblocked through pwlock app */
 	SETTING_PW_TYPE_PIN2_BLOCKED,
 	SETTING_PW_TYPE_MAX,
 } setting_pw_type;
 
 typedef enum {
-	SETTING_PW_ERROR_INVALID_LENGTH = -1,			/* if length of password is wrong, */
-	SETTING_PW_ERROR_INCLUDE_NO_LETTER = -2,		/* if password that user enter has no letter, */
-	SETTING_PW_ERROR_NO_MATCH_WITH_POLICY = -3,		/* if password that user enter does not match with policy, */
-	SETTING_PW_ERROR_NO_MATCH_MIN_COMPLEX = -4,		/* if password that user enter has no letter, */
+	SETTING_PW_ERROR_INVALID_LENGTH = -1, /* if length of password is wrong, */
+	SETTING_PW_ERROR_INCLUDE_NO_LETTER = -2, /* if password that user enter has no letter, */
+	SETTING_PW_ERROR_NO_MATCH_WITH_POLICY = -3, /* if password that user enter does not match with policy, */
+	SETTING_PW_ERROR_NO_MATCH_MIN_COMPLEX = -4, /* if password that user enter has no letter, */
 	SETTING_PW_ERROR_EXIST_FORBIDDEN_STRING = -5,
 	SETTING_PW_ERROR_NO_MATCH_MAX_REPEAT_COUNT = -6,
 	SETTING_PW_ERROR_NO_MATCH_CUR_PASSWORD = -7,
@@ -105,10 +105,8 @@ enum {
 };
 
 enum {
-	SETTING_PW_SUB_CATEGORY_SIMPLE = 0x01,
-	SETTING_PW_SUB_CATEGORY_MAX,
+	SETTING_PW_SUB_CATEGORY_SIMPLE = 0x01, SETTING_PW_SUB_CATEGORY_MAX,
 };
-
 
 struct _pw_item {
 	int pw_type_num;
@@ -205,8 +203,8 @@ typedef struct _SettingPasswordUG {
 	char *view_type_string;
 	int step;
 
-	Evas_Object *bottom_btn;	/* Instead of Toolbar btn */
-	Evas_Object *bottom_btn1;	/* Instead of Toolbar btn */
+	Evas_Object *bottom_btn; /* Instead of Toolbar btn */
+	Evas_Object *bottom_btn1; /* Instead of Toolbar btn */
 	Setting_GenGroupItem_Data *ed_pw1;
 	Setting_GenGroupItem_Data *ed_pw2;
 	Setting_GenGroupItem_Data *ed_pw3;
@@ -277,20 +275,22 @@ typedef struct _SettingPasswordUG {
 
 } SettingPasswordUG;
 
-
 extern setting_view setting_view_password_sim;
 extern setting_view setting_view_password_simple;
 extern setting_view setting_view_password_main;
 
-void setting_password_ug_popup_resp_cb(void *data, Evas_Object *obj, void *event_info);
-void setting_password_ug_create_popup_notitle_nobtn(void *data, char *str, int destroy);
+void setting_password_ug_popup_resp_cb(void *data, Evas_Object *obj,
+		void *event_info);
+void setting_password_ug_create_popup_notitle_nobtn(void *data, char *str,
+		int destroy);
 
 void setting_password_ug_display_desc(void *data, char *desc, int destroy);
 
-
 extern void setting_password_ug_check_attemps_left(void *data);
 
-int setting_password_check_password(const char *challenge,	unsigned int *remain_attempt, unsigned int *valid_sec);
-int setting_password_set_password(const char *cur_pwd, const char *new_pwd, void *data);
+int setting_password_check_password(const char *challenge,
+		unsigned int *remain_attempt, unsigned int *valid_sec);
+int setting_password_set_password(const char *cur_pwd, const char *new_pwd,
+		void *data);
 
 #endif
