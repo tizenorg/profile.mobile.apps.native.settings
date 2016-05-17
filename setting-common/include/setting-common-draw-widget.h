@@ -351,22 +351,15 @@ extern Setting_GenGroupItem_Data *setting_create_Gendial_field_editfield(
 		const Elm_Genlist_Item_Class *itc,
 		setting_call_back_func gl_sel,
 		void *sel_data,
-		SWALLOW_Type
-		swallow_type,
+		SWALLOW_Type swallow_type,
 		const char *keyStr,
 		char *sub_desc,
-		setting_call_back_func
-		chk_change_cb,
-		setting_call_back_func
-		focused_cb,
-		setting_call_back_func
-		unfocused_cb,
-		setting_call_back_func
-		activated_cb,
-		setting_call_back_func
-		max_reached_cb,
-		Elm_Input_Panel_Layout
-		input_type,
+		setting_call_back_func chk_change_cb,
+		setting_call_back_func focused_cb,
+		setting_call_back_func unfocused_cb,
+		setting_call_back_func activated_cb,
+		setting_call_back_func max_reached_cb,
+		Elm_Input_Panel_Layout input_type,
 		bool isPasswordFlag,
 		bool isFocusFlag,
 		int max_char_count,
