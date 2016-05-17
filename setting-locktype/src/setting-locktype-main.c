@@ -48,7 +48,8 @@ setting_view setting_view_locktype_main = {
 		.create = setting_locktype_main_create,
 		.destroy = setting_locktype_main_destroy,
 		.update = setting_locktype_main_update,
-		.cleanup = setting_locktype_main_cleanup, };
+		.cleanup = setting_locktype_main_cleanup,
+};
 
 openlock_appdata *lockapp_data = NULL;
 
@@ -277,7 +278,8 @@ static void __change_simple_password_cb(void *data, Evas_Object *obj,
 		void *event_info)
 {
 	retm_if(data == NULL, "Data parameter is NULL");
-	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
+	Setting_GenGroupItem_Data *list_item =
+			(Setting_GenGroupItem_Data *) data;
 	/*	for update */
 
 	SettingLocktypeUG *ad = (SettingLocktypeUG *) list_item->userdata;
@@ -292,7 +294,8 @@ static void __change_password_cb(void *data, Evas_Object *obj,
 		void *event_info)
 {
 	retm_if(data == NULL, "Data parameter is NULL");
-	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
+	Setting_GenGroupItem_Data *list_item =
+			(Setting_GenGroupItem_Data *) data;
 	/*	for update */
 
 	SettingLocktypeUG *ad = (SettingLocktypeUG *) list_item->userdata;

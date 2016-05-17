@@ -798,8 +798,8 @@ int setting_password_set_password(const char *cur_pwd, const char *new_pwd,
 	}
 
 	ret = auth_passwd_set_passwd(AUTH_PWD_NORMAL, cur_pwd, new_pwd);
-	SETTING_TRACE_DEBUG("[auth_passwd_set_passwd()] returns %d, INFINITE",
-			ret);
+	SETTING_TRACE_DEBUG("[auth_passwd_set_passwd()] returns %d, INF", ret);
+	/* SETTING_TRACE_ERROR("Auth: cur=[%s] new=[%s]", cur_pwd, new_pwd); */
 	if (ret == AUTH_PASSWD_API_SUCCESS) {
 #if 0
 		ckmc_ret = ckmc_change_user_password(user, cur_pwd, new_pwd);
