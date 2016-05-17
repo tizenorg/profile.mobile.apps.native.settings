@@ -299,10 +299,8 @@ static void setting_password_main_entry_changed_cb(void *data, Evas_Object *obj,
 	/* For disable toolbar (done) item */
 	bool disableFlag = isFoundEmptyEntry;
 	if (ad->ed_pw1 && ad->ed_pw1->eo_check
-			&& (safeStrLen(
-					elm_entry_entry_get(
-							ad->ed_pw1->eo_check))
-					< 4))
+			&& safeStrLen(elm_entry_entry_get(
+					ad->ed_pw1->eo_check)) < 4)
 		disableFlag = TRUE;
 
 #if SUPPORT_BOTTOM_BTNS
@@ -511,14 +509,11 @@ int setting_password_main_draw_1line_password(void *data, void *cb)
 
 		/* change return key type */
 		if (ad->ed_pw1) {
-			SETTING_TRACE_ERROR("Edit field created");
 			ad->ed_pw1->return_key_type = ELM_INPUT_PANEL_RETURN_KEY_TYPE_NEXT;
 			elm_entry_input_panel_return_key_type_set(
 					ad->ed_pw1->eo_check,
 					ELM_INPUT_PANEL_RETURN_KEY_TYPE_NEXT);
 			elm_object_focus_set(ad->ed_pw1->eo_check, EINA_TRUE);
-			setting_password_main_entry_changed_cb(ad->ed_pw1,
-					ad->scroller, NULL);
 		} else {
 			SETTING_TRACE_ERROR("Cannot create editfield");
 		}
@@ -578,51 +573,70 @@ void __add_help_of_password_fails(int ret, SettingPasswordUG *ad)
 
 	switch (ret) {
 	case SETTING_PW_ERROR_INVALID_LENGTH:
-		setting_password_ug_display_desc(ad, "Invalid length", FALSE);
+		setting_password_ug_display_desc(
+				ad,
+				"Invalid length",
+				FALSE);
 		break;
 	case SETTING_PW_ERROR_INCLUDE_NO_LETTER:
-		setting_password_ug_display_desc(ad,
+		setting_password_ug_display_desc(
+				ad,
 				"IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_1_LETTER",
 				FALSE);
 		break;
 	case SETTING_PW_ERROR_NO_MATCH_WITH_POLICY:
-		setting_password_ug_display_desc(ad, "No match with policy",
-		FALSE);
+		setting_password_ug_display_desc(
+				ad,
+				"No match with policy",
+				FALSE);
 		break;
 	case SETTING_PW_ERROR_NO_MATCH_MIN_COMPLEX:
-		setting_password_ug_display_desc(ad,
+		setting_password_ug_display_desc(
+				ad,
 				"No match with min complex",
 				FALSE);
 		break;
 	case SETTING_PW_ERROR_EXIST_FORBIDDEN_STRING:
-		setting_password_ug_display_desc(ad, "Exist forbidden string",
-		FALSE);
+		setting_password_ug_display_desc(
+				ad,
+				"Exist forbidden string",
+				FALSE);
 		break;
 	case SETTING_PW_ERROR_NO_MATCH_MAX_REPEAT_COUNT:
-		setting_password_ug_display_desc(ad,
+		setting_password_ug_display_desc(
+				ad,
 				"No match with max repeat count",
 				FALSE);
 		break;
 	case SETTING_PW_ERROR_SIMPLE_STYLE:
-		setting_password_ug_display_desc(ad, "Exist simple sequence",
-		FALSE);
+		setting_password_ug_display_desc(
+				ad,
+				"Exist simple sequence",
+				FALSE);
 		break;
 	case SETTING_PW_ERROR_INCLUDE_DIGIT:
-		setting_password_ug_display_desc(ad,
+		setting_password_ug_display_desc(
+				ad,
 				"Password should not include any digit or symbol",
 				FALSE);
 		break;
 	case SETTING_PW_ERROR_NO_MATCH_WITH_PATTERN:
-		setting_password_ug_display_desc(ad, "No match with pattern",
-		FALSE);
+		setting_password_ug_display_desc(
+				ad,
+				"No match with pattern",
+				FALSE);
 		break;
 	case SETTING_PW_ERROR_NO_DIGIT:
-		setting_password_ug_display_desc(ad,
+		setting_password_ug_display_desc(
+				ad,
 				"IDS_ST_BODY_PASSWORD_MUST_CONTAIN_AT_LEAST_1_NUMBER",
 				FALSE);
 		break;
 	default:
-		setting_password_ug_display_desc(ad, PW_ERR_DESC, FALSE);
+		setting_password_ug_display_desc(
+				ad,
+				PW_ERR_DESC,
+				FALSE);
 		break;
 	}
 }
@@ -651,11 +665,11 @@ int setting_password_main_check_1line_password(void *data)
 	/*	Length Check */
 	int entry_str_len = safeStrLen(entry_str);
 	if (entry_str_len < SETTING_PW_UG_NORMAL_PASSWORD_MIN_LENGTH
-			|| entry_str_len
-					> SETTING_PW_UG_NORMAL_PASSWORD_MAX_LENGTH) {
-		setting_password_main_warning_entry_added_byte_popup(ad,
-		SETTING_PW_UG_NORMAL_PASSWORD_MIN_LENGTH,
-		SETTING_PW_UG_NORMAL_PASSWORD_MAX_LENGTH);
+			|| entry_str_len > SETTING_PW_UG_NORMAL_PASSWORD_MAX_LENGTH) {
+		setting_password_main_warning_entry_added_byte_popup(
+				ad,
+				SETTING_PW_UG_NORMAL_PASSWORD_MIN_LENGTH,
+				SETTING_PW_UG_NORMAL_PASSWORD_MAX_LENGTH);
 		FREE(entry_str);
 		return SETTING_ENTRY_REQUIRED_CORRECT_DIGIT_PW;
 	}
@@ -687,7 +701,8 @@ int setting_password_main_check_2line_password(void *data)
 
 	/*	Empty Check */
 	if (isEmptyStr(entry_str1_mk)) {
-		setting_password_ug_display_desc(ad,
+		setting_password_ug_display_desc(
+				ad,
 				_("IDS_ST_BODY_PASSWORD_EMPTY"),
 				FALSE);
 		FREE(entry_str1_mk);
@@ -698,7 +713,8 @@ int setting_password_main_check_2line_password(void *data)
 	/*	Match Check */
 	if (0 != safeStrCmp(entry_str1_mk, entry_str2_mk)) {
 		setting_password_main_clear_1line_password(ad);
-		setting_password_ug_display_desc(ad,
+		setting_password_ug_display_desc(
+				ad,
 				_("IDS_ST_POP_PASSWORDS_DO_NOT_MATCH"),
 				FALSE);
 		FREE(entry_str1_mk);
@@ -709,11 +725,11 @@ int setting_password_main_check_2line_password(void *data)
 	/*	Length Check */
 	int entry_str_len = safeStrLen(entry_str1_mk);
 	if (entry_str_len < SETTING_PW_UG_NORMAL_PASSWORD_MIN_LENGTH
-			|| entry_str_len
-					> SETTING_PW_UG_NORMAL_PASSWORD_MAX_LENGTH) {
-		setting_password_main_warning_entry_added_byte_popup(ad,
-		SETTING_PW_UG_NORMAL_PASSWORD_MIN_LENGTH,
-		SETTING_PW_UG_NORMAL_PASSWORD_MAX_LENGTH);
+			|| entry_str_len > SETTING_PW_UG_NORMAL_PASSWORD_MAX_LENGTH) {
+		setting_password_main_warning_entry_added_byte_popup(
+				ad,
+				SETTING_PW_UG_NORMAL_PASSWORD_MIN_LENGTH,
+				SETTING_PW_UG_NORMAL_PASSWORD_MAX_LENGTH);
 		FREE(entry_str1_mk);
 		FREE(entry_str2_mk);
 		return SETTING_ENTRY_REQUIRED_CORRECT_DIGIT_PW;
@@ -729,10 +745,8 @@ void setting_password_main_warning_entry_added_byte_popup(SettingPasswordUG *ad,
 {
 	char str[MAX_SPECIALIZITION_LEN + 1] = { 0 };
 
-	snprintf(str,
-	MAX_SPECIALIZITION_LEN,
-			_(
-					"IDS_ST_POP_PASSWORD_MUST_BE_MORE_THAN_P1SD_CHARACTERS_AND_LESS_THAN_P2SD"),
+	snprintf(str, MAX_SPECIALIZITION_LEN,
+			_("IDS_ST_POP_PASSWORD_MUST_BE_MORE_THAN_P1SD_CHARACTERS_AND_LESS_THAN_P2SD"),
 			min, max);
 	setting_password_ug_display_desc(ad, str, FALSE);
 }
@@ -837,19 +851,17 @@ static void setting_password_main_done_password(void *data)
 
 			ret = setting_password_set_password(ad->cur_pwd,
 					entry_str, ad);
-			SETTING_TRACE(
-					" ---> setting_password_set_password : %d \n",
+			SETTING_TRACE(" ---> setting_password_set_password : %d \n",
 					ret);
 
-			/*	Modify Setting Password */
+			/* Modify Setting Password */
 			if (ret > 0) {
 				/*	Display popup */
 				/*service_add_extra_data(svc, "current", entry_str); */
 				if (ad->set_history_timer) {
 					setting_password_ug_create_popup_notitle_nobtn(
 							ad,
-							_(
-									"IDS_ST_POP_NEW_PASSWD_SAVED"),
+							_("IDS_ST_POP_NEW_PASSWD_SAVED"),
 							FALSE);
 				} else {
 					app_control_add_extra_data(svc,
@@ -878,8 +890,7 @@ static void setting_password_main_done_password(void *data)
 				ad->focus_data = ad->ed_pw1;
 				setting_password_main_clear_1line_password(ad);
 				setting_password_ug_display_desc(ad,
-						_(
-								"IDS_BT_POP_OPERATION_FAILED"),
+						_("IDS_BT_POP_OPERATION_FAILED"),
 						FALSE);
 				app_control_destroy(svc);
 				return;
@@ -949,8 +960,8 @@ static int __count_string(const char *str, int *cnt_letter, int *cnt_digit,
 			letter++;
 		} else if ((temp >= 'A') && (temp <= 'Z')) { /* upper letter */
 			letter++;
-			/* symbol means special char that enables to input from IME. */
 		} else if ((temp >= ' ') && (temp <= '~')) {
+			/* symbol means special char that enables to input from IME. */
 			symbol++;
 		}
 	}
