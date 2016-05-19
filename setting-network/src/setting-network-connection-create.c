@@ -997,7 +997,8 @@ static int setting_network_connection_create(void *cb)
 									  __setting_network_connection_exp_cb,
 									  NULL);
 	__get_connection_info(ad);
-	Elm_Object_Item *item = NULL;
+
+	/*Elm_Object_Item *item = NULL;*/
 
 	if (!safeStrCmp(STR_SETTING_NEW_CONNECTIONS, ad->con_name)) { /*new a profile,need to select the "Service type" */
 		ad->data_srv_type =

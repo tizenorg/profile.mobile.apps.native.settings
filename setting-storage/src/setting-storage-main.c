@@ -252,7 +252,8 @@ Evas_Object *storageUg_main_pie_item_get_icon(void *data, Evas_Object *obj,
 			"part(%s) Invaild", part);
 
 	layout = elm_layout_add(obj);
-	Eina_Bool res = elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME,
+
+	elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME,
 			"storage_pie");
 
 	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND,

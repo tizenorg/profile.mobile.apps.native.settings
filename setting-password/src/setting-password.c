@@ -770,7 +770,7 @@ int setting_password_set_password(const char *cur_pwd, const char *new_pwd,
 #if SECURITY_SERVER
 	SettingPasswordUG *ad = (SettingPasswordUG *) data;
 	int ret = 0;
-	int err;
+	/*int err;*/
 
 	/* max attempt count will be handled in passwordug for a while. */
 	if (ad->pw_status == SETTING_PW_STATUS_EMPTY) {

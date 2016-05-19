@@ -53,7 +53,7 @@ static int setting_security_sim_settings_create(void *cb)
 	SettingSecurityUG *ad = (SettingSecurityUG *) cb;
 
 	Evas_Object *scroller;
-	Elm_Object_Item *item = NULL;
+	/*Elm_Object_Item *item = NULL;*/
 
 	/* add basic layout */
 	setting_push_layout_navi_bar_genlist(ad->win_main_layout,

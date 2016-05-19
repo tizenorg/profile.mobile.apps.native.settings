@@ -162,7 +162,7 @@ static UNUSED char *_appmgrUg_access_info_prepend_cb(void *data, Evas_Object *ob
 	retv_if(!data, NULL);
 	char str[256];
 
-	sprintf(str, 256, _("IDS_CAM_BODY_SHOWING_PD_ITEMS_T_TTS"), data);
+	snprintf(str, 256, _("IDS_CAM_BODY_SHOWING_PD_ITEMS_T_TTS"), data);
 	return strdup(_(str));
 }
 

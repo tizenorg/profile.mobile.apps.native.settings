@@ -130,11 +130,11 @@ static void setting_display_screen_timeout_popup(void *data)
 	evas_object_data_set(menu_glist, "radio", rdg);
 	ad->screen_timeout_rdg = rdg;
 
-	int is_emul_bin = FALSE;
+	/*int is_emul_bin = FALSE;*/
 	int radio_num =0;
 	if (isEmulBin()) {
 		SETTING_TRACE_ERROR(">>>>>>>>>>>>>> EMULATOR is on!!");
-		is_emul_bin = TRUE;
+		/*is_emul_bin = TRUE;*/
 		radio_num  = 0;
 		ad->data_backlight_always_on = setting_create_Gendial_field_1radio(
 				menu_glist, &(ad->itc_1text_1icon),

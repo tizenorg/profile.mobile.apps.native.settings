@@ -65,7 +65,7 @@ static int setting_view_security_update_create(void *cb)
 	SettingSecurityUG *ad = (SettingSecurityUG *) cb;
 
 	Evas_Object *scroller;
-	Elm_Object_Item *item = NULL;
+	/*Elm_Object_Item *item = NULL;*/
 
 	/* add basic layout */
 	char setBtnStr[MAX_DISPLAY_NAME_LEN_ON_UI];

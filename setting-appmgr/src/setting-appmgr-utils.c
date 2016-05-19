@@ -654,7 +654,7 @@ Evas_Object *appmgrUg_info_title_gl_icon_get(void *data, Evas_Object *obj,
 											 const char *part)
 {
 	Evas_Object *icon = NULL;
-	Evas_Object *lay = NULL;
+	/*Evas_Object *lay = NULL;*/
 	SettingAppMgrUG *ad = data;
 
 	retv_if(data == NULL, NULL);

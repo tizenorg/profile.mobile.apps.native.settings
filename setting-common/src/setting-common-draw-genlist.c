@@ -425,6 +425,8 @@ static char *_gl_Gendial_new_text_get(void *data, Evas_Object *obj,
 	return ret_str;
 }
 
+
+#if 0
 static char *_gl_Gendial_text_get(void *data, Evas_Object *obj,
 		const char *part)
 {
@@ -457,6 +459,7 @@ static char *_gl_Gendial_text_get(void *data, Evas_Object *obj,
 
 	return ret_str;
 }
+#endif
 
 #if 0
 static char *_gl_Gendial_text2_get(void *data, Evas_Object *obj,
