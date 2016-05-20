@@ -95,20 +95,13 @@ static inline void _storageUg_ignore_vconf()
 
 static inline void storageUg_init_itcs(SettingStorageUG *ad)
 {
-	setting_create_Gendial_itc("dialogue/2text.3/expandable", &(ad->itc_2text_3_parent));
-	setting_create_Gendial_itc("dialogue/1text.1icon/expandable2",
-							   &(ad->itc_1icon_1text_sub));
-	setting_create_Gendial_itc("dialogue/2text.3", &(ad->itc_2text_2));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(ad->itc_2text_2));
 	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE, &(ad->itc_group_item));
-	setting_create_Gendial_itc("2line.top.4", &(ad->itc_2text_1icon_3));
-	setting_create_Gendial_itc("dialogue/1text", &(ad->itc_1text));
-	setting_create_Gendial_itc("1text.1icon.3", &(ad->itc_1text_1icon));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(ad->itc_1text));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(ad->itc_1text_1icon));
 	setting_create_Gendial_itc(SETTING_GENLIST_LEFT_ICON_CONTENT_ICON_STYLE, &(ad->itc_pie));
 	ad->itc_pie.func.content_get = storageUg_main_pie_item_get_icon;
 	ad->itc_pie.func.del = NULL;
-	setting_create_Gendial_itc("1icon/no_padding_line", &(ad->itc_notice));
-	ad->itc_notice.func.content_get = storageUg_default_notice_get_icon;
-	ad->itc_notice.func.del = NULL;
 
 	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(ad->itc_color_item));
 	ad->itc_color_item.func.content_get = storageUg_color_item_content_get;

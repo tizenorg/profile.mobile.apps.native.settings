@@ -78,17 +78,14 @@ struct _SettingStorageUG {
 
 	/* storage setting */
 	Evas_Object *popup;
-	Elm_Genlist_Item_Class itc_2text_3_parent;
+
 	Elm_Genlist_Item_Class itc_1icon_1text_sub;
 	Elm_Genlist_Item_Class itc_2text_2;
 	Elm_Genlist_Item_Class itc_group_item;
-	Elm_Genlist_Item_Class itc_2text_1icon_3;
 	Elm_Genlist_Item_Class itc_1text;
 	Elm_Genlist_Item_Class itc_1text_1icon;
 	Elm_Genlist_Item_Class itc_pie;
-	Elm_Genlist_Item_Class itc_notice;
 	Elm_Genlist_Item_Class itc_color_item;
-	Elm_Genlist_Item_Class itc_msic_file_item;
 
 	double sz_inter_total;
 	double sz_inter_avail;
