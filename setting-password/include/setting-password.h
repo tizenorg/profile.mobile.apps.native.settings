@@ -201,6 +201,7 @@ typedef struct _SettingPasswordUG {
 
 	setting_pw_type view_type;
 	char *view_type_string;
+	char *caller_string;
 	int step;
 
 	Evas_Object *bottom_btn; /* Instead of Toolbar btn */

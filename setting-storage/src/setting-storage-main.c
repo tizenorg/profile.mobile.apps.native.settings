@@ -289,7 +289,7 @@ Evas_Object *storageUg_color_item_content_get(void *data, Evas_Object *obj,
 	Setting_GenGroupItem_Data *list_item = data;
 	int color = list_item->color;
 
-	SETTING_TRACE_ERROR("part : %s", part);
+	SETTING_TRACE_DEBUG("part : %s", part);
 
 	if (!strcmp(part, "elm.swallow.icon")) {
 		Evas_Object *layout = elm_layout_add(obj);
