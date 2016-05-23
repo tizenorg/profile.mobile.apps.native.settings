@@ -1137,7 +1137,7 @@ void __register_network(Setting_GenGroupItem_Data *list_item)
 		} else {
 
 			/* Display 'Registering' popup when automatic */
-			SETTING_TRACE("Automatic selection, Registering..")
+			SETTING_TRACE("Automatic selection, Registering..");
 
 			if (ad->network_select_registering_pop != NULL) {
 				evas_object_del(ad->network_select_registering_pop);
@@ -1218,7 +1218,7 @@ void __register_network(Setting_GenGroupItem_Data *list_item)
 			return;
 		} else {
 			/* Display 'Registering' popup when manual */
-			SETTING_TRACE("Manual selection, Registering..")
+			SETTING_TRACE("Manual selection, Registering..");
 
 			if (ad->network_select_registering_pop != NULL) {
 				evas_object_del(ad->network_select_registering_pop);

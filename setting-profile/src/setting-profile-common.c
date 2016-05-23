@@ -825,7 +825,7 @@ static Eina_Bool __volume_key_down_cb(void *data, int type, void *event)
 
 		sound_manager_get_current_sound_type(&sound_type);
 		if (sound_type == SOUND_TYPE_MEDIA) {
-			SETTING_TRACE("sound_type == SOUND_TYPE_MEDIA")
+			SETTING_TRACE("sound_type == SOUND_TYPE_MEDIA");
 			int ret =  sound_manager_get_volume(sound_type,
 					&volume);
 			SETTING_TRACE("ret:%d", ret);
@@ -856,7 +856,7 @@ static Eina_Bool __volume_key_down_cb(void *data, int type, void *event)
 				}
 			}
 		} else {
-			SETTING_TRACE("sound_type == SOUND_TYPE_RINGTONE")
+			SETTING_TRACE("sound_type == SOUND_TYPE_RINGTONE");
 			sound_manager_get_volume(SOUND_TYPE_RINGTONE, &volume);
 			/*ad->backup_ringtong_volume = volume; */
 			/*vconf_set_int(VCONFKEY_SETAPPL_RINGTONE_BACKUP_VOLUME,
@@ -947,7 +947,7 @@ static Eina_Bool __volume_key_down_cb(void *data, int type, void *event)
 		ad->is_pressing = TRUE;
 		sound_manager_get_current_sound_type(&sound_type);
 		if (sound_type == SOUND_TYPE_MEDIA) {
-			SETTING_TRACE("sound_type == SOUND_TYPE_MEDIA")
+			SETTING_TRACE("sound_type == SOUND_TYPE_MEDIA");
 			int ret =  sound_manager_get_volume(sound_type,
 					&volume);
 			SETTING_TRACE("ret:%d", ret);
