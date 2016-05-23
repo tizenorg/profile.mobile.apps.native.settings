@@ -99,7 +99,8 @@ void time_changed_callback(keynode_t *key, void *data)
 	}
 
 #if 0
-	SETTING_TRACE("ad->is_datefield_selected:%d", ad->is_datefield_selected)
+	SETTING_TRACE("ad->is_datefield_selected:%d",
+			ad->is_datefield_selected);
 	if (EINA_TRUE == ad->is_datefield_selected) {
 		/* Timezone is not changed and a selected value of the
 		 * datefield is already changed */
@@ -324,7 +325,7 @@ static void __update_time_via_sim_card(void *data)
 		SETTING_TRACE("_alarmmgr_set_timezone_helper - successful : "
 				"%s \n", tz_path);
 	if (!__setting_set_city_tzone(tzpath)) {
-		SETTING_TRACE("__setting_set_city_tzone ERROR")
+		SETTING_TRACE("__setting_set_city_tzone ERROR");
 		return;
 	}
 	get_city_name(tzpath);

@@ -428,7 +428,7 @@ char *format_backlight_time_str(char *backligt_time)
 		snprintf(backlight_time_str, sizeof(backlight_time_str),
 				 "%d %s", value, (char *)(_("IDS_ST_BODY_SECONDS")));
 	}
-	SETTING_TRACE("backlight_time_str:%s", backlight_time_str)
+	SETTING_TRACE("backlight_time_str:%s", backlight_time_str);
 	return (char *)g_strdup(backlight_time_str);
 }
 
