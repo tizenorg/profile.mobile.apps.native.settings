@@ -77,6 +77,8 @@
 #define SETTING_ICON_PATH	_TZ_SYS_RO_APP"/org.tizen.setting/res/icons"
 #define SETTING_UG_ICON_PATH	_TZ_SYS_RO_UG"/res/icon/org.tizen.setting"
 
+#define SETTING_APP_MGR_ICON_SIZE	117
+
 #define SETTING_UG_PATH		_TZ_SYS_RO_UG"/lib"
 #define SETTING_UG_PATH_USR	_TZ_SYS_RO_UG"/lib"
 

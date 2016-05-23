@@ -187,8 +187,6 @@ static void *appmgrUg_on_create(ui_gadget_h ug, enum ug_mode mode,
 
 	appmgrUg_init_itcs(ad);
 
-	/*elm_theme_extension_add(NULL, SETTING_THEME_EDJ_NAME); */
-
 	ad->lo_main = setting_create_win_layout(ad->win);
 	ad->navi = appmgrUg_create_navi(ad->lo_main, ad);
 	if (NULL == ad->navi) {
