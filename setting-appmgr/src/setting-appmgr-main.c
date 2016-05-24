@@ -390,6 +390,8 @@ char *appmgrUg_main_gl_label_new_get(void *data, Evas_Object *obj, const char *p
 			label = strdup(desc);
 		} else {
 			label = strdup(_(MGRAPP_STR_COMPUTING));
+			info->size_idler = ecore_timer_add(0.6,
+				(Ecore_Task_Cb)  appmgrUg_get_app_size, info);
 		}
 	}
 
