@@ -39,6 +39,45 @@ extern void appmgrUg_run_stop_click(void *data, Evas_Object *obj, void *event_in
 
 static void appmgrUg_free_listinfo(gpointer data);
 
+void _get_size_cb(const char *package_id, const package_size_info_h size_info, void *data)
+{
+	retm_if(data == NULL, "data == NULL");
+	appmgr_listinfo *info = data;
+
+	long long size = 0;
+	package_size_info_get_data_size(size_info, &size);
+	info->total_size = (int)size;
+
+	package_size_info_get_app_size(size_info, &size);
+	info->total_size += (int)size;
+
+	info->valid_size = true;
+	if (info->size_idler) {
+		ecore_timer_del(info->size_idler);
+		info->size_idler = NULL;
+	}
+	elm_genlist_item_fields_update(info->item, "elm.text.sub",
+		ELM_GENLIST_ITEM_FIELD_TEXT);
+}
+
+Eina_Bool appmgrUg_get_app_size(void *data)
+{
+	retvm_if(data == NULL, EINA_FALSE, "Data parameter is NULL");
+	appmgr_listinfo *info = data;
+	retv_if(info == NULL, 0);
+
+	elm_genlist_item_fields_update(info->item, "elm.text.sub",
+		ELM_GENLIST_ITEM_FIELD_TEXT);
+
+	int ret = package_manager_get_package_size_info(info->pkgid,
+		_get_size_cb, info);
+	if (ret != 0) {
+		SETTING_TRACE_ERROR("failed to invoke ret = %d", ret);
+	}
+
+	return EINA_FALSE;
+}
+
 void _free_GSList(GSList *list)
 {
 	g_slist_foreach(list, (GFunc)g_free, NULL);
@@ -595,13 +634,20 @@ void appmgrUg_get_runlistinfos_cb(int fn_result, SettingAppMgrUG *ad)
 void appmgrUg_pkgmgr_subscribe(SettingAppMgrUG *ad)
 {
 	int ret;
-
 	ret_if(NULL == ad);
 
 	ad->pc_main = pkgmgr_client_new(PC_LISTENING);
 	if (NULL == ad->pc_main) {
 		SETTING_TRACE_ERROR("pkgmgr_client_new() Fail");
 		return;
+	}
+
+	ret = pkgmgr_client_set_status_type(ad->pc_all_size, PKGMGR_CLIENT_STATUS_GET_SIZE);
+	if (ret < 0) {
+		SETTING_TRACE_ERROR("pkgmgr_client_set_status_type() Fail(%d)", ret);
+		pkgmgr_client_free(ad->pc_all_size);
+		ad->pc_main = NULL;
+		return SETTING_RETURN_FAIL;
 	}
 
 	ret = pkgmgr_client_listen_status(ad->pc_main, (pkgmgr_handler)appmgrUg_pkgmgr_changed_cb, ad);
