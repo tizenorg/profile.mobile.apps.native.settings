@@ -314,7 +314,8 @@ static void *setting_password_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	elm_theme_extension_add(NULL, SETTING_GENLIST_EDJ_NAME);
 	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE,
 			&(passwordUG->itc_title));
-	setting_create_Gendial_itc("1icon", &(passwordUG->itc_variable_height));
+	setting_create_Gendial_itc(SETTING_GENLIST_1ICON_STYLE,
+			&(passwordUG->itc_variable_height));
 
 	passwordUG->itc_err_desc.item_style = "multiline_sub";
 	passwordUG->itc_err_desc.func.text_get = __gl_err_desc_text_get;

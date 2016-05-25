@@ -65,6 +65,8 @@ _main_gl_del_cb(void *data, Evas_Object *obj EINA_UNUSED)
 
 static inline void appmgrUg_init_itcs(SettingAppMgrUG *ad)
 {
+	elm_theme_extension_add(NULL, SETTING_GENLIST_EDJ_NAME);
+
 	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE, &(ad->itc_grp_title));
 	setting_create_Gendial_itc(SETTING_GENLIST_MULTILINE_STYLE, &(ad->itc_multiline));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(ad->itc_1txt_1ic_2));
@@ -84,7 +86,7 @@ static inline void appmgrUg_init_itcs(SettingAppMgrUG *ad)
 	ad->itc_main.func.state_get = NULL;
 	ad->itc_main.func.del = _main_gl_del_cb;
 
-	ad->itc_1ic.item_style = "full";
+	ad->itc_1ic.item_style = SETTING_GENLIST_LEFT_ICON_CONTENT_ICON_STYLE;
 	ad->itc_1ic.func.text_get = NULL;
 	ad->itc_1ic.func.content_get = appmgrUg_run_gl_stop_btn;
 	ad->itc_1ic.func.state_get = NULL;
@@ -96,24 +98,26 @@ static inline void appmgrUg_init_itcs(SettingAppMgrUG *ad)
 	ad->itc_info_title.func.state_get = NULL;
 	ad->itc_info_title.func.del = NULL;
 
-	ad->itc_2button1.item_style = "1icon";
+	ad->itc_2button1.item_style = SETTING_GENLIST_1ICON_STYLE;
 	ad->itc_2button1.func.text_get = NULL;
 	ad->itc_2button1.func.content_get = appmgrUg_info_2button1_gl_icon_get;
 	ad->itc_2button1.func.state_get = NULL;
 	ad->itc_2button1.func.del = NULL;
 
-	ad->itc_2button2.item_style = "1icon";
+	ad->itc_2button2.item_style = SETTING_GENLIST_1ICON_STYLE;
 	ad->itc_2button2.func.text_get = NULL;
 	ad->itc_2button2.func.content_get = appmgrUg_info_2button2_gl_icon_get;
 	ad->itc_2button2.func.state_get = NULL;
 	ad->itc_2button2.func.del = NULL;
 
-	setting_create_Gendial_itc("1icon", &(ad->itc_1button));
+	setting_create_Gendial_itc(SETTING_GENLIST_1ICON_STYLE,
+			&(ad->itc_1button));
 	ad->itc_1button.func.text_get = NULL;
 	ad->itc_1button.func.content_get = appmgrUg_info_1button_gl_icon_get;
 	ad->itc_1button.func.del = NULL;
 
-	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(ad->itc_2txt_2));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
+			&(ad->itc_2txt_2));
 	ad->itc_2txt_2.func.text_get = appmgrUg_pkg_size_gl_label_get;
 }
 

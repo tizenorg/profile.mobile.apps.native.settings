@@ -45,7 +45,7 @@ static Evas_Object *__no_result_icon_get(void *data, Evas_Object *obj, const cha
 
 EXPORT_PUBLIC
 const Elm_Genlist_Item_Class itc_no_reult = {
-	.item_style = "1icon/with_no_line",
+	.item_style = SETTING_GENLIST_1ICON_STYLE,
 	.func.text_get = NULL,
 	.func.content_get = __no_result_icon_get,
 	.func.state_get = NULL,
@@ -54,12 +54,12 @@ const Elm_Genlist_Item_Class itc_no_reult = {
 
 #define DEFINE_ITC2(style, name) \
 	EXPORT_PUBLIC const Elm_Genlist_Item_Class name = {\
-													   .item_style = style,\
-													   .func.text_get = __search_label_get,\
-													   .func.content_get = __search_icon_get,\
-													   .func.state_get = NULL,\
-													   .func.del = __search_item_del,\
-													  };
+		.item_style = style,\
+		.func.text_get = __search_label_get,\
+		.func.content_get = __search_icon_get,\
+		.func.state_get = NULL,\
+		.func.del = __search_item_del,\
+	};
 
 DEFINE_ITC2("dialogue/1text.1icon.3.tb", g_search_genlist_ts);
 DEFINE_ITC2("dialogue/newset.1text.2icon.4.tb", g_search_genlist_ts_toggle);
@@ -159,7 +159,7 @@ static Evas_Object *__no_result_icon_get(void *data, Evas_Object *obj, const cha
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if(!data || !obj, NULL, "!data || !obj");
 
-	if (!safeStrCmp(part, "elm.icon")) {
+	if (!safeStrCmp(part, "elm.swallow.content")) {
 		Evas_Object *box = elm_box_add(obj);
 
 		int rot = elm_win_rotation_get(obj);
