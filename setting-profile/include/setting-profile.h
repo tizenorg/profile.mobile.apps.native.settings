@@ -37,7 +37,7 @@
 #define SETTING_PROFILE_SOUND_RINGTONES_PATH	_TZ_SYS_SHARE"/settings/Ringtones"
 #define SETTING_PROFILE_MMC_PATH		_TZ_SYS_MEDIA"/sdcard"
 #define SETTING_DEFAULT_MSG_TONE		_TZ_SYS_SHARE"/settings/Alerts/Whistle.ogg"
-#define SETTING_DEFAULT_MEDIA_TONE		_TZ_SYS_SHARE"/settings/Previews/Media_preview_Over_the_horizon.ogg"
+#define SETTING_DEFAULT_MEDIA_TONE		_TZ_SYS_SHARE"/settings/Ringtones/ringtone_sdk.mp3"
 #define SUPPORT_PLAYER_ASYNC 1
 
 /*Call ringtone:3 icon status */

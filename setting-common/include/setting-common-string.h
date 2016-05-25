@@ -42,11 +42,11 @@
 #define SETTING_OPEN_SOURCE_LICENSE_PATH	"file:///usr/share/license.html"
 
 #define SETTING_OTHER_UG_ICON_PATH			_TZ_SYS_RO_ICONS"/default/small/"
-#define SETTING_DEFAULT_CALL_TONE			_TZ_SYS_SHARE"/settings/Ringtones/Over_the_horizon.ogg"
-#define SETTING_DEFAULT_CALL_TONE_SDK	_TZ_SYS_SHARE"/settings/Ringtones/Over_the_horizon.ogg"
+#define SETTING_DEFAULT_CALL_TONE			_TZ_SYS_SHARE"/settings/Ringtones/ringtone_sdk.mp3"
+#define SETTING_DEFAULT_CALL_TONE_SDK		_TZ_SYS_SHARE"/settings/Ringtones/ringtone_sdk.mp3"
 #define SETTING_DEFAULT_CALL_VIB			_TZ_SYS_SHARE"/settings/Vibrations/haptic/default/Ticktock.ivt"
-#define DEF_RINGTONE						_TZ_SYS_SHARE"/settings/Ringtones/Over_the_horizon.ogg"
-#define SETTING_MMC_PATH				_TZ_SYS_MEDIA"/sdcard/"
+#define DEF_RINGTONE						_TZ_SYS_SHARE"/settings/Ringtones/ringtone_sdk.mp3"
+#define SETTING_MMC_PATH					_TZ_SYS_MEDIA"/sdcard/"
 
 /***************new V7.0*************/
 #define KeyStr_Emulator					"Emulator" /* be used to compare with model_str from system_info_get_platform_string(SYSTEM_INFO_KEY_MODEL, &model_str) */
