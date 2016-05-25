@@ -201,7 +201,8 @@ static void *setting_font_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 			&(fontUG->itc_2text_2));
 	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE,
 			&(fontUG->itc_group_item));
-	setting_create_Gendial_itc("1icon", &(fontUG->itc_1icon));
+	setting_create_Gendial_itc(SETTING_GENLIST_1ICON_STYLE,
+			&(fontUG->itc_1icon));
 
 	/* view type checking */
 	fontUG->view_to_load = __get_font_view_to_load(fontUG, service);

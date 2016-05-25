@@ -952,8 +952,10 @@ static int setting_font_main_create(void *cb)
 			&(ad->itc_1text_1icon_2));
 	ad->itc_1text_1icon_2.func.text_get = _item_text_keystr2_get;
 
-	setting_create_Gendial_itc("full", &(ad->itc_bg_1icon));
-	setting_create_Gendial_itc("type1", &(ad->itc_1icon));
+	setting_create_Gendial_itc(SETTING_GENLIST_LEFT_ICON_CONTENT_ICON_STYLE,
+			&(ad->itc_bg_1icon));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
+			&(ad->itc_1icon));
 	SETTING_TRACE("ad->itc_bg_1icon: %s ", ad->itc_bg_1icon);
 	ad->itc_bg_1icon.func.content_get = _font_size_slider_get;
 

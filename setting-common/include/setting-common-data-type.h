@@ -47,6 +47,8 @@
 #endif
 #define PWD_FILE	_TZ_SYS_DATA"/setting/set_info"
 
+#define SETTING_GENLIST_1ICON_STYLE			"full"
+// "setting.2text.1icon.4"
 #define SETTING_GENLIST_GROUP_INDEX_STYLE		"group_index"
 #define SETTING_GENLIST_ICON_1LINE_STYLE		"type1"
 #define SETTING_GENLIST_2LINE_STYLE			"type1"
