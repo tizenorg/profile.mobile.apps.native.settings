@@ -80,9 +80,9 @@ DEFINE_ITC1(SETTING_GENLIST_ICON_1LINE_STYLE, itc_cm_1text_1icon_2);
 DEFINE_ITC1(SETTING_GENLIST_ICON_1LINE_STYLE, itc_1text_1icon_divider);
 DEFINE_ITC1(SETTING_GENLIST_ICON_1LINE_STYLE, itc_multiline_1text_1icon);
 
-DEFINE_ITC1("1icon", itc_bg_1icon);
-DEFINE_ITC1("1icon", itc_1icon_with_no_line);
-DEFINE_ITC1("1icon", itc_1icon);
+DEFINE_ITC1(SETTING_GENLIST_1ICON_STYLE, itc_bg_1icon);
+DEFINE_ITC1(SETTING_GENLIST_1ICON_STYLE, itc_1icon_with_no_line);
+DEFINE_ITC1(SETTING_GENLIST_1ICON_STYLE, itc_1icon);
 
 DEFINE_ITC1("1text", itc_normal_1text);
 
@@ -2540,8 +2540,8 @@ void setting_check_genlist_item_bottom_line(Elm_Object_Item *item)
 						"multiline_sub",
 						safeStrLen("multiline_sub"))
 				|| 0 == safeStrNCmp(itc->item_style,
-						"1icon",
-						safeStrLen("1icon"))
+						SETTING_GENLIST_1ICON_STYLE,
+						safeStrLen(SETTING_GENLIST_1ICON_STYLE))
 		) {
 			if (0 == safeStrCmp(itc->item_style, "groupindex")) {
 				Elm_Object_Item *prev_item =
