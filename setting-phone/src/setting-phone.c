@@ -876,31 +876,13 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv, 
 
 int set_language_helper(const char *lang)
 {
-#if 0
-	int ret = vconf_set_str(VCONFKEY_LANGSET, lang);
-	if (ret == 0) {
-		/* on success */
-		/* set event system */
-		setting_set_event_system(SYS_EVENT_LANGUAGE_SET, EVT_KEY_LANGUAGE_SET, lang);
-	}
-#else
 	int ret = system_settings_set_value_string(SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, lang);
-#endif
 	return ret;
 }
 
 int set_regionformat_helper(const char *region)
 {
-
-#if 0
-	int ret = vconf_set_str(VCONFKEY_REGIONFORMAT, region);
-	if (ret == 0) {
-		/* set event system */
-		setting_set_event_system(SYS_EVENT_REGION_FORMAT, EVT_KEY_REGION_FORMAT, region);
-	}
-#else
 	int ret = system_settings_set_value_string(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY, region);
-#endif
 	return ret;
 }
 
