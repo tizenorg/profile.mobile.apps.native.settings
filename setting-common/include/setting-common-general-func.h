@@ -62,6 +62,8 @@
 
 #define sncat(to, size, from) strncat(to, from, size-strlen(to)-1)
 
+void setting_set_event_system(const char *sys_evt, const char *evt_key, const char *evt_val);
+
 extern char *setting_file_basename(char *path);
 extern int setting_file_attr_is_valid_name(const char *filename);
 

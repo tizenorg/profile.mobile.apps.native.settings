@@ -1990,8 +1990,10 @@ void setting_network_set_state_data_roaming(ButtonState state)
 	int err;
 	if (state == SETTING_ON_OFF_BTN_ON) {
 		setting_set_bool_slp_key(BOOL_SLP_SETTING_DATA_ROAMING, SETTING_ON_OFF_BTN_ON, &err);
+		/*		setting_set_event_system(SYS_EVENT_DATA_ROAMING_STATE, EVT_KEY_DATA_ROAMING_STATE, EVT_VAL_DATA_ROAMING_ON); */
 	} else {
 		setting_set_bool_slp_key(BOOL_SLP_SETTING_DATA_ROAMING, SETTING_ON_OFF_BTN_OFF, &err);
+		/*		setting_set_event_system(SYS_EVENT_DATA_ROAMING_STATE, EVT_KEY_DATA_ROAMING_STATE, EVT_VAL_DATA_ROAMING_OFF); */
 	}
 }
 
