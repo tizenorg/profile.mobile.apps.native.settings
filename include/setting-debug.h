@@ -71,6 +71,7 @@
 
 /* Genlist Update is in progress. */
 
+#define FUNCTION_SYSTEM_SETTING 1
 #define SETTING_SEARCH 1
 
 /*##menu options##*/

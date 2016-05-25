@@ -318,6 +318,7 @@ static void __call_slider_change_cb(
 				list_item->chk_status,
 				val);
 
+#if FUNCTION_SYSTEM_SETTING
 		if (list_item->chk_status == 0) {
 			/* change to Vibration mode */
 			/* call system_setting */
@@ -341,6 +342,32 @@ static void __call_slider_change_cb(
 						FALSE);
 			}
 		}
+#else
+		if (list_item->chk_status == 0) {
+			/* change to Vibration mode */
+			vconf_set_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL,
+					FALSE);
+			vconf_set_bool(VCONFKEY_SETAPPL_VIBRATION_STATUS_BOOL,
+					TRUE);
+			setting_set_event_system(
+					SYS_EVENT_SILENT_MODE,
+					EVT_KEY_SILENT_MODE,
+					EVT_VAL_SILENTMODE_OFF);
+			/*insert log for vibrate mode on state */
+		} else {
+			if (!ad->sound_on) {
+				vconf_set_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL,
+						TRUE);
+				vconf_set_bool(VCONFKEY_SETAPPL_VIBRATION_STATUS_BOOL,
+						FALSE);
+				setting_set_event_system(
+						SYS_EVENT_SILENT_MODE,
+						EVT_KEY_SILENT_MODE,
+						EVT_VAL_SILENTMODE_OFF);
+				/*insert log for sound mode on state */
+			}
+		}
+#endif
 
 		setting_sound_update_slider_icon(list_item, SND_SLIDER_CALL);
 
