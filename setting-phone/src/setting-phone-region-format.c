@@ -960,7 +960,7 @@ static Evas_Object *_item_content_get(void *data, Evas_Object *obj, const char *
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if(!data || !obj, NULL, "!data || !obj");
 
-	if (!safeStrCmp(part, "elm.icon")) {
+	if (!safeStrCmp(part, "elm.swallow.content")) {
 		Evas_Object *sub_layout = elm_layout_add(obj);
 		elm_layout_theme_set(sub_layout, "layout", "nocontents", "search");
 		evas_object_size_hint_weight_set(sub_layout, EVAS_HINT_EXPAND, 0);
@@ -1052,7 +1052,8 @@ static int setting_phone_region_format_create(void *cb)
 	}
 
 	/* */
-	setting_create_Gendial_itc("1icon", &(ad->itc_1icon_with_no_line));
+	setting_create_Gendial_itc(SETTING_GENLIST_1ICON_STYLE,
+			&(ad->itc_1icon_with_no_line));
 	ad->itc_1icon_with_no_line.func.content_get = _item_content_get;
 
 	Elm_Object_Item *navi_it = setting_push_layout_navi_bar(REGION_FORMAT_LOWER,

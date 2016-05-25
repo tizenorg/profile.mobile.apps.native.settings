@@ -139,7 +139,7 @@ static void _ringtone_gl_del(void *data, Evas_Object *obj)
 static inline void appmgrUg_init_itcs(SettingRingtoneUG *ad)
 {
 	SETTING_TRACE_BEGIN;
-	ad->itc_ring.item_style = "type1";
+	ad->itc_ring.item_style = SETTING_GENLIST_ICON_1LINE_STYLE;
 	ad->itc_ring.func.text_get = _ringtone_gl_label_get;
 	ad->itc_ring.func.content_get = _ringtone_gl_icon_get;
 	ad->itc_ring.func.state_get = NULL;
