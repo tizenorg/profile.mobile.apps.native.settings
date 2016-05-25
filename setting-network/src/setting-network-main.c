@@ -91,8 +91,8 @@ static Eina_Bool __set_net_mode_on_delay(void *data)
 	/*Elm_Object_Item *parentItem = elm_genlist_item_parent_get(subitem); */
 	/*retvm_if(parentItem == NULL, ECORE_CALLBACK_CANCEL, "parentItem is NULL"); */
 
-	/*Setting_GenGroupItem_Data *data_subItem = elm_object_item_data_get(subitem);	*/	/* parent data * /
-	/*Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(parentItem);*/	/* parent data * /
+	/*Setting_GenGroupItem_Data *data_subItem = elm_object_item_data_get(subitem);	*/	/* parent data */
+	/*Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(parentItem);*/	/* parent data */
 	/*retvm_if(!data_subItem || !data_parentItem, ECORE_CALLBACK_CANCEL, "!data_subItem || !data_parentItem"); */
 
 	retvm_if(ad == NULL, ECORE_CALLBACK_CANCEL, "ad is NULL");

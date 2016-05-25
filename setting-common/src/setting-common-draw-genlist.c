@@ -1747,11 +1747,14 @@ static __Content_Drawer    __cd_right [SWALLOW_Type_MAX] = {
 		{ SWALLOW_Type_1CHECK_RIGHT_INVISIBLE, __add_check_invisible },
 };
 
+
+#if 0
 static __Content_Drawer    __cd_end [SWALLOW_Type_MAX] = {
 		/*end part object of the type */
 		{ SWALLOW_Type_1RADIO, __add_radio },
 };
-
+#endif
+	
 /* When X marked button clicked, make string as empty. */
 static void __multiline_eraser_clicked(void *data, Evas_Object *obj,
 		void *event_info)
