@@ -525,6 +525,10 @@ collections {
    tag:  "tab" "\t";\
    tag:  "b" "+ font_weight=Bold";
 
+#ifdef STYLE_TAG_MATCH
+#undef STYLE_TAG_MATCH
+#endif
+
 #define STYLE_TAG_MATCH \
    tag:  "match" "+ color=#3db8cc";
 
