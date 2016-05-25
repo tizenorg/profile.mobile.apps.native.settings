@@ -141,7 +141,7 @@ static int _handle_step1(void *data, char *collection)
 	ret = setting_password_simple_check_simple_password(collection);
 	SETTING_TRACE("ret:%d", ret);
 	if (ret < 0) {
-		SETTING_TRACE_ERROR("Invalid Password formatting")
+		SETTING_TRACE_ERROR("Invalid Password formatting");
 		setting_password_simple_draw_next_simple_password(ad, 3);
 		return SETTING_RETURN_FAIL;
 	}
@@ -152,7 +152,7 @@ static int _handle_step1(void *data, char *collection)
 			&valid_sec);
 	SETTING_TRACE("ret:%d", ret);
 	if (ret != SETTING_RETURN_SUCCESS) {
-		SETTING_TRACE_ERROR("Failed to invoke security_server_chk_pwd")
+		SETTING_TRACE_ERROR("Failed to invoke security_server_chk_pwd");
 		setting_password_simple_draw_next_simple_password(ad, 3);
 		ad->remain_attempt = remain_attempt;
 		ad->valid_sec = valid_sec;
