@@ -54,12 +54,12 @@ const Elm_Genlist_Item_Class itc_no_reult = {
 
 #define DEFINE_ITC2(style, name) \
 	EXPORT_PUBLIC const Elm_Genlist_Item_Class name = {\
-													   .item_style = style,\
-													   .func.text_get = __search_label_get,\
-													   .func.content_get = __search_icon_get,\
-													   .func.state_get = NULL,\
-													   .func.del = __search_item_del,\
-													  };
+		.item_style = style,\
+		.func.text_get = __search_label_get,\
+		.func.content_get = __search_icon_get,\
+		.func.state_get = NULL,\
+		.func.del = __search_item_del,\
+	};
 
 DEFINE_ITC2("dialogue/1text.1icon.3.tb", g_search_genlist_ts);
 DEFINE_ITC2("dialogue/newset.1text.2icon.4.tb", g_search_genlist_ts_toggle);
