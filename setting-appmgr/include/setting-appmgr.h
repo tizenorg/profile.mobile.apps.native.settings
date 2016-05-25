@@ -110,6 +110,7 @@ typedef struct _appmgr_listinfo {
 	bool is_disabled;
 	GList *runinfos;
 	GList *def_appids;
+	Ecore_Idler *size_idler;
 } appmgr_listinfo;
 
 typedef struct _appmgr_runinfo {
