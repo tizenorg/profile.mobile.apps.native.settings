@@ -30,12 +30,16 @@
 #include "setting-appmgr-async-worker.h"
 #include "setting-appmgr-utils.h"
 
-
-extern void appmgrUg_pkg_uninstall_click(void *data, Evas_Object *obj, void *event_info);
-extern void appmgrUg_pkg_clear_cache_click(void *data, Evas_Object *obj, void *event_info);
-extern void appmgrUg_pkg_moveto_cb(void *data, Evas_Object *obj, void *event_info);
-extern Evas_Object *appmgrUg_run_gl_stop_btn(void *data, Evas_Object *obj, const char *part);
-extern void appmgrUg_run_stop_click(void *data, Evas_Object *obj, void *event_info);
+extern void appmgrUg_pkg_uninstall_click(void *data, Evas_Object *obj,
+		void *event_info);
+extern void appmgrUg_pkg_clear_cache_click(void *data, Evas_Object *obj,
+		void *event_info);
+extern void appmgrUg_pkg_moveto_cb(void *data, Evas_Object *obj,
+		void *event_info);
+extern Evas_Object *appmgrUg_run_gl_stop_btn(void *data, Evas_Object *obj,
+		const char *part);
+extern void appmgrUg_run_stop_click(void *data, Evas_Object *obj,
+		void *event_info);
 
 static void appmgrUg_free_listinfo(gpointer data);
 
@@ -80,23 +84,25 @@ Eina_Bool appmgrUg_get_app_size(void *data)
 
 void _free_GSList(GSList *list)
 {
-	g_slist_foreach(list, (GFunc)g_free, NULL);
+	g_slist_foreach(list, (GFunc) g_free, NULL);
 	g_slist_free(list);
 }
 
 /*
-resourced_cb_ret _reset_all_restrict_apps_cb(const resourced_restriction_info *info, void *user_data) {
-	GSList** appid_list = (GSList**)user_data;
-	*appid_list = g_slist_prepend(*appid_list, g_strdup(info->app_id));
-	return 1;
-}
+ resourced_cb_ret _reset_all_restrict_apps_cb(const resourced_restriction_info
+ *info, void *user_data) {
+ GSList** appid_list = (GSList**)user_data;
+ *appid_list = g_slist_prepend(*appid_list, g_strdup(info->app_id));
+ return 1;
+ }
 
-void _reset_restrict_cb(char *app_id){
-	resourced_ret_c ret = remove_restriction_by_iftype(app_id, RESOURCED_IFACE_DATACALL);
-	if(RESOURCED_ERROR_OK != ret){
-		SETTING_TRACE_ERROR("reset restrict app: %s failed with %d", app_id, ret);
-	}
-} */
+ void _reset_restrict_cb(char *app_id){
+ resourced_ret_c ret = remove_restriction_by_iftype(app_id,
+ RESOURCED_IFACE_DATACALL);
+ if(RESOURCED_ERROR_OK != ret){
+ SETTING_TRACE_ERROR("reset restrict app: %s failed with %d", app_id, ret);
+ }
+ } */
 
 void appmgrUg_size_to_str(int size, char *desc, int desc_size)
 {
@@ -105,15 +111,18 @@ void appmgrUg_size_to_str(int size, char *desc, int desc_size)
 	const int MEGABYTE_VALUE = 1048576;
 	const int GIGABYTE_VALUE = 1073741824;
 
-	if (size < MEGABYTE_VALUE) {	/* size < 1MB: show x.xKB */
-		tmp_size = (double)size / KILOBYTE_VALUE;
-		snprintf(desc, desc_size, "%4.2lf%s", tmp_size, _(MGRAPP_STR_KB));
-	} else if (size < GIGABYTE_VALUE) {	/* size < 1GB: show x.xMB */
-		tmp_size = (double)size / MEGABYTE_VALUE;
-		snprintf(desc, desc_size, "%4.2lf%s", tmp_size, _(MGRAPP_STR_MB));
+	if (size < MEGABYTE_VALUE) { /* size < 1MB: show x.xKB */
+		tmp_size = (double) size / KILOBYTE_VALUE;
+		snprintf(desc, desc_size, "%4.2lf%s", tmp_size,
+				_(MGRAPP_STR_KB));
+	} else if (size < GIGABYTE_VALUE) { /* size < 1GB: show x.xMB */
+		tmp_size = (double) size / MEGABYTE_VALUE;
+		snprintf(desc, desc_size, "%4.2lf%s", tmp_size,
+				_(MGRAPP_STR_MB));
 	} else { /* 1G <= size: show x.xGB */
-		tmp_size = (double)size / GIGABYTE_VALUE;
-		snprintf(desc, desc_size, "%4.2lf%s", tmp_size, _(MGRAPP_STR_GB));
+		tmp_size = (double) size / GIGABYTE_VALUE;
+		snprintf(desc, desc_size, "%4.2lf%s", tmp_size,
+				_(MGRAPP_STR_GB));
 	}
 }
 
@@ -134,9 +143,8 @@ void appmgrUg_fail_popup(char *str, SettingAppMgrUG *ad)
 		ad->popup = NULL;
 	}
 
-	ad->popup = setting_create_popup(ad, ad->win, NULL,
-									 str, appmgrUg_popup_del, 0, FALSE, FALSE,
-									 1, MGRAPP_STR_OK);
+	ad->popup = setting_create_popup(ad, ad->win, NULL, str,
+			appmgrUg_popup_del, 0, FALSE, FALSE, 1, MGRAPP_STR_OK);
 }
 
 static void appmgrUg_update_listinfos(SettingAppMgrUG *ad)
@@ -146,37 +154,40 @@ static void appmgrUg_update_listinfos(SettingAppMgrUG *ad)
 	if (ad->list_worker)
 		appmgrUg_stop_async_worker(ad->list_worker);
 	ad->list_worker = appmgrUg_start_async_worker(appmgrUg_get_listinfos,
-												  appmgrUg_get_listinfos_cb, ad);
+			appmgrUg_get_listinfos_cb, ad);
 }
 
 static int appmgrUg_pkgmgr_changed_cb(int req_id, const char *pkg_type,
-									  const char *pkgid, const char *key, const char *val, const void *pmsg,
-									  void *data)
+		const char *pkgid, const char *key, const char *val,
+		const void *pmsg, void *data)
 {
 	SettingAppMgrUG *ad = data;
 
 	retv_if(data == NULL, -1);
 
 	SETTING_TRACE_DEBUG("key:%s val:%s", key, val);
-	SETTING_TRACE_DEBUG("pkg_type:%s, pkgid:%s, sel_pkgid:%s", pkg_type, pkgid,
-						ad->sel_pkgid);
+	SETTING_TRACE_DEBUG("pkg_type:%s, pkgid:%s, sel_pkgid:%s", pkg_type,
+			pkgid, ad->sel_pkgid);
 
 	/*
-	   if (!safeStrCmp(key, "start") && safeStrCmp(val, "uninstall"))
-	   if (!safeStrCmp(key, "start") && !safeStrCmp(val, "install"))
-	   if (!safeStrCmp(key, "start") && !safeStrCmp(val, "move"))
-	   if (!safeStrCmp(key, "start") && !safeStrCmp(val, "update"))
-	   */
+	 if (!safeStrCmp(key, "start") && safeStrCmp(val, "uninstall"))
+	 if (!safeStrCmp(key, "start") && !safeStrCmp(val, "install"))
+	 if (!safeStrCmp(key, "start") && !safeStrCmp(val, "move"))
+	 if (!safeStrCmp(key, "start") && !safeStrCmp(val, "update"))
+	 */
 
 	if (!safeStrCmp(key, "error")) {
-		SETTING_TRACE_ERROR("uninstall() Fail(key:%s val:%s)", key, val);
+		SETTING_TRACE_ERROR("uninstall() Fail(key:%s val:%s)",
+				key, val);
 	} else if (!safeStrCmp(key, "end") && !safeStrCmp(val, "fail")) {
 		if (0 == safeStrCmp(ad->sel_pkgid, pkgid)) {
 			if (APPMGRUG_PKG_REQUEST_UNINSTALL == ad->pkg_request) {
 				SETTING_TRACE_ERROR("uninstall() Fail");
-				appmgrUg_fail_popup(MGRAPP_STR_UNINSTALL_FAILED, ad);
+				appmgrUg_fail_popup(MGRAPP_STR_UNINSTALL_FAILED,
+						ad);
 				ad->pkg_request = APPMGRUG_PKG_REQUEST_NONE;
-			} else if (APPMGRUG_PKG_REQUEST_MOVE == ad->pkg_request) {
+			} else if (APPMGRUG_PKG_REQUEST_MOVE
+					== ad->pkg_request) {
 				appmgrUg_pkg_moveto_worker_finish(ad);
 			}
 		}
@@ -190,26 +201,34 @@ static int appmgrUg_pkgmgr_changed_cb(int req_id, const char *pkg_type,
 
 				if (ad->popup)
 					evas_object_del(ad->popup);
-				ad->popup = setting_create_popup(ad, ad->win, NULL,
-												 MGRAPP_STR_UNINSTALL_COMPLETE, appmgrUg_popup_del, 0, FALSE, FALSE,
-												 1, MGRAPP_STR_OK);
+				ad->popup = setting_create_popup(ad, ad->win,
+						NULL,
+						MGRAPP_STR_UNINSTALL_COMPLETE,
+						appmgrUg_popup_del, 0, FALSE,
+						FALSE, 1, MGRAPP_STR_OK);
 
 				ad->pkg_request = APPMGRUG_PKG_REQUEST_NONE;
-			} else if (APPMGRUG_PKG_REQUEST_MOVE == ad->pkg_request) {
+			} else if (APPMGRUG_PKG_REQUEST_MOVE
+					== ad->pkg_request) {
 				appmgrUg_pkg_moveto_worker_finish(ad);
-			} else if (APPMGRUG_PKG_REQUEST_DISABLE == ad->pkg_request) {
+			} else if (APPMGRUG_PKG_REQUEST_DISABLE
+					== ad->pkg_request) {
 				ad->sel_is_disabled = EINA_TRUE;
 				ad->pkg_request = APPMGRUG_PKG_REQUEST_NONE;
 				if (ad->pkginfo_view->is_create)
-					setting_view_update(ad->pkginfo_view, ad);
-			} else if (APPMGRUG_PKG_REQUEST_ENABLE == ad->pkg_request) {
+					setting_view_update(ad->pkginfo_view,
+							ad);
+			} else if (APPMGRUG_PKG_REQUEST_ENABLE
+					== ad->pkg_request) {
 				ad->sel_is_disabled = EINA_FALSE;
 				ad->pkg_request = APPMGRUG_PKG_REQUEST_NONE;
 				if (ad->pkginfo_view->is_create)
-					setting_view_update(ad->pkginfo_view, ad);
+					setting_view_update(ad->pkginfo_view,
+							ad);
 			} else {
 				if (ad->pkginfo_view->is_create)
-					setting_view_update(ad->pkginfo_view, ad);
+					setting_view_update(ad->pkginfo_view,
+							ad);
 			}
 		}
 
@@ -221,17 +240,20 @@ static int appmgrUg_pkgmgr_changed_cb(int req_id, const char *pkg_type,
 }
 
 Evas_Object *appmgrUg_no_item(Evas_Object *parent, const char *text,
-							  const char *help)
+		const char *help)
 {
 	Evas_Object *layout, *icon;
 
 	layout = elm_layout_add(parent);
 	elm_layout_theme_set(layout, "layout", "nocontents", "default");
-	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND,
+			EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
 	icon = elm_image_add(layout);
-	elm_image_file_set(icon, SETTING_ICON_PATH_CFG "/00_nocontents_text_new.png", NULL);
+	elm_image_file_set(icon,
+			SETTING_ICON_PATH_CFG "/00_nocontents_text_new.png",
+			NULL);
 	elm_object_part_content_set(layout, "nocontents.image", icon);
 
 	elm_object_part_text_set(layout, "elm.text", _(text));
@@ -245,8 +267,8 @@ Evas_Object *appmgrUg_no_item(Evas_Object *parent, const char *text,
 	return layout;
 }
 
-void
-progressbar_pulse_add(char *style_name, char *container_name, Evas_Object *layout)
+void progressbar_pulse_add(char *style_name, char *container_name,
+		Evas_Object *layout)
 {
 	Evas_Object *progressbar = elm_progressbar_add(layout);
 
@@ -255,19 +277,21 @@ progressbar_pulse_add(char *style_name, char *container_name, Evas_Object *layou
 	elm_object_part_content_set(layout, container_name, progressbar);
 
 	evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, 0.5);
-	evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND,
+			EVAS_HINT_EXPAND);
 
 	evas_object_show(progressbar);
 }
 
 Evas_Object *appmgrUg_loading_item(Evas_Object *parent, const char *text,
-								   const char *help)
+		const char *help)
 {
 	Evas_Object *layout;
 
 	layout = elm_layout_add(parent);
 	elm_layout_theme_set(layout, "layout", "nocontents_loading", "default");
-	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND,
+			EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
 	progressbar_pulse_add("process_Xlarge", "nocontents.image", layout);
@@ -284,25 +308,27 @@ Evas_Object *appmgrUg_loading_item(Evas_Object *parent, const char *text,
 }
 
 /*
-Elm_Object_Item *appmgrUg_append_separator(Evas_Object *genlist,
-										   SettingAppMgrUG *ad)
-{
-	Elm_Object_Item *item = NULL;
+ Elm_Object_Item *appmgrUg_append_separator(Evas_Object *genlist,
+ SettingAppMgrUG *ad)
+ {
+ Elm_Object_Item *item = NULL;
 
-	item = elm_genlist_item_append(genlist, &ad->itc_sep, NULL, NULL,
-								   ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-	return item;
-}
-*/
+ item = elm_genlist_item_append(genlist, &ad->itc_sep, NULL, NULL,
+ ELM_GENLIST_ITEM_NONE, NULL, NULL);
+ elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+ return item;
+ }
+ */
 
 char *appmgrUg_get_defualt_icon(pkgmgrinfo_appinfo_h handle)
 {
 	int ret;
 	char *type;
 	const char *icon;
-	const char *svc_icon = SETTING_ICON_PATH"/default_icon_service.png";
-	const char *app_icon = SETTING_ICON_PATH"/mainmenu.png";
+	const char *svc_icon = SETTING_ICON_PATH
+	"/default_icon_service.png";
+	const char *app_icon = SETTING_ICON_PATH
+	"/mainmenu.png";
 
 	ret = pkgmgrinfo_appinfo_get_component_type(handle, &type);
 	if (PMINFO_R_OK == ret) {
@@ -311,7 +337,9 @@ char *appmgrUg_get_defualt_icon(pkgmgrinfo_appinfo_h handle)
 		else
 			icon = app_icon;
 	} else {
-		SETTING_TRACE_ERROR("pkgmgrinfo_appinfo_get_component_type() Fail(%d)", ret);
+		SETTING_TRACE_ERROR(
+				"pkgmgrinfo_appinfo_get_component_type() Fail(%d)",
+				ret);
 		icon = app_icon;
 	}
 
@@ -319,7 +347,7 @@ char *appmgrUg_get_defualt_icon(pkgmgrinfo_appinfo_h handle)
 }
 
 static void appmgrUg_get_listinfo(pkgmgrinfo_pkginfo_h handle,
-								  appmgr_listinfo *info)
+		appmgr_listinfo *info)
 {
 	int ret = 0;
 	char *value;
@@ -375,7 +403,8 @@ static int appmgrUg_get_pkg_list_iter(pkgmgrinfo_pkginfo_h handle, void *data)
 	return 0;
 }
 
-static int appmgrUg_get_disable_pkg_list_iter(pkgmgrinfo_pkginfo_h handle, void *data)
+static int appmgrUg_get_disable_pkg_list_iter(pkgmgrinfo_pkginfo_h handle,
+		void *data)
 {
 	GList **pkg_list = data;
 	appmgr_listinfo *info = NULL;
@@ -470,8 +499,8 @@ static Eina_Bool appmgrUg_get_all_pkg_sizesort(void *data)
 }
 
 static int appmgrUg_get_all_pkg_size(int req_id, const char *pkg_type,
-									 const char *pkg_name, const char *key, const char *val, const void *pmsg,
-									 void *data)
+		const char *pkg_name, const char *key, const char *val,
+		const void *pmsg, void *data)
 {
 	/*If get all size finished. return directly */
 	GList *list;
@@ -487,7 +516,8 @@ static int appmgrUg_get_all_pkg_size(int req_id, const char *pkg_type,
 		return 0;
 	}
 
-	list = g_list_find_custom(ad->pkg_list, pkg_name, appmgrUg_compare_pkgname);
+	list = g_list_find_custom(ad->pkg_list, pkg_name,
+			appmgrUg_compare_pkgname);
 	if (list) {
 		appmgr_listinfo *info = list->data;
 
@@ -497,10 +527,13 @@ static int appmgrUg_get_all_pkg_size(int req_id, const char *pkg_type,
 		if (APPMGRUG_SORT_SIZE == ad->sorttype) {
 			if (ad->size_idler)
 				ecore_idler_del(ad->size_idler);
-			ad->size_idler = ecore_idler_add(appmgrUg_get_all_pkg_sizesort, ad);
+			ad->size_idler = ecore_idler_add(
+					appmgrUg_get_all_pkg_sizesort, ad);
 		} else {
 			if (info->item)
-				elm_genlist_item_fields_update(info->item, "elm.text.sub", ELM_GENLIST_ITEM_FIELD_TEXT);
+				elm_genlist_item_fields_update(info->item,
+						"elm.text.sub",
+						ELM_GENLIST_ITEM_FIELD_TEXT);
 		}
 	}
 
@@ -525,9 +558,11 @@ int appmgrUg_get_listinfos(SettingAppMgrUG *ad)
 	retv_if(ad == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
 	/*init app list */
-	ret = pkgmgrinfo_pkginfo_get_list(appmgrUg_get_pkg_list_iter, &pkg_list);
+	ret = pkgmgrinfo_pkginfo_get_list(appmgrUg_get_pkg_list_iter,
+			&pkg_list);
 	if (ret < 0) {
-		SETTING_TRACE_ERROR("pkgmgrinfo_pkginfo_get_list() Fail(%d)", ret);
+		SETTING_TRACE_ERROR("pkgmgrinfo_pkginfo_get_list() Fail(%d)",
+				ret);
 		return SETTING_RETURN_FAIL;
 	}
 
@@ -537,16 +572,20 @@ int appmgrUg_get_listinfos(SettingAppMgrUG *ad)
 	pkgmgrinfo_pkginfo_filter_h filter_handle;
 	ret = pkgmgrinfo_pkginfo_filter_create(&filter_handle);
 
-	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_appinfo_filter_create() Fail(%d)", ret);
+	warn_if(PMINFO_R_OK != ret,
+			"pkgmgrinfo_appinfo_filter_create() Fail(%d)", ret);
 
 	ret = pkgmgrinfo_pkginfo_filter_add_bool(filter_handle,
-											 PMINFO_PKGINFO_PROP_PACKAGE_SUPPORT_DISABLE, EINA_TRUE);
+	PMINFO_PKGINFO_PROP_PACKAGE_SUPPORT_DISABLE, EINA_TRUE);
 
-	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_filter_add_bool() Fail(%d)", ret);
+	warn_if(PMINFO_R_OK != ret,
+			"pkgmgrinfo_pkginfo_filter_add_bool() Fail(%d)", ret);
 
 	ret = pkgmgrinfo_pkginfo_filter_foreach_pkginfo(filter_handle,
-													appmgrUg_get_disable_pkg_list_iter, &pkg_list);
-	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_filter_foreach_pkginfo() Fail(%d)", ret);
+			appmgrUg_get_disable_pkg_list_iter, &pkg_list);
+	warn_if(PMINFO_R_OK != ret,
+			"pkgmgrinfo_pkginfo_filter_foreach_pkginfo() Fail(%d)",
+			ret);
 
 	pkgmgrinfo_pkginfo_filter_destroy(filter_handle);
 
@@ -573,9 +612,11 @@ int appmgrUg_get_listinfos(SettingAppMgrUG *ad)
 
 	APPMGRUG_STOP_POINT;
 
-	ret = pkgmgr_client_set_status_type(ad->pc_all_size, PKGMGR_CLIENT_STATUS_GET_SIZE);
+	ret = pkgmgr_client_set_status_type(ad->pc_all_size,
+			PKGMGR_CLIENT_STATUS_GET_SIZE);
 	if (ret < 0) {
-		SETTING_TRACE_ERROR("pkgmgr_client_set_status_type() Fail(%d)", ret);
+		SETTING_TRACE_ERROR("pkgmgr_client_set_status_type() Fail(%d)",
+				ret);
 		pkgmgr_client_free(ad->pc_all_size);
 		ad->pc_all_size = NULL;
 		return SETTING_RETURN_FAIL;
@@ -583,9 +624,11 @@ int appmgrUg_get_listinfos(SettingAppMgrUG *ad)
 
 	APPMGRUG_STOP_POINT;
 
-	ret = pkgmgr_client_listen_status(ad->pc_all_size, (pkgmgr_handler)appmgrUg_get_all_pkg_size, ad);
+	ret = pkgmgr_client_listen_status(ad->pc_all_size,
+			(pkgmgr_handler) appmgrUg_get_all_pkg_size, ad);
 	if (ret < 0) {
-		SETTING_TRACE_ERROR("pkgmgr_client_listen_status() Fail(%d)", ret);
+		SETTING_TRACE_ERROR("pkgmgr_client_listen_status() Fail(%d)",
+				ret);
 		pkgmgr_client_free(ad->pc_all_size);
 		ad->pc_all_size = NULL;
 		return SETTING_RETURN_FAIL;
@@ -606,13 +649,15 @@ void appmgrUg_get_listinfos_cb(int fn_result, SettingAppMgrUG *ad)
 	ret_if(NULL == ad);
 
 	if (SETTING_RETURN_SUCCESS != fn_result) {
-		SETTING_TRACE_ERROR("appmgrUg_get_listinfos() Fail(%d)", fn_result);
+		SETTING_TRACE_ERROR("appmgrUg_get_listinfos() Fail(%d)",
+				fn_result);
 	} else {
 		setting_view_update(ad->main_view, ad);
 
 		/*after listinfos & genlist updated, free old listinfos */
 		if (ad->old_pkg_list) {
-			g_list_free_full(ad->old_pkg_list, appmgrUg_free_listinfo);
+			g_list_free_full(ad->old_pkg_list,
+					appmgrUg_free_listinfo);
 			ad->old_pkg_list = NULL;
 		}
 	}
@@ -624,7 +669,8 @@ void appmgrUg_get_runlistinfos_cb(int fn_result, SettingAppMgrUG *ad)
 	ret_if(NULL == ad);
 
 	if (SETTING_RETURN_SUCCESS != fn_result) {
-		SETTING_TRACE_ERROR("appmgrUg_get_listinfos() Fail(%d)", fn_result);
+		SETTING_TRACE_ERROR("appmgrUg_get_listinfos() Fail(%d)",
+				fn_result);
 	} else {
 		setting_view_update(ad->main_view, ad);
 	}
@@ -649,9 +695,11 @@ void appmgrUg_pkgmgr_subscribe(SettingAppMgrUG *ad)
 		ad->pc_main = NULL;
 	}
 
-	ret = pkgmgr_client_listen_status(ad->pc_main, (pkgmgr_handler)appmgrUg_pkgmgr_changed_cb, ad);
+	ret = pkgmgr_client_listen_status(ad->pc_main,
+			(pkgmgr_handler) appmgrUg_pkgmgr_changed_cb, ad);
 	if (ret < 0) {
-		SETTING_TRACE_ERROR("pkgmgr_client_listen_status() Fail(%d)", ret);
+		SETTING_TRACE_ERROR("pkgmgr_client_listen_status() Fail(%d)",
+				ret);
 		pkgmgr_client_free(ad->pc_main);
 		ad->pc_main = NULL;
 		return;
@@ -696,7 +744,7 @@ void appmgrUg_free_listinfos(SettingAppMgrUG *ad)
 }
 
 Evas_Object *appmgrUg_info_title_gl_icon_get(void *data, Evas_Object *obj,
-											 const char *part)
+		const char *part)
 {
 	Evas_Object *icon = NULL;
 	/*Evas_Object *lay = NULL;*/
@@ -710,7 +758,8 @@ Evas_Object *appmgrUg_info_title_gl_icon_get(void *data, Evas_Object *obj,
 	icon = elm_icon_add(obj);
 
 	elm_image_file_set(icon, ad->sel_icon, NULL);
-	evas_object_size_hint_weight_set(icon, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_weight_set(icon, EVAS_HINT_EXPAND,
+			EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(icon, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
 #if 1
@@ -729,7 +778,7 @@ Evas_Object *appmgrUg_info_title_gl_icon_get(void *data, Evas_Object *obj,
 }
 
 void appmgrUg_pkg_disable_enable_cb(void *data, Evas_Object *obj,
-									void *event_info)
+		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "Data parameter is NULL");
@@ -746,10 +795,12 @@ void appmgrUg_pkg_disable_enable_cb(void *data, Evas_Object *obj,
 	}
 
 	if (info->is_disable) {
-		pkgmgr_client_activate(info->pc_request, info->pkg_type, info->pkgid);
+		pkgmgr_client_activate(info->pc_request, info->pkg_type,
+				info->pkgid);
 		ad->pkg_request = APPMGRUG_PKG_REQUEST_ENABLE;
 	} else {
-		pkgmgr_client_deactivate(info->pc_request, info->pkg_type, info->pkgid);
+		pkgmgr_client_deactivate(info->pc_request, info->pkg_type,
+				info->pkgid);
 		ad->pkg_request = APPMGRUG_PKG_REQUEST_DISABLE;
 	}
 }
@@ -757,10 +808,11 @@ void appmgrUg_pkg_disable_enable_cb(void *data, Evas_Object *obj,
 void appmgrUg_pkg_stop_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	setting_retm_if(data == NULL, "Data parameter is NULL");
+
 	SettingAppMgrUG *ad = data;
-	ret_if(NULL == ad->pkginfo);
+	setting_retm_if(ad == NULL, "Data parameter is NULL");
 	appmgr_pkginfo *info = ad->pkginfo;
+	ret_if(info == NULL);
 
 	GList *cur = info->appids;
 	while (cur) {
@@ -771,7 +823,8 @@ void appmgrUg_pkg_stop_cb(void *data, Evas_Object *obj, void *event_info)
 		if (NULL == appid)
 			continue;
 		ret = app_manager_is_running(appid, &running_flag);
-		warn_if(APP_MANAGER_ERROR_NONE != ret, "app_manager_is_running Fail(%d)", ret);
+		warn_if(APP_MANAGER_ERROR_NONE != ret,
+				"app_manager_is_running Fail(%d)", ret);
 		if (0 == running_flag)
 			continue;
 
@@ -779,13 +832,17 @@ void appmgrUg_pkg_stop_cb(void *data, Evas_Object *obj, void *event_info)
 
 		ret = app_manager_get_app_context(appid, &app_context);
 		if (APP_MANAGER_ERROR_NONE != ret) {
-			SETTING_TRACE_ERROR("app_manager_get_app_context Fail(%d)", ret);
+			SETTING_TRACE_ERROR(
+					"app_manager_get_app_context Fail(%d)",
+					ret);
 			return;
 		}
 
 		ret = app_manager_terminate_app(app_context);
 		if (APP_MANAGER_ERROR_NONE != ret) {
-			SETTING_TRACE_ERROR("app_manager_terminate_app() Fail(%d)", ret);
+			SETTING_TRACE_ERROR(
+					"app_manager_terminate_app() Fail(%d)",
+					ret);
 			app_context_destroy(app_context);
 			return;
 		}
@@ -796,49 +853,61 @@ void appmgrUg_pkg_stop_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 Evas_Object *appmgrUg_info_2button1_gl_icon_get(void *data, Evas_Object *obj,
-												const char *part)
+		const char *part)
 {
 	SETTING_TRACE_BEGIN;
-	setting_retvm_if(data == NULL, NULL, "Data parameter is NULL");
-	if (0 != safeStrCmp(part, "elm.icon"))
-		return NULL;
-	SettingAppMgrUG *ad = data;
-	retv_if(NULL == ad->pkginfo, NULL);
-	appmgr_pkginfo *info = ad->pkginfo;
 
-	Evas_Object *box = elm_box_add(obj);
+	SettingAppMgrUG *ad = data;
+	appmgr_pkginfo *info;
+	bool running_flag;
+	GList *cur = NULL;
+	int ret;
+	char *appid = NULL;
+	Evas_Object *box = NULL;
+	Evas_Object *button1 = NULL;
+	Evas_Object *button2 = NULL;
+
+	setting_retvm_if(ad == NULL, NULL, "Data parameter is NULL");
+	if (0 != safeStrCmp(part, "elm.swallow.content")) {
+		return NULL;
+	}
+	setting_retvm_if(ad->pkginfo == NULL, NULL, "ad->pkginfo is NULL");
+	info = ad->pkginfo;
+
+	box = elm_box_add(obj);
 	elm_box_horizontal_set(box, 1);
 	elm_box_align_set(box, 0.0, 0.5);
 	elm_box_padding_set(box, 10, 0);
 
 	/* Force stop button */
-	/*check if have running app */
-	bool running_flag = 0;
-	GList *cur = info->appids;
+	running_flag = false;	/* check if have running app */
+	cur = info->appids;
 	while (cur) {
-		int ret;
-		char *appid = cur->data;
-
+		appid = cur->data;
 		cur = cur->next;
-
 		if (NULL == appid)
 			continue;
 
 		ret = app_manager_is_running(appid, &running_flag);
-		warn_if(APP_MANAGER_ERROR_NONE != ret, "app_manager_is_running Fail(%d)", ret);
+		warn_if(APP_MANAGER_ERROR_NONE != ret,
+				"app_manager_is_running Fail(%d)", ret);
 		if (running_flag) {
 			break;
 		}
 	}
 
-	Evas_Object *button1 =
-		setting_create_button(box, MGRAPP_STR_FORCE_STOP, NULL, appmgrUg_pkg_stop_cb, ad);
+	button1 = setting_create_button(box, MGRAPP_STR_FORCE_STOP,
+			NULL, appmgrUg_pkg_stop_cb, ad);
+	setting_retvm_if(!button1, NULL, "button1 is NULL");
+
 	if (!running_flag)
 		elm_object_disabled_set(button1, EINA_TRUE);
 
 	/* Disable/Enable button */
-	Evas_Object *button2 =
-		setting_create_button(box, MGRAPP_STR_DISABLE, NULL, appmgrUg_pkg_disable_enable_cb, ad);
+	button2 = setting_create_button(box, MGRAPP_STR_DISABLE,
+			NULL, appmgrUg_pkg_disable_enable_cb, ad);
+	setting_retvm_if(!button2, NULL, "button2 is NULL");
+
 	if (!info->is_support_disable) {
 		elm_object_disabled_set(button2, EINA_TRUE);
 	} else if (info->is_disable) {
@@ -849,6 +918,12 @@ Evas_Object *appmgrUg_info_2button1_gl_icon_get(void *data, Evas_Object *obj,
 	elm_box_pack_end(box, button1);
 	elm_box_pack_end(box, button2);
 
+	/* TODO: remove when box size bug will be fixed */
+	int w, h;
+	evas_object_size_hint_min_get(button1, &w, &h);
+	evas_object_size_hint_min_set(box, 0, h);
+	/* */
+
 	evas_object_show(button1);
 	evas_object_show(button2);
 	evas_object_show(box);
@@ -856,27 +931,31 @@ Evas_Object *appmgrUg_info_2button1_gl_icon_get(void *data, Evas_Object *obj,
 }
 
 Evas_Object *appmgrUg_info_2button2_gl_icon_get(void *data, Evas_Object *obj,
-												const char *part)
+		const char *part)
 {
 	SETTING_TRACE_BEGIN;
-	setting_retvm_if(data == NULL, NULL, "Data parameter is NULL");
-	if (0 != safeStrCmp(part, "elm.icon"))
-		return NULL;
-	SettingAppMgrUG *ad = data;
 
-	Evas_Object *box = elm_box_add(obj);
+	SettingAppMgrUG *ad = data;
+	int ret;
+	int mmc;
+	char *btn_str = NULL;
+	appmgr_pkginfo *info = NULL;
+	const char *mmc_key = VCONFKEY_SYSMAN_MMC_STATUS;
+	Evas_Object *box = NULL;
+	Evas_Object *button1 = NULL;
+	Evas_Object *button2 = NULL;
+
+	setting_retvm_if(ad == NULL, NULL, "Data parameter is NULL");
+	info = ad->pkginfo;
+	setting_retvm_if(info == NULL, NULL, "ad->pkginfo is NULL");
+	if (safeStrCmp(part, "elm.swallow.content") != 0)
+		return NULL;
+
+	box = elm_box_add(obj);
 	elm_box_horizontal_set(box, 1);
 	elm_box_align_set(box, 0.0, 0.5);
 	elm_box_padding_set(box, 8, 0);
 
-	int ret, mmc;
-	char *btn_str;
-	appmgr_pkginfo *info;
-	const char *mmc_key = VCONFKEY_SYSMAN_MMC_STATUS;
-
-	retv_if(NULL == ad->pkginfo, NULL);
-
-	info = ad->pkginfo;
 
 	/* Move to */
 	mmc = VCONFKEY_SYSMAN_MMC_REMOVED;
@@ -888,10 +967,11 @@ Evas_Object *appmgrUg_info_2button2_gl_icon_get(void *data, Evas_Object *obj,
 	else
 		btn_str = MGRAPP_STR_MOVE_TO_PHONE;
 
-	Evas_Object *button1 =
-		setting_create_button(box, btn_str, NULL, appmgrUg_pkg_moveto_cb, ad);
+	button1 = setting_create_button(box, btn_str, NULL,
+			appmgrUg_pkg_moveto_cb, ad);
 
-	if (VCONFKEY_SYSMAN_MMC_MOUNTED != mmc || !info->is_movable || info->is_preload)
+	if (VCONFKEY_SYSMAN_MMC_MOUNTED != mmc || !info->is_movable
+			|| info->is_preload)
 		elm_object_disabled_set(button1, EINA_TRUE);
 
 	/* Uninstall */
@@ -900,14 +980,20 @@ Evas_Object *appmgrUg_info_2button2_gl_icon_get(void *data, Evas_Object *obj,
 	else
 		btn_str = MGRAPP_STR_UNINSTALL;
 
-	Evas_Object *button2 =
-		setting_create_button(box, btn_str, NULL, appmgrUg_pkg_uninstall_click, ad);
+	button2 = setting_create_button(box, btn_str, NULL,
+			appmgrUg_pkg_uninstall_click, ad);
 
 	if (!info->removable)
 		elm_object_disabled_set(button2, EINA_TRUE);
 
 	elm_box_pack_end(box, button1);
 	elm_box_pack_end(box, button2);
+
+	/* TODO: remove when box size bug will be fixed */
+	int w, h;
+	evas_object_size_hint_min_get(button1, &w, &h);
+	evas_object_size_hint_min_set(box, 0, h);
+	/* */
 
 	evas_object_show(button1);
 	evas_object_show(button2);
@@ -916,11 +1002,12 @@ Evas_Object *appmgrUg_info_2button2_gl_icon_get(void *data, Evas_Object *obj,
 }
 
 Evas_Object *appmgrUg_info_1button_gl_icon_get(void *data, Evas_Object *obj,
-											   const char *part)
+		const char *part)
 {
 	SETTING_TRACE_BEGIN;
+
 	setting_retvm_if(data == NULL, NULL, "Data parameter is NULL");
-	if (0 != safeStrCmp(part, "elm.icon"))
+	if (0 != safeStrCmp(part, "elm.swallow.content"))
 		return NULL;
 
 	Setting_GenGroupItem_Data *item_data = data;
@@ -938,32 +1025,38 @@ Evas_Object *appmgrUg_info_1button_gl_icon_get(void *data, Evas_Object *obj,
 
 	info = ad->pkginfo;
 
-	Evas_Object *button1 =
-		setting_create_button(box, "BLANK", NULL, NULL, NULL);
-
-	evas_object_hide(button1);
-
 	/* Clear cache */
-
-	Evas_Object *button2 =
-		setting_create_button(box, MGRAPP_STR_CLEAR_CACHE, NULL, appmgrUg_pkg_clear_cache_click, ad);
+	Evas_Object *button1 = setting_create_button(box,
+			MGRAPP_STR_CLEAR_CACHE, NULL,
+			appmgrUg_pkg_clear_cache_click, ad);
 
 	if (info->sz_cache <= 0) {
-		elm_object_disabled_set(button2, EINA_TRUE);
+		elm_object_disabled_set(button1, EINA_TRUE);
 	}
+
+	/* Fake button to reserve space after button1 */
+	Evas_Object *button2 = setting_create_button(box, "BLANK", NULL, NULL,
+			NULL);
+	evas_object_hide(button2);
+
 	elm_box_pack_end(box, button1);
 	elm_box_pack_end(box, button2);
 
+	/* TODO: remove when box size bug will be fixed */
+	int w, h;
+	evas_object_size_hint_min_get(button1, &w, &h);
+	evas_object_size_hint_min_set(box, 0, h);
+	/* */
+
 	/*evas_object_show(button1); */
-	evas_object_show(button2);
+	evas_object_show(button1);
 	evas_object_show(box);
 
-	SETTING_TRACE_END;
 	return box;
 }
 
 char *appmgrUg_info_title_gl_label_get(void *data, Evas_Object *obj,
-									   const char *part)
+		const char *part)
 {
 	char *label = NULL;
 	SettingAppMgrUG *ad = data;
@@ -973,14 +1066,15 @@ char *appmgrUg_info_title_gl_label_get(void *data, Evas_Object *obj,
 	if (0 == strcmp(part, "elm.text")) {
 		label = SAFE_STRDUP(ad->sel_label);
 	} else if (0 == strcmp(part, "elm.text.sub")) {
-		char desc[APPMGRUG_MAX_STR_LEN] = {0};
+		char desc[APPMGRUG_MAX_STR_LEN] = { 0 };
 
 		if (APPMGRUG_TAB_RUNNING == ad->tabtype) {
-			snprintf(desc, sizeof(desc), _(MGRAPP_STR_ACTIVE_APPS_N),
-					 g_list_length(ad->runinfos));
+			snprintf(desc, sizeof(desc),
+					_(MGRAPP_STR_ACTIVE_APPS_N),
+					g_list_length(ad->runinfos));
 		} else {
 			snprintf(desc, sizeof(desc), _(MGRAPP_STR_VERSION_STR),
-					 ad->pkginfo->pkg_version);
+					ad->pkginfo->pkg_version);
 		}
 
 		label = strdup(desc);
@@ -989,15 +1083,16 @@ char *appmgrUg_info_title_gl_label_get(void *data, Evas_Object *obj,
 	return label;
 }
 /*
-void reset_all_restrict_apps() {
-	GSList *appid_list = NULL;
-	resourced_ret_c ret = restrictions_foreach(_reset_all_restrict_apps_cb, &appid_list);
-	if(RESOURCED_ERROR_OK != ret){
-		SETTING_TRACE_ERROR("unset all restrict apps fail with %d",ret);
-	}
-	g_slist_foreach(appid_list, (GFunc)_reset_restrict_cb, NULL);
-	_free_GSList(appid_list);
-} */
+ void reset_all_restrict_apps() {
+ GSList *appid_list = NULL;
+ resourced_ret_c ret = restrictions_foreach(_reset_all_restrict_apps_cb,
+ &appid_list);
+ if(RESOURCED_ERROR_OK != ret){
+ SETTING_TRACE_ERROR("unset all restrict apps fail with %d",ret);
+ }
+ g_slist_foreach(appid_list, (GFunc)_reset_restrict_cb, NULL);
+ _free_GSList(appid_list);
+ } */
 
 static void _reset_app_settings_cb(int fn_result, SettingAppMgrUG *ad)
 {
@@ -1011,7 +1106,8 @@ static void _reset_app_settings_cb(int fn_result, SettingAppMgrUG *ad)
 	}
 
 	if (fn_result) {
-		SETTING_TRACE_ERROR("_reset_app_setting_fn() Fail(%d)", fn_result);
+		SETTING_TRACE_ERROR("_reset_app_setting_fn() Fail(%d)",
+				fn_result);
 		appmgrUg_fail_popup(MGRAPP_STR_ERROR, ad);
 	}
 	ad->reset_worker = NULL;
@@ -1024,7 +1120,8 @@ static int _reset_app_setting_fn(SettingAppMgrUG *ad)
 	retv_if(NULL == ad, -1);
 
 	ret = appsvc_unset_all_defapps();
-	warn_if(APPSVC_RET_OK != ret, "appsvc_unset_all_defapps() Fail(%d)", ret);
+	warn_if(APPSVC_RET_OK != ret, "appsvc_unset_all_defapps() Fail(%d)",
+			ret);
 
 	APPMGRUG_STOP_POINT;
 
@@ -1038,13 +1135,14 @@ int appmgrUg_reset_app_settings(SettingAppMgrUG *ad)
 	if (ad->popup)
 		evas_object_del(ad->popup);
 	/* do not show popup
-	ad->popup = setting_create_popup_with_progressbar(ad, ad->win, PROGRESSBAR_STYLE,
-			NULL, NULL, appmgrUg_popup_del, 0, TRUE, TRUE, 0);
-	*/
+	 ad->popup = setting_create_popup_with_progressbar(ad, ad->win,
+	 PROGRESSBAR_STYLE,
+	 NULL, NULL, appmgrUg_popup_del, 0, TRUE, TRUE, 0);
+	 */
 	ad->pkg_request = APPMGRUG_PKG_REQUEST_RESET;
 
 	ad->reset_worker = appmgrUg_start_async_worker(_reset_app_setting_fn,
-												   _reset_app_settings_cb, ad);
+			_reset_app_settings_cb, ad);
 
 	return 0;
 }

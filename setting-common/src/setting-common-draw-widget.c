@@ -66,6 +66,8 @@ Evas_Object *setting_create_button(
 	}
 
 	Evas_Object *button = elm_button_add(parent);
+	retv_if(!button, NULL);
+
 	if (btn_style) {
 		elm_object_style_set(button, btn_style);
 	}
