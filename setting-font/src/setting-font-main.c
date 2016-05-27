@@ -233,10 +233,13 @@ static Evas_Object *_font_size_slider_get(void *data, Evas_Object *obj,
 					li_slider);
 			return layout;
 		} else {
+
 			SETTING_TRACE("item_data->keyStr:%s",
 					item_data->keyStr);
 			SETTING_TRACE("item_data->sub_desc:%s",
 					item_data->sub_desc);
+#if 1
+
 			int padding_h = 0;
 			Evas_Object *box = elm_box_add(obj);
 			evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND,
@@ -247,16 +250,40 @@ static Evas_Object *_font_size_slider_get(void *data, Evas_Object *obj,
 
 			elm_box_pack_end(box,
 					setting_create_blank_rect_customize(obj,
-							1, 20));
+							1, 200));
 
 			item_data->eo_check = setting_create_textbox(obj,
 					item_data->sub_desc);
 			elm_box_pack_end(box, item_data->eo_check);
 			elm_box_pack_end(box,
 					setting_create_blank_rect_customize(obj,
-							1, 20));
+							1, 200));
 
 			return box;
+#else
+
+			Evas_Object *layout = elm_layout_add(obj);
+			Eina_Bool
+			ret = elm_layout_file_set(layout,
+					SETTING_THEME_EDJ_NAME, "nocontents");
+			if (ret == EINA_TRUE) { /* error condition */
+				SETTING_TRACE("elm_layout_file_set - OK");
+			} else {
+				SETTING_TRACE_ERROR(
+						"elm_layout_file_set - FAILED");
+			}
+
+			evas_object_size_hint_weight_set(layout,
+					EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+
+			Evas_Object *entry = setting_create_textbox(obj,
+					item_data->sub_desc);
+
+			item_data->eo_check = entry;
+			elm_object_part_content_set(layout, "contents", entry);
+
+			return layout;
+#endif
 		}
 	}
 	return NULL;
@@ -817,12 +844,16 @@ static Eina_Bool __font_change_call(void *data)
 	if (ad->size_change_flag == TRUE) {
 		system_settings_set_value_int(SYSTEM_SETTINGS_KEY_FONT_SIZE,
 				ad->ret_font_size);
+
+		elm_genlist_item_fields_update(ad->font_example->item, "elm.swallow.content", ELM_GENLIST_ITEM_FIELD_CONTENT);
 	}
 
 	if (ad->type_change_flag == TRUE) {
 		/*	system_settings_set_value_string(
 		 * SYSTEM_SETTINGS_KEY_FONT_TYPE, ad->font_name); */
 		_event_set_font_type_helper(ad->font_name);
+
+		elm_genlist_item_fields_update(ad->font_example->item, "elm.swallow.content", ELM_GENLIST_ITEM_FIELD_CONTENT);
 	}
 
 	/* finalize */
@@ -954,8 +985,6 @@ static int setting_font_main_create(void *cb)
 
 	setting_create_Gendial_itc(SETTING_GENLIST_LEFT_ICON_CONTENT_ICON_STYLE,
 			&(ad->itc_bg_1icon));
-	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(ad->itc_1icon));
 	SETTING_TRACE("ad->itc_bg_1icon: %s ", ad->itc_bg_1icon);
 	ad->itc_bg_1icon.func.content_get = _font_size_slider_get;
 
@@ -1012,7 +1041,7 @@ static int setting_font_main_create(void *cb)
 			ad->font_type_str);
 
 	ad->font_example = setting_create_Gendial_field_def(ad->genlist,
-			&(ad->itc_1icon),
+			&(ad->itc_bg_1icon),
 			NULL, ad, SWALLOW_Type_INVALID, NULL,
 			NULL, 0, NULL, default_example_str, NULL);
 

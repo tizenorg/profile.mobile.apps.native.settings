@@ -619,6 +619,8 @@ Evas_Object *setting_create_blank_rect_customize(
 	/*evas_object_color_set(rect, 0, 0, 0, 0); */
 	evas_object_color_set(rect, 8, 8, 8, 8);
 
+	evas_object_show(rect);
+	
 	return rect;
 }
 

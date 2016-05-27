@@ -191,18 +191,8 @@ static void *setting_font_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	setting_retvm_if(fontUG->win_main_layout == NULL, NULL,
 			"cannot get main window ");
 
-	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
-			&(fontUG->itc_2text_3_parent));
-	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
-			&(fontUG->itc_1icon_1text_sub));
-	/*setting_create_Gendial_itc("dialogue/2text.3",
-			&(fontUG->itc_2text_2)); */
-	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
-			&(fontUG->itc_2text_2));
 	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE,
 			&(fontUG->itc_group_item));
-	setting_create_Gendial_itc(SETTING_GENLIST_1ICON_STYLE,
-			&(fontUG->itc_1icon));
 
 	/* view type checking */
 	fontUG->view_to_load = __get_font_view_to_load(fontUG, service);

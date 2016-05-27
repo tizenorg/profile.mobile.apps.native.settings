@@ -80,15 +80,10 @@ struct _SettingFontUG {
 	Evas_Object *main_popup;
 	Evas_Object *size_popup;
 
-	Elm_Genlist_Item_Class itc_2text_3_parent;
-	Elm_Genlist_Item_Class itc_1icon_1text_sub;
 	Elm_Genlist_Item_Class itc_1text_1icon_2;
 	Elm_Genlist_Item_Class itc_1text_1icon_2_font_size;
-	Elm_Genlist_Item_Class itc_2text_2;
 	Elm_Genlist_Item_Class itc_group_item;
 	Elm_Genlist_Item_Class itc_bg_1icon;
-	/*Elm_Genlist_Item_Class itc_seperator;*/
-	Elm_Genlist_Item_Class itc_1icon;
 
 	Setting_GenGroupItem_Data *subitem;
 	Setting_GenGroupItem_Data *font_type;

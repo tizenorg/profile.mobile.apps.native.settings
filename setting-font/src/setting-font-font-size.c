@@ -129,12 +129,6 @@ static int setting_font_font_size_create(void *cb)
 																	 ad, &scroller, ad->navibar);
 	}
 
-	/* [UI] separator */
-	/*Elm_Object_Item *item =
-		elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
-								ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
-
 	/* [UI] create the font list */
 	ad->size_rdg = elm_radio_add(scroller);
 	elm_radio_state_value_set(ad->size_rdg, -1);
