@@ -270,17 +270,20 @@
 		<privilege>http://tizen.org/privilege/volume.set</privilege>
 		<privilege>http://tizen.org/privilege/haptic</privilege>
 		<privilege>http://tizen.org/privilege/telephony.admin</privilege>
-		<privilege>http://tizen.org/privilege/systemsettings.admin</privilege>
 		<privilege>http://tizen.org/privilege/telephony</privilege>
+		<privilege>http://tizen.org/privilege/tethering.admin</privilege>
+
 		<privilege>http://tizen.org/privilege/display</privilege>
 		<privilege>http://tizen.org/privilege/nfc.admin</privilege>
 
 		<privilege>http://tizen.org/privilege/packagemanager.install</privilege>
 		<privilege>http://tizen.org/privilege/packagemanager.admin</privilege>
 		<privilege>http://tizen.org/privilege/packagemanager.info</privilege>
+		<privilege>http://tizen.org/privilege/packagemanager.clearcache</privilege>
+
+		<privilege>http://tizen.org/privilege/systemsettings.admin</privilege>
 		<privilege>http://tizen.org/privilege/system</privilege>
 		<privilege>http://tizen.org/privilege/systemmanager</privilege>
-
 
 		<privilege>http://tizen.org/privilege/application.launch</privilege>
 		<privilege>http://tizen.org/privilege/content.read</privilege>
@@ -292,12 +295,14 @@
 		<privilege>http://tizen.org/privilege/ime</privilege>
 		<privilege>http://tizen.org/privilege/internet</privilege>
 		<privilege>http://tizen.org/privilege/mediastorage</privilege>
+		<privilege>http://tizen.org/privilege/externalstorage</privilege>
+		<privilege>http://tizen.org/privilege/externalstorage.appdata</privilege>
+
 		<privilege>http://tizen.org/privilege/network.get</privilege>
 		<privilege>http://tizen.org/privilege/network.profile</privilege>
 		<privilege>http://tizen.org/privilege/network.set</privilege>
 		<privilege>http://tizen.org/privilege/package.info</privilege>
-		<privilege>http://tizen.org/privilege/setting</privilege>
-		<privilege>http://tizen.org/privilege/system</privilege>
+
 
 
 	</privileges>
