@@ -232,33 +232,36 @@ static Evas_Object *_font_size_slider_get(void *data, Evas_Object *obj,
 			elm_object_part_content_set(layout, "slider",
 					li_slider);
 			return layout;
-		} else {
-			SETTING_TRACE("item_data->keyStr:%s",
-					item_data->keyStr);
-			SETTING_TRACE("item_data->sub_desc:%s",
-					item_data->sub_desc);
-			int padding_h = 0;
-			Evas_Object *box = elm_box_add(obj);
-			evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND,
-					EVAS_HINT_EXPAND);
-			evas_object_size_hint_align_set(box, EVAS_HINT_FILL,
-					EVAS_HINT_FILL);
-			elm_box_padding_set(box, 10, padding_h);
-
-			elm_box_pack_end(box,
-					setting_create_blank_rect_customize(obj,
-							1, 20));
-
-			item_data->eo_check = setting_create_textbox(obj,
-					item_data->sub_desc);
-			elm_box_pack_end(box, item_data->eo_check);
-			elm_box_pack_end(box,
-					setting_create_blank_rect_customize(obj,
-							1, 20));
-
-			return box;
 		}
 	}
+	else if (!safeStrCmp(part, "elm.text")) {
+		SETTING_TRACE("item_data->keyStr:%s",
+				item_data->keyStr);
+		SETTING_TRACE("item_data->sub_desc:%s",
+				item_data->sub_desc);
+		int padding_h = 0;
+		Evas_Object *box = elm_box_add(obj);
+		evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND,
+				EVAS_HINT_EXPAND);
+		evas_object_size_hint_align_set(box, EVAS_HINT_FILL,
+				EVAS_HINT_FILL);
+		elm_box_padding_set(box, 10, padding_h);
+
+		elm_box_pack_end(box,
+				setting_create_blank_rect_customize(obj,
+						1, 20));
+
+		item_data->eo_check = setting_create_textbox(obj,
+				item_data->sub_desc);
+		elm_box_pack_end(box, item_data->eo_check);
+		elm_box_pack_end(box,
+				setting_create_blank_rect_customize(obj,
+						1, 20));
+
+		return box;
+
+	}
+
 	return NULL;
 }
 
@@ -501,6 +504,9 @@ static Eina_Bool __slide_timer(void *data)
 		G_FREE(tmp);
 		elm_entry_entry_set(ad->font_example->eo_check,
 				ad->font_example->sub_desc);
+
+		elm_genlist_item_fields_update(ad->font_example->item, "elm.text",ELM_GENLIST_ITEM_FIELD_ALL);
+
 	}
 
 	/* finalize */
@@ -954,10 +960,12 @@ static int setting_font_main_create(void *cb)
 
 	setting_create_Gendial_itc(SETTING_GENLIST_LEFT_ICON_CONTENT_ICON_STYLE,
 			&(ad->itc_bg_1icon));
-	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(ad->itc_1icon));
 	SETTING_TRACE("ad->itc_bg_1icon: %s ", ad->itc_bg_1icon);
 	ad->itc_bg_1icon.func.content_get = _font_size_slider_get;
+
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
+			&(ad->itc_1icon));
+	ad->itc_1icon.func.content_get = _font_size_slider_get;
 
 	retvm_if(ad->win_main_layout == NULL, SETTING_DRAW_ERR_FAIL_LOAD_EDJ,
 			"win_main_layout is NULL");
