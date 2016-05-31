@@ -375,7 +375,8 @@ Evas_Object *setting_create_popup(void *data,
 	SETTING_TRACE_BEGIN;
 
 	Evas_Object *popup = elm_popup_add(parent);
-	elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
+	//elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
+	elm_popup_align_set(popup, 0.5, 1.0);
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 
 	if (text) {
