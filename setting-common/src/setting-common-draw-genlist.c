@@ -1775,8 +1775,8 @@ static Evas_Object *_gl_Gendial_content_get(void *data, Evas_Object *obj,
 	__drawer_fp fp = NULL;
 	retv_if(!item_data, NULL);
 
-	SETTING_TRACE(" ---> content get: style [%s]; part [%s]",
-			item_data->itc, part);
+	/* SETTING_TRACE(" ---> content get: style [%s]; part [%s]",
+			item_data->itc, part); */
 
 	if (!safeStrCmp(part, "elm.swallow.icon")) { /* LEFT AREA */
 		fp = __add_left_default;

@@ -98,6 +98,7 @@ BuildRequires:  pkgconfig(callmgr_client)
 BuildRequires:  pkgconfig(privilege-info)
 #BuildRequires:	pkgconfig(capi-location-manager)
 BuildRequires:  pkgconfig(auth-fw)
+BuildRequires:  pkgconfig(dpm)
 BuildRequires:  libcap-devel
 BuildRequires:  cmake
 BuildRequires:  edje-tools
