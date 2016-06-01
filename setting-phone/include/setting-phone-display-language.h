@@ -25,14 +25,11 @@
 
 #define SETTING_PHONE_DISPLAY_LANGUAGE_PATH "/usr/lib/locale/"
 
-static Eina_Bool setting_phone_display_language_click_softkey_cancel_cb(void *data, Elm_Object_Item *it);
-static void setting_phone_display_language_mouse_up_Gendial_list_radio_cb(void
-																		  *data,
-																		  Evas_Object
-																		  *obj,
-																		  void
-																		  *event_info);
+static Eina_Bool setting_phone_display_language_click_softkey_cancel_cb(
+		void *data, Elm_Object_Item *it);
+static void setting_phone_display_language_mouse_up_Gendial_list_radio_cb(
+		void *data, Evas_Object *obj, void *event_info);
 static void setting_phone_display_language_close_popup_ex(void *data);
 extern int setting_phone_region_format_set_dateformat(const char *region,
-													  void *data);
+		void *data);
 #endif				/* __SETTING_PHONE_DISPLAY_LANGUAGE_H__ */

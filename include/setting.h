@@ -50,9 +50,12 @@
 
 
 typedef enum _FLIGHT_MODE_OPEARTION {
-	FM_INVALID = 0, /*< There is no request waiting for processing */
-	FM_ENTER = 1,	/*< Some "flightmode enter" request is waiting for processing */
-	FM_LEAVE,		/*< Some "flightmode leave" request is waiting for processing */
+	/*< There is no request waiting for processing */
+	FM_INVALID = 0,
+	/*< Some "flightmode enter" request is waiting for processing */
+	FM_ENTER = 1,
+	/*< Some "flightmode leave" request is waiting for processing */
+	FM_LEAVE,
 } FLIGHT_MODE_OPEARTION;
 
 
@@ -89,7 +92,7 @@ typedef struct _setting_main_appdata {
 	Evas_Object *popup;
 
 	Setting_GenGroupItem_Data *data_network; /** special layout */
-	bool isInUGMode;				/**< set TRUE when UG is running */
+	bool isInUGMode;		/**< set TRUE when UG is running */
 
 	int current_rotation;
 	/* ---------------------------------------------------------- */
@@ -108,10 +111,13 @@ extern void __gl_realized(void *data, Evas_Object *obj, void *event_info);
 extern void setting_main_refresh_topview_list(void *data);
 
 extern Evas_Object *__get_top_list(void *data);
-extern void setting_main_click_list_ex_ug_cb(void *data, Evas_Object *obj, void *event_info);
+extern void setting_main_click_list_ex_ug_cb(void *data, Evas_Object *obj,
+		void *event_info);
 extern Eina_Bool __save_timer(void *data);
 
-typedef Setting_GenGroupItem_Data *(*UI_HANDLER)(void *data, char *title, char *iconpath, char *ugname, Evas_Object *genlist, Elm_Object_Item *parent);
+typedef Setting_GenGroupItem_Data *(*UI_HANDLER)(void *data, char *title,
+		char *iconpath, char *ugname, Evas_Object *genlist,
+		Elm_Object_Item *parent);
 
 
 typedef enum {

@@ -33,30 +33,41 @@
 
 #define VOLUME_APP_NAME "org.tizen.setting.volume"
 #define MAX_SAFETY_VOLUME_LEVEL 10
-#define SETTING_PROFILE_SOUND_ALERTS_PATH	_TZ_SYS_SHARE"/settings/Alerts"
-#define SETTING_PROFILE_SOUND_RINGTONES_PATH	_TZ_SYS_SHARE"/settings/Ringtones"
-#define SETTING_PROFILE_MMC_PATH		_TZ_SYS_MEDIA"/sdcard"
-#define SETTING_DEFAULT_MSG_TONE		_TZ_SYS_SHARE"/settings/Alerts/Whistle.ogg"
-#define SETTING_DEFAULT_MEDIA_TONE		_TZ_SYS_SHARE"/settings/Ringtones/ringtone_sdk.mp3"
+#define SETTING_PROFILE_SOUND_ALERTS_PATH \
+	_TZ_SYS_SHARE"/settings/Alerts"
+#define SETTING_PROFILE_SOUND_RINGTONES_PATH \
+	_TZ_SYS_SHARE"/settings/Ringtones"
+#define SETTING_PROFILE_MMC_PATH \
+	_TZ_SYS_MEDIA"/sdcard"
+#define SETTING_DEFAULT_MSG_TONE \
+	_TZ_SYS_SHARE"/settings/Alerts/Whistle.ogg"
+#define SETTING_DEFAULT_MEDIA_TONE \
+	_TZ_SYS_SHARE"/settings/Ringtones/ringtone_sdk.mp3"
 #define SUPPORT_PLAYER_ASYNC 1
 
 /*Call ringtone:3 icon status */
-#define ICON_CALL_VIB		SETTING_ICON_PATH_CFG"B04_slider_icon_vibrate.png"
-#define ICON_CALL_NORMAL	SETTING_ICON_PATH_CFG"B04_slider_icon_ring.png"
-#define ICON_CALL_MUTE		SETTING_ICON_PATH_CFG"B04_volume_icon_mute.png"
+#define ICON_CALL_VIB \
+	SETTING_ICON_PATH_CFG"B04_slider_icon_vibrate.png"
+#define ICON_CALL_NORMAL \
+	SETTING_ICON_PATH_CFG"B04_slider_icon_ring.png"
+#define ICON_CALL_MUTE \
+	SETTING_ICON_PATH_CFG"B04_volume_icon_mute.png"
 
 /*Notification: 2 icon status */
-#define ICON_NOTI_MUTE		SETTING_ICON_PATH_CFG"B04_slider_icon_notification_mute.png"
-#define ICON_NOTI_NORMAL	SETTING_ICON_PATH_CFG"B04_slider_icon_notification.png"
+#define ICON_NOTI_MUTE \
+	SETTING_ICON_PATH_CFG"B04_slider_icon_notification_mute.png"
+#define ICON_NOTI_NORMAL \
+	SETTING_ICON_PATH_CFG"B04_slider_icon_notification.png"
 
 /*Media: 2 icon status */
 #define ICON_MEDIA_MUTE		SETTING_ICON_PATH_CFG"B04_volume_icon_mute.png"
 #define ICON_MEDIA_NORMAL	SETTING_ICON_PATH_CFG"00_volume_icon.png"
 
 /*System:2 icon status */
-#define ICON_SYSTEM_MUTE	SETTING_ICON_PATH_CFG"B04_slider_icon_system_mute.png"
-#define ICON_SYSTEM_NORMAL	SETTING_ICON_PATH_CFG"B04_slider_icon_system.png"
-
+#define ICON_SYSTEM_MUTE \
+	SETTING_ICON_PATH_CFG"B04_slider_icon_system_mute.png"
+#define ICON_SYSTEM_NORMAL \
+	SETTING_ICON_PATH_CFG"B04_slider_icon_system.png"
 
 typedef enum {
 	SND_SLIDER_CALL = 0,
@@ -70,8 +81,8 @@ typedef struct _SettingProfileUG SettingProfileUG;
 
 /**
  * Setting Profile UG context
- * all UG function has void* as an agument. this is casted back to SettingProfileUG
- * and the functions access app context.
+ * all UG function has void* as an agument. this is casted back to
+ * SettingProfileUG and the functions access app context.
  */
 struct _SettingProfileUG {
 	ui_gadget_h ug;
@@ -105,7 +116,6 @@ struct _SettingProfileUG {
 	Setting_GenGroupItem_Data *data_button_sounds;
 	Setting_GenGroupItem_Data *data_touch_sounds;
 
-
 	player_h *mp_ringtone;
 	player_h *mp_noti;
 	player_h *mp_media;
@@ -116,42 +126,42 @@ struct _SettingProfileUG {
 	char *ringtone_type;
 	char *sdcard_ringtone_path;
 
-	Ecore_Idler *play_ringtone_idler; /* for performance of incoming call ringtone slider */
+	/* for performance of incoming call ringtone slider */
+	Ecore_Idler *play_ringtone_idler;
 
 	Ecore_Event_Handler *keydown_handler;
-	Ecore_Event_Handler *keyup_handler;
-	bool is_pressing;
+	Ecore_Event_Handler *keyup_handler;bool is_pressing;
 	Ecore_Timer *updown_timer;
 	Evas_Object *calling_popup; /* Unable to pre-listening during a call */
-	int backup_ringtong_volume;
-	bool is_ringtone_slidering;
+	int backup_ringtong_volume;bool is_ringtone_slidering;
 };
 
 extern setting_view setting_view_sound_main;
 
 extern void setting_sound_play_sound_origin(player_h **mp_handle, void *data,
-											void *cb, char *ringtone_file, float vol,
-											sound_type_e sound_type);
+		void *cb, char *ringtone_file, float vol,
+		sound_type_e sound_type);
 extern int setting_sound_check_file_exist(void *data, const char *file_path);
 
-extern void system_settings_changed_silent_mode(system_settings_key_e key, void *user_data);
+extern void system_settings_changed_silent_mode(system_settings_key_e key,
+		void *user_data);
 
 extern player_h *setting_sound_play_sound(void *data, void *cb,
-										  char *ringtone_file,
-										  int vol,
-										  sound_type_e sound_type);
+		char *ringtone_file, int vol, sound_type_e sound_type);
 
 extern int __close_player(void *data, SoundType type);
 
 extern int setting_sound_stop_sound(void *data, player_h *player);
-extern int setting_sound_close_other_mm_players_but_type(void *data, sound_type_e type);
+extern int setting_sound_close_other_mm_players_but_type(void *data,
+		sound_type_e type);
 extern int setting_sound_close_all_mm_players(void *data);
 extern void __setting_sound_ug_key_grab(SettingProfileUG *ad);
 extern void __setting_sound_ug_key_ungrab(SettingProfileUG *ad);
 extern char *setting_media_basename(char *path);
 extern void setting_sound_create_warning_popup_during_call(void *data);
 extern char *setting_sound_get_slider_icon(int type, int volume);
-extern void setting_sound_update_slider_icon(Setting_GenGroupItem_Data *item_data, int type);
+extern void setting_sound_update_slider_icon(
+		Setting_GenGroupItem_Data *item_data, int type);
 extern Evas_Object *setting_sound_init(void *data);
 extern void setting_sound_deinit(void *data);
 char *setting_do_not_disturb_is_enable(void *data);

@@ -22,11 +22,16 @@
 #define __SETTING_NETWORK_CON_CREATE_H__
 
 #include <setting-network.h>
-/*static void setting_network_con_click_softkey_create_cb(void *data, Evas_Object *obj, void *event_info); */
-static void setting_network_con_click_softkey_reset_cb(void *data, Evas_Object *obj, void *event_info);
-static void	setting_network_con_reset_popup_cb(void *data, Evas_Object *obj, void *event_info);
+/*static void setting_network_con_click_softkey_create_cb(
+ * void *data, Evas_Object *obj, void *event_info); */
+static void setting_network_con_click_softkey_reset_cb(
+		void *data, Evas_Object *obj, void *event_info);
+static void	setting_network_con_reset_popup_cb(
+		void *data, Evas_Object *obj, void *event_info);
 
-static Eina_Bool setting_network_con_click_softkey_cancel_cb(void *data, Elm_Object_Item *it);
-static void setting_network_con_item_Gendial_mouse_up_cb(void *data, Evas_Object *obj, void *event_info);
+static Eina_Bool setting_network_con_click_softkey_cancel_cb(
+		void *data, Elm_Object_Item *it);
+static void setting_network_con_item_Gendial_mouse_up_cb(
+		void *data, Evas_Object *obj, void *event_info);
 
 #endif				/* __SETTING_NETWORK_CON_CREATE_H__ */

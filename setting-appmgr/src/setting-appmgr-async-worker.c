@@ -51,7 +51,7 @@ void appmgrUg_thread_testcancel()
 static Eina_Bool _async_worker_idler(void *data)
 {
 	SETTING_TRACE_BEGIN;
-	SETTING_TRACE("---------------------------------------------thread join BEGIN ");
+	SETTING_TRACE("----------------------------------thread join BEGIN ");
 	appmgrUg_worker *worker = data;
 
 	retv_if(NULL == data, ECORE_CALLBACK_CANCEL);
@@ -66,10 +66,11 @@ static Eina_Bool _async_worker_idler(void *data)
 	/*g_hash_table_remove(async_worker_hashT, worker); */
 
 
-	/*	worker->worker_idler = ecore_idler_add(_async_worker_idler, worker); */
+	/* worker->worker_idler = ecore_idler_add(_async_worker_idler,
+	 * worker); */
 
 	worker->worker_idler = NULL;
-	SETTING_TRACE("---------------------------------------------thread join END ");
+	SETTING_TRACE("----------------------------------thread join END ");
 	SETTING_TRACE_END;
 	return ECORE_CALLBACK_CANCEL;
 }
@@ -123,7 +124,7 @@ static void _async_worker_hash_free_key(gpointer data)
 }
 
 void *appmgrUg_start_async_worker(async_fn fn, callback_fn cb,
-								  SettingAppMgrUG *ad)
+		SettingAppMgrUG *ad)
 {
 	int ret;
 	appmgrUg_worker *worker;
@@ -132,7 +133,7 @@ void *appmgrUg_start_async_worker(async_fn fn, callback_fn cb,
 
 	if (NULL == async_worker_hashT) {
 		async_worker_hashT = g_hash_table_new_full(NULL, NULL,
-												   _async_worker_hash_free_key, NULL);
+				_async_worker_hash_free_key, NULL);
 	}
 
 	worker = calloc(1, sizeof(appmgrUg_worker));

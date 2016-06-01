@@ -25,7 +25,8 @@
 
 #define KeyStr_Brightness_Adjust "IDS_ST_BODY_ADJUST_BRIGHTNESS_LEVEL"
 #define KeyStr_Brightness_Auto_Adjust "IDS_ST_BODY_ADJUST_AUTOMATIC_BRIGHTNESS"
-#define KeyStr_Brightness_Overheating "IDS_ST_BODY_TO_AVOID_OVERHEATING_MAXIMUM_BRIGHTNESS_HAS_BEEN_REDUCED"
+#define KeyStr_Brightness_Overheating \
+	"IDS_ST_BODY_TO_AVOID_OVERHEATING_MAXIMUM_BRIGHTNESS_HAS_BEEN_REDUCED"
 
 
 void __display_int_vconf_cb(keynode_t *key, void *data);

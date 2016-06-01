@@ -25,28 +25,27 @@
 
 #define NUM_PROGRESSBAR 4
 
-#define SETTING_USB_DEBUGGING_DESC "IDS_ST_BODY_DEBUGGING_MODE_LAUNCHES_WHEN_USB_IS_CONNECTED"
+#define SETTING_USB_DEBUGGING_DESC \
+	"IDS_ST_BODY_DEBUGGING_MODE_LAUNCHES_WHEN_USB_IS_CONNECTED"
 
 enum progressbar_status {
-	STATE_NONE = 0x00,
-	STATE_PROGRESSBAR
+	STATE_NONE = 0x00, STATE_PROGRESSBAR
 };
 
 typedef struct _button_status button_status;
 
 struct _button_status {
-	Evas_Object *progressbar;	/*	progressbar */
-	Elm_Object_Item *item;	/*	button */
-	int pstate;		/*	progressbar status to show or hide */
+	Evas_Object *progressbar; /*	progressbar */
+	Elm_Object_Item *item; /*	button */
+	int pstate; /*	progressbar status to show or hide */
 };
 
 static void setting_connectivity_usb_click_softkey_cancel_cb(void *data,
-															 Evas_Object *obj,
-															 void *event_info);
+		Evas_Object *obj, void *event_info);
 #ifdef HELP_UG_EXIST
 static void setting_connectivity_usb_click_softkey_set_cb(void *data,
-														  Evas_Object *obj,
-														  void *event_info);
+		Evas_Object *obj,
+		void *event_info);
 #endif
 
 #endif				/* __SETTING_CONNECTIVITY_USB_H__ */

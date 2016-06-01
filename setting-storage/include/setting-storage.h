@@ -36,7 +36,8 @@ extern const char *storageUg_ENCRYPT_stat;
 
 
 #define SETTING_STORAGE_PIE_RECT_OFFSET (36 * WIDGET_SCALE_FACTOR)
-#define SETTING_STORAGE_DEFAULT_STORAGE_APP_DESP_SIZE (240 * WIDGET_SCALE_FACTOR)
+#define SETTING_STORAGE_DEFAULT_STORAGE_APP_DESP_SIZE \
+	(240 * WIDGET_SCALE_FACTOR)
 
 #define SETTING_STORAGE_POPUP_TIMER	2
 #define SETTING_STORAGE_PROGRESSBAR_TIMEOUT 10
@@ -144,12 +145,12 @@ struct _SettingStorageUG {
 	Setting_GenGroupItem_Data *data_installapp;
 
 	/* miscellaneous files list */
-	int misc_view_mode;				/** 0 : default 1 : delete layout */
+	int misc_view_mode;		/** 0 : default 1 : delete layout */
 
 	Elm_Object_Item *main_misces_navi_it;
 	Elm_Object_Item *misces_navi_it;
 
-	Evas_Object *gl_misces;			/** genlist for misc list */
+	Evas_Object *gl_misces;		/** genlist for misc list */
 	Evas_Object *misces_lo_noitem;
 
 	Eina_Bool misces_is_select_all;
@@ -161,7 +162,7 @@ struct _SettingStorageUG {
 	bool misces_ctx_popup_selected;
 	void *del_worker;
 
-	Evas_Object *ly_select_all;		/** misc > 'select all' layout */
+	Evas_Object *ly_select_all;	/** misc > 'select all' layout */
 	Evas_Object *ly_default;
 
 	Evas_Object *title_left_btn;

@@ -59,16 +59,20 @@
 
 #define REGION_ITEM_MAX 300
 
-#define SETTING_PHONE_REGION_RECT_SIZE_W		((int)720 * WIDGET_SCALE_FACTOR)
-#define SETTING_PHONE_REGION_RECT_SIZE_H		((int)1280 * WIDGET_SCALE_FACTOR)
+#define SETTING_PHONE_REGION_RECT_SIZE_W ((int)720 * WIDGET_SCALE_FACTOR)
+#define SETTING_PHONE_REGION_RECT_SIZE_H ((int)1280 * WIDGET_SCALE_FACTOR)
 
-#define ASK_DEREG_PHONE "<linesize=44>Your phone is<br>already registered.<br> Are you sure you<br>wish to deregister?"
+#define ASK_DEREG_PHONE \
+	"<linesize=44>Your phone is<br>already registered.<br>"\
+	" Are you sure you<br>wish to deregister?"
 #define REGISTRATION_GET_FAILED _("IDS_ST_POP_REGISTRATION_CODE_NOT_FOUND")
 #define REGISTRATION_INDICATOT "IDS_ST_BODY_YOUR_DEVICE_REGISTRATION_CODE_C_PS"
 #define REGISTRATION_AT "IDS_ST_BODY_REGISTER_AT"
-#define DEREGISTRATION_INDICATOT "<br><br>Your device<br>deregistration code:<br><br>"
+#define DEREGISTRATION_INDICATOT \
+	"<br><br>Your device<br>deregistration code:<br><br>"
 #define EREGISTRATION_AT "<br><br><br>Deregister at"
-#define TRANSFER_INFO "IDS_ST_BODY_EXPLANATION_FOR_TRANSACTION_TRACKING_MENU_VODA"
+#define TRANSFER_INFO \
+	"IDS_ST_BODY_EXPLANATION_FOR_TRANSACTION_TRACKING_MENU_VODA"
 
 #define REGION_FORMAT_LOWER "IDS_ST_BODY_REGION"
 
@@ -76,8 +80,8 @@ typedef struct _SettingPhoneUG SettingPhoneUG;
 
 /**
  * Setting Phone UG context
- * all UG function has void* as an agument. this is casted back to SettingPhoneUG
- * and the functions access app context.
+ * all UG function has void* as an agument. this is casted back to
+ * SettingPhoneUG and the functions access app context.
  */
 struct _SettingPhoneUG {
 	ui_gadget_h ug;
@@ -125,7 +129,7 @@ struct _SettingPhoneUG {
 
 	/* [UI] license */
 	Evas_Object *chk_lang;
-	int prev_lang;		/** prev is used for special lang. */
+	int prev_lang; /** prev is used for special lang. */
 	Setting_GenGroupItem_Data *data_tracking;
 	Setting_GenGroupItem_Data *data_expiry;
 	Setting_GenGroupItem_Data *divx_vod;
@@ -135,7 +139,7 @@ struct _SettingPhoneUG {
 	Setting_GenGroupItem_Data *data_reg;
 	Setting_GenGroupItem_Data *data_dereg;
 	Evas_Object *pop_dereg;
-	int mode;		/* 0: reg, 1: dereg */
+	int mode; /* 0: reg, 1: dereg */
 
 	Evas_Object *chk_tracking;
 	Evas_Object *chk_expiry;
@@ -226,19 +230,18 @@ extern setting_view setting_view_phone_region_format;
 int app_terminate_dead_cb(int pid, void *data);
 extern char *setting_phone_lang_get_region_str(const char *region);
 extern char *setting_phone_lang_get_by_pattern(const char *locale,
-											   const char *skeleton,
-											   void *data);
+		const char *skeleton, void *data);
 extern char *setting_phone_lang_get_example_desc(const char *region,
-												 void *data);
+		void *data);
 /**
-* Change language string to UTF8 format, the invoker need to free the return string
-*
-* @param unichars The source string will be translated.
-*
-* @return UTF8 format string.
-*/
+ * Change language string to UTF8 format, the invoker need to free the return
+ * string
+ *
+ * @param unichars The source string will be translated.
+ *
+ * @return UTF8 format string.
+ */
 extern char *setting_phone_lang_str_to_utf8(const UChar *unichars);
-
 
 /* event system */
 int set_language_helper(const char *lang);

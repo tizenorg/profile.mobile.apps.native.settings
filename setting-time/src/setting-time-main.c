@@ -1394,7 +1394,9 @@ setting_time_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 		setting_get_bool_slp_key(BOOL_SLP_SETTING_AUTOMATIC_TIME_UPDATE,
 								 &bvalue, &err);
 		if (bvalue) {
-			(void) setting_set_bool_slp_key(BOOL_SLP_SETTING_AUTOMATIC_TIME_UPDATE, SETTING_ON_OFF_BTN_OFF, &err);
+			(void) setting_set_bool_slp_key(
+					BOOL_SLP_SETTING_AUTOMATIC_TIME_UPDATE,
+					SETTING_ON_OFF_BTN_OFF, &err);
 			setting_update_gl_item_chk_status(ad->data_auto, 0);
 
 			if (ad->data_tz) {

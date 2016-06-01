@@ -46,7 +46,9 @@
 #define LAUNCH_EFFECT_STR "IDS_ST_BODY_APP_OPENING_EFFECT"
 #define LAUNCH_IMAGE_STR  "IDS_ST_BODY_APP_OPENING_IMAGE"
 
-#define LAUNCH_BATTERY_DESC	 "IDS_ST_BODY_SHOWS_BATTERY_PERCENTAGE_ON_INDICATOR" /*"Increase the screen's sensitivity so you can touch it while wearing gloves" */
+/*"Increase the screen's sensitivity so you can touch it while wearing
+ * gloves" */
+#define LAUNCH_BATTERY_DESC "IDS_ST_BODY_SHOWS_BATTERY_PERCENTAGE_ON_INDICATOR"
 
 #define SETTING_DISPLAY_TIME_15_SEC_STR "IDS_ST_BODY_15SEC"
 #define SETTING_DISPLAY_TIME_30_SEC_STR "IDS_ST_BODY_30SEC"
@@ -93,8 +95,8 @@ typedef struct _SettingDisplayUG SettingDisplayUG;
 
 /**
  * Setting Display UG context
- * all UG function has void* as an agument. this is casted back to SettingDisplayUG
- * and the functions access app context.
+ * all UG function has void* as an agument. this is casted back to
+ * SettingDisplayUG and the functions access app context.
  */
 struct _SettingDisplayUG {
 	ui_gadget_h ug;
@@ -211,7 +213,7 @@ extern setting_view setting_view_display_brightness;
 extern setting_view setting_view_display_backlight;
 
 void setting_display_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
-								  void *priv);
+		void *priv);
 
 Eina_Bool __show_smartstay_guide_popup(void *data);
 Eina_Bool __show_smartrotation_guide_popup(void *data);

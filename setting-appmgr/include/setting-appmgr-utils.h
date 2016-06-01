@@ -24,9 +24,7 @@
 #include <package_manager.h>
 
 enum {
-	APPMGRUG_SORT_ATOZ,
-	APPMGRUG_SORT_ZTOA,
-	APPMGRUG_SORT_SIZE,
+	APPMGRUG_SORT_ATOZ, APPMGRUG_SORT_ZTOA, APPMGRUG_SORT_SIZE,
 };
 
 GList *appmgrUg_sort_pkg_list(int sorttype, GList *pkg_list);
@@ -38,28 +36,28 @@ void appmgrUg_pkgmgr_deinit(SettingAppMgrUG *ad);
 void appmgrUg_free_listinfos(SettingAppMgrUG *ad);
 
 /*Elm_Object_Item *appmgrUg_append_separator(Evas_Object *genlist,
-										   SettingAppMgrUG *ad);*/
-										   
+ SettingAppMgrUG *ad);*/
+
 Eina_Bool appmgrUg_get_app_size(void *data);
 
 void appmgrUg_size_to_str(int size, char *desc, int desc_size);
 char *appmgrUg_info_title_gl_label_get(void *data, Evas_Object *obj,
-									   const char *part);
+		const char *part);
 Evas_Object *appmgrUg_info_title_gl_icon_get(void *data, Evas_Object *obj,
-											 const char *part);
+		const char *part);
 Evas_Object *appmgrUg_info_2button1_gl_icon_get(void *data, Evas_Object *obj,
-												const char *part);
+		const char *part);
 Evas_Object *appmgrUg_info_2button2_gl_icon_get(void *data, Evas_Object *obj,
-												const char *part);
+		const char *part);
 Evas_Object *appmgrUg_info_1button_gl_icon_get(void *data, Evas_Object *obj,
-											   const char *part);
+		const char *part);
 void appmgrUg_popup_del(void *data, Evas_Object *obj, void *event_info);
 void appmgrUg_fail_popup(char *str, SettingAppMgrUG *ad);
 int appmgrUg_reset_app_settings(SettingAppMgrUG *ad);
 Evas_Object *appmgrUg_no_item(Evas_Object *parent, const char *text,
-							  const char *help);
+		const char *help);
 Evas_Object *appmgrUg_loading_item(Evas_Object *parent, const char *text,
-								   const char *help);
+		const char *help);
 gint appmgrUg_compare_pkgname(gconstpointer item, gconstpointer pkg_name);
 char *appmgrUg_get_defualt_icon(pkgmgrinfo_appinfo_h handle);
 
@@ -70,6 +68,5 @@ static inline char *appmgrUg_check_icon(const char *icon_path)
 	else
 		return NULL;
 }
-
 
 #endif /*__SETTING_APPMGR_UTILS_H__ */

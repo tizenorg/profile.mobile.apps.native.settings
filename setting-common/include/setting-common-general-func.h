@@ -54,15 +54,16 @@
 #undef S_
 #endif
 #define _(s)			setting_gettext(s)
-#define __(s, domainname)			setting_gettext2(s, domainname)
-#define S_(s)		   setting_gettext(s)
-#define U_(s)		   multilanguage_text_upper(s)
+#define __(s, domainname)	setting_gettext2(s, domainname)
+#define S_(s)			setting_gettext(s)
+#define U_(s)			multilanguage_text_upper(s)
 
 #define btn_type(obj) get_popup_btn_response_type(obj)
 
 #define sncat(to, size, from) strncat(to, from, size-strlen(to)-1)
 
-void setting_set_event_system(const char *sys_evt, const char *evt_key, const char *evt_val);
+void setting_set_event_system(const char *sys_evt, const char *evt_key,
+		const char *evt_val);
 
 extern char *setting_file_basename(char *path);
 extern int setting_file_attr_is_valid_name(const char *filename);
@@ -96,7 +97,7 @@ extern bool is_substr_ncase(const char *parentstr, const char *substr);
 
 /* check if partern belongs to array..*/
 extern bool is_string_belong_to_array(const char *partern, const char **array,
-									  int array_num);
+		int array_num);
 extern int safeStrCmp(const char *s1, const char *s2);
 extern int safeStrNCmp(const char *s1, const char *s2, int len);
 extern char *safeStrNCat(char *dst, const char *src, int maxlen);
@@ -111,7 +112,8 @@ extern char *multilanguage_text_upper(const char *s);
 
 extern bool get_substring_int(const char **ipStr, int *ipValue, char delim);
 extern bool is_ip_string(const char *ipstr, char **output);
-extern int setting_invoke_reset_function(char *ug_name, app_control_h service, void *ext);
+extern int setting_invoke_reset_function(char *ug_name, app_control_h service,
+		void *ext);
 extern int excuteCmd(char *exec_path, int option_num, ...);
 
 extern char *get_icon_path(const char *package);
@@ -141,20 +143,23 @@ extern char *__get_font_size_str(int value);
 extern char *format_backlight_time_str(char *backligt_time);
 extern char *get_pa_backlight_time_value_str();
 
-extern void setting_play_sound(const char *sound_file, int vol, void **mp_handle);
+extern void setting_play_sound(const char *sound_file, int vol,
+		void **mp_handle);
 
 
 
 
 
 /* ui-gadget-1 */
-extern int ug_create_cb(void (*create_cb)(char *, char *, char *, void *), void *user_data);
+extern int ug_create_cb(void (*create_cb)(char *, char *, char *, void *),
+		void *user_data);
 void setting_ug_create_cb(char *ug, char *mem, char *parent, void *user_data);
-ui_gadget_h setting_ug_create(ui_gadget_h parent, const char *name, enum ug_mode mode, app_control_h service, struct ug_cbs *cbs);
+ui_gadget_h setting_ug_create(ui_gadget_h parent, const char *name,
+		enum ug_mode mode, app_control_h service, struct ug_cbs *cbs);
 void setting_ug_destroy(ui_gadget_h parent);
 char *strcasestr(const char *haystack, const char *needle);
 extern void setting_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
-								 void *priv);
+		void *priv);
 
 
 #endif				/* __SETTING_COMMON_GENERAL_FUNC_H__ */
