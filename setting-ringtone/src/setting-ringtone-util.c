@@ -60,7 +60,8 @@ char *get_media_basename(const char *dir_path, const char *name)
 	if (ret == METADATA_EXTRACTOR_ERROR_NONE && metadata) {
 		ret = metadata_extractor_set_path(metadata, path);
 		if (ret == METADATA_EXTRACTOR_ERROR_NONE) {
-			ret = metadata_extractor_get_metadata(metadata, METADATA_TITLE, &title);
+			ret = metadata_extractor_get_metadata(
+					metadata, METADATA_TITLE, &title);
 			metadata_extractor_destroy(metadata);
 			if (title)
 				/*return (char *)g_strdup(title);*/
@@ -96,7 +97,8 @@ int get_filelist_from_dir_path(char *path, Eina_List **file_list)
 
 		fileNodeInfo *pNode = NULL;
 
-		if (strncmp(ent.d_name, ".", 1) == 0 || strcmp(ent.d_name, "..") == 0) {
+		if (strncmp(ent.d_name, ".", 1) == 0
+				|| strcmp(ent.d_name, "..") == 0) {
 			continue;
 		}
 
@@ -112,7 +114,8 @@ int get_filelist_from_dir_path(char *path, Eina_List **file_list)
 
 		pNode->path = g_strdup(path);
 		pNode->name = g_strdup(ent.d_name);
-		pNode->media_name = get_media_basename(pNode->path, pNode->name);
+		pNode->media_name = get_media_basename(
+				pNode->path, pNode->name);
 
 		*file_list = eina_list_append(*file_list, pNode);
 	}
@@ -132,7 +135,9 @@ void ringtone_play_sound(const char *sound_file, player_h **mp_handle)
 	}
 
 	sound_manager_set_session_type(SOUND_SESSION_TYPE_MEDIA);
-	sound_manager_set_media_session_option(SOUND_SESSION_OPTION_PAUSE_OTHERS_WHEN_START, SOUND_SESSION_OPTION_INTERRUPTIBLE_DURING_PLAY);
+	sound_manager_set_media_session_option(
+			SOUND_SESSION_OPTION_PAUSE_OTHERS_WHEN_START,
+			SOUND_SESSION_OPTION_INTERRUPTIBLE_DURING_PLAY);
 
 	int err = player_create(player);
 	if (err != PLAYER_ERROR_NONE) {

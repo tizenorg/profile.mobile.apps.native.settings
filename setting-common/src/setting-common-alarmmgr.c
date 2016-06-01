@@ -30,8 +30,8 @@
 /**
 * send
 * This function is	used to create mgr
-* @param		   data[in]			pointer to AData
-* @return		   when success, return EINA_TRUE or EINA_FALSE if error
+* @param		data[in]			pointer to AData
+* @return		when success, return EINA_TRUE or EINA_FALSE if error
 * @exception
 */
 EXPORT_PUBLIC
@@ -59,10 +59,12 @@ int setting_common_alarmmgr_create(BM_AData *alarm)
 		SETTING_TRACE_ERROR("fail to call localtime_r");
 	}
 
-	SETTING_TRACE("alarm->hour[%d], alarm->min[%d]", alarm->hour, alarm->min);
+	SETTING_TRACE("alarm->hour[%d], alarm->min[%d]", alarm->hour,
+			alarm->min);
 	pt.tm_hour = alarm->hour;
 	pt.tm_min = alarm->min;
-	SET_BM_TIME_DATA_T(&alarm_data, pt.tm_year + 1900, pt.tm_mon + 1, pt.tm_mday, pt.tm_hour, pt.tm_min, 0);
+	SET_BM_TIME_DATA_T(&alarm_data, pt.tm_year + 1900, pt.tm_mon + 1,
+			pt.tm_mday, pt.tm_hour, pt.tm_min, 0);
 	nErr |= alarmmgr_set_time(alarm_entry, alarm_data);
 
 	/*set type	 */
@@ -76,15 +78,18 @@ int setting_common_alarmmgr_create(BM_AData *alarm)
 
 	/*create new	*/
 	int alarm_mgr_id = 0;
-	nErr = alarmmgr_add_alarm_with_localtime(alarm_entry, SETTING_BM_ALARM_APP, &alarm_mgr_id);
-	/*nErr = alarmmgr_add_alarm_appsvc_with_localtime(alarm_entry, (void *)b, &alarm_mgr_id); */
+	nErr = alarmmgr_add_alarm_with_localtime(alarm_entry,
+			SETTING_BM_ALARM_APP, &alarm_mgr_id);
+	/*nErr = alarmmgr_add_alarm_appsvc_with_localtime(
+	 * alarm_entry, (void *)b, &alarm_mgr_id); */
 	SETTING_TRACE("alarm_mgr_id [%d]", alarm_mgr_id);
 	if (nErr) {
 		SETTING_TRACE("*** [ERR] alarmmgr_add_alarm_with_localtime failed ***");
 	}
 
 	alarm->alarm_mgr_id = alarm_mgr_id;
-	/*vconf_set_int(VCONFKEY_SETAPPL_BM_ALARM_ID_START, alarm->alarm_mgr_id); */
+	/*vconf_set_int(VCONFKEY_SETAPPL_BM_ALARM_ID_START,
+	 * alarm->alarm_mgr_id); */
 
 	if (alarm_entry) {
 		alarmmgr_free_alarm(alarm_entry);

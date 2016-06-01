@@ -51,7 +51,7 @@ void storageUg_thread_testcancel()
 static Eina_Bool _async_worker_idler(void *data)
 {
 	SETTING_TRACE_BEGIN;
-	SETTING_TRACE("---------------------------------------------thread join BEGIN ");
+	SETTING_TRACE("------------------------------------thread join BEGIN ");
 	storageUg_worker *worker = data;
 
 	retv_if(NULL == data, ECORE_CALLBACK_CANCEL);
@@ -64,7 +64,7 @@ static Eina_Bool _async_worker_idler(void *data)
 
 
 
-	SETTING_TRACE("---------------------------------------------thread join END ");
+	SETTING_TRACE("------------------------------------thread join END ");
 	SETTING_TRACE_END;
 	return ECORE_CALLBACK_CANCEL;
 }
@@ -123,7 +123,7 @@ bool storageUg_worker_is_running(void *data)
 }
 
 void *storageUg_start_async_worker(async_fn fn, callback_fn cb,
-								   SettingStorageUG *ad)
+		SettingStorageUG *ad)
 {
 	int ret;
 	storageUg_worker *worker;
@@ -132,7 +132,7 @@ void *storageUg_start_async_worker(async_fn fn, callback_fn cb,
 
 	if (NULL == storage_worker_hashT) {
 		storage_worker_hashT = g_hash_table_new_full(NULL, NULL,
-													 _async_worker_hash_free_key, NULL);
+				_async_worker_hash_free_key, NULL);
 	}
 
 	worker = calloc(1, sizeof(storageUg_worker));

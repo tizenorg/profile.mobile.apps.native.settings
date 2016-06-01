@@ -31,17 +31,17 @@
 #include <setting-cfg.h>
 /*#include <locations.h> */
 
-#define KeyStr_On				"IDS_ST_BODY_ON"
-#define KeyStr_Off				"IDS_ST_BODY_ALERTTYPE_OFF"
+#define KeyStr_On		"IDS_ST_BODY_ON"
+#define KeyStr_Off		"IDS_ST_BODY_ALERTTYPE_OFF"
 #define KeyStr_LocationService	"IDS_LBS_BODY_LOCATION_SERVICE"
-#define KeyStr_VPN				"IDS_ST_BODY_VPN"
+#define KeyStr_VPN		"IDS_ST_BODY_VPN"
 
 typedef struct _SettingMoreConnectionsUG SettingMoreConnectionsUG;
 
 /**
  * Setting MoreConnections UG context
- * all UG function has void* as an agument. this is casted back to SettingMoreConnectionsUG
- * and the functions access app context.
+ * all UG function has void* as an agument. this is casted back to
+ * SettingMoreConnectionsUG and the functions access app context.
  */
 struct _SettingMoreConnectionsUG {
 	ui_gadget_h ug;
@@ -72,6 +72,7 @@ struct _SettingMoreConnectionsUG {
 
 extern setting_view setting_view_moreconnections_main;
 char *setting_location_is_enable(void *data);
-void setting_moreconnections_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode, void *priv);
+void setting_moreconnections_layout_ug_cb(
+		ui_gadget_h ug, enum ug_mode mode, void *priv);
 
 #endif				/* __SETTING_MORECONNECTIONS_H__ */

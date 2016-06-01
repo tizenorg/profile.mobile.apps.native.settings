@@ -132,7 +132,7 @@ struct _SettingAboutUG {
 	bool empty_flag;
 	/*char *my_numbers[SETTING_ABOUT_MY_NUMBERS_LEN]; */
 	TelSimMsisdnList_t my_numbers;
-	bool popup_showed_flag; /** if popup has been showed, do not show again*/
+	bool popup_showed_flag; /* if popup has been showed, do not show again*/
 	bool drag_flag;
 	int noti_id;
 	SETTING_SIM_STATUS sim_status;
@@ -149,7 +149,8 @@ struct _SettingAboutUG {
 
 extern setting_view setting_view_about_main;
 extern void setting_about_main_get_wifi_mac_address_string(char *str, int size);
-extern void setting_about_main_get_bluetooth_address_string(char *str, int size);
+extern void setting_about_main_get_bluetooth_address_string(char *str,
+		int size);
 
 
 /**
@@ -160,7 +161,7 @@ extern void setting_about_main_get_bluetooth_address_string(char *str, int size)
 * @param priv
 */
 void setting_about_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
-								void *priv);
+		void *priv);
 
 /**
  * @}

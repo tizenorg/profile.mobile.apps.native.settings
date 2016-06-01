@@ -27,7 +27,7 @@ typedef int (*async_fn)(SettingAppMgrUG *ad);
 typedef void (*callback_fn)(int fn_result, SettingAppMgrUG *ad);
 
 void *appmgrUg_start_async_worker(async_fn fn, callback_fn cb,
-								  SettingAppMgrUG *ad);
+		SettingAppMgrUG *ad);
 void appmgrUg_stop_async_worker(void *worker_id);
 void appmgrUg_stop_async_worker_all(void);
 void appmgrUg_thread_testcancel();

@@ -26,12 +26,15 @@
 #include <vconf.h>
 #include <setting-common-general-func.h>
 
-#define LANGLIST_FILE_PATH		_TZ_SYS_RO_APP"/org.tizen.setting/def_config/langlist.xml"
-#define LANGLIST_ALL_FILE_PATH	_TZ_SYS_RW_APP"/org.tizen.setting/data/langlist_all.xml"
+#define LANGLIST_FILE_PATH \
+	_TZ_SYS_RO_APP"/org.tizen.setting/def_config/langlist.xml"
+#define LANGLIST_ALL_FILE_PATH \
+	_TZ_SYS_RW_APP"/org.tizen.setting/data/langlist_all.xml"
 
 
 #define SETTING_STR_SLP_LEN 256
-#define VCONFKEY_SETAPPL_USE_PACKET_DATA_BOOL				   VCONFKEY_SETAPPL_PREFIX"/use_packet_data"
+#define VCONFKEY_SETAPPL_USE_PACKET_DATA_BOOL \
+	VCONFKEY_SETAPPL_PREFIX"/use_packet_data"
 
 
 
@@ -40,7 +43,8 @@
 #endif
 
 #ifndef VCONFKEY_SETAPPL_ACCESSIBILITY_FONT_NAME
-#define VCONFKEY_SETAPPL_ACCESSIBILITY_FONT_NAME  "db/setting/accessibility/font_name"
+#define VCONFKEY_SETAPPL_ACCESSIBILITY_FONT_NAME \
+	"db/setting/accessibility/font_name"
 #endif
 
 /**
@@ -54,51 +58,71 @@
 /** @todo verify if the below keys need to be added in libslp-setting*/
 
 /* added 11.07.11 */
-#define VCONFKEY_SETAPPL_STATE_PARENTAL_MODE_BOOL	VCONFKEY_SETAPPL_PREFIX"/parental_mode"
-#define VCONFKEY_SETAPPL_DATA_EACH_MONTH_INT		VCONFKEY_SETAPPL_PREFIX"/data_each_month"
-#define VCONFKEY_SETAPPL_DATA_EACH_MONTH_APP_INT	VCONFKEY_SETAPPL_PREFIX"/data_each_month_app"
+#define VCONFKEY_SETAPPL_STATE_PARENTAL_MODE_BOOL \
+	VCONFKEY_SETAPPL_PREFIX"/parental_mode"
+#define VCONFKEY_SETAPPL_DATA_EACH_MONTH_INT \
+	VCONFKEY_SETAPPL_PREFIX"/data_each_month"
+#define VCONFKEY_SETAPPL_DATA_EACH_MONTH_APP_INT \
+	VCONFKEY_SETAPPL_PREFIX"/data_each_month_app"
 
-#define VCONFKEY_SETAPPL_TAP_TWIST			VCONFKEY_SETAPPL_PREFIX"/motion/tap_twist"
+#define VCONFKEY_SETAPPL_TAP_TWIST VCONFKEY_SETAPPL_PREFIX"/motion/tap_twist"
 #ifndef VCONFKEY_SETAPPL_USE_MUTE_PAUSE
-#define VCONFKEY_SETAPPL_USE_MUTE_PAUSE		VCONFKEY_SETAPPL_PREFIX"db/setting/use_mute_pause"
+#define VCONFKEY_SETAPPL_USE_MUTE_PAUSE \
+	VCONFKEY_SETAPPL_PREFIX"db/setting/use_mute_pause"
 #endif
 
 /*Driving Mode(DM) */
-#define VCONFKEY_SETAPPL_DM_DRIVING_MODE	VCONFKEY_SETAPPL_PREFIX"/drivingmode/drivingmode"
-#define VCONFKEY_SETAPPL_DM_INCOMING_CALL	VCONFKEY_SETAPPL_PREFIX"/drivingmode/incomingcall"
-#define VCONFKEY_SETAPPL_DM_MESSAGE		VCONFKEY_SETAPPL_PREFIX"/drivingmode/message"
-#define VCONFKEY_SETAPPL_DM_EMAIL		VCONFKEY_SETAPPL_PREFIX"/drivingmode/newemails"
-#define VCONFKEY_SETAPPL_DM_VOICEMAIL		VCONFKEY_SETAPPL_PREFIX"/drivingmode/newvoicemails"
-#define VCONFKEY_SETAPPL_DM_ALARM		VCONFKEY_SETAPPL_PREFIX"/drivingmode/alarm"
-#define VCONFKEY_SETAPPL_DM_SCHEDULE		VCONFKEY_SETAPPL_PREFIX"/drivingmode/schedule"
-#define VCONFKEY_SETAPPL_DM_UNLOCK_SCREEN	VCONFKEY_SETAPPL_PREFIX"/drivingmode/unlockscreen"
+#define VCONFKEY_SETAPPL_DM_DRIVING_MODE \
+	VCONFKEY_SETAPPL_PREFIX"/drivingmode/drivingmode"
+#define VCONFKEY_SETAPPL_DM_INCOMING_CALL \
+	VCONFKEY_SETAPPL_PREFIX"/drivingmode/incomingcall"
+#define VCONFKEY_SETAPPL_DM_MESSAGE \
+	VCONFKEY_SETAPPL_PREFIX"/drivingmode/message"
+#define VCONFKEY_SETAPPL_DM_EMAIL \
+	VCONFKEY_SETAPPL_PREFIX"/drivingmode/newemails"
+#define VCONFKEY_SETAPPL_DM_VOICEMAIL \
+	VCONFKEY_SETAPPL_PREFIX"/drivingmode/newvoicemails"
+#define VCONFKEY_SETAPPL_DM_ALARM \
+	VCONFKEY_SETAPPL_PREFIX"/drivingmode/alarm"
+#define VCONFKEY_SETAPPL_DM_SCHEDULE \
+	VCONFKEY_SETAPPL_PREFIX"/drivingmode/schedule"
+#define VCONFKEY_SETAPPL_DM_UNLOCK_SCREEN \
+	VCONFKEY_SETAPPL_PREFIX"/drivingmode/unlockscreen"
 
 /*about phone ug */
-#define VCONFKEY_SETAPPL_ASSISTIVE_LIGHT_REMINDER	VCONFKEY_SETAPPL_PREFIX"/accessibility/assistive_light_reminder"
+#define VCONFKEY_SETAPPL_ASSISTIVE_LIGHT_REMINDER \
+	VCONFKEY_SETAPPL_PREFIX"/accessibility/assistive_light_reminder"
 
 /* firewall block type */
-#define VCONFKEY_SETAPPL_FIREWALL_NETWORK_BLOCK_TYPE	VCONFKEY_SETAPPL_PREFIX"/firewall_network_block"
-#define VCONFKEY_SETAPPL_FIREWALL_PROTOCOL_BLOCK_TYPE	VCONFKEY_SETAPPL_PREFIX"/firewall_protocol_block"
+#define VCONFKEY_SETAPPL_FIREWALL_NETWORK_BLOCK_TYPE \
+	VCONFKEY_SETAPPL_PREFIX"/firewall_network_block"
+#define VCONFKEY_SETAPPL_FIREWALL_PROTOCOL_BLOCK_TYPE \
+	VCONFKEY_SETAPPL_PREFIX"/firewall_protocol_block"
 
 #ifndef VCONFKEY_SETAPPL_DEFAULT_MEM_WIFI_DIRECT_INT
-#define VCONFKEY_SETAPPL_DEFAULT_MEM_WIFI_DIRECT_INT	  VCONFKEY_SETAPPL_PREFIX"/default_memory/wifi_direct"
+#define VCONFKEY_SETAPPL_DEFAULT_MEM_WIFI_DIRECT_INT \
+	VCONFKEY_SETAPPL_PREFIX"/default_memory/wifi_direct"
 #endif
 
 #ifndef VCONFKEY_SETAPPL_DEFAULT_MEM_INSTALL_APPLICATIONS_INT
-#define VCONFKEY_SETAPPL_DEFAULT_MEM_INSTALL_APPLICATIONS_INT	   VCONFKEY_SETAPPL_PREFIX"/default_memory/install_applications"
+#define VCONFKEY_SETAPPL_DEFAULT_MEM_INSTALL_APPLICATIONS_INT \
+	VCONFKEY_SETAPPL_PREFIX"/default_memory/install_applications"
 #endif
 
 
 /*already defined by hyejin kim,need to removed after next binary */
 #ifndef VCONFKEY_SETAPPL_LCD_AUTOMATIC_BRIGHTNESS
-#define VCONFKEY_SETAPPL_LCD_AUTOMATIC_BRIGHTNESS  VCONFKEY_SETAPPL_PREFIX"/automatic_brightness_level"
+#define VCONFKEY_SETAPPL_LCD_AUTOMATIC_BRIGHTNESS \
+	VCONFKEY_SETAPPL_PREFIX"/automatic_brightness_level"
 #endif
 
 /*for data usage */
-#define VCONFKEY_SETAPPL_SET_DATA_USAGE_LIMIT_ROAMING_BOOL	VCONFKEY_SETAPPL_PREFIX"/set_data_usage_limit_roaming"
+#define VCONFKEY_SETAPPL_SET_DATA_USAGE_LIMIT_ROAMING_BOOL \
+	VCONFKEY_SETAPPL_PREFIX"/set_data_usage_limit_roaming"
 
 #ifndef VCONFKEY_SETAPPL_BOOL_AUTO_ADJUST_SCREEN_TONE
-#define VCONFKEY_SETAPPL_BOOL_AUTO_ADJUST_SCREEN_TONE VCONFKEY_SETAPPL_PREFIX"/auto_adjust_screen_tone"
+#define VCONFKEY_SETAPPL_BOOL_AUTO_ADJUST_SCREEN_TONE \
+	VCONFKEY_SETAPPL_PREFIX"/auto_adjust_screen_tone"
 #endif
 
 
@@ -134,7 +158,8 @@ typedef enum {
 	INT_SLP_SETTING_LCD_TIMEOUT_NORMAL,
 	INT_SLP_SETTING_LCD_TIMEOUT_NORMAL_BACKUP,
 
-	INT_SLP_SETTING_AUTOMATIC_BRIGHTNESS,	/* set by manul or not. 0:manul, 1:not */
+	/* set by manul or not. 0:manul, 1:not */
+	INT_SLP_SETTING_AUTOMATIC_BRIGHTNESS,
 
 	INT_SLP_SETTING_SELECT_NETWORK,
 	INT_SLP_SETTING_NETWORK_MODE,
@@ -257,18 +282,27 @@ typedef struct _Vconf_Change_Node {
 	vconf_callback_fn cb;
 	void *cb_data;
 } Vconf_Change_Node;
-#define DEREGISTER_VCONFS(listened_list) setting_destory_listen_list(&(listened_list))
-#define REGISTER_VCONF_NODE(listened_list,vconf,cb,data) setting_add_listen_node(&(listened_list),vconf,cb,data)
+#define DEREGISTER_VCONFS(listened_list) \
+	setting_destory_listen_list(&(listened_list))
+#define REGISTER_VCONF_NODE(listened_list,vconf,cb,data) \
+	setting_add_listen_node(&(listened_list),vconf,cb,data)
 
 extern void setting_destory_listen_list(Eina_List **listened_list);
-extern bool setting_add_listen_node(Eina_List **listened_list, const char *vconf, vconf_callback_fn cb, void *data);
+extern bool setting_add_listen_node(Eina_List **listened_list,
+		const char *vconf, vconf_callback_fn cb, void *data);
 
-extern int setting_set_int_slp_key(setting_int_slp_list key, int value, int *err);
-extern int setting_get_int_slp_key(setting_int_slp_list key, int *value, int *err);
-extern int setting_set_bool_slp_key(setting_bool_slp_list key, int value, int *err);
-extern int setting_get_bool_slp_key(setting_bool_slp_list key, int *value, int *err);
-extern int setting_set_string_slp_key(setting_str_slp_list key, char *value, int *err);
-extern int setting_get_string_slp_key(setting_str_slp_list key, char *value, int *err);
+extern int setting_set_int_slp_key(
+		setting_int_slp_list key, int value, int *err);
+extern int setting_get_int_slp_key(
+		setting_int_slp_list key, int *value, int *err);
+extern int setting_set_bool_slp_key(
+		setting_bool_slp_list key, int value, int *err);
+extern int setting_get_bool_slp_key(
+		setting_bool_slp_list key, int *value, int *err);
+extern int setting_set_string_slp_key(
+		setting_str_slp_list key, char *value, int *err);
+extern int setting_get_string_slp_key(
+		setting_str_slp_list key, char *value, int *err);
 
 extern int setting_store_init_password(char *in);
 extern int setting_read_password(char *md_result);
@@ -279,7 +313,7 @@ extern Eina_List *setting_get_language_list();
 extern Eina_List *setting_get_language_list2();
 extern void	 setting_get_language_list_destroy();
 
-/*---------------------------------------------------------------------------------------------- */
+/*------------------------------------------------------------------------- */
 /* export&import function */
 typedef int (*status_handler_fp)(int total, int current, void *data);
 

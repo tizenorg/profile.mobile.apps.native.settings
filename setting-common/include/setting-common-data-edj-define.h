@@ -33,7 +33,8 @@
 #define TOP_AREA_H			171
 #define BOTTOM_BAR_AREA_H	98
 #define HD_HEIGHT			1280
-#define PERSONAL_VIBRATION_LAYOUT_H	((HD_HEIGHT)-(TOP_AREA_H)-(BOTTOM_BAR_AREA_H))
+#define PERSONAL_VIBRATION_LAYOUT_H \
+	((HD_HEIGHT)-(TOP_AREA_H)-(BOTTOM_BAR_AREA_H))
 
 #define SETTING_LAYOUT_FOCUS_PART(bg) \
 	part { name: "focus_bg_left_top_padding";\

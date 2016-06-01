@@ -23,7 +23,9 @@
 
 #include <setting-moreconnections.h>
 
-static void setting_moreconnections_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj, void *event_info);
-static Eina_Bool setting_moreconnections_main_click_softkey_back_cb(void *data, Evas_Object *obj, void *event_info);
+static void setting_moreconnections_main_mouse_up_Gendial_list_cb(
+		void *data, Evas_Object *obj, void *event_info);
+static Eina_Bool setting_moreconnections_main_click_softkey_back_cb(
+		void *data, Evas_Object *obj, void *event_info);
 
 #endif				/* __SETTING_MORECONNECTIONS_MAIN_H__ */

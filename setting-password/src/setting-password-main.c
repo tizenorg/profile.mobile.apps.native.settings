@@ -270,7 +270,8 @@ static void setting_password_main_entry_changed_cb(void *data, Evas_Object *obj,
 
 	retm_if(data == NULL, "[Setting > Password] Data parameter is NULL");
 	retm_if(obj == NULL, "[Setting > Password] Data parameter is NULL");
-	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
+	Setting_GenGroupItem_Data *list_item =
+			(Setting_GenGroupItem_Data *) data;
 	SettingPasswordUG *ad = (SettingPasswordUG *) list_item->userdata;
 	const char *entry_str = elm_entry_entry_get(obj);
 	list_item->sub_desc = (char *) g_strdup(entry_str);
@@ -328,7 +329,8 @@ static void __reached_max_pwlength_cb(void *data, Evas_Object *obj,
 
 	/* int err = 0; */
 
-	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
+	Setting_GenGroupItem_Data *list_item =
+			(Setting_GenGroupItem_Data *) data;
 	SettingPasswordUG *ad = (SettingPasswordUG *) list_item->userdata;
 
 	/* Display help text. */
@@ -343,7 +345,8 @@ static void __entry_activated_cb(void *data, Evas_Object *obj, void *event_info)
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
 
-	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
+	Setting_GenGroupItem_Data *list_item =
+			(Setting_GenGroupItem_Data *) data;
 	SettingPasswordUG *ad = (SettingPasswordUG *) list_item->userdata;
 
 	if (ad->bottom_btn) {
@@ -410,7 +413,8 @@ static void __entry_focused_cb(void *data, Evas_Object *obj, void *event_info)
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
 
-	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
+	Setting_GenGroupItem_Data *list_item =
+			(Setting_GenGroupItem_Data *) data;
 	/* SettingPasswordUG *ad = (SettingPasswordUG *)list_item->userdata; */
 
 	if (!elm_entry_is_empty(obj)) {
@@ -427,7 +431,8 @@ static void __entry_unfocused_cb(void *data, Evas_Object *obj, void *event_info)
 	retm_if(data == NULL, "Data parameter is NULL");
 	retm_if(obj == NULL, "Data parameter is NULL");
 
-	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
+	Setting_GenGroupItem_Data *list_item =
+			(Setting_GenGroupItem_Data *) data;
 
 	if (list_item->item) {
 		elm_object_item_signal_emit(list_item->item,
@@ -470,7 +475,8 @@ int setting_password_main_draw_1line_password(void *data, void *cb)
 				NULL);
 		/* change return key type */
 		if (ad->ed_pw1) {
-			ad->ed_pw1->return_key_type = ELM_INPUT_PANEL_RETURN_KEY_TYPE_DONE;
+			ad->ed_pw1->return_key_type =
+					ELM_INPUT_PANEL_RETURN_KEY_TYPE_DONE;
 			elm_entry_input_panel_return_key_type_set(
 					ad->ed_pw1->eo_check,
 					ELM_INPUT_PANEL_RETURN_KEY_TYPE_DONE);
@@ -509,7 +515,8 @@ int setting_password_main_draw_1line_password(void *data, void *cb)
 
 		/* change return key type */
 		if (ad->ed_pw1) {
-			ad->ed_pw1->return_key_type = ELM_INPUT_PANEL_RETURN_KEY_TYPE_NEXT;
+			ad->ed_pw1->return_key_type =
+					ELM_INPUT_PANEL_RETURN_KEY_TYPE_NEXT;
 			elm_entry_input_panel_return_key_type_set(
 					ad->ed_pw1->eo_check,
 					ELM_INPUT_PANEL_RETURN_KEY_TYPE_NEXT);
@@ -928,8 +935,8 @@ static int __count_string(const char *str, int *cnt_letter, int *cnt_digit,
 {
 	SETTING_TRACE_BEGIN;
 
-	retv_if(
-			str == NULL || cnt_letter == NULL || cnt_digit == NULL || cnt_sym == NULL,
+	retv_if(str == NULL || cnt_letter == NULL || cnt_digit == NULL
+			|| cnt_sym == NULL,
 			SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
 	/*char* plain_str = elm_entry_markup_to_utf8(str); */
@@ -958,7 +965,8 @@ static int __count_string(const char *str, int *cnt_letter, int *cnt_digit,
 		} else if ((temp >= 'A') && (temp <= 'Z')) { /* upper letter */
 			letter++;
 		} else if ((temp >= ' ') && (temp <= '~')) {
-			/* symbol means special char that enables to input from IME. */
+			/* symbol means special char that enables to input from
+			 * IME. */
 			symbol++;
 		}
 	}

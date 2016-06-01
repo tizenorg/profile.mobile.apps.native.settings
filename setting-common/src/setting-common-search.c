@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 #include <setting-common-search.h>
 #include <unistd.h>
 #include <eina_list.h>
@@ -35,9 +34,11 @@
 static char *__search_label_get(void *data, Evas_Object *obj, const char *part);
 static char *___add_tag_for_search(char *target, char *searcher);
 
-static Evas_Object *__search_icon_get(void *data, Evas_Object *obj, const char *part);
+static Evas_Object *__search_icon_get(void *data, Evas_Object *obj,
+		const char *part);
 static void __search_item_del(void *data, Evas_Object *obj);
-static Evas_Object *__no_result_icon_get(void *data, Evas_Object *obj, const char *part);
+static Evas_Object *__no_result_icon_get(void *data, Evas_Object *obj,
+		const char *part);
 /**
  * [UI] search bar
  * plain list item style
@@ -49,8 +50,7 @@ const Elm_Genlist_Item_Class itc_no_reult = {
 	.func.text_get = NULL,
 	.func.content_get = __no_result_icon_get,
 	.func.state_get = NULL,
-	.func.del = __search_item_del,
-};
+	.func.del = __search_item_del, };
 
 #define DEFINE_ITC2(style, name) \
 	EXPORT_PUBLIC const Elm_Genlist_Item_Class name = {\
@@ -63,15 +63,16 @@ const Elm_Genlist_Item_Class itc_no_reult = {
 
 DEFINE_ITC2("dialogue/1text.1icon.3.tb", g_search_genlist_ts);
 DEFINE_ITC2("dialogue/newset.1text.2icon.4.tb", g_search_genlist_ts_toggle);
-DEFINE_ITC2("dialogue/newset.1text.2icon.4.divider.tb", g_search_genlist_ts_divided_toggle);
+DEFINE_ITC2("dialogue/newset.1text.2icon.4.divider.tb",
+		g_search_genlist_ts_divided_toggle);
 
 static
 char *___add_tag_for_search(char *target, char *searcher)
 {
 	const char *p = NULL;
 	const char *pre = NULL;
-	char buf[BUF_SIZE] = {0,};
-	char str_tag_added[BUF_SIZE] = {0,};
+	char buf[BUF_SIZE] = { 0, };
+	char str_tag_added[BUF_SIZE] = { 0, };
 
 	pre = target;
 	p = (const char *)strcasestr(pre, searcher);
@@ -95,10 +96,6 @@ char *___add_tag_for_search(char *target, char *searcher)
 	return strdup(str_tag_added);
 }
 
-
-
-
-
 /**
  * Callback function used for get label as member in genlist item
  *
@@ -121,20 +118,27 @@ char *__search_label_get(void *data, Evas_Object *obj, const char *part)
 	retv_if(NULL == part, NULL);
 
 	if (!strcmp(part, "elm.text.1")) {
-		snprintf(buf, BUF_SIZE, "%s", "elm.text.1");		/* print out test message */
+		/* print out test message */
+		snprintf(buf, BUF_SIZE, "%s", "elm.text.1");
 	} else if (!strcmp(part, "elm.text.2")) {
-		snprintf(buf, BUF_SIZE, "%s", "elm.text.2");		/* print out test message */
+		/* print out test message */
+		snprintf(buf, BUF_SIZE, "%s", "elm.text.2");
 	} else if (!strcmp(part, "elm.text.3")) {
-		snprintf(buf, BUF_SIZE, "%s", "elm.text.3");		/* print out test message */
+		/* print out test message */
+		snprintf(buf, BUF_SIZE, "%s", "elm.text.3");
 	} else if (!strcmp(part, "elm.text")) {
 #if 0
-		/*snprintf(buf, BUF_SIZE, "[%s] - %s", item->type, item->title);   // print out "[type] - title" */
-		snprintf(buf, BUF_SIZE, "%s", item->title);	  /* print out "[type] - title" */
+		/*snprintf(buf, BUF_SIZE, "[%s] - %s", item->type, item->title);
+		 * // print out "[type] - title" */
+		/* print out "[type] - title" */
+		snprintf(buf, BUF_SIZE, "%s", item->title);
 		return strdup(buf);
 #else
-		/*tag_str = ___add_tag_for_search(item->title, g_ad->search_text); */
+		/*tag_str = ___add_tag_for_search(item->title,
+		 * g_ad->search_text); */
 		tag_str = ___add_tag_for_search(item->title, "");
-		snprintf(buf, BUF_SIZE, "%s", tag_str);	  /* print out "[type] - title" */
+		/* print out "[type] - title" */
+		snprintf(buf, BUF_SIZE, "%s", tag_str);
 		FREE(tag_str);
 		return strdup(buf);
 #endif
@@ -150,13 +154,16 @@ char *__search_label_get(void *data, Evas_Object *obj, const char *part)
 /*--------------------------------------------------- */
 static void ___toggle_chg_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	SETTING_TRACE_BEGIN;
+	SETTING_TRACE_BEGIN
+	;
 
 }
 
-static Evas_Object *__no_result_icon_get(void *data, Evas_Object *obj, const char *part)
+static Evas_Object *__no_result_icon_get(void *data, Evas_Object *obj,
+		const char *part)
 {
-	SETTING_TRACE_BEGIN;
+	SETTING_TRACE_BEGIN
+	;
 	setting_retvm_if(!data || !obj, NULL, "!data || !obj");
 
 	if (!safeStrCmp(part, "elm.swallow.content")) {
@@ -165,18 +172,23 @@ static Evas_Object *__no_result_icon_get(void *data, Evas_Object *obj, const cha
 		int rot = elm_win_rotation_get(obj);
 		SETTING_TRACE_DEBUG("....change_ang:%d", rot);
 		if (APP_DEVICE_ORIENTATION_0 == rot
-			|| APP_DEVICE_ORIENTATION_180 == rot) {
+				|| APP_DEVICE_ORIENTATION_180 == rot) {
 			/*b.separator.. */
-			Evas_Object *separator = setting_create_blank_rect_customize(box, 1, 270);
+			Evas_Object *separator = setting_create_blank_rect_customize(
+					box, 1, 270);
 			elm_box_pack_end(box, separator);
 		}
 
 		Evas_Object *sub_layout = elm_layout_add(obj);
-		elm_layout_theme_set(sub_layout, "layout", "nocontents", "search");
-		evas_object_size_hint_weight_set(sub_layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-		evas_object_size_hint_align_set(sub_layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
+		elm_layout_theme_set(sub_layout, "layout", "nocontents",
+				"search");
+		evas_object_size_hint_weight_set(sub_layout, EVAS_HINT_EXPAND,
+		EVAS_HINT_EXPAND);
+		evas_object_size_hint_align_set(sub_layout, EVAS_HINT_FILL,
+		EVAS_HINT_FILL);
 
-		elm_object_part_text_set(sub_layout, "elm.text", _("IDS_ST_BODY_NO_RESULTS_FOUND"));
+		elm_object_part_text_set(sub_layout, "elm.text",
+				_("IDS_ST_BODY_NO_RESULTS_FOUND"));
 		setting_resize_object(sub_layout, 500, 500);
 		evas_object_show(sub_layout);
 		elm_box_pack_end(box, sub_layout);
@@ -196,8 +208,8 @@ static Evas_Object *__no_result_icon_get(void *data, Evas_Object *obj, const cha
  * @return	   NULL if meet error
  *			   Pointer to new icon
  */
-static
-Evas_Object *__search_icon_get(void *data, Evas_Object *obj, const char *part)
+static Evas_Object *__search_icon_get(void *data, Evas_Object *obj,
+		const char *part)
 {
 	/*SETTING_TRACE_BEGIN; */
 	retv_if(NULL == part, NULL);
@@ -210,24 +222,32 @@ Evas_Object *__search_icon_get(void *data, Evas_Object *obj, const char *part)
 		Evas_Object *icon = elm_icon_add(obj);
 
 		char *icon_path = NULL;
-		icon_path = IMG_SETTING;
+		icon_path = IMG_SETTING
+		;
 		if (item->icon_path) {
-			if (safeStrCmp(item->icon_path, "") == 0)
-				icon_path = IMG_SETTING;
-			else
+			if (safeStrCmp(item->icon_path, "") == 0) {
+				icon_path = IMG_SETTING
+				;
+			} else {
 				icon_path = item->icon_path;
+			}
 		}
 		/*SET//TING_TRACE("item->title:%s", item->title); */
-		/*SETTING_TRACE("item->title2:%s", item->title2);	// plain text */
-		/*SETTING_TRACE("item->iconpath:%s", icon_path);	// plain text */
+		// plain text
+		/*SETTING_TRACE("item->title2:%s", item->title2); */
+		// plain text
+		/*SETTING_TRACE("item->iconpath:%s", icon_path); */
 		elm_image_file_set(icon, icon_path, NULL);
-		evas_object_size_hint_aspect_set(icon, EVAS_ASPECT_CONTROL_VERTICAL, 1, 1);
+		evas_object_size_hint_aspect_set(icon,
+				EVAS_ASPECT_CONTROL_VERTICAL, 1, 1);
 
 		Evas_Object *ly_outer = elm_layout_add(obj);
-		elm_layout_file_set(ly_outer, SETTING_THEME_EDJ_NAME, "nocontents");
+		elm_layout_file_set(ly_outer, SETTING_THEME_EDJ_NAME,
+				"nocontents");
 		evas_object_show(ly_outer);
 
-		evas_object_size_hint_min_set(icon, ELM_SCALE_SIZE(63), ELM_SCALE_SIZE(63));
+		evas_object_size_hint_min_set(icon, ELM_SCALE_SIZE(63),
+				ELM_SCALE_SIZE(63));
 		evas_object_size_hint_max_set(icon, 63, 63);
 		elm_object_part_content_set(ly_outer, "contents", icon);
 
@@ -238,25 +258,32 @@ Evas_Object *__search_icon_get(void *data, Evas_Object *obj, const char *part)
 		Evas_Object *toggle = elm_check_add(obj);
 
 		if (item->fp_check_btn_cb)
-			evas_object_smart_callback_add(toggle, "changed", item->fp_check_btn_cb, item);
+			evas_object_smart_callback_add(toggle, "changed",
+					item->fp_check_btn_cb, item);
 		else
-			evas_object_smart_callback_add(toggle, "changed", ___toggle_chg_cb, item);
+			evas_object_smart_callback_add(toggle, "changed",
+					___toggle_chg_cb, item);
 
 		/* get state------------------------------------- */
 		/* if it is the 1'st depth item, get the pnode */
 		/* display UG need to get the pointer */
 
-		Setting_Cfg_Node_T *pnode = get_cfg_node_by_keystr(item->title2);
+		Setting_Cfg_Node_T *pnode = get_cfg_node_by_keystr(
+				item->title2);
 
 		Cfg_Item_State state = Cfg_Item_Error;
 		if (pnode && pnode->tfunc && pnode->tfunc->get_item_state) {
 			pnode->tfunc->get_item_state(&state, NULL);
 		} else if (!pnode && item->viewname) {
-			/* if get_cfg_node_by_keystr returns NULL, search for UG's keyword */
-			int ret =  setting_search_get_module_item_state(item->title2, item->viewname, &state, NULL);
-			SETTING_TRACE("---------------------------------------");
-			SETTING_TRACE(" >>>	 ret : %d, state : %d <<< ", ret, state);
-			SETTING_TRACE("---------------------------------------");
+			/* if get_cfg_node_by_keystr returns NULL,
+			 * search for UG's keyword */
+			int ret = setting_search_get_module_item_state(
+					item->title2, item->viewname, &state,
+					NULL);
+			SETTING_TRACE("--------------------------------------");
+			SETTING_TRACE(" >>>	 ret : %d, state : %d <<< ",
+					ret, state);
+			SETTING_TRACE("--------------------------------------");
 		}
 
 		if (state == Cfg_Item_On)
@@ -297,12 +324,10 @@ void __search_item_del(void *data, Evas_Object *obj)
 	FREE(item);
 }
 
-
-
 static void sql_stmt(sqlite3 *db, const char *stmt)
 {
 	char *errmsg;
-	int	  ret;
+	int ret;
 
 	ret = sqlite3_exec(db, stmt, 0, 0, &errmsg);
 	if (ret != SQLITE_OK) {
@@ -315,13 +340,15 @@ static void sql_stmt(sqlite3 *db, const char *stmt)
 EXPORT_PUBLIC
 int setting_searchdb_open(sqlite3 **ppdb)
 {
-	SETTING_TRACE_BEGIN;
+	SETTING_TRACE_BEGIN
+	;
 	/*char *zErrMsg = NULL; */
 	int rc;
 	/*char query[512]; */
 	rc = sqlite3_open(SEARCH_DB_PATH, ppdb);
 	if (rc) {
-		SETTING_TRACE_ERROR("Can't open database: %s", sqlite3_errmsg(*ppdb));
+		SETTING_TRACE_ERROR("Can't open database: %s",
+				sqlite3_errmsg(*ppdb));
 		sqlite3_close(*ppdb);
 		return (-1);
 	} else {
@@ -334,14 +361,16 @@ int setting_searchdb_open(sqlite3 **ppdb)
 EXPORT_PUBLIC
 void setting_searchdb_close(sqlite3 *db)
 {
-	SETTING_TRACE_BEGIN;
+	SETTING_TRACE_BEGIN
+	;
 	sqlite3_close(db);
 }
 
 EXPORT_PUBLIC
 void setting_add_db_search_clean(sqlite3 *db)
 {
-	SETTING_TRACE_BEGIN;
+	SETTING_TRACE_BEGIN
+	;
 	sql_stmt(db, "BEGIN");
 	char *query = "DELETE FROM setting_search";
 
@@ -349,30 +378,36 @@ void setting_add_db_search_clean(sqlite3 *db)
 	sql_stmt(db, "COMMIT");
 }
 
-
 /**
-* @brief add index to DB
-*
-* @param db
-* @param locale	locale name (ko_KR, en_US ...)
-* @param keystr string name (ex. Wi-Fi)
-* @param infostr UG path, memta info, URL
-* @param data_type 0, 1, 2, 3, 4 ... type
-* @param viewname ""
-* @param fieldname ""
-* @param icon_path ""
-*/
+ * @brief add index to DB
+ *
+ * @param db
+ * @param locale	locale name (ko_KR, en_US ...)
+ * @param keystr string name (ex. Wi-Fi)
+ * @param infostr UG path, memta info, URL
+ * @param data_type 0, 1, 2, 3, 4 ... type
+ * @param viewname ""
+ * @param fieldname ""
+ * @param icon_path ""
+ */
 EXPORT_PUBLIC
-void setting_add_db_search_index(sqlite3 *db, char *locale, char *keystr, char *infostr, int data_type, char *viewname, char *fieldname, char *icon_path)
+void setting_add_db_search_index(sqlite3 *db, char *locale, char *keystr,
+		char *infostr, int data_type, char *viewname, char *fieldname,
+		char *icon_path)
 {
-	SETTING_TRACE_BEGIN;
+	SETTING_TRACE_BEGIN
+	;
 	sql_stmt(db, "BEGIN");
 	/*char query[1024]; */
 
-	/*snprintf(query, sizeof(query), "INSERT INTO setting_search VALUES (%Q, %Q, %Q, %d, NULL, %Q, %Q, %Q)", */
-	/*			locale, fieldname, viewname, data_type,	keystr,	infostr, icon_path); */
-	char *query = sqlite3_mprintf("INSERT INTO setting_search VALUES (%Q, %Q, %Q, %d, NULL, %Q, %Q, %Q)",
-								  locale, fieldname, viewname, data_type, keystr, infostr, icon_path);
+	/*snprintf(query, sizeof(query), "INSERT INTO setting_search VALUES (%Q,
+	 * %Q, %Q, %d, NULL, %Q, %Q, %Q)", */
+	/*	locale, fieldname, viewname, data_type,	keystr,	infostr,
+	 * icon_path); */
+	char *query = sqlite3_mprintf(
+			"INSERT INTO setting_search VALUES (%Q, %Q, %Q, %d, "
+			"NULL, %Q, %Q, %Q)", locale, fieldname, viewname,
+			data_type, keystr, infostr, icon_path);
 	sql_stmt(db, query);
 	sqlite3_free(query);
 	query = NULL;
@@ -381,7 +416,8 @@ void setting_add_db_search_index(sqlite3 *db, char *locale, char *keystr, char *
 
 #if 1
 EXPORT_PUBLIC
-int setting_invoke_search_db_function(char *ug_name, app_control_h service, void *ext, char **ppapplocale)
+int setting_invoke_search_db_function(char *ug_name, app_control_h service,
+		void *ext, char **ppapplocale)
 {
 	SETTING_TRACE("Enter %s with ug_name:%s", __FUNCTION__, ug_name);
 	int (*search_plugin)(app_control_h pair, void **ptr, char **applocale);
@@ -393,16 +429,20 @@ int setting_invoke_search_db_function(char *ug_name, app_control_h service, void
 	struct stat st;
 	if (stat(ug_file, &st) != 0) {
 
-		/*2.if it does not exit in /opt/ug/lib, then do exist-checking in (_TZ_SYS_RO_UG)/lib */
+		/*2.if it does not exit in /opt/ug/lib, then do exist-checking
+		 * in (_TZ_SYS_RO_UG)/lib */
 		memset(ug_file, 0x00, PATH_MAX + 1);
-		snprintf(ug_file, PATH_MAX, "%s/libug-%s.so", SETTING_UG_PATH_USR, ug_name);
+		snprintf(ug_file, PATH_MAX, "%s/libug-%s.so",
+				SETTING_UG_PATH_USR, ug_name);
 		if (stat(ug_file, &st) != 0) {
 			/*both not exist,skip it */
-			SETTING_TRACE_ERROR(" libug-%s.so is *NOT* present, so skip it..\n", ug_name);
+			SETTING_TRACE_ERROR(
+					" libug-%s.so is *NOT* present, so skip it..\n",
+					ug_name);
 			return OPERATE_LIB_SUCESS;
 		}
 	}
-	/*------------------------------------------------------------------------------------- */
+	/*------------------------------------------------------------------- */
 	void *handle = dlopen(ug_file, RTLD_LAZY);
 	if (!handle) {
 		SETTING_TRACE_ERROR(" >>>>>>>>>>> %s", dlerror());
@@ -418,22 +458,25 @@ int setting_invoke_search_db_function(char *ug_name, app_control_h service, void
 	}
 
 	if (search_plugin) {
-		ret = (*search_plugin)(service, ext, ppapplocale);	  /*  CALL */
-		SETTING_TRACE(" after calling PLUGIN WITH -APP LOCALE ID = %s", *ppapplocale);
+		ret = (*search_plugin)(service, ext, ppapplocale); /*  CALL */
+		SETTING_TRACE(" after calling PLUGIN WITH -APP LOCALE ID = %s",
+				*ppapplocale);
 	}
-	if (ret < 0) ret += UNDEFINED_LIB_SYMBOL;/*from -2 on */
+	if (ret < 0)
+		ret += UNDEFINED_LIB_SYMBOL;/*from -2 on */
 
 	dlclose(handle);
 	return ret;
 }
 #endif
 
-
 EXPORT_PUBLIC
-int setting_search_set_module_item_state(char *keyword, char *ug_name, Cfg_Item_State item_state, cfg_func_table *pops)
+int setting_search_set_module_item_state(char *keyword, char *ug_name,
+		Cfg_Item_State item_state, cfg_func_table *pops)
 {
 	SETTING_TRACE("Enter %s with ug_name:%s", __FUNCTION__, ug_name);
-	/* int setting_plugin_search_query_ops(char* str_id, void** tfunc_obj) */
+	/* int setting_plugin_search_query_ops(char* str_id,
+	 * void** tfunc_obj) */
 	int (*query_ops)(char *str_id, void **tfunc_obj);
 	int ret = OPERATE_LIB_SUCESS;
 
@@ -443,16 +486,20 @@ int setting_search_set_module_item_state(char *keyword, char *ug_name, Cfg_Item_
 	struct stat st;
 	if (stat(ug_file, &st) != 0) {
 
-		/*2.if it does not exit in /opt/ug/lib, then do exist-checking in (_TZ_SYS_RO_UG)/lib */
+		/*2.if it does not exit in /opt/ug/lib, then do exist-checking
+		 * in (_TZ_SYS_RO_UG)/lib */
 		memset(ug_file, 0x00, PATH_MAX + 1);
-		snprintf(ug_file, PATH_MAX, "%s/libug-%s.so", SETTING_UG_PATH_USR, ug_name);
+		snprintf(ug_file, PATH_MAX, "%s/libug-%s.so",
+				SETTING_UG_PATH_USR, ug_name);
 		if (stat(ug_file, &st) != 0) {
 			/*both not exist,skip it */
-			SETTING_TRACE_ERROR(" libug-%s.so is *NOT* present, so skip it..\n", ug_name);
+			SETTING_TRACE_ERROR(
+					" libug-%s.so is *NOT* present, so skip it..\n",
+					ug_name);
 			return OPERATE_LIB_SUCESS;
 		}
 	}
-	/*------------------------------------------------------------------------------------- */
+	/*------------------------------------------------------------------- */
 	void *handle = dlopen(ug_file, RTLD_LAZY);
 	if (!handle) {
 		SETTING_TRACE_ERROR(" >>>>>>>>>>> %s", dlerror());
@@ -471,18 +518,21 @@ int setting_search_set_module_item_state(char *keyword, char *ug_name, Cfg_Item_
 		/* OPS RETURNS NULL, IT'S PROBLEM */
 		cfg_func_table *ops = NULL;
 		/*ret = (*query_ops) ("MOCK_STR_ID", &ops);	  */
-		ret = (*query_ops)(keyword, (void **)&ops);	  /*  CALL */
+		ret = (*query_ops)(keyword, (void **)&ops); /*  CALL */
 		SETTING_TRACE(" ops = %x ", ops);
-		/*------------------------------------------------------------- */
+		/*----------------------------------------------------------- */
 		/* ACTUAL PROCESSING */
-		/*------------------------------------------------------------- */
+		/*----------------------------------------------------------- */
 		if ((ops) && (ops)->set_item_state) {
 			(ops)->set_item_state(item_state, NULL, NULL);
 		}
-		SETTING_TRACE(" ---> ppops.set_item_state(stat, NULL); -- after, sstat : %d", item_state);
-		/*------------------------------------------------------------- */
+		SETTING_TRACE(
+				" ---> ppops.set_item_state(stat, NULL); -- after, sstat" ": %d",
+				item_state);
+		/*----------------------------------------------------------- */
 	}
-	if (ret < 0) ret += UNDEFINED_LIB_SYMBOL;/*from -2 on */
+	if (ret < 0)
+		ret += UNDEFINED_LIB_SYMBOL;/*from -2 on */
 
 	dlclose(handle);
 	return ret;
@@ -491,10 +541,12 @@ int setting_search_set_module_item_state(char *keyword, char *ug_name, Cfg_Item_
 
 #if 1
 EXPORT_PUBLIC
-int setting_search_get_module_item_state(char *keyword, char *ug_name, Cfg_Item_State *pstat, cfg_func_table *pops)
+int setting_search_get_module_item_state(char *keyword, char *ug_name,
+		Cfg_Item_State *pstat, cfg_func_table *pops)
 {
 	SETTING_TRACE("Enter %s with ug_name:%s", __FUNCTION__, ug_name);
-	/* int setting_plugin_search_query_ops(char* str_id, void** tfunc_obj) */
+	/* int setting_plugin_search_query_ops(char* str_id,
+	 * void** tfunc_obj) */
 	int (*query_ops)(char *str_id, void **tfunc_obj);
 	int ret = OPERATE_LIB_SUCESS;
 
@@ -504,16 +556,20 @@ int setting_search_get_module_item_state(char *keyword, char *ug_name, Cfg_Item_
 	struct stat st;
 	if (stat(ug_file, &st) != 0) {
 
-		/*2.if it does not exit in /opt/ug/lib, then do exist-checking in (_TZ_SYS_RO_UG)/lib */
+		/*2.if it does not exit in /opt/ug/lib, then do exist-checking
+		 * in (_TZ_SYS_RO_UG)/lib */
 		memset(ug_file, 0x00, PATH_MAX + 1);
-		snprintf(ug_file, PATH_MAX, "%s/libug-%s.so", SETTING_UG_PATH_USR, ug_name);
+		snprintf(ug_file, PATH_MAX, "%s/libug-%s.so",
+				SETTING_UG_PATH_USR, ug_name);
 		if (stat(ug_file, &st) != 0) {
 			/*both not exist,skip it */
-			SETTING_TRACE_ERROR(" libug-%s.so is *NOT* present, so skip it..\n", ug_name);
+			SETTING_TRACE_ERROR(
+					" libug-%s.so is *NOT* present, so skip it..\n",
+					ug_name);
 			return OPERATE_LIB_SUCESS;
 		}
 	}
-	/*------------------------------------------------------------------------------------- */
+	/*------------------------------------------------------------------- */
 	void *handle = dlopen(ug_file, RTLD_LAZY);
 	if (!handle) {
 		SETTING_TRACE_ERROR(" >>>>>>>>>>> %s", dlerror());
@@ -531,85 +587,86 @@ int setting_search_get_module_item_state(char *keyword, char *ug_name, Cfg_Item_
 	if (query_ops && keyword) {
 		/* OPS RETURNS NULL, IT'S PROBLEM */
 		cfg_func_table *ops = NULL;
-		/* ret = (*query_ops) ("MOCK_STR_ID", &ops); */	/*  CALL */
-		ret = (*query_ops)(keyword, (void **)&ops);	/*  CALL */
+		/* ret = (*query_ops) ("MOCK_STR_ID", &ops); *//*  CALL */
+		ret = (*query_ops)(keyword, (void **)&ops); /*  CALL */
 		SETTING_TRACE(" ops = %x ", ops);
-		/*------------------------------------------------------------- */
+		/*----------------------------------------------------------- */
 		/* ACTUAL PROCESSING */
-		/*------------------------------------------------------------- */
+		/*----------------------------------------------------------- */
 		if ((ops) && (ops)->get_item_state)
 			(ops)->get_item_state(pstat, NULL);
 
-		SETTING_TRACE(" ---> ppops.get_item_state(pstat, NULL); -- after, pstat : %d", *pstat);
-		/*------------------------------------------------------------- */
+		SETTING_TRACE(
+				" ---> ppops.get_item_state(pstat, NULL); -- after, " "pstat : %d",
+				*pstat);
+		/*----------------------------------------------------------- */
 	}
-	if (ret < 0) ret += UNDEFINED_LIB_SYMBOL;/*from -2 on */
+	if (ret < 0)
+		ret += UNDEFINED_LIB_SYMBOL;/*from -2 on */
 
 	dlclose(handle);
 	return ret;
 }
 #endif
 
-
 EXPORT_PUBLIC
 int __setting_init_search_index_module()
 {
-
 	/* test, adding sql query */
 	sqlite3 *db = NULL;
 	setting_searchdb_open(&db);
 	SETTING_TRACE("search db = %d", db);
 
-	char *backup_langset =	vconf_get_str(VCONFKEY_LANGSET);
+	char *backup_langset = vconf_get_str(VCONFKEY_LANGSET);
 	char *ug_name_arr[] = {
-		"setting-display-efl",					/* finish */
-		"setting-profile-efl",					/* finish */
-		"setting-call-efl",						/* NO CODE !!! -- put  node here for testing */
-		"setting-cloud-efl",					/*finish */
-		"quickcommand-setting-efl",				/* finish */
-		"setting-mobileap-efl",					/* finish */
-		"lockscreen-options",					/* finish */
-		"email-setting-efl",					/* NO CODE !!! */
-		"emergency-msg-setting-efl",			/* NO CODE !!! */
-		"msg-setting-efl",						/* NO CODE !!! */
-		"setting-allshare-cast-efl",			/* NO CODE !!! */
-		"setting-allshare-efl",					/* NO CODE !!! */
-		"setting-blockingmode-efl",				/* NO CODE !!! */
+		"setting-display-efl", /* finish */
+		"setting-profile-efl", /* finish */
+		"setting-call-efl", /* NO CODE !!! put  node here for testing */
+		"setting-cloud-efl", /*finish */
+		"quickcommand-setting-efl", /* finish */
+		"setting-mobileap-efl", /* finish */
+		"lockscreen-options", /* finish */
+		"email-setting-efl", /* NO CODE !!! */
+		"emergency-msg-setting-efl", /* NO CODE !!! */
+		"msg-setting-efl", /* NO CODE !!! */
+		"setting-allshare-cast-efl", /* NO CODE !!! */
+		"setting-allshare-efl", /* NO CODE !!! */
+		"setting-blockingmode-efl", /* NO CODE !!! */
 		/*"ug-bluetooth-efl", */
-		"setting-dock-efl",						/* NO CODE !!! */
-		"setting-drivingmode-efl",				/* NO CODE !!! */
-		"setting-gallery-efl",					/* NO CODE !!! */
-		"setting-homescreen-efl",				/* NO CODE !!! */
-		"setting-ledindicator-efl",				/* NO CODE !!! */
-		"setting-location-efl",					/* NO CODE !!! */
-		"setting-manage-applications-efl",		/* NO CODE !!! */
-		"setting-manage-certificates-efl",		/* NO CODE !!! */
-		"setting-myaccount-efl",				/* NO CODE !!! */
-		"setting-phone-efl",					/* NO CODE !!! */
-		"setting-readytoshare-efl",				/* NO CODE !!! */
-		"setting-synchronise-efl",				/* NO CODE !!! */
-		"wifi-efl-UG",							/* NO CODE !!! */
-		"setting-wifidirect-efl",				/* NO CODE !!! */
-		"worldclock-efl",						/* NO CODE !!! */
-		"ug-nfc-efl",							/* NO CODE !!! */
-		"setting-font-efl",						/* NO CODE !!! */
-		"quickpanel-setting-efl",				/* NO CODE !!! */
-		"setting-easymode-efl",					/* NO CODE !!! */
-		"setting-accessibility-efl",			/* NO CODE !!! */
-		"setting-personalpage-efl",				/* NO CODE !!! */
-		"setting-voice-efl",					/* NO CODE !!! */
-		"setting-motion-efl",					/* NO CODE !!! */
-		"setting-palmmotion-efl",				/* NO CODE !!! */
-		"setting-time-efl",						/* NO CODE !!! */
-		"setting-accessory-efl",				/* NO CODE !!! */
-		"setting-powersaving-efl",				/* NO CODE !!! */
-		"setting-storage-efl",					/* NO CODE !!! */
-		"setting-security-efl",					/* NO CODE !!! */
-		"setting-privacy-efl",					/* NO CODE !!! */
-		"isfsetting-efl",					/* NO CODE !!! */
-		"setting-developeroption-efl",			/* NO CODE !!! */
-		"setting-about-efl",						/* NO CODE !!! */
-		"setting-network-efl",				/*finish */
+		"setting-dock-efl", /* NO CODE !!! */
+		"setting-drivingmode-efl", /* NO CODE !!! */
+		"setting-gallery-efl", /* NO CODE !!! */
+		"setting-homescreen-efl", /* NO CODE !!! */
+		"setting-ledindicator-efl", /* NO CODE !!! */
+		"setting-location-efl", /* NO CODE !!! */
+		"setting-manage-applications-efl", /* NO CODE !!! */
+		"setting-manage-certificates-efl", /* NO CODE !!! */
+		"setting-myaccount-efl", /* NO CODE !!! */
+		"setting-phone-efl", /* NO CODE !!! */
+		"setting-readytoshare-efl", /* NO CODE !!! */
+		"setting-synchronise-efl", /* NO CODE !!! */
+		"wifi-efl-UG", /* NO CODE !!! */
+		"setting-wifidirect-efl", /* NO CODE !!! */
+		"worldclock-efl", /* NO CODE !!! */
+		"ug-nfc-efl", /* NO CODE !!! */
+		"setting-font-efl", /* NO CODE !!! */
+		"quickpanel-setting-efl", /* NO CODE !!! */
+		"setting-easymode-efl", /* NO CODE !!! */
+		"setting-accessibility-efl", /* NO CODE !!! */
+		"setting-personalpage-efl", /* NO CODE !!! */
+		"setting-voice-efl", /* NO CODE !!! */
+		"setting-motion-efl", /* NO CODE !!! */
+		"setting-palmmotion-efl", /* NO CODE !!! */
+		"setting-time-efl", /* NO CODE !!! */
+		"setting-accessory-efl", /* NO CODE !!! */
+		"setting-powersaving-efl", /* NO CODE !!! */
+		"setting-storage-efl", /* NO CODE !!! */
+		"setting-security-efl", /* NO CODE !!! */
+		"setting-privacy-efl", /* NO CODE !!! */
+		"isfsetting-efl", /* NO CODE !!! */
+		"setting-developeroption-efl", /* NO CODE !!! */
+		"setting-about-efl", /* NO CODE !!! */
+		"setting-network-efl", /*finish */
 		"setting-datausage-efl",
 		"setting-fingerscanner-efl",
 		"setting-vpn-efl",
@@ -627,21 +684,26 @@ int __setting_init_search_index_module()
 		}
 
 		char *domainname = NULL;
-		ret =  setting_invoke_search_db_function(ug_name_arr[i], NULL, &plist, &domainname);
+		ret = setting_invoke_search_db_function(ug_name_arr[i], NULL,
+				&plist, &domainname);
 		if (ret != OPERATE_LIB_SUCESS) {
-			SETTING_TRACE_ERROR(" no plugin -- code : %s : %d ", ug_name_arr[i], ret);
+			SETTING_TRACE_ERROR(" no plugin -- code : %s : %d ",
+					ug_name_arr[i], ret);
 			continue;
 		} else {
 			/*SETTING_TRACE(" return : %d", ret); */
-			SETTING_TRACE(" plugin -- code : %s O.K : %d ", ug_name_arr[i], ret);
+			SETTING_TRACE(" plugin -- code : %s O.K : %d ",
+					ug_name_arr[i], ret);
 		}
 
 		if (!domainname) {
-			SETTING_TRACE_ERROR("domainname == NULL, it's error by plugin, not go next");
+			SETTING_TRACE_ERROR(
+					"domainname == NULL, it's error by plugin, not" " go next");
 			Eina_List *l = NULL;
 			Setting_Cfg_Node_T *node = NULL;
 			/*int count = 0; */
-			EINA_LIST_FOREACH(plist, l, node) {
+			EINA_LIST_FOREACH(plist, l, node)
+			{
 				FREE(node->key_name);
 				FREE(node->ug_args);
 				FREE(node->icon_path);
@@ -659,7 +721,7 @@ int __setting_init_search_index_module()
 #if 1
 		if (p) {
 			char *tempp;
-			domain_appname = strtok_r(domainname, ":",&tempp);
+			domain_appname = strtok_r(domainname, ":", &tempp);
 
 			SETTING_TRACE("p1:appname : %s\n", domain_appname);
 			SETTING_TRACE("p2:localedir : %s\n", p + 1);
@@ -668,50 +730,71 @@ int __setting_init_search_index_module()
 		} else {
 			domain_appname = domainname;
 			/* default locale */
-			setting_set_i18n(domain_appname, _TZ_SYS_RO_UG"/res/locale");
+			setting_set_i18n(domain_appname,
+					_TZ_SYS_RO_UG"/res/locale");
 		}
 #endif
 
 		/* test */
-		Eina_List *langlist = setting_get_language_list2(LANGLIST_ALL_FILE_PATH);
+		Eina_List *langlist = setting_get_language_list2(
+				LANGLIST_ALL_FILE_PATH);
 
 		Eina_List *elist = NULL;
 		setting_lang_entry *pnode = NULL;
 		char *locale = NULL;
-		EINA_LIST_FOREACH(langlist, elist, pnode) {
+		EINA_LIST_FOREACH(langlist, elist, pnode)
+		{
 			locale = pnode->locale;
 
 			char str[256];
 			snprintf(str, 256, "%s.UTF-8", locale);
 			(void)setlocale(LC_MESSAGES, str);
 
-			/*-------------------------------------------------------------- */
-			SETTING_TRACE(" (locale : %s) --------- BEFORE EINA LOOP : %x ", locale, plist);
+			/*--------------------------------------------------- */
+			SETTING_TRACE(" (locale : %s) --------- BEFORE EINA LOOP : %x ",
+					locale, plist);
 			/* loop and print */
 			Eina_List *l = NULL;
 			Setting_Cfg_Node_T *node = NULL;
 			int count = 0;
-			EINA_LIST_FOREACH(plist, l, node) {
+			EINA_LIST_FOREACH(plist, l, node)
+			{
 				if (count != 0) {
 #if 0
-					SETTING_TRACE(" key_name : %s", node->key_name);
-					SETTING_TRACE(" ug_args : %s", node->ug_args);
-					SETTING_TRACE(" icon_path : %s", node->icon_path);
+					SETTING_TRACE(" key_name : %s",
+							node->key_name);
+					SETTING_TRACE(" ug_args : %s",
+							node->ug_args);
+					SETTING_TRACE(" icon_path : %s",
+							node->icon_path);
 
-					SETTING_TRACE(" pos : %d", node->pos);
-					SETTING_TRACE(" reset_type : %d", node->reset_type);
-					SETTING_TRACE(" click_times : %d", node->click_times);
-					SETTING_TRACE(" item_type : %d", node->item_type);
-					SETTING_TRACE(" data : %x", node->data);
+					SETTING_TRACE(" pos : %d",
+							node->pos);
+					SETTING_TRACE(" reset_type : %d",
+							node->reset_type);
+					SETTING_TRACE(" click_times : %d",
+							node->click_times);
+					SETTING_TRACE(" item_type : %d",
+							node->item_type);
+					SETTING_TRACE(" data : %x",
+							node->data);
 					SETTING_TRACE(" -----------------------------");
 #else
-					SETTING_TRACE(" add DB :: key_name : %s", node->key_name);
+					SETTING_TRACE(" add DB :: key_name : %s",
+							node->key_name);
 
+					char *subindex = (node->sub_index) ?
+							node->sub_index : "";
+					char *icon_path = (node->icon_path) ?
+							node->icon_path : "";
 
-					char *subindex = (node->sub_index) ? node->sub_index : "";
-					char *icon_path = (node->icon_path) ? node->icon_path : "";
-
-					setting_add_db_search_index(db, locale, __(node->key_name, domain_appname), node->ug_args, node->item_type, ug_name_arr[i], __(subindex, domain_appname), icon_path);
+					setting_add_db_search_index(db, locale,
+							__(node->key_name, domain_appname),
+							node->ug_args,
+							node->item_type,
+							ug_name_arr[i],
+							__(subindex, domain_appname),
+							icon_path);
 #endif
 				}
 				count++;
@@ -724,7 +807,8 @@ int __setting_init_search_index_module()
 		Eina_List *l = NULL;
 		Setting_Cfg_Node_T *node = NULL;
 
-		EINA_LIST_FOREACH(plist, l, node) {
+		EINA_LIST_FOREACH(plist, l, node)
+		{
 			FREE(node->key_name);
 			FREE(node->ug_args);
 			FREE(node->icon_path);
@@ -735,9 +819,8 @@ int __setting_init_search_index_module()
 		eina_list_free(plist);
 		plist = NULL;
 		FREE(domainname);
-		/*-------------------------------------------------------------- */
-	}	/* end of for loop */
-
+		/*----------------------------------------------------------- */
+	} /* end of for loop */
 
 	/* roll back */
 	(void)setlocale(LC_MESSAGES, backup_langset);
@@ -758,20 +841,22 @@ int __setting_init_search_index_app()
 	setting_add_db_search_clean(db);
 
 	/* add index for testing */
-	Setting_Cfg_Node_T *pitem = get_cfg_node_first();	/* head */
+	Setting_Cfg_Node_T *pitem = get_cfg_node_first(); /* head */
 	int size = get_cfg_array_size();
 	SETTING_TRACE(" size of array : %d ", size);
 
 	char *locale = NULL;
-	char *backup_langset =	vconf_get_str(VCONFKEY_LANGSET);
+	char *backup_langset = vconf_get_str(VCONFKEY_LANGSET);
 
 	/* get langlist // load language table from XML file */
 	Eina_List *elist = NULL;
 	setting_lang_entry *pnode = NULL;
 	Eina_List *langlist = setting_get_language_list2(LANGLIST_ALL_FILE_PATH);
 
-	EINA_LIST_FOREACH(langlist, elist, pnode) {
-		/*SETTING_TRACE(" locale = %s --- language = %s --- mcc = %s ", pnode->locale, pnode->title, pnode->mcc); */
+	EINA_LIST_FOREACH(langlist, elist, pnode)
+	{
+		/*SETTING_TRACE(" locale = %s --- language = %s --- mcc = %s ",
+		 * pnode->locale, pnode->title, pnode->mcc); */
 		locale = pnode->locale;
 
 		char str[256];
@@ -781,31 +866,52 @@ int __setting_init_search_index_app()
 		int i;
 		for (i = 0; i < size; i++) {
 			/*SETTING_TRACE(" index : %d ", i); */
-			char *subindex = (pitem[i].sub_index) ? _(pitem[i].sub_index) : "";
-			char *icon_path = (pitem[i].icon_path) ? pitem[i].icon_path : "";
-			if (pitem[i].item_type == Cfg_Item_Title_Node) {
+			char *subindex = (pitem[i].sub_index) ?
+					_(pitem[i].sub_index) : "";
+			char *icon_path = (pitem[i].icon_path) ?
+					pitem[i].icon_path : "";
 
-				setting_add_db_search_index(db, locale, _(pitem[i].key_name), pitem[i].ug_args, pitem[i].item_type/*title in Genlist*/, "", subindex, icon_path);
+			if (pitem[i].item_type == Cfg_Item_Title_Node) {
+				setting_add_db_search_index(db, locale,
+						_(pitem[i].key_name),
+						pitem[i].ug_args,
+						/*title in Genlist*/
+						pitem[i].item_type,
+						"", subindex, icon_path);
 
 			} else if (pitem[i].item_type == Cfg_Item_Ug_Node
-					   || pitem[i].item_type == Cfg_Item_Ug_Node_Toggle
-					   || pitem[i].item_type == Cfg_Item_AppLauncher_Node
-					   || pitem[i].item_type == Cfg_Item_AppLauncher_Node_Toggle
-					  ) {
+					|| pitem[i].item_type == Cfg_Item_Ug_Node_Toggle
+					|| pitem[i].item_type == Cfg_Item_AppLauncher_Node
+					|| pitem[i].item_type == Cfg_Item_AppLauncher_Node_Toggle) {
 
 				if (pitem[i].key_name && _(pitem[i].key_name)) {
-					setting_add_db_search_index(db, locale, _(pitem[i].key_name), pitem[i].ug_args, pitem[i].item_type/*UG name*/, "", subindex, icon_path);
+					setting_add_db_search_index(db, locale,
+							_(pitem[i].key_name),
+							pitem[i].ug_args,
+							/*UG name*/
+							pitem[i].item_type,
+							"", subindex,
+							icon_path);
 				}
 			} else if (pitem[i].item_type == Cfg_Item_App_Node) {
 
 				if (pitem[i].key_name && _(pitem[i].key_name)) {
-					setting_add_db_search_index(db, locale, _(pitem[i].key_name), pitem[i].ug_args, pitem[i].item_type/*App Launching*/, "", subindex, icon_path);
+					setting_add_db_search_index(db, locale,
+							_(pitem[i].key_name),
+							pitem[i].ug_args,
+							/*App Launching*/
+							pitem[i].item_type,
+							"", subindex,
+							icon_path);
 				}
 			} else if (pitem[i].item_type == Cfg_Item_Ui_Node
-					   || pitem[i].item_type == Cfg_Item_Ui_Node_Toggle
-					  ) {
+					|| pitem[i].item_type == Cfg_Item_Ui_Node_Toggle) {
 
-				setting_add_db_search_index(db, locale, _(pitem[i].key_name), pitem[i].ug_args, pitem[i].item_type/*UI type*/, "", subindex, icon_path);
+				setting_add_db_search_index(db, locale,
+						_(pitem[i].key_name),
+						pitem[i].ug_args,
+						pitem[i].item_type/*UI type*/,
+						"", subindex, icon_path);
 			}
 		}
 
