@@ -30,7 +30,7 @@ int appmgrUg_pkg_get_privileges_grp_iter(const char *grp, void *user_data);
 void *appmgrUg_pkg_moveto_worker(void *data);
 void appmgrUg_pkg_moveto_worker_finish(SettingAppMgrUG *ad);
 char *appmgrUg_pkg_size_gl_label_get(void *data, Evas_Object *obj,
-									 const char *part);
+		const char *part);
 void appmgrUg_pkg_update_cache_size(void *data);
 
 #endif /*__SETTING_APPMGR_PKGINFO_UTILS_H__ */

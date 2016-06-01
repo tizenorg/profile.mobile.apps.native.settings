@@ -43,7 +43,8 @@ extern void appmgrUg_run_stop_click(void *data, Evas_Object *obj,
 
 static void appmgrUg_free_listinfo(gpointer data);
 
-void _get_size_cb(const char *package_id, const package_size_info_h size_info, void *data)
+void _get_size_cb(const char *package_id, const package_size_info_h size_info,
+		void *data)
 {
 	retm_if(data == NULL, "data == NULL");
 	appmgr_listinfo *info = data;
@@ -688,9 +689,11 @@ void appmgrUg_pkgmgr_subscribe(SettingAppMgrUG *ad)
 		return;
 	}
 
-	ret = pkgmgr_client_set_status_type(ad->pc_all_size, PKGMGR_CLIENT_STATUS_GET_SIZE);
+	ret = pkgmgr_client_set_status_type(ad->pc_all_size,
+			PKGMGR_CLIENT_STATUS_GET_SIZE);
 	if (ret < 0) {
-		SETTING_TRACE_ERROR("pkgmgr_client_set_status_type() Fail(%d)", ret);
+		SETTING_TRACE_ERROR("pkgmgr_client_set_status_type() Fail(%d)",
+				ret);
 		pkgmgr_client_free(ad->pc_all_size);
 		ad->pc_main = NULL;
 	}

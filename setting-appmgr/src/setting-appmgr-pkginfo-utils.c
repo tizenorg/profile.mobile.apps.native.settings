@@ -26,7 +26,7 @@
 #include "setting-appmgr-pkginfo-utils.h"
 
 static UNUSED int appmgrUg_pkg_get_privileges_help(const char *privilege,
-												   void *user_data)
+		void *user_data)
 {
 	SETTING_TRACE_BEGIN;
 
@@ -44,29 +44,33 @@ static UNUSED int appmgrUg_pkg_get_privileges_help(const char *privilege,
 
 	ret = privilege_info_get_display_name("3.0", privilege, &name);
 	if (PRVINFO_ERROR_NONE != ret) {
-		SETTING_TRACE_ERROR("privilege_info_get_display_name() Fail(%d)", ret);
+		SETTING_TRACE_ERROR(
+				"privilege_info_get_display_name() Fail(%d)",
+				ret);
 		return 0;
 	}
 
 	ret = privilege_info_get_description("3.0", privilege, &help);
 	if (PRVINFO_ERROR_NONE != ret) {
-		SETTING_TRACE_ERROR("privilege_info_get_description() Fail(%d)", ret);
+		SETTING_TRACE_ERROR("privilege_info_get_description() Fail(%d)",
+				ret);
 		free(name);
 		return 0;
 	}
 
-	/*SETTING_TRACE("-------------------------------------------------------------------------"); */
+	/*SETTING_TRACE("-------------------------------------------------"); */
 	/*SETTING_TRACE("NAME: %s", name); */
 	/*SETTING_TRACE("DESC: %s", help); */
-	/*SETTING_TRACE("-------------------------------------------------------------------------"); */
+	/*SETTING_TRACE("-------------------------------------------------"); */
 
 	desc = g_strconcat("<font_size=28><B>", name, "</B></font_size><br>",
-					   help, "<br><br>", NULL);
+			help, "<br><br>", NULL);
 	free(help);
 	free(name);
 
 	/*appmgrUg_append_separator(info->gl_prv, ad);*/
-	setting_create_Gendial_field_titleItem(info->gl_prv, &ad->itc_multiline, desc, NULL);
+	setting_create_Gendial_field_titleItem(info->gl_prv, &ad->itc_multiline,
+			desc, NULL);
 
 	g_free(desc);
 	return 0;
@@ -78,13 +82,16 @@ static UNUSED int appmgrUg_pkg_get_privileges_help(const char *privilege,
  * @param data The view data passed between all callbacks
  * @param it Naviframe item
  */
-static UNUSED Eina_Bool appmgrUg_pkg_privilege_info_softkey_cancel_cb(void *data, Elm_Object_Item *it)
+static UNUSED Eina_Bool appmgrUg_pkg_privilege_info_softkey_cancel_cb(
+		void *data, Elm_Object_Item *it)
 {
 	SETTING_TRACE_BEGIN;
 
-	SettingAppMgrUG *ad = (SettingAppMgrUG *) data;
+	SettingAppMgrUG *ad = (SettingAppMgrUG *)data;
 
-	retvm_if(data == NULL, FALSE, "[Setting > Application Manager > Pkg info ] Data parameter is NULL");
+	retvm_if(data == NULL, FALSE,
+			"[Setting > Application Manager > Pkg info ] Data "\
+			"parameter is NULL");
 
 	if (ad->navi)
 		elm_naviframe_item_pop(ad->navi);
@@ -93,7 +100,7 @@ static UNUSED Eina_Bool appmgrUg_pkg_privilege_info_softkey_cancel_cb(void *data
 }
 
 static void appmgrUg_pkg_privilege_info_view(void *data, Evas_Object *obj,
-											 void *event_info)
+		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 
@@ -119,18 +126,24 @@ static void appmgrUg_pkg_privilege_info_view(void *data, Evas_Object *obj,
 	/*Deprecated API */
 	privilege_info_get_privilege_group_display_name(grp, &grp_name);
 
-	Elm_Object_Item *navi_it = setting_push_layout_navi_bar_genlist(ad->lo_parent, ad->win, grp_name,
-																	NULL, NULL,/* here */appmgrUg_pkg_privilege_info_softkey_cancel_cb, NULL, ad, &info->gl_prv, ad->navi);
-	elm_naviframe_item_pop_cb_set(navi_it, appmgrUg_pkg_privilege_info_softkey_cancel_cb, ad);
+	Elm_Object_Item *navi_it = setting_push_layout_navi_bar_genlist(
+			ad->lo_parent, ad->win, grp_name,
+			NULL, NULL,/* here */
+			appmgrUg_pkg_privilege_info_softkey_cancel_cb, NULL,
+			ad, &info->gl_prv, ad->navi);
+	elm_naviframe_item_pop_cb_set(navi_it,
+			appmgrUg_pkg_privilege_info_softkey_cancel_cb, ad);
 	elm_genlist_mode_set(info->gl_prv, ELM_LIST_COMPRESS);
 
 	/*Deprecated API */
-	privilege_info_foreach_privilege_list_by_pkgid_and_privilege_group(info->pkgid, grp,
-																	   appmgrUg_pkg_get_privileges_help, ad);
+	privilege_info_foreach_privilege_list_by_pkgid_and_privilege_group(
+			info->pkgid, grp,
+			appmgrUg_pkg_get_privileges_help, ad);
 #endif
 }
 
-static UNUSED int appmgrUg_pkg_get_privileges_iter(const char *privilege, void *user_data)
+static UNUSED int appmgrUg_pkg_get_privileges_iter(const char *privilege,
+		void *user_data)
 {
 	int ret;
 	gchar **str = user_data;
@@ -141,7 +154,9 @@ static UNUSED int appmgrUg_pkg_get_privileges_iter(const char *privilege, void *
 
 	ret = privilege_info_get_display_name("3.0", privilege, &name);
 	if (PRVINFO_ERROR_NONE != ret) {
-		SETTING_TRACE_ERROR("privilege_info_get_display_name() Fail(%d)", ret);
+		SETTING_TRACE_ERROR(
+				"privilege_info_get_display_name() Fail(%d)",
+				ret);
 		return 0;
 	}
 
@@ -172,7 +187,9 @@ int appmgrUg_pkg_get_privileges_grp_iter(const char *grp, void *user_data)
 	ret = privilege_info_get_privilege_group_display_name(grp, &grp_name);
 	if (PRVINFO_ERROR_NONE != ret) {
 		SETTING_TRACE_ERROR(
-			"privilege_info_get_privilege_group_display_name() Fail(%d)", ret);
+				"privilege_info_get_privilege_group_display_"\
+				"name() Fail(%d)",
+				ret);
 		return 0;
 	}
 
@@ -181,11 +198,12 @@ int appmgrUg_pkg_get_privileges_grp_iter(const char *grp, void *user_data)
 #if 0
 	/*Deprecated API */
 	ret = privilege_info_foreach_privilege_list_by_pkgid_and_privilege_group(info->pkgid,
-																			 grp, appmgrUg_pkg_get_privileges_iter, &prv_desc);
+			grp, appmgrUg_pkg_get_privileges_iter, &prv_desc);
 	if (PRVINFO_ERROR_NONE != ret || '\0' == *prv_desc) {
 		SETTING_TRACE_ERROR(
-			"privilege_info_foreach_privilege_list_by_pkgid_and_privilege_group()"
-			" Fail(%d), prv_desc(%p)", ret, prv_desc);
+				"privilege_info_foreach_privilege_list_by_"\
+				"pkgid_and_privilege_group()"
+				" Fail(%d), prv_desc(%p)", ret, prv_desc);
 		G_FREE(prv_desc);
 		FREE(grp_name);
 		return 0;
@@ -197,9 +215,11 @@ int appmgrUg_pkg_get_privileges_grp_iter(const char *grp, void *user_data)
 	if (p)
 		*p = '\0';
 
-	info->last_prv = setting_create_Gendial_field_def(ad->gl_pkg, &ad->itc_multiline_2txt,
-													  appmgrUg_pkg_privilege_info_view, (void *)grp, SWALLOW_Type_INVALID, NULL,
-													  NULL, 0, grp_name, prv_desc, NULL);
+	info->last_prv = setting_create_Gendial_field_def(ad->gl_pkg,
+			&ad->itc_multiline_2txt,
+			appmgrUg_pkg_privilege_info_view, (void *)grp,
+			SWALLOW_Type_INVALID, NULL,
+			NULL, 0, grp_name, prv_desc, NULL);
 	if (info->last_prv) {
 		info->last_prv->userdata = ad;
 
@@ -238,7 +258,8 @@ void appmgrUg_pkg_free_pkginfo(appmgr_pkginfo *info)
 	free(info);
 }
 
-static int appmgrUg_pkg_get_appinfo_iter(pkgmgrinfo_appinfo_h handle, void *data)
+static int appmgrUg_pkg_get_appinfo_iter(pkgmgrinfo_appinfo_h handle,
+		void *data)
 {
 	int ret;
 	char *appid, *label;
@@ -251,14 +272,17 @@ static int appmgrUg_pkg_get_appinfo_iter(pkgmgrinfo_appinfo_h handle, void *data
 
 	ret = pkgmgrinfo_appinfo_get_appid(handle, &appid);
 	if (PMINFO_R_OK != ret || NULL == appid) {
-		SETTING_TRACE_ERROR("pkgmgrinfo_appinfo_get_appid() Fail(%d)", ret);
+		SETTING_TRACE_ERROR("pkgmgrinfo_appinfo_get_appid() Fail(%d)",
+				ret);
 		return 0;
 	}
 
 	ret = pkgmgrinfo_appinfo_get_label(handle, &label);
-	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_appinfo_get_label() Fail(%d)", ret);
+	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_appinfo_get_label() Fail(%d)",
+			ret);
 
-	if (NULL == pkginfo->icon_path && safeStrCmp(appid, pkginfo->main_appid))
+	if (NULL == pkginfo->icon_path
+			&& safeStrCmp(appid, pkginfo->main_appid))
 		pkginfo->icon_path = appmgrUg_get_defualt_icon(handle);
 
 	pkginfo->appids = g_list_append(pkginfo->appids, strdup(appid));
@@ -269,25 +293,26 @@ static int appmgrUg_pkg_get_appinfo_iter(pkgmgrinfo_appinfo_h handle, void *data
 static inline void appmgrUg_pkg_update_size(appmgr_pkginfo *info)
 {
 	SETTING_TRACE_BEGIN;
-	char desc[APPMGRUG_MAX_STR_LEN] = {0};
+	char desc[APPMGRUG_MAX_STR_LEN] = { 0 };
 
 	appmgrUg_size_to_str(info->sz_total, desc, sizeof(desc));
 	g_free(info->total_size->sub_desc);
 	info->total_size->sub_desc = (char *)g_strdup(desc);
 	elm_genlist_item_fields_update(info->total_size->item, "elm.text.sub",
-								   ELM_GENLIST_ITEM_FIELD_TEXT);
+			ELM_GENLIST_ITEM_FIELD_TEXT);
 
 	appmgrUg_size_to_str(info->sz_data, desc, sizeof(desc));
 	g_free(info->data_size->sub_desc);
 	info->data_size->sub_desc = (char *)g_strdup(desc);
 	elm_genlist_item_fields_update(info->data_size->item, "elm.text.sub",
-								   ELM_GENLIST_ITEM_FIELD_TEXT);
+			ELM_GENLIST_ITEM_FIELD_TEXT);
 
-	appmgrUg_size_to_str(info->sz_total - info->sz_data, desc, sizeof(desc));
+	appmgrUg_size_to_str(info->sz_total - info->sz_data, desc,
+			sizeof(desc));
 	g_free(info->app_size->sub_desc);
 	info->app_size->sub_desc = (char *)g_strdup(desc);
 	elm_genlist_item_fields_update(info->app_size->item, "elm.text.sub",
-								   ELM_GENLIST_ITEM_FIELD_TEXT);
+			ELM_GENLIST_ITEM_FIELD_TEXT);
 }
 
 void appmgrUg_pkg_update_cache_size(void *data)
@@ -298,14 +323,14 @@ void appmgrUg_pkg_update_cache_size(void *data)
 	appmgr_pkginfo *info = ad->pkginfo;
 	retm_if(info == NULL, "info is NULL");
 
-	char desc[APPMGRUG_MAX_STR_LEN] = {0};
+	char desc[APPMGRUG_MAX_STR_LEN] = { 0 };
 
 	appmgrUg_size_to_str(info->sz_cache, desc, sizeof(desc));
 
 	if (ad->cache_size && ad->cache_size->item) {
 		ad->cache_size->sub_desc = (char *)g_strdup(desc);
-		elm_genlist_item_fields_update(ad->cache_size->item, "elm.text.sub",
-									   ELM_GENLIST_ITEM_FIELD_TEXT);
+		elm_genlist_item_fields_update(ad->cache_size->item,
+				"elm.text.sub", ELM_GENLIST_ITEM_FIELD_TEXT);
 	}
 
 	if (ad->clear_cache && ad->clear_cache->item) {
@@ -314,7 +339,8 @@ void appmgrUg_pkg_update_cache_size(void *data)
 }
 
 static UNUSED int _appmgrUg_pkg_get_pkg_size(int req_id, const char *pkg_type,
-											 const char *pkgid, const char *key, const char *val, const void *pmsg, void *data)
+		const char *pkgid, const char *key, const char *val,
+		const void *pmsg, void *data)
 {
 	appmgr_pkginfo *info = data;
 
@@ -344,15 +370,17 @@ static inline void appmgrUg_pkg_get_pkg_size(appmgr_pkginfo *info)
 		SETTING_TRACE_ERROR("pkgmgr_client_new() Fail");
 		return;
 	}
-/*
-@FIX ME add correct callback handler for this pkgmgr call
-	ret = pkgmgr_client_get_size(info->pc_size, info->pkgid, PM_GET_TOTAL_SIZE,
-								 NULL, info);
-*/
+	/*
+	 @FIX ME add correct callback handler for this pkgmgr call
+	 ret = pkgmgr_client_get_size(info->pc_size, info->pkgid,
+	 PM_GET_TOTAL_SIZE,
+	 NULL, info);
+	 */
 	warn_if(ret, "pkgmgr_client_get_size(%s) Fail(%d)", info->pkgid, ret);
 }
 
-static void _get_cache_cb(const char *package_id, const package_size_info_h size_info, void *data)
+static void _get_cache_cb(const char *package_id,
+		const package_size_info_h size_info, void *data)
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "data == NULL");
@@ -396,22 +424,22 @@ static Eina_Bool __get_pkg_size_on_time(void *data)
 		appmgrUg_pkg_update_cache_size(ad);
 	} else {
 		int ret = package_manager_get_package_size_info(info->pkgid,
-														_get_cache_cb, ad);
+				_get_cache_cb, ad);
 		if (ret != 0) {
 			SETTING_TRACE_ERROR("failed to invoke ret = %d", ret);
 		}
 	}
 
 	/*get pkg total & data size */
-/*
-	if (ad->sel_total < 0 || ad->sel_data_size < 0) {
-		appmgrUg_pkg_get_pkg_size(info);
-	} else {
-		info->sz_total = ad->sel_total;
-		info->sz_data = ad->sel_data_size;
-		appmgrUg_pkg_update_size(info);
-	}
-*/
+	/*
+	 if (ad->sel_total < 0 || ad->sel_data_size < 0) {
+	 appmgrUg_pkg_get_pkg_size(info);
+	 } else {
+	 info->sz_total = ad->sel_total;
+	 info->sz_data = ad->sel_data_size;
+	 appmgrUg_pkg_update_size(info);
+	 }
+	 */
 	ad->pkginfo_getsize_timer = NULL;
 	return EINA_FALSE;
 }
@@ -435,7 +463,7 @@ static int _appmgrUg_pkg_get_info(pkgmgrinfo_pkginfo_h handle, void *data)
 		ad->pkginfo_getsize_timer = NULL;
 	}
 	ad->pkginfo_getsize_timer = ecore_timer_add(0.6,
-												(Ecore_Task_Cb) __get_pkg_size_on_time, ad);
+			(Ecore_Task_Cb)__get_pkg_size_on_time, ad);
 
 	/*get other info */
 	if (ad->sel_icon) {
@@ -456,32 +484,41 @@ static int _appmgrUg_pkg_get_info(pkgmgrinfo_pkginfo_h handle, void *data)
 	info->main_appid = SAFE_STRDUP(value);
 
 	ret = pkgmgrinfo_appinfo_get_list(handle, PMINFO_ALL_APP,
-									  appmgrUg_pkg_get_appinfo_iter, ad);
-	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_appinfo_get_list() Fail(%d)", ret);
+			appmgrUg_pkg_get_appinfo_iter, ad);
+	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_appinfo_get_list() Fail(%d)",
+			ret);
 
 	ret = pkgmgrinfo_pkginfo_is_movable(handle, &info->is_movable);
-	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_is_movable() Fail(%d)", ret);
+	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_is_movable() Fail(%d)",
+			ret);
 
 	ret = pkgmgrinfo_pkginfo_is_preload(handle, &info->is_preload);
-	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_is_preload() Fail(%d)", ret);
+	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_is_preload() Fail(%d)",
+			ret);
 
 	ret = pkgmgrinfo_pkginfo_is_update(handle, &info->is_updated);
-	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_is_update() Fail(%d)", ret);
+	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_is_update() Fail(%d)",
+			ret);
 
 	ret = pkgmgrinfo_pkginfo_get_installed_storage(handle, &info->storage);
-	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_get_installed_storage() Fail(%d)", ret);
+	warn_if(PMINFO_R_OK != ret,
+			"pkgmgrinfo_pkginfo_get_installed_storage() Fail(%d)",
+			ret);
 
 	ret = pkgmgrinfo_pkginfo_is_removable(handle, &info->removable);
-	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_is_removable() Fail(%d)", ret);
+	warn_if(PMINFO_R_OK != ret,
+			"pkgmgrinfo_pkginfo_is_removable() Fail(%d)", ret);
 
 	value = NULL;
 	ret = pkgmgrinfo_pkginfo_get_type(handle, &value);
-	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_get_type() Fail(%d)", ret);
+	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_get_type() Fail(%d)",
+			ret);
 	info->pkg_type = SAFE_STRDUP(value);
 
 	value = NULL;
 	ret = pkgmgrinfo_pkginfo_get_version(handle, &value);
-	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_get_version() Fail(%d)", ret);
+	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_get_version() Fail(%d)",
+			ret);
 	info->pkg_version = SAFE_STRDUP(value);
 
 	if (ad->sel_label) {
@@ -489,13 +526,17 @@ static int _appmgrUg_pkg_get_info(pkgmgrinfo_pkginfo_h handle, void *data)
 	} else {
 		value = NULL;
 		ret = pkgmgrinfo_pkginfo_get_label(handle, &value);
-		warn_if(ret < 0, "pkgmgrinfo_pkginfo_get_label() Fail(%d)", ret);
+		warn_if(ret < 0, "pkgmgrinfo_pkginfo_get_label() Fail(%d)",
+				ret);
 		info->pkg_label = SAFE_STRDUP(value);
 		ad->sel_label = SAFE_STRDUP(info->pkg_label);
 	}
 
-	ret = pkgmgrinfo_pkginfo_is_support_disable(handle, &info->is_support_disable);
-	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_appinfo_is_support_disable() Fail(%d)", ret);
+	ret = pkgmgrinfo_pkginfo_is_support_disable(handle,
+			&info->is_support_disable);
+	warn_if(PMINFO_R_OK != ret,
+			"pkgmgrinfo_appinfo_is_support_disable() Fail(%d)",
+			ret);
 
 	return 0;
 }
@@ -523,21 +564,31 @@ int appmgrUg_pkg_get_info(SettingAppMgrUG *ad)
 		pkgmgrinfo_pkginfo_filter_h filter_handle;
 		int ret = pkgmgrinfo_pkginfo_filter_create(&filter_handle);
 
-		warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_appinfo_filter_create() Fail(%d)", ret);
+		warn_if(PMINFO_R_OK != ret,
+				"pkgmgrinfo_appinfo_filter_create() Fail(%d)",
+				ret);
 
 		ret = pkgmgrinfo_pkginfo_filter_add_bool(filter_handle,
-												 PMINFO_PKGINFO_PROP_PACKAGE_SUPPORT_DISABLE, EINA_TRUE);
+		PMINFO_PKGINFO_PROP_PACKAGE_SUPPORT_DISABLE, EINA_TRUE);
 
-		warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_filter_add_bool() Fail(%d)", ret);
+		warn_if(PMINFO_R_OK != ret,
+				"pkgmgrinfo_pkginfo_filter_add_bool() Fail(%d)",
+				ret);
 
 		ret = pkgmgrinfo_pkginfo_filter_add_string(filter_handle,
-												   PMINFO_PKGINFO_PROP_PACKAGE_ID, info->pkgid);
+		PMINFO_PKGINFO_PROP_PACKAGE_ID, info->pkgid);
 
-		warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_filter_add_string() Fail(%d)", ret);
+		warn_if(PMINFO_R_OK != ret,
+				"pkgmgrinfo_pkginfo_filter_add_string() "\
+				"Fail(%d)",
+				ret);
 
 		ret = pkgmgrinfo_pkginfo_filter_foreach_pkginfo(filter_handle,
-														_appmgrUg_pkg_get_info, ad);
-		warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_pkginfo_filter_foreach_pkginfo() Fail(%d)", ret);
+				_appmgrUg_pkg_get_info, ad);
+		warn_if(PMINFO_R_OK != ret,
+				"pkgmgrinfo_pkginfo_filter_foreach_pkginfo() "\
+				"Fail(%d)",
+				ret);
 
 		pkgmgrinfo_pkginfo_filter_destroy(filter_handle);
 
@@ -545,7 +596,10 @@ int appmgrUg_pkg_get_info(SettingAppMgrUG *ad)
 		pkgmgrinfo_pkginfo_h handle;
 		ret = pkgmgrinfo_pkginfo_get_pkginfo(info->pkgid, &handle);
 		if (PMINFO_R_OK != ret) {
-			SETTING_TRACE_ERROR("pkgmgrinfo_pkginfo_get_pkginfo() Fail(%d)", ret);
+			SETTING_TRACE_ERROR(
+					"pkgmgrinfo_pkginfo_get_pkginfo() "\
+					"Fail(%d)",
+					ret);
 			appmgrUg_pkg_free_pkginfo(info);
 			ad->pkginfo = NULL;
 			return -1;
@@ -576,8 +630,8 @@ void appmgrUg_pkg_moveto_worker_finish(SettingAppMgrUG *ad)
 			evas_object_del(ad->popup);
 
 		ad->popup = setting_create_popup(ad, ad->win, NULL,
-										 MGRAPP_STR_MOVE_COMPLETED, appmgrUg_popup_del,
-										 0, FALSE, FALSE, 1, MGRAPP_STR_OK);
+		MGRAPP_STR_MOVE_COMPLETED, appmgrUg_popup_del, 0, FALSE, FALSE,
+				1, MGRAPP_STR_OK);
 		setting_view_update(ad->pkginfo_view, ad);
 		break;
 	case APP2EXT_ERROR_MMC_STATUS:
@@ -619,15 +673,16 @@ void *appmgrUg_pkg_moveto_worker(void *data)
 		move_type = PM_MOVE_TO_INTERNAL;
 
 	pc = pkgmgr_client_new(PC_REQUEST);
-	ret = pkgmgr_client_request_service(PM_REQUEST_MOVE, move_type, pc, info->pkg_type,
-										info->pkgid, NULL, NULL, NULL);
+	ret = pkgmgr_client_request_service(PM_REQUEST_MOVE, move_type, pc,
+			info->pkg_type, info->pkgid, NULL, NULL, NULL);
 
 	pkgmgr_client_free(pc);
 
 	pthread_exit((void *)ret);
 }
 
-static void appmgrUg_pkg_ug_layout_cb(ui_gadget_h ug, enum ug_mode mode, void *priv)
+static void appmgrUg_pkg_ug_layout_cb(ui_gadget_h ug, enum ug_mode mode,
+		void *priv)
 {
 	Evas_Object *base = NULL;
 
@@ -641,7 +696,8 @@ static void appmgrUg_pkg_ug_layout_cb(ui_gadget_h ug, enum ug_mode mode, void *p
 
 	switch (mode) {
 	case UG_MODE_FULLVIEW:
-		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
+				EVAS_HINT_EXPAND);
 		evas_object_show(base);
 		break;
 	default:
@@ -688,7 +744,8 @@ void appmgrUg_pkg_webapp_ug(void *data, Evas_Object *obj, void *event_info)
 	cbs.priv = (void *)ad;
 
 	elm_object_tree_focus_allow_set(ad->lo_main, EINA_FALSE);
-	ug = setting_ug_create(ad->ug, "webapp-detail-efl", UG_MODE_FULLVIEW, svc, &cbs);
+	ug = setting_ug_create(ad->ug, "webapp-detail-efl", UG_MODE_FULLVIEW,
+			svc, &cbs);
 	warn_if(NULL == ug, "setting_ug_create() Fail");
 
 	app_control_destroy(svc);
@@ -723,13 +780,16 @@ void appmgrUg_pkg_clear_default(void *data, Evas_Object *obj, void *event_info)
 
 		/*TODO */
 		/* There is problem with app-svc API which use */
-		/* aul_svc_unset_defapp_for_uid(const char *defapp, uid_t uid); (v.1.53) */
-		/* instead of aul_svc_unset_all_defapps(const char *defapp); (v.1.78) */
+		/* aul_svc_unset_defapp_for_uid(const char *defapp, uid_t uid);
+		 * (v.1.53) */
+		/* instead of aul_svc_unset_all_defapps(const char *defapp);
+		 * (v.1.78) */
 
 		/*ret = appsvc_unset_defapp(appid); */
 		/*FIXME */
 		ret = APPSVC_RET_OK;
-		warn_if(APPSVC_RET_OK != ret, "appsvc_unset_defapp() Fail(%d)", ret);
+		warn_if(APPSVC_RET_OK != ret, "appsvc_unset_defapp() Fail(%d)",
+				ret);
 	}
 
 	/* clear default separator */
@@ -754,10 +814,10 @@ void appmgrUg_pkg_clear_default(void *data, Evas_Object *obj, void *event_info)
 }
 
 char *appmgrUg_pkg_size_gl_label_get(void *data, Evas_Object *obj,
-									 const char *part)
+		const char *part)
 {
 	char *label = NULL;
-	char desc[APPMGRUG_MAX_STR_LEN] = {0};
+	char desc[APPMGRUG_MAX_STR_LEN] = { 0 };
 	Setting_GenGroupItem_Data *item_data = data;
 
 	retv_if(data == NULL, NULL);
@@ -768,7 +828,8 @@ char *appmgrUg_pkg_size_gl_label_get(void *data, Evas_Object *obj,
 		label = SAFE_STRDUP(_(item_data->keyStr));
 
 	if (item_data->keyStr && item_data->sub_desc)
-		snprintf(desc, sizeof(desc), "%s,%s", _(item_data->keyStr), _(item_data->sub_desc));
+		snprintf(desc, sizeof(desc), "%s,%s", _(item_data->keyStr),
+				_(item_data->sub_desc));
 
 	return label;
 }

@@ -34,8 +34,8 @@ typedef struct _SettingRingtoneUG SettingRingtoneUG;
 
 /**
  * Setting About UG context
- * all UG function has void* as an agument. this is casted back to SettingRingtoneUG
- * and the functions access app context.
+ * all UG function has void* as an agument. this is casted back to
+ * SettingRingtoneUG and the functions access app context.
  */
 struct _SettingRingtoneUG {
 	ui_gadget_h ug;

@@ -22,9 +22,9 @@
 
 #include <setting-profile.h>
 
-/*///////////////////////////////////////////////////////////////////////////////////////// */
+/*/////////////////////////////////////////////////////////////////////////// */
 /* Player related codes - End */
-/*///////////////////////////////////////////////////////////////////////////////////////// */
+/*/////////////////////////////////////////////////////////////////////////// */
 static void vp_del_win(void *data, Evas_Object *obj, void *event)
 {
 	/*ui_app_exit(); */
@@ -49,17 +49,21 @@ static Evas_Object *vp_create_win(const char *name, bool transparent)
 #ifdef ECORE_X
 			unsigned int opaqueVal = 1;
 
-			Ecore_X_Atom opaqueAtom = ecore_x_atom_get("_E_ILLUME_WINDOW_REGION_OPAQUE");
+			Ecore_X_Atom opaqueAtom = ecore_x_atom_get(
+					"_E_ILLUME_WINDOW_REGION_OPAQUE");
 			Ecore_X_Window xwin = elm_win_xwindow_get(eo);
-			ecore_x_window_prop_card32_set(xwin, opaqueAtom, &opaqueVal, 1);
+			ecore_x_window_prop_card32_set(
+					xwin, opaqueAtom, &opaqueVal, 1);
 #else
 			/* @todo : repace codes using X with codes tizen 3.0 API */
 #endif
 		}
 
-		evas_object_smart_callback_add(eo, "delete,request", vp_del_win, NULL);
+		evas_object_smart_callback_add(
+				eo, "delete,request", vp_del_win, NULL);
 #ifdef ECORE_X
-		ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
+		ecore_x_window_size_get(
+				ecore_x_window_root_first_get(), &w, &h);
 #else
 		elm_win_screen_size_get(eo, NULL, NULL, &w, &h);
 #endif
@@ -113,7 +117,8 @@ static void vp_app_terminate(void *data)
 
 	SETTING_TRACE("volume_popup_terminate!");
 
-	evas_object_smart_callback_del(ad->win_get, "wm,rotation,changed", _vp_rot_changed_cb);
+	evas_object_smart_callback_del(
+			ad->win_get, "wm,rotation,changed", _vp_rot_changed_cb);
 	setting_sound_deinit(ad);
 	if (ad->win_get) {
 		evas_object_del(ad->win_get);
@@ -140,7 +145,8 @@ static void vp_app_resume(void *data)
 }
 
 /**
-* The function is called by app-fwk after app_create. It always do the process which cost much time.
+* The function is called by app-fwk after app_create. It always do the process
+* which cost much time.
 */
 static void vp_app_reset(app_control_h service, void *data)
 {
@@ -180,10 +186,15 @@ int main(int argc, char *argv[])
 	};
 
 	app_event_handler_h handlers[5] = {NULL, };
-	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY], APP_EVENT_LOW_BATTERY, NULL, NULL);
-	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED], APP_EVENT_LANGUAGE_CHANGED, vp_app_lang_changed, NULL);
-	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED], APP_EVENT_REGION_FORMAT_CHANGED, NULL, NULL);
-	ui_app_add_event_handler(&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED], APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY],
+			APP_EVENT_LOW_BATTERY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED],
+			APP_EVENT_LANGUAGE_CHANGED, vp_app_lang_changed, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED],
+			APP_EVENT_REGION_FORMAT_CHANGED, NULL, NULL);
+	ui_app_add_event_handler(
+			&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED],
+			APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
 
 	memset(&ad, 0x00, sizeof(SettingProfileUG));
 

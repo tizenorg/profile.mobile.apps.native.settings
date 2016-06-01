@@ -29,89 +29,119 @@ setting_view setting_view_network_select_network = {
 	.create = setting_network_select_network_create,
 	.destroy = setting_network_select_network_destroy,
 	.update = setting_network_select_network_update,
-	.cleanup = setting_network_select_network_cleanup,
-};
+	.cleanup = setting_network_select_network_cleanup, };
 
 /* ***************************************************
  *
  *basic func
  *
  ***************************************************/
-static void
-__network_main_gl_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
+static void __network_main_gl_mouse_up(void *data, Evas *e, Evas_Object *obj,
+		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(!data || !event_info);
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	SettingNetworkUG *ad = (SettingNetworkUG *)data;
 	Evas_Event_Mouse_Up *ev = (Evas_Event_Mouse_Up *)event_info;
-	Elm_Object_Item *selected_item = elm_genlist_at_xy_item_get(ad->genlist_sel_network, ev->output.x, ev->output.y, NULL);
+	Elm_Object_Item *selected_item = elm_genlist_at_xy_item_get(
+			ad->genlist_sel_network, ev->output.x, ev->output.y,
+			NULL);
 	ret_if(!selected_item);
-	Setting_GenGroupItem_Data *data_Item = elm_object_item_data_get(selected_item);
+	Setting_GenGroupItem_Data *data_Item = elm_object_item_data_get(
+			selected_item);
 	ret_if(!data_Item);
-	if (!safeStrCmp(data_Item->keyStr, "IDS_ST_BODY_SELECT_AUTOMATICALLY")) {
-		SETTING_TRACE("ev->output.x:%d, ev->output.y:%d", ev->output.x, ev->output.y);
+	if (!safeStrCmp(data_Item->keyStr,
+			"IDS_ST_BODY_SELECT_AUTOMATICALLY")) {
+		SETTING_TRACE("ev->output.x:%d, ev->output.y:%d", ev->output.x,
+				ev->output.y);
 		Evas_Coord x, y, w, h;
-		evas_object_geometry_get(ad->data_auto_network_item->eo_check, &x, &y, &w, &h);
-		SETTING_TRACE("x:%d, y:%d, w:%d, h:%d", x, y, w , h);
-		if (x <= ev->output.x && ev->output.x <= (x + w) && y <= ev->output.y && ev->output.y <= (y + h)) {
+		evas_object_geometry_get(ad->data_auto_network_item->eo_check,
+				&x, &y, &w, &h);
+		SETTING_TRACE("x:%d, y:%d, w:%d, h:%d", x, y, w, h);
+		if (x <= ev->output.x
+				&& ev->output.x <= (x + w)
+				&& y <= ev->output.y
+				&& ev->output.y <= (y + h)) {
 			return;
 		}
 		if (ad->data_auto_network_item->chk_status) {
-			char *sub_text = setting_customize_text(ad->data_auto_network_item->sub_desc, 0, BLUE_COLOR, NULL);
+			char *sub_text = setting_customize_text(
+					ad->data_auto_network_item->sub_desc, 0,
+					BLUE_COLOR, NULL);
 			FREE(ad->data_auto_network_item->sub_desc);
-			ad->data_auto_network_item->sub_desc = (char *)g_strdup(sub_text);
+			ad->data_auto_network_item->sub_desc = (char *)g_strdup(
+					sub_text);
 			FREE(sub_text);
 		} else {
-			char *sub_text = setting_customize_text(ad->data_auto_network_item->sub_desc, 0, GRAY_COLOR, NULL);
+			char *sub_text = setting_customize_text(
+					ad->data_auto_network_item->sub_desc, 0,
+					GRAY_COLOR, NULL);
 			FREE(ad->data_auto_network_item->sub_desc);
-			ad->data_auto_network_item->sub_desc = (char *)g_strdup(sub_text);
+			ad->data_auto_network_item->sub_desc = (char *)g_strdup(
+					sub_text);
 			FREE(sub_text);
 		}
 
-		elm_genlist_item_fields_update(ad->data_auto_network_item->item, "*", ELM_GENLIST_ITEM_FIELD_TEXT);
+		elm_genlist_item_fields_update(ad->data_auto_network_item->item,
+				"*", ELM_GENLIST_ITEM_FIELD_TEXT);
 	}
 }
-static void
-__network_main_gl_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+static void __network_main_gl_mouse_down(void *data, Evas *e, Evas_Object *obj,
+		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(!data || !event_info);
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	SettingNetworkUG *ad = (SettingNetworkUG *)data;
 	Evas_Event_Mouse_Down *ev = (Evas_Event_Mouse_Down *)event_info;
 	ad->point_down.x = ev->output.x;
 	ad->point_down.y = ev->output.y;
-	Elm_Object_Item *selected_item = elm_genlist_at_xy_item_get(ad->genlist_sel_network, ev->output.x, ev->output.y, NULL);
+	Elm_Object_Item *selected_item = elm_genlist_at_xy_item_get(
+			ad->genlist_sel_network, ev->output.x, ev->output.y,
+			NULL);
 	ret_if(!selected_item);
-	Setting_GenGroupItem_Data *data_Item = elm_object_item_data_get(selected_item);
+	Setting_GenGroupItem_Data *data_Item = elm_object_item_data_get(
+			selected_item);
 	ret_if(!data_Item);
-	if (!safeStrCmp(data_Item->keyStr, "IDS_ST_BODY_SELECT_AUTOMATICALLY")) {
-		SETTING_TRACE("ev->output.x:%d, ev->output.y:%d", ev->output.x, ev->output.y);
+	if (!safeStrCmp(data_Item->keyStr,
+			"IDS_ST_BODY_SELECT_AUTOMATICALLY")) {
+		SETTING_TRACE("ev->output.x:%d, ev->output.y:%d", ev->output.x,
+				ev->output.y);
 		Evas_Coord x, y, w, h;
-		evas_object_geometry_get(ad->data_auto_network_item->eo_check, &x, &y, &w, &h);
-		SETTING_TRACE("x:%d, y:%d, w:%d, h:%d", x, y, w , h);
-		if (x <= ev->output.x && ev->output.x <= (x + w) && y <= ev->output.y && ev->output.y <= (y + h)) {
+		evas_object_geometry_get(ad->data_auto_network_item->eo_check,
+				&x, &y, &w, &h);
+		SETTING_TRACE("x:%d, y:%d, w:%d, h:%d", x, y, w, h);
+		if (x <= ev->output.x
+				&& ev->output.x <= (x + w)
+				&& y <= ev->output.y
+				&& ev->output.y <= (y + h)) {
 			return;
 		}
 
-		char *sub_text = setting_customize_text(ad->data_auto_network_item->sub_desc, 0, WHITE_COLOR, NULL);
+		char *sub_text = setting_customize_text(
+				ad->data_auto_network_item->sub_desc, 0,
+				WHITE_COLOR, NULL);
 		FREE(ad->data_auto_network_item->sub_desc);
-		ad->data_auto_network_item->sub_desc = (char *)g_strdup(sub_text);
+		ad->data_auto_network_item->sub_desc = (char *)g_strdup(
+				sub_text);
 		FREE(sub_text);
-		elm_genlist_item_fields_update(ad->data_auto_network_item->item, "*", ELM_GENLIST_ITEM_FIELD_TEXT);
+		elm_genlist_item_fields_update(ad->data_auto_network_item->item,
+				"*", ELM_GENLIST_ITEM_FIELD_TEXT);
 	}
 
 }
-static void
-__network_main_gl_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
+static void __network_main_gl_mouse_move(void *data, Evas *e, Evas_Object *obj,
+		void *event_info)
 {
 	/*SETTING_TRACE_BEGIN; */
 	ret_if(!data || !event_info);
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	SettingNetworkUG *ad = (SettingNetworkUG *)data;
 	Evas_Event_Mouse_Move *ev = (Evas_Event_Mouse_Move *)event_info;
 	int x_offset = ev->cur.output.x - ad->point_down.x;
 	int y_offset = ev->cur.output.y - ad->point_down.y;
-	if (x_offset < 0) x_offset = -x_offset;
-	if (y_offset < 0) y_offset = -y_offset;
+	if (x_offset < 0)
+		x_offset = -x_offset;
+	if (y_offset < 0)
+		y_offset = -y_offset;
 	/*SETTING_TRACE("x_offset:%d, y_offset:%d", x_offset, y_offset); */
 	if (x_offset <= MIN_MOVE_DISTANCE && y_offset <= MIN_MOVE_DISTANCE) {
 		return;
@@ -119,18 +149,25 @@ __network_main_gl_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_
 
 	/*SETTING_TRACE("xxxxxxxxxx"); */
 	if (ad->data_auto_network_item->chk_status) {
-		char *sub_text = setting_customize_text(ad->data_auto_network_item->sub_desc, 0, BLUE_COLOR, NULL);
+		char *sub_text = setting_customize_text(
+				ad->data_auto_network_item->sub_desc, 0,
+				BLUE_COLOR, NULL);
 		FREE(ad->data_auto_network_item->sub_desc);
-		ad->data_auto_network_item->sub_desc = (char *)g_strdup(sub_text);
+		ad->data_auto_network_item->sub_desc = (char *)g_strdup(
+				sub_text);
 		FREE(sub_text);
 	} else {
-		char *sub_text = setting_customize_text(ad->data_auto_network_item->sub_desc, 0, GRAY_COLOR, NULL);
+		char *sub_text = setting_customize_text(
+				ad->data_auto_network_item->sub_desc, 0,
+				GRAY_COLOR, NULL);
 		FREE(ad->data_auto_network_item->sub_desc);
-		ad->data_auto_network_item->sub_desc = (char *)g_strdup(sub_text);
+		ad->data_auto_network_item->sub_desc = (char *)g_strdup(
+				sub_text);
 		FREE(sub_text);
 	}
 
-	elm_genlist_item_fields_update(ad->data_auto_network_item->item, "*", ELM_GENLIST_ITEM_FIELD_TEXT);
+	elm_genlist_item_fields_update(ad->data_auto_network_item->item, "*",
+			ELM_GENLIST_ITEM_FIELD_TEXT);
 }
 
 static int setting_network_select_network_create(void *cb)
@@ -138,36 +175,40 @@ static int setting_network_select_network_create(void *cb)
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingNetworkUG *ad = (SettingNetworkUG *) cb;
+	SettingNetworkUG *ad = (SettingNetworkUG *)cb;
 	if (ad->view_to_load == &setting_view_network_select_network) {
-		ad->ly_main = setting_create_layout_navi_bar_genlist(ad->win_main_layout,
-															 ad->win_get,
-															 "IDS_COM_BODY_NETWORK_OPERATORS",
-															 _("IDS_ST_BUTTON_BACK"), NULL,
-															 setting_network_select_network_click_softkey_cancel_cb, NULL,
-															 ad, &ad->genlist_sel_network, &ad->navi_bar);
+		ad->ly_main = setting_create_layout_navi_bar_genlist(
+				ad->win_main_layout, ad->win_get,
+				"IDS_COM_BODY_NETWORK_OPERATORS",
+				_("IDS_ST_BUTTON_BACK"), NULL,
+				setting_network_select_network_click_softkey_cancel_cb,
+				NULL, ad, &ad->genlist_sel_network,
+				&ad->navi_bar);
 	} else {
-		setting_push_layout_navi_bar_genlist(ad->win_main_layout, ad->win_get,
-											 "IDS_COM_BODY_NETWORK_OPERATORS",
-											 _("IDS_ST_BUTTON_BACK"),
-											 NULL,
-											 setting_network_select_network_click_softkey_cancel_cb,
-											 NULL,
-											 ad, &ad->genlist_sel_network, ad->navi_bar);
+		setting_push_layout_navi_bar_genlist(ad->win_main_layout,
+				ad->win_get, "IDS_COM_BODY_NETWORK_OPERATORS",
+				_("IDS_ST_BUTTON_BACK"),
+				NULL,
+				setting_network_select_network_click_softkey_cancel_cb,
+				NULL, ad, &ad->genlist_sel_network,
+				ad->navi_bar);
 	}
 
 	/*m_Object_Item *item = elm_genlist_item_append(ad->genlist_sel_network,
-													&(itc_seperator), NULL, NULL,
-													ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
+	 &(itc_seperator), NULL, NULL,
+	 ELM_GENLIST_ITEM_NONE, NULL, NULL);
+	 elm_genlist_item_select_mode_set(item,
+	 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
 
 	/* scroller is a genlist */
 	ad->chk_sel = elm_radio_add(ad->genlist_sel_network);
 	elm_radio_state_value_set(ad->chk_sel, -1);
-	vconf_get_int(VCONFKEY_SETAPPL_SELECT_NETWORK_INT, &ad->sel_net);/*retrieve here */
+	/*retrieve here */
+	vconf_get_int(VCONFKEY_SETAPPL_SELECT_NETWORK_INT, &ad->sel_net);
 	SETTING_TRACE("ad->sel_net:%d", ad->sel_net);
 
-	vconf_get_int(VCONFKEY_SETAPPL_SELECT_OLD_NT_ACT, &ad->sel_act);/*retrieve here */
+	/*retrieve here */
+	vconf_get_int(VCONFKEY_SETAPPL_SELECT_OLD_NT_ACT, &ad->sel_act);
 	SETTING_TRACE("ad->sel_act:%d", ad->sel_act);
 
 	FREE(ad->sel_network);
@@ -175,45 +216,55 @@ static int setting_network_select_network_create(void *cb)
 	ad->sel_network = get_pa_select_network();
 	SETTING_TRACE("pa_sel_net_name:%s", ad->sel_network);
 	if (!ad->sel_network) {
-		ad->sel_network = strndup(Keystr_UNKNOWN_NETWORK, strlen(Keystr_UNKNOWN_NETWORK) + 1);
+		ad->sel_network = strndup(Keystr_UNKNOWN_NETWORK,
+				strlen(Keystr_UNKNOWN_NETWORK) + 1);
 	}
 
-	elm_genlist_mode_set(ad->genlist_sel_network, ELM_LIST_COMPRESS);	/* resolve abnormal height issue */
+	/* resolve abnormal height issue */
+	elm_genlist_mode_set(ad->genlist_sel_network, ELM_LIST_COMPRESS);
 
-	evas_object_event_callback_add(ad->genlist_sel_network, EVAS_CALLBACK_MOUSE_UP, __network_main_gl_mouse_up, ad);
-	evas_object_event_callback_add(ad->genlist_sel_network, EVAS_CALLBACK_MOUSE_DOWN, __network_main_gl_mouse_down, ad);
-	evas_object_event_callback_add(ad->genlist_sel_network, EVAS_CALLBACK_MOUSE_MOVE, __network_main_gl_mouse_move, ad);
+	evas_object_event_callback_add(ad->genlist_sel_network,
+			EVAS_CALLBACK_MOUSE_UP, __network_main_gl_mouse_up, ad);
+	evas_object_event_callback_add(ad->genlist_sel_network,
+			EVAS_CALLBACK_MOUSE_DOWN, __network_main_gl_mouse_down,
+			ad);
+	evas_object_event_callback_add(ad->genlist_sel_network,
+			EVAS_CALLBACK_MOUSE_MOVE, __network_main_gl_mouse_move,
+			ad);
 
 	if (TAPI_NETWORK_SELECTIONMODE_AUTOMATIC == ad->sel_net) {
 		ad->data_auto_network_item = setting_create_Gendial_field_1radio(
-										 ad->genlist_sel_network,
-										 &(itc_1text_1icon),
-										 setting_network_Gendial_select_plmn_cb,
-										 ad, SWALLOW_Type_1ICON_1RADIO,
-										 NULL, TRUE,
-										 "IDS_ST_BODY_SELECT_AUTOMATICALLY",
-										 setting_network_select_network_chk_changed);
+				ad->genlist_sel_network, &(itc_1text_1icon),
+				setting_network_Gendial_select_plmn_cb, ad,
+				SWALLOW_Type_1ICON_1RADIO,
+				NULL, TRUE, "IDS_ST_BODY_SELECT_AUTOMATICALLY",
+				setting_network_select_network_chk_changed);
 		setting_retvm_if(NULL == ad->data_auto_network_item,
-						 SETTING_RETURN_FAIL, "Failed to calloc memory");
-		char *sub_text = setting_customize_text(_(ad->sel_network), 0, BLUE_COLOR, NULL);
-		ad->data_auto_network_item->sub_desc = (char *)g_strdup(sub_text);
+				SETTING_RETURN_FAIL, "Failed to calloc memory");
+		char *sub_text = setting_customize_text(_(ad->sel_network), 0,
+				BLUE_COLOR, NULL);
+		ad->data_auto_network_item->sub_desc = (char *)g_strdup(
+				sub_text);
 		FREE(sub_text);
 		ad->data_auto_network_item->userdata = ad;
 
 	} else if (TAPI_NETWORK_SELECTIONMODE_MANUAL == ad->sel_net) {
 
-		ad->data_auto_network_item	= setting_create_Gendial_field_1radio(
-										  ad->genlist_sel_network,
-										  &(itc_1text_1icon),
-										  setting_network_Gendial_select_plmn_cb,
-										  ad, SWALLOW_Type_1ICON_1RADIO,
-										  NULL, FALSE, "IDS_ST_BODY_SELECT_AUTOMATICALLY",
-										  setting_network_select_network_chk_changed);
+		ad->data_auto_network_item = setting_create_Gendial_field_1radio(
+				ad->genlist_sel_network, &(itc_1text_1icon),
+				setting_network_Gendial_select_plmn_cb, ad,
+				SWALLOW_Type_1ICON_1RADIO,
+				NULL, FALSE, "IDS_ST_BODY_SELECT_AUTOMATICALLY",
+				setting_network_select_network_chk_changed);
 
-		setting_retvm_if(NULL == ad->data_auto_network_item, SETTING_RETURN_FAIL, "Failed to calloc memory");
-		/*ad->data_auto_network_item->sub_desc = (char *)g_strdup(ad->sel_network);//just a simple display */
-		char *sub_text = setting_customize_text(_(ad->sel_network), 0, GRAY_COLOR, NULL);
-		ad->data_auto_network_item->sub_desc = (char *)g_strdup(sub_text);
+		setting_retvm_if(NULL == ad->data_auto_network_item,
+				SETTING_RETURN_FAIL, "Failed to calloc memory");
+		/*ad->data_auto_network_item->sub_desc = (char *)g_strdup(
+		 * ad->sel_network);//just a simple display */
+		char *sub_text = setting_customize_text(_(ad->sel_network), 0,
+				GRAY_COLOR, NULL);
+		ad->data_auto_network_item->sub_desc = (char *)g_strdup(
+				sub_text);
 		FREE(sub_text);
 		ad->data_auto_network_item->userdata = ad;
 
@@ -222,77 +273,88 @@ static int setting_network_select_network_create(void *cb)
 		setting_network_searching_network(ad->data_auto_network_item);
 
 		/* Searching icon appeared.
-		ad->data_search_network_item = setting_create_Gendial_field_1radio(
-						ad->genlist_sel_network,
-						&itc_1icon,
-						NULL, NULL,
-						SWALLOW_Type_1RADIO_1SEARCH,
-						ad->chk_sel, -1, NULL, NULL);
-		__BACK_POINTER_SET(ad->data_search_network_item);
-		elm_genlist_item_select_mode_set(ad->data_search_network_item->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-		*/
+		 ad->data_search_network_item = setting_create_Gendial_field_1radio(
+		 ad->genlist_sel_network,
+		 &itc_1icon,
+		 NULL, NULL,
+		 SWALLOW_Type_1RADIO_1SEARCH,
+		 ad->chk_sel, -1, NULL, NULL);
+		 __BACK_POINTER_SET(ad->data_search_network_item);
+		 elm_genlist_item_select_mode_set(
+		 ad->data_search_network_item->item,
+		 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+		 */
 
 		/*
-		if (0 == safeStrCmp("IDS_ST_BODY_NOSERVICE", ad->sel_network)
-			|| 0 == safeStrCmp(_("IDS_ST_BODY_NOSERVICE"), _(ad->sel_network))
-			|| 0 == safeStrCmp("EMERGENCY", ad->sel_network)
-			|| 0 == safeStrCmp(_("EMERGENCY"), ad->sel_network)
-			|| 0 == safeStrCmp("No service", ad->sel_network)
-			|| 0 == safeStrCmp("No service", _(ad->sel_network))
-			|| 0 == safeStrCmp(_("IDS_CALL_POP_CALLING_EMERG_ONLY"), _(ad->sel_network))
-			|| 0 == safeStrCmp("Emergency calls only", _(ad->sel_network))
-			)
-		{
-			//no service case:
-			ad->data_search_network_item = setting_create_Gendial_field_1radio(
-							ad->genlist_sel_network,
-							&itc_1icon,
-							NULL, NULL,
-							SWALLOW_Type_1RADIO_1SEARCH,
-							ad->chk_sel, -1, NULL, NULL);
-			__BACK_POINTER_SET(ad->data_search_network_item);
-			elm_genlist_item_select_mode_set(ad->data_search_network_item->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-		}
-		else
-		{
-			//normal case:
-			Setting_GenGroupItem_Data *item_Data = NULL;
+		 if (0 == safeStrCmp("IDS_ST_BODY_NOSERVICE", ad->sel_network)
+		 || 0 == safeStrCmp(_("IDS_ST_BODY_NOSERVICE"),
+		 _(ad->sel_network))
+		 || 0 == safeStrCmp("EMERGENCY", ad->sel_network)
+		 || 0 == safeStrCmp(_("EMERGENCY"), ad->sel_network)
+		 || 0 == safeStrCmp("No service", ad->sel_network)
+		 || 0 == safeStrCmp("No service", _(ad->sel_network))
+		 || 0 == safeStrCmp(_("IDS_CALL_POP_CALLING_EMERG_ONLY"),
+		 _(ad->sel_network))
+		 || 0 == safeStrCmp("Emergency calls only", _(ad->sel_network))
+		 )
+		 {
+		 //no service case:
+		 ad->data_search_network_item = setting_create_Gendial_field_1radio(
+		 ad->genlist_sel_network,
+		 &itc_1icon,
+		 NULL, NULL,
+		 SWALLOW_Type_1RADIO_1SEARCH,
+		 ad->chk_sel, -1, NULL, NULL);
+		 __BACK_POINTER_SET(ad->data_search_network_item);
+		 elm_genlist_item_select_mode_set(
+		 ad->data_search_network_item->item,
+		 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+		 }
+		 else
+		 {
+		 //normal case:
+		 Setting_GenGroupItem_Data *item_Data = NULL;
 
-			char sel_network_desc[MAX_COMMON_BUFFER_LEN] = { 0, };
+		 char sel_network_desc[MAX_COMMON_BUFFER_LEN] = { 0, };
 
-			snprintf(sel_network_desc, MAX_COMMON_BUFFER_LEN, "%s",_(ad->sel_network));
-			item_Data = setting_create_Gendial_field_1radio(
-							ad->genlist_sel_network,
-							&itc_multiline_1text_1icon,
-							setting_network_Gendial_select_plmn_cb, ad,
-							SWALLOW_Type_1RADIO,
-							ad->chk_sel, TAPI_NETWORK_SELECTIONMODE_MANUAL,
-							sel_network_desc,
-							setting_network_select_network_chk_changed);
-			setting_retvm_if(NULL == item_Data, SETTING_RETURN_FAIL, "Failed to calloc memory");
-			item_Data->userdata = ad;
+		 snprintf(sel_network_desc, MAX_COMMON_BUFFER_LEN, "%s",
+		 _(ad->sel_network));
+		 item_Data = setting_create_Gendial_field_1radio(
+		 ad->genlist_sel_network,
+		 &itc_multiline_1text_1icon,
+		 setting_network_Gendial_select_plmn_cb, ad,
+		 SWALLOW_Type_1RADIO,
+		 ad->chk_sel, TAPI_NETWORK_SELECTIONMODE_MANUAL,
+		 sel_network_desc,
+		 setting_network_select_network_chk_changed);
+		 setting_retvm_if(NULL == item_Data, SETTING_RETURN_FAIL,
+		 "Failed to calloc memory");
+		 item_Data->userdata = ad;
 
-			ad->data_search_network_item = setting_create_Gendial_field_1radio(
-							ad->genlist_sel_network,
-							&itc_1icon,
-							NULL, NULL,
-							SWALLOW_Type_1RADIO_1SEARCH,
-							ad->chk_sel, -1, NULL, NULL);
-			__BACK_POINTER_SET(ad->data_search_network_item);
-			elm_genlist_item_select_mode_set(ad->data_search_network_item->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-			elm_radio_value_set(ad->chk_sel, TAPI_NETWORK_SELECTIONMODE_MANUAL);
+		 ad->data_search_network_item = setting_create_Gendial_field_1radio(
+		 ad->genlist_sel_network,
+		 &itc_1icon,
+		 NULL, NULL,
+		 SWALLOW_Type_1RADIO_1SEARCH,
+		 ad->chk_sel, -1, NULL, NULL);
+		 __BACK_POINTER_SET(ad->data_search_network_item);
+		 elm_genlist_item_select_mode_set(
+		 ad->data_search_network_item->item,
+		 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+		 elm_radio_value_set(ad->chk_sel,
+		 TAPI_NETWORK_SELECTIONMODE_MANUAL);
 
-		}
-		*/
+		 }
+		 */
 	}
 
 	setting_view_network_select_network.is_create = TRUE;
 	return SETTING_RETURN_SUCCESS;
 	/*
-	err_handle:
-		setting_view_network_select_network.is_create = TRUE;
-		return SETTING_RETURN_FAIL;
-	*/
+	 err_handle:
+	 setting_view_network_select_network.is_create = TRUE;
+	 return SETTING_RETURN_FAIL;
+	 */
 }
 
 static int setting_network_select_network_destroy(void *cb)
@@ -301,11 +363,14 @@ static int setting_network_select_network_destroy(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingNetworkUG *ad = (SettingNetworkUG *) cb;
+	SettingNetworkUG *ad = (SettingNetworkUG *)cb;
 
-	evas_object_event_callback_del(ad->genlist_sel_network, EVAS_CALLBACK_MOUSE_UP, __network_main_gl_mouse_up);
-	evas_object_event_callback_del(ad->genlist_sel_network, EVAS_CALLBACK_MOUSE_DOWN, __network_main_gl_mouse_down);
-	evas_object_event_callback_del(ad->genlist_sel_network, EVAS_CALLBACK_MOUSE_MOVE, __network_main_gl_mouse_move);
+	evas_object_event_callback_del(ad->genlist_sel_network,
+			EVAS_CALLBACK_MOUSE_UP, __network_main_gl_mouse_up);
+	evas_object_event_callback_del(ad->genlist_sel_network,
+			EVAS_CALLBACK_MOUSE_DOWN, __network_main_gl_mouse_down);
+	evas_object_event_callback_del(ad->genlist_sel_network,
+			EVAS_CALLBACK_MOUSE_MOVE, __network_main_gl_mouse_move);
 
 	if (ad->timer) {
 		ecore_timer_del(ad->timer);
@@ -320,26 +385,31 @@ static int setting_network_select_network_destroy(void *cb)
 	/*cancel the searching operation */
 	if (ad->b_searching_network) {
 		int tapi_ret;
-		tapi_ret = tel_cancel_network_manual_search(ad->handle, setting_tapi_cancel_manual_search_cb, ad);
+		tapi_ret = tel_cancel_network_manual_search(ad->handle,
+				setting_tapi_cancel_manual_search_cb, ad);
 		if (tapi_ret != TAPI_API_SUCCESS) {
-			SETTING_TRACE_ERROR("*** [ERR] tel_cancel_network_manual_search. "\
-								"tapi_ret=%d ***", tapi_ret);
+			SETTING_TRACE_ERROR(
+					"*** [ERR] tel_cancel_network_manual_search. " "tapi_ret=%d ***",
+					tapi_ret);
 		}
 		ad->b_searching_network = FALSE;
 	}
 	/*roolback..*/
-	if (0 != vconf_get_int(VCONFKEY_SETAPPL_SELECT_NETWORK_INT, &ad->sel_net)) {
+	if (0 != vconf_get_int(VCONFKEY_SETAPPL_SELECT_NETWORK_INT,
+			&ad->sel_net)) {
 		SETTING_TRACE_ERROR("vconf get failed");
 	}
 
-	if (0 != vconf_get_int(VCONFKEY_SETAPPL_SELECT_OLD_NT_ACT, &ad->sel_act)) {
+	if (0 != vconf_get_int(VCONFKEY_SETAPPL_SELECT_OLD_NT_ACT,
+			&ad->sel_act)) {
 		SETTING_TRACE_ERROR("vconf get failed");
 	}
 
 	FREE(ad->sel_network);
 	ad->sel_network = get_pa_select_network();
 	if (!ad->sel_network) {
-		ad->sel_network = strndup(Keystr_UNKNOWN_NETWORK, strlen(Keystr_UNKNOWN_NETWORK) + 1);
+		ad->sel_network = strndup(Keystr_UNKNOWN_NETWORK,
+				strlen(Keystr_UNKNOWN_NETWORK) + 1);
 	}
 
 	/*reset..*/
@@ -357,7 +427,8 @@ static int setting_network_select_network_destroy(void *cb)
 	}
 	/* elm_naviframe_item_pop(ad->navi_bar); */
 
-	/*Following handlers will be used by async listening callback. They must be reset after genlist is 'popuped'. */
+	/*Following handlers will be used by async listening callback. They
+	 * must be reset after genlist is 'popuped'. */
 	ad->data_auto_network_item = NULL;
 	/*data_sel_net was created in main view, it won't be destoryed. */
 	/*ad->data_sel_net = NULL; */
@@ -396,13 +467,11 @@ static int setting_network_select_network_cleanup(void *cb)
  *
  ***************************************************/
 
-static void
-setting_network_select_network_click_softkey_cancel_cb(void *data,
-													   Evas_Object *obj,
-													   void *event_info)
+static void setting_network_select_network_click_softkey_cancel_cb(void *data,
+		Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	SettingNetworkUG *ad = (SettingNetworkUG *)data;
 
 	/* If registering.. popup is displaying, Back must be ignored. */
 	if (ad->network_select_registering_pop) {
@@ -411,7 +480,8 @@ setting_network_select_network_click_softkey_cancel_cb(void *data,
 	}
 
 	/* error check */
-	retm_if(data == NULL, "[Setting > Network > Select] Data parameter is NULL");
+	retm_if(data == NULL,
+			"[Setting > Network > Select] Data parameter is NULL");
 
 	if (ad->view_to_load == &setting_view_network_select_network) {
 		/* exit */
@@ -419,7 +489,7 @@ setting_network_select_network_click_softkey_cancel_cb(void *data,
 		return;
 	} else {
 		setting_view_change(&setting_view_network_select_network,
-							&setting_view_network_main, ad);
+				&setting_view_network_main, ad);
 	}
 	return;
 }

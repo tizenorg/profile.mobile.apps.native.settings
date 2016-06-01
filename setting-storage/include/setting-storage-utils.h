@@ -24,7 +24,7 @@
 void storageUg_popup_del(void *data, Evas_Object *obj, void *event_info);
 void storageUg_get_internal_storage_status();
 void storageUg_get_external_storage_status(const char *path, double *total,
-										   double *avail);
+		double *avail);
 
 void storageUG_update_apps_info(SettingStorageUG *ad);
 void storageUg_size_to_str(double size, char *desc, int desc_size);
@@ -37,7 +37,8 @@ int storageUg_get_internal_detail(SettingStorageUG *ad);
 void storageUg_get_internal_detail_cb(int fn_result, SettingStorageUG *ad);
 
 void storageUG_update_cache_info(SettingStorageUG *ad);
-void storageug_genlist_text_update(Setting_GenGroupItem_Data *item_data, double size);
+void storageug_genlist_text_update(Setting_GenGroupItem_Data *item_data,
+		double size);
 
 #endif /*__SETTING_STORAGE_UTILS_H__ */
 

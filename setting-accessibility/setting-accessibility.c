@@ -28,70 +28,78 @@
 #endif
 
 static void *setting_accessibility_ug_on_create(ui_gadget_h ug,
-												enum ug_mode mode, app_control_h service,
-												void *priv)
+		enum ug_mode mode, app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if((NULL == priv), NULL, "NULL == priv");
 	SettingAccessibilityUG *accessibilityUG = priv;
 	accessibilityUG->ug = ug;
-	accessibilityUG->win_main_layout = (Evas_Object *) ug_get_parent_layout(ug);
-	accessibilityUG->win_get = (Evas_Object *) ug_get_window();
+	accessibilityUG->win_main_layout = (Evas_Object *)ug_get_parent_layout(
+			ug);
+	accessibilityUG->win_get = (Evas_Object *)ug_get_window();
 	evas_object_show(accessibilityUG->win_main_layout);
-	accessibilityUG->evas = evas_object_evas_get(accessibilityUG->win_main_layout);
+	accessibilityUG->evas = evas_object_evas_get(
+			accessibilityUG->win_main_layout);
 
 	setting_retvm_if(accessibilityUG->win_main_layout == NULL, NULL,
-					 "cannot get main window ");
+			"cannot get main window ");
 	setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR);
 
 	/* register view node table */
 	setting_view_node_table_intialize();
-	setting_view_node_table_register(&setting_view_accessibility_main, NULL);
-
+	setting_view_node_table_register(&setting_view_accessibility_main,
+			NULL);
 
 	setting_view_node_set_cur_view(&setting_view_accessibility_main);
-	setting_view_create(&setting_view_accessibility_main, (void *)accessibilityUG);
+	setting_view_create(&setting_view_accessibility_main,
+			(void *)accessibilityUG);
 
 	return accessibilityUG->ly_main;
 }
 
-void setting_accessibility_ug_on_start(ui_gadget_h ug, app_control_h app_control, void *priv)
+void setting_accessibility_ug_on_start(ui_gadget_h ug,
+		app_control_h app_control, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE_END;
 }
 
-void setting_accessibility_ug_on_pause(ui_gadget_h ug, app_control_h app_control, void *priv)
+void setting_accessibility_ug_on_pause(ui_gadget_h ug,
+		app_control_h app_control, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE_END;
 }
 
-void setting_accessibility_ug_on_resume(ui_gadget_h ug, app_control_h app_control, void *priv)
+void setting_accessibility_ug_on_resume(ui_gadget_h ug,
+		app_control_h app_control, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE_END;
 }
 
-void setting_accessibility_ug_on_destroy(ui_gadget_h ug, app_control_h app_control, void *priv)
+void setting_accessibility_ug_on_destroy(ui_gadget_h ug,
+		app_control_h app_control, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE_END;
 }
 
-void setting_accessibility_ug_on_message(ui_gadget_h ug, app_control_h msg, app_control_h app_control, void *priv)
+void setting_accessibility_ug_on_message(ui_gadget_h ug, app_control_h msg,
+		app_control_h app_control, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE_END;
 }
-void setting_accessibility_ug_on_event(ui_gadget_h ug, enum ug_event event, app_control_h app_control, void *priv)
+void setting_accessibility_ug_on_event(ui_gadget_h ug, enum ug_event event,
+		app_control_h app_control, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE_END;
 }
 
-void setting_accessibility_ug_on_key_event(ui_gadget_h ug, enum ug_key_event event,
-										   app_control_h app_control, void *priv)
+void setting_accessibility_ug_on_key_event(ui_gadget_h ug,
+		enum ug_key_event event, app_control_h app_control, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE_END;
@@ -101,10 +109,10 @@ UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
 {
 	SETTING_TRACE_BEGIN;
 
-	SettingAccessibilityUG *accessibilityUG =
-		calloc(1, sizeof(SettingAccessibilityUG));
+	SettingAccessibilityUG *accessibilityUG = calloc(1,
+			sizeof(SettingAccessibilityUG));
 	setting_retvm_if(!accessibilityUG, -1,
-					 "Create SettingAccessibilityUG obj failed");
+			"Create SettingAccessibilityUG obj failed");
 
 	ops->create = setting_accessibility_ug_on_create;
 	ops->start = setting_accessibility_ug_on_start;
@@ -137,16 +145,35 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 }
 
 UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
-											 char **applocale)
+		char **applocale)
 {
 	SETTING_TRACE_BEGIN;
 	int i, size;
 	Setting_Cfg_Node_T *node;
 	Eina_List **pplist = priv;
-	const Setting_Cfg_Node_T search_configs[] = {
-		{_(DEVOPTION_STR_ACCESSIBILITY_MAGNIFIER), NULL, NULL, 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node, NULL, NULL, NULL, NULL},
-		{_(DEVOPTION_STR_ACCESSIBILITY_SCREENREADER), NULL, NULL, 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node, NULL, NULL, NULL, NULL},
-	};
+	const Setting_Cfg_Node_T search_configs[] = { {
+			_(DEVOPTION_STR_ACCESSIBILITY_MAGNIFIER),
+			NULL,
+			NULL,
+			0,
+			Cfg_Item_unResetable,
+			0,
+			Cfg_Item_View_Node,
+			NULL,
+			NULL,
+			NULL,
+			NULL }, {
+			_(DEVOPTION_STR_ACCESSIBILITY_SCREENREADER),
+			NULL,
+			NULL,
+			0,
+			Cfg_Item_unResetable,
+			0,
+			Cfg_Item_View_Node,
+			NULL,
+			NULL,
+			NULL,
+			NULL }, };
 
 	retv_if(NULL == priv, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 	retv_if(NULL == applocale, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
@@ -157,12 +184,12 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
 
 	for (i = 0; i < size; i++) {
 		node = setting_plugin_search_item_subindex_add(
-				   search_configs[i].key_name,
-				   "viewtype:accessibility",
-				   IMG_USBconnection,
-				   search_configs[i].item_type,
-				   search_configs[i].data,
-				   "Accessibility");
+				search_configs[i].key_name,
+				"viewtype:accessibility",
+				IMG_USBconnection,
+				search_configs[i].item_type,
+				search_configs[i].data,
+				"Accessibility");
 
 		*pplist = eina_list_append(*pplist, node);
 	}

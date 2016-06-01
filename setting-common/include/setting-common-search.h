@@ -42,9 +42,13 @@
 #endif
 
 #define SEARCH_DB_PATH	_TZ_SYS_DATA"/setting/test.db"
-#define SEARCH_DB_QUERY "select * from setting_search indexed by search_index where locale = %Q and keystr LIKE '%%%q%%'"
-#define SEARCH_DB_QUERY_SELECT_ALL "select * from setting_search indexed by search_index where locale = %Q"
-#define SEARCH_COUNT_DB_QUERY "select count(*) from setting_search indexed by search_index where locale = %Q and keystr LIKE '%%%q%%'"
+#define SEARCH_DB_QUERY \
+	"select * from setting_search indexed by search_index where locale ="\
+	"%Q and keystr LIKE '%%%q%%'"
+#define SEARCH_DB_QUERY_SELECT_ALL "select * from setting_search indexed by "\
+	"search_index where locale = %Q"
+#define SEARCH_COUNT_DB_QUERY "select count(*) from setting_search indexed by "\
+	"search_index where locale = %Q and keystr LIKE '%%%q%%'"
 
 
 extern const Elm_Genlist_Item_Class g_search_genlist_ts;
@@ -83,10 +87,14 @@ typedef struct _ListItemObject {
 * @param viewname to find page
 * @param fieldname to find field in the page
 */
-extern int setting_search_get_module_item_state(char *keyword, char *ug_name, Cfg_Item_State *stat, cfg_func_table *pops);
-extern int setting_search_set_module_item_state(char *keyword, char *ug_name, Cfg_Item_State stat, cfg_func_table *pops);
+extern int setting_search_get_module_item_state(char *keyword, char *ug_name,
+		Cfg_Item_State *stat, cfg_func_table *pops);
+extern int setting_search_set_module_item_state(char *keyword, char *ug_name,
+		Cfg_Item_State stat, cfg_func_table *pops);
 
-extern void setting_add_db_search_index(sqlite3 *db, char *locale, char *keystr, char *infostr, int data_type, char *viewname, char *fieldname, char *icon_path);
+extern void setting_add_db_search_index(sqlite3 *db, char *locale,
+		char *keystr, char *infostr, int data_type, char *viewname,
+		char *fieldname, char *icon_path);
 extern int setting_searchdb_open(sqlite3 **ppdb);
 extern void setting_searchdb_close(sqlite3 *db);
 

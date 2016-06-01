@@ -30,7 +30,8 @@
 #include "setting-appmgr-main.h"
 #include "setting-appmgr.h"
 
-static void appmgrUg_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
+static void appmgrUg_resize(void *data, Evas *e, Evas_Object *obj,
+		void *event_info)
 {
 	SettingAppMgrUG *ad = data;
 
@@ -48,15 +49,15 @@ static void _app_mgr_item_del(void *data, Evas_Object *obj)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "Data parameter is NULL");
-	Setting_GenGroupItem_Data *item_data = (Setting_GenGroupItem_Data *) data;
+	Setting_GenGroupItem_Data *item_data =
+	(Setting_GenGroupItem_Data *) data;
 	if (item_data) {
 		FREE(item_data);
 	}
 }
 #endif
 
-static void
-_main_gl_del_cb(void *data, Evas_Object *obj EINA_UNUSED)
+static void _main_gl_del_cb(void *data, Evas_Object *obj EINA_UNUSED)
 {
 	ret_if(NULL == data);
 	/*appmgr_listinfo *info = data; */
@@ -65,19 +66,24 @@ _main_gl_del_cb(void *data, Evas_Object *obj EINA_UNUSED)
 
 static inline void appmgrUg_init_itcs(SettingAppMgrUG *ad)
 {
-	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE, &(ad->itc_grp_title));
-	setting_create_Gendial_itc(SETTING_GENLIST_MULTILINE_STYLE, &(ad->itc_multiline));
-	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(ad->itc_1txt_1ic_2));
-	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(ad->itc_1txt));
-	setting_create_Gendial_itc("multiline_sub.main", &(ad->itc_multiline_2txt));
+	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE,
+			&(ad->itc_grp_title));
+	setting_create_Gendial_itc(SETTING_GENLIST_MULTILINE_STYLE,
+			&(ad->itc_multiline));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
+			&(ad->itc_1txt_1ic_2));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
+			&(ad->itc_1txt));
+	setting_create_Gendial_itc("multiline_sub.main",
+			&(ad->itc_multiline_2txt));
 
-/*
-	ad->itc_sep.item_style = "dialogue/separator.transparent.2";
-	ad->itc_sep.func.text_get = NULL;
-	ad->itc_sep.func.content_get = NULL;
-	ad->itc_sep.func.state_get = NULL;
-	ad->itc_sep.func.del = NULL;
-*/
+	/*
+	 ad->itc_sep.item_style = "dialogue/separator.transparent.2";
+	 ad->itc_sep.func.text_get = NULL;
+	 ad->itc_sep.func.content_get = NULL;
+	 ad->itc_sep.func.state_get = NULL;
+	 ad->itc_sep.func.del = NULL;
+	 */
 	ad->itc_main.item_style = SETTING_GENLIST_2LINE_STYLE;
 	ad->itc_main.func.text_get = appmgrUg_main_gl_label_new_get;
 	ad->itc_main.func.content_get = appmgrUg_main_gl_icon_new_get;
@@ -131,7 +137,7 @@ static void appmgrUg_navi_back(void *data, Evas_Object *obj, void *event_info)
 }
 
 static inline Evas_Object *appmgrUg_create_navi(Evas_Object *parent,
-												SettingAppMgrUG *ad)
+		SettingAppMgrUG *ad)
 {
 	Evas_Object *navi;
 
@@ -140,8 +146,10 @@ static inline Evas_Object *appmgrUg_create_navi(Evas_Object *parent,
 	navi = elm_naviframe_add(parent);
 	elm_naviframe_prev_btn_auto_pushed_set(navi, EINA_FALSE);
 
-	eext_object_event_callback_add(navi, EEXT_CALLBACK_BACK, appmgrUg_navi_back, ad);
-	eext_object_event_callback_add(navi, EEXT_CALLBACK_MORE, eext_naviframe_more_cb, ad);
+	eext_object_event_callback_add(navi, EEXT_CALLBACK_BACK,
+			appmgrUg_navi_back, ad);
+	eext_object_event_callback_add(navi, EEXT_CALLBACK_MORE,
+			eext_naviframe_more_cb, ad);
 
 	evas_object_show(navi);
 	return navi;
@@ -162,7 +170,7 @@ static int appmgrUg_get_tabtype(char *keyword)
 }
 
 static void *appmgrUg_on_create(ui_gadget_h ug, enum ug_mode mode,
-								app_control_h service, void *priv)
+		app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 
@@ -170,7 +178,8 @@ static void *appmgrUg_on_create(ui_gadget_h ug, enum ug_mode mode,
 	SettingAppMgrUG *ad = priv;
 	char *search_keyword = NULL;
 
-	retvm_if(NULL == ug || NULL == ad, NULL, "ug=%p, priv=%p is Invalid", ug, ad);
+	retvm_if(NULL == ug || NULL == ad, NULL, "ug=%p, priv=%p is Invalid",
+			ug, ad);
 
 	bindtextdomain(SETTING_PACKAGE, SETTING_LOCALEDIR);
 	textdomain(SETTING_PACKAGE);
@@ -195,14 +204,16 @@ static void *appmgrUg_on_create(ui_gadget_h ug, enum ug_mode mode,
 		SETTING_TRACE_ERROR("calloc() Fail");
 		return NULL;
 	}
-	elm_object_part_content_set(ad->lo_main, "elm.swallow.content", ad->navi);
+	elm_object_part_content_set(ad->lo_main, "elm.swallow.content",
+			ad->navi);
 
 	app_control_get_extra_data(service, "viewtype", &viewtype);
 	app_control_get_extra_data(service, "keyword", &search_keyword);
 
 	if (0 == safeStrCmp(viewtype, "application-info")) {
 		/*register view table */
-		setting_view_node_table_register(&setting_view_appmgr_pkginfo, NULL);
+		setting_view_node_table_register(&setting_view_appmgr_pkginfo,
+		NULL);
 
 		SETTING_TRACE("viewtype : %s", viewtype);
 		char *pkgid = NULL;
@@ -218,26 +229,30 @@ static void *appmgrUg_on_create(ui_gadget_h ug, enum ug_mode mode,
 		setting_view_create(ad->pkginfo_view, ad);
 	} else {
 		/*register view table */
-		setting_view_node_table_register(&setting_view_appmgr_main, NULL);
-		setting_view_node_table_register(&setting_view_appmgr_pkginfo, &setting_view_appmgr_main);
+		setting_view_node_table_register(&setting_view_appmgr_main,
+		NULL);
+		setting_view_node_table_register(&setting_view_appmgr_pkginfo,
+				&setting_view_appmgr_main);
 
 		ad->tabtype = appmgrUg_get_tabtype(search_keyword);
 		setting_view_create(ad->main_view, ad);
 	}
 	free(viewtype);
 
-	evas_object_event_callback_add(ad->lo_parent, EVAS_CALLBACK_RESIZE, appmgrUg_resize,
-								   ad);
+	evas_object_event_callback_add(ad->lo_parent, EVAS_CALLBACK_RESIZE,
+			appmgrUg_resize, ad);
 	return ad->lo_main;
 }
 
-static void appmgrUg_on_destroy(ui_gadget_h ug, app_control_h service, void *priv)
+static void appmgrUg_on_destroy(ui_gadget_h ug, app_control_h service,
+		void *priv)
 {
 	SettingAppMgrUG *ad = priv;
 
 	retm_if(NULL == ug || NULL == ad, "ug=%p, priv=%p is Invalid", ug, ad);
 
-	evas_object_event_callback_del(ad->lo_parent, EVAS_CALLBACK_RESIZE, appmgrUg_resize);
+	evas_object_event_callback_del(ad->lo_parent, EVAS_CALLBACK_RESIZE,
+			appmgrUg_resize);
 
 	if (ad->runinfo_view->is_create)
 		setting_view_destroy(ad->runinfo_view, ad);
@@ -262,7 +277,8 @@ static void appmgrUg_on_pause(ui_gadget_h ug, app_control_h service, void *priv)
 		setting_view_update(ad->runinfo_view, ad);
 }
 
-static void appmgrUg_on_resume(ui_gadget_h ug, app_control_h service, void *priv)
+static void appmgrUg_on_resume(ui_gadget_h ug, app_control_h service,
+		void *priv)
 {
 	SettingAppMgrUG *ad = priv;
 
@@ -277,9 +293,10 @@ static void appmgrUg_on_resume(ui_gadget_h ug, app_control_h service, void *priv
 }
 
 static void appmgrUg_on_event(ui_gadget_h ug, enum ug_event event,
-							  app_control_h service, void *priv)
+		app_control_h service, void *priv)
 {
-	retm_if(NULL == ug || NULL == priv, "ug=%p, priv=%p is Invalid", ug, priv);
+	retm_if(NULL == ug || NULL == priv, "ug=%p, priv=%p is Invalid", ug,
+			priv);
 
 	switch (event) {
 	case UG_EVENT_LOW_MEMORY:
@@ -296,7 +313,7 @@ static void appmgrUg_on_event(ui_gadget_h ug, enum ug_event event,
 }
 
 static void appmgrUg_on_key_event(ui_gadget_h ug, enum ug_key_event event,
-								  app_control_h service, void *priv)
+		app_control_h service, void *priv)
 {
 	if (!ug)
 		return;
@@ -336,7 +353,6 @@ UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
 	return 0;
 }
 
-
 UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 {
 	ret_if(NULL == ops);
@@ -345,33 +361,52 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 }
 
 UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
-											 char **applocale)
+		char **applocale)
 {
 	int i, size;
 	Setting_Cfg_Node_T *node;
 	Eina_List **pplist = priv;
 	char ug_args[APPMGRUG_MAX_STR_LEN];
-	const Setting_Cfg_Node_T search_configs[] = {
-		{MGRAPP_STR_DOWNLOADS, NULL, NULL, 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node, NULL, NULL, NULL, NULL},
-		{MGRAPP_STR_RUNNING, NULL, NULL, 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node, NULL, NULL, NULL, NULL},
-		{MGRAPP_STR_ALL, NULL, NULL, 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node, NULL, NULL, NULL, NULL},
-	};
+	const Setting_Cfg_Node_T search_configs[] = { {
+	MGRAPP_STR_DOWNLOADS,
+	NULL,
+	NULL, 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node,
+	NULL,
+	NULL,
+	NULL,
+	NULL }, {
+	MGRAPP_STR_RUNNING,
+	NULL,
+	NULL, 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node,
+	NULL,
+	NULL,
+	NULL,
+	NULL }, {
+	MGRAPP_STR_ALL,
+	NULL,
+	NULL, 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node,
+	NULL,
+	NULL,
+	NULL,
+	NULL }, };
 
 	retv_if(NULL == priv, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 	retv_if(NULL == applocale, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	*applocale = strdup("setting:"_TZ_SYS_RO_APP"/org.tizen.setting/res/locale");
+	*applocale = strdup("setting:"_TZ_SYS_RO_APP\
+			"/org.tizen.setting/res/locale");
 
 	size = sizeof(search_configs) / sizeof(Setting_Cfg_Node_T);
 
 	for (i = 0; i < size; i++) {
-		snprintf(ug_args, APPMGRUG_MAX_STR_LEN, "keyword:%s", search_configs[i].key_name);
+		snprintf(ug_args, APPMGRUG_MAX_STR_LEN, "keyword:%s",
+				search_configs[i].key_name);
 		node = setting_plugin_search_item_subindex_add(
-				   search_configs[i].key_name,
-				   ug_args,
-				   IMG_Applications,
-				   search_configs[i].item_type,
-				   search_configs[i].data, "Application Manager");
+				search_configs[i].key_name,
+				ug_args,
+				IMG_Applications,
+				search_configs[i].item_type,
+				search_configs[i].data, "Application Manager");
 
 		*pplist = eina_list_append(*pplist, node);
 	}

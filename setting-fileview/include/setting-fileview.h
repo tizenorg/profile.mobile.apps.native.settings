@@ -58,8 +58,8 @@ typedef struct _SettingFileviewUG SettingFileviewUG;
 
 /**
  * Setting About UG context
- * all UG function has void* as an agument. this is casted back to SettingFileviewUG
- * and the functions access app context.
+ * all UG function has void* as an agument. this is casted back to
+ * SettingFileviewUG and the functions access app context.
  */
 struct _SettingFileviewUG {
 	ui_gadget_h ug;

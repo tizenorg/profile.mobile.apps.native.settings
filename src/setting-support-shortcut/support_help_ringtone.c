@@ -39,14 +39,14 @@ typedef struct _support_help_appdata {
 	Evas *evas;
 	Evas_Object *win_main;
 	Evas_Object *navibar_main;
-	Evas_Object *ly_main;					/**< seting view main */
+	Evas_Object *ly_main; /**< seting view main */
 	app_control_h service;
 	Ecore_Event_Handler *event_handler;
 } support_help_appdata;
 
 /**
-* The function is called when Setting is terminated
-*/
+ * The function is called when Setting is terminated
+ */
 static void support_help_app_terminate(void *data)
 {
 	SETTING_TRACE_BEGIN;
@@ -74,8 +74,8 @@ static void support_help_app_terminate(void *data)
 }
 
 /**
-* The event process when win object is destroyed
-*/
+ * The event process when win object is destroyed
+ */
 static void support_help_del_win(void *data, Evas_Object *obj, void *event)
 {
 	/*ui_app_exit(); */
@@ -83,8 +83,8 @@ static void support_help_del_win(void *data, Evas_Object *obj, void *event)
 }
 
 /**
-* To create a win object, the win is shared between the App and all its UGs
-*/
+ * To create a win object, the win is shared between the App and all its UGs
+ */
 static Evas_Object *support_help_create_win(const char *name)
 {
 	SETTING_TRACE_BEGIN;
@@ -97,10 +97,10 @@ static Evas_Object *support_help_create_win(const char *name)
 		elm_win_title_set(eo, name);
 		elm_win_borderless_set(eo, EINA_TRUE);
 		evas_object_smart_callback_add(eo, "delete,request",
-									   support_help_del_win, NULL);
+				support_help_del_win, NULL);
 #ifdef ECORE_X
 		ecore_x_window_size_get(ecore_x_window_root_first_get(),
-								&w, &h);
+				&w, &h);
 #else
 		elm_win_screen_size_get(eo, NULL, NULL, &w, &h);
 #endif
@@ -127,19 +127,21 @@ static Eina_Bool __key_press_cb(void *data, int type, void *event)
 }
 
 /**
-* The function is called to create Setting view widgets
-*/
+ * The function is called to create Setting view widgets
+ */
 static bool support_help_app_create(void *data)
 {
 	SETTING_TRACE_BEGIN;
 
 	support_help_appdata *ad = data;
 
-	SETTING_TRACE("[TIME] 3. it taked %d msec from main to setting_help_app_create ", appcore_measure_time());
+	SETTING_TRACE("[TIME] 3. it taked %d msec from main to setting_help_app_create ",
+			appcore_measure_time());
 	appcore_measure_start();
 
 	/* create window */
-	ad->win_main = support_help_create_win("org.tizen.setting.helpringtone");
+	ad->win_main = support_help_create_win(
+			"org.tizen.setting.helpringtone");
 	if (ad->win_main == NULL) {
 		SETTING_TRACE("Can't create window");
 		return 0;
@@ -147,7 +149,8 @@ static bool support_help_app_create(void *data)
 
 	if (elm_win_wm_rotation_supported_get(ad->win_main)) {
 		int rots[4] = { 0, 90, 180, 270 };
-		elm_win_wm_rotation_available_rotations_set(ad->win_main, rots, 4);
+		elm_win_wm_rotation_available_rotations_set(ad->win_main, rots,
+				4);
 	}
 
 	UG_INIT_EFL(ad->win_main, UG_OPT_INDICATOR_ENABLE);
@@ -159,41 +162,48 @@ static bool support_help_app_create(void *data)
 	/* call ug */
 	Evas_Object *conform = elm_conformant_add(ad->win_main);
 	ad->ly_main = elm_layout_add(ad->win_main);
-	evas_object_size_hint_weight_set(ad->ly_main, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_weight_set(ad->ly_main, EVAS_HINT_EXPAND,
+			EVAS_HINT_EXPAND);
 	elm_layout_theme_set(ad->ly_main, "layout", "application", "default");
 
 	/* add bg */
 	Evas_Object *bg = elm_bg_add(ad->ly_main);
 	elm_object_style_set(bg, "group_list");
-	evas_object_size_hint_weight_set(bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_weight_set(bg, EVAS_HINT_EXPAND,
+			EVAS_HINT_EXPAND);
 	elm_object_part_content_set(ad->ly_main, "elm.swallow.bg", bg);
 	evas_object_show(bg);
 
 	/* Indicator bg */
 	Evas_Object *indicator_bg = elm_bg_add(conform);
 	elm_object_style_set(indicator_bg, "indicator/headerbg");
-	elm_object_part_content_set(conform, "elm.swallow.indicator_bg", indicator_bg);
+	elm_object_part_content_set(conform, "elm.swallow.indicator_bg",
+			indicator_bg);
 	evas_object_show(indicator_bg);
 
-	evas_object_size_hint_weight_set(conform, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(conform, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_size_hint_weight_set(conform, EVAS_HINT_EXPAND,
+			EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(conform, EVAS_HINT_FILL,
+			EVAS_HINT_FILL);
 	elm_win_resize_object_add(ad->win_main, conform);
 	elm_object_content_set(conform, ad->ly_main);
 	evas_object_show(conform);
 	elm_win_conformant_set(ad->win_main, EINA_TRUE);
 
-	SETTING_TRACE("[TIME] 4. setting_main_app_create taked %d msec ", appcore_measure_time());
+	SETTING_TRACE("[TIME] 4. setting_main_app_create taked %d msec ",
+			appcore_measure_time());
 	appcore_measure_start();
 
 	/* add event handler */
-	ad->event_handler = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, __key_press_cb, ad);
+	ad->event_handler = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
+			__key_press_cb, ad);
 
 	return TRUE;
 }
 
 /**
-* The function is called when Setting begins run in background from forground
-*/
+ * The function is called when Setting begins run in background from forground
+ */
 static void support_help_app_pause(void *data)
 {
 	SETTING_TRACE_BEGIN;
@@ -206,8 +216,8 @@ static void support_help_app_pause(void *data)
 }
 
 /**
-* The function is called when Setting begins run in forground from background
-*/
+ * The function is called when Setting begins run in forground from background
+ */
 static void support_help_app_resume(void *data)
 {
 	SETTING_TRACE_BEGIN;
@@ -219,9 +229,9 @@ static void support_help_app_resume(void *data)
 
 void support_help_app_destroy_ug_cb(ui_gadget_h ug, void *priv)
 {
-	support_help_appdata *ad = (support_help_appdata *) priv;
+	support_help_appdata *ad = (support_help_appdata *)priv;
 	if (!ad)
-		return;		/*	do nothing if ad is NULL */
+		return; /*	do nothing if ad is NULL */
 
 	elm_win_lower(ad->win_main);
 
@@ -235,28 +245,28 @@ void support_help_app_end_ug_cb(ui_gadget_h ug, void *priv)
 {
 	if (!ug)
 		return;
-	support_help_appdata *ad = (support_help_appdata *) priv;
+	support_help_appdata *ad = (support_help_appdata *)priv;
 	if (!ad)
-		return;		/*	do nothing if ad is NULL */
+		return; /*	do nothing if ad is NULL */
 	support_help_app_terminate(ad);
 }
 
 void support_help_app_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
-								   void *priv)
+		void *priv)
 {
 	Evas_Object *base;
 
 	if (!priv)
 		return;
 
-	base = (Evas_Object *) ug_get_layout(ug);
+	base = (Evas_Object *)ug_get_layout(ug);
 	if (!base)
 		return;
 
 	switch (mode) {
 	case UG_MODE_FULLVIEW:
 		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-										 EVAS_HINT_EXPAND);
+		EVAS_HINT_EXPAND);
 		ug_disable_effect(ug);
 		evas_object_show(base);
 		break;
@@ -334,8 +344,9 @@ int set_i18n(char *pkgname, char *localedir)
 }
 
 /**
-* The function is called by app-fwk after app_create. It always do the process which cost much time.
-*/
+ * The function is called by app-fwk after app_create. It always do the process
+ * which cost much time.
+ */
 static void support_help_app_reset(app_control_h service, void *data)
 {
 	SETTING_TRACE_BEGIN;
@@ -363,12 +374,15 @@ static void support_help_app_reset(app_control_h service, void *data)
 
 	app_control_set_uri(svc, "tizen-help://org.tizen.setting/ringtone");
 
-	char *cur_ringtone_path = vconf_get_str(VCONFKEY_SETAPPL_CALL_RINGTONE_PATH_STR);
+	char *cur_ringtone_path = vconf_get_str(
+			VCONFKEY_SETAPPL_CALL_RINGTONE_PATH_STR);
 	if (cur_ringtone_path == NULL)
-		cur_ringtone_path = (char *)strdup(_TZ_SYS_SHARE"/settings/Ringtones/Over_the_horizon.ogg");
+	cur_ringtone_path = (char *)strdup(
+			_TZ_SYS_SHARE"/settings/Ringtones/Over_the_horizon.ogg");
 	app_control_add_extra_data(svc, "title", "IDS_ST_HEADER_RINGTONES");
 	app_control_add_extra_data(svc, "domain", "setting");
-	app_control_add_extra_data(svc, "path", _TZ_SYS_SHARE"/settings/Ringtones");
+	app_control_add_extra_data(svc, "path",
+			_TZ_SYS_SHARE"/settings/Ringtones");
 	app_control_add_extra_data(svc, "select_type", "SINGLE_FILE");
 	app_control_add_extra_data(svc, "file_type", "SOUND");
 	app_control_add_extra_data(svc, "drm_type", "DRM_ALL");
@@ -376,8 +390,10 @@ static void support_help_app_reset(app_control_h service, void *data)
 	if (safeStrCmp(cur_ringtone_path, "silent") == 0)
 		app_control_add_extra_data(svc, "marked_mode", "silent");
 	else
-		app_control_add_extra_data(svc, "marked_mode", cur_ringtone_path);
-	ad->ug = setting_ug_create(NULL, "myfile-efl", UG_MODE_FULLVIEW, svc, cbs);
+		app_control_add_extra_data(svc, "marked_mode",
+				cur_ringtone_path);
+	ad->ug = setting_ug_create(NULL, "myfile-efl", UG_MODE_FULLVIEW, svc,
+			cbs);
 
 	app_control_destroy(svc);
 
@@ -401,8 +417,8 @@ static void support_help_app_reset(app_control_h service, void *data)
 	FREE(cur_ringtone_path);
 }
 
-
-static void support_help_app_lang_changed(app_event_info_h event_info, void *data)
+static void support_help_app_lang_changed(app_event_info_h event_info,
+		void *data)
 {
 	SETTING_TRACE_BEGIN;
 	support_help_appdata *ad = data;
@@ -426,18 +442,23 @@ int main(int argc, char *argv[])
 	support_help_appdata ad;
 
 	ui_app_lifecycle_callback_s ops = {
-		.create = support_help_app_create,
-		.terminate = support_help_app_terminate,
-		.pause = support_help_app_pause,
-		.resume = support_help_app_resume,
-		.app_control = support_help_app_reset,
-	};
+			.create = support_help_app_create,
+			.terminate = support_help_app_terminate,
+			.pause = support_help_app_pause,
+			.resume = support_help_app_resume,
+			.app_control = support_help_app_reset, };
 
-	app_event_handler_h handlers[5] = {NULL, };
-	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY], APP_EVENT_LOW_BATTERY, NULL, NULL);
-	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED], APP_EVENT_LANGUAGE_CHANGED, support_help_app_lang_changed, NULL);
-	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED], APP_EVENT_REGION_FORMAT_CHANGED, NULL, NULL);
-	ui_app_add_event_handler(&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED], APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
+	app_event_handler_h handlers[5] = { NULL, };
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY],
+			APP_EVENT_LOW_BATTERY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED],
+			APP_EVENT_LANGUAGE_CHANGED,
+			support_help_app_lang_changed, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED],
+			APP_EVENT_REGION_FORMAT_CHANGED, NULL, NULL);
+	ui_app_add_event_handler(
+			&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED],
+			APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
 
 	memset(&ad, 0x00, sizeof(support_help_appdata));
 

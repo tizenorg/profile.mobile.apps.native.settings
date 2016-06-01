@@ -34,8 +34,7 @@ static Setting_GenGroupItem_Data *__backlight_time_handler(void *data,
 		char *keyStr, char *icon_path, char *ug_args,
 		Evas_Object *genlist, Elm_Object_Item *parent)
 {
-	SETTING_TRACE_BEGIN
-	;
+	SETTING_TRACE_BEGIN;
 	setting_main_appdata *ad = (setting_main_appdata *) data;
 	Setting_GenGroupItem_Data *obj = NULL;
 
@@ -60,8 +59,7 @@ static Setting_GenGroupItem_Data *__developer_option_handler(void *data,
 		char *keyStr, char *icon_path, char *ug_args,
 		Evas_Object *genlist, Elm_Object_Item *parent)
 {
-	SETTING_TRACE_BEGIN
-	;
+	SETTING_TRACE_BEGIN;
 	setting_main_appdata *ad = (setting_main_appdata *) data;
 	Setting_GenGroupItem_Data *obj = NULL;
 #ifdef BINARY_RELEASE_TYPE_ENG
@@ -200,8 +198,7 @@ mainlist_entry *settinig_drawer_hash_find(void *cb, char *search_str)
 void setting_main_click_list_item_ug_cb(void *data, Evas_Object *obj,
 		char *ug_to_load, app_control_h svc, struct ug_cbs *cbs)
 {
-	SETTING_TRACE_BEGIN
-	;
+	SETTING_TRACE_BEGIN;
 	setting_main_appdata *ad = (setting_main_appdata *) data;
 	if (!ug_to_load) {
 		setting_create_popup(ad, ad->win_main, NULL, NO_UG_FOUND_MSG,
@@ -232,8 +229,7 @@ void setting_main_click_list_item_ug_cb(void *data, Evas_Object *obj,
 void setting_main_click_list_ex_ug_cb(void *data, Evas_Object *obj,
 		void *event_info)
 {
-	SETTING_TRACE_BEGIN
-	;
+	SETTING_TRACE_BEGIN;
 	retm_if(event_info == NULL, "Invalid argument: event info is NULL");
 	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
 

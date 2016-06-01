@@ -26,7 +26,8 @@
 typedef int (*async_fn)(SettingStorageUG *ad);
 typedef void (*callback_fn)(int fn_result, SettingStorageUG *ad);
 
-void *storageUg_start_async_worker(async_fn fn, callback_fn cb, SettingStorageUG *ad);
+void *storageUg_start_async_worker(async_fn fn, callback_fn cb,
+		SettingStorageUG *ad);
 bool storageUg_worker_is_running(void *worker_id);
 void storageUg_stop_async_worker(void *worker_id);
 void storageUg_stop_async_worker_all(void);

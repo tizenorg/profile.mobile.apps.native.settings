@@ -37,7 +37,8 @@ bool __parse_ug_argument(app_control_h service, void *priv)
 	ad->input_file = NULL;
 
 	app_control_get_extra_data(service, "file", &(ad->input_file));
-	setting_retvm_if(!ad->input_file, FALSE, "no arguement to specialize file");
+	setting_retvm_if(!ad->input_file, FALSE,
+			"no arguement to specialize file");
 
 	ad->input_title = NULL;
 
@@ -49,45 +50,45 @@ bool __parse_ug_argument(app_control_h service, void *priv)
 }
 
 /**
-* Event process when the sizeof UG view changes
-*
-* @param data
-* @param e
-* @param obj
-* @param event_info
-*/
+ * Event process when the sizeof UG view changes
+ *
+ * @param data
+ * @param e
+ * @param obj
+ * @param event_info
+ */
 static void setting_fileview_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
-										  void *event_info)
+		void *event_info)
 {
-	SettingFileviewUG *ad = (SettingFileviewUG *) data;
+	SettingFileviewUG *ad = (SettingFileviewUG *)data;
 	setting_view_update(&setting_view_fileview_main, ad);
 }
 
 /**
-* on_create function of the UG
-*
-* @param ug
-* @param mode
-* @param data
-* @param priv
-*
-* @return
-*/
+ * on_create function of the UG
+ *
+ * @param ug
+ * @param mode
+ * @param data
+ * @param priv
+ *
+ * @return
+ */
 static void *setting_fileview_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
-										   app_control_h service, void *priv)
+		app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if((NULL == priv), NULL, "NULL == priv");
 	SettingFileviewUG *fileviewUG = priv;
 	fileviewUG->ug = ug;
 
-	fileviewUG->win_main_layout = (Evas_Object *) ug_get_parent_layout(ug);
-	fileviewUG->win_get = (Evas_Object *) ug_get_window();
+	fileviewUG->win_main_layout = (Evas_Object *)ug_get_parent_layout(ug);
+	fileviewUG->win_get = (Evas_Object *)ug_get_window();
 	evas_object_show(fileviewUG->win_main_layout);
 	fileviewUG->evas = evas_object_evas_get(fileviewUG->win_main_layout);
 
 	setting_retvm_if(fileviewUG->win_main_layout == NULL, NULL,
-					 "cannot get main window ");
+			"cannot get main window ");
 
 	/*	creating a view. */
 	if (!__parse_ug_argument(service, priv)) {
@@ -96,43 +97,45 @@ static void *setting_fileview_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	}
 	setting_view_create(&setting_view_fileview_main, (void *)fileviewUG);
 	evas_object_event_callback_add(fileviewUG->win_main_layout,
-								   EVAS_CALLBACK_RESIZE,
-								   setting_fileview_ug_cb_resize, fileviewUG);
+			EVAS_CALLBACK_RESIZE, setting_fileview_ug_cb_resize,
+			fileviewUG);
 	return fileviewUG->ly_main;
 }
 
 static void setting_fileview_ug_on_start(ui_gadget_h ug, app_control_h service,
-										 void *priv)
+		void *priv)
 {
 }
 
 static void setting_fileview_ug_on_pause(ui_gadget_h ug, app_control_h service,
-										 void *priv)
+		void *priv)
 {
 	SETTING_TRACE_BEGIN;
 }
 
 static void setting_fileview_ug_on_resume(ui_gadget_h ug, app_control_h service,
-										  void *priv)
+		void *priv)
 {
 	SETTING_TRACE_BEGIN;
 }
 
 /**
-* on_destroy function of the UG
-*
-* @param ug
-* @param data
-* @param priv
-*/
-static void setting_fileview_ug_on_destroy(ui_gadget_h ug, app_control_h service,
-										   void *priv)
+ * on_destroy function of the UG
+ *
+ * @param ug
+ * @param data
+ * @param priv
+ */
+static void setting_fileview_ug_on_destroy(ui_gadget_h ug,
+		app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
 	SettingFileviewUG *fileviewUG = priv;
 
-	evas_object_event_callback_del(fileviewUG->win_main_layout, EVAS_CALLBACK_RESIZE, setting_fileview_ug_cb_resize);	/* fix flash issue for gallery */
+	/* fix flash issue for gallery */
+	evas_object_event_callback_del(fileviewUG->win_main_layout,
+			EVAS_CALLBACK_RESIZE, setting_fileview_ug_cb_resize);
 	fileviewUG->ug = ug;
 	/*	delete the allocated objects. */
 	setting_view_destroy(&setting_view_fileview_main, fileviewUG);
@@ -143,21 +146,21 @@ static void setting_fileview_ug_on_destroy(ui_gadget_h ug, app_control_h service
 		FREE(fileviewUG->input_title);
 
 	if (NULL != ug_get_layout(fileviewUG->ug)) {
-		evas_object_hide((Evas_Object *) ug_get_layout(fileviewUG->ug));
-		evas_object_del((Evas_Object *) ug_get_layout(fileviewUG->ug));
+		evas_object_hide((Evas_Object *)ug_get_layout(fileviewUG->ug));
+		evas_object_del((Evas_Object *)ug_get_layout(fileviewUG->ug));
 	}
 
 	SETTING_TRACE_END;
 }
 
 static void setting_fileview_ug_on_message(ui_gadget_h ug, app_control_h msg,
-										   app_control_h service, void *priv)
+		app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 }
 
 static void setting_fileview_ug_on_event(ui_gadget_h ug, enum ug_event event,
-										 app_control_h service, void *priv)
+		app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	switch (event) {
@@ -183,22 +186,21 @@ static void setting_fileview_ug_on_event(ui_gadget_h ug, enum ug_event event,
 }
 
 static void setting_fileview_ug_on_key_event(ui_gadget_h ug,
-											 enum ug_key_event event,
-											 app_control_h service, void *priv)
+		enum ug_key_event event, app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
-	SettingFileviewUG *ad = (SettingFileviewUG *) priv;
+	SettingFileviewUG *ad = (SettingFileviewUG *)priv;
 
 	switch (event) {
 	case UG_KEY_EVENT_END: {
-			if (elm_naviframe_top_item_get(ad->navi_bar) ==
+		if (elm_naviframe_top_item_get(ad->navi_bar) ==
 				elm_naviframe_bottom_item_get(ad->navi_bar)) {
-				ug_destroy_me(ug);
-			} else {
-				/* elm_naviframe_item_pop(ad->navi_bar); */
-				setting_view_cb_at_endKey(ad);
-			}
+			ug_destroy_me(ug);
+		} else {
+			/* elm_naviframe_item_pop(ad->navi_bar); */
+			setting_view_cb_at_endKey(ad);
 		}
+	}
 		break;
 	default:
 		break;
@@ -209,7 +211,8 @@ UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
 {
 	SETTING_TRACE_BEGIN;
 	SettingFileviewUG *fileviewUG = calloc(1, sizeof(SettingFileviewUG));
-	setting_retvm_if(!fileviewUG, -1, "Create SettingFileviewUG obj failed");
+	setting_retvm_if(!fileviewUG, -1,
+			"Create SettingFileviewUG obj failed");
 
 	ops->create = setting_fileview_ug_on_create;
 	ops->start = setting_fileview_ug_on_start;

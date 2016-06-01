@@ -36,8 +36,10 @@ typedef struct _SettingFlightModeUG SettingFlightModeUG;
 
 typedef enum _MODE_OPEARTION {
 	MODE_INVALID = 0, /*< There is no request waiting for processing */
-	MODE_ENTER = 1,	/*< Some "flightmode enter" request is waiting for processing */
-	MODE_LEAVE,		/*< Some "flightmode leave" request is waiting for processing */
+	MODE_ENTER = 1,	/*< Some "flightmode enter" request is waiting for
+				processing */
+	MODE_LEAVE,	/*< Some "flightmode leave" request is waiting for
+				processing */
 } MODE_OPEARTION;
 
 
@@ -45,7 +47,7 @@ struct _SettingFlightModeUG {
 	ui_gadget_h ug;
 	ui_gadget_h ug_loading;
 	/* add more variables here (move your appdata to here) */
-	app_control_h bundle_data; /**< when loading this UG, bundle is stored */
+	app_control_h bundle_data; /* when loading this UG, bundle is stored */
 
 	Evas *evas;
 	Evas_Object *win_main_layout;
@@ -71,7 +73,8 @@ struct _SettingFlightModeUG {
 	 * vars for flightmode
 	 */
 	TapiHandle *handle;
-	bool b_fm_requesting; /**< whether some request is processing. 1:yes, 0:no */
+	bool b_fm_requesting; /* whether some request is processing.
+				1:yes, 0:no */
 	MODE_OPEARTION fm_waiting_op;
 };
 

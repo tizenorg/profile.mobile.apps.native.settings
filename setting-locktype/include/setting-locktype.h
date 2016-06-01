@@ -59,8 +59,12 @@
 	"in Settings"
 
 #define Motion_Unlock_Guildtext1 "IDS_ST_HEADER_UNLOCK_DEVICE_USING_MOTION_ABB"
-#define Motion_Unlock_Guildtext2 "IDS_ST_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_TO_UNLOCK_IT_IF_THE_SCREEN_DOES_NOT_UNLOCK_TRY_TILTING_THE_DEVICE_MORE"
-#define Motion_Unlock_Guildtext3 "IDS_ST_BODY_WHEN_LEARN_ABOUT_TILT_OR_MOTION_UNLOCK_ARE_SET_MOTION_ACTIVATION_WILL_BE_AUTOMATICALLY_ENABLED_IN_SETTINGS"
+#define Motion_Unlock_Guildtext2 \
+	"IDS_ST_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_"\
+	"TO_UNLOCK_IT_IF_THE_SCREEN_DOES_NOT_UNLOCK_TRY_TILTING_THE_DEVICE_MORE"
+#define Motion_Unlock_Guildtext3 \
+	"IDS_ST_BODY_WHEN_LEARN_ABOUT_TILT_OR_MOTION_UNLOCK_ARE_SET_MOTION_ACT"\
+	"IVATION_WILL_BE_AUTOMATICALLY_ENABLED_IN_SETTINGS"
 
 #define Face_Unlock_Warring	"Warning<br><br>"\
 	"Do not use face unlock while driving, it may distract you from "\
@@ -76,11 +80,16 @@
 	".Find an indoor spot that is not too bright or too dim.<br><br>"\
 	".Hold the phone at eye level."
 
-#define Voice_Unlock_Guildtext "Tap button below then say voice command you want to use for Unlock 4 times all at once"
-#define Voice_Unlock_Guildtext2 "Use 3-5 syllable words and maintain constant intonation.<br><br>"\
-	"All background music and recording will stop when you unlock the device using Face and voice<br>"
-#define Voice_Recognized_text "Recognised. Now you can use your own voice command for Unlock.<br><br>"\
-	"For assuring higher security. You can adapt voice command by tapping 'Adapt voice' button."
+#define Voice_Unlock_Guildtext "Tap button below then say voice command you wa"\
+	"nt to use for Unlock 4 times all at once"
+#define Voice_Unlock_Guildtext2 "Use 3-5 syllable words and maintain constant "\
+	"intonation.<br><br>"\
+	"All background music and recording will stop when you unlock the devi"\
+	"ce using Face and voice<br>"
+#define Voice_Recognized_text "Recognised. Now you can use your own voice comm"\
+	"and for Unlock.<br><br>"\
+	"For assuring higher security. You can adapt voice command by tapping "\
+	"'Adapt voice' button."
 
 #define Adapt_voice_Str "Adapt Voice"
 
@@ -89,13 +98,13 @@
 	"Tip : improve face matching by having your face capture in different "\
 	"conditions."
 
-#define Speak_Now_Str					"Speak now"
+#define Speak_Now_Str			"Speak now"
 
-#define Keystr_ScreenLockType			"IDS_ST_BODY_SCREEN_LOCK_TYPE"
-#define Keystr_LockScreenOptions			"IDS_ST_BODY_LOCK_SCREEN_OPTIONS"
-#define Keystr_Swipe						"IDS_ST_MBODY_SWIPE"
-#define Keystr_FaceAndVoice				"IDS_ST_BODY_FACE_AND_VOICE"
-#define Keystr_FingerPrint						"Fingerprint"
+#define Keystr_ScreenLockType		"IDS_ST_BODY_SCREEN_LOCK_TYPE"
+#define Keystr_LockScreenOptions	"IDS_ST_BODY_LOCK_SCREEN_OPTIONS"
+#define Keystr_Swipe			"IDS_ST_MBODY_SWIPE"
+#define Keystr_FaceAndVoice		"IDS_ST_BODY_FACE_AND_VOICE"
+#define Keystr_FingerPrint		"Fingerprint"
 
 
 typedef struct _SettingLocktypeUG SettingLocktypeUG;
@@ -120,13 +129,15 @@ enum {
 enum {
 	SETTING_LOCKTYPE_VIEWTYPE_MAIN,
 	SETTING_LOCKTYPE_VIEWTYPE_ENCRYPTION,
-	SETTING_LOCKTYPE_VIEWTYPE_RECOVERY, /* In case that recovery password using tizen account, lockscreen can call locktype */
+	/* In case that recovery password using tizen account, lockscreen can
+	 * call locktype */
+	SETTING_LOCKTYPE_VIEWTYPE_RECOVERY,
 };
 
 /**
  * Setting Security UG context
- * all UG function has void* as an agument. this is casted back to SettingSecurityUG
- * and the functions access app context.
+ * all UG function has void* as an agument. this is casted back to
+ * SettingSecurityUG and the functions access app context.
  */
 struct _SettingLocktypeUG {
 	ui_gadget_h ug;
@@ -191,11 +202,11 @@ extern setting_view setting_view_locktype_main;
 
 
 void setting_locktype_result_password_ug_cb(ui_gadget_h ug,
-											app_control_h service, void *priv);
+		app_control_h service, void *priv);
 gboolean setting_locktype_create_password_sg(void *data);
 void setting_locktype_destroy_password_ug_cb(ui_gadget_h ug,
-											 void *priv);
+		void *priv);
 void setting_locktype_layout_passwd_ug_cb(ui_gadget_h ug,
-										  enum ug_mode mode, void *priv);
+		enum ug_mode mode, void *priv);
 
 #endif

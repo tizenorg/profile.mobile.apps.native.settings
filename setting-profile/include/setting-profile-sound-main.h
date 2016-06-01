@@ -23,6 +23,8 @@
 
 #include <setting-profile.h>
 
-static Eina_Bool setting_sound_main_click_softkey_cancel_cb(void *data, Elm_Object_Item *it);
-static void setting_sound_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj, void *event_info);
+static Eina_Bool setting_sound_main_click_softkey_cancel_cb(void *data,
+		Elm_Object_Item *it);
+static void setting_sound_main_mouse_up_Gendial_list_cb(void *data,
+		Evas_Object *obj, void *event_info);
 #endif

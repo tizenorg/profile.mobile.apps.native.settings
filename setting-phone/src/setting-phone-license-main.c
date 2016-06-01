@@ -31,8 +31,7 @@ setting_view setting_view_phone_license_main = {
 	.create = setting_phone_license_main_create,
 	.destroy = setting_phone_license_main_destroy,
 	.update = setting_phone_license_main_update,
-	.cleanup = setting_phone_license_main_cleanup,
-};
+	.cleanup = setting_phone_license_main_cleanup, };
 
 /* ***************************************************
  *
@@ -44,26 +43,28 @@ static int setting_phone_license_main_create(void *cb)
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPhoneUG *ad = (SettingPhoneUG *) cb;
+	SettingPhoneUG *ad = (SettingPhoneUG *)cb;
 
 	Evas_Object *scroller;
 
 	/* add basic layout */
 	char setBtnStr[MAX_DISPLAY_NAME_LEN_ON_UI];
 	snprintf(setBtnStr, sizeof(setBtnStr), "%s",
-			 (char *)dgettext("sys_string", "IDS_ST_BUTTON_BACK"));
+			(char *)dgettext("sys_string", "IDS_ST_BUTTON_BACK"));
 	/* scroller is a genlist */
-	ad->ly_license = setting_create_layout_navi_bar_genlist(ad->win_main_layout, ad->win_get, "IDS_ST_MBODY_LEGAL_INFORMATION_ABB", setBtnStr, NULL,	/* dgettext("sys_string", "IDS_ST_SK_SET_LITE"), */
-															setting_phone_license_main_click_softkey_cancel, NULL,	/* setting_phone_license_main_click_softkey_set, */
-															ad, &scroller,
-															&
-															(ad->navi_bar));
+	ad->ly_license = setting_create_layout_navi_bar_genlist(
+			ad->win_main_layout, ad->win_get,
+			/* dgettext("sys_string", "IDS_ST_SK_SET_LITE"), */
+			"IDS_ST_MBODY_LEGAL_INFORMATION_ABB", setBtnStr, NULL,
+			/* setting_phone_license_main_click_softkey_set, */
+			setting_phone_license_main_click_softkey_cancel, NULL,
+			ad, &scroller, &(ad->navi_bar));
 	/* [UI] open source license */
 	setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
-									 setting_phone_license_main_mouse_up_Gendial_list_cb,
-									 ad, SWALLOW_Type_INVALID, NULL, NULL,
-									 0, "IDS_ST_BODY_OPEN_SOURCE_LICENCES",
-									 NULL, NULL);
+			setting_phone_license_main_mouse_up_Gendial_list_cb, ad,
+			SWALLOW_Type_INVALID, NULL, NULL, 0,
+			"IDS_ST_BODY_OPEN_SOURCE_LICENCES",
+			NULL, NULL);
 
 	setting_view_phone_license_main.is_create = 1;
 
@@ -76,11 +77,12 @@ static int setting_phone_license_main_destroy(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPhoneUG *ad = (SettingPhoneUG *) cb;
+	SettingPhoneUG *ad = (SettingPhoneUG *)cb;
 
 	if (ad->ly_license != NULL) {
 		SETTING_TRACE("ad->ly_license:%p", ad->ly_license);
-		/* SETTING_TRACE("ad->roaming_nw_dialData:%p", ad->roaming_nw_dialData); */
+		/* SETTING_TRACE("ad->roaming_nw_dialData:%p",
+		 * ad->roaming_nw_dialData); */
 		if (ad->popup_clear_license) {
 			evas_object_del(ad->popup_clear_license);
 			ad->popup_clear_license = NULL;
@@ -98,14 +100,17 @@ static int setting_phone_license_main_update(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPhoneUG *ad = (SettingPhoneUG *) cb;
+	SettingPhoneUG *ad = (SettingPhoneUG *)cb;
 
 	if (ad->ly_license != NULL) {
 		evas_object_show(ad->ly_license);
-		/* setting_check_onoff_status(ad->chk_expiry, BOOL_SLP_SETTING_EXPIRY_REMINDER); */
+		/* setting_check_onoff_status(ad->chk_expiry,
+		 * BOOL_SLP_SETTING_EXPIRY_REMINDER); */
 
-		/* setting_update_chk_status(ad->chk_roaming_nw, INT_SLP_SETTING_ROAMING_NETWORK); */
-		/* edje_object_part_text_set(_EDJ(ad->li_roaming_nw), "bottom.text", get_pa_roaming_network_str()); */
+		/* setting_update_chk_status(ad->chk_roaming_nw,
+		 * INT_SLP_SETTING_ROAMING_NETWORK); */
+		/* edje_object_part_text_set(_EDJ(ad->li_roaming_nw),
+		 * "bottom.text", get_pa_roaming_network_str()); */
 	}
 
 	return SETTING_RETURN_SUCCESS;
@@ -116,7 +121,7 @@ static int setting_phone_license_main_cleanup(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPhoneUG *ad = (SettingPhoneUG *) cb;
+	SettingPhoneUG *ad = (SettingPhoneUG *)cb;
 
 	if (ad->ly_license != NULL) {
 		/*	evas_object_hide(ad->ly_license); */
@@ -135,7 +140,7 @@ static void __ug_layout_cb(ui_gadget_h ug, enum ug_mode mode, void *priv)
 	}
 	SETTING_TRACE_BEGIN;
 
-	base = (Evas_Object *) ug_get_layout(ug);
+	base = (Evas_Object *)ug_get_layout(ug);
 	if (!base) {
 		return;
 	}
@@ -143,7 +148,7 @@ static void __ug_layout_cb(ui_gadget_h ug, enum ug_mode mode, void *priv)
 	switch (mode) {
 	case UG_MODE_FULLVIEW:
 		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-										 EVAS_HINT_EXPAND);
+		EVAS_HINT_EXPAND);
 		/*elm_win_resize_object_add(ad->win_get, base); */
 		evas_object_show(base);
 		break;
@@ -160,7 +165,7 @@ static void __ug_destroy_cb(ui_gadget_h ug, void *priv)
 
 	/* restore the '<-' button on the navigate bar */
 	ret_if(!priv);
-	SettingPhoneUG *ad = (SettingPhoneUG *) priv;	/* ad is point to priv */
+	SettingPhoneUG *ad = (SettingPhoneUG *)priv; /* ad is point to priv */
 
 	if (ug) {
 		setting_ug_destroy(ug);
@@ -175,11 +180,12 @@ static void __ug_result_cb(ui_gadget_h ug, app_control_h result, void *priv)
 	/* error check */
 	retm_if(priv == NULL, "Data parameter is NULL");
 
-	SettingPhoneUG *ad = (SettingPhoneUG *) priv;
+	SettingPhoneUG *ad = (SettingPhoneUG *)priv;
 
 	if (result) {
 		char *webkit_address = NULL;
-		app_control_get_extra_data(result, "webkit_address", &webkit_address);
+		app_control_get_extra_data(result, "webkit_address",
+				&webkit_address);
 		SETTING_TRACE("webkit_address = %s", webkit_address);
 
 		app_control_h svc;
@@ -188,7 +194,8 @@ static void __ug_result_cb(ui_gadget_h ug, app_control_h result, void *priv)
 			return;
 		}
 
-		app_control_add_extra_data(svc, "webkit_address", webkit_address);
+		app_control_add_extra_data(svc, "webkit_address",
+				webkit_address);
 
 		ug_send_result(ad->ug, svc);
 		app_control_destroy(svc);
@@ -214,55 +221,60 @@ static void __main_license_clicked(void *data)
 		FREE(cbs);
 		return;
 	}
-	app_control_add_extra_data(svc, "file", SETTING_OPEN_SOURCE_LICENSE_PATH);
-	app_control_add_extra_data(svc, "title", "IDS_ST_BODY_OPEN_SOURCE_LICENCES");
+	app_control_add_extra_data(svc, "file",
+			SETTING_OPEN_SOURCE_LICENSE_PATH);
+	app_control_add_extra_data(svc, "title",
+			"IDS_ST_BODY_OPEN_SOURCE_LICENCES");
 
 	if (ad->ly_language) {
 		elm_object_tree_focus_allow_set(ad->ly_language, EINA_FALSE);
 	}
 
-	ad->ug_loading = setting_ug_create(ad->ug, "setting-fileview-efl", UG_MODE_FULLVIEW, svc, cbs);
-	if (NULL == ad->ug_loading) {	/* error handling */
-		setting_create_popup(ad, ad->win_get, NULL, _(UNSUPPORTED_FUNCTION), NULL, 0, false, false, 0);
+	ad->ug_loading = setting_ug_create(ad->ug, "setting-fileview-efl",
+			UG_MODE_FULLVIEW, svc, cbs);
+	if (NULL == ad->ug_loading) { /* error handling */
+		setting_create_popup(ad, ad->win_get, NULL,
+				_(UNSUPPORTED_FUNCTION), NULL, 0, false, false,
+				0);
 	}
 
 	app_control_destroy(svc);
 	FREE(cbs);
 }
 
-void
-setting_phone_license_main_mouse_up_Gendial_list_cb(void *data,
-													Evas_Object *obj,
-													void *event_info)
+void setting_phone_license_main_mouse_up_Gendial_list_cb(void *data,
+		Evas_Object *obj, void *event_info)
 {
 	/* error check */
 	setting_retm_if(data == NULL, "Data parameter is NULL");
 
 	retm_if(event_info == NULL, "Invalid argument: event info is NULL");
-	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
+	Elm_Object_Item *item = (Elm_Object_Item *)event_info;
 	elm_genlist_item_selected_set(item, 0);
 	Setting_GenGroupItem_Data *list_item =
-		(Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
+			(Setting_GenGroupItem_Data *)elm_object_item_data_get(
+					item);
 	setting_retm_if(NULL == list_item, "list_item is NULL");
 
 	/*SettingPhoneUG *ad = (SettingPhoneUG *) data; */
 
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 
-	if (!safeStrCmp("IDS_ST_BODY_OPEN_SOURCE_LICENCES", list_item->keyStr)) {
+	if (!safeStrCmp("IDS_ST_BODY_OPEN_SOURCE_LICENCES",
+			list_item->keyStr)) {
 		__main_license_clicked(data);
 	}
 }
 
 void setting_phone_license_main_popup_resp_cb(void *data, Evas_Object *obj,
-											  void *event_info)
+		void *event_info)
 {
 	int response_type = btn_type(obj);
 	if (POPUP_RESPONSE_OK == response_type) {
 	}
 
 	setting_retm_if(data == NULL, "Data parameter is NULL");
-	SettingPhoneUG *ad = (SettingPhoneUG *) data;
+	SettingPhoneUG *ad = (SettingPhoneUG *)data;
 	if (ad->popup) {
 		evas_object_del(ad->popup);
 		ad->popup = NULL;
@@ -270,14 +282,13 @@ void setting_phone_license_main_popup_resp_cb(void *data, Evas_Object *obj,
 
 }
 
-void
-setting_phone_license_main_click_softkey_cancel(void *data, Evas_Object *obj,
-												void *event_info)
+void setting_phone_license_main_click_softkey_cancel(void *data,
+		Evas_Object *obj, void *event_info)
 {
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");
 
-	SettingPhoneUG *ad = (SettingPhoneUG *) data;
+	SettingPhoneUG *ad = (SettingPhoneUG *)data;
 
 	/* modify by kairong78.yin */
 	/* Send destroy request */

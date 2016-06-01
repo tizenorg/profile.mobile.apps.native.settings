@@ -37,8 +37,10 @@
 
 #define ERR_BIGGER_THAN_2037 "Cannot Set the year bigger than 2037"
 #define AUTO_TIME_UPDATE_ON	 "Automatic time update is ON!"
-#define SETTING_TIME_AUTO_UPDATE_DESC  "IDS_ST_BODY_USE_TIME_PROVIDED_BY_NETWORK"
-#define NOT_SUPPORT_AUTO_UPDATE_DESC "IDS_ST_POP_AUTO_TIME_UPDATE_UNAVAILABLE_CHOOSE_ALTERNATIVE_TIME_SET_MODE_JPN_SBM"
+#define SETTING_TIME_AUTO_UPDATE_DESC "IDS_ST_BODY_USE_TIME_PROVIDED_BY_NETWORK"
+#define NOT_SUPPORT_AUTO_UPDATE_DESC \
+	"IDS_ST_POP_AUTO_TIME_UPDATE_UNAVAILABLE_CHOOSE_ALTERNATIVE_TIME_SET_M"\
+	"ODE_JPN_SBM"
 
 
 #define DATE_TIME_STR_AUTOMATIC_UPDATE "IDS_ST_MBODY_AUTO_UPDATE"
@@ -61,7 +63,7 @@ struct _SettingTimeUG {
 	/* add more variables here (move your appdata to here) */
 	int noti_fd;
 
-	app_control_h bundle_data; /**< when loading this UG, bundle is stored */
+	app_control_h bundle_data; /* when loading this UG, bundle is stored */
 	Evas *evas;
 	Evas_Object *win_main_layout;
 	Evas_Object *win_get;
