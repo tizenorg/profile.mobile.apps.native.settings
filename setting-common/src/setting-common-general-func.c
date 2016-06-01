@@ -258,7 +258,7 @@ char *get_pa_backlight_time_str()
 	switch (value) {
 	case 0:
 		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
-				 _(KeyStr_Backlight_Alays_On));
+				 _(KeyStr_Backlight_Always_On));
 		break;
 	case 15:
 		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
@@ -359,7 +359,7 @@ char *get_pa_backlight_time_value_str()
 	switch (value) {
 	case 0:
 		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",
-				 _(KeyStr_Backlight_Alays_On));
+				 _(KeyStr_Backlight_Always_On));
 		break;
 	case 15:
 		snprintf(backlight_time_str, sizeof(backlight_time_str), "%s",

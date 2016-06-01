@@ -5,7 +5,7 @@ INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_display REQUIRED elementary ecore edje evas
 				appcore-common appcore-efl ui-gadget-1 capi-appfw-application dlog
 				capi-system-device efl-extension capi-system-system-settings
-				deviced json-glib-1.0 libtzplatform-config)
+				deviced json-glib-1.0 libtzplatform-config dpm)
 
 FOREACH(flag ${pkgs_display_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")

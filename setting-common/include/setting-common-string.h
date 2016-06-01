@@ -92,7 +92,7 @@
 #define KeyStr_DefaultApplications		"IDS_ST_HEADER_DEFAULT_APPLICATIONS_ABB"
 #define KeyStr_Home						"IDS_ST_BODY_HOME"
 #define KeyStr_BacklightTime			"IDS_ST_BODY_SCREEN_TIMEOUT_ABB2"
-#define KeyStr_Backlight_Alays_On	"IDS_ST_BODY_ALWAYS_ON"
+#define KeyStr_Backlight_Always_On	"IDS_ST_BODY_ALWAYS_ON"
 #define KeyStr_Backlight_15_SEC_STR "IDS_ST_BODY_15SEC"
 #define KeyStr_Backlight_30_SEC_STR "IDS_ST_BODY_30SEC"
 #define KeyStr_Backlight_1_MIN_STR	"IDS_ST_BODY_1_MINUTE"
