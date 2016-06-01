@@ -20,7 +20,6 @@
  */
 #include <setting-display-main.h>
 #include <dd-display.h>
-#include <eventsystem.h>
 
 #include <setting-common-draw-widget.h>
 #include <bundle_internal.h>
@@ -350,16 +349,6 @@ static void setting_display_main_vconf_change_cb(keynode_t *key, void *data)
 	}
 }
 
-void auto_rotate_event_handler(
-		const char *event_name, bundle *data, void *user_data)
-{
-	const char *auto_rotate_set = NULL;
-	SETTING_TRACE("auto rotate set event(%s) received", event_name);
-
-	auto_rotate_set = bundle_get_val(data, EVT_KEY_SCREEN_AUTOROTATE_STATE);
-	SETTING_TRACE("auto_rotate_set(%s", auto_rotate_set);
-}
-
 static int setting_display_main_create(void *cb)
 {
 	SettingDisplayUG *ad = (SettingDisplayUG *) cb;
@@ -498,15 +487,6 @@ static int setting_display_main_create(void *cb)
 			ad);
 #endif
 
-	/* eventsystem */
-	if (eventsystem_register_event(
-			SYS_EVENT_SCREEN_AUTOROTATE_STATE,
-			&auto_rotate_event_reg_id,
-			(eventsystem_handler)auto_rotate_event_handler,
-			cb) != ES_R_OK) {
-		SETTING_TRACE_ERROR("error");
-	}
-
 	setting_view_display_main.is_create = 1;
 
 	return SETTING_RETURN_SUCCESS;
@@ -577,9 +557,6 @@ static int setting_display_main_destroy(void *cb)
 	}
 
 	setting_view_display_main.is_create = 0;
-
-	if (ES_R_OK != eventsystem_unregister_event(auto_rotate_event_reg_id))
-		SETTING_TRACE_ERROR("error");
 
 	return SETTING_RETURN_SUCCESS;
 }

@@ -29,7 +29,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sqlite3.h>
-#include <eventsystem.h>
 
 #include <vconf.h>
 #include <vconf-keys.h>
@@ -40,7 +39,6 @@
 #include <unicode/ucal.h>
 #include <unicode/utmscale.h>
 
-#include <eventsystem.h>
 #include <bundle_internal.h>
 #include <system_settings.h>
 
@@ -268,14 +266,9 @@ static void setting_time_main_int_vconf_change_cb(keynode_t *key, void *data)
 
 static int _alarmmgr_set_timezone_helper(char *tzdata)
 {
+	SETTING_TRACE_BEGIN;
 	int ret = alarmmgr_set_timezone(tzdata);
-	if (ret) {
-		/* set event system */
-		setting_set_event_system(SYS_EVENT_TIME_ZONE,
-				EVT_KEY_TIME_ZONE,
-				tzdata);
-	}
-
+	SETTING_TRACE("ret of alarmmgr_set_timezone : %d ", ret);
 	return ret;
 }
 
@@ -283,13 +276,6 @@ static int _alarmmgr_set_systime_helper(time_t t_current)
 {
 	int ret;
 	ret = alarmmgr_set_systime(t_current);
-	if (ret) {
-		/* set event system */
-		setting_set_event_system(SYS_EVENT_SCREEN_AUTOROTATE_STATE,
-				EVT_KEY_TIME_CHANGED,
-				ctime(&t_current));
-	}
-
 	return ret;
 }
 
@@ -607,18 +593,6 @@ Eina_Bool __refresh_date_timer(void *data)
 }
 #endif
 
-void hour_format_event_handler(const char *event_name, bundle *data,
-		void *user_data)
-{
-	const char *hour_format_set = NULL;
-	SETTING_TRACE("hour format set event(%s) received", event_name);
-
-	hour_format_set = bundle_get_val(data, EVT_KEY_HOUR_FORMAT);
-	SETTING_TRACE("hour_format_set(%s)", hour_format_set);
-}
-
-unsigned int hour_format_event_reg_id;
-
 static int setting_time_main_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
@@ -891,13 +865,6 @@ static int setting_time_main_create(void *cb)
 			(Ecore_Task_Cb) __refresh_date_timer, ad);
 #endif
 
-	/* eventsystem */
-	if (ES_R_OK != eventsystem_register_event(SYS_EVENT_HOUR_FORMAT,
-			&hour_format_event_reg_id,
-			(eventsystem_handler)hour_format_event_handler, cb)) {
-		SETTING_TRACE_ERROR("error");
-	}
-
 	return SETTING_RETURN_SUCCESS;
 }
 
@@ -961,10 +928,6 @@ static int setting_time_main_destroy(void *cb)
 		evas_object_del(ad->ly_main);
 		ad->ly_main = NULL;
 		setting_view_time_main.is_create = 0;
-	}
-
-	if (ES_R_OK != eventsystem_unregister_event(hour_format_event_reg_id)) {
-		SETTING_TRACE_ERROR("error");
 	}
 
 	return SETTING_RETURN_SUCCESS;
@@ -1071,7 +1034,7 @@ setting_time_main_launch_worldclock_result_ug_cb(ui_gadget_h ug,
 	safeCopyStr(tz_path, SETTING_TIME_ZONEINFO_PATH,
 			MAX_COMMON_BUFFER_LEN / 4);
 	g_strlcat(tz_path, tzpath, sizeof(tz_path));
-	SETTING_TRACE("full tz_path:%s", tz_path);
+	SETTING_TRACE("full tz_path:(%s)", tz_path);
 
 	int ret = _alarmmgr_set_timezone_helper(tz_path);
 	if (ret < 0) {
@@ -1108,6 +1071,7 @@ setting_time_main_launch_worldclock_result_ug_cb(ui_gadget_h ug,
 		FREE(tzpath);
 	if (city)
 		FREE(city);
+
 	SETTING_TRACE_END;
 }
 
@@ -1452,13 +1416,6 @@ setting_time_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 		int value = VCONFKEY_TIME_FORMAT_12;
 		if (list_item->chk_status) {
 			value = VCONFKEY_TIME_FORMAT_24;
-			setting_set_event_system(SYS_EVENT_HOUR_FORMAT,
-					EVT_KEY_HOUR_FORMAT,
-					EVT_VAL_HOURFORMAT_24);
-		} else {
-			setting_set_event_system(SYS_EVENT_HOUR_FORMAT,
-					EVT_KEY_HOUR_FORMAT,
-					EVT_VAL_HOURFORMAT_12);
 		}
 		setting_set_int_slp_key(INT_SLP_SETTING_REGIONFORMAT_TIME1224,
 				value, &err);

@@ -9,7 +9,7 @@ ui-gadget-1 capi-appfw-application
 capi-network-connection
 tapi dlog efl-extension
 capi-system-system-settings
-notification json-glib-1.0 eventsystem callmgr_client libtzplatform-config)
+notification json-glib-1.0 callmgr_client libtzplatform-config)
 
 FOREACH(flag ${pkgs_network_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")

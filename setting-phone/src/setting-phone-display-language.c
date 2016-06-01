@@ -21,7 +21,6 @@
 #include <setting-phone-display-language.h>
 
 #include <setting-common-draw-widget.h>
-#include <eventsystem.h>
 
 static int setting_phone_display_language_create(void *cb);
 static int setting_phone_display_language_destroy(void *cb);

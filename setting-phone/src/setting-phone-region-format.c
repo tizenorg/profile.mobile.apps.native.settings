@@ -20,7 +20,6 @@
  */
 #include <setting-phone-region-format.h>
 #include <setting-common-draw-widget.h>
-#include <eventsystem.h>
 
 #include <system_settings.h>
 

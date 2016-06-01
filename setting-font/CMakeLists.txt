@@ -4,7 +4,7 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${SETTING_COMMON}/include)
 
 INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_font REQUIRED ecore ecore-file evas elementary appcore-common appcore-efl ui-gadget-1 capi-appfw-application
-deviced fontconfig libxml-2.0 capi-system-system-settings json-glib-1.0 eventsystem libtzplatform-config)
+deviced fontconfig libxml-2.0 capi-system-system-settings json-glib-1.0 libtzplatform-config)
 
 FOREACH(flag ${pkgs_font_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")

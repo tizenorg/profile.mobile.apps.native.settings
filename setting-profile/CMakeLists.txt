@@ -9,7 +9,7 @@ pkg_check_modules(pkgs_profile REQUIRED
 			ui-gadget-1 capi-appfw-application capi-appfw-app-manager vconf
 			capi-media-player capi-media-sound-manager
 			dlog feedback deviced capi-system-device efl-extension
-			cairo mm-keysound capi-media-metadata-extractor json-glib-1.0 eventsystem notification callmgr_client capi-system-system-settings libtzplatform-config)
+			cairo mm-keysound capi-media-metadata-extractor json-glib-1.0 notification callmgr_client capi-system-system-settings libtzplatform-config)
 
 FOREACH(flag ${pkgs_profile_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")

@@ -43,7 +43,6 @@
 
 #include <Ecore_IMF.h>
 
-#include <eventsystem.h>
 #include <bundle_internal.h>
 #include <system_settings.h>
 

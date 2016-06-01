@@ -26,7 +26,6 @@
 #include <libxml/parser.h>
 #include <setting-font-font-size.h>
 
-#include <eventsystem.h>
 
 #define SETTING_FONT_MAX_LEN 10
 #define FONT_BUF_SIZE 256

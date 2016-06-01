@@ -26,7 +26,6 @@
 #include <setting-profile.h>
 #include <setting-common-general-func.h>
 
-#include <eventsystem.h>
 #include <bundle_internal.h>
 #include <notification_setting.h>
 #include <notification_setting_internal.h>
@@ -349,22 +348,12 @@ static void __call_slider_change_cb(
 					FALSE);
 			vconf_set_bool(VCONFKEY_SETAPPL_VIBRATION_STATUS_BOOL,
 					TRUE);
-			setting_set_event_system(
-					SYS_EVENT_SILENT_MODE,
-					EVT_KEY_SILENT_MODE,
-					EVT_VAL_SILENTMODE_OFF);
-			/*insert log for vibrate mode on state */
 		} else {
 			if (!ad->sound_on) {
 				vconf_set_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL,
 						TRUE);
 				vconf_set_bool(VCONFKEY_SETAPPL_VIBRATION_STATUS_BOOL,
 						FALSE);
-				setting_set_event_system(
-						SYS_EVENT_SILENT_MODE,
-						EVT_KEY_SILENT_MODE,
-						EVT_VAL_SILENTMODE_OFF);
-				/*insert log for sound mode on state */
 			}
 		}
 #endif
@@ -973,16 +962,6 @@ static void __volume_popup_del_cb(
 	elm_exit();
 }
 
-void vibration_state_event_handler(
-		const char *event_name, bundle *data, void *user_data)
-{
-	const char *vibration_state_set = NULL;
-	SETTING_TRACE("vibration state set event (%s) received", event_name);
-
-	vibration_state_set = bundle_get_val(data, EVT_KEY_VIBRATION_STATE);
-	SETTING_TRACE("vibration_state_set(%s)", vibration_state_set);
-}
-
 unsigned int vibration_state_reg_id;
 
 static Eina_Bool
@@ -1051,14 +1030,6 @@ static int setting_sound_main_create(void *cb)
 	}
 	setting_view_sound_main.is_create = TRUE;
 
-	/* eventsystem */
-	if (ES_R_OK != eventsystem_register_event(
-			SYS_EVENT_VIBRATION_STATE,
-			&vibration_state_reg_id,
-			(eventsystem_handler)vibration_state_event_handler,
-			cb)) {
-		SETTING_TRACE_ERROR("error");
-	}
 	SETTING_TRACE_END;
 	return SETTING_RETURN_SUCCESS;
 }
@@ -1085,10 +1056,6 @@ static int setting_sound_main_destroy(void *cb)
 		evas_object_del(ad->ly_main);
 	}
 	setting_view_sound_main.is_create = FALSE;
-
-	if (ES_R_OK != eventsystem_unregister_event(vibration_state_reg_id)) {
-		SETTING_TRACE_ERROR("error");
-	}
 	return SETTING_RETURN_SUCCESS;
 }
 

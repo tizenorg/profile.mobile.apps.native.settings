@@ -45,21 +45,7 @@
 
 #include <bundle.h>
 #include <bundle_internal.h>
-#include <eventsystem.h>
 #include <app_control_internal.h>
-
-EXPORT_PUBLIC
-void setting_set_event_system(const char *sys_evt, const char *evt_key, const char *evt_val)
-{
-	bundle *b = NULL;
-
-	SETTING_TRACE("sys_evt: %s, evt_key: %s, evt_val: %s", sys_evt, evt_key, evt_val);
-
-	b = bundle_create();
-	bundle_add_str(b, evt_key, evt_val);
-	eventsystem_request_sending_system_event(sys_evt, b);
-	bundle_free(b);
-}
 
 EXPORT_PUBLIC
 char *setting_file_basename(char *path)
