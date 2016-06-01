@@ -38,7 +38,6 @@ void setting_main_genlist_handler_reset(void *data)
 	retm_if(data == NULL, "Invalid argument: data is NULL");
 	setting_main_appdata *ad = data;
 
-
 	ad->data_network = NULL;
 
 	SETTING_TRACE_END;
@@ -56,10 +55,10 @@ bool is_searchmode_app(Cfg_Item_Type type)
 	bool ret = false;
 
 	switch (type % 10) {
-	case Cfg_Item_Ug_Node:				/* ug run */
-	case Cfg_Item_App_Node:				/* docomo run */
-	case Cfg_Item_View_Node:			/* n-depth search */
-	case Cfg_Item_AppLauncher_Node:		/* app launch */
+	case Cfg_Item_Ug_Node: /* ug run */
+	case Cfg_Item_App_Node: /* docomo run */
+	case Cfg_Item_View_Node: /* n-depth search */
+	case Cfg_Item_AppLauncher_Node: /* app launch */
 		ret = true;
 		break;
 
@@ -75,22 +74,20 @@ bool is_searchmode_app(Cfg_Item_Type type)
 	return ret;
 }
 
-void setting_main_click_list_item_reset_data(void *data,
-											 Evas_Object *obj)
+void setting_main_click_list_item_reset_data(void *data, Evas_Object *obj)
 {
 	/*SETTING_TRACE_BEGIN; */
-	setting_main_appdata *ad = (setting_main_appdata *) data;
+	setting_main_appdata *ad = (setting_main_appdata *)data;
 	ad->isInUGMode = FALSE;
 	/*SETTING_TRACE_END; */
 }
 
-
 void setting_main_destroy_ug_cb(ui_gadget_h ug, void *priv)
 {
-	setting_main_appdata *ad = (setting_main_appdata *) priv;
+	setting_main_appdata *ad = (setting_main_appdata *)priv;
 
 	if (!ad) {
-		return;		/*	do nothing if ad is NULL */
+		return; /*	do nothing if ad is NULL */
 	}
 
 	evas_object_show(ad->navibar_main);
@@ -127,7 +124,7 @@ void setting_main_destroy_ug_cb(ui_gadget_h ug, void *priv)
 }
 
 void setting_main_result_ug_cb(ui_gadget_h ug, app_control_h service,
-							   void *priv)
+		void *priv)
 {
 	if (!priv) {
 		return;
@@ -138,8 +135,7 @@ void setting_main_result_ug_cb(ui_gadget_h ug, app_control_h service,
 	SETTING_TRACE_END;
 }
 
-void setting_main_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
-							   void *priv)
+void setting_main_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode, void *priv)
 {
 	/*setting_main_appdata *ad = (setting_main_appdata *) priv; */
 	Evas_Object *base;
@@ -149,19 +145,18 @@ void setting_main_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
 	}
 	SETTING_TRACE_BEGIN;
 
-	setting_main_appdata *ad = (setting_main_appdata *) priv;
+	setting_main_appdata *ad = (setting_main_appdata *)priv;
 	evas_object_hide(ad->navibar_main);
 
-	base = (Evas_Object *) ug_get_layout(ug);
+	base = (Evas_Object *)ug_get_layout(ug);
 	if (!base) {
 		return;
 	}
 
-
 	switch (mode) {
 	case UG_MODE_FULLVIEW:
 		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-										 EVAS_HINT_EXPAND);
+				EVAS_HINT_EXPAND);
 		/*elm_win_resize_object_add(ad->win_main, base); */
 		evas_object_show(base);
 		break;

@@ -33,7 +33,9 @@ static const settings_font_size_table font_size_table[] = {
 	{NULL, 0}
 };
 
-void setting_font_font_size_list_mouse_up_cb(void *data, Evas_Object *obj, void *event_info);
-char *_item_text_font_size_keystr2_get(void *data, Evas_Object *obj, const char *part);
+void setting_font_font_size_list_mouse_up_cb(void *data, Evas_Object *obj,
+		void *event_info);
+char *_item_text_font_size_keystr2_get(void *data, Evas_Object *obj,
+		const char *part);
 
 #endif				/* __SETTING_FONT_FONT_SIZE_H__ */

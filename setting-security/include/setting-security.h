@@ -44,7 +44,6 @@
 #include <app_manager.h>
 #include <dd-deviced.h>
 
-
 /*///////////////////face and voice unlock */
 #define SET_AS_LOCK_STR "IDS_ST_SK_SET_LITE"/*"Set as lock" */
 #define CONTINUE_STR "Continue"
@@ -66,8 +65,12 @@
 	"in Settings"
 
 #define Motion_Unlock_Guildtext1 "IDS_ST_HEADER_UNLOCK_DEVICE_USING_MOTION_ABB"
-#define Motion_Unlock_Guildtext2 "IDS_ST_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_TO_UNLOCK_IT_IF_THE_SCREEN_DOES_NOT_UNLOCK_TRY_TILTING_THE_DEVICE_MORE"
-#define Motion_Unlock_Guildtext3 "IDS_ST_BODY_WHEN_LEARN_ABOUT_TILT_OR_MOTION_UNLOCK_ARE_SET_MOTION_ACTIVATION_WILL_BE_AUTOMATICALLY_ENABLED_IN_SETTINGS"
+#define Motion_Unlock_Guildtext2 \
+	"IDS_ST_BODY_TAP_AND_HOLD_THE_SCREEN_THEN_TILT_THE_DEVICE_TOWARDS_YOU_"\
+	"TO_UNLOCK_IT_IF_THE_SCREEN_DOES_NOT_UNLOCK_TRY_TILTING_THE_DEVICE_MORE"
+#define Motion_Unlock_Guildtext3 \
+	"IDS_ST_BODY_WHEN_LEARN_ABOUT_TILT_OR_MOTION_UNLOCK_ARE_SET_MOTION_ACT"\
+	"IVATION_WILL_BE_AUTOMATICALLY_ENABLED_IN_SETTINGS"
 
 #define Face_Unlock_Warring	"Warning<br><br>"\
 	"Do not use face unlock while driving, it may distract you from "\
@@ -83,11 +86,16 @@
 	".Find an indoor spot that is not too bright or too dim.<br><br>"\
 	".Hold the phone at eye level."
 
-#define Voice_Unlock_Guildtext "Tap button below then say voice command you want to use for Unlock 4 times all at once"
-#define Voice_Unlock_Guildtext2 "Use 3-5 syllable words and maintain constant intonation.<br><br>"\
-	"All background music and recording will stop when you unlock the device using Face and voice<br>"
-#define Voice_Recognized_text "Recognised. Now you can use your own voice command for Unlock.<br><br>"\
-	"For assuring higher security. You can adapt voice command by tapping 'Adapt voice' button."
+#define Voice_Unlock_Guildtext "Tap button below then say voice command you wa"\
+	"nt to use for Unlock 4 times all at once"
+#define Voice_Unlock_Guildtext2 "Use 3-5 syllable words and maintain constant "\
+	"intonation.<br><br>"\
+	"All background music and recording will stop when you unlock the devi"\
+	"ce using Face and voice<br>"
+#define Voice_Recognized_text "Recognised. Now you can use your own voice comm"\
+	"and for Unlock.<br><br>"\
+	"For assuring higher security. You can adapt voice command by tapping "\
+	"'Adapt voice' button."
 
 #define Adapt_voice_Str "Adapt Voice"
 
@@ -96,27 +104,37 @@
 	"Tip : improve face matching by having your face capture in different "\
 	"conditions."
 
-#define Speak_Now_Str					"Speak now"
-#define Keystr_FDN						"IDS_ST_BODY_FIXED_DIALLING_MODE"
+#define Speak_Now_Str			"Speak now"
+#define Keystr_FDN			"IDS_ST_BODY_FIXED_DIALLING_MODE"
 
 #define SEC_FIREWALL_DIR "/home/app/.firewall"
 
-#define PIN_BLOCKED_ENTER_PUK_DESC "IDS_ST_BODY_PIN_BLOCKED_ENTER_PUK_TO_CONTINUE_JPN_DCM"
-#define SECURITY_MANUAL_UPDATE_TEXT "IDS_ST_POP_CHECK_FOR_SECURITY_UPDATES_AND_DOWNLOAD_NEW_UPDATES_Q_NOTI_MSG"
-#define SECURITY_UPDATE_TOGGLE_ON "IDS_ST_POP_ENABLING_AUTO_UPDATE_MEANS_YOUR_DEVICE_WILL_CHECK_FOR_SECURITY_UPDATES_AUTOMATICALLY_NOTI_MSG"
-#define SECURITY_UPDATE_TOGGLE_OFF "IDS_ST_POP_DISABLING_AUTO_UPDATE_MEANS_YOU_HAVE_TO_CHECK_FOR_SECURITY_UPDATES_MANUALLY_NOTI_MSG"
+#define PIN_BLOCKED_ENTER_PUK_DESC \
+	"IDS_ST_BODY_PIN_BLOCKED_ENTER_PUK_TO_CONTINUE_JPN_DCM"
+#define SECURITY_MANUAL_UPDATE_TEXT \
+	"IDS_ST_POP_CHECK_FOR_SECURITY_UPDATES_AND_DOWNLOAD_NEW_UPDATES_Q_NOTI"\
+	"_MSG"
+#define SECURITY_UPDATE_TOGGLE_ON \
+	"IDS_ST_POP_ENABLING_AUTO_UPDATE_MEANS_YOUR_DEVICE_WILL_CHECK_FOR_SECU"\
+	"RITY_UPDATES_AUTOMATICALLY_NOTI_MSG"
+#define SECURITY_UPDATE_TOGGLE_OFF \
+	"IDS_ST_POP_DISABLING_AUTO_UPDATE_MEANS_YOU_HAVE_TO_CHECK_FOR_SECURITY"\
+	"_UPDATES_MANUALLY_NOTI_MSG"
 #define SECURITY_UPDATE_TEXT "IDS_EMAIL_POP_SECURITY_UPDATE_ABB"
 #define UPDATE_TEXT "IDS_ST_BODY_CHECK_FOR_UPDATES"
 #define CHECK_UPDATES "IDS_ST_BODY_CHECK_FOR_UPDATES_ABB"
 #define AUTO_UPDATE "IDS_ST_OPT_AUTO_UPDATE_ABB"
 #define CHECK_UPDATE_AUTO "IDS_ST_BODY_CHECK_FOR_UPDATES_AUTOMATICALLY_ABB"
-#define CHECK_UPDATE_AUTO_MSG "IDS_ST_SBODY_AUTOMATICALLY_CHECK_FOR_CHANGES_TO_THE_SECURITY_POLICY_MSG"
+#define CHECK_UPDATE_AUTO_MSG \
+	"IDS_ST_SBODY_AUTOMATICALLY_CHECK_FOR_CHANGES_TO_THE_SECURITY_POLICY_M"\
+	"SG"
 #define CONNECT_TO_SERVER "IDS_ST_POP_CONNECTING_TO_THE_SERVER_ING"
 #define	SECURITY_VIA_WIFI "IDS_ST_MBODY_VIA_WI_FI_ONLY"
-#define	SECURITY_VIA_WIFI_HELP_MSG "IDS_ST_SBODY_ONLY_UPDATE_THE_SECURITY_POLICY_AUTOMATICALLY_WHEN_YOUR_DEVICE_IS_CONNECTED_TO_A_WI_FI_NETWORK"
+#define	SECURITY_VIA_WIFI_HELP_MSG \
+	"IDS_ST_SBODY_ONLY_UPDATE_THE_SECURITY_POLICY_AUTOMATICALLY_WHEN_YOUR_"\
+	"DEVICE_IS_CONNECTED_TO_A_WI_FI_NETWORK"
 #define	SECURITY_SIM_NOT_PRESENT_MSG ""
 #define	SECURITY_SIM_SETTINGS "IDS_JAVA_OPT_SIM_SETTINGS"
-
 
 #define SETTING_SECURITY_FIREWALL_BLOCKLIST_NAME_LEN_MAX		256
 
@@ -129,70 +147,93 @@ struct _BlockList_Info {
 #endif
 
 #if SUPPORT_ENCRYPTION
-#define Keystr_DeviceEncryption				"IDS_ASEML_BODY_DEVICE_ENCRYPTION"
-#define keystr_DeviceDecryption			"Device decryption"
-#define DEVICE_ENCRYPTION_DESC		"IDS_ST_BODY_PASSWORD_REQUIRED_TO_DECRYPT_DEVICE_EACH_TIME_YOU_TURN_IT_ON"
+#define Keystr_DeviceEncryption		"IDS_ASEML_BODY_DEVICE_ENCRYPTION"
+#define keystr_DeviceDecryption		"Device decryption"
+#define DEVICE_ENCRYPTION_DESC		"IDS_ST_BODY_PASSWORD_REQUIRED_TO_DECR"\
+	"YPT_DEVICE_EACH_TIME_YOU_TURN_IT_ON"
 #define DEVICE_DECRYPTION_DESC		"IDS_ST_BODY_DEVICE_ENCRYPTED"
 
-#define Keystr_ConfirmEncryption			"IDS_ST_HEADER_CONFIRM_ENCRYPTION"
-#define Keystr_ConfirmDecryption			"IDS_ST_BODY_CONFIRM_DECRYPTION"
+#define Keystr_ConfirmEncryption	"IDS_ST_HEADER_CONFIRM_ENCRYPTION"
+#define Keystr_ConfirmDecryption	"IDS_ST_BODY_CONFIRM_DECRYPTION"
 #define DEVICE_ENCRYPTION_GUIDE_01	"IDS_ST_BODY_DEVICE_ENCRYPTION_HELP_MSG"
-#define DEVICE_ENCRYPTION_GUIDE_03	"IDS_ST_BODY_SET_AN_UNLOCK_PASSWORD_OF_AT_LEAST_6_CHARACTERS_CONTAINING_AT_LEAST_1_NUMBER"
-#define DEVICE_ENCRYPTION_GUIDE_04	"IDS_ST_BODY_PLUG_IN_CHARGER_AND_TRY_AGAIN"
-#define DEVICE_ENCRYPTION_GUIDE_05	"IDS_ST_BODY_CHARGE_BATTERY_TO_ABOVE_80P_AND_TRY_AGAIN"
-#define DEVICE_DECRYPTION_GUIDE_01	"IDS_ST_BODY_YOU_CAN_DECRYPT_ACCOUNTS_SETTINGS_DOWNLOADED_APPLICATIONS_AND_THEIR_DATA_MEDIA_AND_OTHER_FILES_DECRYPTION_WARNING_MSG"
-#define CONFIRM_ENCRYPTION_GUIDE_01	"IDS_ST_BODY_ENCRYPT_DEVICE_Q_WARNING_MSG"
-#define CONFIRM_ENCRYPTION_GUIDE_02	"IDS_ST_BODY_FAST_ENCRYPTION"
-#define CONFIRM_ENCRYPTION_GUIDE_03	"IDS_ST_BODY_IF_YOU_SELECT_THIS_OPTION_ONLY_USED_MEMORY_SPACE_WILL_BE_ENCRYPTED"
-#define CONFIRM_DECRYPTION_GUIDE_01	"IDS_ST_BODY_DECRYPT_DEVICE_Q_WARNING_MSG"
-#define Keystr_Encrypting				"IDS_ST_BODY_ENCRYPTING_ING"
-#define Keystr_Decrypting				"IDS_ST_BODY_DECRYPTING_ING"
-#define ENCRYPTING_GUIDE_01			"IDS_ST_BODY_PREPARING_THIS_COULD_TAKE_OVER_10_MINUTES_ING"
-#define ENCRYPTING_GUIDE_02			"IDS_ST_BODY_WAIT_WHILE_DEVICE_IS_ENCRYPTED_PDP_COMPLETE"
-#define DECRYPTING_GUIDE_02			"IDS_ST_BODY_WAIT_WHILE_DEVICE_IS_DECRYPTED_PDP_COMPLETE"
-#define Keystr_EncryptDevice				"IDS_ST_HEADER_ENCRYPT_DEVICE"
-#define Keystr_DecryptDevice				"IDS_ST_BODY_DECRYPT_DEVICE"
+#define DEVICE_ENCRYPTION_GUIDE_03	"IDS_ST_BODY_SET_AN_UNLOCK_PASSWORD_OF"\
+	"_AT_LEAST_6_CHARACTERS_CONTAINING_AT_LEAST_1_NUMBER"
+#define DEVICE_ENCRYPTION_GUIDE_04 \
+	"IDS_ST_BODY_PLUG_IN_CHARGER_AND_TRY_AGAIN"
+#define DEVICE_ENCRYPTION_GUIDE_05 \
+	"IDS_ST_BODY_CHARGE_BATTERY_TO_ABOVE_80P_AND_TRY_AGAIN"
+#define DEVICE_DECRYPTION_GUIDE_01 \
+	"IDS_ST_BODY_YOU_CAN_DECRYPT_ACCOUNTS_SETTINGS_DOWNLOADED_APPLICATIONS"\
+	"_AND_THEIR_DATA_MEDIA_AND_OTHER_FILES_DECRYPTION_WARNING_MSG"
+#define CONFIRM_ENCRYPTION_GUIDE_01 "IDS_ST_BODY_ENCRYPT_DEVICE_Q_WARNING_MSG"
+#define CONFIRM_ENCRYPTION_GUIDE_02 "IDS_ST_BODY_FAST_ENCRYPTION"
+#define CONFIRM_ENCRYPTION_GUIDE_03 \
+	"IDS_ST_BODY_IF_YOU_SELECT_THIS_OPTION_ONLY_USED_MEMORY_SPACE_WILL_BE_"\
+	"ENCRYPTED"
+#define CONFIRM_DECRYPTION_GUIDE_01 \
+	"IDS_ST_BODY_DECRYPT_DEVICE_Q_WARNING_MSG"
+#define Keystr_Encrypting	"IDS_ST_BODY_ENCRYPTING_ING"
+#define Keystr_Decrypting	"IDS_ST_BODY_DECRYPTING_ING"
+#define ENCRYPTING_GUIDE_01 \
+	"IDS_ST_BODY_PREPARING_THIS_COULD_TAKE_OVER_10_MINUTES_ING"
+#define ENCRYPTING_GUIDE_02 \
+	"IDS_ST_BODY_WAIT_WHILE_DEVICE_IS_ENCRYPTED_PDP_COMPLETE"
+#define DECRYPTING_GUIDE_02 \
+	"IDS_ST_BODY_WAIT_WHILE_DEVICE_IS_DECRYPTED_PDP_COMPLETE"
+#define Keystr_EncryptDevice \
+	"IDS_ST_HEADER_ENCRYPT_DEVICE"
+#define Keystr_DecryptDevice \
+	"IDS_ST_BODY_DECRYPT_DEVICE"
 #endif
 
-#define USELESS_SIM_CARD				"Not useful SIM card"
-#define KeyStr_Security_Waiting_Sim			"IDS_ST_BODY_WAITING_FOR_RESPONSE_FROM_SIM_CARD_ING"
-#define Keystr_ScreenLockType			"IDS_ST_BODY_SCREEN_LOCK_TYPE"
-#define Keystr_LockScreenOptions			"IDS_ST_BODY_LOCK_SCREEN_OPTIONS"
-#define Keystr_Swipe						"IDS_ST_MBODY_SWIPE"
-#define Keystr_FaceAndVoice				"IDS_ST_BODY_FACE_AND_VOICE"
+#define USELESS_SIM_CARD \
+	"Not useful SIM card"
+#define KeyStr_Security_Waiting_Sim \
+	"IDS_ST_BODY_WAITING_FOR_RESPONSE_FROM_SIM_CARD_ING"
+#define Keystr_ScreenLockType \
+	"IDS_ST_BODY_SCREEN_LOCK_TYPE"
+#define Keystr_LockScreenOptions \
+	"IDS_ST_BODY_LOCK_SCREEN_OPTIONS"
+#define Keystr_Swipe \
+	"IDS_ST_MBODY_SWIPE"
+#define Keystr_FaceAndVoice \
+	"IDS_ST_BODY_FACE_AND_VOICE"
 
 #if SUPPORT_SECURITY_FIREWALL
-#define Keystr_Firewall				"IDS_ST_BODY_FIREWALL"
-#define Keystr_BlockIP				"IDS_ST_BODY_BLOCK_IP"
-#define Keystr_BlockedIPList			"IDS_ST_BODY_BLOCKED_IP_LIST"
-#define Keystr_BlockedIPDesc			"IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_IP_ADDRESS_MSG"
-#define Keystr_BlockURL				"IDS_ST_BODY_BLOCK_URL"
+#define Keystr_Firewall			"IDS_ST_BODY_FIREWALL"
+#define Keystr_BlockIP			"IDS_ST_BODY_BLOCK_IP"
+#define Keystr_BlockedIPList		"IDS_ST_BODY_BLOCKED_IP_LIST"
+#define Keystr_BlockedIPDesc \
+	"IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_IP_ADDRESS_MSG"
+#define Keystr_BlockURL			"IDS_ST_BODY_BLOCK_URL"
 #define Keystr_BlockedURLList		"IDS_ST_BODY_BLOCKED_URL_LIST"
-#define Keystr_BlockedURLDesc		"IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_URL_MSG"
-#define Keystr_BlockPort				"IDS_ST_BODY_BLOCK_PORT"
+#define Keystr_BlockedURLDesc	"IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_URL_MSG"
+#define Keystr_BlockPort		"IDS_ST_BODY_BLOCK_PORT"
 #define Keystr_BlockedPortList		"IDS_ST_BODY_BLOCKED_PORT_LIST"
-#define Keystr_BlockedPortDesc		"IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_PORT_MSG"
+#define Keystr_BlockedPortDesc	"IDS_ST_BODY_USER_CAN_BLOCK_A_SPECIFIC_PORT_MSG"
 #define Keystr_BlockedNetworkType	"IDS_ST_BODY_NETWORK_TYPE"
 #define Keystr_BlockedProtocolType	"IDS_ST_BODY_PROTOCOL_TYPE"
 
-#define Keystr_AddIP					"IDS_ST_HEADER_ADD_IP"
-#define Keystr_AddURL				"IDS_ST_HEADER_ADD_URL"
-#define Keystr_AddPort				"IDS_ST_HEADER_ADD_PORT"
-#define Keystr_IP					"IDS_WIFI_BODY_IP"
-#define Keystr_URL					"IDS_ST_BODY_URL"
-#define Keystr_Port					"IDS_ST_HEADER_PORT"
+#define Keystr_AddIP			"IDS_ST_HEADER_ADD_IP"
+#define Keystr_AddURL			"IDS_ST_HEADER_ADD_URL"
+#define Keystr_AddPort			"IDS_ST_HEADER_ADD_PORT"
+#define Keystr_IP			"IDS_WIFI_BODY_IP"
+#define Keystr_URL			"IDS_ST_BODY_URL"
+#define Keystr_Port			"IDS_ST_HEADER_PORT"
 
-#define KeyStr_IP_removed			"IDS_ST_POP_IP_ADDRESS_REMOVED"
-#define KeyStr_Port_removed			"IDS_ST_POP_PORT_REMOVED"
+#define KeyStr_IP_removed		"IDS_ST_POP_IP_ADDRESS_REMOVED"
+#define KeyStr_Port_removed		"IDS_ST_POP_PORT_REMOVED"
 #define KeyStr_Ports_removed		"IDS_ST_POP_PORTS_REMOVED"
-#define KeyStr_URL_removed			"IDS_ST_POP_URL_REMOVED"
+#define KeyStr_URL_removed		"IDS_ST_POP_URL_REMOVED"
 #define KeyStr_URLs_removed		"IDS_ST_POP_URLS_REMOVED"
 #endif
 #define Keystr_Security_Engine		"IDS_ST_BODY_SECURITY_ENGINE"
-#define Keystr_Security_Engine_Default "IDS_ST_BODY_ANTIVIRUS_SOFTWARE_ABB"
+#define Keystr_Security_Engine_Default	"IDS_ST_BODY_ANTIVIRUS_SOFTWARE_ABB"
 #define Keystr_Security_Engine_Type_None "IDS_ST_BODY_NONE"
-#define Keystr_Security_Engine_Desc		 "IDS_ST_BODY_PROTECT_YOUR_DEVICE_FROM_HARMFUL_VIRUSES_AND_MALWARE"
-#define Keystr_Firewall_dimm_desc "IDS_IM_POP_THIS_FEATURE_IS_NOT_AVAILABLE_WHILE_FLIGHT_MODE_IS_ON"
+#define Keystr_Security_Engine_Desc \
+	"IDS_ST_BODY_PROTECT_YOUR_DEVICE_FROM_HARMFUL_VIRUSES_AND_MALWARE"
+#define Keystr_Firewall_dimm_desc \
+	"IDS_IM_POP_THIS_FEATURE_IS_NOT_AVAILABLE_WHILE_FLIGHT_MODE_IS_ON"
 
 typedef struct _SettingSecurityUG SettingSecurityUG;
 
@@ -223,7 +264,7 @@ typedef enum {
 } setting_sec_firewall_network_block_type;
 
 typedef enum {
-	SETTING_SEC_FIREWALL_PROTOCOL_BLOCK_ALLOW_ALL  = 0,
+	SETTING_SEC_FIREWALL_PROTOCOL_BLOCK_ALLOW_ALL = 0,
 	SETTING_SEC_FIREWALL_PROTOCOL_BLOCK_TCP,
 	SETTING_SEC_FIREWALL_PROTOCOL_BLOCK_UDP,
 	SETTING_SEC_FIREWALL_PROTOCOL_BLOCK_ALL,
@@ -258,11 +299,9 @@ COMMAND *g_ipHead, *g_ipTail;
 COMMAND *g_urlHead, *g_urlTail;
 COMMAND *g_portHead, *g_portTail;
 
-
 #endif
 #define MAX_VOICE_TIME 4
 #define MAX_SEC_PROFILE_NUM 100
-
 
 enum {
 	SETTING_SEC_VIEWTYPE_MAIN = 0,
@@ -274,8 +313,8 @@ enum {
 
 /**
  * Setting Security UG context
- * all UG function has void* as an agument. this is casted back to SettingSecurityUG
- * and the functions access app context.
+ * all UG function has void* as an agument. this is casted back to
+ * SettingSecurityUG and the functions access app context.
  */
 struct _SettingSecurityUG {
 	ui_gadget_h ug;
@@ -325,7 +364,7 @@ struct _SettingSecurityUG {
 	Evas_Object *pop_auto_update_off;
 
 #if SUPPORT_SECURITY_FIREWALL
-	Elm_Object_Item		*navi_it;
+	Elm_Object_Item *navi_it;
 	Evas_Object *view_layout;
 	Evas_Object *scroller;
 	Evas_Object *content;
@@ -371,7 +410,6 @@ struct _SettingSecurityUG {
 
 	Elm_Genlist_Item_Class itc_group_item;
 	Elm_Genlist_Item_Class itc_2text_3_parent;
-
 
 #if SUPPORT_FDN
 	Setting_GenGroupItem_Data *data_fdn;
@@ -420,7 +458,9 @@ struct _SettingSecurityUG {
 	char *caller;
 	char *input_pwd;
 
-	int sel_item; /**< It's used to check PIN1, PIN2 _BLOCKED. 0:click pin lock, 1:change pin1 code, 2:fdn, 3: change pin2 code */
+	/**< It's used to check PIN1, PIN2 _BLOCKED.
+	 * 0:click pin lock, 1:change pin1 code, 2:fdn, 3: change pin2 code */
+	int sel_item;
 	Ecore_Timer *update_view_timer;
 	Ecore_Timer *get_security_list_timer;
 
@@ -429,11 +469,10 @@ struct _SettingSecurityUG {
 	/*for Security engine */
 	GList *secrity_engine_list;
 
-	bool ug_removed;
-	bool pin2_blocked_flag;
-	bool samsung_account_is_running;
+	bool ug_removed;bool pin2_blocked_flag;bool samsung_account_is_running;
 
-	struct mmc_contents mmc_content; /* Handle exception of SD card encryption */
+	/* Handle exception of SD card encryption */
+	struct mmc_contents mmc_content;
 
 	int current_rotation;
 };
@@ -456,21 +495,23 @@ extern setting_view setting_view_security_sim_settings;
 
 extern setting_view setting_view_security_update;
 
-SettingSecurityUG *g_ad;	/* for tapi callback */
+SettingSecurityUG *g_ad; /* for tapi callback */
 
 /*char *get_screen_lock_type_str(void * priv); */
 void setting_security_result_password_ug_cb(ui_gadget_h ug,
-											app_control_h service, void *priv);
-void setting_security_sim_get_facility_cb(TapiHandle *handle, int result, void *data, void *user_data);
-void setting_security_pin_get_facility_cb(TapiHandle *handle, int result, void *data, void *user_data);
-void setting_security_pin2_get_lock_info_cb(TapiHandle *handle, int result, void *data, void *user_data);
+		app_control_h service, void *priv);
+void setting_security_sim_get_facility_cb(TapiHandle *handle, int result,
+		void *data, void *user_data);
+void setting_security_pin_get_facility_cb(TapiHandle *handle, int result,
+		void *data, void *user_data);
+void setting_security_pin2_get_lock_info_cb(TapiHandle *handle, int result,
+		void *data, void *user_data);
 
 gboolean setting_security_create_password_sg(void *data);
 
-void setting_security_destroy_password_ug_cb(ui_gadget_h ug,
-											 void *priv);
-void setting_security_layout_passwd_ug_cb(ui_gadget_h ug,
-										  enum ug_mode mode, void *priv);
+void setting_security_destroy_password_ug_cb(ui_gadget_h ug, void *priv);
+void setting_security_layout_passwd_ug_cb(ui_gadget_h ug, enum ug_mode mode,
+		void *priv);
 
 gboolean setting_security_create_lockscreen_options_sg(void *data);
 gboolean setting_security_create_mmc_encryption_sg(void *data);
@@ -480,6 +521,6 @@ gboolean setting_security_create_firewall_sg(void *data);
 
 #if SUPPORT_SECURITY_FIREWALL
 int setting_security_system_command(const char *command, const char *commandex);
-\
+
 int setting_security_firewall_reset();
 #endif

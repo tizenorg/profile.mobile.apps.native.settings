@@ -24,7 +24,6 @@
 #include <setting-network.h>
 
 static void setting_network_select_network_click_softkey_cancel_cb(void *data,
-																   Evas_Object *obj,
-																   void *event_info);
+		Evas_Object *obj, void *event_info);
 
 #endif				/* __SETTING_NETWORK_SELECT_NETWORK_H__ */

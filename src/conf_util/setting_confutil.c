@@ -88,7 +88,8 @@ void timezone_init()
 void get_current_font()
 {
 	char *value = NULL;
-	int retcode = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_FONT_TYPE, &value);
+	int retcode = system_settings_get_value_string(
+			SYSTEM_SETTINGS_KEY_FONT_TYPE, &value);
 	if (retcode != 0) {
 		SETTING_TRACE("fail to set SYSTEM_SETTINGS_KEY_FONT_TYPE");
 	}

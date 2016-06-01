@@ -1,23 +1,23 @@
 /*
-* setting
-*
-* Copyright (c) 2000 - 2011 Samsung Electronics Co., Ltd.
-*
-* Contact: MyoungJune Park <mj2004.park@samsung.com>
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-* http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*
-*/
+ * setting
+ *
+ * Copyright (c) 2000 - 2011 Samsung Electronics Co., Ltd.
+ *
+ * Contact: MyoungJune Park <mj2004.park@samsung.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
 
 #include <sys/socket.h>
 #include <sys/un.h>
@@ -35,10 +35,10 @@ setting_view setting_view_password_forgot_password = {
 	.create = setting_password_forgot_password_create,
 	.destroy = setting_password_forgot_password_destroy,
 	.update = setting_password_forgot_password_update,
-	.cleanup = setting_password_forgot_password_cleanup,
-};
+	.cleanup = setting_password_forgot_password_cleanup, };
 
-void __reset_personal_popup_resp_cb(void *data, Evas_Object *obj, void *event_info)
+void __reset_personal_popup_resp_cb(void *data, Evas_Object *obj,
+		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(!data);
@@ -54,14 +54,17 @@ void __reset_personal_popup_resp_cb(void *data, Evas_Object *obj, void *event_in
 			SETTING_TRACE("pse_restore() returns %d", ret);
 
 			/* initialize vconf */
-			vconf_set_int(VCONFKEY_SETAPPL_PERSONAL_MODE_UNLOCK_METHOD_INT, -1);
-			vconf_set_bool(VCONFKEY_SETAPPL_PERSONAL_MODE_STATUS_BOOL, 0);
+			vconf_set_int(VCONFKEY_SETAPPL_PERSONAL_MODE_UNLOCK_METHOD_INT,
+					-1);
+			vconf_set_bool(VCONFKEY_SETAPPL_PERSONAL_MODE_STATUS_BOOL,
+					0);
 
 			ode_deinit();
 			/* send resunt to personal mode ug */
 			app_control_h svc;
 			if (!app_control_create(&svc)) {
-				app_control_add_extra_data(svc, "result", "Restore");
+				app_control_add_extra_data(svc, "result",
+						"Restore");
 				ug_send_result(ad->ug, svc);
 				app_control_destroy(svc);
 			}
@@ -96,8 +99,8 @@ static void __launch_lockscreen(void)
 	saddr.sun_path[strlen("/tmp/phlock")] = 0;
 
 	SETTING_TRACE("saddr.sun_path = %s", saddr.sun_path);
-retry_con:
-	if (connect(fd, (struct sockaddr *)&saddr, sizeof(saddr)) < 0) {
+	retry_con: if (connect(fd, (struct sockaddr *)&saddr,
+			sizeof(saddr)) < 0) {
 		if (retry > 0) {
 			usleep(100 * 1000);
 			retry--;
@@ -112,7 +115,8 @@ retry_con:
 	send(fd, cmd, len, 0);
 }
 
-static void setting_password_forgot_password_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj, void *event_info)
+static void setting_password_forgot_password_mouse_up_Gendial_list_cb(
+		void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -120,17 +124,21 @@ static void setting_password_forgot_password_mouse_up_Gendial_list_cb(void *data
 	SettingPasswordUG *ad = (SettingPasswordUG *)data;
 
 	retm_if(event_info == NULL, "Invalid argument: event info is NULL");
-	Elm_Object_Item *item = (Elm_Object_Item *) event_info;
+	Elm_Object_Item *item = (Elm_Object_Item *)event_info;
 	elm_genlist_item_selected_set(item, 0);
-	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) elm_object_item_data_get(item);
+	Setting_GenGroupItem_Data *list_item =
+			(Setting_GenGroupItem_Data *)elm_object_item_data_get(
+			item);
 
 	SETTING_TRACE("%s clicked", list_item->keyStr);
 	if (!safeStrCmp(list_item->keyStr, PW_ST_RESET_PERSONAL_MODE)) {
-		/* if lock type is simple password or password, call lockscreen. */
+		/* if lock type is simple password or password, call
+		 * lockscreen. */
 		int screen_lock_type = 0;
-		vconf_get_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, &screen_lock_type);
+		vconf_get_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT,
+				&screen_lock_type);
 		if (screen_lock_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD
-			|| screen_lock_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD) {
+				|| screen_lock_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD) {
 			/* call lockscreen app */
 			__launch_lockscreen();
 			/*int ret = 0; */
@@ -140,10 +148,10 @@ static void setting_password_forgot_password_mouse_up_Gendial_list_cb(void *data
 
 		/* draw popup */
 		ad->reset_personal_popup = setting_create_popup(ad, ad->win_get,
-														PW_ST_RESET_PERSONAL_MODE,
-														PW_ST_RESET_PERSONAL_MODE_POPUP_Q,
-														__reset_personal_popup_resp_cb, 0, FALSE, FALSE,
-														2, PW_ST_RESET, PW_ST_CANCEL);
+		PW_ST_RESET_PERSONAL_MODE,
+		PW_ST_RESET_PERSONAL_MODE_POPUP_Q,
+				__reset_personal_popup_resp_cb, 0, FALSE, FALSE,
+				2, PW_ST_RESET, PW_ST_CANCEL);
 	}
 }
 
@@ -151,7 +159,8 @@ static Eina_Bool __forgot_password_pop_cb(void *data, Elm_Object_Item *it)
 {
 	SETTING_TRACE_BEGIN;
 
-	setting_view_change(&setting_view_password_forgot_password, &setting_view_password_main, data);
+	setting_view_change(&setting_view_password_forgot_password,
+			&setting_view_password_main, data);
 
 	return EINA_TRUE;
 }
@@ -162,30 +171,31 @@ static int setting_password_forgot_password_create(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *) cb;
+	SettingPasswordUG *ad = (SettingPasswordUG *)cb;
 
 	Evas_Object *genlist = NULL;
 	Elm_Object_Item *navi_it = NULL;
 
-	navi_it = setting_push_layout_navi_bar_genlist(ad->win_main_layout, ad->win_get,
-												   PW_ST_FORGOT_PASSWORD,
-												   NULL, NULL, NULL, NULL, NULL,
-												   &genlist, ad->navi_bar);
+	navi_it = setting_push_layout_navi_bar_genlist(ad->win_main_layout,
+			ad->win_get,
+			PW_ST_FORGOT_PASSWORD,
+			NULL, NULL, NULL, NULL, NULL, &genlist, ad->navi_bar);
 	/* add pop cb */
-	elm_naviframe_item_pop_cb_set(navi_it, (Elm_Naviframe_Item_Pop_Cb)__forgot_password_pop_cb, ad);
+	elm_naviframe_item_pop_cb_set(navi_it,
+			(Elm_Naviframe_Item_Pop_Cb)__forgot_password_pop_cb,
+			ad);
 
 	if (genlist) {
 		/* menu 1. */
 		setting_create_Gendial_field_def(genlist, &(itc_1text),
-										 setting_password_forgot_password_mouse_up_Gendial_list_cb, ad,
-										 SWALLOW_Type_INVALID,
-										 NULL, NULL,
-										 0, PW_ST_RESET_PERSONAL_MODE, NULL, NULL);
+				setting_password_forgot_password_mouse_up_Gendial_list_cb,
+				ad, SWALLOW_Type_INVALID,
+				NULL, NULL, 0, PW_ST_RESET_PERSONAL_MODE, NULL,
+				NULL);
 
 		/* menu 2. */
 		ADD_GL_HELP(genlist, PW_ST_RESET_PERSONAL_MODE_HELP);
 	}
-
 
 	setting_view_password_forgot_password.is_create = 1;
 
@@ -211,7 +221,7 @@ static int setting_password_forgot_password_update(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *) cb;
+	SettingPasswordUG *ad = (SettingPasswordUG *)cb;
 
 	if (ad->ly_main != NULL) {
 		evas_object_show(ad->ly_main);

@@ -23,8 +23,10 @@
 
 #include <setting-display.h>
 static void
-setting_display_backlight_click_softkey_back_cb(void *data, Evas_Object *obj, void *event_info);
+setting_display_backlight_click_softkey_back_cb(void *data, Evas_Object *obj,
+		void *event_info);
 static void
-setting_display_backlight_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj, void *event_info);
+setting_display_backlight_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
+		void *event_info);
 
 #endif /*__SETTING_DISPLAY_BACKLIGHT_H__ */

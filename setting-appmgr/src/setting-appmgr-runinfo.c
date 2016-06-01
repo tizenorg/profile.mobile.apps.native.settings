@@ -59,7 +59,7 @@ static void appmgrUg_del_running_list(gpointer data, gpointer user_data)
 }
 
 static inline int appmgrUg_run_get_app_info(const char *appid,
-											appmgr_runinfo *out)
+		appmgr_runinfo *out)
 {
 	int ret;
 	char *value;
@@ -67,24 +67,28 @@ static inline int appmgrUg_run_get_app_info(const char *appid,
 
 	ret = pkgmgrinfo_appinfo_get_appinfo(appid, &handle);
 	if (PMINFO_R_OK != ret) {
-		SETTING_TRACE_ERROR("pkgmgrinfo_appinfo_get_appinfo() Fail(%d)", ret);
+		SETTING_TRACE_ERROR("pkgmgrinfo_appinfo_get_appinfo() Fail(%d)",
+				ret);
 		return -1;
 	}
 
 	ret = pkgmgrinfo_appinfo_get_pkgid(handle, &value);
 	if (PMINFO_R_OK != ret) {
-		SETTING_TRACE_ERROR("pkgmgrinfo_appinfo_get_pkgid() Fail(%d)", ret);
+		SETTING_TRACE_ERROR("pkgmgrinfo_appinfo_get_pkgid() Fail(%d)",
+				ret);
 		pkgmgrinfo_appinfo_destroy_appinfo(handle);
 		return -1;
 	}
 	out->appid = SAFE_STRDUP(value);
 
 	ret = pkgmgrinfo_appinfo_get_label(handle, &value);
-	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_appinfo_get_label() Fail(%d)", ret);
+	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_appinfo_get_label() Fail(%d)",
+			ret);
 	out->label = SAFE_STRDUP(value);
 
 	ret = pkgmgrinfo_appinfo_is_taskmanage(handle, &out->can_kill);
-	warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_appinfo_is_taskmanage() Fail(%d)", ret);
+	warn_if(PMINFO_R_OK != ret,
+			"pkgmgrinfo_appinfo_is_taskmanage() Fail(%d)", ret);
 
 	pkgmgrinfo_appinfo_destroy_appinfo(handle);
 	return 0;
@@ -97,7 +101,7 @@ static int appmgrUg_get_running_list_iter(const aul_app_info *info, void *data)
 	char *label = NULL;
 	char *pkgid = NULL;
 	SettingAppMgrUG *ad = data;
-	appmgr_runinfo tmp_info = {NULL, NULL, false};
+	appmgr_runinfo tmp_info = { NULL, NULL, false };
 
 	retv_if(NULL == data, 0);
 	retv_if(NULL == info, 0);
@@ -105,7 +109,8 @@ static int appmgrUg_get_running_list_iter(const aul_app_info *info, void *data)
 
 	ret = appmgrUg_run_get_app_info(info->appid, &tmp_info);
 	if (ret) {
-		SETTING_TRACE_ERROR("appmgrUg_run_get_app_info(%s) Fail", info->appid);
+		SETTING_TRACE_ERROR("appmgrUg_run_get_app_info(%s) Fail",
+				info->appid);
 		return 0;
 	}
 	pkgid = tmp_info.appid; /*temporary using */
@@ -119,7 +124,8 @@ static int appmgrUg_get_running_list_iter(const aul_app_info *info, void *data)
 			runinfo->appid = strdup(info->appid);
 			runinfo->label = strdup(tmp_info.label);
 			runinfo->can_kill = tmp_info.can_kill;
-			listinfo->runinfos = g_list_append(listinfo->runinfos, runinfo);
+			listinfo->runinfos = g_list_append(listinfo->runinfos,
+					runinfo);
 		} else {
 			SETTING_TRACE_ERROR("calloc() Fail");
 			free(label);
@@ -141,16 +147,20 @@ static void appmgrUg_run_stop_iter(gpointer data, gpointer user_data)
 
 	ret = app_manager_get_app_context(info->appid, &app_context);
 	if (APP_MANAGER_ERROR_NONE != ret) {
-		SETTING_TRACE_ERROR("app_manager_get_app_context(%s) Fail(%d)", info->appid, ret);
+		SETTING_TRACE_ERROR("app_manager_get_app_context(%s) Fail(%d)",
+				info->appid, ret);
 		return;
 	}
 
 #if 1
-	SETTING_TRACE_ERROR("app_manager_terminate_app is not External interface. need check in more detail.");
+	SETTING_TRACE_ERROR(
+			"app_manager_terminate_app is not External interface. "\
+			"need check in more detail.");
 #else
 	ret = app_manager_terminate_app(app_context);
 	if (APP_MANAGER_ERROR_NONE != ret) {
-		SETTING_TRACE_ERROR("app_manager_terminate_app() Fail(%d)", ret);
+		SETTING_TRACE_ERROR("app_manager_terminate_app() Fail(%d)",
+				ret);
 		return;
 	}
 #endif
@@ -158,8 +168,7 @@ static void appmgrUg_run_stop_iter(gpointer data, gpointer user_data)
 	app_context_destroy(app_context);
 }
 
-void appmgrUg_run_stop_click(void *data, Evas_Object *obj,
-							 void *event_info)
+void appmgrUg_run_stop_click(void *data, Evas_Object *obj, void *event_info)
 {
 	SettingAppMgrUG *ad = data;
 
@@ -201,14 +210,18 @@ static void appmgrUg_run_append_run_apps(SettingAppMgrUG *ad)
 			continue;
 		}
 
-		d_item = setting_create_Gendial_field_def(ad->gl_run, &ad->itc_1txt_1ic_2, NULL,
-												  NULL, SWALLOW_Type_1ICON_SMALL_ICON, (char *)ad->sel_icon, NULL, 0, info->label,
-												  NULL, NULL);
+		d_item = setting_create_Gendial_field_def(ad->gl_run,
+				&ad->itc_1txt_1ic_2, NULL,
+				NULL, SWALLOW_Type_1ICON_SMALL_ICON,
+				(char *)ad->sel_icon, NULL, 0, info->label,
+				NULL, NULL);
 		if (NULL == d_item) {
-			SETTING_TRACE_ERROR("setting_create_Gendial_field_def() Fail");
+			SETTING_TRACE_ERROR(
+					"setting_create_Gendial_field_def() Fail");
 			continue;
 		}
-		elm_genlist_item_select_mode_set(d_item->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+		elm_genlist_item_select_mode_set(d_item->item,
+				ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 		cnt++;
 	}
@@ -224,10 +237,11 @@ static int appmgrUg_run_create(void *data)
 
 	retv_if(NULL == data, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	Elm_Object_Item *navi_item = setting_push_layout_navi_bar_genlist(ad->lo_parent, ad->win,
-																	  MGRAPP_STR_ACTIVE_APP, NULL, NULL,
-																	  (setting_call_back_func)appmgrUg_run_back_cb,
-																	  NULL, ad, &ad->gl_run, ad->navi);
+	Elm_Object_Item *navi_item = setting_push_layout_navi_bar_genlist(
+			ad->lo_parent, ad->win,
+			MGRAPP_STR_ACTIVE_APP, NULL, NULL,
+			(setting_call_back_func)appmgrUg_run_back_cb,
+			NULL, ad, &ad->gl_run, ad->navi);
 	elm_naviframe_item_pop_cb_set(navi_item, appmgrUg_run_back_cb, ad);
 
 	elm_genlist_mode_set(ad->gl_run, ELM_LIST_COMPRESS);
@@ -235,25 +249,29 @@ static int appmgrUg_run_create(void *data)
 	/*appmgrUg_append_separator(ad->gl_run, ad); */
 
 	/* Title (pkg name, process N) */
-	item = elm_genlist_item_append(ad->gl_run, &ad->itc_info_title, ad, NULL,
-								   ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+	item = elm_genlist_item_append(ad->gl_run, &ad->itc_info_title, ad,
+			NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
+	elm_genlist_item_select_mode_set(item,
+			ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	/*appmgrUg_append_separator(ad->gl_run, ad); */
 
 	/* notice */
-	snprintf(msg, sizeof(msg), _(MGRAPP_STR_APP_STOP_MSG), ad->sel_label, ad->sel_label);
-	setting_create_Gendial_field_titleItem(ad->gl_run, &ad->itc_multiline, msg, NULL);
+	snprintf(msg, sizeof(msg), _(MGRAPP_STR_APP_STOP_MSG), ad->sel_label,
+			ad->sel_label);
+	setting_create_Gendial_field_titleItem(ad->gl_run, &ad->itc_multiline,
+			msg, NULL);
 
 	/* Stop button */
-	elm_genlist_item_append(ad->gl_run, &ad->itc_1ic, ad, NULL, ELM_GENLIST_ITEM_NONE,
-							NULL, NULL);
+	elm_genlist_item_append(ad->gl_run, &ad->itc_1ic, ad, NULL,
+			ELM_GENLIST_ITEM_NONE,
+			NULL, NULL);
 
 	/*appmgrUg_append_separator(ad->gl_run, ad); */
 
 	/* group title(applications) */
 	setting_create_Gendial_field_titleItem(ad->gl_run, &ad->itc_grp_title,
-										   MGRAPP_STR_APPS, NULL);
+	MGRAPP_STR_APPS, NULL);
 
 	appmgrUg_run_append_run_apps(ad);
 
@@ -287,12 +305,12 @@ static int appmgrUg_run_update(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	/*
-	SettingAppMgrUG *ad = data;
+	 SettingAppMgrUG *ad = data;
 
-	retv_if(NULL == data, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+	 retv_if(NULL == data, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	elm_naviframe_item_pop(ad->navi);
-	*/
+	 elm_naviframe_item_pop(ad->navi);
+	 */
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -316,7 +334,7 @@ void appmgrUg_appinfo_init(SettingAppMgrUG *ad)
 }
 
 Evas_Object *appmgrUg_run_gl_stop_btn(void *data, Evas_Object *obj,
-									  const char *part)
+		const char *part)
 {
 	GList *cur;
 	Evas_Object *btn;
@@ -326,9 +344,10 @@ Evas_Object *appmgrUg_run_gl_stop_btn(void *data, Evas_Object *obj,
 
 	if (0 != safeStrCmp(part, "elm.swallow.content"))
 		return NULL;
-	btn = setting_create_button(obj, MGRAPP_STR_STOP, NULL, appmgrUg_run_stop_click, ad);
-	evas_object_size_hint_expand_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-
+	btn = setting_create_button(obj, MGRAPP_STR_STOP, NULL,
+			appmgrUg_run_stop_click, ad);
+	evas_object_size_hint_expand_set(btn, EVAS_HINT_EXPAND,
+			EVAS_HINT_EXPAND);
 
 	cur = ad->runinfos;
 	while (cur) {

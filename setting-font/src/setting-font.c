@@ -133,11 +133,13 @@ setting_view *__get_font_view_to_load(void *data, app_control_h service)
 	setting_retvm_if((!data), NULL, "data is NULL");
 	SettingFontUG *fontUG = (SettingFontUG *) data;
 
-	/*if ug is called by accessibility, view node table should not be initialized */
+	/*if ug is called by accessibility, view node table should not be
+	 * initialized */
 	char *caller = NULL;
 	app_control_get_extra_data(service, "caller", &caller);
 	if (0 != safeStrCmp(caller, "accessibility")) {
-		/*need to initialize the node table when UG is re-created and it is NOT loaded by another UG*/
+		/*need to initialize the node table when UG is re-created and
+		 * it is NOT loaded by another UG*/
 		setting_view_node_table_intialize();
 	}
 	FREE(caller);
@@ -147,10 +149,8 @@ setting_view *__get_font_view_to_load(void *data, app_control_h service)
 	int ret = app_control_get_operation(service, &output_url);
 
 	/* service OK, but there's no argument */
-	if ((ret == APP_CONTROL_ERROR_NONE)
-			&& (0
-					== safeStrCmp(output_url,
-							"http://tizen.org/appcontrol/operation/default"))) {
+	if ((ret == APP_CONTROL_ERROR_NONE) && (0 == safeStrCmp(output_url,
+			"http://tizen.org/appcontrol/operation/default"))) {
 		FREE(output_url);
 		return __default_view_state(fontUG, service);
 
@@ -380,30 +380,33 @@ UG_MODULE_API int setting_plugin_reset(app_control_h service, void *priv)
 	return ret;
 }
 static Setting_Cfg_Node_T s_cfg_node_array[] = {
-		{
-				"IDS_ST_BODY_FONT_TYPE",
-				NULL,
-				"viewtype:FontType_expand;tab:first;keyword:IDS_ST_BODY_FONT_TYPE",
-				0,
-				0,
-				0,
-				Cfg_Item_View_Node,
-				NULL,
-				NULL,
-				NULL,
-				NULL },
-		{
-				"IDS_ST_MBODY_FONT_SIZE",
-				NULL,
-				"viewtype:FontSize_expand;tab:first;keyword:IDS_ST_MBODY_FONT_SIZE",
-				0,
-				0,
-				0,
-				Cfg_Item_View_Node,
-				NULL,
-				NULL,
-				NULL,
-				NULL }, };
+	{
+		"IDS_ST_BODY_FONT_TYPE",
+		NULL,
+		"viewtype:FontType_expand;tab:first;keyword:IDS_ST_BODY_FONT_TYPE",
+		0,
+		0,
+		0,
+		Cfg_Item_View_Node,
+		NULL,
+		NULL,
+		NULL,
+		NULL
+	},
+	{
+		"IDS_ST_MBODY_FONT_SIZE",
+		NULL,
+		"viewtype:FontSize_expand;tab:first;keyword:IDS_ST_MBODY_FONT_SIZE",
+		0,
+		0,
+		0,
+		Cfg_Item_View_Node,
+		NULL,
+		NULL,
+		NULL,
+		NULL
+	},
+};
 
 UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
 		char **applocale)

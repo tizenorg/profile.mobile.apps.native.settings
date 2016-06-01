@@ -25,13 +25,12 @@
 #include <setting-common-data-error.h>
 #include <setting-debug.h>
 
-
 #define MAX_VIEWNODE_NUM	15
 typedef struct _SettingViewNode {
 	setting_view *view;
 	setting_view *topview;
 } SettingViewNode;
-static setting_view *g_cur_view;	/* use by 'End Key' process */
+static setting_view *g_cur_view; /* use by 'End Key' process */
 static SettingViewNode g_view_node_table[MAX_VIEWNODE_NUM];
 static int g_view_node_table_cur_size = 0;
 
@@ -76,7 +75,8 @@ EXPORT_PUBLIC int setting_view_node_table_intialize()
  * @param view The top view of current view
  * @return #0 on success, else on failed
  */
-EXPORT_PUBLIC int setting_view_node_table_register(setting_view *view, setting_view *topview)
+EXPORT_PUBLIC int setting_view_node_table_register(setting_view *view,
+		setting_view *topview)
 {
 	/*SETTING_TRACE_BEGIN; */
 	if (g_view_node_table_cur_size >= MAX_VIEWNODE_NUM) {
@@ -85,7 +85,7 @@ EXPORT_PUBLIC int setting_view_node_table_register(setting_view *view, setting_v
 	int idx = 0;
 	for (; idx < g_view_node_table_cur_size; idx++) {
 		if (view == g_view_node_table[idx].view
-			&& topview == g_view_node_table[idx].topview) {
+				&& topview == g_view_node_table[idx].topview) {
 			SETTING_TRACE("view node has been registered, ignore");
 			return SETTING_RETURN_FAIL;
 		}
@@ -172,7 +172,6 @@ void setting_view_update_topview(setting_view *view, setting_view *topview)
 	}
 }
 
-
 /**
  * @brief Callback of view creating
  *
@@ -185,14 +184,15 @@ int setting_view_create(setting_view *view, void *cb)
 {
 	LAUNCH_SETTING_IN();
 	/* error check */
-	setting_retvm_if(!view || !cb , SETTING_GENERAL_ERR_NULL_DATA_PARAMETER, "Invalid arguement");
+	setting_retvm_if(!view || !cb, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
+			"Invalid arguement");
 
 	int ret = SETTING_RETURN_FAIL;
 
-	if (!view->is_create && view->create) {/*error handle:create only when the view doesn't exit */
+	/*error handle:create only when the view doesn't exit */
+	if (!view->is_create && view->create) {
 		ret = view->create(cb);
-	}
-	LAUNCH_SETTING_OUT();
+	} LAUNCH_SETTING_OUT();
 	return ret;
 }
 
@@ -206,11 +206,13 @@ int setting_view_create(setting_view *view, void *cb)
 EXPORT_PUBLIC int setting_view_destroy(setting_view *view, void *cb)
 {
 	/* error check */
-	setting_retvm_if(!view || !cb , SETTING_GENERAL_ERR_NULL_DATA_PARAMETER, "Invalid arguement");
+	setting_retvm_if(!view || !cb, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
+			"Invalid arguement");
 
 	int ret = SETTING_RETURN_FAIL;
 
-	if (view->is_create && view->destroy) {/*error handle:destroy only when the view exits */
+	/*error handle:destroy only when the view exits */
+	if (view->is_create && view->destroy) {
 		ret = view->destroy(cb);
 	}
 
@@ -222,16 +224,19 @@ EXPORT_PUBLIC int setting_view_destroy(setting_view *view, void *cb)
  * @param view The view being updated
  * @param cb The view data passed between all callbacks
  * @return #0 on success, else on failed
- * @warning the function should be invoked on the view which will be toppest view
+ * @warning the function should be invoked on the view which will be toppest
+ * 	view
  */
 EXPORT_PUBLIC int setting_view_update(setting_view *view, void *cb)
 {
 	/* error check */
-	setting_retvm_if(!view || !cb , SETTING_GENERAL_ERR_NULL_DATA_PARAMETER, "Invalid arguement");
+	setting_retvm_if(!view || !cb, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
+			"Invalid arguement");
 
 	int ret = SETTING_RETURN_FAIL;
 
-	if ((view->is_create == TRUE) && view->update) {/*error handle:update only when the view exits */
+	/*error handle:update only when the view exits */
+	if ((view->is_create == TRUE) && view->update) {
 		ret = view->update(cb);
 	}
 
@@ -250,11 +255,13 @@ EXPORT_PUBLIC
 int setting_view_cleanup(setting_view *view, void *cb)
 {
 	/* error check */
-	setting_retvm_if(!view || !cb , SETTING_GENERAL_ERR_NULL_DATA_PARAMETER, "Invalid arguement");
+	setting_retvm_if(!view || !cb, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
+			"Invalid arguement");
 
 	int ret = SETTING_RETURN_FAIL;
 
-	if (view->is_create && view->cleanup) {/*error handle:cleanup only when the view exits */
+	/*error handle:cleanup only when the view exits */
+	if (view->is_create && view->cleanup) {
 		ret = view->cleanup(cb);
 	}
 
@@ -271,19 +278,22 @@ int setting_view_cleanup(setting_view *view, void *cb)
  * @warning the function should be invoked to change views
  */
 EXPORT_PUBLIC
-int setting_view_change(setting_view *from_view, setting_view *to_view, void *cb)
+int setting_view_change(setting_view *from_view, setting_view *to_view,
+		void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
-	setting_retvm_if(!from_view || !to_view || !cb ,
-					 SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
-					 "Invalid arguement");
+	setting_retvm_if(!from_view || !to_view || !cb,
+			SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
+			"Invalid arguement");
 
 	int ret = SETTING_RETURN_SUCCESS;
 	if (from_view == setting_view_get_topview(to_view)) {
-		/*from a parent view to his child view, don't need cleanup parent view */
+		/*from a parent view to his child view, don't need cleanup
+		 * parent view */
 	} else {
-		/*from a child view to his parent view, need cleanup child view */
+		/*from a child view to his parent view, need cleanup child
+		 * view */
 		ret = setting_view_cleanup(from_view, cb);
 	}
 
@@ -296,7 +306,7 @@ int setting_view_change(setting_view *from_view, setting_view *to_view, void *cb
 	} else {
 		ret = setting_view_create(to_view, cb);
 	}
-	g_cur_view = to_view;	/* compute new value of g_cur_view. */
+	g_cur_view = to_view; /* compute new value of g_cur_view. */
 	SETTING_TRACE_END;
 	return ret;
 }

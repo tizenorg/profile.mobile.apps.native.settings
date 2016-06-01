@@ -34,11 +34,12 @@
 #include <runtime_info.h>
 
 
-#define DEVOPTION_STR_USB_DEBUGGING				"IDS_ST_BODY_USB_DEBUGGING"
-#define DEVOPTION_STR_SHOW_CPU_USAGE			"IDS_ST_MBODY_SHOW_CPU_USAGE"
-#define DEVOPTION_STR_RENDERTING_ENGINE			"IDS_ST_BODY_DEFAULT_RENDERING_ENGINE"
-#define DEVOPTION_STR_LIMIT_BACKGROUND_PRECESS	"IDS_ST_BODY_LIMIT_BACKGROUND_PROCESSES"
-#define DEVOPTION_STR_CRASH_VIEWER				"IDS_ST_BODY_CRASH_VIEWER"
+#define DEVOPTION_STR_USB_DEBUGGING	"IDS_ST_BODY_USB_DEBUGGING"
+#define DEVOPTION_STR_SHOW_CPU_USAGE	"IDS_ST_MBODY_SHOW_CPU_USAGE"
+#define DEVOPTION_STR_RENDERTING_ENGINE	"IDS_ST_BODY_DEFAULT_RENDERING_ENGINE"
+#define DEVOPTION_STR_LIMIT_BACKGROUND_PRECESS \
+	"IDS_ST_BODY_LIMIT_BACKGROUND_PROCESSES"
+#define DEVOPTION_STR_CRASH_VIEWER	"IDS_ST_BODY_CRASH_VIEWER"
 
 enum mode_change {
 	CHANGE_COMPLETE = 0,
@@ -56,8 +57,8 @@ typedef struct _SettingConnectivityUG SettingConnectivityUG;
 
 /**
  * Setting Connectivity UG context
- * all UG function has void* as an agument. this is casted back to SettingConnectivityUG
- * and the functions access app context.
+ * all UG function has void* as an agument. this is casted back to
+ * SettingConnectivityUG and the functions access app context.
  */
 struct _SettingConnectivityUG {
 	ui_gadget_h ug;
@@ -76,10 +77,10 @@ struct _SettingConnectivityUG {
 	Evas_Object *view_layout;
 	Evas_Object *selectioninfo_popup;
 
-	Setting_GenGroupItem_Data *debug_mode;		/* debug mode */
-	Setting_GenGroupItem_Data *cpu_usage;		/* Show CPU Usage */
-	Setting_GenGroupItem_Data *gpu_render;		/* Force GPU Rendering */
-	Setting_GenGroupItem_Data *bg_processes;	/* Limit background processes */
+	Setting_GenGroupItem_Data *debug_mode;	/* debug mode */
+	Setting_GenGroupItem_Data *cpu_usage;	/* Show CPU Usage */
+	Setting_GenGroupItem_Data *gpu_render;	/* Force GPU Rendering */
+	Setting_GenGroupItem_Data *bg_processes;/* Limit background processes */
 
 	/*****/
 	setting_view *view_to_load;

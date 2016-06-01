@@ -23,7 +23,7 @@
 
 void appmgrUg_appinfo_init(SettingAppMgrUG *ad);
 Evas_Object *appmgrUg_run_gl_stop_btn(void *data, Evas_Object *obj,
-									  const char *part);
+		const char *part);
 int appmgrUg_get_running_list(SettingAppMgrUG *ad);
 void appmgrUg_free_runinfo(gpointer data);
 

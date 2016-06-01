@@ -37,8 +37,7 @@ setting_view setting_view_security_enc_processing = {
 	.create = setting_security_enc_processing_create,
 	.destroy = setting_security_enc_processing_destroy,
 	.update = setting_security_enc_processing_update,
-	.cleanup = setting_security_enc_processing_cleanup,
-};
+	.cleanup = setting_security_enc_processing_cleanup, };
 
 /* ***************************************************
  **
@@ -63,23 +62,23 @@ static void __encrypting_key_grab(SettingSecurityUG *ad)
 	disp = ecore_x_display_get();
 	xwin = elm_win_xwindow_get((Evas_Object *)ug_get_window());
 
-
 	ret = eext_win_keygrab_set(xwin, "XF86PowerOff");
 	if (ret)
-		return;
+	return;
 	ret = eext_win_keygrab_set(xwin, "XF86Home");
 	if (ret)
-		return;
+	return;
 	ret = eext_win_keygrab_set(xwin, "XF86AudioRaiseVolume");
 	if (ret)
-		return;
+	return;
 	ret = eext_win_keygrab_set(xwin, "XF86AudioLowerVolume");
 	if (ret)
-		return;
+	return;
 #else
 	/* @todo : repace codes using X with codes tizen 3.0 API */
 #endif
-	ad->event_handler = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, NULL, NULL);
+	ad->event_handler = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, NULL,
+			NULL);
 	SETTING_TRACE_END;
 }
 static void __encrypting_key_ungrab(SettingSecurityUG *ad)
@@ -99,19 +98,18 @@ static void __encrypting_key_ungrab(SettingSecurityUG *ad)
 	disp = ecore_x_display_get();
 	xwin = elm_win_xwindow_get((Evas_Object *)ug_get_window());
 
-
 	ret = eext_win_keygrab_unset(xwin, "XF86PowerOff");
 	if (ret)
-		return;
+	return;
 	ret = eext_win_keygrab_unset(xwin, "XF86Home");
 	if (ret)
-		return;
+	return;
 	ret = eext_win_keygrab_unset(xwin, "XF86AudioRaiseVolume");
 	if (ret)
-		return;
+	return;
 	ret = eext_win_keygrab_unset(xwin, "XF86AudioLowerVolume");
 	if (ret)
-		return;
+	return;
 #else
 	/* @todo : repace codes using X with codes tizen 3.0 API */
 #endif
@@ -122,12 +120,12 @@ static void __vconf_change_cb(keynode_t *key, void *data)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(data == NULL);
-	SettingSecurityUG *ad = (SettingSecurityUG *) data;
+	SettingSecurityUG *ad = (SettingSecurityUG *)data;
 
 	/* To do : update progressbar */
 	char *vconf_name = vconf_keynode_get_name(key);
 	char *vconf_value = NULL;
-	char temp[MAX_COMMON_BUFFER_LEN] = {0,};
+	char temp[MAX_COMMON_BUFFER_LEN] = { 0, };
 
 	/*if (!safeStrCmp(vconf_name, VCONFKEY_ODE_ENCRYPT_PROGRESS)) {*/
 	if (!safeStrCmp(vconf_name, "db/ode/encrypt_progress")) {
@@ -141,22 +139,26 @@ static void __vconf_change_cb(keynode_t *key, void *data)
 			return;
 
 		if (ad->cur_enc_mode == 0) {
-			snprintf(temp, MAX_COMMON_BUFFER_LEN, _(ENCRYPTING_GUIDE_02), (int)i_value);
+			snprintf(temp, MAX_COMMON_BUFFER_LEN,
+					_(ENCRYPTING_GUIDE_02), (int)i_value);
 		} else if (ad->cur_enc_mode == 1) {
-			snprintf(temp, MAX_COMMON_BUFFER_LEN, _(DECRYPTING_GUIDE_02), (int)i_value);
+			snprintf(temp, MAX_COMMON_BUFFER_LEN,
+					_(DECRYPTING_GUIDE_02), (int)i_value);
 		}
 		elm_object_part_text_set(ad->enc_layout, "description", temp);
 		SETTING_TRACE_DEBUG("current status : %s", temp);
 
 		elm_progressbar_value_set(ad->enc_progressbar, i_value / 100.0);
-		SETTING_TRACE_DEBUG("progressbar is updated. %f", i_value / 100.0);
+		SETTING_TRACE_DEBUG("progressbar is updated. %f",
+				i_value / 100.0);
 		G_FREE(vconf_value);
 
 		if (i_value == 100) {
 			SETTING_TRACE_DEBUG("100%");
 			/* To do : Encryption completed. Restart target. */
 			if (ode_crypto_complete() == 0) {
-				SETTING_TRACE_DEBUG("ode_crypto_complete() success.");
+				SETTING_TRACE_DEBUG(
+						"ode_crypto_complete() success.");
 				ode_deinit();
 				/*system("reboot"); */
 			}
@@ -172,9 +174,9 @@ int __listen_vconf_change(void *data)
 	int ret = 0;
 
 	ret = vconf_notify_key_changed(VCONFKEY_ODE_ENCRYPT_PROGRESS,
-								   __vconf_change_cb, data);
+			__vconf_change_cb, data);
 	setting_retvm_if(ret < 0, ret, "%s notifications Failed(%d)",
-					 (char *)VCONFKEY_ODE_ENCRYPT_PROGRESS, ret);
+			(char * )VCONFKEY_ODE_ENCRYPT_PROGRESS, ret);
 
 	return ret;
 }
@@ -184,7 +186,7 @@ static int setting_security_enc_processing_create(void *cb)
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingSecurityUG *ad = (SettingSecurityUG *) cb;
+	SettingSecurityUG *ad = (SettingSecurityUG *)cb;
 
 	if (ad->input_pwd == NULL)
 		return SETTING_RETURN_FAIL;
@@ -192,12 +194,14 @@ static int setting_security_enc_processing_create(void *cb)
 	Evas_Object *window = NULL;
 	Evas_Object *layout = NULL;
 	Evas_Object *progressbar = NULL;
-	char enc_type[16] = {0,};
+	char enc_type[16] = { 0, };
 
 	layout = elm_layout_add(ad->win_main_layout);
-	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND,
+			EVAS_HINT_EXPAND);
 
-	elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME, "encryption_layout");
+	elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME,
+			"encryption_layout");
 	/*elm_win_center(layout, EINA_TRUE, EINA_TRUE); */
 	/*elm_win_fullscreen_set(layout, EINA_TRUE); */
 	/*setting_resize_object(layout, 720, 1280); */
@@ -225,24 +229,30 @@ static int setting_security_enc_processing_create(void *cb)
 
 	if (ad->cur_enc_mode == 0) {
 		elm_object_part_text_set(layout, "title", _(Keystr_Encrypting));
-		elm_object_part_text_set(layout, "description", _(ENCRYPTING_GUIDE_01));
+		elm_object_part_text_set(layout, "description",
+				_(ENCRYPTING_GUIDE_01));
 		safeCopyStr(enc_type, "inplace", 16);
 #if TEMP
 		if (ode_enable(enc_type, ad->input_pwd) == 0) {
-			SETTING_TRACE_DEBUG("ode_enable(%s, %s) success", ad->input_pwd, enc_type);
+			SETTING_TRACE_DEBUG("ode_enable(%s, %s) success",
+					ad->input_pwd, enc_type);
 		} else {
-			SETTING_TRACE_DEBUG("ode_enable(%s, %s) failed", ad->input_pwd, enc_type);
+			SETTING_TRACE_DEBUG("ode_enable(%s, %s) failed",
+					ad->input_pwd, enc_type);
 		}
 #endif
 	} else if (ad->cur_enc_mode == 1) {
 		elm_object_part_text_set(layout, "title", _(Keystr_Decrypting));
-		elm_object_part_text_set(layout, "description", _(DECRYPTING_GUIDE_02));
+		elm_object_part_text_set(layout, "description",
+				_(DECRYPTING_GUIDE_02));
 		safeCopyStr(enc_type, "disable", 16);
 #if TEMP
 		if (ode_disable(ad->input_pwd) == 0) {
-			SETTING_TRACE_DEBUG("ode_disable(%s, %s) success", ad->input_pwd, enc_type);
+			SETTING_TRACE_DEBUG("ode_disable(%s, %s) success",
+					ad->input_pwd, enc_type);
 		} else {
-			SETTING_TRACE_DEBUG("ode_disable(%s, %s) failed", ad->input_pwd, enc_type);
+			SETTING_TRACE_DEBUG("ode_disable(%s, %s) failed",
+					ad->input_pwd, enc_type);
 		}
 #endif
 	}
@@ -258,9 +268,10 @@ static int setting_security_enc_processing_destroy(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingSecurityUG *ad = (SettingSecurityUG *) cb;
+	SettingSecurityUG *ad = (SettingSecurityUG *)cb;
 
-	vconf_ignore_key_changed(VCONFKEY_ODE_ENCRYPT_PROGRESS, __vconf_change_cb);
+	vconf_ignore_key_changed(VCONFKEY_ODE_ENCRYPT_PROGRESS,
+			__vconf_change_cb);
 
 	if (ad->enc_layout) {
 		evas_object_del(ad->enc_layout);

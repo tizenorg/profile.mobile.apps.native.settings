@@ -23,10 +23,13 @@
 
 #include <setting-applications.h>
 
-static void setting_applications_main_mouse_up_Gendial_list_cb(void *data, Evas_Object *obj, void *event_info);
-static Eina_Bool setting_applications_main_click_softkey_back_cb(void *data, Elm_Object_Item *it);
+static void setting_applications_main_mouse_up_Gendial_list_cb(
+		void *data, Evas_Object *obj, void *event_info);
+static Eina_Bool setting_applications_main_click_softkey_back_cb(
+		void *data, Elm_Object_Item *it);
 #ifdef UNUSED_VCONFKEY
-static void setting_applications_main_launch_image_chk_btn_cb(void *data, Evas_Object *obj, void *event_info);
+static void setting_applications_main_launch_image_chk_btn_cb(
+		void *data, Evas_Object *obj, void *event_info);
 #endif
 
 #endif				/* __SETTING_APPLICATIONS_MAIN_H__ */

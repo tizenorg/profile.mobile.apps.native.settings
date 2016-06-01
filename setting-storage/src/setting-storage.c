@@ -73,11 +73,15 @@ static inline void _storageUg_listen_vconf(SettingStorageUG *storageUG)
 	const char *FONT_SIZE = VCONFKEY_SETAPPL_ACCESSIBILITY_FONT_SIZE;
 	const char *FONT_NAME = VCONFKEY_SETAPPL_ACCESSIBILITY_FONT_NAME;
 
-	ret = vconf_notify_key_changed(FONT_SIZE, _storageUg_vconf_change_cb, storageUG);
-	warn_if(ret < 0, "vconf_notify_key_changed(%s) Fail(%d)", FONT_SIZE, ret);
+	ret = vconf_notify_key_changed(FONT_SIZE, _storageUg_vconf_change_cb,
+			storageUG);
+	warn_if(ret < 0, "vconf_notify_key_changed(%s) Fail(%d)", FONT_SIZE,
+			ret);
 
-	ret = vconf_notify_key_changed(FONT_NAME, _storageUg_vconf_change_cb, storageUG);
-	warn_if(ret < 0, "vconf_notify_key_changed(%s) Fail(%d)", FONT_NAME, ret);
+	ret = vconf_notify_key_changed(FONT_NAME, _storageUg_vconf_change_cb,
+			storageUG);
+	warn_if(ret < 0, "vconf_notify_key_changed(%s) Fail(%d)", FONT_NAME,
+			ret);
 }
 
 static inline void _storageUg_ignore_vconf()
@@ -87,23 +91,31 @@ static inline void _storageUg_ignore_vconf()
 	const char *FONT_NAME = VCONFKEY_SETAPPL_ACCESSIBILITY_FONT_NAME;
 
 	ret = vconf_ignore_key_changed(FONT_SIZE, _storageUg_vconf_change_cb);
-	warn_if(ret < 0, "vconf_ignore_key_changed(%s) Fail(%d)", FONT_SIZE, ret);
+	warn_if(ret < 0, "vconf_ignore_key_changed(%s) Fail(%d)", FONT_SIZE,
+			ret);
 
 	ret = vconf_ignore_key_changed(FONT_NAME, _storageUg_vconf_change_cb);
-	warn_if(ret < 0, "vconf_ignore_key_changed(%s) Fail(%d)", FONT_NAME, ret);
+	warn_if(ret < 0, "vconf_ignore_key_changed(%s) Fail(%d)", FONT_NAME,
+			ret);
 }
 
 static inline void storageUg_init_itcs(SettingStorageUG *ad)
 {
-	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(ad->itc_2text_2));
-	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE, &(ad->itc_group_item));
-	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(ad->itc_1text));
-	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(ad->itc_1text_1icon));
-	setting_create_Gendial_itc(SETTING_GENLIST_LEFT_ICON_CONTENT_ICON_STYLE, &(ad->itc_pie));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
+			&(ad->itc_2text_2));
+	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE,
+			&(ad->itc_group_item));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
+			&(ad->itc_1text));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
+			&(ad->itc_1text_1icon));
+	setting_create_Gendial_itc(SETTING_GENLIST_LEFT_ICON_CONTENT_ICON_STYLE,
+			&(ad->itc_pie));
 	ad->itc_pie.func.content_get = storageUg_main_pie_item_get_icon;
 	ad->itc_pie.func.del = NULL;
 
-	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE, &(ad->itc_color_item));
+	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
+			&(ad->itc_color_item));
 	ad->itc_color_item.func.content_get = storageUg_color_item_content_get;
 	ad->itc_color_item.func.del = NULL;
 }
@@ -114,14 +126,15 @@ static void storageUg_navi_back(void *data, Evas_Object *obj, void *event_info)
 
 	ret_if(NULL == data);
 	ret_if(NULL != ad->del_worker);
-	retm_if(ad->sd_request || ad->usb_request, "sd_request(%d), usb_request(%d)",
+	retm_if(ad->sd_request || ad->usb_request,
+			"sd_request(%d), usb_request(%d)",
 			ad->sd_request, ad->usb_request);
 
 	elm_naviframe_item_pop(obj);
 }
 
 static inline Evas_Object *storageUg_create_navi(Evas_Object *parent,
-												 SettingStorageUG *ad)
+		SettingStorageUG *ad)
 {
 	Evas_Object *navi;
 
@@ -130,19 +143,22 @@ static inline Evas_Object *storageUg_create_navi(Evas_Object *parent,
 	navi = elm_naviframe_add(parent);
 	elm_naviframe_prev_btn_auto_pushed_set(navi, EINA_FALSE);
 
-	eext_object_event_callback_add(navi, EEXT_CALLBACK_BACK, storageUg_navi_back, ad);
-	eext_object_event_callback_add(navi, EEXT_CALLBACK_MORE, eext_naviframe_more_cb, ad);
+	eext_object_event_callback_add(navi, EEXT_CALLBACK_BACK,
+			storageUg_navi_back, ad);
+	eext_object_event_callback_add(navi, EEXT_CALLBACK_MORE,
+			eext_naviframe_more_cb, ad);
 
 	evas_object_show(navi);
 	return navi;
 }
 
 static inline void storageUg_move_view(STORAGEUG_KEYWORD keynum,
-									   SettingStorageUG *ad)
+		SettingStorageUG *ad)
 {
 	Setting_GenGroupItem_Data *item_data;
 
-	retm_if(keynum <= STORAGEUG_KEYWORD_NONE || STORAGEUG_KEYWORD_MAX <= keynum,
+	retm_if(keynum <= STORAGEUG_KEYWORD_NONE
+			|| STORAGEUG_KEYWORD_MAX <= keynum,
 			"keynum(%d) is Invalid", keynum);
 
 	switch (keynum) {
@@ -188,12 +204,10 @@ static inline void storageUg_move_view(STORAGEUG_KEYWORD keynum,
 		if (STORAGEUG_KEYWORD_DEFAULT < keynum)
 			elm_genlist_item_expanded_set(item_data->item, TRUE);
 		else
-			elm_genlist_item_bring_in(item_data->item, ELM_GENLIST_ITEM_SCROLLTO_MIDDLE);
+			elm_genlist_item_bring_in(item_data->item,
+					ELM_GENLIST_ITEM_SCROLLTO_MIDDLE);
 	}
 }
-
-
-
 
 #if SUPPORT_APP_ROATION
 static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
@@ -224,7 +238,8 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 	default:
 		return;
 	}
-	SETTING_TRACE_DEBUG("diff:%d", elm_win_rotation_get(ad->win) - ad->current_rotation);
+	SETTING_TRACE_DEBUG("diff:%d",
+			elm_win_rotation_get(ad->win) - ad->current_rotation);
 
 	if (change_ang != ad->current_rotation) {
 		int diff = change_ang - ad->current_rotation;
@@ -232,8 +247,9 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 			diff = -diff;
 		}
 		/**
-		* @todo if app didn't launch UG, is the call required to invoke?
-		*/
+		 * @todo if app didn't launch UG, is the call required to
+		 * invoke?
+		 */
 		ug_send_event(event);
 		if (diff == 180) {
 			/* do nothing */
@@ -243,9 +259,8 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 }
 #endif
 
-
 static void *setting_storageUg_on_create(ui_gadget_h ug, enum ug_mode mode,
-										 app_control_h service, void *priv)
+		app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	int ret;
@@ -257,7 +272,8 @@ static void *setting_storageUg_on_create(ui_gadget_h ug, enum ug_mode mode,
 	SETTING_TRACE(" -----> [TIME-1] before ");
 	appcore_measure_start();
 
-	retvm_if(NULL == ug || NULL == priv, NULL, "ug=%p, priv=%p is Invalid", ug, priv);
+	retvm_if(NULL == ug || NULL == priv, NULL, "ug=%p, priv=%p is Invalid",
+			ug, priv);
 
 	ad->ug = ug;
 	ad->win = ug_get_window();
@@ -267,19 +283,15 @@ static void *setting_storageUg_on_create(ui_gadget_h ug, enum ug_mode mode,
 		return NULL;
 	}
 
-
-
 	ad->current_rotation = elm_win_rotation_get(ad->win);
 	SETTING_TRACE_DEBUG("ad->current_rotation:%d", ad->current_rotation);
 	if (elm_win_wm_rotation_supported_get(ad->win)) {
-		int rots[4] = { 0, 90, 180, 270 };	/* rotation value that app may want */
+		int rots[4] = { 0, 90, 180, 270 }; /* rotation value that app
+		may want */
 		elm_win_wm_rotation_available_rotations_set(ad->win, rots, 4);
 	}
-	evas_object_smart_callback_add(ad->win, "wm,rotation,changed", _rot_changed_cb, ad);
-
-
-
-
+	evas_object_smart_callback_add(ad->win, "wm,rotation,changed",
+			_rot_changed_cb, ad);
 
 	ret = media_content_connect();
 	if (MEDIA_CONTENT_ERROR_NONE != ret) {
@@ -290,7 +302,7 @@ static void *setting_storageUg_on_create(ui_gadget_h ug, enum ug_mode mode,
 	app_control_get_extra_data(service, "caller", &caller);
 	app_control_get_extra_data(service, "keyword", &search_keyword);
 	if (NULL == caller)
-		elm_theme_extension_add(NULL, SETTING_GENLIST_EDJ_NAME);
+	elm_theme_extension_add(NULL, SETTING_GENLIST_EDJ_NAME);
 
 	/* add listening */
 	_storageUg_listen_vconf(ad);
@@ -312,12 +324,14 @@ static void *setting_storageUg_on_create(ui_gadget_h ug, enum ug_mode mode,
 		SETTING_TRACE_ERROR("calloc() Fail");
 		return NULL;
 	}
-	elm_object_part_content_set(ad->lo_main, "elm.swallow.content", ad->navi);
+	elm_object_part_content_set(ad->lo_main, "elm.swallow.content",
+			ad->navi);
 
 	if (search_keyword)
 		keyword_val = atoi(search_keyword);
 
-	if (STORAGEUG_KEYWORD_DEFAULT <= keyword_val && keyword_val < STORAGEUG_KEYWORD_MAX)
+	if (STORAGEUG_KEYWORD_DEFAULT <= keyword_val
+			&& keyword_val < STORAGEUG_KEYWORD_MAX)
 		setting_view_create(ad->default_view, ad);
 	else
 		setting_view_create(ad->main_view, ad);
@@ -328,27 +342,30 @@ static void *setting_storageUg_on_create(ui_gadget_h ug, enum ug_mode mode,
 	free(caller);
 	free(search_keyword);
 
-	SETTING_TRACE(" -----> [TIME-2] it took %d msec ", appcore_measure_time());
+	SETTING_TRACE(" -----> [TIME-2] it took %d msec ",
+			appcore_measure_time());
 	appcore_measure_start();
 
 	return ad->lo_main;
 }
 
 static void setting_storageUg_on_destroy(ui_gadget_h ug, app_control_h service,
-										 void *priv)
+		void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	int ret;
 	SettingStorageUG *storageUG = priv;
 
-	retm_if(NULL == ug || NULL == priv, "ug=%p, priv=%p is Invalid", ug, priv);
+	retm_if(NULL == ug || NULL == priv, "ug=%p, priv=%p is Invalid", ug,
+			priv);
 
 	FREE(storageUG->usb_otg_path);
 
 	_storageUg_ignore_vconf();
 
 	ret = media_content_disconnect();
-	warn_if(ret != MEDIA_CONTENT_ERROR_NONE, "media_content_disconnect Fail");
+	warn_if(ret != MEDIA_CONTENT_ERROR_NONE,
+			"media_content_disconnect Fail");
 
 	if (storageUG->main_view->is_create)
 		setting_view_destroy(storageUG->main_view, storageUG);
@@ -362,27 +379,27 @@ static void setting_storageUg_on_destroy(ui_gadget_h ug, app_control_h service,
 }
 
 static void setting_storageUg_on_resume(ui_gadget_h ug, app_control_h service,
-										void *priv)
+		void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SettingStorageUG *storageUG = priv;
 
-	retm_if(NULL == ug || NULL == priv, "ug=%p, priv=%p is Invalid", ug, priv);
+	retm_if(NULL == ug || NULL == priv, "ug=%p, priv=%p is Invalid", ug,
+			priv);
 
 	if (storageUG->main_view->is_create)
 		setting_view_update(storageUG->main_view, storageUG);
 
-
 }
 
-
 static void setting_storageUg_on_event(ui_gadget_h ug, enum ug_event event,
-									   app_control_h service, void *priv)
+		app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SettingStorageUG *storageUG = priv;
 
-	retm_if(NULL == ug || NULL == priv, "ug=%p, priv=%p is Invalid", ug, priv);
+	retm_if(NULL == ug || NULL == priv, "ug=%p, priv=%p is Invalid", ug,
+			priv);
 
 	switch (event) {
 	case UG_EVENT_LOW_MEMORY:
@@ -398,9 +415,9 @@ static void setting_storageUg_on_event(ui_gadget_h ug, enum ug_event event,
 	case UG_EVENT_ROTATE_LANDSCAPE:
 	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
 		/*
-		   if (storageUG->application_desp)
-		   elm_genlist_item_update(storageUG->application_desp->item);
-		   */
+		 if (storageUG->application_desp)
+		 elm_genlist_item_update(storageUG->application_desp->item);
+		 */
 		break;
 	case UG_EVENT_REGION_CHANGE:
 		break;
@@ -410,7 +427,7 @@ static void setting_storageUg_on_event(ui_gadget_h ug, enum ug_event event,
 }
 
 static void setting_storageUg_on_key_event(ui_gadget_h ug,
-										   enum ug_key_event event, app_control_h service, void *priv)
+		enum ug_key_event event, app_control_h service, void *priv)
 {
 	if (!ug)
 		return;
@@ -424,13 +441,16 @@ static void setting_storageUg_on_key_event(ui_gadget_h ug,
 	}
 }
 
-static void setting_storageUg_on_start(ui_gadget_h ug, app_control_h app_control, void *priv)
+static void setting_storageUg_on_start(ui_gadget_h ug,
+		app_control_h app_control, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 
-	retm_if(NULL == ug || NULL == priv, "ug=%p, priv=%p is Invalid", ug, priv);
+	retm_if(NULL == ug || NULL == priv, "ug=%p, priv=%p is Invalid", ug,
+			priv);
 
-	SETTING_TRACE(" -----> [TIME-3] it took %d msec to finish on_Start ", appcore_measure_time());
+	SETTING_TRACE(" -----> [TIME-3] it took %d msec to finish on_Start ",
+			appcore_measure_time());
 }
 
 UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
@@ -459,7 +479,6 @@ UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
 	return 0;
 }
 
-
 UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 {
 	ret_if(NULL == ops);
@@ -468,7 +487,7 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 }
 
 UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
-											 char **applocale)
+		char **applocale)
 {
 	int i;
 	int size;
@@ -476,20 +495,30 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
 	Setting_Cfg_Node_T *node;
 	Eina_List **pplist = (Eina_List **)priv;
 	const storageUg_search_data search_configs[] = {
-		/* key_name, view_type, keyword, action, data */
-		{STORAGEUG_STR_SYS_MEM, STORAGEUG_KEYWORD_MAIN_SYS_MEM},
-		{STORAGEUG_STR_APPS, STORAGEUG_KEYWORD_MAIN_APPS},
-		{STORAGEUG_STR_PICS, STORAGEUG_KEYWORD_MAIN_PICS},
-		{STORAGEUG_STR_AUDIO, STORAGEUG_KEYWORD_MAIN_AUDIO},
-		{STORAGEUG_STR_MISCES, STORAGEUG_KEYWORD_MAIN_MISCES},
-		{STORAGEUG_STR_AVAIL, STORAGEUG_KEYWORD_MAIN_AVAIL},
-		{STORAGEUG_STR_SD_CARD, STORAGEUG_KEYWORD_MAIN_SD_CARD},
-		{STORAGEUG_STR_DEF_STORAGE, STORAGEUG_KEYWORD_DEFAULT},
-		{STORAGEUG_STR_BT, STORAGEUG_KEYWORD_DEFAULT_BT},
-		{STORAGEUG_STR_WIFI, STORAGEUG_KEYWORD_DEFAULT_WIFI},
-		{STORAGEUG_STR_NFC, STORAGEUG_KEYWORD_DEFAULT_NFC},
-		{STORAGEUG_STR_INSTALLED_APP_B, STORAGEUG_KEYWORD_DEFAULT_APP}
-	};
+	/* key_name, view_type, keyword, action, data */
+	{ STORAGEUG_STR_SYS_MEM, STORAGEUG_KEYWORD_MAIN_SYS_MEM }, {
+		STORAGEUG_STR_APPS,
+		STORAGEUG_KEYWORD_MAIN_APPS }, {
+		STORAGEUG_STR_PICS,
+		STORAGEUG_KEYWORD_MAIN_PICS }, {
+		STORAGEUG_STR_AUDIO,
+		STORAGEUG_KEYWORD_MAIN_AUDIO }, {
+		STORAGEUG_STR_MISCES,
+		STORAGEUG_KEYWORD_MAIN_MISCES }, {
+		STORAGEUG_STR_AVAIL,
+		STORAGEUG_KEYWORD_MAIN_AVAIL }, {
+		STORAGEUG_STR_SD_CARD,
+		STORAGEUG_KEYWORD_MAIN_SD_CARD }, {
+		STORAGEUG_STR_DEF_STORAGE,
+		STORAGEUG_KEYWORD_DEFAULT }, {
+		STORAGEUG_STR_BT,
+		STORAGEUG_KEYWORD_DEFAULT_BT }, {
+		STORAGEUG_STR_WIFI,
+		STORAGEUG_KEYWORD_DEFAULT_WIFI }, {
+		STORAGEUG_STR_NFC,
+		STORAGEUG_KEYWORD_DEFAULT_NFC }, {
+		STORAGEUG_STR_INSTALLED_APP_B,
+		STORAGEUG_KEYWORD_DEFAULT_APP } };
 
 	retv_if(NULL == priv, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 	retv_if(NULL == applocale, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
@@ -499,14 +528,15 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
 	size = sizeof(search_configs) / sizeof(storageUg_search_data);
 
 	for (i = 0; i < size; i++) {
-		snprintf(ug_args, STORAGEUG_MAX_STR_LEN, "keyword:%d", search_configs[i].keynum);
+		snprintf(ug_args, STORAGEUG_MAX_STR_LEN, "keyword:%d",
+				search_configs[i].keynum);
 		node = setting_plugin_search_item_subindex_add(
-				   search_configs[i].key_name,
-				   ug_args,
-				   IMG_Storage,
-				   Cfg_Item_View_Node,
-				   NULL,
-				   "Storage");
+				search_configs[i].key_name,
+				ug_args,
+				IMG_Storage,
+				Cfg_Item_View_Node,
+				NULL,
+				"Storage");
 
 		*pplist = eina_list_append(*pplist, node);
 	}

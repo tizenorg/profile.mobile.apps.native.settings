@@ -23,5 +23,6 @@
 
 #include <setting-fileview.h>
 
-static void setting_fileview_click_back_cb(void *data, Evas_Object *obj, void *event_info);
+static void setting_fileview_click_back_cb(void *data, Evas_Object *obj,
+		void *event_info);
 #endif		/* __SETTING_FILEVIEW_LICENCES_H__ */

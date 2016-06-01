@@ -27,5 +27,6 @@
 #define STR_RINGTONE_SELECT	"IDS_ST_OPT_SELECT"
 #define STR_DEFAULT_RINGTONE	"IDS_ST_OPT_DEFAULT_RINGTONE"
 
-static Eina_Bool setting_ringtone_click_back_cb(void *data, Elm_Object_Item *it);
+static Eina_Bool setting_ringtone_click_back_cb(void *data,
+		Elm_Object_Item *it);
 #endif		/* __SETTING_RINGTONE_LICENCES_H__ */

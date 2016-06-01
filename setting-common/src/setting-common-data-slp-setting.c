@@ -39,13 +39,10 @@
 
 #define SETTING_DATA_DIR_PATH _TZ_SYS_RW_APP"/org.tizen.setting/data/"
 #define SETTING_CFG_JSON_FILE_PATH	SETTING_DATA_DIR_PATH"exported.json"
-#define EXPORT_FILE			SETTING_DATA_DIR_PATH"setting_export.xml"
-
+#define EXPORT_FILE		SETTING_DATA_DIR_PATH"setting_export.xml"
 
 typedef enum {
-	eBOOL,
-	eINT,
-	eSTRING,
+	eBOOL, eINT, eSTRING,
 } vconftype;
 
 typedef union {
@@ -54,18 +51,19 @@ typedef union {
 	char *c;
 } vconfval;
 
-
 typedef struct VconfNode VconfNode;
 struct VconfNode {
-	const char *public_key;					/** key for importing & exporting */
-	const char *public_groupkey;			/** category for importing & exporting */
-	/*------------------------------------------------------------------------------------- */
-	int key;								/** vconf id definded in Setting app */
-	const char *vconf_key;					/** vconf string defined in libslp-setting */
-	vconftype type;							/** BOOL, INT, STRING */
-	vconfval value;							/** variable by union */
-	void (*export)(VconfNode *pnode, void *data);		/** method for exporting current state */
-	void (*import)(VconfNode *pnode, void *data);		/** method for importing state from cloud */
+	const char *public_key; /* key for importing & exporting */
+	const char *public_groupkey; /* category for importing & exporting */
+	/*------------------------------------------------------------------- */
+	int key; /* vconf id definded in Setting app */
+	const char *vconf_key; /* vconf string defined in libslp-setting */
+	vconftype type; /** BOOL, INT, STRING */
+	vconfval value; /** variable by union */
+	/** method for exporting current state */
+	void (*export)(VconfNode *pnode, void *data);
+	/** method for importing state from cloud */
+	void (*import)(VconfNode *pnode, void *data);
 };
 
 int get_vconf(VconfNode node, VconfNode *result);
@@ -85,11 +83,14 @@ void export_default(VconfNode *node, void *root)
 		char *type = NULL;
 
 		char arr[1024];
-		if (node->vconf_key == NULL) return; /* NO DOTHING IF null */
+		if (node->vconf_key == NULL)
+			return; /* NO DOTHING IF null */
 		VconfNode result;
 		switch (node->type) {
 		case eBOOL:
-			SETTING_TRACE("EXPORTING key : %s : %d : %d", node->vconf_key, node->type, node->value.b);
+			SETTING_TRACE("EXPORTING key : %s : %d : %d",
+					node->vconf_key, node->type,
+					node->value.b);
 			/* call vconf_get */
 
 			get_vconf(*node, &result);
@@ -103,18 +104,22 @@ void export_default(VconfNode *node, void *root)
 
 			break;
 		case eINT:
-			SETTING_TRACE("EXPORTING key : %s : %d : %d", node->vconf_key, node->type, node->value.i);
+			SETTING_TRACE("EXPORTING key : %s : %d : %d",
+					node->vconf_key, node->type,
+					node->value.i);
 			/* call vconf_get */
 			get_vconf(*node, &result);
 			type = "int";
 
 			SETTING_TRACE(">>(%d)<<", result.value.i);
-			snprintf(arr,1024, "%d", result.value.i);
+			snprintf(arr, 1024, "%d", result.value.i);
 			/*node->value.i */
 			val = arr;
 			break;
 		case eSTRING:
-			SETTING_TRACE("EXPORTING key : %s : %d : %s", node->vconf_key, node->type, node->value.c);
+			SETTING_TRACE("EXPORTING key : %s : %d : %s",
+					node->vconf_key, node->type,
+					node->value.c);
 			/* call vconf_get */
 			get_vconf(*node, &result);
 			val = result.value.c;
@@ -122,14 +127,15 @@ void export_default(VconfNode *node, void *root)
 			break;
 		}
 
-		xmlNodePtr xmlnode = xmlNewChild(*root_node, NULL, BAD_CAST "config", BAD_CAST val);
+		xmlNodePtr xmlnode = xmlNewChild(*root_node, NULL,
+		BAD_CAST "config", BAD_CAST val);
 		xmlNewProp(xmlnode, BAD_CAST "key", BAD_CAST node->vconf_key);
 		xmlNewProp(xmlnode, BAD_CAST "type", BAD_CAST type);
 		xmlAddChild(*root_node, xmlnode);
 	}
 }
 
-/*----------------------------------------------------------------------------------------------- */
+/*-------------------------------------------------------------------------- */
 
 /* export function for each vconf key */
 EXPORT_PUBLIC
@@ -142,11 +148,14 @@ void export_json(VconfNode *node, void *root)
 		/*char *type = NULL; */
 
 		char arr[1024];
-		if (node->vconf_key == NULL) return; /* NO DOTHING IF null */
+		if (node->vconf_key == NULL)
+			return; /* NO DOTHING IF null */
 		VconfNode result;
 		switch (node->type) {
 		case eBOOL:
-			SETTING_TRACE("EXPORTING key : %s : %d : %d", node->vconf_key, node->type, node->value.b);
+			SETTING_TRACE("EXPORTING key : %s : %d : %d",
+					node->vconf_key, node->type,
+					node->value.b);
 			/* call vconf_get */
 
 			get_vconf(*node, &result);
@@ -160,18 +169,22 @@ void export_json(VconfNode *node, void *root)
 
 			break;
 		case eINT:
-			SETTING_TRACE("EXPORTING key : %s : %d : %d", node->vconf_key, node->type, node->value.i);
+			SETTING_TRACE("EXPORTING key : %s : %d : %d",
+					node->vconf_key, node->type,
+					node->value.i);
 			/* call vconf_get */
 			get_vconf(*node, &result);
 			/*type = "int"; */
 
 			SETTING_TRACE(">>(%d)<<", result.value.i);
-			snprintf(arr,1024, "%d", result.value.i);
+			snprintf(arr, 1024, "%d", result.value.i);
 			/*node->value.i */
 			val = arr;
 			break;
 		case eSTRING:
-			SETTING_TRACE("EXPORTING key : %s : %d : %s", node->vconf_key, node->type, node->value.c);
+			SETTING_TRACE("EXPORTING key : %s : %d : %s",
+					node->vconf_key, node->type,
+					node->value.c);
 			/* call vconf_get */
 			get_vconf(*node, &result);
 			val = result.value.c;
@@ -198,136 +211,685 @@ void import_default(VconfNode *node, void *data)
 
 	switch (node->type) {
 	case eBOOL:
-		SETTING_TRACE("IMPORTING key : %s : %d : %d", node->vconf_key, node->type, node->value);
+		SETTING_TRACE("IMPORTING key : %s : %d : %d", node->vconf_key,
+				node->type, node->value);
 		break;
 	case eINT:
-		SETTING_TRACE("IMPORTING key : %s : %d : %d", node->vconf_key, node->type, node->value);
+		SETTING_TRACE("IMPORTING key : %s : %d : %d", node->vconf_key,
+				node->type, node->value);
 		break;
 	case eSTRING:
-		SETTING_TRACE("IMPORTING key : %s : %d : %s", node->vconf_key, node->type, node->value);
+		SETTING_TRACE("IMPORTING key : %s : %d : %s", node->vconf_key,
+				node->type, node->value);
 		break;
 	}
 }
 
 /** bool vconf table */
 static VconfNode g_btable[] = {
-
-	{"power_on_lock", "security", BOOL_SLP_SETTING_POWER_ON_LOCK, VCONFKEY_SETAPPL_STATE_POWER_ON_LOCK_BOOL, eBOOL, {0}, export_json, import_default}, /* node[0] */
-	{"simple_password", "security", BOOL_SLP_SETTING_SIMPLE_PASSWORD, VCONFKEY_SETAPPL_STATE_SIMPLE_PASSWORD_BOOL, eBOOL, {0}, export_json, import_default}, /* node[0] */
-
-	{"automatic_time", "datetime", BOOL_SLP_SETTING_AUTOMATIC_TIME_UPDATE, VCONFKEY_SETAPPL_STATE_AUTOMATIC_TIME_UPDATE_BOOL, eBOOL, {0}, export_json, import_default},
-
-	{"filight_mode", "connectivity", BOOL_SLP_SETTING_FLIGHT_MODE, VCONFKEY_TELEPHONY_FLIGHT_MODE, eBOOL, {0}, export_json, import_default},
-	{"net_restriction_mode", "connectivity", BOOL_SLP_SETTING_NET_RESTRICTION_MODE, VCONFKEY_SETAPPL_NETWORK_RESTRICT_MODE, eBOOL, {0}, export_json, import_default},
-	{"data_roaming", "connectivity", BOOL_SLP_SETTING_DATA_ROAMING, VCONFKEY_SETAPPL_STATE_DATA_ROAMING_BOOL, eBOOL, {0}, export_json, import_default},
-	{"nfc_mode", "connectivity", BOOL_SLP_SETTING_NFC_STATUS, VCONFKEY_NFC_STATE, eBOOL, {0}, export_json, import_default},
-
-	{"use_packetdata", "connectivity", BOOL_SLP_SETTING_USE_PACKET_DATA, VCONFKEY_3G_ENABLE, eBOOL, {0}, export_json, import_default},
-	{"high_contract", "accessibility", BOOL_SLP_SETTING_ACCESSIBILITY_HIGH_CONTRAST, VCONFKEY_SETAPPL_ACCESSIBILITY_HIGH_CONTRAST, eBOOL, {0}, export_json, import_default},
-	{"screen_zoom", "accessibility", BOOL_SLP_SETTING_ACCESSIBILITY_SCREEN_ZOOM, VCONFKEY_SETAPPL_ACCESSIBILITY_SCREEN_ZOOM, eBOOL, {0}, export_json, import_default},
-	{"assistive_light", "accessibility", BOOL_SLP_SETTING_ACCESSIBILITY_ASSISTIVE_LIGHT, VCONFKEY_SETAPPL_ACCESSIBILITY_TORCH_LIGHT, eBOOL, {0}, export_json, import_default},
-	{"mono_audio", "accessibility", BOOL_SLP_SETTING_ACCESSIBILITY_MONO_AUDIO, VCONFKEY_SETAPPL_ACCESSIBILITY_MONO_AUDIO, eBOOL, {0}, export_json, import_default},
-	{"turn_off_all_sounds", "accessibility", BOOL_SLP_SETTING_ACCESSIBILITY_TURN_OFF_ALL_SOUNDS, VCONFKEY_SETAPPL_ACCESSIBILITY_TURN_OFF_ALL_SOUNDS, eBOOL, {0}, export_json, import_default},
-	{"led_notify", "accessibility", BOOL_SLP_SETTING_ACCESSIBILITY_LED_NOTIFY, VCONFKEY_SETAPPL_ACCESSIBILITY_LED_NOTIFY, eBOOL, {0}, export_json, import_default},
-	{"accept_call", "accessibility", BOOL_SLP_SETTING_ACCESSIBILITY_ACCEPT_CALL, VCONFKEY_CISSAPPL_ANSWERING_KEY_BOOL, eBOOL, {0}, export_json, import_default},
-	{"powerkey_end_calls", "accessibility", BOOL_SLP_SETTING_ACCESSIBILITY_POWERKEY_END_CALLS, VCONFKEY_CISSAPPL_POWER_KEY_ENDS_CALL_BOOL, eBOOL, {0}, export_json, import_default},
-	{"easy_touch_mode", "accessibility", BOOL_SLP_SETTING_ACCESSIBILITY_EASY_TOUCH_MODE, VCONFKEY_SETAPPL_EASY_TOUCH_MODE_BOOL, eBOOL, {0}, export_json, import_default},
-	{"rapid_key_input", "accessibility", BOOL_SLP_SETTING_ACCESSIBILITY_RAPID_KEY_INPUT, VCONFKEY_SETAPPL_ACCESSIBILITY_RAPID_KEY_INPUT, eBOOL, {0}, export_json, import_default},
-
+	{
+		"power_on_lock",
+		"security",
+		BOOL_SLP_SETTING_POWER_ON_LOCK,
+		VCONFKEY_SETAPPL_STATE_POWER_ON_LOCK_BOOL,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default }, /* node[0] */
+	{
+		"simple_password",
+		"security",
+		BOOL_SLP_SETTING_SIMPLE_PASSWORD,
+		VCONFKEY_SETAPPL_STATE_SIMPLE_PASSWORD_BOOL,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default }, /* node[0] */
+	{
+		"automatic_time",
+		"datetime",
+		BOOL_SLP_SETTING_AUTOMATIC_TIME_UPDATE,
+		VCONFKEY_SETAPPL_STATE_AUTOMATIC_TIME_UPDATE_BOOL,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"filight_mode",
+		"connectivity",
+		BOOL_SLP_SETTING_FLIGHT_MODE,
+		VCONFKEY_TELEPHONY_FLIGHT_MODE,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"net_restriction_mode",
+		"connectivity",
+		BOOL_SLP_SETTING_NET_RESTRICTION_MODE,
+		VCONFKEY_SETAPPL_NETWORK_RESTRICT_MODE,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"data_roaming",
+		"connectivity",
+		BOOL_SLP_SETTING_DATA_ROAMING,
+		VCONFKEY_SETAPPL_STATE_DATA_ROAMING_BOOL,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"nfc_mode",
+		"connectivity",
+		BOOL_SLP_SETTING_NFC_STATUS,
+		VCONFKEY_NFC_STATE,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"use_packetdata",
+		"connectivity",
+		BOOL_SLP_SETTING_USE_PACKET_DATA,
+		VCONFKEY_3G_ENABLE,
+		eBOOL, { 0 }, export_json, import_default },
+	{
+		"high_contract",
+		"accessibility",
+		BOOL_SLP_SETTING_ACCESSIBILITY_HIGH_CONTRAST,
+		VCONFKEY_SETAPPL_ACCESSIBILITY_HIGH_CONTRAST,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"screen_zoom",
+		"accessibility",
+		BOOL_SLP_SETTING_ACCESSIBILITY_SCREEN_ZOOM,
+		VCONFKEY_SETAPPL_ACCESSIBILITY_SCREEN_ZOOM,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"assistive_light",
+		"accessibility",
+		BOOL_SLP_SETTING_ACCESSIBILITY_ASSISTIVE_LIGHT,
+		VCONFKEY_SETAPPL_ACCESSIBILITY_TORCH_LIGHT,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"mono_audio",
+		"accessibility",
+		BOOL_SLP_SETTING_ACCESSIBILITY_MONO_AUDIO,
+		VCONFKEY_SETAPPL_ACCESSIBILITY_MONO_AUDIO,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"turn_off_all_sounds",
+		"accessibility",
+		BOOL_SLP_SETTING_ACCESSIBILITY_TURN_OFF_ALL_SOUNDS,
+		VCONFKEY_SETAPPL_ACCESSIBILITY_TURN_OFF_ALL_SOUNDS,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"led_notify",
+		"accessibility",
+		BOOL_SLP_SETTING_ACCESSIBILITY_LED_NOTIFY,
+		VCONFKEY_SETAPPL_ACCESSIBILITY_LED_NOTIFY,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"accept_call",
+		"accessibility",
+		BOOL_SLP_SETTING_ACCESSIBILITY_ACCEPT_CALL,
+		VCONFKEY_CISSAPPL_ANSWERING_KEY_BOOL,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"powerkey_end_calls",
+		"accessibility",
+		BOOL_SLP_SETTING_ACCESSIBILITY_POWERKEY_END_CALLS,
+		VCONFKEY_CISSAPPL_POWER_KEY_ENDS_CALL_BOOL,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"easy_touch_mode",
+		"accessibility",
+		BOOL_SLP_SETTING_ACCESSIBILITY_EASY_TOUCH_MODE,
+		VCONFKEY_SETAPPL_EASY_TOUCH_MODE_BOOL,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"rapid_key_input",
+		"accessibility",
+		BOOL_SLP_SETTING_ACCESSIBILITY_RAPID_KEY_INPUT,
+		VCONFKEY_SETAPPL_ACCESSIBILITY_RAPID_KEY_INPUT,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
 	/*datausage */
-	{"data_usage_limit_bool", "datausage", BOOL_SLP_SETTING_DATAUSAGE_SET_DATA_USAGE_LIMIT_BOOL, VCONFKEY_SETAPPL_SET_DATA_USAGE_LIMIT_BOOL, eBOOL, {0}, export_json, import_default},
-	{"data_usage_limit_roaming_bool", "datausage", BOOL_SLP_SETTING_DATAUSAGE_SET_DATA_USAGE_LIMIT_ROAMING_BOOL, VCONFKEY_SETAPPL_SET_DATA_USAGE_LIMIT_ROAMING_BOOL, eBOOL, {0}, export_json, import_default},
-
+	{
+		"data_usage_limit_bool",
+		"datausage",
+		BOOL_SLP_SETTING_DATAUSAGE_SET_DATA_USAGE_LIMIT_BOOL,
+		VCONFKEY_SETAPPL_SET_DATA_USAGE_LIMIT_BOOL,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"data_usage_limit_roaming_bool",
+		"datausage",
+		BOOL_SLP_SETTING_DATAUSAGE_SET_DATA_USAGE_LIMIT_ROAMING_BOOL,
+		VCONFKEY_SETAPPL_SET_DATA_USAGE_LIMIT_ROAMING_BOOL,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
 	/* motion */
-	{"motion_activation", "motion", BOOL_SLP_SETTING_MOTION_ACTIVATION, VCONFKEY_SETAPPL_MOTION_ACTIVATION, eBOOL, {0}, export_json, import_default},
-	{"use_pick_up_call", "motion", BOOL_SLP_SETTING_MOTION_USE_PICK_UP_CALL, VCONFKEY_SETAPPL_USE_PICK_UP_CALL, eBOOL, {0}, export_json, import_default},
-	{"use_pick_up", "motion", BOOL_SLP_SETTING_MOTION_USE_PICK_UP, VCONFKEY_SETAPPL_USE_PICK_UP, eBOOL, {0}, export_json, import_default},
-	{"use_double_tap", "motion", BOOL_SLP_SETTING_MOTION_USE_DOUBLE_TAP, VCONFKEY_SETAPPL_USE_DOUBLE_TAP, eBOOL, {0}, export_json, import_default},
-	{"use_tilt", "motion", BOOL_SLP_SETTING_MOTION_USE_TILT, VCONFKEY_SETAPPL_USE_TILT, eBOOL, {0}, export_json, import_default},
-	{"use_panning", "motion", BOOL_SLP_SETTING_MOTION_USE_PANNING, VCONFKEY_SETAPPL_USE_PANNING, eBOOL, {0}, export_json, import_default},
-	{"use_panning_browser", "motion", BOOL_SLP_SETTING_MOTION_USE_PANNING_BROWSER, VCONFKEY_SETAPPL_USE_PANNING_BROWSER, eBOOL, {0}, export_json, import_default},
-	{"use_shake", "motion", BOOL_SLP_SETTING_MOTION_USE_SHAKE, VCONFKEY_SETAPPL_USE_SHAKE, eBOOL, {0}, export_json, import_default},
-	{"use_turn_over", "motion", BOOL_SLP_SETTING_MOTION_USE_TURN_OVER, VCONFKEY_SETAPPL_USE_TURN_OVER, eBOOL, {0}, export_json, import_default},
-	{"tab_twist", "motion", BOOL_SLP_SETTING_MOTION_TAP_TWIST, VCONFKEY_SETAPPL_TAP_TWIST, eBOOL, {0}, export_json, import_default},
-	{"use_mute_pause", "motion", BOOL_SLP_SETTING_MOTION_USE_MUTE_PAUSE, VCONFKEY_SETAPPL_USE_MUTE_PAUSE, eBOOL, {0}, export_json, import_default},
+	{
+		"motion_activation",
+		"motion",
+		BOOL_SLP_SETTING_MOTION_ACTIVATION,
+		VCONFKEY_SETAPPL_MOTION_ACTIVATION,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"use_pick_up_call",
+		"motion",
+		BOOL_SLP_SETTING_MOTION_USE_PICK_UP_CALL,
+		VCONFKEY_SETAPPL_USE_PICK_UP_CALL,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"use_pick_up",
+		"motion",
+		BOOL_SLP_SETTING_MOTION_USE_PICK_UP,
+		VCONFKEY_SETAPPL_USE_PICK_UP,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"use_double_tap",
+		"motion",
+		BOOL_SLP_SETTING_MOTION_USE_DOUBLE_TAP,
+		VCONFKEY_SETAPPL_USE_DOUBLE_TAP,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"use_tilt",
+		"motion",
+		BOOL_SLP_SETTING_MOTION_USE_TILT,
+		VCONFKEY_SETAPPL_USE_TILT,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"use_panning",
+		"motion",
+		BOOL_SLP_SETTING_MOTION_USE_PANNING,
+		VCONFKEY_SETAPPL_USE_PANNING,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"use_panning_browser",
+		"motion",
+		BOOL_SLP_SETTING_MOTION_USE_PANNING_BROWSER,
+		VCONFKEY_SETAPPL_USE_PANNING_BROWSER,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"use_shake",
+		"motion",
+		BOOL_SLP_SETTING_MOTION_USE_SHAKE,
+		VCONFKEY_SETAPPL_USE_SHAKE,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"use_turn_over",
+		"motion",
+		BOOL_SLP_SETTING_MOTION_USE_TURN_OVER,
+		VCONFKEY_SETAPPL_USE_TURN_OVER,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"tab_twist",
+		"motion",
+		BOOL_SLP_SETTING_MOTION_TAP_TWIST,
+		VCONFKEY_SETAPPL_TAP_TWIST,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"use_mute_pause",
+		"motion",
+		BOOL_SLP_SETTING_MOTION_USE_MUTE_PAUSE,
+		VCONFKEY_SETAPPL_USE_MUTE_PAUSE,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
 	/*---- */
-	{NULL, "groupname", SETTING_BOOL_SLP_LIST_MAX, NULL, eBOOL, {0}, export_json, import_default},
+	{
+		NULL,
+		"groupname",
+		SETTING_BOOL_SLP_LIST_MAX,
+		NULL,
+		eBOOL,
+		{ 0 },
+		export_json,
+		import_default },
 };
-
 
 /** int vconf table */
 static VconfNode g_itable[] = {
-	{"lcd_brightness", "display", INT_SLP_SETTING_LCD_BRIGHTNESS, VCONFKEY_SETAPPL_LCD_BRIGHTNESS, eINT, {0}, export_json, import_default},
-	{"lcd_timeout_normal", "display", INT_SLP_SETTING_LCD_TIMEOUT_NORMAL, VCONFKEY_SETAPPL_LCD_TIMEOUT_NORMAL, eINT, {0}, export_json, import_default},
-	{"lcd_timeout_normal_backup", "display", INT_SLP_SETTING_LCD_TIMEOUT_NORMAL_BACKUP, VCONFKEY_LCD_TIMEOUT_NORMAL_BACKUP, eINT, {0}, export_json, import_default},
+	{
+		"lcd_brightness",
+		"display",
+		INT_SLP_SETTING_LCD_BRIGHTNESS,
+		VCONFKEY_SETAPPL_LCD_BRIGHTNESS,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"lcd_timeout_normal",
+		"display",
+		INT_SLP_SETTING_LCD_TIMEOUT_NORMAL,
+		VCONFKEY_SETAPPL_LCD_TIMEOUT_NORMAL,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"lcd_timeout_normal_backup",
+		"display",
+		INT_SLP_SETTING_LCD_TIMEOUT_NORMAL_BACKUP,
+		VCONFKEY_LCD_TIMEOUT_NORMAL_BACKUP,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
 
-	{"automatic_brightness", "display", INT_SLP_SETTING_AUTOMATIC_BRIGHTNESS, VCONFKEY_SETAPPL_BRIGHTNESS_AUTOMATIC_INT, eINT, {0}, export_json, import_default},
+	{
+		"automatic_brightness",
+		"display",
+		INT_SLP_SETTING_AUTOMATIC_BRIGHTNESS,
+		VCONFKEY_SETAPPL_BRIGHTNESS_AUTOMATIC_INT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
 
-	{"select_network", "network", INT_SLP_SETTING_SELECT_NETWORK, VCONFKEY_SETAPPL_SELECT_NETWORK_INT, eINT, {0}, export_json, import_default},
-	{"network_mode", "network", INT_SLP_SETTING_NETWORK_MODE, VCONFKEY_SETAPPL_NETWORK_MODE_INT, eINT, {0}, export_json, import_default},
-	{"regionformat_time1224", "datetime", INT_SLP_SETTING_REGIONFORMAT_TIME1224, VCONFKEY_REGIONFORMAT_TIME1224, eINT, {0}, export_json, import_default},
-	{"dateformat", "datetime", INT_SLP_SETTING_DATE_FORMAT, VCONFKEY_SETAPPL_DATE_FORMAT_INT, eINT, {0}, export_json, import_default},
-	{"weekformat", "datetime", INT_SLP_SETTING_WEEK_FORMAT, VCONFKEY_SETAPPL_WEEKOFDAY_FORMAT_INT, eINT, {0}, export_json, import_default},
+	{
+		"select_network",
+		"network",
+		INT_SLP_SETTING_SELECT_NETWORK,
+		VCONFKEY_SETAPPL_SELECT_NETWORK_INT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"network_mode",
+		"network",
+		INT_SLP_SETTING_NETWORK_MODE,
+		VCONFKEY_SETAPPL_NETWORK_MODE_INT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"regionformat_time1224",
+		"datetime",
+		INT_SLP_SETTING_REGIONFORMAT_TIME1224,
+		VCONFKEY_REGIONFORMAT_TIME1224,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"dateformat",
+		"datetime",
+		INT_SLP_SETTING_DATE_FORMAT,
+		VCONFKEY_SETAPPL_DATE_FORMAT_INT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"weekformat",
+		"datetime",
+		INT_SLP_SETTING_WEEK_FORMAT,
+		VCONFKEY_SETAPPL_WEEKOFDAY_FORMAT_INT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
 
 	/* CALL_ALERT_VIB */
-	{"call_alert_vib", "sound", INT_SLP_SETTING_CALL_ALERT_VIB, VCONFKEY_SETAPPL_CALL_VIBRATION_PATTERN_INT, eINT, {0}, export_json, import_default},
+	{
+		"call_alert_vib",
+		"sound",
+		INT_SLP_SETTING_CALL_ALERT_VIB,
+		VCONFKEY_SETAPPL_CALL_VIBRATION_PATTERN_INT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
 
 	/*****/
-	{"msg_alert_repeat", "sound", INT_SLP_SETTING_MSG_ALERT_REPEAT, VCONFKEY_SETAPPL_NOTI_MSG_ALERT_REP_TYPE_INT, eINT, {0}, export_json, import_default},
+	{
+		"msg_alert_repeat",
+		"sound",
+		INT_SLP_SETTING_MSG_ALERT_REPEAT,
+		VCONFKEY_SETAPPL_NOTI_MSG_ALERT_REP_TYPE_INT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
 
 	/*****/
-	{"language_index", "display", INT_SLP_SETTING_LANG, VCONFKEY_SETAPPL_LANG_INT, eINT, {0}, export_json, import_default},
-	{"bluetooth_switch", "connectivity", INT_SLP_SETTING_BT_STATUS, VCONFKEY_BT_STATUS, eINT, {0}, export_json, import_default},
-	{"wifi_state", "connectivity", INT_SLP_SETTING_WIFI_STATUS, VCONFKEY_WIFI_STATE, eINT, {0}, export_json, import_default},
-	{"mobile_hotspot_mode", "connectivity", INT_SLP_SETTING_MOBILE_AP_STATUS, VCONFKEY_MOBILE_HOTSPOT_MODE, eINT, {0}, export_json, import_default},
-	{"roaming_network", "connectivity", INT_SLP_SETTING_ROAMING_NETWORK, VCONFKEY_SETAPPL_ROAMING_NETWORK_INT, eINT, {0}, export_json, import_default},
-	{"usb_mode", "connectivity", INT_SLP_SETTING_USB_MODE, VCONFKEY_SETAPPL_USB_MODE_INT, eINT, {0}, export_json, import_default},
+	{
+		"language_index",
+		"display",
+		INT_SLP_SETTING_LANG,
+		VCONFKEY_SETAPPL_LANG_INT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"bluetooth_switch",
+		"connectivity",
+		INT_SLP_SETTING_BT_STATUS,
+		VCONFKEY_BT_STATUS,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"wifi_state",
+		"connectivity",
+		INT_SLP_SETTING_WIFI_STATUS,
+		VCONFKEY_WIFI_STATE,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"mobile_hotspot_mode",
+		"connectivity",
+		INT_SLP_SETTING_MOBILE_AP_STATUS,
+		VCONFKEY_MOBILE_HOTSPOT_MODE,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"roaming_network",
+		"connectivity",
+		INT_SLP_SETTING_ROAMING_NETWORK,
+		VCONFKEY_SETAPPL_ROAMING_NETWORK_INT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"usb_mode",
+		"connectivity",
+		INT_SLP_SETTING_USB_MODE,
+		VCONFKEY_SETAPPL_USB_MODE_INT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
 
 	/* memory */
-	{"mem_bluetooth", "memory", INT_SLP_SETTING_DEFAULT_MEM_BLUETOOTH, VCONFKEY_SETAPPL_DEFAULT_MEM_BLUETOOTH_INT, eINT, {0}, export_json, import_default},
-	{"mem_wifidirect", "memory", INT_SLP_SETTING_DEFAULT_MEM_WIFIDIRECT, VCONFKEY_SETAPPL_DEFAULT_MEM_WIFI_DIRECT_INT, eINT, {0}, export_json, import_default},
-	{"mem_installapplications", "memory", INT_SLP_SETTING_DEFAULT_MEM_INSTALLAPPLICATIONS, VCONFKEY_SETAPPL_DEFAULT_MEM_INSTALL_APPLICATIONS_INT, eINT, {0}, export_json, import_default},
+	{
+		"mem_bluetooth",
+		"memory",
+		INT_SLP_SETTING_DEFAULT_MEM_BLUETOOTH,
+		VCONFKEY_SETAPPL_DEFAULT_MEM_BLUETOOTH_INT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"mem_wifidirect",
+		"memory",
+		INT_SLP_SETTING_DEFAULT_MEM_WIFIDIRECT,
+		VCONFKEY_SETAPPL_DEFAULT_MEM_WIFI_DIRECT_INT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"mem_installapplications",
+		"memory",
+		INT_SLP_SETTING_DEFAULT_MEM_INSTALLAPPLICATIONS,
+		VCONFKEY_SETAPPL_DEFAULT_MEM_INSTALL_APPLICATIONS_INT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
 
 	/* other module */
-	{"sim_slot", "security", INT_SLP_SETTING_SIM_SLOT, VCONFKEY_TELEPHONY_SIM_SLOT, eINT, {0}, export_json, import_default},
-	{"phone_lock_attempt", "security", INT_SLP_SETTING_PHONE_LOCK_ATTEMPTS_LEFT, VCONFKEY_SETAPPL_PHONE_LOCK_ATTEMPTS_LEFT_INT, eINT, {0}, export_json, import_default},
-	{"sime_lock_attempt", "security", INT_SLP_SETTING_SIM_LOCK_ATTEMPTS_LEFT, VCONFKEY_SETAPPL_SIM_LOCK_ATTEMPTS_LEFT_INT, eINT, {0}, export_json, import_default},
+	{
+		"sim_slot",
+		"security",
+		INT_SLP_SETTING_SIM_SLOT,
+		VCONFKEY_TELEPHONY_SIM_SLOT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"phone_lock_attempt",
+		"security",
+		INT_SLP_SETTING_PHONE_LOCK_ATTEMPTS_LEFT,
+		VCONFKEY_SETAPPL_PHONE_LOCK_ATTEMPTS_LEFT_INT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"sime_lock_attempt",
+		"security",
+		INT_SLP_SETTING_SIM_LOCK_ATTEMPTS_LEFT,
+		VCONFKEY_SETAPPL_SIM_LOCK_ATTEMPTS_LEFT_INT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
 
 	/* accessibility setting */
-	{"font_size", "accessibility", INT_SLP_SETTING_ACCESSIBILITY_FONT_SIZE, VCONFKEY_SETAPPL_ACCESSIBILITY_FONT_SIZE, eINT, {0}, export_json, import_default},
+	{
+		"font_size",
+		"accessibility",
+		INT_SLP_SETTING_ACCESSIBILITY_FONT_SIZE,
+		VCONFKEY_SETAPPL_ACCESSIBILITY_FONT_SIZE,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
 #if SUPPORT_FONT_STYLE
-	{"font_style", "accessibility", INT_SLP_SETTING_ACCESSIBILITY_FONT_STYLE, VCONFKEY_SETAPPL_ACCESSIBILITY_FONT_STYLE, eINT, {0}, export_json, import_default},
+	{
+		"font_style",
+		"accessibility",
+		INT_SLP_SETTING_ACCESSIBILITY_FONT_STYLE,
+		VCONFKEY_SETAPPL_ACCESSIBILITY_FONT_STYLE,
+		eINT,
+		{	0},
+		export_json, import_default},
 #endif
-	{"sound_balance", "accessibility", INT_SLP_SETTING_ACCESSIBILITY_SOUND_BALANCE, VCONFKEY_SETAPPL_SOUND_BALANCE_INT, eINT, {0}, export_json, import_default},
+	{
+		"sound_balance",
+		"accessibility",
+		INT_SLP_SETTING_ACCESSIBILITY_SOUND_BALANCE,
+		VCONFKEY_SETAPPL_SOUND_BALANCE_INT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
 
 	/*powersaving */
-	{"bgprocess", "developeroptions", INT_SLP_SETTING_DEVOPTION_BGPROCESS, VCONFKEY_SETAPPL_DEVOPTION_BGPROCESS, eINT, {0}, export_json, import_default},
+	{
+		"bgprocess",
+		"developeroptions",
+		INT_SLP_SETTING_DEVOPTION_BGPROCESS,
+		VCONFKEY_SETAPPL_DEVOPTION_BGPROCESS,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
 
 	/* data usage */
-	{"usage_cycle", "datausage", INT_SLP_SETTING_DATAUSAGE_DATA_USAGE_CYCLE_INT, VCONFKEY_SETAPPL_DATA_USAGE_CYCLE_INT, eINT, {0}, export_json, import_default},
-	{"each_month", "datausage", INT_SLP_SETTING_DATAUSAGE_DATA_EACH_MONTH_INT, VCONFKEY_SETAPPL_DATA_EACH_MONTH_INT, eINT, {0}, export_json, import_default},
-	{"each_month_app", "datausage", INT_SLP_SETTING_DATAUSAGE_DATA_EACH_MONTH_APP_INT, VCONFKEY_SETAPPL_DATA_EACH_MONTH_APP_INT, eINT, {0}, export_json, import_default},
+	{
+		"usage_cycle",
+		"datausage",
+		INT_SLP_SETTING_DATAUSAGE_DATA_USAGE_CYCLE_INT,
+		VCONFKEY_SETAPPL_DATA_USAGE_CYCLE_INT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"each_month",
+		"datausage",
+		INT_SLP_SETTING_DATAUSAGE_DATA_EACH_MONTH_INT,
+		VCONFKEY_SETAPPL_DATA_EACH_MONTH_INT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"each_month_app",
+		"datausage",
+		INT_SLP_SETTING_DATAUSAGE_DATA_EACH_MONTH_APP_INT,
+		VCONFKEY_SETAPPL_DATA_EACH_MONTH_APP_INT,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
 
 	/* accessories */
-	{"display/touchkey_light_duration", "display", INT_SLP_SETTING_TOUCHKEY_LIGHT_DURATION_INT, VCONFKEY_SETAPPL_TOUCHKEY_LIGHT_DURATION, eINT, {0}, export_json, import_default},
-	{"display/screen_capture_destination", "display", INT_SLP_SETTING_SCREEN_CAPTURE_DESTINATION_INT, VCONFKEY_SETAPPL_SCREEN_CAPTURE_DESTINATION, eINT, {0}, export_json, import_default},
+	{
+		"display/touchkey_light_duration",
+		"display",
+		INT_SLP_SETTING_TOUCHKEY_LIGHT_DURATION_INT,
+		VCONFKEY_SETAPPL_TOUCHKEY_LIGHT_DURATION,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"display/screen_capture_destination",
+		"display",
+		INT_SLP_SETTING_SCREEN_CAPTURE_DESTINATION_INT,
+		VCONFKEY_SETAPPL_SCREEN_CAPTURE_DESTINATION,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
 	/*---- */
-	{NULL, "groupkey", SETTING_INT_SLP_LIST_MAX, NULL, eINT, {0}, export_json, import_default},
-
+	{
+		NULL,
+		"groupkey",
+		SETTING_INT_SLP_LIST_MAX,
+		NULL,
+		eINT,
+		{ 0 },
+		export_json,
+		import_default },
 };
-
 
 /** string vconf table */
 static VconfNode g_stable[] = {
 	/* password code - special processing */
-	{"phone_password", "security",	STR_SLP_LIST_PHONE_PASSWORD, NULL, eSTRING, {0}, export_json, import_default },
-	{"phonelock_timestamp", "security",	STR_SLP_SETTING_PHONE_LOCK_TIMESTAMP, VCONFKEY_SETAPPL_PHONE_LOCK_TIMESTAMP_STR, eSTRING, {0}, export_json, import_default },
-	{"simlock_timestamp", "security",	STR_SLP_SETTING_SIM_LOCK_TIMESTAMP, VCONFKEY_SETAPPL_SIM_LOCK_TIMESTAMP_STR, eSTRING, {0}, export_json, import_default },
-	{"selected_phonenum", "about",	STR_SLP_SETTING_SELECT_NUM, VCONFKEY_SETAPPL_SELECTED_NUM, eSTRING, {0}, export_json, import_default },
+	{
+		"phone_password",
+		"security",
+		STR_SLP_LIST_PHONE_PASSWORD,
+		NULL,
+		eSTRING,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"phonelock_timestamp",
+		"security",
+		STR_SLP_SETTING_PHONE_LOCK_TIMESTAMP,
+		VCONFKEY_SETAPPL_PHONE_LOCK_TIMESTAMP_STR,
+		eSTRING,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"simlock_timestamp",
+		"security",
+		STR_SLP_SETTING_SIM_LOCK_TIMESTAMP,
+		VCONFKEY_SETAPPL_SIM_LOCK_TIMESTAMP_STR,
+		eSTRING,
+		{ 0 },
+		export_json,
+		import_default },
+	{
+		"selected_phonenum",
+		"about",
+		STR_SLP_SETTING_SELECT_NUM,
+		VCONFKEY_SETAPPL_SELECTED_NUM,
+		eSTRING,
+		{ 0 },
+		export_json,
+		import_default },
 	/*---- */
-	{NULL, "groupkey",	STR_SLP_LIST_MAX, NULL, eSTRING, {0}, export_json, import_default},
+	{
+		NULL,
+		"groupkey",
+		STR_SLP_LIST_MAX,
+		NULL,
+		eSTRING,
+		{ 0 },
+		export_json,
+		import_default },
 };
-
 
 /**
  * import
@@ -343,14 +905,13 @@ int sync_adapter_restore_set_data(void *data, unsigned long long size)
 	return 0;
 }
 
-
-
 static int getconfsize()
 {
 	/*---- */
 	int bcount = sizeof(g_btable) / sizeof(g_btable[0]) - 1;
 	int icount = sizeof(g_itable) / sizeof(g_itable[0]) - 1;
-	int scount = sizeof(g_stable) / sizeof(g_stable[0]) - 1; /* why?? buggy */
+	/* why?? buggy */
+	int scount = sizeof(g_stable) / sizeof(g_stable[0]) - 1;
 	int total = bcount + icount + scount;
 
 	return total;
@@ -361,10 +922,12 @@ static int getconfsize()
  *
  * g_sortedarr from caller
  */
-void __foreach_attr(JsonObject *object, const gchar *public_key, JsonNode *member_node, gpointer user_data)
+void __foreach_attr(JsonObject *object, const gchar *public_key,
+		JsonNode *member_node, gpointer user_data)
 {
 	char *public_groupname = (char *)user_data;
-	char *retstr = (char *)json_object_get_string_member(object, public_key);
+	char *retstr = (char *)json_object_get_string_member(object,
+			public_key);
 
 	/*SETTING_TRACE(" public_groupname : %s", public_groupname); */
 
@@ -375,16 +938,22 @@ void __foreach_attr(JsonObject *object, const gchar *public_key, JsonNode *membe
 	static int ncount = 0;
 	int run = 1;
 	for (i = 0; i < total && run == 1; i++) {
-		/*SETTING_TRACE(" >> g_sortedarr[%d].public_groupkey : %s",i, g_sortedarr[i].public_groupkey ); */
-		/*SETTING_TRACE(" >> g_sortedarr[%d].public_key : %s",i, g_sortedarr[i].public_key ); */
+		/*SETTING_TRACE(" >> g_sortedarr[%d].public_groupkey : %s",i,
+		 * g_sortedarr[i].public_groupkey ); */
+		/*SETTING_TRACE(" >> g_sortedarr[%d].public_key : %s",i,
+		 * g_sortedarr[i].public_key ); */
 		/*SETTING_TRACE(" >> public_key : %s",public_key ); */
 
-		if (g_sortedarr[i].public_groupkey &&
-			safeStrCmp(g_sortedarr[i].public_groupkey, public_groupname) == 0 &&
-			g_sortedarr[i].public_key &&
-			safeStrCmp(g_sortedarr[i].public_key, public_key) == 0) {
+		if (g_sortedarr[i].public_groupkey
+				&& safeStrCmp(g_sortedarr[i].public_groupkey, public_groupname) == 0
+				&& g_sortedarr[i].public_key
+				&& safeStrCmp(g_sortedarr[i].public_key, public_key) == 0) {
 			ncount += 1;
-			SETTING_TRACE(" FOUND ---> group name %s : public key %s --- vconf key (%s) - type (%d) -- strval : [%s] ", g_sortedarr[i].public_groupkey, g_sortedarr[i].public_key, g_sortedarr[i].vconf_key, g_sortedarr[i].type, retstr);
+			SETTING_TRACE(" FOUND ---> group name %s : public key " "%s --- vconf key (%s) - type (%d) -- " "strval : [%s] ",
+					g_sortedarr[i].public_groupkey,
+					g_sortedarr[i].public_key,
+					g_sortedarr[i].vconf_key,
+					g_sortedarr[i].type, retstr);
 
 			/* set value from vconf (key/value) */
 			/* retstr */
@@ -394,18 +963,18 @@ void __foreach_attr(JsonObject *object, const gchar *public_key, JsonNode *membe
 				/* "true"  --> 1  "false" --> 0 */
 				if (retstr && safeStrCmp(retstr, "true") == 0) {
 					g_sortedarr[i].value.b = 1;
-				}	else if (retstr && safeStrCmp(retstr, "false") == 0) {
+				} else if (retstr && safeStrCmp(retstr, "false") == 0) {
 					g_sortedarr[i].value.b = 0;
 				}
 				break;
 
 			case eINT: {
-					int num = -1;
-					/* "111" --> 1111 */
-					if (retstr)
-						num = atoi(retstr);
-					g_sortedarr[i].value.i = num;
-				}
+				int num = -1;
+				/* "111" --> 1111 */
+				if (retstr)
+					num = atoi(retstr);
+				g_sortedarr[i].value.i = num;
+			}
 				break;
 
 			case eSTRING:
@@ -413,7 +982,8 @@ void __foreach_attr(JsonObject *object, const gchar *public_key, JsonNode *membe
 				if (retstr)
 					g_sortedarr[i].value.c = retstr;
 				else
-					g_sortedarr[i].value.c = "";	/* error handler */
+					/* error handler */
+					g_sortedarr[i].value.c = "";
 				break;
 
 			}
@@ -430,12 +1000,14 @@ void __foreach_attr(JsonObject *object, const gchar *public_key, JsonNode *membe
 	SETTING_TRACE(" n - FOUND %d ", ncount);
 }
 
-void __func_cb(JsonObject *object, const gchar *member_name, JsonNode *member_node, gpointer user_data)
+void __func_cb(JsonObject *object, const gchar *member_name,
+		JsonNode *member_node, gpointer user_data)
 {
 	/*JsonArray *array = json_node_get_array(member_node); */
 	/*SETTING_TRACE(" ----> member name : %s ", member_name); */
 	JsonObject *child = json_object_get_object_member(object, member_name);
-	json_object_foreach_member(child, __foreach_attr, (gpointer)member_name);
+	json_object_foreach_member(child, __foreach_attr,
+			(gpointer)member_name);
 }
 
 int __compareByCategory(const void *arg1, const void *arg2)
@@ -443,7 +1015,8 @@ int __compareByCategory(const void *arg1, const void *arg2)
 	char *str1 = (char *)(((VconfNode *)arg1)->public_groupkey);
 	char *str2 = (char *)(((VconfNode *)arg2)->public_groupkey);
 
-	if (!str1 || !str2) return -1;
+	if (!str1 || !str2)
+		return -1;
 
 	return safeStrCmp(str1, str2);
 }
@@ -452,7 +1025,7 @@ EXPORT_PUBLIC
 void setting_import_json(status_handler_fp fp, void *data)
 {
 	SETTING_TRACE_BEGIN;
-	/*--------------------------------------------------------------------------------- */
+	/*------------------------------------------------------------------ */
 	JsonParser *parser;
 	JsonNode *root;
 	GError *error;
@@ -460,13 +1033,15 @@ void setting_import_json(status_handler_fp fp, void *data)
 	/*---- */
 	int bcount = sizeof(g_btable) / sizeof(g_btable[0]) - 1;
 	int icount = sizeof(g_itable) / sizeof(g_itable[0]) - 1;
-	int scount = sizeof(g_stable) / sizeof(g_stable[0]) - 1; /* why?? buggy */
+	/* why?? buggy */
+	int scount = sizeof(g_stable) / sizeof(g_stable[0]) - 1;
 	int total = bcount + icount + scount;
 	SETTING_TRACE(" >>> total : %d ", total);
 
-	VconfNode *arr3 = (VconfNode *)malloc(sizeof(VconfNode)*total);
-	if (!arr3) return;
-	memcpy(arr3, g_btable, sizeof(VconfNode)*(bcount));
+	VconfNode *arr3 = (VconfNode *)malloc(sizeof(VconfNode) * total);
+	if (!arr3)
+		return;
+	memcpy(arr3, g_btable, sizeof(VconfNode) * (bcount));
 	memcpy(&arr3[bcount - 1], g_itable, sizeof(g_itable));
 	memcpy(&arr3[bcount - 1 + icount - 1], g_stable, sizeof(g_stable));
 	qsort(arr3, total, sizeof(VconfNode), __compareByCategory);
@@ -479,7 +1054,8 @@ void setting_import_json(status_handler_fp fp, void *data)
 	error = NULL;
 	json_parser_load_from_file(parser, SETTING_CFG_JSON_FILE_PATH, &error);
 	if (error) {
-		SETTING_TRACE("Unable to parse `%s': %s", SETTING_CFG_JSON_FILE_PATH, error->message);
+		SETTING_TRACE("Unable to parse `%s': %s",
+				SETTING_CFG_JSON_FILE_PATH, error->message);
 		g_error_free(error);
 		g_object_unref(parser);
 		return;
@@ -492,7 +1068,8 @@ void setting_import_json(status_handler_fp fp, void *data)
 	if (json_object_has_member(obj1, "value")) {
 		JsonNode *node = json_object_get_member(obj1, "value");
 		JsonObject *object2 = json_node_get_object(node);
-		json_object_foreach_member(object2, __func_cb, NULL);	/* with g_sortedarr */
+		/* with g_sortedarr */
+		json_object_foreach_member(object2, __func_cb, NULL);
 	}
 	g_object_unref(parser);
 
@@ -514,11 +1091,13 @@ char *setting_export_json(status_handler_fp fp, void *data)
 	JsonObject *top = json_object_new();
 	json_node_take_object(root, top);
 
-	json_object_set_string_member(top, "key", "SETTINGS_359617040746834_8592d887-8b97-406e-9cf9-03aebc045f81");
+	json_object_set_string_member(top, "key",
+			"SETTINGS_359617040746834_8592d887-8b97-406e-9cf9-03aebc045f81");
 
 	int bcount = sizeof(g_btable) / sizeof(g_btable[0]) - 1;
 	int icount = sizeof(g_itable) / sizeof(g_itable[0]) - 1;
-	int scount = sizeof(g_stable) / sizeof(g_stable[0]) - 1; /* why?? buggy */
+	/* why?? buggy */
+	int scount = sizeof(g_stable) / sizeof(g_stable[0]) - 1;
 
 	int total = bcount + icount + scount;
 
@@ -528,9 +1107,10 @@ char *setting_export_json(status_handler_fp fp, void *data)
 
 	json_object_set_member(top, "value", topnode);
 
-	VconfNode *arr3 = (VconfNode *)malloc(sizeof(VconfNode)*total);
-	if (!arr3) return NULL;
-	memcpy(arr3, g_btable, sizeof(VconfNode)*(bcount));
+	VconfNode *arr3 = (VconfNode *)malloc(sizeof(VconfNode) * total);
+	if (!arr3)
+		return NULL;
+	memcpy(arr3, g_btable, sizeof(VconfNode) * (bcount));
 	memcpy(&arr3[bcount - 1], g_itable, sizeof(g_itable));
 	memcpy(&arr3[bcount - 1 + icount - 1], g_stable, sizeof(g_stable));
 	qsort(arr3, total, sizeof(VconfNode), __compareByCategory);
@@ -544,13 +1124,15 @@ char *setting_export_json(status_handler_fp fp, void *data)
 	int i;
 	for (i = 0; i < total; i++) {
 		if (arr3[i].public_key) {
-			if (public_groupkey && safeStrCmp(public_groupkey, arr3[i].public_groupkey) != 0) {
+			if (public_groupkey && safeStrCmp(public_groupkey,
+					arr3[i].public_groupkey) != 0) {
 				public_groupkey = (char *)(arr3[i].public_groupkey);
 				/*array = json_array_new(); */
 				obj = json_object_new();
 				node = json_node_new(JSON_NODE_OBJECT);
 				json_node_take_object(node, obj);
-				json_object_set_member(topobj, public_groupkey, node);
+				json_object_set_member(topobj, public_groupkey,
+						node);
 				/*json_array_add_element(array, node); */
 			}
 
@@ -576,13 +1158,15 @@ char *setting_export_json(status_handler_fp fp, void *data)
 			case eSTRING:
 				get_vconf(arr3[i], &result);
 				val = result.value.c;
-				if (val == NULL) val = "";
+				if (val == NULL)
+					val = "";
 				break;
 			default:
 				val = "error";
 			}
 
-			json_object_set_string_member(obj, arr3[i].public_key, val);
+			json_object_set_string_member(obj, arr3[i].public_key,
+					val);
 		}
 	}
 
@@ -594,12 +1178,16 @@ char *setting_export_json(status_handler_fp fp, void *data)
 	gsize len;
 	char *buf = (char *)json_generator_to_data(generator, &len);
 
-	g_object_set(generator, "pretty", TRUE, NULL);	 /*write file in indent format */
-	gboolean ret = json_generator_to_file(generator, SETTING_CFG_JSON_FILE_PATH, &error);
+	/*write file in indent format */
+	g_object_set(generator, "pretty", TRUE, NULL);
+	gboolean ret = json_generator_to_file(
+			generator, SETTING_CFG_JSON_FILE_PATH,
+			&error);
 	g_object_unref(generator);
 
 	if (FALSE == ret) {
-		SETTING_TRACE_ERROR("Error writing file %s!", SETTING_CFG_JSON_FILE_PATH);
+		SETTING_TRACE_ERROR("Error writing file %s!",
+				SETTING_CFG_JSON_FILE_PATH);
 		/*return FALSE; */
 	}
 
@@ -612,19 +1200,21 @@ char *setting_export_json(status_handler_fp fp, void *data)
 int set_vconf(VconfNode node, VconfNode *result)
 {
 	/*SETTING_TRACE_BEGIN; */
-	int ret = -1 ;
+	int ret = -1;
 	/*node.key */
 	/*node.vconf_key */
 	*result = node;
 	switch (node.type) {
 	case eBOOL:
-		/*SETTING_TRACE("begin case eBOOL[%s=\"%d\"]", node.vconf_key, node.value.b); */
+		/*SETTING_TRACE("begin case eBOOL[%s=\"%d\"]", node.vconf_key,
+		 * node.value.b); */
 		ret = vconf_set_bool(node.vconf_key, node.value.b);
 		result->type = eBOOL;
 		result->value.b = node.value.b;
 		break;
 	case eINT:
-		/*SETTING_TRACE("begin case eINT[%s=\"%d\"]", node.vconf_key, node.value.i); */
+		/*SETTING_TRACE("begin case eINT[%s=\"%d\"]", node.vconf_key,
+		 * node.value.i); */
 		ret = vconf_set_int(node.vconf_key, node.value.i);
 		result->type = eINT;
 		result->value.i = node.value.i;
@@ -633,7 +1223,8 @@ int set_vconf(VconfNode node, VconfNode *result)
 		if (node.key == STR_SLP_LIST_PHONE_PASSWORD) {
 			ret = setting_store_init_password(node.value.c);
 		} else {
-			/*SETTING_TRACE("begin case eSTRING[%s=\"%s\"]", node.vconf_key, node.value.c); */
+			/*SETTING_TRACE("begin case eSTRING[%s=\"%s\"]",
+			 * node.vconf_key, node.value.c); */
 			ret = vconf_set_str(node.vconf_key, node.value.c);
 		}
 		result->type = eSTRING;
@@ -645,20 +1236,20 @@ int set_vconf(VconfNode node, VconfNode *result)
 	}
 
 	if (0 != ret) {
-		SETTING_TRACE_ERROR(">>>>>>>>>> Failed to set vconf[%s]", node.vconf_key);
+		SETTING_TRACE_ERROR(">>>>>>>>>> Failed to set vconf[%s]",
+				node.vconf_key);
 	}
-	/*SETTING_TRACE("KEY:%d VCONF_KEY=%s TYPE=%d VALUE=%d ", result->key, result->vconf_key, result->type, result->value.i); */
+	/*SETTING_TRACE("KEY:%d VCONF_KEY=%s TYPE=%d VALUE=%d ", result->key,
+	 * result->vconf_key, result->type, result->value.i); */
 	return ret;
 }
 
-
 int get_vconf(VconfNode node, VconfNode *result)
 {
-	int ret = -1 ;
+	int ret = -1;
 
 	char md_result[SHA256_DIGEST_LENGTH];
 	memset(md_result, 0x0, SHA256_DIGEST_LENGTH);
-
 
 	*result = node;
 
@@ -675,17 +1266,20 @@ int get_vconf(VconfNode node, VconfNode *result)
 		break;
 	case eSTRING:
 		if (node.key == STR_SLP_LIST_PHONE_PASSWORD) {
-			node.value.c = (char *)malloc(sizeof(char)*SHA256_DIGEST_LENGTH);
+			node.value.c = (char *)malloc(
+					sizeof(char) * SHA256_DIGEST_LENGTH);
 			if (node.value.c) {
 				memset(node.value.c, 0x0, SHA256_DIGEST_LENGTH);
 			} else {
-				SETTING_TRACE_ERROR(" malloc filed : eSTRING, node.value.c ");
+				SETTING_TRACE_ERROR(
+						" malloc filed : eSTRING," "node.value.c ");
 				ret = SETTING_RETURN_FAIL;
 				goto endtag;
 			}
 
 			if (setting_read_password(md_result) == 0) {
-				safeCopyStr(node.value.c, md_result, SHA256_DIGEST_LENGTH); /*	un-safe */
+				safeCopyStr(node.value.c, md_result,
+				SHA256_DIGEST_LENGTH); /*	un-safe */
 
 				result->type = eSTRING;
 				result->value.c = node.value.c;
@@ -704,10 +1298,11 @@ int get_vconf(VconfNode node, VconfNode *result)
 		}
 		break;
 	default:
-		SETTING_TRACE_ERROR(">>>>>>>>>>>>>>>>>>>>>>> get vconf ERROR : %s ", node.vconf_key);
+		SETTING_TRACE_ERROR(
+				">>>>>>>>>>>>>>>>>>>>>>> get vconf ERROR : %s ",
+				node.vconf_key);
 	}
-endtag:
-	return ret;
+	endtag: return ret;
 }
 
 EXPORT_PUBLIC
@@ -726,7 +1321,10 @@ int setting_set_bool_slp_key(setting_bool_slp_list key, int value, int *err)
 	g_btable[key].value.b = value;
 	ret = set_vconf(g_btable[key], &result);
 
-	SETTING_TRACE("setting_set_bool ::: KEY:%d VCONF_KEY=%s TYPE=%d VALUE=%d ", result.key, result.vconf_key, result.type, result.value.b);
+	SETTING_TRACE(
+			"setting_set_bool ::: KEY:%d VCONF_KEY=%s TYPE=%d " "VALUE=%d ",
+			result.key, result.vconf_key, result.type,
+			result.value.b);
 	return ret;
 }
 
@@ -766,11 +1364,14 @@ int setting_set_int_slp_key(setting_int_slp_list key, int value, int *err)
 	g_itable[key].value.i = value;
 	ret = set_vconf(g_itable[key], &result);
 	*err = ret;
-	SETTING_TRACE_DEBUG("setting_set_int ::: KEY:%d VCONF_KEY=%s TYPE=%d VALUE=%d ", result.key, result.vconf_key, result.type, result.value.i);
+	SETTING_TRACE_DEBUG(
+			"setting_set_int ::: KEY:%d VCONF_KEY=%s TYPE=%d " "VALUE=%d ",
+			result.key, result.vconf_key, result.type,
+			result.value.i);
 	return ret;
 }
 
-/* return -1: fail	cannot use err to check the result, return value instead*/
+/* return -1: fail - cannot use err to check the result, return value instead*/
 EXPORT_PUBLIC
 int setting_get_int_slp_key(setting_int_slp_list key, int *value, int *err)
 {
@@ -835,41 +1436,42 @@ int setting_set_string_slp_key(setting_str_slp_list key, char *value, int *err)
 	ret = set_vconf(g_stable[key], &result);
 	g_stable[key].value.c = "";
 
-	SETTING_TRACE("setting_set_str ::: KEY:%d VCONF_KEY=%s TYPE=%d VALUE=%d ", result.key, result.vconf_key, result.type, result.value.c);
+	SETTING_TRACE(
+			"setting_set_str ::: KEY:%d VCONF_KEY=%s TYPE=%d " "VALUE=%d ",
+			result.key, result.vconf_key, result.type,
+			result.value.c);
 	*err = ret;
 	return ret;
 }
 
 /** @todo don't use i18n string directly. */
 static const setting_lang_entry lang_table[] = {
-	{	"auto",			"Automatic"},
-	{	"ko_KR.UTF-8",	"한국어"},
-	{	"en_US.UTF-8",	"English"},
-	{	"zh_CN.UTF-8",	"简体中文"},
-	{	"zh_HK.UTF-8",	"繁體中文(香港)"},
-	{	"zh_TW.UTF-8",	"繁體中文(台灣)"},
-	{	"de_DE.UTF-8",	"Deutsch"},
-	{	"nl_NL.UTF-8",	"Nederlands"},
-	{	"es_ES.UTF-8",	"Español"},
-	{	"pt_PT.UTF-8",	"Português"},
-	{	"el_GR.UTF-8",	"Eλληνικά"},
-	{	"it_IT.UTF-8",	"Italiano"},
-	{	"fr_FR.UTF-8",	"Français"},
-	{	"tr_TR.UTF-8",	"Türkçe"},
-	{	"ja_JP.UTF-8",	"にほんご"},
-	{	"ru_RU.UTF-8",	"Россию"},
-};
+	{ "auto", "Automatic" },
+	{ "ko_KR.UTF-8", "한국어" },
+	{ "en_US.UTF-8", "English" },
+	{ "zh_CN.UTF-8", "简体中文" },
+	{ "zh_HK.UTF-8", "繁體中文(香港)" },
+	{ "zh_TW.UTF-8", "繁體中文(台灣)" },
+	{ "de_DE.UTF-8", "Deutsch" },
+	{ "nl_NL.UTF-8", "Nederlands" },
+	{ "es_ES.UTF-8", "Español" },
+	{ "pt_PT.UTF-8", "Português" },
+	{ "el_GR.UTF-8", "Eλληνικά" },
+	{ "it_IT.UTF-8", "Italiano" },
+	{ "fr_FR.UTF-8", "Français" },
+	{ "tr_TR.UTF-8", "Türkçe" },
+	{ "ja_JP.UTF-8", "にほんご" },
+	{ "ru_RU.UTF-8", "Россию" }, };
 
 setting_lang_entry *setting_get_language_table()
 {
 	return (setting_lang_entry *)lang_table;
 }
 
-
-static void _parseLangListXML(char *docname);	/* internal */
+static void _parseLangListXML(char *docname); /* internal */
 static void __tree_walk_langlist(xmlNodePtr cur); /* internal */
 
-static Eina_List *s_langlist;					/* internal */
+static Eina_List *s_langlist; /* internal */
 
 /* do it once */
 int _langlist_load(char *path)
@@ -906,16 +1508,16 @@ Eina_List *setting_get_language_list2(char *path)
 	return s_langlist;
 }
 
-
 int _langlist_destroy()
 {
 	SETTING_TRACE_BEGIN;
 	Eina_List *li = s_langlist;
 	setting_lang_entry *node;
 	while (li) {
-		node = (setting_lang_entry *) eina_list_data_get(li);
+		node = (setting_lang_entry *)eina_list_data_get(li);
 		if (node) {
-			/*SETTING_TRACE("destroy nodes : locale : %s title : %s", node->locale, node->title); */
+			/*SETTING_TRACE("destroy nodes : locale : %s title : %s",
+			 * node->locale, node->title); */
 			G_FREE(node->locale);
 			G_FREE(node->title);
 			G_FREE(node->mcc);
@@ -923,13 +1525,13 @@ int _langlist_destroy()
 		}
 		li = eina_list_next(li);
 	}
-	s_langlist = eina_list_free(s_langlist);		/* returns NULL */
+	s_langlist = eina_list_free(s_langlist); /* returns NULL */
 
 	return 0;
 }
 
 EXPORT_PUBLIC
-void  setting_get_language_list_destroy()
+void setting_get_language_list_destroy()
 {
 	_langlist_destroy();
 }
@@ -956,8 +1558,9 @@ static void _parseLangListXML(char *docname)
 
 	/*SETTING_TRACE("ROOT NODE : %s ", cur->name); */
 	/* make sure root node is "settings" */
-	if (xmlStrcmp(cur->name, (const xmlChar *) "langlist")) {
-		SETTING_TRACE("document of the wrong type, root node != settings");
+	if (xmlStrcmp(cur->name, (const xmlChar *)"langlist")) {
+		SETTING_TRACE(
+				"document of the wrong type, root node != settings");
 		xmlFreeDoc(doc);
 		return;
 	}
@@ -986,37 +1589,51 @@ static void __tree_walk_langlist(xmlNodePtr cur)
 	for (cur_node = cur; cur_node; cur_node = cur_node->next) {
 		if (cur_node->type == XML_ELEMENT_NODE) {
 
-			/*SETTING_TRACE(" name=%s title=%s \n", xmlGetProp(cur_node, (const xmlChar *)"id"), xmlGetProp(cur_node, (const xmlChar *)"string")); */
-			id = (char *)g_strdup((char *)xmlGetProp(cur_node, (const xmlChar *)"id"));
-			string = (char *)g_strdup((char *) xmlGetProp(cur_node, (const xmlChar *)"string"));
-			/*SETTING_TRACE_DEBUG("lang: %s", xmlGetProp(cur_node, (const xmlChar *)"lang")); */
-			mcc = (char *)g_strdup((char *) xmlGetProp(cur_node, (const xmlChar *)"mcc"));
-			/*number = atoi((char*) xmlGetProp(cur_node, (const xmlChar *)"no")); */
+			/*SETTING_TRACE(" name=%s title=%s \n", xmlGetProp(cur_node,
+			 * (const xmlChar *)"id"), xmlGetProp(cur_node,
+			 * (const xmlChar *)"string")); */
+			id = (char *)g_strdup(
+					(char *)xmlGetProp(cur_node,
+							(const xmlChar *)"id"));
+			string = (char *)g_strdup(
+					(char *)xmlGetProp(cur_node,
+							(const xmlChar *)"string"));
+			/*SETTING_TRACE_DEBUG("lang: %s", xmlGetProp(cur_node,
+			 * (const xmlChar *)"lang")); */
+			mcc = (char *)g_strdup(
+					(char *)xmlGetProp(cur_node,
+							(const xmlChar *)"mcc"));
+			/*number = atoi((char*) xmlGetProp(cur_node,
+			 * (const xmlChar *)"no")); */
 
-			setting_lang_entry *pitem = (setting_lang_entry *)calloc(1, sizeof(setting_lang_entry));
+			setting_lang_entry *pitem = (setting_lang_entry *)calloc(
+					1, sizeof(setting_lang_entry));
 			if (pitem) {
 				pitem->locale = id;
 				pitem->title = string;
 				pitem->mcc = mcc;
 				/*pitem->number = number++; */
 				/*SETTING_TRACE_DEBUG("no=%d", pitem->number); */
-				/*SETTING_TRACE_DEBUG(">>>> locale: %s title: %s mcc: %s", pitem->locale, pitem->title, pitem->mcc); */
-				s_langlist = eina_list_append(s_langlist, pitem);
+				/*SETTING_TRACE_DEBUG(
+				 * ">>>> locale: %s title: %s mcc: %s", pitem->locale,
+				 * pitem->title, pitem->mcc); */
+				s_langlist = eina_list_append(s_langlist,
+						pitem);
 			}
 		}
 	}
 }
-/*----------------------------------------------------------------------------------------------- */
-/*----------------------------------------------------------------------------------------------- */
+/*-------------------------------------------------------------------------- */
+/*-------------------------------------------------------------------------- */
 
 /*setting_lang_entry* */
 
-/*//////////////////////////////////////////////////////////////////////////////////////// */
+/*////////////////////////////////////////////////////////////////////////// */
 int setting_store_init_password(char *in)
 {
 
 	SHA256_CTX context;
-	char md[SHA256_DIGEST_LENGTH] = {0,};
+	char md[SHA256_DIGEST_LENGTH] = { 0, };
 	/* int i = 0; */
 	int ret = SETTING_RETURN_FAIL;
 
@@ -1028,7 +1645,7 @@ int setting_store_init_password(char *in)
 	SETTING_TRACE("input: [%s]\n", in);
 	SETTING_TRACE("output: [");
 	for (i = 0; i < SHA256_DIGEST_LENGTH; i++)
-		SETTING_TRACE("%02x", md[i]);
+	SETTING_TRACE("%02x", md[i]);
 	SETTING_TRACE("]\n");
 #endif
 
@@ -1060,7 +1677,8 @@ int setting_read_password(char *md_result)
 	FILE *fp = NULL;
 	fp = fopen(PWD_FILE, "r");
 	if (fp) {
-		int size = fread(md_result, sizeof(char), SHA256_DIGEST_LENGTH, fp);
+		int size = fread(md_result, sizeof(char), SHA256_DIGEST_LENGTH,
+				fp);
 		if (size != SHA256_DIGEST_LENGTH) {
 			SETTING_TRACE_ERROR("fread failed");
 		}
@@ -1073,7 +1691,7 @@ int setting_read_password(char *md_result)
 #ifdef DEBUG
 	SETTING_TRACE("output from file: [");
 	for (i = 0; i < SHA256_DIGEST_LENGTH; i++)
-		SETTING_TRACE("%02x", md_result[i]);
+	SETTING_TRACE("%02x", md_result[i]);
 	SETTING_TRACE("]\n");
 #endif
 	SETTING_TRACE_END;
@@ -1109,11 +1727,13 @@ void setting_destory_listen_list(Eina_List **listened_list)
 		Vconf_Change_Node *node = NULL;
 		Eina_List *li = *listened_list;
 		while (li) {
-			node = (Vconf_Change_Node *) eina_list_data_get(li);
+			node = (Vconf_Change_Node *)eina_list_data_get(li);
 			if (node) {
-				/*SETTING_TRACE("Deregister callback[%p] of %s", node->cb, node->in_key); */
+				/*SETTING_TRACE("Deregister callback[%p] of %s",
+				 * node->cb, node->in_key); */
 				if (node->in_key && node->cb) {
-					(void)vconf_ignore_key_changed(node->in_key, node->cb);
+					(void)vconf_ignore_key_changed(
+							node->in_key, node->cb);
 					FREE(node);
 				}
 			}
@@ -1124,7 +1744,8 @@ void setting_destory_listen_list(Eina_List **listened_list)
 }
 
 EXPORT_PUBLIC
-bool setting_add_listen_node(Eina_List **listened_list, const char *vconf, vconf_callback_fn cb, void *data)
+bool setting_add_listen_node(Eina_List **listened_list, const char *vconf,
+		vconf_callback_fn cb, void *data)
 {
 	Vconf_Change_Node *node = calloc(1, sizeof(Vconf_Change_Node));
 	bool ret = TRUE;
@@ -1134,10 +1755,13 @@ bool setting_add_listen_node(Eina_List **listened_list, const char *vconf, vconf
 		node->cb_data = data;
 
 		if (0 == vconf_notify_key_changed(vconf, cb, data)) {
-			/*SETTING_TRACE("Register callback[%p] of %s", node->cb, node->in_key); */
+			/*SETTING_TRACE("Register callback[%p] of %s", node->cb,
+			 * node->in_key); */
 			*listened_list = eina_list_append(*listened_list, node);
 		} else {
-			SETTING_TRACE_ERROR("Failed to register callback[%p] of %s", node->cb, node->in_key);
+			SETTING_TRACE_ERROR(
+					"Failed to register callback[%p] of %s",
+					node->cb, node->in_key);
 			FREE(node);
 			ret = FALSE;
 		}

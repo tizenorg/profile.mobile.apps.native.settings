@@ -48,10 +48,13 @@
 #define LAUNCH_EFFECT_STR "IDS_ST_BODY_APP_OPENING_EFFECT"
 #define LAUNCH_IMAGE_STR  "IDS_ST_BODY_APP_OPENING_IMAGE"
 
-#define KeyStr_AdjustScreenTone_Dsc "IDS_ST_BODY_SAVE_POWER_BY_ADJUSTING_SCREEN_TONE_ACCORDING_TO_ANALYSIS_OF_IMAGES"
-#define KeyStr_HighTouchSensitivity_Dsc "IDS_ST_SBODY_INCREASE_THE_SENSITIVITY_OF_THE_TOUCH_SCREEN_SBODY_MSG"
+#define KeyStr_AdjustScreenTone_Dsc "IDS_ST_BODY_SAVE_POWER_BY_ADJUSTING_"\
+	"SCREEN_TONE_ACCORDING_TO_ANALYSIS_OF_IMAGES"
+#define KeyStr_HighTouchSensitivity_Dsc "IDS_ST_SBODY_INCREASE_THE_"\
+	"SENSITIVITY_OF_THE_TOUCH_SCREEN_SBODY_MSG"
 
-#define LAUNCH_BATTERY_DESC	 "IDS_ST_BODY_SHOWS_BATTERY_PERCENTAGE_ON_INDICATOR" /*"Increase the screen's sensitivity so you can touch it while wearing gloves" */
+/* Increase the screen's sensitivity so you can touch it while wearing gloves */
+#define LAUNCH_BATTERY_DESC "IDS_ST_BODY_SHOWS_BATTERY_PERCENTAGE_ON_INDICATOR"
 
 #define SETTING_DISPLAY_TIME_15_SEC_STR "IDS_ST_BODY_15SEC"
 #define SETTING_DISPLAY_TIME_30_SEC_STR "IDS_ST_BODY_30SEC"
@@ -60,14 +63,17 @@
 #define SETTING_DISPLAY_TIME_2_MIN_STR "IDS_ST_BODY_2_MINUTES"
 #define SETTING_DISPLAY_TIME_5_MIN_STR "IDS_ST_BODY_5_MINUTES"
 #define SETTING_DISPLAY_TIME_10_MIN_STR "IDS_ST_BODY_10_MINUTES"
-#define SMART_SCREEN_TRY_IT_IMAGE_L	 SETTING_ICON_PATH_CFG"air_jump_try_full_h.png"
-#define SMART_SCREEN_TRY_IT_IMAGE_P	 SETTING_ICON_PATH_CFG"air_jump_try_full.png"
+#define SMART_SCREEN_TRY_IT_IMAGE_L \
+	SETTING_ICON_PATH_CFG"air_jump_try_full_h.png"
+#define SMART_SCREEN_TRY_IT_IMAGE_P \
+	SETTING_ICON_PATH_CFG"air_jump_try_full.png"
 
 #define KeyStr_ScreenCapture "IDS_MF_BODY_SCREEN_CAPTURE_M_NOUN"
 #define KeyStr_ScreenCapture_Destination "IDS_LBS_BODY_DESTINATION"
 #define KeyStr_ScreenCapture_Ask "IDS_SKM_BODY_ASK_M_IDEA_SKETCH"
 #define KeyStr_ScreenCapture_Gallery "IDS_ST_BODY_GALLERY"
-#define KeyStr_ScreenCapture_KeepIt "IDS_KEEPIT_HEADER_KEEPIT_M_APPLICATION_NAME"
+#define KeyStr_ScreenCapture_KeepIt \
+	"IDS_KEEPIT_HEADER_KEEPIT_M_APPLICATION_NAME"
 #define KeyStr_ScreenCapture_Edit "IDS_ST_MBODY_EDIT_AFTER_SCREEN_CAPTURE"
 #define KeyStr_Dynamic_Status_Bar "IDS_ST_BODY_DYNAMIC_STATUS_BAR"
 
@@ -113,8 +119,8 @@ typedef struct _SettingApplicationsUG SettingApplicationsUG;
 
 /**
  * Setting Applications UG context
- * all UG function has void* as an agument. this is casted back to SettingApplicationsUG
- * and the functions access app context.
+ * all UG function has void* as an agument. this is casted back to
+ * SettingApplicationsUG and the functions access app context.
  */
 struct _SettingApplicationsUG {
 	ui_gadget_h ug;
@@ -237,7 +243,8 @@ extern setting_view setting_view_applications_main;
 extern setting_view setting_view_applications_defaultapp;
 
 
-void setting_applications_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode, void *priv);
+void setting_applications_layout_ug_cb(
+		ui_gadget_h ug, enum ug_mode mode, void *priv);
 
 Eina_Bool __show_smartstay_guide_popup(void *data);
 Eina_Bool __show_smartrotation_guide_popup(void *data);
