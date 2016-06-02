@@ -28,6 +28,10 @@
 #include "setting-storage-utils.h"
 #include "setting-storage-async-worker.h"
 #include "setting-storage-main.h"
+
+#include <dpm/storage.h>
+#include <dpm/restriction.h>
+
 #if 0
 #define SETTING_STORAGE_PIE_RECT_WIDTH (432 * WIDGET_SCALE_FACTOR)
 #define SETTING_STORAGE_PIE_RECT_HEIGHT (414 * WIDGET_SCALE_FACTOR)
@@ -56,6 +60,57 @@
 const char *storageUg_MMC_stat = VCONFKEY_SYSMAN_MMC_STATUS;
 
 static setting_view setting_view_storage_main;
+
+static int dpm_usb_mass_storage(int* enable)
+{
+	SETTING_TRACE_BEGIN;
+	dpm_context_h context;
+    dpm_storage_policy_h policy;
+	//bool enable = false;
+
+	int ret = 1;
+	context = dpm_context_create();
+	if (context == NULL) {
+		SETTING_TRACE_ERROR("Failed to create client context\n");
+		return 0;
+	}
+
+    policy = dpm_context_acquire_storage_policy(context);
+    if (policy == NULL) {
+        SETTING_TRACE_ERROR("Failed to get storage policy interface\n");
+        dpm_context_destroy(context);
+        return 0;
+    }
+
+#if 0
+typedef enum {
+    DPM_ERROR_NONE                 = TIZEN_ERROR_NONE,                 /**< The operation was successful */
+    DPM_ERROR_INVALID_PARAMETER    = TIZEN_ERROR_INVALID_PARAMETER,    /**< Invalid parameter */
+    DPM_ERROR_CONNECTION_REFUSED   = TIZEN_ERROR_CONNECTION_REFUSED,   /**< Connection refused */
+    DPM_ERROR_TIMED_OUT            = TIZEN_ERROR_TIMED_OUT,            /**< Time out */
+    DPM_ERROR_PERMISSION_DENIED    = TIZEN_ERROR_PERMISSION_DENIED,    /**< Access privilege is not sufficient */
+    DPM_ERROR_NOT_SUPPORTED        = TIZEN_ERROR_NOT_SUPPORTED,        /**< Operation is not supported */
+    DPM_ERROR_NO_SUCH_FILE         = TIZEN_ERROR_NO_SUCH_FILE,         /**< No such file or directory */
+    DPM_ERROR_FILE_EXISTS          = TIZEN_ERROR_FILE_EXISTS,          /**< File exists */
+    DPM_ERROR_OUT_OF_MEMORY        = TIZEN_ERROR_OUT_OF_MEMORY         /**< Out of memory */
+} dpm_error_type_e;
+#endif
+
+	int rval = 0;
+	ret = dpm_restriction_get_external_storage_state(policy, &rval);
+	SETTING_TRACE("ret = dpm_restriction_get_external_storage_state : %d", ret);
+
+	*enable = rval;
+
+out:
+	dpm_context_release_storage_policy(context, policy);
+	dpm_context_destroy(context);
+
+	SETTING_TRACE_END;
+	return ret;
+}
+
+
 
 static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 		SettingStorageUG *ad)
@@ -742,6 +797,11 @@ static int storageUg_main_create(void *data)
 	media_content_set_db_updated_cb(storageUg_media_filesys_changed_cb, ad);
 	SETTING_TRACE("-----------------------------------------------");
 	SETTING_TRACE(" WIDGET_SCALE_FACTOR : %f", WIDGET_SCALE_FACTOR);
+	SETTING_TRACE("-----------------------------------------------");
+
+	int enable = 0;
+	dpm_usb_mass_storage(&enable);
+	SETTING_TRACE(" DPM_USB_MASS_STORAGE : %d", enable);
 	SETTING_TRACE("-----------------------------------------------");
 
 	return SETTING_RETURN_SUCCESS;
