@@ -6,7 +6,7 @@ FILE(GLOB STORAGE_SRCS src/*.c)
 INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_storage REQUIRED elementary capi-appfw-application deviced storage
 	pkgmgr capi-content-media-content cairo appcore-efl ui-gadget-1 capi-appfw-package-manager
-	 json-glib-1.0 efl-extension)
+	 json-glib-1.0 efl-extension dpm)
 
 FOREACH(flag ${pkgs_storage_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
