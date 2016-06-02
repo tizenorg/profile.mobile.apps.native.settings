@@ -75,6 +75,7 @@ static void *setting_time_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR);
 
 	/* register view node table */
+	elm_theme_extension_add(NULL, SETTING_GENLIST_EDJ_NAME);
 	setting_view_node_table_intialize();
 	setting_view_node_table_register(&setting_view_time_main, NULL);
 
