@@ -562,32 +562,18 @@ static inline void storageUg_misces_clear_sel_list(Eina_List *list)
 	eina_list_free(list);
 }
 
-/**
- * "Select All" - check button handler
- */
-static inline void setting_storage_select_all_chk_btn_cb(void *data,
-		Evas_Object *obj, void *event_info)
+static void __select_all_items(SettingStorageUG *ad)
 {
-	SETTING_TRACE_BEGIN;
-	/* error check */
-	retm_if(data == NULL, "Data parameter is NULL");
-	Setting_GenGroupItem_Data *list_item =
-			(Setting_GenGroupItem_Data *)data;
-	SettingStorageUG *ad = (SettingStorageUG *)list_item->userdata;
-
-	/* for genlist update status */
-	list_item->chk_status = elm_check_state_get(obj);
-	ad->misces_is_select_all = elm_check_state_get(obj);
-
 	SETTING_TRACE_ERROR("1");
-
 	Eina_List *l = NULL;
-	Evas_Object *toolbar;
+	Evas_Object *toolbar = NULL;
 	Node_Info *node = NULL;
 	Setting_GenGroupItem_Data *item_data = NULL;
 
-	SETTING_TRACE_ERROR("2 : ad->misces_is_select_all--->%d",
-			ad->misces_is_select_all);
+	if (!ad)
+		return;
+
+	SETTING_TRACE_ERROR("2 : ad->misces_is_select_all--->%d", ad->misces_is_select_all);
 	SETTING_TRACE_ERROR("ad->misces_list--->%x", ad->misces_list);
 	EINA_LIST_FOREACH(ad->misces_list, l, node)
 	{
@@ -641,6 +627,23 @@ static inline void setting_storage_select_all_chk_btn_cb(void *data,
 				"********** SET TO ZERO ad->misces_checked = 0");
 	}
 	SETTING_TRACE_ERROR("5");
+}
+
+/**
+ * "Select All" - check button handler
+ */
+static inline void setting_storage_select_all_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	/* error check */
+	retm_if(data == NULL, "Data parameter is NULL");
+	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
+	SettingStorageUG *ad = (SettingStorageUG *)list_item->userdata;
+
+	list_item->chk_status = elm_check_state_get(obj);/*	for genlist update status */
+	ad->misces_is_select_all = elm_check_state_get(obj);
+
+	__select_all_items(ad);
 }
 
 /**
@@ -1007,78 +1010,24 @@ static void storageUg_misces_sel_all_clicked(void *data, Evas_Object *obj,
 		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	Eina_List *l = NULL;
-	Evas_Object *toolbar;
 	Node_Info *node = NULL;
 	SettingStorageUG *ad = data;
-	/*Setting_GenGroupItem_Data *list_item =
-	 * (Setting_GenGroupItem_Data *) data; */
-
 	Setting_GenGroupItem_Data *item_data = NULL;
+	Elm_Object_Item *item = event_info;
 
 	SETTING_TRACE_ERROR("1");
-
 	ret_if(data == NULL);
 
-	ad->misces_is_select_all = elm_check_state_get(obj);
+	elm_genlist_item_selected_set(item, 0);
+	item_data = elm_object_item_data_get(item);
+	if (item_data) {
+		node = item_data->userdata;
 
-	SETTING_TRACE_ERROR("2 : ad->misces_is_select_all--->%d",
-			ad->misces_is_select_all);
-	SETTING_TRACE_ERROR("ad->misces_list--->%x", ad->misces_list);
-	EINA_LIST_FOREACH(ad->misces_list, l, node)
-	{
-		if (node && node->data) {
-			item_data = node->data;
-			SETTING_TRACE_ERROR("2.1");
-			if (item_data) {
-				item_data->chk_status =
-						(ad->misces_is_select_all == 1) ?
-								0 : 1;
-				SETTING_TRACE_ERROR("2.2");
-				elm_object_item_data_set(item_data->item,
-						item_data);
-				SETTING_TRACE_ERROR("2.3");
-				storageUg_misces_handle_sel_list(ad, node->id,
-						item_data->chk_status);
-				SETTING_TRACE_ERROR("2.4");
-			}
-		}
+		setting_update_gl_item_chk_status(item_data, !(item_data->chk_status));
+		storageUg_misces_handle_sel_list(ad, node->id, item_data->chk_status);
+		ad->misces_is_select_all = item_data->chk_status;
+		__select_all_items(ad);
 	}
-
-	SETTING_TRACE_ERROR("3");
-	elm_genlist_realized_items_update(ad->gl_misces);
-
-	SETTING_TRACE_ERROR("4");
-	bool select_all_state = (ad->misces_is_select_all == 1) ? 0 : 1;
-
-	if (select_all_state) {
-		char text[MAX_DISPLAY_NAME_LEN_ON_UI] = { 0 };
-
-		snprintf(text, sizeof(text), _(STORAGEUG_STR_N_SELECTED),
-				ad->misces_sz_all);
-		elm_object_item_part_text_set(ad->misces_navi_it, "subtitle",
-				text);
-
-		toolbar = elm_object_item_part_content_get(ad->misces_navi_it,
-				"toolbar");
-		elm_object_item_disabled_set(elm_toolbar_last_item_get(toolbar),
-				EINA_FALSE);
-		ad->misces_checked = ad->misces_sz_all;
-	} else {
-		elm_object_item_part_text_set(ad->misces_navi_it, "subtitle",
-				"");
-		elm_object_item_signal_emit(ad->misces_navi_it,
-				"elm,state,subtitle,hide", "elm");
-
-		toolbar = elm_object_item_part_content_get(ad->misces_navi_it,
-				"toolbar");
-		elm_object_item_disabled_set(elm_toolbar_last_item_get(toolbar),
-				EINA_TRUE);
-		ad->misces_checked = 0;
-		SETTING_TRACE_ERROR(
-				"********** SET TO ZERO ad->misces_checked = 0");
-	}
-	SETTING_TRACE_ERROR("5");
 }
 
 /**
