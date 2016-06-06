@@ -19,7 +19,9 @@
 #include <appsvc.h>
 #include <aul_svc.h>
 #include <package_manager.h>
-#include <privilege_information.h>
+//#include <privilege_information.h>
+#include <privilege_info.h>
+//#include <privilege_manager.h>
 
 #include "setting-appmgr-utils.h"
 #include "setting-appmgr-pkginfo-utils.h"
@@ -239,33 +241,28 @@ static inline void appmgrUg_pkg_append_website(SettingAppMgrUG *ad)
 static inline void appmgrUg_pkg_append_privilege(SettingAppMgrUG *ad)
 {
 	SETTING_TRACE_BEGIN;
-#if 0
-	int ret;
-#endif
-	appmgr_pkginfo *info;
-	/*Elm_Object_Item *sep_it; */
-	Setting_GenGroupItem_Data *title_itdata;
+	int ret = 0;
+	appmgr_pkginfo *info = NULL;
+	package_info_h pkginfo_h = NULL;
+	Setting_GenGroupItem_Data *title_itdata = NULL;
 
 	ret_if(NULL == ad);
 	ret_if(NULL == ad->pkginfo);
 
 	info = ad->pkginfo;
 
-	/*sep_it = appmgrUg_append_separator(ad->gl_pkg, ad); */
-
 	title_itdata = setting_create_Gendial_field_titleItem(ad->gl_pkg,
 			&(ad->itc_grp_title),
 			MGRAPP_STR_PRIVILEGE, NULL);
 
 	info->first_prv = NULL;
-#if 0
-	/*Deprecated API */
+
+	/* Deprecated API */
 	ret = privilege_info_foreach_privilege_group_list_by_pkgid(info->pkgid,
 			appmgrUg_pkg_get_privileges_grp_iter, ad);
-	warn_if(PRVINFO_ERROR_NONE != ret,
+	warn_if(PRVMGR_ERR_NONE != ret,
 			"privilege_info_foreach_privilege_group_list_by_pkgid() Fail(%d)",
 			ret);
-#endif
 
 	if (NULL == info->first_prv) {
 		SETTING_TRACE_ERROR("No privilege");
