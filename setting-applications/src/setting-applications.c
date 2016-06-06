@@ -18,11 +18,10 @@
  * limitations under the License.
  *
  */
-
-#include <setting-applications.h>
-
+#include <appfw/app_control_internal.h>
 #include <Eina.h>
 
+#include <setting-applications.h>
 #include <setting-cfg.h>
 
 #define SETTING_BRIGHTNESS_DEFAULT_LEVEL 60
@@ -69,6 +68,122 @@ static void setting_applications_ug_cb_resize(void *data, Evas *e,
 	setting_view_update(ad->view_to_load, ad);
 }
 
+char *_main_gl_label_new_get(void *data, Evas_Object *obj,
+		const char *part)
+{
+	SETTING_TRACE_BEGIN;
+	default_app *info = data;
+	retv_if(data == NULL, NULL);
+	char *label = NULL;
+	SETTING_TRACE("part:[%s]", part);
+
+	if (0 == strcmp(part, "elm.text")) {
+		label = SAFE_STRDUP(info->pkg_label);
+		SETTING_TRACE("##label:[%s]", label);
+	}
+	return label;
+}
+
+char *appmgrUg_get_defualt_icon(pkgmgrinfo_appinfo_h handle)
+{
+	int ret;
+	char *type;
+	const char *icon;
+	const char *svc_icon = SETTING_ICON_PATH
+	"/default_icon_service.png";
+	const char *app_icon = SETTING_ICON_PATH
+	"/mainmenu.png";
+
+	ret = pkgmgrinfo_appinfo_get_component_type(handle, &type);
+	if (PMINFO_R_OK == ret) {
+		if (0 == safeStrCmp(type, "svcapp"))
+			icon = svc_icon;
+		else
+			icon = app_icon;
+	} else {
+		SETTING_TRACE_ERROR(
+				"pkgmgrinfo_appinfo_get_component_type() Fail(%d)",
+				ret);
+		icon = app_icon;
+	}
+
+	return strdup(icon);
+}
+static void clear_default_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	ret_if(data == NULL);
+	default_app *info = data;
+	int ret = -1;
+
+	if (NULL != info->pkgid){
+		ret = app_control_unset_defapp(info->pkgid);
+		if (ret != APP_CONTROL_ERROR_NONE) {
+			SETTING_TRACE_ERROR("app_control_unset_defapp() Fail(%d)", ret);
+		}
+	}
+
+	elm_object_item_del(info->item);
+
+}
+
+
+Evas_Object *_info_1button1_gl_icon_get(void *data, Evas_Object *obj,
+		const char *part)
+{
+	SETTING_TRACE_BEGIN;
+	retv_if(data == NULL, NULL);
+	default_app *info = data;
+
+	SETTING_TRACE("part:[%s]", part);
+
+	if (!safeStrCmp(part, "elm.swallow.icon"))
+	{
+		Evas_Object *icon = NULL;
+		icon = elm_icon_add(obj);
+		SETTING_TRACE("path:[%s]", info->icon_path);
+		if (NULL == info->icon_path){
+			char *_icon;
+			pkgmgrinfo_appinfo_h handle = NULL;
+
+			int ret = pkgmgrinfo_appinfo_get_appinfo(info->pkgid, &handle);
+			warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_appinfo_get_appinfo() Fail(%d)",
+					ret);
+
+			_icon = appmgrUg_get_defualt_icon(handle);
+
+			SETTING_TRACE(" ==> appid [%s], icon [%s]", info->pkgid, _icon);
+
+			pkgmgrinfo_appinfo_destroy_appinfo(handle);
+		}
+
+		elm_image_file_set(icon, info->icon_path, NULL);
+		elm_image_resizable_set(icon, EINA_TRUE, EINA_TRUE);
+		evas_object_size_hint_align_set(icon, EVAS_HINT_FILL, EVAS_HINT_FILL);
+		evas_object_size_hint_min_set(icon, SETTING_APP_MGR_ICON_SIZE,
+				SETTING_APP_MGR_ICON_SIZE);
+		evas_object_show(icon);
+		SETTING_TRACE_BEGIN;
+		return icon;
+
+	} else if(!safeStrCmp(part, "elm.swallow.end")) {
+		SETTING_TRACE_BEGIN;
+		Evas_Object *button = NULL;
+
+		button = elm_button_add(obj);
+		SETTING_TRACE_BEGIN;
+		elm_object_text_set(button, "Clear");
+		evas_object_size_hint_align_set(button, EVAS_HINT_FILL, EVAS_HINT_FILL);
+		evas_object_size_hint_min_set(button, 160, 60);
+		evas_object_size_hint_max_set(button, 160, 60);
+		evas_object_show(button);
+		evas_object_smart_callback_add(button, "clicked", clear_default_cb, info);
+
+		return button;
+	} else
+		return NULL;
+}
+
 static void *setting_applications_ug_on_create(ui_gadget_h ug,
 		enum ug_mode mode, app_control_h service, void *priv)
 {
@@ -97,16 +212,24 @@ static void *setting_applications_ug_on_create(ui_gadget_h ug,
 			&(applicationsUG->itc_2text_2));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
 			&(applicationsUG->itc_1text_1icon));
-
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
 			&(applicationsUG->itc_1icon_1text_sub));
-
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
 			&(applicationsUG->itc_1text));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
 			&(applicationsUG->itc_2text_3));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
 			&(applicationsUG->itc_1text_1icon_divider));
+	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE,
+			&(applicationsUG->itc_grp_title));
+
+	applicationsUG->itc_1icon_1button.item_style = SETTING_GENLIST_2LINE_STYLE;
+	applicationsUG->itc_1icon_1button.func.text_get = _main_gl_label_new_get;
+	applicationsUG->itc_1icon_1button.func.content_get =
+			_info_1button1_gl_icon_get;
+	applicationsUG->itc_1icon_1button.func.state_get = NULL;
+	applicationsUG->itc_1icon_1button.func.del = NULL;
+
 
 	/*	creating a view. */
 	applicationsUG->view_to_load = __get_applications_view_to_load(
