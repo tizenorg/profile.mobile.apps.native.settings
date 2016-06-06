@@ -17,6 +17,7 @@
  *
  */
 #include <appsvc.h>
+#include <aul_svc.h>
 #include <package_manager.h>
 #include <privilege_information.h>
 
@@ -193,17 +194,23 @@ static inline void appmgrUg_pkg_append_default(SettingAppMgrUG *ad)
 	}
 
 	/*info->def_sep = appmgrUg_append_separator(ad->gl_pkg, ad); */
+	char *appid = cur->data;
+	int ret = aul_svc_is_defapp(appid);
 
 	setting_create_Gendial_field_titleItem(ad->gl_pkg, &(ad->itc_grp_title),
-	MGRAPP_STR_LAUNCH_BY_DEFAULT, NULL);
-
-	setting_create_Gendial_field_def(ad->gl_pkg, &ad->itc_1txt,
-			appmgrUg_pkg_clear_default, ad, SWALLOW_Type_INVALID,
-			NULL, NULL, 0,
-			MGRAPP_STR_CLEAR_DEFAULTS, NULL, NULL);
+			MGRAPP_STR_LAUNCH_BY_DEFAULT, NULL);
+	Setting_GenGroupItem_Data *data = setting_create_Gendial_field_def(
+		ad->gl_pkg, &ad->itc_1txt,
+		appmgrUg_pkg_clear_default, ad, SWALLOW_Type_INVALID,
+		NULL, NULL, 0,
+		MGRAPP_STR_CLEAR_DEFAULTS, NULL, NULL);
 
 	setting_create_Gendial_field_titleItem(ad->gl_pkg, &ad->itc_multiline,
-	MGRAPP_STR_DEFAULT_DESC, NULL);
+			MGRAPP_STR_DEFAULT_DESC, NULL);
+	if(1 != ret)
+	{
+		elm_object_item_disabled_set(data->item, EINA_TRUE);
+	}
 }
 
 static inline void appmgrUg_pkg_append_website(SettingAppMgrUG *ad)

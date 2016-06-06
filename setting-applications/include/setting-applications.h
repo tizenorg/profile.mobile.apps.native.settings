@@ -24,6 +24,10 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <glib.h>
+#include <pkgmgr-info.h>
+#include <package-manager.h>
+
 #include <Elementary.h>
 
 
@@ -39,6 +43,8 @@
 /*#include <devman.h> */
 
 #include <pkgmgr-info.h>
+
+#define SAFE_STRDUP(src) (src)?strdup(src):NULL
 
 #define Keystr_Dynamic		"IDS_ST_BODY_DYNAMIC_T_DISPLAY_EFFECT"
 #define Keystr_Standard		"IDS_ST_BODY_STANDARD_T_DISPLAY_EFFECT"
@@ -194,6 +200,8 @@ struct _SettingApplicationsUG {
 	Elm_Genlist_Item_Class itc_2text_3;
 	Elm_Genlist_Item_Class itc_1text_1icon_divider;
 	Elm_Genlist_Item_Class itc_1icon;
+	Elm_Genlist_Item_Class itc_grp_title;
+	Elm_Genlist_Item_Class itc_1icon_1button;
 	Elm_Genlist_Item_Class itc_variable_height;
 	Elm_Genlist_Item_Class itc_2text_3_parent_backlight;
 	Elm_Genlist_Item_Class itc_2text_3_parent_touch_duration;
@@ -223,6 +231,8 @@ struct _SettingApplicationsUG {
 	DBusConnection *bus;
 	char *uri;
 
+	GList *pkg_list;
+
 	/*for brightness*/
 	Eina_Bool is_event_registered;
 	int last_requested_level;
@@ -242,6 +252,15 @@ struct _SettingApplicationsUG {
 extern setting_view setting_view_applications_main;
 extern setting_view setting_view_applications_defaultapp;
 
+typedef struct _default_app{
+	Elm_Object_Item *item;
+
+	int defapp;
+	char *pkgid;
+	char *icon_path;
+	char *pkg_label;
+
+} default_app;
 
 void setting_applications_layout_ug_cb(
 		ui_gadget_h ug, enum ug_mode mode, void *priv);
