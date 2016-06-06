@@ -95,6 +95,7 @@ BuildRequires:  pkgconfig(bundle)
 BuildRequires:  pkgconfig(notification)
 BuildRequires:  pkgconfig(callmgr_client)
 BuildRequires:  pkgconfig(privilege-info)
+BuildRequires:  pkgconfig(security-privilege-manager)
 #BuildRequires:	pkgconfig(capi-location-manager)
 BuildRequires:  pkgconfig(auth-fw)
 BuildRequires:  pkgconfig(dpm)
@@ -106,7 +107,7 @@ BuildRequires:  gettext-tools
 BuildRequires:  hash-signer
 #BuildRequires:  system-resource-devel-meta
 #Requires: libeas-common
-Requires: security-privilege-manager
+#Requires: security-privilege-manager
 Requires(post): attr
 
 %description
