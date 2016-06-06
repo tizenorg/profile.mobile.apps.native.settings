@@ -17,6 +17,8 @@
  *
  */
 #include <appsvc.h>
+#include <appfw/app_control_internal.h>
+#include <aul_svc.h>
 #include <privilege_information.h>
 #include <app2ext_interface.h>
 
@@ -24,6 +26,8 @@
 
 #include "setting-appmgr-utils.h"
 #include "setting-appmgr-pkginfo-utils.h"
+
+#define DEFAULT_CLEAR_TEXT "To clear default app settings, go to Settings > Apps > Default apps, then tap Clear"
 
 static UNUSED int appmgrUg_pkg_get_privileges_help(const char *privilege,
 		void *user_data)
@@ -752,8 +756,18 @@ void appmgrUg_pkg_webapp_ug(void *data, Evas_Object *obj, void *event_info)
 	SETTING_TRACE_END;
 }
 
+void appmgrUg_pkg_clear_default_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	ret_if(NULL == data);
+	SettingAppMgrUG *ad = data;
+	if (ad->popup)
+		evas_object_del(ad->popup);
+}
+
 void appmgrUg_pkg_clear_default(void *data, Evas_Object *obj, void *event_info)
 {
+	SETTING_TRACE_BEGIN;
 	GList *cur;
 	appmgr_pkginfo *info;
 	SettingAppMgrUG *ad = data;
@@ -772,24 +786,33 @@ void appmgrUg_pkg_clear_default(void *data, Evas_Object *obj, void *event_info)
 	while (cur) {
 		int ret;
 		char *appid = cur->data;
+		char appname[255];
+
+		ret = aul_svc_is_defapp(appid);
+		if (appid && 1 == ret)
+		{
+			SETTING_TRACE_ERROR("#>>> ONA JEST TA APPKA!!");
+		}
 
 		cur = cur->next;
 
 		if (NULL == appid)
 			continue;
 
-		/*TODO */
-		/* There is problem with app-svc API which use */
-		/* aul_svc_unset_defapp_for_uid(const char *defapp, uid_t uid);
-		 * (v.1.53) */
-		/* instead of aul_svc_unset_all_defapps(const char *defapp);
-		 * (v.1.78) */
+		if (ad->popup)
+			evas_object_del(ad->popup);
 
-		/*ret = appsvc_unset_defapp(appid); */
-		/*FIXME */
-		ret = APPSVC_RET_OK;
-		warn_if(APPSVC_RET_OK != ret, "appsvc_unset_defapp() Fail(%d)",
-				ret);
+		ad->popup = setting_create_popup(
+				ad,
+				ad->win,
+				"Clear default app settings",
+				DEFAULT_CLEAR_TEXT,
+				appmgrUg_pkg_clear_default_cb,
+				0,
+				FALSE,
+				FALSE,
+				1,
+				MGRAPP_STR_OK);
 	}
 
 	/* clear default separator */
