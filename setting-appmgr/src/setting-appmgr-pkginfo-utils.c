@@ -25,6 +25,9 @@
 #include "setting-appmgr-utils.h"
 #include "setting-appmgr-pkginfo-utils.h"
 
+#define DEFAULT_CLEAR_TEXT "To clear default app settings, go to \
+	Settings > Apps > Default apps, then tap Clear"
+
 static UNUSED int appmgrUg_pkg_get_privileges_help(const char *privilege,
 		void *user_data)
 {
@@ -752,63 +755,36 @@ void appmgrUg_pkg_webapp_ug(void *data, Evas_Object *obj, void *event_info)
 	SETTING_TRACE_END;
 }
 
+void appmgrUg_pkg_clear_default_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	ret_if(NULL == data);
+	SettingAppMgrUG *ad = data;
+	if (ad->popup)
+		evas_object_del(ad->popup);
+}
+
 void appmgrUg_pkg_clear_default(void *data, Evas_Object *obj, void *event_info)
 {
-	GList *cur;
-	appmgr_pkginfo *info;
 	SettingAppMgrUG *ad = data;
-	Elm_Object_Item *next;
 	Elm_Object_Item *item = event_info;
 
 	ret_if(NULL == data);
 	ret_if(NULL == ad->pkginfo);
 	ret_if(NULL == event_info);
 
-	info = ad->pkginfo;
-
 	elm_genlist_item_selected_set(item, EINA_FALSE);
 
-	cur = info->appids;
-	while (cur) {
-		int ret;
-		char *appid = cur->data;
-
-		cur = cur->next;
-
-		if (NULL == appid)
-			continue;
-
-		/*TODO */
-		/* There is problem with app-svc API which use */
-		/* aul_svc_unset_defapp_for_uid(const char *defapp, uid_t uid);
-		 * (v.1.53) */
-		/* instead of aul_svc_unset_all_defapps(const char *defapp);
-		 * (v.1.78) */
-
-		/*ret = appsvc_unset_defapp(appid); */
-		/*FIXME */
-		ret = APPSVC_RET_OK;
-		warn_if(APPSVC_RET_OK != ret, "appsvc_unset_defapp() Fail(%d)",
-				ret);
-	}
-
-	/* clear default separator */
-	next = elm_genlist_item_next_get(info->def_sep);
-	elm_object_item_del(info->def_sep);
-	info->def_sep = NULL;
-
-	/* clear default title */
-	item = next;
-	next = elm_genlist_item_next_get(next);
-	elm_object_item_del(item);
-
-	/* clear default button */
-	item = next;
-	next = elm_genlist_item_next_get(next);
-	elm_object_item_del(item);
-
-	/* clear default notice */
-	elm_object_item_del(next);
+	ad->popup = setting_create_popup(
+			ad,
+			ad->win,
+			"Clear default app settings",
+			DEFAULT_CLEAR_TEXT,
+			appmgrUg_pkg_clear_default_cb,
+			0,
+			FALSE,
+			FALSE,
+			1,
+			MGRAPP_STR_OK);
 
 	setting_view_update(ad->main_view, ad);
 }

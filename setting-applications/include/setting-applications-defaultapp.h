@@ -28,7 +28,8 @@
 #define KeyStr_Brightness_Auto_Adjust "IDS_ST_BODY_ADJUST_AUTOMATIC_BRIGHTNESS"
 #define KeyStr_Brightness_Overheating \
 	"IDS_ST_BODY_TO_AVOID_OVERHEATING_MAXIMUM_BRIGHTNESS_HAS_BEEN_REDUCED"
-
+#define MGRAPP_STR_LAUNCH_BY_DEFAULT "IDS_ST_BODY_LAUNCH_BY_DEFAULT"
+#define MGRAPP_STR_CLEAR_DEFAULT "IDS_ST_BODY_CLEAR_DEFAULTS"
 
 void __display_int_vconf_cb(keynode_t *key, void *data);
 
