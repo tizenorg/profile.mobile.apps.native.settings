@@ -1397,6 +1397,27 @@ void setting_sound_notifications_layout_ug_cb(ui_gadget_h ug,
 	SETTING_TRACE_END;
 }
 
+
+void setting_sound_update_donotdisturb_item(void *data)
+{
+	SETTING_TRACE_BEGIN;
+	ret_if(data == NULL);
+	
+	SettingProfileUG *ad = (SettingProfileUG *) data;
+
+	elm_genlist_realized_items_update(ad->gl_lite_main);
+
+	/* do not disturb */
+	if (ad->data_do_not_disturb) {
+		char *sub_desc = setting_do_not_disturb_is_enable(data);
+		ad->data_do_not_disturb->sub_desc = (char *)strdup(sub_desc);
+		elm_object_item_data_set(ad->data_do_not_disturb->item, ad->data_do_not_disturb);
+		elm_genlist_item_update(ad->data_do_not_disturb->item);
+	}
+
+}
+
+
 static void
 setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 		Evas_Object *obj,
@@ -1410,7 +1431,7 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 	elm_genlist_item_selected_set(item, 0);
 	Setting_GenGroupItem_Data *list_item = elm_object_item_data_get(item);
 
-	SettingProfileUG *ad = data;
+	SettingProfileUG *ad = (SettingProfileUG *)data;
 
 	if (SETTING_RETURN_SUCCESS != setting_sound_close_all_mm_players(ad)) {
 		SETTING_TRACE_ERROR("close player fail.");
@@ -1447,6 +1468,9 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 		app_control_set_app_id(service,
 				"org.tizen.setting-notification");
 		app_control_set_operation(service, DO_NOT_DISTURB_OP);
+
+		elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
+		
 		app_control_send_launch_request(service, NULL, NULL);
 		app_control_destroy(service);
 #endif
@@ -1476,6 +1500,9 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 		app_control_set_app_id(
 				service,"org.tizen.setting-notification");
 		app_control_set_operation(service, APP_NOTIFICATIONS_OP);
+
+		elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
+		
 		app_control_send_launch_request(service, NULL, NULL);
 		app_control_destroy(service);
 

@@ -19,11 +19,42 @@
  *
  */
 
+#include <app_manager.h>
 #include <setting-profile.h>
 
 #ifndef UG_MODULE_API
 #define UG_MODULE_API __attribute__ ((visibility("default")))
 #endif
+
+
+
+extern void setting_sound_update_donotdisturb_item(void *data);
+
+static  void appmgr_event_cb(app_context_h app_context, app_context_event_e event, void *user_data)
+{
+	SETTING_TRACE_BEGIN;
+
+	SETTING_TRACE_DEBUG("event : %d",event);			
+
+	char *app_id=NULL;
+	app_context_get_app_id ( app_context,    &app_id);
+
+	SETTING_TRACE_DEBUG("app_id: %x",app_id);			
+	if(app_id) {
+		SETTING_TRACE_DEBUG("app_id str: %s",app_id);			
+	}
+
+	
+	if( event == APP_CONTEXT_EVENT_TERMINATED){
+
+		if(app_id && safeStrCmp("org.tizen.setting-notification", app_id)==0){
+			SETTING_TRACE("org.tizen.setting-notification is terminated");			
+			
+			setting_sound_update_donotdisturb_item(user_data);
+		}
+	}
+
+}
 
 
 static void setting_sound_ug_cb_resize(void *data, Evas *e,
@@ -57,6 +88,9 @@ static void *setting_sound_ug_on_create(ui_gadget_h ug,
 	evas_object_event_callback_add(profileUG->win_main_layout,
 								   EVAS_CALLBACK_RESIZE,
 								   setting_sound_ug_cb_resize, profileUG);
+
+	app_manager_set_app_context_event_cb(appmgr_event_cb, priv);
+	
 	return profileUG->ly_main;
 }
 
@@ -66,6 +100,8 @@ static void setting_sound_ug_on_start(ui_gadget_h ug, app_control_h service, voi
 
 static void setting_sound_ug_on_pause(ui_gadget_h ug, app_control_h service, void *priv)
 {
+	app_manager_unset_app_context_event_cb();
+
 	ret_if(priv == NULL);
 	SettingProfileUG *profileUG = (SettingProfileUG *)priv;
 

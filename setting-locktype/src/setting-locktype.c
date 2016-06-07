@@ -154,7 +154,8 @@ static void *setting_locktype_ug_on_create(ui_gadget_h ug,
 	app_control_get_extra_data(service, "caller", &(locktypeUG->caller));
 	if (locktypeUG->caller && !safeStrCmp(locktypeUG->caller, "encryption")) {
 		locktypeUG->viewtype = SETTING_LOCKTYPE_VIEWTYPE_ENCRYPTION;
-	} else if (locktypeUG->caller && !safeStrCmp(locktypeUG->caller, "lockscreen")) {
+	} 
+	else if (locktypeUG->caller && !safeStrCmp(locktypeUG->caller, "lockscreen")) {
 		locktypeUG->viewtype = SETTING_LOCKTYPE_VIEWTYPE_RECOVERY;
 		vconf_set_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, SETTING_SCREEN_LOCK_TYPE_SWIPE);
 #if SECURITY_SERVER
@@ -162,7 +163,8 @@ static void *setting_locktype_ug_on_create(ui_gadget_h ug,
 //??		int result = auth_passwd_reset_passwd(AUTH_PWD_NORMAL,uid, "0000");
 //		SETTING_TRACE_DEBUG("reset_pwd result : %d", result);
 #endif
-	} else {
+	}
+	else {
 		locktypeUG->viewtype = SETTING_LOCKTYPE_VIEWTYPE_MAIN;
 	}
 	FREE(locktypeUG->caller);
@@ -401,6 +403,11 @@ gboolean setting_locktype_create_password_sg(void *data)
 
 	if (ad->input_pwd)
 		app_control_add_extra_data(svc, "current", ad->input_pwd);
+
+	if (ad->caller && !safeStrCmp(ad->caller, "DPM")) {
+		app_control_add_extra_data(svc, "caller", "DPM");
+	}
+
 
 	elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
 	ad->ug_passwd = setting_ug_create(ad->ug, "setting-password-efl", UG_MODE_FULLVIEW, svc, cbs);
