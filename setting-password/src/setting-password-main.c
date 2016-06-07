@@ -277,21 +277,17 @@ static void setting_password_main_entry_changed_cb(void *data, Evas_Object *obj,
 	list_item->sub_desc = (char *) g_strdup(entry_str);
 	bool isFoundEmptyEntry = FALSE;
 
-	do {
-		if (ad->ed_pw1) {
-			entry_str = ad->ed_pw1->sub_desc;
-			if (NULL == entry_str || '\0' == entry_str[0]) {
-				isFoundEmptyEntry = TRUE;
-				elm_object_item_signal_emit(ad->ed_pw1->item,
-						"elm,state,eraser,hide", "");
-				break;
-			} else {
-				elm_object_item_signal_emit(ad->ed_pw1->item,
-						"elm,state,eraser,show", "");
-				break;
-			}
+	if (ad->ed_pw1) {
+		entry_str = ad->ed_pw1->sub_desc;
+		if (NULL == entry_str || '\0' == entry_str[0]) {
+			isFoundEmptyEntry = TRUE;
+			elm_object_item_signal_emit(ad->ed_pw1->item,
+					"elm,state,eraser,hide", "");
+		} else {
+			elm_object_item_signal_emit(ad->ed_pw1->item,
+					"elm,state,eraser,show", "");
 		}
-	} while (0);
+	}
 
 	Eina_Bool item_disabled = elm_object_item_disabled_get(list_item->item);
 	if (item_disabled)
@@ -468,7 +464,7 @@ int setting_password_main_draw_1line_password(void *data, void *cb)
 				__reached_max_pwlength_cb,
 				ELM_INPUT_PANEL_LAYOUT_PASSWORD,
 				TRUE,
-				TRUE,
+				FALSE,
 				SETTING_PW_UG_NORMAL_PASSWORD_MAX_LENGTH,
 				0,
 				NULL,
@@ -502,7 +498,7 @@ int setting_password_main_draw_1line_password(void *data, void *cb)
 				__reached_max_pwlength_cb,
 				ELM_INPUT_PANEL_LAYOUT_PASSWORD,
 				TRUE,
-				TRUE,
+				FALSE,
 				SETTING_PW_UG_NORMAL_PASSWORD_MAX_LENGTH,
 				0,
 				NULL,
@@ -660,7 +656,7 @@ int setting_password_main_check_1line_password(void *data)
 	/*char* plain_str = elm_entry_markup_to_utf8(ad->ed_pw1->sub_desc); */
 	ad->focus_data = ad->ed_pw1;
 
-	/*	Empty Check */
+	/* Empty Check */
 	if (isEmptyStr(entry_str)) {
 		setting_password_ug_display_desc(ad,
 				_("IDS_ST_BODY_PASSWORD_EMPTY"),
@@ -669,7 +665,7 @@ int setting_password_main_check_1line_password(void *data)
 		return SETTING_ENTRY_RETURN_NULL_STR_ERR;
 	}
 
-	/*	Length Check */
+	/* Length Check */
 	int entry_str_len = safeStrLen(entry_str);
 	if (entry_str_len < SETTING_PW_UG_NORMAL_PASSWORD_MIN_LENGTH
 			|| entry_str_len > SETTING_PW_UG_NORMAL_PASSWORD_MAX_LENGTH) {
@@ -706,7 +702,7 @@ int setting_password_main_check_2line_password(void *data)
 
 	ad->focus_data = ad->ed_pw1;
 
-	/*	Empty Check */
+	/* Empty Check */
 	if (isEmptyStr(entry_str1_mk)) {
 		setting_password_ug_display_desc(
 				ad,
@@ -717,7 +713,7 @@ int setting_password_main_check_2line_password(void *data)
 		return SETTING_ENTRY_RETURN_NULL_STR_ERR;
 	}
 
-	/*	Match Check */
+	/* Match Check */
 	if (0 != safeStrCmp(entry_str1_mk, entry_str2_mk)) {
 		setting_password_main_clear_1line_password(ad);
 		setting_password_ug_display_desc(
@@ -729,7 +725,7 @@ int setting_password_main_check_2line_password(void *data)
 		return SETTING_ENTRY_NOT_MATCH_NEW_CONF_PW;
 	}
 
-	/*	Length Check */
+	/* Length Check */
 	int entry_str_len = safeStrLen(entry_str1_mk);
 	if (entry_str_len < SETTING_PW_UG_NORMAL_PASSWORD_MIN_LENGTH
 			|| entry_str_len > SETTING_PW_UG_NORMAL_PASSWORD_MAX_LENGTH) {
@@ -776,61 +772,57 @@ static void setting_password_main_done_password(void *data)
 	case SETTING_PW_TYPE_PASSWORD:
 		ret = setting_password_main_check_1line_password(ad);
 
-		if (ret == SETTING_RETURN_SUCCESS) {
-			const char *entry_str;
-			entry_str = ad->ed_pw1->sub_desc;
-			/*SETTING_TRACE(" ----> entry_str : %s ", entry_str); */
-			/*SETTING_TRACE(" ----> ad->view_type_string : %s ",
-			 * ad->view_type_string); */
-			unsigned int remain_attempt = ATTEMPT_INFINITE;
-			unsigned int valid_seconds = 0;
-
-			ret = setting_password_check_password(entry_str,
-					&remain_attempt, &valid_seconds);
-
-			if (ret == SETTING_RETURN_SUCCESS) {
-				int err;
-
-				if (safeStrCmp(ad->view_type_string,
-						"SETTING_PW_TYPE_PASSWORD")
-						== 0) {
-
-					/*	reset VCONF */
-					setting_set_int_slp_key(
-							INT_SLP_SETTING_PHONE_LOCK_ATTEMPTS_LEFT,
-							PHONE_LOCK_ATTEMPS_MAX,
-							&err);
-					if (err == SETTING_RETURN_FAIL) {
-						SETTING_TRACE_ERROR(
-								"[Error] set value of vconf fail.");
-						app_control_destroy(svc);
-						return;
-					}
-				} else if (0
-						== safeStrCmp(
-								ad->view_type_string,
-								"SETTING_PW_TYPE_ENTER_LOCK_TYPE")) {
-					app_control_add_extra_data(svc,
-							"current", entry_str);
-				}
-			} else {
-				/*	Incorrect Password. Display Popup.	 */
-				setting_password_main_clear_1line_password(ad);
-				ad->focus_data = ad->ed_pw1;
-				/*else */
-				/*{ */
-				/*	setting_password_ug_check_attemps_left(ad); */
-				/*	return; */
-				/*} */
-				setting_password_ug_display_desc(ad,
-				PW_ERR_DESC, FALSE);
-				app_control_destroy(svc);
-				return;
-			}
-		} else {
+		if (ret != SETTING_RETURN_SUCCESS) {
 			setting_password_main_clear_1line_password(ad);
 			app_control_destroy(svc);
 			return;
+		}
+
+		const char *entry_str;
+		entry_str = ad->ed_pw1->sub_desc;
+		/*SETTING_TRACE(" ----> entry_str : %s ", entry_str); */
+		/*SETTING_TRACE(" ----> ad->view_type_string : %s ",
+		 * ad->view_type_string); */
+		unsigned int remain_attempt = ATTEMPT_INFINITE;
+		unsigned int valid_seconds = 0;
+
+		ret = setting_password_check_password(entry_str,
+				&remain_attempt, &valid_seconds);
+
+		if (ret != SETTING_RETURN_SUCCESS) {
+			/* Incorrect Password. Display Popup.	 */
+			setting_password_main_clear_1line_password(ad);
+			ad->focus_data = ad->ed_pw1;
+			/*else */
+			/*{ */
+			/* setting_password_ug_check_attemps_left(ad); */
+			/* return; */
+			/*} */
+			setting_password_ug_display_desc(ad,
+			PW_ERR_DESC, FALSE);
+			app_control_destroy(svc);
+			return;
+		}
+
+		int err;
+		if (safeStrCmp(ad->view_type_string,
+				"SETTING_PW_TYPE_PASSWORD") == 0) {
+
+			/* reset VCONF */
+			setting_set_int_slp_key(
+					INT_SLP_SETTING_PHONE_LOCK_ATTEMPTS_LEFT,
+					PHONE_LOCK_ATTEMPS_MAX,
+					&err);
+			if (err == SETTING_RETURN_FAIL) {
+				SETTING_TRACE_ERROR(
+						"[Error] set value of vconf fail.");
+				app_control_destroy(svc);
+				return;
+			}
+		} else if (0 == safeStrCmp(ad->view_type_string,
+					"SETTING_PW_TYPE_ENTER_LOCK_TYPE")) {
+			app_control_add_extra_data(svc,
+					"current", entry_str);
 		}
 		break;
 
@@ -892,7 +884,7 @@ static void setting_password_main_done_password(void *data)
 			return;
 		}
 
-		/*	Display popup */
+		/* Display popup */
 		/*service_add_extra_data(svc, "current", entry_str); */
 		if (ad->set_history_timer) {
 			setting_password_ug_create_popup_notitle_nobtn(
