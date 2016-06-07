@@ -235,7 +235,7 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 	{	KeyStr_ApplicationsItem, IMG_Applications,
 		"setting-applications-efl",
 		Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0,
-		Cfg_Item_Ug_Node, NULL, KeyStr_Device, NULL,
+		Cfg_Item_AppLauncher_Node, NULL, KeyStr_Device, NULL,
 		uuid_Display, 0, "org.tizen.setting.display"},
 
 	/* Group: Personal */

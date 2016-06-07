@@ -26,7 +26,6 @@
 
 #include <Elementary.h>
 
-
 #include <glib-object.h>
 
 #include <setting-common-draw-widget.h>
@@ -134,7 +133,6 @@ struct _SettingApplicationsUG {
 	ui_gadget_h ug_appmgr;
 	ui_gadget_h ug_homescreen;
 	ui_gadget_h ug_passwd;
-	ui_gadget_h ug_ledindicator;
 
 	Evas_Object *ly_main;
 
@@ -145,41 +143,10 @@ struct _SettingApplicationsUG {
 
 	Setting_GenGroupItem_Data *data_home;
 
-	Setting_GenGroupItem_Data *data_screen_mode;
-	Setting_GenGroupItem_Data *data_br;
 	Setting_GenGroupItem_Data *data_back;
-	Setting_GenGroupItem_Data *data_br_auto;
-	Setting_GenGroupItem_Data *data_br_sli;
-	Setting_GenGroupItem_Data *data_adjust;
-	Setting_GenGroupItem_Data *data_overheating;
-
-	Setting_GenGroupItem_Data *data_br_adjustment;
-
-	Setting_GenGroupItem_Data *data_auto_rotate;
-	Setting_GenGroupItem_Data *data_tts;
-
-	/* smart screen */
-	Setting_GenGroupItem_Data *data_smart_stay;
-	Setting_GenGroupItem_Data *data_smart_rotation;
-	Setting_GenGroupItem_Data *data_auto_adjust_scrn_tone;
-	Setting_GenGroupItem_Data *data_dynamic;
-
 
 	Evas_Object *more_popup;
 	Ctxpopup_Data ctx_data;
-
-	Setting_GenGroupItem_Data *tilting_head;
-	Setting_GenGroupItem_Data *tilting_device;
-	Setting_GenGroupItem_Data *smart_scroll_speed;
-	Setting_GenGroupItem_Data *visual_feedback_display;
-	Setting_GenGroupItem_Data *scroll_speed_slider;
-	Setting_GenGroupItem_Data *try_tilting_head;
-	Setting_GenGroupItem_Data *try_tilting_device;
-	Setting_GenGroupItem_Data *data_smart_screen_image;
-	Setting_GenGroupItem_Data *data_smart_screen_rotation_image;
-
-	/*int bright_value; */
-	int low_bat;
 
 	setting_view *view_to_load;
 
@@ -190,29 +157,9 @@ struct _SettingApplicationsUG {
 	Elm_Genlist_Item_Class itc_1text_1icon;
 	Elm_Genlist_Item_Class itc_1icon_1text_sub;
 	Elm_Genlist_Item_Class itc_1text;
-	Elm_Genlist_Item_Class itc_screen_mode;
 	Elm_Genlist_Item_Class itc_2text_3;
-	Elm_Genlist_Item_Class itc_1text_1icon_divider;
-	Elm_Genlist_Item_Class itc_1icon;
-	Elm_Genlist_Item_Class itc_variable_height;
-	Elm_Genlist_Item_Class itc_2text_3_parent_backlight;
-	Elm_Genlist_Item_Class itc_2text_3_parent_touch_duration;
-	Elm_Genlist_Item_Class itc_1icon_1text_sub_back;
-	Elm_Genlist_Item_Class itc_1icon_1text_sub_touch;
-	Elm_Genlist_Item_Class itc_multiline_text;
-	Elm_Genlist_Item_Class itc_multiline_overheating;
 
-
-	ui_gadget_h ug_gallery;
-	ui_gadget_h ug_imageviewer;
 	Eina_Bool isLoading;
-	Setting_GenGroupItem_Data *data_backlight_always_on;
-	Setting_GenGroupItem_Data *data_backlight_15sec;
-	Setting_GenGroupItem_Data *data_backlight_30sec;
-	Setting_GenGroupItem_Data *data_backlight_1min;
-	Setting_GenGroupItem_Data *data_backlight_2min;
-	Setting_GenGroupItem_Data *data_backlight_5min;
-	Setting_GenGroupItem_Data *data_backlight_10min;
 	/*Improve response speed */
 	Ecore_Idler *set_idler;
 	Ecore_Timer *set_timer;

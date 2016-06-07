@@ -136,14 +136,6 @@ static int setting_applications_main_update(void *cb)
 
 	if (ad->ly_main != NULL) {
 		evas_object_show(ad->ly_main);
-		if (ad->data_br) {
-			ad->data_br->sub_desc = (char *)g_strdup(
-					get_brightness_mode_str());
-			elm_object_item_data_set(ad->data_br->item,
-					ad->data_br);
-			elm_genlist_item_update(ad->data_br->item);
-
-		}
 	}
 
 	return SETTING_RETURN_SUCCESS;

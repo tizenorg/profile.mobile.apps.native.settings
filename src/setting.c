@@ -128,7 +128,11 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 		 * @todo if app didn't launch UG, is the call required to
 		 * invoke?
 		 */
+#if 1
+		//ug_send_event(event);
+#else
 		ug_send_event(event);
+#endif
 		if (diff == 180) {
 			/* do nothing */
 		}
@@ -447,9 +451,9 @@ static void setting_main_app_pause(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	setting_main_appdata *ad = data;
-	if (ad->ug) {
-		ug_pause();
-	}
+//	if (ad->ug) {
+//		ug_pause();
+//	}
 }
 
 /**
@@ -460,13 +464,17 @@ static void setting_main_app_resume(void *data)
 	SETTING_TRACE_BEGIN;
 	setting_main_appdata *ad = data;
 
+#if 1
+	//_rot_changed_cb(ad, ad->win_main, NULL);/*to fix P131121-02103 */
+#else
 	_rot_changed_cb(ad, ad->win_main, NULL);/*to fix P131121-02103 */
-
+#endif
 	if (ad->is_searchmode % 10 == Cfg_Item_AppLauncher_Node) {
 		/* app-launching exit */
 		elm_exit();
 	}
 
+#if 0
 	if (!(ad->isInUGMode && ad->ug)) { /* top-level view is not on UG */
 		SETTING_TRACE("update main genlist in resuming app without UG");
 		Eina_Bool is_freezed = evas_object_freeze_events_get(ad->navibar_main);
@@ -475,9 +483,11 @@ static void setting_main_app_resume(void *data)
 			evas_object_freeze_events_set(ad->navibar_main, EINA_FALSE);
 		}
 
-	} else if (ad->ug) {
-		ug_resume();
 	}
+#endif
+	// else if (ad->ug) {
+	//	ug_resume();
+//	}
 }
 
 /**
