@@ -147,7 +147,7 @@ static int get_max_inactivity_time_device_lock_handler(int *max_inactivity_time)
 
 static void _pdm_handle(int radio_num, int max_inactivity_time, Setting_GenGroupItem_Data *data)
 {
-       if (timeout_val_list[radio_num] < max_inactivity_time)
+       if (timeout_val_list[radio_num] <= max_inactivity_time)
        {
                setting_enable_genlist_item(data->item);
        } else {
