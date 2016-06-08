@@ -35,6 +35,11 @@
 #define UG_MODULE_API __attribute__ ((visibility("default")))
 #endif
 
+SettingSecurityUG *g_ad; /* for tapi callback */
+COMMAND *g_ipHead, *g_ipTail;
+COMMAND *g_urlHead, *g_urlTail;
+COMMAND *g_portHead, *g_portTail;
+
 enum {
 	RESULT_OK, RESULT_FAILED, RESULT_CANCELED, RESULT_NETWORK_ERROR
 };
