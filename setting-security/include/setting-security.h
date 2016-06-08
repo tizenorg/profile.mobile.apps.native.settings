@@ -295,9 +295,9 @@ typedef struct _commandList {
 	struct _commandList *next;
 } COMMAND;
 
-COMMAND *g_ipHead, *g_ipTail;
-COMMAND *g_urlHead, *g_urlTail;
-COMMAND *g_portHead, *g_portTail;
+extern COMMAND *g_ipHead, *g_ipTail;
+extern COMMAND *g_urlHead, *g_urlTail;
+extern COMMAND *g_portHead, *g_portTail;
 
 #endif
 #define MAX_VOICE_TIME 4
@@ -495,7 +495,7 @@ extern setting_view setting_view_security_sim_settings;
 
 extern setting_view setting_view_security_update;
 
-SettingSecurityUG *g_ad; /* for tapi callback */
+extern SettingSecurityUG *g_ad; /* for tapi callback */
 
 /*char *get_screen_lock_type_str(void * priv); */
 void setting_security_result_password_ug_cb(ui_gadget_h ug,
