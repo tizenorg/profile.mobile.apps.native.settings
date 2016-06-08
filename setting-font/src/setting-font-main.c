@@ -464,17 +464,6 @@ static void __setting_progress_popup_cb(void *data, Evas_Object *obj,
 	ug_destroy_me(ad->ug);
 }
 
-static void _event_set_font_type_helper(char *font_name)
-{
-	int ret = system_settings_set_value_string(
-			SYSTEM_SETTINGS_KEY_FONT_TYPE, font_name);
-	if (ret == SYSTEM_SETTINGS_ERROR_NONE) {
-		/* on success */
-		SETTING_TRACE("SYSTEM_SETTINGS_KEY_FONT_TYPE is OK : %s",
-				font_name);
-	}
-}
-
 static Eina_Bool __slide_timer(void *data)
 {
 	SETTING_TRACE_BEGIN;
@@ -592,6 +581,8 @@ void setting_font_main_list_sel_cb(void *data, Evas_Object *obj,
 		G_FREE(tmp);
 		elm_entry_entry_set(ad->font_example->eo_check,
 				ad->font_example->sub_desc);
+
+		elm_genlist_item_fields_update(ad->font_example->item, "elm.text",ELM_GENLIST_ITEM_FIELD_ALL);
 	}
 
 	if (ad->init_font_type == data_subItem->chk_status) {
@@ -820,14 +811,19 @@ static Eina_Bool __font_change_call(void *data)
 
 	/* logic3 */
 	if (ad->size_change_flag == TRUE) {
-		system_settings_set_value_int(SYSTEM_SETTINGS_KEY_FONT_SIZE,
-				ad->ret_font_size);
+		int ret = system_settings_set_value_int(SYSTEM_SETTINGS_KEY_FONT_SIZE, ad->ret_font_size);
+		if (ret == SYSTEM_SETTINGS_ERROR_NONE) {
+			/* on success */
+			SETTING_TRACE("SYSTEM_SETTINGS_KEY_FONT_SIZE is OK : %d", ad->ret_font_size);
+		}
 	}
 
 	if (ad->type_change_flag == TRUE) {
-		/*	system_settings_set_value_string(
-		 * SYSTEM_SETTINGS_KEY_FONT_TYPE, ad->font_name); */
-		_event_set_font_type_helper(ad->font_name);
+		int ret = system_settings_set_value_string(SYSTEM_SETTINGS_KEY_FONT_TYPE, ad->font_name);
+		if (ret == SYSTEM_SETTINGS_ERROR_NONE) {
+			/* on success */
+			SETTING_TRACE("SYSTEM_SETTINGS_KEY_FONT_TYPE is OK : %s", ad->font_name);
+		}
 	}
 
 	/* finalize */
@@ -1082,6 +1078,9 @@ static int setting_font_main_create(void *cb)
 				ret);
 		ad->font_name = _get_default_font();
 	}
+	else{
+		SETTING_TRACE_DEBUG("ad->font_name dfrom vconf :%s", ad->font_name);
+	}
 
 	rgd = elm_radio_add(ad->genlist);
 	elm_radio_value_set(rgd, -1);
@@ -1122,6 +1121,9 @@ static int setting_font_main_create(void *cb)
 		i++;
 		ad->font_type_list = eina_list_append(ad->font_type_list,
 				item_data);
+	}
+	else {
+		SETTING_TRACE_DEBUG("default_font_name is NULL");		
 	}
 
 	Eina_List *font_list = NULL;
