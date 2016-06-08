@@ -179,15 +179,22 @@ typedef Eina_Bool(*setting_naviframe_cb)(void *data, Elm_Object_Item *it);
 
 #define SMALL_FONT_DPI			(-80)
 #define MIDDLE_FONT_DPI			(-100)
-#define LARGE_FONT_DPI			(-144)
-#define HUGE_FONT_DPI			(-184)
-#define GIANT_FONT_DPI			(-240)
+#define LARGE_FONT_DPI			(-150)
+#define HUGE_FONT_DPI			(-190)
+#define GIANT_FONT_DPI			(-250)
 
-#define LABEL_FONT_SIZE_SMALL		24
-#define LABEL_FONT_SIZE_NORMAL		35
-#define LABEL_FONT_SIZE_LARGE		55
-#define LABEL_FONT_SIZE_HUGE		75
-#define LABEL_FONT_SIZE_GIANT		92
+#define LABEL_FONT_SIZE_SMALL		32
+#define LABEL_FONT_SIZE_NORMAL	40
+#define LABEL_FONT_SIZE_LARGE		60
+#define LABEL_FONT_SIZE_HUGE		76
+#define LABEL_FONT_SIZE_GIANT		100
+
+#define STR_LABEL_FONT_SIZE_SMALL		"32"
+#define STR_LABEL_FONT_SIZE_NORMAL	"40"
+#define STR_LABEL_FONT_SIZE_LARGE		"60"
+#define STR_LABEL_FONT_SIZE_HUGE		"76"
+#define STR_LABEL_FONT_SIZE_GIANT		"100"
+
 
 #define __STR_EMUL			"emul"
 #define __LEN_STR_EMUL			4

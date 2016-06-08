@@ -885,23 +885,23 @@ static void __setting_get_font_size_str(void *data, int size)
 	SettingFontUG *ad = (SettingFontUG *) data;
 
 	switch (size) {
-	case 0:
-		ad->font_size_str = (char *) g_strdup("24");
+	case SYSTEM_SETTINGS_FONT_SIZE_SMALL:
+		ad->font_size_str = (char *) g_strdup(STR_LABEL_FONT_SIZE_SMALL);
 		break;
-	case 1:
-		ad->font_size_str = (char *) g_strdup("30");
+	case SYSTEM_SETTINGS_FONT_SIZE_NORMAL:
+		ad->font_size_str = (char *) g_strdup(STR_LABEL_FONT_SIZE_NORMAL);
 		break;
-	case 2:
-		ad->font_size_str = (char *) g_strdup("44");
+	case SYSTEM_SETTINGS_FONT_SIZE_LARGE:
+		ad->font_size_str = (char *) g_strdup(STR_LABEL_FONT_SIZE_LARGE);
 		break;
-	case 3:
-		ad->font_size_str = (char *) g_strdup("56");
+	case SYSTEM_SETTINGS_FONT_SIZE_HUGE:
+		ad->font_size_str = (char *) g_strdup(STR_LABEL_FONT_SIZE_HUGE);
 		break;
-	case 4:
-		ad->font_size_str = (char *) g_strdup("70");
+	case SYSTEM_SETTINGS_FONT_SIZE_GIANT:
+		ad->font_size_str = (char *) g_strdup(STR_LABEL_FONT_SIZE_GIANT);
 		break;
 	default:
-		ad->font_size_str = (char *) g_strdup("30");
+		ad->font_size_str = (char *) g_strdup(STR_LABEL_FONT_SIZE_NORMAL);
 	}
 }
 
