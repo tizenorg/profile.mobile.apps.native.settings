@@ -87,7 +87,6 @@ static void setting_sound_ug_on_resume(ui_gadget_h ug, app_control_h service,
 {
 	ret_if(priv == NULL);
 	SettingProfileUG *profileUG = (SettingProfileUG *)priv;
-
 	/* If current view is sound main, block volume app */
 	/* To prevent conflict with volume app */
 	if (!safeStrCmp(profileUG->viewtype, "com.samsung.volume")) {
@@ -201,6 +200,7 @@ static void setting_sound_ug_on_resume(ui_gadget_h ug, app_control_h service,
 			SND_SLIDER_MEDIA);
 	setting_sound_update_slider_icon(profileUG->data_touch_volume,
 			SND_SLIDER_SYSTEM);
+	setting_sound_update_do_not_disturb_item(profileUG);
 }
 
 static void setting_sound_ug_on_destroy(ui_gadget_h ug, app_control_h service,

@@ -164,6 +164,7 @@ extern void setting_sound_update_slider_icon(
 		Setting_GenGroupItem_Data *item_data, int type);
 extern Evas_Object *setting_sound_init(void *data);
 extern void setting_sound_deinit(void *data);
-char *setting_do_not_disturb_is_enable(void *data);
+extern char *setting_do_not_disturb_is_enable(void *data);
+extern void setting_sound_update_do_not_disturb_item(void *data);
 
 #endif

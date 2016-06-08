@@ -49,6 +49,20 @@ SliderIcons slider_icons[SND_SLIDER_MAX] = {
 	/*{SND_SLIDER_MAX,	"",				""} */
 };
 
+void setting_sound_update_do_not_disturb_item(void *data)
+{
+	SettingProfileUG *ad = (SettingProfileUG *) data;
+	const char *sub_desc = NULL;
+
+	if (!ad || !ad->data_do_not_disturb)
+		return;
+
+	sub_desc = setting_do_not_disturb_is_enable(data);
+	g_free(ad->data_do_not_disturb->sub_desc);
+	ad->data_do_not_disturb->sub_desc = g_strdup(sub_desc);
+	elm_genlist_item_update(ad->data_do_not_disturb->item);
+}
+
 char *setting_sound_get_slider_icon(int type, int volume)
 {
 	if (type < SND_SLIDER_CALL || type >= SND_SLIDER_MAX)
