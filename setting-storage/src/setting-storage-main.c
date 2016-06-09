@@ -60,14 +60,6 @@ const char *storageUg_MMC_stat = VCONFKEY_SYSMAN_MMC_STATUS;
 
 static setting_view setting_view_storage_main;
 
-static void dpm_usb_policy_changed_cb(const char* policy, const char* state, void* data)
-{
-	SETTING_TRACE_BEGIN;
-
-	SETTING_TRACE("External storag policy changed: %s : %s", policy, state);
-	SETTING_TRACE_END;
-}
-
 static int dpm_usb_mass_storage(int* enable)
 {
 	SETTING_TRACE_BEGIN;
