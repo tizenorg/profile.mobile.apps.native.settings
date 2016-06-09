@@ -120,34 +120,66 @@ static Setting_GenGroupItem_Data *__default_handler(void *data, char *keyStr,
 
 /*/////////////////////////////////////////////////////////////////////////// */
 /* list handler */
-static mainlist_entry mainlist_table[] = { {
+static mainlist_entry mainlist_table[] = {
+	{
 		KeyStr_FlightMode,
 		__default_handler,
 		UG_HANDLE,
 		NULL }, /* 0 --> NOT UG */
-{ KeyStr_WiFi, __default_handler, UI_PROC, NULL }, /* 1 --> UG */
-{ KeyStr_Bluetooth, __default_handler, UI_PROC, NULL }, {
+	{
+		KeyStr_WiFi,
+		__default_handler,
+		UI_PROC,
+		NULL }, /* 1 --> UG */
+	{
+		KeyStr_Bluetooth,
+		__default_handler,
+		UI_PROC,
+		NULL },
+	{
 		KeyStr_MobileAP,
 		__mobileap_handler,
 		UG_HANDLE,
 		NULL }, /* 1 --> UG */
-{ KeyStr_Location, __default_handler, UI_PROC, NULL }, /* 1 --> UG */
-{ KeyStr_Network, __default_handler, UG_HANDLE, NULL }, /* 1 --> UG */
-{ KeyStr_DeveloperOption, __developer_option_handler, UI_PROC, NULL }, {
+	{
+		KeyStr_Location,
+		__default_handler,
+		UI_PROC,
+		NULL }, /* 1 --> UG */
+	{
+		KeyStr_Network,
+		__default_handler,
+		UG_HANDLE,
+		NULL }, /* 1 --> UG */
+	{
+		KeyStr_DeveloperOption,
+		__developer_option_handler,
+		UI_PROC,
+		NULL },
+	{
 		KeyStr_BacklightTime,
 		__backlight_time_handler,
 		UI_PROC,
 		/* 1 --> UG */
-		NULL }, { "Default", __default_handler, DEFAULT_UI, NULL },
-/*-------------------------------------------------------------- */
-{ NULL, NULL, ERROR_STATE, NULL }, };
+		NULL },
+	{
+		"Default",
+		__default_handler,
+		DEFAULT_UI,
+		NULL },
+	/*-------------------------------------------------------------- */
+	{
+		NULL,
+		NULL,
+		ERROR_STATE,
+		NULL },
+};
 
 /*--------------------------------------------------------------------------- */
 /* hash table utility */
 static void __list_hash_free_cb(void *obj)
 {
-	SETTING_TRACE_BEGIN
-	;
+	SETTING_TRACE_BEGIN;
 	/*const char *name = key; */
 	/*const char *number = data; */
 	/*printf("%s: %s\n", name, number); */
@@ -157,8 +189,7 @@ static void __list_hash_free_cb(void *obj)
 /* hash table utility */
 void settinig_drawer_hash_init(void *cb)
 {
-	SETTING_TRACE_BEGIN
-	;
+	SETTING_TRACE_BEGIN;
 
 	setting_main_appdata *ad = (setting_main_appdata *) cb;
 	eina_init();
