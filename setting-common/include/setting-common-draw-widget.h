@@ -285,10 +285,15 @@ extern Setting_GenGroupItem_Data *setting_create_Gendial_field_titleItem(
  * @return a pointer to Setting_GenGroupItem_Data
  */
 extern Setting_GenGroupItem_Data *setting_create_Gendial_field_1radio(
-		Evas_Object *genlist, const Elm_Genlist_Item_Class *itc,
-		setting_call_back_func gl_sel, void *sel_data,
-		SWALLOW_Type swallow_type, Evas_Object *rgd, int chk_status,
-		const char *keyStr, setting_call_back_func chk_change_cb);
+		Evas_Object *genlist,
+		const Elm_Genlist_Item_Class *itc,
+		setting_call_back_func gl_sel,
+		void *sel_data,
+		SWALLOW_Type swallow_type,
+		Evas_Object *rgd,
+		int chk_status,
+		const char *keyStr,
+		setting_call_back_func chk_change_cb);
 
 /**
  * Create 1radio-1button style item
