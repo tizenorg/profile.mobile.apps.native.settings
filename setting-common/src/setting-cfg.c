@@ -213,7 +213,7 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 		uuid_Network, 0, NULL},
 #endif
 	/*More connections */
-	{	KeyStr_MoreConnections, IMG_More_Connections,
+	{	KeyStr_MoreConnectionSettings, IMG_More_Connections,
 		"setting-moreconnections-efl", Cfg_Item_Pos_Level0,
 		Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL,
 		KeyStr_Connections, NULL, uuid_Network, 0, NULL},

@@ -203,7 +203,7 @@ static int setting_moreconnections_main_create(void *cb)
 	ad->genlist = scroller;
 	ad->ly_main = setting_create_layout_navi_bar_genlist(
 			ad->win_main_layout, ad->win_get,
-			KeyStr_MoreConnectionSetting,
+			KeyStr_MoreConnectionSettings,
 			NULL,/* Arrow Back button */
 			NULL,
 			(setting_call_back_func)setting_moreconnections_main_click_softkey_back_cb,
