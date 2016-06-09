@@ -291,7 +291,8 @@ int setting_view_change(setting_view *from_view, setting_view *to_view,
 	if (from_view == setting_view_get_topview(to_view)) {
 		/*from a parent view to his child view, don't need cleanup
 		 * parent view */
-	} else {
+	} 
+	else {
 		/*from a child view to his parent view, need cleanup child
 		 * view */
 		ret = setting_view_cleanup(from_view, cb);
