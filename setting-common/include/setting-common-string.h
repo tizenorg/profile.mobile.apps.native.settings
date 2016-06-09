@@ -64,7 +64,6 @@
 /* connectivity keyStr*/
 #define KeyStr_Accessibility	"IDS_ST_BODY_ACCESSIBILITY"
 #define KeyStr_Connections	"IDS_ST_BODY_CONNECTIONS"
-#define KeyStr_MoreConnections	"IDS_ST_HEADER_MORE_CONNECTION_SETTINGS"
 #define KeyStr_Personal		"IDS_ST_HEADER_PERSONALISATION"
 
 #define KeyStr_Device		"IDS_ST_BODY_DEVICE"
@@ -80,7 +79,7 @@
 #define KeyStr_DataRoaming	"IDS_ST_BODY_DATA_ROAMING"
 #define KeyStr_UseMobileData	"IDS_ST_MBODY_MOBILE_DATA"
 #define KeyStr_DeveloperOption	"IDS_ST_BODY_DEVELOPER_OPTIONS"
-#define KeyStr_MoreConnectionSetting "IDS_ST_HEADER_MORE_CONNECTION_SETTINGS"
+#define KeyStr_MoreConnectionSettings "IDS_ST_HEADER_MORE_CONNECTION_SETTINGS"
 
 /* system keyStr*/
 #define KeyStr_System		"IDS_ST_BODY_SYSTEM"
