@@ -18,8 +18,8 @@
  * limitations under the License.
  *
  */
-#ifndef __SETTING_DISPLAY_H__
-#define __SETTING_DISPLAY_H__
+#ifndef __SETTING_APPLICATION_H__
+#define __SETTING_APPLICATION_H__
 
 #include <stdio.h>
 #include <string.h>
@@ -29,7 +29,6 @@
 #include <package-manager.h>
 
 #include <Elementary.h>
-
 
 #include <glib-object.h>
 
@@ -46,29 +45,8 @@
 
 #define SAFE_STRDUP(src) (src) ? strdup(src) : NULL
 
-#define Keystr_Dynamic		"IDS_ST_BODY_DYNAMIC_T_DISPLAY_EFFECT"
-#define Keystr_Standard		"IDS_ST_BODY_STANDARD_T_DISPLAY_EFFECT"
-#define Keystr_Natural		"IDS_ST_BODY_NATURAL_T_DISPLAY_EFFECT"
-#define Keystr_Movie		"IDS_ST_BODY_MOVIE_T_DISPLAY_EFFECT"
+#define Keystr_Clear		"Clear"
 
-#define LAUNCH_EFFECT_STR "IDS_ST_BODY_APP_OPENING_EFFECT"
-#define LAUNCH_IMAGE_STR  "IDS_ST_BODY_APP_OPENING_IMAGE"
-
-#define KeyStr_AdjustScreenTone_Dsc "IDS_ST_BODY_SAVE_POWER_BY_ADJUSTING_"\
-	"SCREEN_TONE_ACCORDING_TO_ANALYSIS_OF_IMAGES"
-#define KeyStr_HighTouchSensitivity_Dsc "IDS_ST_SBODY_INCREASE_THE_"\
-	"SENSITIVITY_OF_THE_TOUCH_SCREEN_SBODY_MSG"
-
-/* Increase the screen's sensitivity so you can touch it while wearing gloves */
-#define LAUNCH_BATTERY_DESC "IDS_ST_BODY_SHOWS_BATTERY_PERCENTAGE_ON_INDICATOR"
-
-#define SETTING_DISPLAY_TIME_15_SEC_STR "IDS_ST_BODY_15SEC"
-#define SETTING_DISPLAY_TIME_30_SEC_STR "IDS_ST_BODY_30SEC"
-#define SETTING_DISPLAY_TIME_1_MIN_STR "IDS_ST_BODY_1_MINUTE"
-
-#define SETTING_DISPLAY_TIME_2_MIN_STR "IDS_ST_BODY_2_MINUTES"
-#define SETTING_DISPLAY_TIME_5_MIN_STR "IDS_ST_BODY_5_MINUTES"
-#define SETTING_DISPLAY_TIME_10_MIN_STR "IDS_ST_BODY_10_MINUTES"
 #define SMART_SCREEN_TRY_IT_IMAGE_L \
 	SETTING_ICON_PATH_CFG"air_jump_try_full_h.png"
 #define SMART_SCREEN_TRY_IT_IMAGE_P \
@@ -83,45 +61,7 @@
 #define KeyStr_ScreenCapture_Edit "IDS_ST_MBODY_EDIT_AFTER_SCREEN_CAPTURE"
 #define KeyStr_Dynamic_Status_Bar "IDS_ST_BODY_DYNAMIC_STATUS_BAR"
 
-#define POPUP_TURN_ON_STR "IDS_ST_BUTTON_ENABLE"
-
-#define SAMRT_SCREEN_TRY_IT_IAMGE_PORTRAIT_H 2636
-#define SAMRT_SCREEN_TRY_IT_IAMGE_PORTRAIT_W 720
-#define SAMRT_SCREEN_TRY_IT_IAMGE_LANDSCAPE_H 2055
-#define SAMRT_SCREEN_TRY_IT_IAMGE_LANDSCAPE_W 1280
-#define SETTING_DISPLAY_ICON_PATH 12
-
-typedef enum {
-	SCREENMODE_DYNAMIC = 0,
-	SCREENMODE_STANDARD,
-	SCREENMODE_NATURAL,
-	SCREENMODE_MOVIE,
-	SCREENMODE_MAX
-} screenmode_t;
-
-typedef enum {
-	DISPLAY_EXPAND_NONE = 0,
-	DISPLAY_EXPAND_BACKLIGHT,
-	DISPLAY_EXPAND_TOUCH_KEY_LIGHT_DURATION
-} ApplicationsExpandState;
-
-
-typedef struct _Ctxpopup_Data {
-	Evas_Object *ctx;
-	Evas_Object *btn;
-} Ctxpopup_Data;
-
-typedef enum {
-	SETTING_DISPLAY_VIEWTYPE_MAIN,
-	SETTING_DISPLAY_VIEWTYPE_BRIGHTNESS,
-	SETTING_DISPLAY_VIEWTYPE_BACKLIGHT,
-	SETTING_DISPLAY_VIEWTYPE_SMARTSCREEN,
-	SETTING_DISPLAY_VIEWTYPE_MAX,
-} applications_viewtype;
-
 typedef struct _SettingApplicationsUG SettingApplicationsUG;
-
-#define BRIGHTNESS_DISPLAY 0
 
 /**
  * Setting Applications UG context
@@ -151,41 +91,10 @@ struct _SettingApplicationsUG {
 
 	Setting_GenGroupItem_Data *data_home;
 
-	Setting_GenGroupItem_Data *data_screen_mode;
-	Setting_GenGroupItem_Data *data_br;
 	Setting_GenGroupItem_Data *data_back;
-	Setting_GenGroupItem_Data *data_br_auto;
-	Setting_GenGroupItem_Data *data_br_sli;
-	Setting_GenGroupItem_Data *data_adjust;
-	Setting_GenGroupItem_Data *data_overheating;
-
-	Setting_GenGroupItem_Data *data_br_adjustment;
 
 	Setting_GenGroupItem_Data *data_auto_rotate;
 	Setting_GenGroupItem_Data *data_tts;
-
-	/* smart screen */
-	Setting_GenGroupItem_Data *data_smart_stay;
-	Setting_GenGroupItem_Data *data_smart_rotation;
-	Setting_GenGroupItem_Data *data_auto_adjust_scrn_tone;
-	Setting_GenGroupItem_Data *data_dynamic;
-
-
-	Evas_Object *more_popup;
-	Ctxpopup_Data ctx_data;
-
-	Setting_GenGroupItem_Data *tilting_head;
-	Setting_GenGroupItem_Data *tilting_device;
-	Setting_GenGroupItem_Data *smart_scroll_speed;
-	Setting_GenGroupItem_Data *visual_feedback_display;
-	Setting_GenGroupItem_Data *scroll_speed_slider;
-	Setting_GenGroupItem_Data *try_tilting_head;
-	Setting_GenGroupItem_Data *try_tilting_device;
-	Setting_GenGroupItem_Data *data_smart_screen_image;
-	Setting_GenGroupItem_Data *data_smart_screen_rotation_image;
-
-	/*int bright_value; */
-	int low_bat;
 
 	setting_view *view_to_load;
 
@@ -211,16 +120,6 @@ struct _SettingApplicationsUG {
 	Elm_Genlist_Item_Class itc_multiline_overheating;
 
 
-	ui_gadget_h ug_gallery;
-	ui_gadget_h ug_imageviewer;
-	Eina_Bool isLoading;
-	Setting_GenGroupItem_Data *data_backlight_always_on;
-	Setting_GenGroupItem_Data *data_backlight_15sec;
-	Setting_GenGroupItem_Data *data_backlight_30sec;
-	Setting_GenGroupItem_Data *data_backlight_1min;
-	Setting_GenGroupItem_Data *data_backlight_2min;
-	Setting_GenGroupItem_Data *data_backlight_5min;
-	Setting_GenGroupItem_Data *data_backlight_10min;
 	/*Improve response speed */
 	Ecore_Idler *set_idler;
 	Ecore_Timer *set_timer;
@@ -233,20 +132,12 @@ struct _SettingApplicationsUG {
 
 	GList *pkg_list;
 
-	/*for brightness*/
-	Eina_Bool is_event_registered;
-	int last_requested_level;
-	applications_viewtype applications_viewtype;
-
 	/*for smart screen try it*/
 	Evas_Object *smart_stay_image;
 	Evas_Object *smart_rotation_image;
 	Evas_Object *smart_stay_sublayout;
 	Evas_Object *smart_rotation_sublayout;
 	Ecore_Timer *timer_show_guide;
-
-	ApplicationsExpandState applications_expand_state;
-
 };
 
 extern setting_view setting_view_applications_main;
@@ -265,10 +156,4 @@ typedef struct _default_app {
 void setting_applications_layout_ug_cb(
 		ui_gadget_h ug, enum ug_mode mode, void *priv);
 
-Eina_Bool __show_smartstay_guide_popup(void *data);
-Eina_Bool __show_smartrotation_guide_popup(void *data);
-
-extern void destruct_brightness(void *data);
-extern void construct_brightness(void *data, Evas_Object *genlist);
-
-#endif				/* __SETTING_DISPLAY_H__ */
+#endif				/* __SETTING_APPLICATION_H__ */
