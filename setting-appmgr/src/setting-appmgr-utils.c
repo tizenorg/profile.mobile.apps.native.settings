@@ -158,9 +158,11 @@ static void appmgrUg_update_listinfos(SettingAppMgrUG *ad)
 			appmgrUg_get_listinfos_cb, ad);
 }
 
-static int appmgrUg_pkgmgr_changed_cb(int req_id, const char *pkg_type,
-		const char *pkgid, const char *key, const char *val,
-		const void *pmsg, void *data)
+
+
+static int appmgrUg_pkgmgr_changed_cb(uid_t target_uid, int req_id, const char *pkg_type,
+		const char *pkgid, const char *key,
+		const char *val, const void *pmsg, void *data)
 {
 	SettingAppMgrUG *ad = data;
 
@@ -499,7 +501,7 @@ static Eina_Bool appmgrUg_get_all_pkg_sizesort(void *data)
 	return ECORE_CALLBACK_CANCEL;
 }
 
-static int appmgrUg_get_all_pkg_size(int req_id, const char *pkg_type,
+static int appmgrUg_get_all_pkg_size(uid_t target_uid, int req_id, const char *pkg_type,
 		const char *pkg_name, const char *key, const char *val,
 		const void *pmsg, void *data)
 {
