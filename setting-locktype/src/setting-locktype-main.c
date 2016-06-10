@@ -30,6 +30,9 @@
 #include <ode.h>
 #endif
 
+#include <dpm/restriction.h>
+#include <dpm/password.h>
+
 #include <auth-passwd.h>
 
 #define TBD 0
@@ -58,6 +61,61 @@ openlock_appdata *lockapp_data = NULL;
  **basic func
  **
  ****************************************************/
+
+/*
+static void dpm_dpmusb_policy_changed_cb(const char* policy, const char* state, void* data)
+{
+	SETTING_TRACE_BEGIN;
+
+	SETTING_TRACE("External storag policy changed: %s : %s", policy, state);
+
+	SETTING_TRACE_END;
+}
+*/
+
+static int dpm_get_password_policy(dpm_password_quality_e *quality, int *minimum_length)
+{
+	SETTING_TRACE_BEGIN;
+	dpm_context_h context;
+	dpm_restriction_policy_h policy;
+
+
+	context = dpm_context_create();
+	if (context == NULL) {
+		SETTING_TRACE_ERROR("Failed to create client context");
+		return 0;
+	}
+
+	policy = dpm_context_acquire_restriction_policy(context);
+	if (policy == NULL) {
+		SETTING_TRACE_ERROR("Failed to get storage policy interface");
+		dpm_context_destroy(context);
+		return 0;
+	}
+
+	int ret;
+	if ((ret=dpm_password_get_quality(policy, quality)) != DPM_ERROR_NONE){
+		SETTING_TRACE_ERROR("Failed to dpm_password_get_quality : %d", ret);
+		dpm_context_release_password_policy(context, policy);
+		dpm_context_destroy(context);
+		return 0;
+	}
+	SETTING_TRACE("quality : %d", *quality);
+
+	if ((ret=dpm_password_get_minimum_length(policy, minimum_length)) != DPM_ERROR_NONE){
+		SETTING_TRACE_ERROR("Failed to dpm_password_get_minimum_length : %d", ret);
+		dpm_context_release_password_policy(context, policy);
+		dpm_context_destroy(context);
+		return 0;
+	}
+	SETTING_TRACE("minimum_length : %d", *minimum_length);
+
+	dpm_context_release_restriction_policy(context, policy);
+	dpm_context_destroy(context);
+
+	return 1;
+}
+
 
 static int __get_lockapp_index_from_appname(char *app_name)
 {
@@ -328,6 +386,7 @@ void __add_locktype_items(void *data)
 	evas_object_smart_callback_add(ad->genlist, "realized",
 			__gl_realized_cb, NULL);
 
+
 	/* to do : radio menu */
 	/* 0) None */
 	ad->data_locktype_none = setting_create_Gendial_field_def(
@@ -400,6 +459,43 @@ void __add_locktype_items(void *data)
 	} else {
 		SETTING_TRACE_ERROR("item_data is NULL");
 	}
+
+
+
+	dpm_password_quality_e quality;
+	int minimum_length;
+	dpm_get_password_policy(&quality, &minimum_length);
+
+#if 0
+typedef enum {
+    DPM_PASSWORD_QUALITY_UNSPECIFIED     = 0x00,    /**< No requirements for password. */
+    DPM_PASSWORD_QUALITY_SIMPLE_PASSWORD = 0x01,    /**< EAS(Exchange ActiveSync) requirement for simple password */
+    DPM_PASSWORD_QUALITY_SOMETHING       = 0x10,    /**< Some kind password is required, but doesn't care what it is */
+    DPM_PASSWORD_QUALITY_NUMERIC         = 0x20,    /**< Containing at least numeric characters */
+    DPM_PASSWORD_QUALITY_ALPHABETIC      = 0x40,    /**< Containing at least alphabetic (or other symbol) characters */
+    DPM_PASSWORD_QUALITY_ALPHANUMERIC    = 0x80,    /**< Containing at least numeric and alphabetic characters */
+} dpm_password_quality_e;
+#endif
+
+	if(quality == DPM_PASSWORD_QUALITY_UNSPECIFIED){
+		/* no dim*/
+	}
+	else if(quality == DPM_PASSWORD_QUALITY_SIMPLE_PASSWORD || quality == DPM_PASSWORD_QUALITY_SOMETHING || quality == DPM_PASSWORD_QUALITY_NUMERIC){
+		// dim swipe, none
+		if(ad->data_locktype_none) setting_disable_genlist_item(ad->data_locktype_none->item);
+		if(ad->data_locktype_swipe) setting_disable_genlist_item(ad->data_locktype_swipe->item);
+		if(minimum_length>=5){
+			/* dim pin */
+			/* there's no pin type in ref app */
+		}
+	}
+	else if(quality == DPM_PASSWORD_QUALITY_ALPHABETIC || quality == DPM_PASSWORD_QUALITY_ALPHANUMERIC){
+		// dim swipe, none, pin
+		if(ad->data_locktype_none) setting_disable_genlist_item(ad->data_locktype_none->item);
+		if(ad->data_locktype_swipe) setting_disable_genlist_item(ad->data_locktype_swipe->item);
+		/* there's no pin type in ref app */
+	}
+
 
 #if 0
 	int index = -1;
