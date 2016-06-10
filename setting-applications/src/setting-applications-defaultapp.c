@@ -200,9 +200,8 @@ void default_app_list_init(void *data, Evas_Object *genlist)
 				NULL, NULL,
 				SWALLOW_Type_INVALID, NULL,
 				NULL, 0,
-				"There are no apps set as defaults.", NULL, NULL);
+				MGRAPP_STR_DEFAULT_NO_APPS, NULL, NULL);
 		elm_object_item_disabled_set(item->item, EINA_TRUE);
-
 	}
 	else {
 		pkg_list = g_list_sort(pkg_list, _glist_sort_atoz);
@@ -221,7 +220,6 @@ void default_app_list_init(void *data, Evas_Object *genlist)
 					ELM_GENLIST_ITEM_NONE,
 					_unset_sel, ad);
 		}
-
 	}
 	ad->pkg_list = pkg_list;
 }

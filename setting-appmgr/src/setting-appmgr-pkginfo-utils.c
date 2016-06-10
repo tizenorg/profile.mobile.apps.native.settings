@@ -25,9 +25,6 @@
 #include "setting-appmgr-utils.h"
 #include "setting-appmgr-pkginfo-utils.h"
 
-#define DEFAULT_CLEAR_TEXT "To clear default app settings, go to \
-	Settings > Apps > Default apps, then tap Clear"
-
 static int appmgrUg_pkg_get_privileges_help(const char *privilege,
 		void *user_data)
 {
@@ -765,8 +762,8 @@ void appmgrUg_pkg_clear_default(void *data, Evas_Object *obj, void *event_info)
 	ad->popup = setting_create_popup(
 			ad,
 			ad->win,
-			"Clear default app settings",
-			DEFAULT_CLEAR_TEXT,
+			MGRAPP_STR_CLEAR_DEFAULT_POPUP_TITLE,
+			MGRAPP_STR_DEFAULT_CLEAR_TEXT,
 			appmgrUg_pkg_clear_default_cb,
 			0,
 			FALSE,
