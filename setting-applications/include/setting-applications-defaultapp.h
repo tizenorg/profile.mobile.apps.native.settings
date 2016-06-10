@@ -30,6 +30,7 @@
 	"IDS_ST_BODY_TO_AVOID_OVERHEATING_MAXIMUM_BRIGHTNESS_HAS_BEEN_REDUCED"
 #define MGRAPP_STR_LAUNCH_BY_DEFAULT "IDS_ST_BODY_LAUNCH_BY_DEFAULT"
 #define MGRAPP_STR_CLEAR_DEFAULT "IDS_ST_BODY_CLEAR_DEFAULTS"
+#define MGRAPP_STR_DEFAULT_NO_APPS "There are no apps set as defaults."
 
 void __display_int_vconf_cb(keynode_t *key, void *data);
 

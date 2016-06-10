@@ -68,7 +68,7 @@ static void setting_applications_ug_cb_resize(void *data, Evas *e,
 	setting_view_update(ad->view_to_load, ad);
 }
 
-char *_main_gl_label_new_get(void *data, Evas_Object *obj,
+char *_gl_label_new_get(void *data, Evas_Object *obj,
 		const char *part)
 {
 	SETTING_TRACE_BEGIN;
@@ -84,7 +84,7 @@ char *_main_gl_label_new_get(void *data, Evas_Object *obj,
 	return label;
 }
 
-char *appmgrUg_get_defualt_icon(pkgmgrinfo_appinfo_h handle)
+char *_get_defualt_icon(pkgmgrinfo_appinfo_h handle)
 {
 	int ret;
 	char *type;
@@ -109,7 +109,7 @@ char *appmgrUg_get_defualt_icon(pkgmgrinfo_appinfo_h handle)
 
 	return strdup(icon);
 }
-static void clear_default_cb(void *data, Evas_Object *obj, void *event_info)
+static void _clear_default_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(data == NULL);
@@ -124,11 +124,10 @@ static void clear_default_cb(void *data, Evas_Object *obj, void *event_info)
 	}
 
 	elm_object_item_del(info->item);
-
 }
 
 
-Evas_Object *_info_1button1_gl_icon_get(void *data, Evas_Object *obj,
+Evas_Object *_gl_1button1_icon_get(void *data, Evas_Object *obj,
 		const char *part)
 {
 	SETTING_TRACE_BEGIN;
@@ -150,7 +149,7 @@ Evas_Object *_info_1button1_gl_icon_get(void *data, Evas_Object *obj,
 			warn_if(PMINFO_R_OK != ret, "pkgmgrinfo_appinfo_get_appinfo() Fail(%d)",
 					ret);
 
-			_icon = appmgrUg_get_defualt_icon(handle);
+			_icon = _get_defualt_icon(handle);
 
 			SETTING_TRACE(" ==> appid [%s], icon [%s]", info->pkgid, _icon);
 
@@ -172,12 +171,12 @@ Evas_Object *_info_1button1_gl_icon_get(void *data, Evas_Object *obj,
 
 		button = elm_button_add(obj);
 		SETTING_TRACE_BEGIN;
-		elm_object_text_set(button, "Clear");
+		elm_object_text_set(button, Keystr_Clear);
 		evas_object_size_hint_align_set(button, EVAS_HINT_FILL, EVAS_HINT_FILL);
 		evas_object_size_hint_min_set(button, 160, 60);
 		evas_object_size_hint_max_set(button, 160, 60);
 		evas_object_show(button);
-		evas_object_smart_callback_add(button, "clicked", clear_default_cb, info);
+		evas_object_smart_callback_add(button, "clicked", _clear_default_cb, info);
 
 		return button;
 	} else
@@ -224,9 +223,9 @@ static void *setting_applications_ug_on_create(ui_gadget_h ug,
 			&(applicationsUG->itc_grp_title));
 
 	applicationsUG->itc_1icon_1button.item_style = SETTING_GENLIST_2LINE_STYLE;
-	applicationsUG->itc_1icon_1button.func.text_get = _main_gl_label_new_get;
+	applicationsUG->itc_1icon_1button.func.text_get = _gl_label_new_get;
 	applicationsUG->itc_1icon_1button.func.content_get =
-			_info_1button1_gl_icon_get;
+			_gl_1button1_icon_get;
 	applicationsUG->itc_1icon_1button.func.state_get = NULL;
 	applicationsUG->itc_1icon_1button.func.del = NULL;
 
