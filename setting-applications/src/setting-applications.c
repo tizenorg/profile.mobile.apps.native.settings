@@ -124,7 +124,6 @@ static void clear_default_cb(void *data, Evas_Object *obj, void *event_info)
 	}
 
 	elm_object_item_del(info->item);
-
 }
 
 
@@ -172,7 +171,7 @@ Evas_Object *_info_1button1_gl_icon_get(void *data, Evas_Object *obj,
 
 		button = elm_button_add(obj);
 		SETTING_TRACE_BEGIN;
-		elm_object_text_set(button, "Clear");
+		elm_object_text_set(button, Keystr_Clear);
 		evas_object_size_hint_align_set(button, EVAS_HINT_FILL, EVAS_HINT_FILL);
 		evas_object_size_hint_min_set(button, 160, 60);
 		evas_object_size_hint_max_set(button, 160, 60);
