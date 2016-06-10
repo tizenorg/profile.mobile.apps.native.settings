@@ -123,9 +123,38 @@ void __sub_list_rd_change(void *data, Evas_Object *obj, void *event_info)
 	}
 }
 
+static void _create_new_cellular_internet_profile(SettingNetworkUG *ad)
+{
+	int ret;
+	const char *profile_name = NULL;
+
+	if (ad->data_profile_name)
+		profile_name = elm_entry_markup_to_utf8(
+				ad->data_profile_name->sub_desc);
+	if (!profile_name)
+		profile_name = strdup("");
+
+	ret = connection_profile_create(
+			CONNECTION_PROFILE_TYPE_CELLULAR,
+			_(profile_name), &ad->sel_profile_h);
+
+	if (ret == CONNECTION_ERROR_NONE)
+		ret = connection_profile_set_cellular_service_type(
+				ad->sel_profile_h,
+				CONNECTION_CELLULAR_SERVICE_TYPE_INTERNET);
+
+	if (ret != CONNECTION_ERROR_NONE)
+		SETTING_TRACE_ERROR("Cannot create new profile. Error: %s",
+				get_error_message(ret));
+
+	FREE(profile_name);
+}
+
 void __sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
+	int ret;
+
 	/* error check */
 	retm_if(event_info == NULL, "Invalid argument: event info is NULL");
 	Elm_Object_Item *subitem = (Elm_Object_Item *) event_info;
@@ -157,6 +186,7 @@ void __sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 			evas_object_del(ad->popup_auth_type);
 			ad->popup_auth_type = NULL;
 		}
+
 	} else if (data_parentItem == ad->data_srv_type) {
 		if (ad->srvType != data_subItem->chk_status)
 			ad->srvType = data_subItem->chk_status;
@@ -194,15 +224,21 @@ void __sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 				ad->data_hm_url = NULL;
 			}
 		}
+
 	} else if (data_parentItem == ad->data_pdn_type) {
 		elm_genlist_item_expanded_set(ad->data_pdn_type->item, FALSE);
 		elm_genlist_item_update(ad->data_pdn_type->item);
 
-		if (CONNECTION_ERROR_NONE
-				!= connection_profile_set_cellular_pdn_type(
-						ad->sel_profile_h,
-						chk_status)) {
-			SETTING_TRACE_ERROR("Fail to set cellular pdn type!\n");
+		if (!ad->sel_profile_h)
+			_create_new_cellular_internet_profile(ad);
+
+		ret = connection_profile_set_cellular_pdn_type(
+				ad->sel_profile_h,
+				chk_status);
+		if (ret != CONNECTION_ERROR_NONE) {
+			SETTING_TRACE_ERROR("Fail to set cellular pdn type!"
+					" Error code (%d): %s",
+					ret, get_error_message(ret));
 		} else {
 			ad->chkType_pdn = chk_status;
 			connection_update_profile(ad->connection,
@@ -220,12 +256,15 @@ void __sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 				FALSE);
 		elm_genlist_item_update(ad->data_roam_pdn_type->item);
 
-		if (CONNECTION_ERROR_NONE
-				!= connection_profile_set_cellular_roam_pdn_type(
-						ad->sel_profile_h,
-						chk_status)) {
-			SETTING_TRACE_ERROR(
-					"Fail to set cellular roam pdn type!\n");
+		if (!ad->sel_profile_h)
+			_create_new_cellular_internet_profile(ad);
+
+		ret = connection_profile_set_cellular_roam_pdn_type(
+				ad->sel_profile_h,
+				chk_status);
+		if (ret != CONNECTION_ERROR_NONE) {
+			SETTING_TRACE_ERROR("Fail to set cellular roam pdn "
+					"type: %s", get_error_message(ret));
 		} else {
 			ad->chkType_roam_pdn = chk_status;
 			connection_update_profile(ad->connection,
@@ -237,7 +276,6 @@ void __sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 			evas_object_del(ad->popup_pdn_type);
 			ad->popup_pdn_type = NULL;
 		}
-
 	}
 }
 
@@ -372,22 +410,33 @@ static void __create_pdn_type_popup(void *data, Evas_Object *obj,
 		elm_radio_value_set(rgd, -1);
 
 		setting_create_Gendial_field_1radio(scroller,
-				&itc_multiline_1text_1icon, __sub_list_sel_cb,
-				data_parentItem, SWALLOW_Type_1RADIO_RIGHT, rgd,
-				CONNECTION_CELLULAR_PDN_TYPE_IPV4, "IPv4",
+				&itc_multiline_1text_1icon,
+				__sub_list_sel_cb,
+				data_parentItem,
+				SWALLOW_Type_1RADIO_RIGHT,
+				rgd,
+				CONNECTION_CELLULAR_PDN_TYPE_IPV4,
+				"IPv4",
 				NULL);
 
 		setting_create_Gendial_field_1radio(scroller,
-				&itc_multiline_1text_1icon, __sub_list_sel_cb,
-				data_parentItem, SWALLOW_Type_1RADIO_RIGHT, rgd,
+				&itc_multiline_1text_1icon,
+				__sub_list_sel_cb,
+				data_parentItem,
+				SWALLOW_Type_1RADIO_RIGHT,
+				rgd,
 				CONNECTION_CELLULAR_PDN_TYPE_IPV4_IPv6,
 				"IPv4v6",
 				NULL);
 
 		setting_create_Gendial_field_1radio(scroller,
-				&itc_multiline_1text_1icon, __sub_list_sel_cb,
-				data_parentItem, SWALLOW_Type_1RADIO_RIGHT, rgd,
-				CONNECTION_CELLULAR_PDN_TYPE_IPV6, "IPv6",
+				&itc_multiline_1text_1icon,
+				__sub_list_sel_cb,
+				data_parentItem,
+				SWALLOW_Type_1RADIO_RIGHT,
+				rgd,
+				CONNECTION_CELLULAR_PDN_TYPE_IPV6,
+				"IPv6",
 				NULL);
 
 		elm_radio_value_set(rgd, ad->chkType_pdn);
