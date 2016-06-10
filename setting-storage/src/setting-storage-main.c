@@ -739,8 +739,7 @@ static int storageUg_main_create(void *data)
 			storageUg_get_internal_detail_cb,
 			ad);
 
-	storageUG_update_apps_info(ad);
-	storageUG_update_cache_info(ad);
+	storageUG_update_apps_cache_info(ad);
 
 	if (!isEmulBin()) {
 		ret = vconf_get_int(storageUg_MMC_stat, &ad->mmc_status);
@@ -858,7 +857,7 @@ static int storageUg_main_update(void *data)
 	retv_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
 	/*storageUg_main_update_media_data(ad); */
-	storageUG_update_apps_info(ad);
+	storageUG_update_apps_cache_info(ad);
 
 	if (ad->misces_list) {
 		/*setting_view_update(ad->misces_view, ad); */

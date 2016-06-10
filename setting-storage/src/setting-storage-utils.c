@@ -330,27 +330,6 @@ static int storageUG_get_media_info(const char *cond, media_info_cb cb,
 
 	return ret;
 }
-static void storageUG_get_cache_files_size(pkgmgr_client *pc,
-		const pkg_size_info_t *size_info, void *user_data)
-{
-	SETTING_TRACE_BEGIN;
-	setting_retm_if(NULL == user_data, "user_data is NULL");
-	setting_retm_if(NULL == size_info, "size_info is NULL");
-	/*char * path = app_get_cache_path(); */
-	/*SETTING_TRACE_DEBUG("cache path:%s",path); */
-	SettingStorageUG *ad = user_data;
-	ad->sz_caches = (double) (size_info->cache_size
-			+ size_info->ext_cache_size);
-	SETTING_TRACE_DEBUG("ad->sz_caches:%lf", ad->sz_caches);
-	storageug_genlist_text_update(ad->caches, ad->sz_caches);
-
-	setting_retm_if(!ad->pie_it, "!ad->pie_it");
-	elm_genlist_item_update(ad->pie_it);
-
-	pkgmgr_client_free(ad->pc_total_size);
-	ad->pc_total_size = NULL;
-	SETTING_TRACE_END;
-}
 
 int storageUg_get_internal_detail(SettingStorageUG *ad)
 {
@@ -386,11 +365,41 @@ int storageUg_get_internal_detail(SettingStorageUG *ad)
 	return SETTING_RETURN_SUCCESS;
 }
 
-void storageUG_update_cache_info(SettingStorageUG *ad)
+static void storageUG_get_app_cache_size_cb(pkgmgr_client *pc,
+		const pkg_size_info_t *size_info, void *user_data)
 {
+	SETTING_TRACE_BEGIN;
+	setting_retm_if(NULL == user_data, "user_data is NULL");
+	setting_retm_if(NULL == size_info, "size_info is NULL");
 
-	/*package_manager_get_total_package_size_info(
-	 * storageUG_get_cache_files_size, ad); */
+
+	/*char * path = app_get_cache_path(); */
+	/*SETTING_TRACE_DEBUG("cache path:%s",path); */
+	
+	SettingStorageUG *ad = user_data;
+
+	ad->sz_apps = (double) (size_info->app_size	+ size_info->ext_app_size);
+	ad->sz_caches = (double) (size_info->cache_size + size_info->ext_cache_size);
+	
+	SETTING_TRACE_DEBUG("size_info->app_size : %ld", ad->sz_apps);
+	SETTING_TRACE_DEBUG("ad->sz_caches:%lf", ad->sz_caches);
+	
+	storageug_genlist_text_update(ad->apps, ad->sz_apps);
+	storageug_genlist_text_update(ad->caches, ad->sz_caches);
+
+	setting_retm_if(!ad->pie_it, "!ad->pie_it");
+	elm_genlist_item_update(ad->pie_it);
+
+	pkgmgr_client_free(ad->pc_total_size);
+	ad->pc_total_size = NULL;
+	SETTING_TRACE_END;
+}
+
+void storageUG_update_apps_cache_info(SettingStorageUG *ad)
+{
+	SETTING_TRACE_BEGIN;
+	
+
 	int ret;
 
 	ret_if(NULL == ad);
@@ -405,46 +414,9 @@ void storageUG_update_cache_info(SettingStorageUG *ad)
 	}
 
 	ret = pkgmgr_client_get_total_package_size_info(ad->pc_total_size,
-			storageUG_get_cache_files_size, ad);
+			storageUG_get_app_cache_size_cb, ad);
 
-	warn_if(ret, "pkgmgr_client_get_total_package_size_info() Fail(%d)",
-			ret);
-}
+	setting_retm_if(ret, "pkgmgr_client_get_total_package_size_info() Fail(%d)", ret);
 
-static int storageUg_get_apps_info(uid_t target_uid, int req_id,
-		const char *pkg_type, const char *pkgid, const char *key,
-		const char *val, const void *pmsg, void *data)
-{
-	SettingStorageUG *ad = data;
-
-	retv_if(NULL == data, 0);
-	retv_if(NULL == val, 0);
-
-	ad->sz_apps = atof(val);
-
-	storageug_genlist_text_update(ad->apps, ad->sz_apps);
-	setting_retvm_if(!ad->pie_it, 0, "!ad->pie_it");
-	elm_genlist_item_update(ad->pie_it);
-	return 0;
-}
-
-void storageUG_update_apps_info(SettingStorageUG *ad)
-{
-	int ret;
-
-	ret_if(NULL == ad);
-
-	if (ad->pc)
-		pkgmgr_client_free(ad->pc);
-
-	ad->pc = pkgmgr_client_new(PC_REQUEST);
-	if (NULL == ad->pc) {
-		SETTING_TRACE_ERROR("pkgmgr_client_new() Fail");
-		return;
-	}
-
-	ret = pkgmgr_client_get_size(ad->pc, "get", PM_GET_ALL_PKGS,
-			&storageUg_get_apps_info, ad);
-	warn_if(ret, "pkgmgr_client_get_size() Fail(%d)", ret);
 }
 

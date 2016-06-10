@@ -26,7 +26,8 @@ void storageUg_get_internal_storage_status();
 void storageUg_get_external_storage_status(const char *path, double *total,
 		double *avail);
 
-void storageUG_update_apps_info(SettingStorageUG *ad);
+void storageUG_update_apps_cache_info(SettingStorageUG *ad);
+
 void storageUg_size_to_str(double size, char *desc, int desc_size);
 void storageUg_ug_layout_cb(ui_gadget_h ug, enum ug_mode mode, void *priv);
 void storageUg_ug_destroy_cb(ui_gadget_h ug, void *priv);
@@ -36,7 +37,6 @@ void storageUg_manage_app_ug(SettingStorageUG *ad);
 int storageUg_get_internal_detail(SettingStorageUG *ad);
 void storageUg_get_internal_detail_cb(int fn_result, SettingStorageUG *ad);
 
-void storageUG_update_cache_info(SettingStorageUG *ad);
 void storageug_genlist_text_update(Setting_GenGroupItem_Data *item_data,
 		double size);
 
