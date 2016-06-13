@@ -196,6 +196,8 @@ typedef struct _SettingAppMgrUG {
 
 	Setting_GenGroupItem_Data *cache_size;
 	Setting_GenGroupItem_Data *clear_cache;
+
+	int current_rotation;
 } SettingAppMgrUG;
 
 #define APPMGRUG_TIME(fmt, arg...) \
