@@ -84,6 +84,38 @@ bool __update_timezone_idler(SettingTimeUG *ad)
 	return 0;
 }
 
+
+void system_settings_changed_timezone(system_settings_key_e key, void *data)
+{
+	SETTING_TRACE(">>>>>>>> NOTIFY CHANGE TIMEZONE ");
+	SettingTimeUG *ad = (SettingTimeUG *)data;
+	int ret;
+	char *timezone = NULL;
+	ret = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_TIMEZONE, &timezone);
+	SETTING_TRACE(" timezone : (%s) ", timezone);
+
+	tzset();
+	ICU_set_timezone(timezone);
+
+	if (!__setting_set_city_tzone(timezone)) {
+		SETTING_TRACE("__setting_set_city_tzone ERROR");
+		return;
+	}
+	FREE(timezone);
+
+	/* update timezone */
+	if (ad->update_timezone_idler) {
+		ecore_idler_del(ad->update_timezone_idler);
+		ad->update_timezone_idler = NULL;
+	}
+	ad->update_timezone_idler =
+		ecore_idler_add((Ecore_Task_Cb) __update_timezone_idler, ad);
+}
+
+
+
+// ret = system_settings_set_changed_cb(SYSTEM_SETTINGS_KEY_LOCALE_TIMEZONE, system_settings_changed_timezone, ad);
+
 void time_changed_callback(keynode_t *key, void *data)
 {
 
@@ -96,45 +128,6 @@ void time_changed_callback(keynode_t *key, void *data)
 		SETTING_TRACE("FAIL: setting_time_update_db(ad)\n");
 	}
 
-#if 0
-	SETTING_TRACE("ad->is_datefield_selected:%d",
-			ad->is_datefield_selected);
-	if (EINA_TRUE == ad->is_datefield_selected) {
-		/* Timezone is not changed and a selected value of the
-		 * datefield is already changed */
-		SETTING_TRACE("Datefield is selected\n");
-		return ;
-	}
-#endif
-
-	tzset();
-	/* vconfset to update timezone */
-	char pTZPath[__MAX_PATH_SIZE];
-	ssize_t nLen = readlink(SETTING_TZONE_SYMLINK_PATH, pTZPath,
-			sizeof(pTZPath) - 1);
-	if (nLen != -1) {
-		pTZPath[nLen] = '\0';
-	} else {
-		SETTING_TRACE("parse error for SETTING_TZONE_SYMLINK_PATH");
-		return;
-	}
-
-	if (!__setting_set_city_tzone(&pTZPath[20])) {
-		SETTING_TRACE("__setting_set_city_tzone ERROR");
-		return;
-	}
-	char *timezone = vconf_get_str(VCONFKEY_SETAPPL_TIMEZONE_ID);
-	setting_retm_if(timezone == NULL, "get vonf failed");
-	ICU_set_timezone(timezone);
-	FREE(timezone);
-
-	/* update timezone */
-	if (ad->update_timezone_idler) {
-		ecore_idler_del(ad->update_timezone_idler);
-		ad->update_timezone_idler = NULL;
-	}
-	ad->update_timezone_idler =
-		ecore_idler_add((Ecore_Task_Cb) __update_timezone_idler, ad);
 	/* update time */
 	if (ad->refresh_time_idler) {
 		ecore_idler_del(ad->refresh_time_idler);
@@ -264,11 +257,14 @@ static void setting_time_main_int_vconf_change_cb(keynode_t *key, void *data)
 	}
 }
 
-static int _alarmmgr_set_timezone_helper(char *tzdata)
+static int _set_timezone_helper(char *tzdata)
 {
 	SETTING_TRACE_BEGIN;
-	int ret = alarmmgr_set_timezone(tzdata);
-	SETTING_TRACE("ret of alarmmgr_set_timezone : %d ", ret);
+	SETTING_TRACE("= %s", tzdata);
+	int ret;
+	ret = system_settings_set_value_string(SYSTEM_SETTINGS_KEY_LOCALE_TIMEZONE, tzdata);
+	SETTING_TRACE("system_settings_set_value_string(SYSTEM_SETTINGS_KEY_LOCALE_TIMEZONE) = %d, .", ret);
+
 	return ret;
 }
 
@@ -303,12 +299,12 @@ static void __update_time_via_sim_card(void *data)
 			MAX_COMMON_BUFFER_LEN / 4);
 	g_strlcat(tz_path, tzpath, sizeof(tz_path));
 	SETTING_TRACE("full tz_path:%s", tz_path);
-	ret = _alarmmgr_set_timezone_helper(tz_path);
+	ret = _set_timezone_helper(tz_path);
 	if (ret < 0) {
 		SETTING_TRACE("tzpath is not valid.");
 		return;
 	} else
-		SETTING_TRACE("_alarmmgr_set_timezone_helper - successful : "
+		SETTING_TRACE("_set_timezone_helper - successful : "
 				"%s \n", tz_path);
 	if (!__setting_set_city_tzone(tzpath)) {
 		SETTING_TRACE("__setting_set_city_tzone ERROR");
@@ -659,11 +655,11 @@ static int setting_time_main_create(void *cb)
 					MAX_COMMON_BUFFER_LEN / 4);
 			g_strlcat(tz_path, tzpath, sizeof(tz_path));
 			SETTING_TRACE("full tz_path:%s", tz_path);
-			ret = _alarmmgr_set_timezone_helper(tz_path);
+			ret = _set_timezone_helper(tz_path);
 			if (ret < 0) {
 				SETTING_TRACE("tzpath is not valid.");
 			} else
-				SETTING_TRACE("_alarmmgr_set_timezone_helper - "
+				SETTING_TRACE("_set_timezone_helper - "
 						"successful : %s \n", tz_path);
 			if (!__setting_set_city_tzone(tzpath)) {
 				SETTING_TRACE("__setting_set_city_tzone ERROR");
@@ -838,6 +834,9 @@ static int setting_time_main_create(void *cb)
 	}
 
 	setting_view_time_main.is_create = 1;
+
+
+	ret = system_settings_set_changed_cb(SYSTEM_SETTINGS_KEY_LOCALE_TIMEZONE, system_settings_changed_timezone, (void*)ad);
 	vconf_notify_key_changed(VCONFKEY_SYSTEM_TIME_CHANGED,
 			time_changed_callback, (void *)ad);
 
@@ -905,6 +904,7 @@ static int setting_time_main_destroy(void *cb)
 		ad->refresh_time_idler = NULL;
 	}
 
+	int ret = system_settings_unset_changed_cb(SYSTEM_SETTINGS_KEY_LOCALE_TIMEZONE);
 	vconf_ignore_key_changed(VCONFKEY_SYSTEM_TIME_CHANGED,
 			time_changed_callback);
 
@@ -999,9 +999,8 @@ static int __setting_set_city_tzone(const char *pTZPath)
 
 	/* set timezone_id */
 	/** @todo replace with vconf ID */
-	vconf_set_str(VCONFKEY_SETAPPL_TIMEZONE_ID, pStr);
+	//vconf_set_str(VCONFKEY_SETAPPL_TIMEZONE_ID, pStr);
 	FREE(pStr);
-
 	return TRUE;
 }
 
@@ -1035,8 +1034,9 @@ setting_time_main_launch_worldclock_result_ug_cb(ui_gadget_h ug,
 			MAX_COMMON_BUFFER_LEN / 4);
 	g_strlcat(tz_path, tzpath, sizeof(tz_path));
 	SETTING_TRACE("full tz_path:(%s)", tz_path);
+	SETTING_TRACE("tz_path:(%s)", tz_path+20);
 
-	int ret = _alarmmgr_set_timezone_helper(tz_path);
+	int ret = _set_timezone_helper(tz_path+20);
 	if (ret < 0) {
 		SETTING_TRACE("tzpath is not valid.");
 		if (tzpath)
@@ -1045,7 +1045,7 @@ setting_time_main_launch_worldclock_result_ug_cb(ui_gadget_h ug,
 			FREE(city);
 		return;
 	} else
-		SETTING_TRACE("_alarmmgr_set_timezone_helper - successful : "
+		SETTING_TRACE("_set_timezone_helper - successful : "
 				"%s \n", tz_path);
 
 	ret = vconf_set_str(VCONFKEY_SETAPPL_CITYNAME_INDEX_INT, city);
@@ -1609,17 +1609,13 @@ static void get_gmt_offset(char *str_buf, int size)
 static char *get_timezone_str()
 {
 	SETTING_TRACE_BEGIN;
-
-	enum { BUFFERSIZE = 1024 };
-	char buf[BUFFERSIZE];
-	ssize_t len = readlink(_TZ_SYS_ETC"/localtime", buf, sizeof(buf) - 1);
-
-	if (len != -1) {
-		buf[len] = '\0';
-	} else {
-		/* handle error condition */
+	char *str = NULL;
+	int ret = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_TIMEZONE, &str);
+	if (ret != SYSTEM_SETTINGS_ERROR_NONE) {
+		SETTING_TRACE("Failed to call system_settings_get_"
+				"value_string with error code %d", ret);
 	}
-	return g_strdup(buf + 20);		/*Asia/Seoul */
+	return g_strdup(str);		/*Asia/Seoul */
 }
 
 static char *get_city_name_result()
