@@ -66,13 +66,12 @@ extern struct _pw_item pw_its[];
  *
  ***************************************************/
 
-static Eina_Bool setting_password_simple_click_softkey_cancel_cb(void *data,
-		Elm_Object_Item *it)
+static void setting_password_simple_click_softkey_cancel_cb(void *data,
+		Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
-	retvm_if(data == NULL, EINA_FALSE,
-			"[Setting > Password] Data parameter is NULL");
+	retm_if(data == NULL, "[Setting > Password] Data parameter is NULL");
 
 	SettingPasswordUG *ad = (SettingPasswordUG *) data;
 
@@ -86,6 +85,7 @@ static Eina_Bool setting_password_simple_click_softkey_cancel_cb(void *data,
 		ad->imf_handler = NULL;
 	}
 	if (ad->imf_context) {
+		ecore_imf_context_focus_out(ad->imf_context);
 		ecore_imf_context_del(ad->imf_context);
 		ad->imf_context = NULL;
 	}
@@ -95,14 +95,12 @@ static Eina_Bool setting_password_simple_click_softkey_cancel_cb(void *data,
 	if (app_control_create(&svc) == 0) {
 		app_control_add_extra_data(svc, "result", "Cancel");
 		ug_send_result(ad->ug, svc);
-		SETTING_TRACE("Send Result : %s\n", "Cancel");
+		SETTING_TRACE("Send Result : %s", "Cancel");
 
 		app_control_destroy(svc);
 	}
 	/* Send destroy request */
 	ug_destroy_me(ad->ug);
-
-	return EINA_TRUE;
 }
 
 static void setting_password_simple_add_description(Evas_Object *layout,
@@ -203,7 +201,7 @@ static int _handle_step1(void *data, char *collection)
 	memset(collection, 0x00, SETTING_PW_UG_NORMAL_PASSWORD_MIN_LENGTH + 1);
 
 	ug_send_result(ad->ug, svc);
-	SETTING_TRACE("Send Result : %s\n", ad->view_type_string);
+	SETTING_TRACE("Send Result : %s", ad->view_type_string);
 	app_control_destroy(svc);
 	/* Send destroy request */
 	ug_destroy_me(ad->ug);
@@ -271,7 +269,7 @@ static int _handle_step2(void *data, int *step, char *collection1,
 							SETTING_PW_UG_NORMAL_PASSWORD_MIN_LENGTH + 1);
 
 					ug_send_result(ad->ug, svc);
-					SETTING_TRACE("Send Result : %s\n",
+					SETTING_TRACE("Send Result : %s",
 							ad->view_type_string);
 					app_control_destroy(svc);
 					/* Send destroy request */
@@ -476,7 +474,7 @@ static Eina_Bool __imf_event_key_down_cb(void *data, int type, void *event)
 	char *commit_str = (char *)ev->key;
 	char *digit = (char *)ev->string;
 	/*here you get the Input String from ISE */
-	SETTING_TRACE_DEBUG("ev->keyname is %s\n", commit_str);
+	SETTING_TRACE_DEBUG("ev->keyname is %s", commit_str);
 
 	if (!safeStrCmp(commit_str, "Return"))
 		return EINA_TRUE;
@@ -543,7 +541,7 @@ void __imf_show_for_simple_password(void *data)
 		ad->imf_handler = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
 				__imf_event_key_down_cb, ad);
 		if (!ad->imf_handler)
-			SETTING_TRACE_DEBUG("handler is NULL");
+			SETTING_TRACE_ERROR("handler is NULL");
 	}
 	SETTING_TRACE_END;
 }
@@ -573,28 +571,28 @@ static int setting_password_simple_create(void *cb)
 	elm_layout_file_set(ad->simple_layout, SETTING_THEME_EDJ_NAME,
 			"layout/simple_password");
 
-	ad->sp_entry1  = elm_entry_add(ad->simple_layout);
+	ad->sp_entry1 = elm_entry_add(ad->simple_layout);
 	elm_object_style_set(ad->sp_entry1 , "popup");
 	elm_entry_single_line_set(ad->sp_entry1 , EINA_TRUE);
 	elm_entry_editable_set(ad->sp_entry1 , EINA_FALSE);
 	ad->sp_entry[0] = ad->sp_entry1;
 	elm_object_part_content_set(ad->simple_layout, "entry1", ad->sp_entry1);
 
-	ad->sp_entry2  = elm_entry_add(ad->simple_layout);
+	ad->sp_entry2 = elm_entry_add(ad->simple_layout);
 	elm_object_style_set(ad->sp_entry2 , "popup");
 	elm_entry_single_line_set(ad->sp_entry2 , EINA_TRUE);
 	elm_entry_editable_set(ad->sp_entry2 , EINA_FALSE);
 	ad->sp_entry[1] = ad->sp_entry2;
 	elm_object_part_content_set(ad->simple_layout, "entry2", ad->sp_entry2);
 
-	ad->sp_entry3  = elm_entry_add(ad->simple_layout);
+	ad->sp_entry3 = elm_entry_add(ad->simple_layout);
 	elm_object_style_set(ad->sp_entry3 , "popup");
 	elm_entry_single_line_set(ad->sp_entry3 , EINA_TRUE);
 	elm_entry_editable_set(ad->sp_entry3 , EINA_FALSE);
 	ad->sp_entry[2] = ad->sp_entry3;
 	elm_object_part_content_set(ad->simple_layout, "entry3", ad->sp_entry3);
 
-	ad->sp_entry4  = elm_entry_add(ad->simple_layout);
+	ad->sp_entry4 = elm_entry_add(ad->simple_layout);
 	elm_object_style_set(ad->sp_entry4 , "popup");
 	elm_entry_single_line_set(ad->sp_entry4 , EINA_TRUE);
 	elm_entry_editable_set(ad->sp_entry4 , EINA_FALSE);
@@ -614,7 +612,7 @@ static int setting_password_simple_create(void *cb)
 			ad->win_get,
 			"IDS_ST_BODY_SIMPLE_PASSWORD",
 			_("IDS_ST_BUTTON_BACK"),
-			(setting_call_back_func)setting_password_simple_click_softkey_cancel_cb,
+			setting_password_simple_click_softkey_cancel_cb,
 			ad,
 			ad->simple_layout,
 			&(ad->navi_bar), NULL);
