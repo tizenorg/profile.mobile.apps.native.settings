@@ -257,7 +257,6 @@ typedef struct _SettingPasswordUG {
 	Evas_Object *sp_entry2;
 	Evas_Object *sp_entry3;
 	Evas_Object *sp_entry4;
-	Evas_Object *sp_focused;
 	int sp_focused_num;
 	char sp_chars[5];
 
