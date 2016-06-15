@@ -67,10 +67,20 @@ static void setting_ringtone_done_click_cb(void *data, Evas_Object *obj,
 		}
 		SETTING_TRACE("is_def_seleted: %d", is_def_seleted);
 
-		if (ad->sel_item_data && !safeStrCmp(ad->sel_item_data->keyStr,
-				"IDS_ST_BODY_PHONEPROFILES_SILENT")) {
-			vconf_set_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL,
-			FALSE);
+		char *titleID;
+		app_control_get_extra_data(ad->source_svc,
+				"title",
+				&titleID);
+
+		if(!safeStrCmp(titleID, "IDS_ST_MBODY_RINGTONE"))
+		{
+			if (ad->sel_item_data && !safeStrCmp(ad->sel_item_data->keyStr,
+									"IDS_ST_BODY_PHONEPROFILES_SILENT"))
+			{
+				vconf_set_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, FALSE);
+			} else {
+				vconf_set_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, TRUE);
+			}
 		}
 
 		if (is_def_seleted) {
@@ -93,7 +103,7 @@ static void setting_ringtone_done_click_cb(void *data, Evas_Object *obj,
 			app_control_destroy(reply);
 		}
 	}
-
+	free(titleID);
 	ug_destroy_me(ad->ug);
 	SETTING_TRACE_END;
 }
