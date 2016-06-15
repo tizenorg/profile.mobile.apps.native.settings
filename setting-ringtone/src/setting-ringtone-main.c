@@ -71,6 +71,9 @@ static void setting_ringtone_done_click_cb(void *data, Evas_Object *obj,
 				"IDS_ST_BODY_PHONEPROFILES_SILENT")) {
 			vconf_set_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL,
 			FALSE);
+		} else {
+			vconf_set_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL,
+						TRUE);
 		}
 
 		if (is_def_seleted) {
