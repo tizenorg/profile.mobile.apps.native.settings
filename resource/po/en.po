@@ -2662,3 +2662,18 @@ msgstr "Status bar information"
 msgid "IDS_ACCS_SBODY_SELECT_WHICH_INFORMATION_FROM_INDICATORS_SHOWN_ON_THE_STATUS_BAR_WILL_BE_READ_OUT_WHEN_YOU_TRIPLE_TAP_THE_SCREEN_WITH_TWO_FINGERS_MSG"
 msgstr "Select which information will be read out from indicators shown on the status bar when you triple tap the screen with two fingers, for example, the time and date, the device's signal strength, Wi-Fi and Bluetooth connections, and the battery power."
 
+msgid "IDS_ACCS_SPEECH_RATE"
+msgstr "Speech Rate"
+
+msgid "IDS_ACCS_KEYBOARD_FEEDBACK"
+msgstr "Keyboard Feedback"
+
+msgid "IDS_ACCS_SPEAK_WHILE_SCREEN_OFF"
+msgstr "Speak While Screen Off"
+
+msgid "IDS_ACCS_HINTS"
+msgstr "Hints"
+
+msgid "IDS_ACCS_VIBRATION_FEEDBACK"
+msgstr "Vibration Feedback"
+
