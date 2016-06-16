@@ -49,10 +49,41 @@ static Eina_Bool __setting_accessibility_screen_reader_page_hide(void *data,
 	SETTING_TRACE_END;
 	return EINA_TRUE;
 }
-
-static void setting_accessibility_main_chk_screenreader_vconf_update(int state)
+static Eina_Bool __disable_atspi(void *data)
 {
+	SETTING_TRACE_BEGIN;
+	setting_retvm_if(NULL == data, ECORE_CALLBACK_CANCEL, "data is NULL");
+	SettingAccessibilityUG *ad = (SettingAccessibilityUG *)data;
+	elm_config_atspi_mode_set(EINA_FALSE);
+	elm_config_all_flush();
+	elm_config_save();
+	ad->atspi_disable_timer = NULL;
+	SETTING_TRACE_END;
+	return ECORE_CALLBACK_CANCEL;
+}
+
+static void setting_accessibility_main_chk_screenreader_vconf_update(int state, void* data)
+{
+	SETTING_TRACE_BEGIN;
+	retm_if(data == NULL, "Data parameter is NULL");
+	SettingAccessibilityUG *ad = (SettingAccessibilityUG *)data;
 	vconf_set_bool(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, state ? 1 : 0);
+
+	if (state) {
+		elm_config_atspi_mode_set(EINA_TRUE);
+		elm_config_all_flush();
+		elm_config_save();
+	}
+	else {
+		if (ad->atspi_disable_timer)
+			ecore_timer_del(ad->atspi_disable_timer);
+
+		ad->atspi_disable_timer = ecore_timer_add(0.5, __disable_atspi, ad);
+	}
+
+
+	SETTING_TRACE_END;
+
 }
 
 static void setting_accessibility_main_chk_screenreader_cb(void *data,
@@ -68,7 +99,7 @@ static void setting_accessibility_main_chk_screenreader_cb(void *data,
 
 	SETTING_TRACE_DEBUG("check_status: %i", list_item->chk_status);
 	setting_accessibility_main_chk_screenreader_vconf_update(
-			list_item->chk_status);
+			list_item->chk_status, list_item->userdata);
 	SETTING_TRACE_END;
 }
 static void setting_accessibility_screenreader_settings_mouse_up_Gendial_list_cb(
@@ -104,7 +135,7 @@ static void setting_accessibility_screenreader_mouse_up_Gendial_list_cb(
 	setting_update_gl_item_chk_status(list_item,
 			list_item->chk_status ? 0 : 1);
 	setting_accessibility_main_chk_screenreader_vconf_update(
-			list_item->chk_status ? 1 : 0);
+			(list_item->chk_status ? 1 : 0), list_item->userdata);
 	SETTING_TRACE_END;
 }
 
@@ -148,6 +179,7 @@ void setting_accessibility_screen_reader_page_create(
 			NULL, NULL);
 	multiline_screen_reader_comment->userdata = ad;
 	__BACK_POINTER_SET(multiline_screen_reader_comment);
+	elm_genlist_item_select_mode_set(multiline_screen_reader_comment->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	Setting_GenGroupItem_Data *screen_reader_settings = setting_create_Gendial_field_def(
 			genlist, &itc_1text,

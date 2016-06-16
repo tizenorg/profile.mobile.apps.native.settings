@@ -6,7 +6,7 @@ FILE(GLOB ACC_SRCS *.c)
 INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_acc REQUIRED elementary ui-gadget-1 capi-appfw-application
         evas dlog edje glib-2.0 appcore-efl eina appsvc capi-appfw-app-manager
-        vconf app2sd json-glib-1.0 efl-extension libtzplatform-config)
+        vconf app2sd json-glib-1.0 efl-extension libtzplatform-config tts-setting)
 
 FOREACH(flag ${pkgs_acc_CFLAGS})
     SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
@@ -24,6 +24,6 @@ ADD_DEFINITIONS("-DPREFIX=\"${CMAKE_INSTALL_PREFIX}\"")
 
 ADD_LIBRARY(${SETTING_ACCESSIBILITY_UG} SHARED ${ACC_SRCS})
 TARGET_LINK_LIBRARIES(${SETTING_ACCESSIBILITY_UG} ${LIB_SETTING_COMMON})
-TARGET_LINK_LIBRARIES(${SETTING_ACCESSIBILITY_UG} ${pkgs_appmgr_LDFLAGS})
+TARGET_LINK_LIBRARIES(${SETTING_ACCESSIBILITY_UG} ${pkgs_acc_LDFLAGS})
 
 INSTALL(TARGETS ${SETTING_ACCESSIBILITY_UG} DESTINATION ${PREFIX}/lib/ug)
