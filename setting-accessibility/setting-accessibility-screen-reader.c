@@ -52,7 +52,13 @@ static Eina_Bool __setting_accessibility_screen_reader_page_hide(void *data,
 
 static void setting_accessibility_main_chk_screenreader_vconf_update(int state)
 {
+	if (state) elm_config_atspi_mode_set(EINA_TRUE);
+	else elm_config_atspi_mode_set(EINA_FALSE);
+
 	vconf_set_bool(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, state ? 1 : 0);
+
+	elm_config_all_flush();
+	elm_config_save();
 }
 
 static void setting_accessibility_main_chk_screenreader_cb(void *data,
