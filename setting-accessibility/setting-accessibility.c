@@ -82,6 +82,17 @@ void setting_accessibility_ug_on_destroy(ui_gadget_h ug,
 		app_control_h app_control, void *priv)
 {
 	SETTING_TRACE_BEGIN;
+	setting_retm_if((!priv), "!priv");
+	SettingAccessibilityUG *accessibilityUG = priv;
+	accessibilityUG->ug = ug;
+	if (NULL != ug_get_layout(accessibilityUG->ug)) {
+		evas_object_hide(
+			(Evas_Object *)ug_get_layout(
+				accessibilityUG->ug));
+		evas_object_del(
+			(Evas_Object *)ug_get_layout(
+				accessibilityUG->ug));
+	}
 	SETTING_TRACE_END;
 }
 

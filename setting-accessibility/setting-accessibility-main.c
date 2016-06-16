@@ -70,7 +70,7 @@ static Eina_Bool setting_accessibility_main_click_softkey_back_cb(void *data,
 	ug_destroy_me(ad->ug);
 
 	SETTING_TRACE_END;
-	return EINA_FALSE;
+	return EINA_TRUE;
 }
 
 static void setting_accessibility_vision_screen_reader_mouse_up_Gendial_list_cb(
@@ -140,13 +140,17 @@ static int setting_accessibility_main_create(void *cb)
 	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
 			"Cannot set scroller object  as contento of layout");
 	elm_object_style_set(scroller, "dialogue");
+	elm_genlist_mode_set(scroller, ELM_LIST_COMPRESS);
 	elm_genlist_clear(scroller); /* first to clear list */
+	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb,
+			NULL);
 	ad->genlist = scroller;
+
 	ad->ly_main = setting_create_layout_navi_bar(ad->win_main_layout,
 			ad->win_get,
 			KeyStr_Accessibility, _("IDS_ST_BUTTON_BACK"),
 			(setting_call_back_func)setting_accessibility_main_click_softkey_back_cb,
-			ad, scroller, &ad->navi_bar, NULL);
+			ad, ad->genlist, &ad->navi_bar, NULL);
 	ad->navi_item = elm_naviframe_top_item_get(ad->navi_bar);
 
 	setting_accessibility_main_generate_genlist((void *)ad);
