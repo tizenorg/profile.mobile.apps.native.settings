@@ -1467,7 +1467,7 @@ char *__setting_phone_lang_get_by_pattern(const char *locale,
 			bestPatternCapacity, &status);
 
 	u_austrcpy(bestPatternString, bestPattern);
-	SETTING_TRACE("BestPattern is %s", bestPatternString);
+	/* SETTING_TRACE("BestPattern is %s", bestPatternString); */
 
 	UDate date = ucal_getNow();
 	formatter = udat_open(UDAT_IGNORE, UDAT_IGNORE, locale_tmp, NULL, -1,
@@ -1477,7 +1477,7 @@ char *__setting_phone_lang_get_by_pattern(const char *locale,
 	(void) udat_format(formatter, date, formatted, formattedCapacity, NULL,
 			&status);
 	u_austrcpy(formattedString, formatted);
-	SETTING_TRACE("DATE & TIME is %s", formattedString);
+	/* SETTING_TRACE("DATE & TIME is %s", formattedString); */
 
 	udat_close(formatter);
 

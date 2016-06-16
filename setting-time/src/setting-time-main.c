@@ -91,7 +91,12 @@ void system_settings_changed_timezone(system_settings_key_e key, void *data)
 	SettingTimeUG *ad = (SettingTimeUG *)data;
 	int ret;
 	char *timezone = NULL;
-	ret = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_TIMEZONE, &timezone);
+
+	ret = system_settings_get_value_string(
+			SYSTEM_SETTINGS_KEY_LOCALE_TIMEZONE, &timezone);
+	if (ret)
+		SETTING_TRACE_ERROR("Cannot get TIMEZONE system key value");
+
 	SETTING_TRACE(" timezone : (%s) ", timezone);
 
 	tzset();
@@ -581,7 +586,6 @@ static void setting_time_main_datefield_set_cb(void *data, Evas_Object *object,
 #ifdef USE_TIMER_UPDATE_TIME_IN_TIME_VIEW
 Eina_Bool __refresh_date_timer(void *data)
 {
-	SETTING_TRACE_BEGIN;
 	SettingTimeUG *ad = data;
 
 	__setting_update_datefield_cb(ad);
@@ -904,7 +908,11 @@ static int setting_time_main_destroy(void *cb)
 		ad->refresh_time_idler = NULL;
 	}
 
-	int ret = system_settings_unset_changed_cb(SYSTEM_SETTINGS_KEY_LOCALE_TIMEZONE);
+	int ret = system_settings_unset_changed_cb(
+			SYSTEM_SETTINGS_KEY_LOCALE_TIMEZONE);
+	if (ret)
+		SETTING_TRACE_ERROR("Cannot unregister callback");
+
 	vconf_ignore_key_changed(VCONFKEY_SYSTEM_TIME_CHANGED,
 			time_changed_callback);
 
@@ -981,7 +989,7 @@ int setting_time_check_automatic_time_update_state()
 	int err = 0;
 
 	setting_get_bool_slp_key(BOOL_SLP_SETTING_AUTOMATIC_TIME_UPDATE,
-							 &bvalue, &err);
+			&bvalue, &err);
 
 	return bvalue;
 
@@ -1140,10 +1148,10 @@ void setting_time_main_launch_worldclock_sg(void *data)
 
 	elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
 	SETTING_TRACE("to load ug[%s]", "worldclock-efl");
-	ad->ug_loading =
-		setting_ug_create(ad->ug, "worldclock-efl", UG_MODE_FULLVIEW,
-				NULL, cbs);
-	if (NULL == ad->ug_loading) {	/* error handling */
+	ad->ug_loading = setting_ug_create(ad->ug, "worldclock-efl",
+			UG_MODE_FULLVIEW, NULL, cbs);
+	if (ad->ug_loading == NULL) {	/* error handling */
+		SETTING_TRACE_ERROR("Cannot load worldclock-efl UG module");
 	}
 
 	FREE(cbs);
@@ -1152,69 +1160,64 @@ void setting_time_main_launch_worldclock_sg(void *data)
 
 static void __setting_update_datefield_cb(void *cb)
 {
-	SETTING_TRACE_BEGIN;
 	retm_if(cb == NULL, "Data parameter is NULL");
 	SettingTimeUG *ad = (SettingTimeUG *) cb;
 
-	if (ad->data_time) {
-		time_t cctime = time(NULL);
-		struct tm ts_ret;
-		struct tm *ts = localtime_r(&cctime, &ts_ret);
-		SETTING_TRACE("year : %d, month : %d, day : %d, hour : %d, "
-				"min : %d",
-				ts_ret.tm_year, ts_ret.tm_mon, ts_ret.tm_mday,
-				ts_ret.tm_hour, ts_ret.tm_min);
-		if (ts) {
-
-			char *region = NULL;
-			int err = system_settings_get_value_string(
-					SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY,
-					&region);
-			if (err != SYSTEM_SETTINGS_ERROR_NONE) {
-				SETTING_TRACE("Failed to call system_settings_"
-						"get_value_string with error "
-						"code %d", err);
-			}
-			char *date = __setting_phone_lang_get_by_pattern(region,
-					"MMM/d/yyyy");
-			char *time;
-			static char date_arr[DEF_BUF_SIZE];
-			static char time_arr[DEF_BUF_SIZE];
-			char *pa_time_format = get_pa_time_format_str();
-			setting_retm_if(NULL == pa_time_format,
-					"pa_time_format is NULL");
-			if (!strncmp(pa_time_format, "IDS_ST_BODY_12_HOURS",
-					strlen("IDS_ST_BODY_12_HOURS")))
-				time = __setting_phone_lang_get_by_pattern(
-						region, "hhmm");
-			else
-				time = __setting_phone_lang_get_by_pattern(
-						region, "Hm");
-
-			strncpy(date_arr, date, DEF_BUF_SIZE);
-			strncpy(time_arr, time, DEF_BUF_SIZE);
-
-			date_arr[DEF_BUF_SIZE - 1] = '\0';
-			time_arr[DEF_BUF_SIZE - 1] = '\0';
-
-			if (ad->data_time->btn_left)
-				elm_object_text_set(ad->data_time->btn_left,
-						date_arr);
-			else {
-				SETTING_TRACE_ERROR("ad->data_time->btn_left "
-						"is NULL");
-			}
-			if (ad->data_time->btn_right)
-				elm_object_text_set(ad->data_time->btn_right,
-						time_arr);
-			else {
-				SETTING_TRACE_ERROR("ad->data_time->btn_right "
-						"is NULL");
-			}
-			SETTING_TRACE_BEGIN;
-			FREE(pa_time_format);
-		}
+	if (!ad->data_time) {
+		SETTING_TRACE_ERROR("data_time is null");
+		return;
 	}
+
+	time_t cctime = time(NULL);
+	struct tm ts_ret;
+	struct tm *ts = localtime_r(&cctime, &ts_ret);
+	/* SETTING_TRACE("year : %d, month : %d, day : %d, hour : %d, "
+			"min : %d",
+			ts_ret.tm_year, ts_ret.tm_mon, ts_ret.tm_mday,
+			ts_ret.tm_hour, ts_ret.tm_min); */
+	if (!ts) {
+		SETTING_TRACE_ERROR("Cannot get local time");
+		return;
+	}
+
+	char *region = NULL;
+	int err = system_settings_get_value_string(
+			SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY,
+			&region);
+	if (err != SYSTEM_SETTINGS_ERROR_NONE) {
+		SETTING_TRACE_ERROR("Failed to call system_settings_get_value_"
+				"string with error code %d", err);
+	}
+	char *date = __setting_phone_lang_get_by_pattern(region, "MMM/d/yyyy");
+	char *time;
+	static char date_arr[DEF_BUF_SIZE];
+	static char time_arr[DEF_BUF_SIZE];
+	char *pa_time_format = get_pa_time_format_str();
+	setting_retm_if(NULL == pa_time_format, "pa_time_format is NULL");
+	if (!strncmp(pa_time_format, "IDS_ST_BODY_12_HOURS",
+			strlen("IDS_ST_BODY_12_HOURS")))
+		time = __setting_phone_lang_get_by_pattern(region, "hhmm");
+	else
+		time = __setting_phone_lang_get_by_pattern(region, "Hm");
+
+	strncpy(date_arr, date, DEF_BUF_SIZE);
+	strncpy(time_arr, time, DEF_BUF_SIZE);
+
+	date_arr[DEF_BUF_SIZE - 1] = '\0';
+	time_arr[DEF_BUF_SIZE - 1] = '\0';
+
+	if (ad->data_time->btn_left) {
+		elm_object_text_set(ad->data_time->btn_left, date_arr);
+	} else {
+		SETTING_TRACE_ERROR("ad->data_time->btn_left is NULL");
+	}
+	if (ad->data_time->btn_right) {
+		elm_object_text_set(ad->data_time->btn_right, time_arr);
+	} else {
+		SETTING_TRACE_ERROR("ad->data_time->btn_right is NULL");
+	}
+
+	FREE(pa_time_format);
 }
 
 Eina_Bool setting_update_datefield_cb(void *data)
