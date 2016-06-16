@@ -98,6 +98,7 @@
 #define KeyStr_Display			"IDS_ST_HEADER_DISPLAY"
 #define KeyStr_ApplicationsItem		"IDS_ST_BODY_APPLICATIONS"
 #define KeyStr_ApplicationManager	"IDS_ST_BODY_APPLICATION_MANAGER"
+#define KeyStr_Accessibility		"IDS_ST_BODY_ACCESSIBILITY"
 #define KeyStr_DefaultApplications	"IDS_ST_HEADER_DEFAULT_APPLICATIONS_ABB"
 #define KeyStr_Home			"IDS_ST_BODY_HOME"
 #define KeyStr_BacklightTime		"IDS_ST_BODY_SCREEN_TIMEOUT_ABB2"
