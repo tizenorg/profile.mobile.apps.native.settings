@@ -455,9 +455,9 @@ static void storageUg_main_sel(void *data, Evas_Object *obj, void *event_info)
 	} else if (!safeStrCmp(STORAGEUG_STR_DEF_STORAGE, list_item->keyStr)) {
 		setting_view_change(ad->main_view, ad->default_view, ad);
 	} else if (!safeStrCmp(STORAGEUG_STR_PICS, list_item->keyStr)) {
-		app_launcher("org.tizen.gallery");
+		app_launcher("org.tizen.gallery", NULL, NULL);
 	} else if (!safeStrCmp(STORAGEUG_STR_AUDIO, list_item->keyStr)) {
-		app_launcher("org.tizen.music-player");
+		app_launcher("org.tizen.music-player", NULL, NULL);
 	} else if (!safeStrCmp(STORAGEUG_STR_MISCES, list_item->keyStr)) {
 		setting_view_change(ad->main_view, ad->misces_view, ad);
 	} else if (!safeStrCmp(STORAGEUG_STR_CACHE, list_item->keyStr)) {

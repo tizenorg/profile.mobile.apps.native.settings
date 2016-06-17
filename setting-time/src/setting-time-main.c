@@ -1130,6 +1130,87 @@ void setting_time_main_launch_worldclock_layout_ug_cb(
 	SETTING_TRACE_END;
 }
 
+Eina_Bool ___time_freeze_event_timer_cb(void *cb)
+{
+	SettingTimeUG *ad = (SettingTimeUG*)cb;
+
+	SETTING_TRACE_BEGIN;
+	retv_if(cb == NULL, EINA_FALSE);
+
+	evas_object_freeze_events_set(ad->navi_bar, EINA_FALSE);
+	ad->event_freeze_timer = NULL;
+
+	return EINA_FALSE;
+}
+
+static void _worldclock_reply_cb(app_control_h request, app_control_h reply, app_control_result_e result, void *user_data)
+{
+	SETTING_TRACE_BEGIN;
+	/* error check */
+	retm_if(user_data == NULL, "Data parameter is NULL");
+
+	SettingTimeUG *ad = (SettingTimeUG *) user_data;
+
+	char *city = NULL;
+	char *tzpath = NULL;
+	app_control_get_extra_data(reply, "city", &city);
+	app_control_get_extra_data(reply, "tzpath", &tzpath);
+
+	if (!tzpath) {
+		SETTING_TRACE("tzpath from worldclock UG is null.");
+		setting_update_timezone(ad);
+		return;
+	} else {
+		SETTING_TRACE("tzpath : %s", tzpath);
+	}
+	SETTING_TRACE("city : %s", city);
+
+	/* ----------------------------------------------------------------- */
+	char tz_path[MAX_COMMON_BUFFER_LEN / 4 + 1];
+	safeCopyStr(tz_path, SETTING_TIME_ZONEINFO_PATH,
+			MAX_COMMON_BUFFER_LEN / 4);
+	g_strlcat(tz_path, tzpath, sizeof(tz_path));
+	SETTING_TRACE("full tz_path:(%s)", tz_path);
+	SETTING_TRACE("tz_path:(%s)", tz_path+20);
+
+	int ret = _set_timezone_helper(tz_path+20);
+	if (ret < 0) {
+		SETTING_TRACE("tzpath is not valid.");
+		if (tzpath)
+			FREE(tzpath);
+		if (city)
+			FREE(city);
+		return;
+	} else
+		SETTING_TRACE("_set_timezone_helper - successful : "
+				"%s \n", tz_path);
+
+	ret = vconf_set_str(VCONFKEY_SETAPPL_CITYNAME_INDEX_INT, city);
+	setting_retm_if(ret != 0, "set vconf failed");
+
+	/* parse city and GMT offset from tzpath and system time property */
+	/* set the strings in vconf which will be used while updating display
+	 * of timezone */
+	if (!__setting_set_city_tzone(tzpath)) {
+		SETTING_TRACE("__setting_set_city_tzone ERROR");
+		if (tzpath)
+			FREE(tzpath);
+		if (city)
+			FREE(city);
+		return;
+	}
+
+	/* update the display for timezone */
+	setting_update_timezone(ad);
+	static int t_event_val = -1;
+	vconf_set_int(VCONFKEY_SYSTEM_TIME_CHANGED, t_event_val);
+	if (tzpath)
+		FREE(tzpath);
+	if (city)
+		FREE(city);
+
+	SETTING_TRACE_END;
+}
 
 void setting_time_main_launch_worldclock_sg(void *data)
 {
@@ -1137,25 +1218,22 @@ void setting_time_main_launch_worldclock_sg(void *data)
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");
 
+	/* ad is point to data */
 	SettingTimeUG *ad = (SettingTimeUG *) data;
 
-	struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
-	setting_retm_if(!cbs, "calloc failed");
-	cbs->layout_cb = setting_time_main_launch_worldclock_layout_ug_cb;
-	cbs->result_cb = setting_time_main_launch_worldclock_result_ug_cb;
-	cbs->destroy_cb = setting_time_main_launch_worldclock_destroy_ug_cb;
-	cbs->priv = (void *)ad;
+	SETTING_TRACE_BEGIN;
+	/* error check */
+	retv_if(data == NULL, FALSE);
 
-	elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
-	SETTING_TRACE("to load ug[%s]", "worldclock-efl");
-	ad->ug_loading = setting_ug_create(ad->ug, "worldclock-efl",
-			UG_MODE_FULLVIEW, NULL, cbs);
-	if (ad->ug_loading == NULL) {	/* error handling */
-		SETTING_TRACE_ERROR("Cannot load worldclock-efl UG module");
+	if (0 == app_launcher("org.tizen.worldclock-efl", _worldclock_reply_cb, ad)) {
+		if (ad->event_freeze_timer) {
+			ecore_timer_del(ad->event_freeze_timer);
+			ad->event_freeze_timer = NULL;
+		}
+		ad->event_freeze_timer = ecore_timer_add(
+				1, ___time_freeze_event_timer_cb, ad);
+		evas_object_freeze_events_set(ad->navi_bar, EINA_TRUE);
 	}
-
-	FREE(cbs);
-	return;
 }
 
 static void __setting_update_datefield_cb(void *cb)

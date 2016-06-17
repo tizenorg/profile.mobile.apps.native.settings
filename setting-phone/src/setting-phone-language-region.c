@@ -192,7 +192,7 @@ static void setting_phone_lang_create_readout_ug(SettingPhoneUG *ad)
 	SETTING_TRACE_BEGIN;
 	ret_if(ad == NULL);
 
-	if (app_launcher("setting-drivingmode-efl") == 0) {
+	if (app_launcher("setting-drivingmode-efl", NULL, NULL) == 0) {
 		ad->event_freeze_timer = ecore_timer_add(1,
 				setting_phone_language_region_freeze_event_timer_cb,
 				ad);

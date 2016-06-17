@@ -1717,7 +1717,7 @@ static void setting_about_main_mouse_up_Gendial_list_cb(void *data,
 			elm_object_focus_set(back_btn, EINA_TRUE);
 		}
 
-		app_launcher("org.tizen.oma-dm");
+		app_launcher("org.tizen.oma-dm", NULL, NULL);
 #endif
 	} else if (!safeStrCmp(SETTING_ABOUT_DEVICE_NAME_STR,
 			list_item->keyStr)) {
