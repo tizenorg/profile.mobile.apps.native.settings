@@ -388,7 +388,7 @@ static void setting_connectivity_main_chk_btn_cb(void *data, Evas_Object *obj,
 	SETTING_TRACE("list_item->keyStr = %s", list_item->keyStr);
 	if (!safeStrCmp("IDS_ST_MBODY_SHOW_CPU_USAGE", list_item->keyStr)) {
 		if (opposite) {
-			app_launcher(SETTING_CPU_USAGE_PKG_NAME);
+			app_launcher(SETTING_CPU_USAGE_PKG_NAME, NULL, NULL);
 		} else {
 #if 0
 			bool running_flag = FALSE;
@@ -444,7 +444,7 @@ static void setting_connectivity_usb_mouse_up_Gendial_CPU_usage_cb(void *data,
 
 		if (list_item->chk_status) {
 			vconf_set_bool("db/setting/show_cpu_info", 1);
-			app_launcher(SETTING_CPU_USAGE_PKG_NAME);
+			app_launcher(SETTING_CPU_USAGE_PKG_NAME, NULL, NULL);
 		} else {
 			vconf_set_bool("db/setting/show_cpu_info", 0);
 		}
@@ -472,7 +472,7 @@ static void __setting_connectivity_usb_dia_usage_mouse_up_cb(void *data,
 	if (list_item)
 		SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 
-	app_launcher("org.tizen.crash-viewer");
+	app_launcher("org.tizen.crash-viewer", NULL, NULL);
 }
 
 char *get_bg_processes()
