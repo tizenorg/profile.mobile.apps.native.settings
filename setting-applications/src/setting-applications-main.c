@@ -179,7 +179,7 @@ static void setting_applications_manage_apps_ug(SettingApplicationsUG *ad)
 {
 	SETTING_TRACE_BEGIN;
 	if (app_launcher(
-			"setting-manage-applications-efl|viewtype:manage-applications")
+			"setting-manage-applications-efl|viewtype:manage-applications", NULL, NULL)
 			== 0) {
 		ad->event_freeze_timer = ecore_timer_add(1,
 				setting_applications_manage_apps_freeze_event_timer_cb,

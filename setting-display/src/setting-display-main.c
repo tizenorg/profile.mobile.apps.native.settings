@@ -706,7 +706,7 @@ gboolean setting_display_create_font_sg(void *data)
 	/* error check */
 	retv_if(data == NULL, FALSE);
 
-	if (0 == app_launcher("setting-font-efl")) {
+	if (0 == app_launcher("setting-font-efl", NULL, NULL)) {
 		if (ad->event_freeze_timer) {
 			ecore_timer_del(ad->event_freeze_timer);
 			ad->event_freeze_timer = NULL;

@@ -69,7 +69,7 @@ static void setting_moreconnections_main_mouse_up_Gendial_list_cb(void *data,
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 
 	if (!safeStrCmp(KeyStr_LocationService, list_item->keyStr)) {
-		app_launcher("org.tizen.setting-location");
+		app_launcher("org.tizen.setting-location", NULL, NULL);
 	}
 }
 

@@ -1939,7 +1939,7 @@ int setting_set_i18n_force(char *pkgname, char *localedir)
 /*example 2:  app_launcher("emergency-msg-setting-efl"); */
 /*example 3:  app_launcher(
  * "sevenemail-setting-efl|caller:setting;cmd:main option"); */
-EXPORT_PUBLIC int app_launcher(const char *pkg_name)
+EXPORT_PUBLIC int app_launcher(const char *pkg_name, app_control_reply_cb callback, void *user_data)
 {
 	int ret = -1;
 	char *path = NULL;
@@ -1951,12 +1951,12 @@ EXPORT_PUBLIC int app_launcher(const char *pkg_name)
 	}
 
 	app_control_set_operation(service, APP_CONTROL_OPERATION_PICK);
-	/*service_set_operation(service, SERVICE_OPERATION_DEFAULT); */
 	if (path)
 		app_control_set_app_id(service, path);
 	app_control_set_window(service, elm_win_xwindow_get(ug_get_window()));
 
-	int launch_ret = app_control_send_launch_request(service, NULL, NULL);
+	SETTING_TRACE("service name  - %s", path);
+	int launch_ret = app_control_send_launch_request(service, callback, user_data);
 	SETTING_TRACE("after app_service_create - %s : %d ", pkg_name,
 			launch_ret);
 	if (launch_ret == APP_CONTROL_ERROR_NONE) {

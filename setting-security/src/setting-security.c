@@ -1237,29 +1237,7 @@ gboolean setting_security_create_lockscreen_options_sg(void *data)
 		return FALSE;
 	}
 
-#if 1
-	app_launcher("lockscreen-options");
-#else
-	struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
-
-	if (!cbs)
-	return FALSE;
-	cbs->layout_cb = setting_security_layout_lockscreen_options_ug_cb;
-	cbs->result_cb = NULL;
-	cbs->destroy_cb = setting_security_destroy_lockscreen_options_ug_cb;
-	cbs->priv = (void *)ad;
-
-	if (ad->ly_main)
-	elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
-	ad->ug_lockscreen = setting_ug_create(ad->ug, "lockscreen-options",
-			UG_MODE_FULLVIEW, NULL, cbs);
-	if (NULL == ad->ug_lockscreen) { /* error handling */
-		SETTING_TRACE_ERROR("NULL == ad->ug_lockscreen");
-		evas_object_show(ad->ly_main);
-	}
-
-	FREE(cbs);
-#endif
+	app_launcher("lockscreen-options", NULL, NULL);
 
 	return TRUE;
 }

@@ -410,34 +410,13 @@ static void setting_security_main_mouse_up_Gendial_list_cb(void *data,
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 
 	if (!safeStrCmp(KeyStr_LockScreen, list_item->keyStr)) {
-#if 1
-		if (0 == app_launcher("org.tizen.ug-lockscreen-options")) {
+		if (0 == app_launcher("org.tizen.ug-lockscreen-options", NULL, NULL)) {
 			/*if (0 == app_launcher(
 			 * "setting-lockscreen-options-efl")) { */
 			ad->update_view_timer = ecore_timer_add(1,
 					__freeze_event_timer_cb, ad);
 			evas_object_freeze_events_set(ad->navi_bar, EINA_TRUE);
 		}
-#else
-		retm_if(data == NULL, "Data parameter is NULL");
-
-		SettingSecurityUG *ad = (SettingSecurityUG *) data;
-
-		struct ug_cbs *cbs = (struct ug_cbs *)
-				calloc(1, sizeof(struct ug_cbs));
-		setting_retm_if(!cbs, "calloc failed");
-		cbs->layout_cb = setting_security_lockscreen_layout_ug_cb;
-		cbs->result_cb = NULL;
-		cbs->destroy_cb = setting_security_lockscreen_destroy_ug_cb;
-		cbs->priv = (void *)ad;
-
-		elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
-
-		SETTING_TRACE("To load ug[%s]", "lockscreen-options");
-		setting_ug_create(ad->ug, "lockscreen-options",
-				UG_MODE_FULLVIEW, NULL, cbs);
-		FREE(cbs);
-#endif
 	}
 }
 

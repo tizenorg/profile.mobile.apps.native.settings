@@ -425,7 +425,7 @@ static gboolean setting_applications_create_homescreen_setting_ug(void *data)
 		return FALSE;
 	}
 
-	app_launcher("org.tizen.setting-homescreen");
+	app_launcher("org.tizen.setting-homescreen", NULL, NULL);
 
 	return TRUE;
 }

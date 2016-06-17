@@ -305,7 +305,7 @@ void setting_main_click_list_ex_ug_cb(void *data, Evas_Object *obj,
 		return;
 	}
 	if (pnode && pnode->item_type == Cfg_Item_AppLauncher_Node) {
-		if (app_launcher(data) == 0) {
+		if (app_launcher(data, NULL, NULL) == 0) {
 			ad->event_freeze_timer = ecore_timer_add(1,
 					setting_main_freeze_event_timer_cb, ad);
 			evas_object_freeze_events_set(ad->navibar_main,

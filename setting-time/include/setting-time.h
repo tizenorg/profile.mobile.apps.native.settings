@@ -74,6 +74,7 @@ struct _SettingTimeUG {
 	Evas_Object *navi_bar;
 	Evas_Object *scrl_main;
 	char *caller;
+	Ecore_Timer *event_freeze_timer;
 
 #ifdef USE_TIMER_UPDATE_TIME_IN_TIME_VIEW
 	Ecore_Timer *update_timer;

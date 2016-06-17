@@ -1338,6 +1338,7 @@ static Eina_Bool __feedback_back_cb(void *data, Elm_Object_Item *it)
 	return EINA_TRUE;
 }
 
+#if 0
 void setting_sound_notifications_layout_ug_cb(ui_gadget_h ug,
 		enum ug_mode mode,
 		void *priv)
@@ -1363,6 +1364,7 @@ void setting_sound_notifications_layout_ug_cb(ui_gadget_h ug,
 	}
 	SETTING_TRACE_END;
 }
+#endif
 
 static void
 setting_sound_main_mouse_up_Gendial_list_cb(void *data,
