@@ -30,8 +30,6 @@
 #include <notification_setting.h>
 #include <notification_setting_internal.h>
 
-#define DO_NOT_DISTURB_OP "http://tizen.org/appcontrol/operation/setting/"\
-	"do_not_disturb"
 #define APP_NOTIFICATIONS_OP "http://tizen.org/appcontrol/operation/setting/"\
 	"app_notifications"
 
