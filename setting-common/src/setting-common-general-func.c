@@ -199,10 +199,7 @@ char *get_pa_backlight_time_str()
 #if SUPPORT_LCD_TIMEOUT_KEEPING
 	if (0 != vconf_get_int(VCONFKEY_LCD_TIMEOUT_NORMAL_BACKUP, &value)) {
 		/* value = 600; */
-		if (isEmulBin())
 		value = 0; /* keep agree with postin file */
-		else
-		value = 30;
 		vconf_set_int(VCONFKEY_LCD_TIMEOUT_NORMAL_BACKUP, value);
 	}
 #else
@@ -215,10 +212,7 @@ char *get_pa_backlight_time_str()
 		/* file system exceptional handle, eg.
 		 * The vconf file lost due to file system. */
 		/* value = 600; */
-		if (isEmulBin())
 		value = 0; /* keep agree with postin file */
-		else
-		value = 30;
 		setting_set_int_slp_key(INT_SLP_SETTING_LCD_TIMEOUT_NORMAL,
 				value, &err);
 	}
@@ -231,36 +225,20 @@ char *get_pa_backlight_time_str()
 	/* if 120 < < 300, 120 */
 	/* if 300 < < 600, 300 */
 	/* if > 600, 600 */
-	if (isEmulBin()) {
-		if (SETTING_RETURN_FAIL == ret || value < 15)
-			value = 0;
-		else if (value >= 15 && value < 30)
-			value = 15;
-		else if (value >= 30 && value < 60)
-			value = 30;
-		else if (value >= 60 && value < 120)
-			value = 60;
-		else if (value >= 120 && value < 300)
-			value = 120;
-		else if (value >= 300 && value < 600)
-			value = 300;
-		else
-			value = 600;
-	} else {
-		if (SETTING_RETURN_FAIL == ret || value < 30)
-			value = 15;
-		else if (value >= 30 && value < 60)
-			value = 30;
-		else if (value >= 60 && value < 120)
-			value = 60;
-		else if (value >= 120 && value < 300)
-			value = 120;
-		else if (value >= 300 && value < 600)
-			value = 300;
-		else
-			value = 600;
-	}
-
+	if (SETTING_RETURN_FAIL == ret || value < 15)
+		value = 0;
+	else if (value >= 15 && value < 30)
+		value = 15;
+	else if (value >= 30 && value < 60)
+		value = 30;
+	else if (value >= 60 && value < 120)
+		value = 60;
+	else if (value >= 120 && value < 300)
+		value = 120;
+	else if (value >= 300 && value < 600)
+		value = 300;
+	else
+		value = 600;
 	setting_set_int_slp_key(INT_SLP_SETTING_LCD_TIMEOUT_NORMAL, value,
 			&err);
 #endif
@@ -305,13 +283,6 @@ char *get_pa_backlight_time_str()
 EXPORT_PUBLIC
 int adjust_backlight_time_value(int value)
 {
-#if NORMAL
-	/* value = 600; */
-	if (isEmulBin())
-	value = 0; /* keep agree with postin file */
-	else
-	value = 30;
-#else /* for MDM server */
 	/* adjust value. */
 	/* if < 15, 15 */
 	/* if 15 < < 30, 15 */
@@ -320,36 +291,21 @@ int adjust_backlight_time_value(int value)
 	/* if 120 < < 300, 120 */
 	/* if 300 < < 600, 300 */
 	/* if > 600, 600 */
-	if (isEmulBin()) {
-		if (value < 15)
-			value = 0;
-		else if (value >= 15 && value < 30)
-			value = 15;
-		else if (value >= 30 && value < 60)
-			value = 30;
-		else if (value >= 60 && value < 120)
-			value = 60;
-		else if (value >= 120 && value < 300)
-			value = 120;
-		else if (value >= 300 && value < 600)
-			value = 300;
-		else
-			value = 600;
-	} else {
-		if (value < 30)
-			value = 15;
-		else if (value >= 30 && value < 60)
-			value = 30;
-		else if (value >= 60 && value < 120)
-			value = 60;
-		else if (value >= 120 && value < 300)
-			value = 120;
-		else if (value >= 300 && value < 600)
-			value = 300;
-		else
-			value = 600;
-	}
-#endif
+	if (value < 15)
+		value = 0;
+	else if (value >= 15 && value < 30)
+		value = 15;
+	else if (value >= 30 && value < 60)
+		value = 30;
+	else if (value >= 60 && value < 120)
+		value = 60;
+	else if (value >= 120 && value < 300)
+		value = 120;
+	else if (value >= 300 && value < 600)
+		value = 300;
+	else
+		value = 600;
+
 	return value;
 }
 

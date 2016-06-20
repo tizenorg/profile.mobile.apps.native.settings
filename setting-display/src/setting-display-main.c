@@ -184,25 +184,23 @@ static void setting_display_screen_timeout_popup(void *data)
 	ad->screen_timeout_rdg = rdg;
 
 	int radio_num =0;
-	if (isEmulBin()) {
-		SETTING_TRACE_ERROR(">>>>>>>>>>>>>> EMULATOR is on!!");
-		ad->data_backlight_always_on = setting_create_Gendial_field_1radio(
-				menu_glist, &(ad->itc_1text_1icon),
-				   __screen_timeout_cb,ad,
-				SWALLOW_Type_1RADIO_RIGHT,
-				rdg, radio_num,		  /* Always ON */
-				timeout_str_list[radio_num], NULL);
+	SETTING_TRACE_ERROR(">>>>>>>>>>>>>> EMULATOR is on!!");
+	ad->data_backlight_always_on = setting_create_Gendial_field_1radio(
+			menu_glist, &(ad->itc_1text_1icon),
+			   __screen_timeout_cb,ad,
+			SWALLOW_Type_1RADIO_RIGHT,
+			rdg, radio_num,		  /* Always ON */
+			timeout_str_list[radio_num], NULL);
 
-		if (ad->data_backlight_always_on) {
-			ad->data_backlight_always_on->userdata = ad;
-			__BACK_POINTER_SET(ad->data_backlight_always_on);
-		} else {
-			SETTING_TRACE_ERROR("ad->data_backlight_always_on is NULL");
-		}
-
-		_pdm_handle(0, max_inactivity_time, ad->data_backlight_always_on);
-		radio_num++;
+	if (ad->data_backlight_always_on) {
+		ad->data_backlight_always_on->userdata = ad;
+		__BACK_POINTER_SET(ad->data_backlight_always_on);
+	} else {
+		SETTING_TRACE_ERROR("ad->data_backlight_always_on is NULL");
 	}
+
+	_pdm_handle(0, max_inactivity_time, ad->data_backlight_always_on);
+	radio_num++;
 
 	ad->data_backlight_15sec = setting_create_Gendial_field_1radio(
 			menu_glist, &(ad->itc_1text_1icon),
@@ -297,26 +295,22 @@ static void setting_display_screen_timeout_popup(void *data)
 	/* update radio */
 	setting_get_int_slp_key(
 			ad->data_back->int_slp_setting_binded, &value, &err);
-	if (isEmulBin()) {
-		if (0 == value) {
-			elm_radio_value_set(rdg, 0);
-		}
-		radio_num = 1;
-	} else {
-		radio_num = 0;
-	}
-	if (15 == value) {
+
+	radio_num = 0;
+	if (0 == value) {
 		elm_radio_value_set(rdg, radio_num + 0);
-	} else if (30 == value) {
+	} else if (15 == value) {
 		elm_radio_value_set(rdg, radio_num + 1);
-	} else if (60 == value) {
+	} else if (30 == value) {
 		elm_radio_value_set(rdg, radio_num + 2);
-	} else if (120 == value) {
+	} else if (60 == value) {
 		elm_radio_value_set(rdg, radio_num + 3);
-	} else if (300 == value) {
+	} else if (120 == value) {
 		elm_radio_value_set(rdg, radio_num + 4);
-	} else if (600 == value) {
+	} else if (300 == value) {
 		elm_radio_value_set(rdg, radio_num + 5);
+	} else if (600 == value) {
+		elm_radio_value_set(rdg, radio_num + 6);
 	}
 }
 
