@@ -29,6 +29,9 @@
 
 #include <setting-common-po-string.h>
 
+#define DO_NOT_DISTURB_OP "http://tizen.org/appcontrol/operation/setting/"\
+	"do_not_disturb"
+
 #define TTS_CONTENT_MENU_CLICK_INFO \
 	"IDS_ST_BODY_TO_OPEN_THE_MENU_DOUBLE_TAP_IT_T_TTS"
 #define TTS_CONTENT_BACK_CLICK_INFO \

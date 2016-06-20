@@ -1012,20 +1012,29 @@ static int __setting_set_city_tzone(const char *pTZPath)
 	return TRUE;
 }
 
-static void
-setting_time_main_launch_worldclock_result_ug_cb(ui_gadget_h ug,
-		app_control_h result, void *priv)
+static void _worldclock_app_reply_cb(app_control_h request,
+		app_control_h reply, app_control_result_e result,
+		void *priv)
 {
+	// (ui_gadget_h ug, app_control_h result, void *priv)
 	SETTING_TRACE_BEGIN;
-	/* error check */
-	retm_if(priv == NULL, "Data parameter is NULL");
-
 	SettingTimeUG *ad = (SettingTimeUG *) priv;
+	int ret;
+
+	retm_if(result != APP_CONTROL_RESULT_SUCCEEDED,
+			"Application call failed");
+	retm_if(request == NULL, "request is NULL");
+	retm_if(reply == NULL, "reply is NULL");
+	retm_if(priv == NULL, "Data parameter is NULL");
 
 	char *city = NULL;
 	char *tzpath = NULL;
-	app_control_get_extra_data(result, "city", &city);
-	app_control_get_extra_data(result, "tzpath", &tzpath);
+	ret = app_control_get_extra_data(reply, "city", &city);
+	retm_if(ret != APP_CONTROL_ERROR_NONE,
+			"cannot get 'city' extra data");
+	ret = app_control_get_extra_data(reply, "tzpath", &tzpath);
+	retm_if(ret != APP_CONTROL_ERROR_NONE,
+			"cannot get 'tzpath' extra data");
 
 	if (!tzpath) {
 		SETTING_TRACE("tzpath from worldclock UG is null.");
@@ -1044,7 +1053,7 @@ setting_time_main_launch_worldclock_result_ug_cb(ui_gadget_h ug,
 	SETTING_TRACE("full tz_path:(%s)", tz_path);
 	SETTING_TRACE("tz_path:(%s)", tz_path+20);
 
-	int ret = _set_timezone_helper(tz_path+20);
+	ret = _set_timezone_helper(tz_path+20);
 	if (ret < 0) {
 		SETTING_TRACE("tzpath is not valid.");
 		if (tzpath)
@@ -1215,15 +1224,10 @@ static void _worldclock_reply_cb(app_control_h request, app_control_h reply, app
 void setting_time_main_launch_worldclock_sg(void *data)
 {
 	SETTING_TRACE_BEGIN;
-	/* error check */
-	retm_if(data == NULL, "Data parameter is NULL");
-
-	/* ad is point to data */
+	// ad is point to data 
 	SettingTimeUG *ad = (SettingTimeUG *) data;
 
-	SETTING_TRACE_BEGIN;
-	/* error check */
-	retv_if(data == NULL, FALSE);
+	retm_if(data == NULL, "Data parameter is NULL");
 
 	if (0 == app_launcher("org.tizen.worldclock-efl", _worldclock_reply_cb, ad)) {
 		if (ad->event_freeze_timer) {
