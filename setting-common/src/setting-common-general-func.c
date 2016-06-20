@@ -1952,9 +1952,10 @@ EXPORT_PUBLIC int app_launcher(const char *pkg_name)
 
 	app_control_set_operation(service, APP_CONTROL_OPERATION_PICK);
 	/*service_set_operation(service, SERVICE_OPERATION_DEFAULT); */
-	if (path)
+	if (path) {
 		app_control_set_app_id(service, path);
-	app_control_set_window(service, elm_win_xwindow_get(ug_get_window()));
+		SETTING_TRACE("app path - %s", path);
+	}
 
 	int launch_ret = app_control_send_launch_request(service, NULL, NULL);
 	SETTING_TRACE("after app_service_create - %s : %d ", pkg_name,

@@ -164,6 +164,12 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj,
 		evas_object_del(ctxpopup);
 	}
 
+
+	/* do not float more menu (popup) in file selection mode */
+	if(ad->misces_ctx_popup_selected) {
+		return;
+	}
+
 	ctxpopup = elm_ctxpopup_add(nf);
 	elm_ctxpopup_auto_hide_disabled_set(ctxpopup, EINA_TRUE);
 	elm_object_style_set(ctxpopup, "more/default");
@@ -184,8 +190,12 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj,
 	 * win_rotation_changed_cb, ctxpopup); */
 
 	/*------------------------------------------------------------------- */
+
+
 	elm_ctxpopup_item_append(ctxpopup, _("IDS_ST_BODY_DELETE"), NULL,
 			setting_storage_ctx_click_softkey_cb, ad);
+
+
 	/*------------------------------------------------------------------- */
 
 	elm_ctxpopup_direction_priority_set(ctxpopup, ELM_CTXPOPUP_DIRECTION_UP,
@@ -1041,12 +1051,13 @@ static void storageUg_misces_cancel_cb(void *data, Evas_Object *obj,
 		SETTING_TRACE_ERROR("ad->misces_ctx_popup_selected == true");
 
 		/* change UI style */
-		ad->misces_ctx_popup_selected = false;
+		ad->misces_ctx_popup_selected = EINA_FALSE;
 
 		/* 1. remove 1st item of genlist */
 		storageUg_misces_gl_remove_select_all_item(ad);
 		/* 2. remove all 'toggle' from all list */
 		_genlist_check_hide(ad, true);
+
 
 		/* remove sub text of naviframe title */
 		elm_object_item_part_text_set(ad->misces_navi_it, "subtitle",
@@ -1074,8 +1085,6 @@ static void storageUg_misces_cancel_cb(void *data, Evas_Object *obj,
 
 		SETTING_TRACE_ERROR(
 				"********** SET TO ZERO ad->misces_checked = 0");
-
-		ad->misces_ctx_popup_selected = EINA_FALSE;
 
 	} else {
 		SETTING_TRACE_ERROR(

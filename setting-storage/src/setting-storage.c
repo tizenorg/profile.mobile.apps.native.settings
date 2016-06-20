@@ -346,6 +346,9 @@ static void *setting_storageUg_on_create(ui_gadget_h ug, enum ug_mode mode,
 			appcore_measure_time());
 	appcore_measure_start();
 
+
+	ad->misces_ctx_popup_selected = EINA_FALSE;
+
 	return ad->lo_main;
 }
 
