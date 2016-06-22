@@ -1012,77 +1012,6 @@ static int __setting_set_city_tzone(const char *pTZPath)
 	return TRUE;
 }
 
-static void
-setting_time_main_launch_worldclock_result_ug_cb(ui_gadget_h ug,
-		app_control_h result, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-	/* error check */
-	retm_if(priv == NULL, "Data parameter is NULL");
-
-	SettingTimeUG *ad = (SettingTimeUG *) priv;
-
-	char *city = NULL;
-	char *tzpath = NULL;
-	app_control_get_extra_data(result, "city", &city);
-	app_control_get_extra_data(result, "tzpath", &tzpath);
-
-	if (!tzpath) {
-		SETTING_TRACE("tzpath from worldclock UG is null.");
-		setting_update_timezone(ad);
-		return;
-	} else {
-		SETTING_TRACE("tzpath : %s", tzpath);
-	}
-	SETTING_TRACE("city : %s", city);
-
-	/* ----------------------------------------------------------------- */
-	char tz_path[MAX_COMMON_BUFFER_LEN / 4 + 1];
-	safeCopyStr(tz_path, SETTING_TIME_ZONEINFO_PATH,
-			MAX_COMMON_BUFFER_LEN / 4);
-	g_strlcat(tz_path, tzpath, sizeof(tz_path));
-	SETTING_TRACE("full tz_path:(%s)", tz_path);
-	SETTING_TRACE("tz_path:(%s)", tz_path+20);
-
-	int ret = _set_timezone_helper(tz_path+20);
-	if (ret < 0) {
-		SETTING_TRACE("tzpath is not valid.");
-		if (tzpath)
-			FREE(tzpath);
-		if (city)
-			FREE(city);
-		return;
-	} else
-		SETTING_TRACE("_set_timezone_helper - successful : "
-				"%s \n", tz_path);
-
-	ret = vconf_set_str(VCONFKEY_SETAPPL_CITYNAME_INDEX_INT, city);
-	setting_retm_if(ret != 0, "set vconf failed");
-
-	/* parse city and GMT offset from tzpath and system time property */
-	/* set the strings in vconf which will be used while updating display
-	 * of timezone */
-	if (!__setting_set_city_tzone(tzpath)) {
-		SETTING_TRACE("__setting_set_city_tzone ERROR");
-		if (tzpath)
-			FREE(tzpath);
-		if (city)
-			FREE(city);
-		return;
-	}
-
-	/* update the display for timezone */
-	setting_update_timezone(ad);
-	static int t_event_val = -1;
-	vconf_set_int(VCONFKEY_SYSTEM_TIME_CHANGED, t_event_val);
-	if (tzpath)
-		FREE(tzpath);
-	if (city)
-		FREE(city);
-
-	SETTING_TRACE_END;
-}
-
 void setting_time_main_launch_worldclock_destroy_ug_cb(ui_gadget_h ug,
 		void *priv)
 {
@@ -1143,7 +1072,8 @@ Eina_Bool ___time_freeze_event_timer_cb(void *cb)
 	return EINA_FALSE;
 }
 
-static void _worldclock_reply_cb(app_control_h request, app_control_h reply, app_control_result_e result, void *user_data)
+static void _worldclock_reply_cb(app_control_h request, app_control_h reply,
+		app_control_result_e result, void *user_data)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -1220,10 +1150,6 @@ void setting_time_main_launch_worldclock_sg(void *data)
 
 	/* ad is point to data */
 	SettingTimeUG *ad = (SettingTimeUG *) data;
-
-	SETTING_TRACE_BEGIN;
-	/* error check */
-	retv_if(data == NULL, FALSE);
 
 	if (0 == app_launcher("org.tizen.worldclock-efl", _worldclock_reply_cb, ad)) {
 		if (ad->event_freeze_timer) {
