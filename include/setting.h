@@ -28,8 +28,6 @@
 #include <setting-common-view.h>
 #include <setting-common-search.h>
 
-#define EXPORT_PUBLIC __attribute__ ((visibility ("default")))
-
 /*	TAPI*/
 #include <tapi_common.h>
 #include <ITapiModem.h>
