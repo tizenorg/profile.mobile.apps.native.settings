@@ -689,6 +689,8 @@ static inline void storageUg_misces_gl_append_select_all_item(
 	if (item_data) {
 		item_data->userdata = ad;
 		item_data->isItemHideFlag = TRUE;
+
+		elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 	} else {
 		SETTING_TRACE_ERROR("item_data is NULL");
 	}
@@ -733,6 +735,8 @@ static inline void storageUg_misces_gl_append_items(SettingStorageUG *ad)
 			node->data = item_data;
 			node->ad = ad;
 			item_data->isItemHideFlag = TRUE;
+
+			elm_genlist_item_select_mode_set(item_data->item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 		} else {
 			SETTING_TRACE_ERROR("item_data is NULL");
 		}
