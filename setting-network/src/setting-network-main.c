@@ -105,7 +105,8 @@ static Eina_Bool __set_net_mode_on_delay(void *data)
 
 	SETTING_TRACE("tel_set_network_mode(data_subItem->chk_status=%d) run",
 			data_subItem->chk_status);
-	int tapi_ret = tel_set_network_mode(ad->handle,
+/*TODO select handle:*/
+	int tapi_ret = tel_set_network_mode(ad->handle[0],
 			data_subItem->chk_status, setting_tapi_set_band_cb, ad);
 
 	if (tapi_ret != TAPI_API_SUCCESS) {
@@ -202,6 +203,11 @@ static void __change_3g_on_resp_cb(void *data, Evas_Object *obj,
 void __network_sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
+	int tapi_ret = 0;
+	int err = 0;
+	int ret = 0;
+	int value_use_packet = 0;
+
 	/* error check */
 	retm_if(event_info == NULL, "Invalid argument: event info is NULL");
 	ret_if(NULL == data);
@@ -223,8 +229,6 @@ void __network_sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 		return;
 	}
 
-	int value_use_packet;
-
 	vconf_get_int(VCONFKEY_DNET_STATE, &value_use_packet);
 
 	/*it will be deleted in callback set by tel_set_network_mode(
@@ -245,8 +249,11 @@ void __network_sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 
 	SETTING_TRACE("tel_set_network_mode(data_subItem->chk_status=%d) run",
 			data_subItem->chk_status);
-	int tapi_ret = tel_set_network_mode(ad->handle,
-			data_subItem->chk_status, setting_tapi_set_band_cb, ad);
+
+	tapi_ret = tel_set_network_mode(
+					(TapiHandle *)data_subItem->modem_handle,
+					data_subItem->chk_status,
+					setting_tapi_set_band_cb, ad);
 
 	if (tapi_ret != TAPI_API_SUCCESS) {
 		SETTING_TRACE_DEBUG(
@@ -256,8 +263,7 @@ void __network_sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 				Invok_API_Failed_Desc, NULL, POPUP_INTERVAL,
 				FALSE, FALSE, 0);
 		/*rollback */
-		int err = 0;
-		int ret = setting_get_int_slp_key(
+		ret = setting_get_int_slp_key(
 				ad->data_net_mode->int_slp_setting_binded,
 				&(ad->net_mode), &err);
 		if (ret == SETTING_RETURN_FAIL) {
@@ -588,15 +594,18 @@ static void __check_flight_mode(void *cb)
 unsigned int data_roaming_event_reg_id;
 unsigned int mobile_data_event_reg_id;
 
-static void setting_network_mode_popup(void *data)
+static void setting_network_mode_popup(void *data, int sim_ix)
 {
+	int value = 0;
+	int err = 0;
+	Evas_Object *rdg = NULL;
+	Evas_Object *genlist = NULL;
 
 	ret_if(NULL == data);
 	SETTING_TRACE_BEGIN;
 	SettingNetworkUG *ad = (SettingNetworkUG *)data;
 
-	Evas_Object *scroller = NULL;
-	ad->network_mode_popup = setting_create_popup_with_list(&scroller, ad,
+	ad->network_mode_popup = setting_create_popup_with_list(&genlist, ad,
 			ad->win_get, _("IDS_ST_BODY_NETWORK_MODE"), NULL, 0,
 			false, false, 0);
 	_P(ad->network_mode_popup);
@@ -614,11 +623,7 @@ static void setting_network_mode_popup(void *data)
 		return;
 	}
 
-	int value = 0;
-	int err = 0;
-	Evas_Object *rdg;
-
-	rdg = elm_radio_add(scroller);
+	rdg = elm_radio_add(genlist);
 	elm_radio_value_set(rdg, -1);
 
 	/*Need to fix */
@@ -633,12 +638,13 @@ static void setting_network_mode_popup(void *data)
 			pszStrId = _("IDS_ST_BODY_LTE_WCDMA_GSM_NHAUTO_CONNECT");
 
 		ad->lte_wcdma_gsm = setting_create_Gendial_field_1radio(
-				scroller, &itc_multiline_1text_1icon,
+				genlist, &itc_multiline_1text_1icon,
 				__network_sub_list_sel_cb, ad,
 				SWALLOW_Type_1RADIO_RIGHT, rdg,
 				TAPI_NETWORK_MODE_LTE | TAPI_NETWORK_MODE_WCDMA
 				| TAPI_NETWORK_MODE_GSM/* chk_status */,
 				pszStrId, __network_default_rd_change);
+		ad->lte_wcdma_gsm->modem_handle = ad->handle[sim_ix];
 	}
 
 	/* WCDMA/GSM */
@@ -647,12 +653,13 @@ static void setting_network_mode_popup(void *data)
 	else
 		pszStrId = _("IDS_ST_BODY_WCDMA_GSM_NHAUTO_CONNECT");
 
-	ad->wcdma_gsm = setting_create_Gendial_field_1radio(scroller,
+	ad->wcdma_gsm = setting_create_Gendial_field_1radio(genlist,
 			&itc_multiline_1text_1icon, __network_sub_list_sel_cb,
 			ad, SWALLOW_Type_1RADIO_RIGHT, rdg,
 			/* chk_status */
 			TAPI_NETWORK_MODE_WCDMA | TAPI_NETWORK_MODE_GSM,
 			pszStrId, __network_default_rd_change);
+	ad->wcdma_gsm->modem_handle = ad->handle[sim_ix];
 
 	/* WCDMA */
 	if (strcmp(szCscFeatureValue, "all_numeric") == 0)
@@ -660,11 +667,12 @@ static void setting_network_mode_popup(void *data)
 	else
 		pszStrId = _("IDS_ST_MBODY_WCDMA_ONLY");
 
-	ad->wcdma_only = setting_create_Gendial_field_1radio(scroller,
+	ad->wcdma_only = setting_create_Gendial_field_1radio(genlist,
 			&itc_multiline_1text_1icon, __network_sub_list_sel_cb,
 			ad, SWALLOW_Type_1RADIO_RIGHT, rdg,
 			TAPI_NETWORK_MODE_WCDMA, /* chk_status */
 			pszStrId, __network_default_rd_change);
+	ad->wcdma_only->modem_handle = ad->handle[sim_ix];
 
 	/* GSM */
 	if (strcmp(szCscFeatureValue, "all_numeric") == 0)
@@ -672,11 +680,12 @@ static void setting_network_mode_popup(void *data)
 	else
 		pszStrId = _("IDS_ST_MBODY_GSM_ONLY");
 
-	ad->gsm_only = setting_create_Gendial_field_1radio(scroller,
+	ad->gsm_only = setting_create_Gendial_field_1radio(genlist,
 			&itc_multiline_1text_1icon, __network_sub_list_sel_cb,
 			ad, SWALLOW_Type_1RADIO_RIGHT, rdg,
 			TAPI_NETWORK_MODE_GSM, /* chk_status */
 			pszStrId, __network_default_rd_change);
+	ad->gsm_only->modem_handle = ad->handle[sim_ix];
 
 	setting_get_int_slp_key(INT_SLP_SETTING_NETWORK_MODE, &value, &err);
 	SETTING_TRACE("value: %d, err: %d", value, err);
@@ -698,8 +707,7 @@ static void setting_network_mode_popup(void *data)
 							ad->lte_wcdma_gsm->chk_status);
 					break;
 				} else
-					SETTING_TRACE_ERROR(
-							"ad->lte_wcdma_gsm is NULL");
+					SETTING_TRACE_ERROR("ad->lte_wcdma_gsm is NULL");
 			}
 		}
 
@@ -727,6 +735,7 @@ static void setting_network_mode_popup(void *data)
 		} else if (value & TAPI_NETWORK_MODE_GSM) {
 			SETTING_TRACE("TAPI_NETWORK_MODE_GSM selected");
 
+
 			if (ad->gsm_only) {
 				elm_radio_value_set(ad->data_net_mode->rgd,
 						ad->gsm_only->chk_status);
@@ -736,7 +745,6 @@ static void setting_network_mode_popup(void *data)
 				SETTING_TRACE_ERROR("ad->gsm_only is NULL");
 		} else
 			SETTING_TRACE_ERROR("TAPI_NETWORK(%d) unknown", value);
-
 	} while (0);
 
 	SETTING_TRACE("after value set -- value: %d, err: %d", value, err);
@@ -748,20 +756,20 @@ static int setting_network_main_create(void *cb)
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
 	SettingNetworkUG *ad = (SettingNetworkUG *)cb;
-	Evas_Object *scroller;
+	Evas_Object *genlist = NULL;
 
 	ad->ly_main = setting_create_layout_navi_bar_genlist(
 			ad->win_main_layout, ad->win_get,
-			_("IDS_ST_BODY_NETWORK"),
+			_("IDS_ST_BODY_MOBILE_NETWORKS"),
 			/*dgettext("sys_string", "IDS_ST_BUTTON_BACK"), */
 			NULL, /* ARROW STYLE */
 			NULL,/*_("IDS_ST_HEADER_HELP"), */
 			setting_network_main_click_softkey_back_cb,
 			setting_network_main_click_softkey_help_cb, ad,
-			&scroller, &ad->navi_bar);
+			&genlist, &ad->navi_bar);
 
-	if (scroller) {
-		ad->genlist = scroller;
+	if (genlist) {
+		ad->genlist = genlist;
 	} else {
 		ad->genlist = NULL;
 		SETTING_TRACE("genlist is NULL ERROR COND");
@@ -770,7 +778,7 @@ static int setting_network_main_create(void *cb)
 	evas_object_smart_callback_add(ad->genlist, "realized",
 			__gl_realized_cb, ad);
 
-	Elm_Object_Item *item = NULL;;
+	Elm_Object_Item *item = NULL;
 	elm_genlist_item_select_mode_set(item,
 			ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
@@ -782,7 +790,7 @@ static int setting_network_main_create(void *cb)
 
 	setting_network_get_state_mobile_data(&value_mobile_data);
 
-	ad->data_mobile_data = setting_create_Gendial_field_def(scroller,
+	ad->data_mobile_data = setting_create_Gendial_field_def(genlist,
 			&itc_1text_1icon,
 			setting_network_main_item_Gendial_mouse_up_cb, ad,
 			SWALLOW_Type_1ICON_1RADIO, NULL,
@@ -803,7 +811,7 @@ static int setting_network_main_create(void *cb)
 	SETTING_TRACE_ERROR(" ---> data roaming value : %d",
 			value_data_roaming);
 
-	ad->data_roaming = setting_create_Gendial_field_def(scroller,
+	ad->data_roaming = setting_create_Gendial_field_def(genlist,
 			&(itc_1text_1icon),
 			setting_network_main_item_Gendial_mouse_up_cb, ad,
 			SWALLOW_Type_1ICON_1RADIO, NULL,
@@ -818,34 +826,17 @@ static int setting_network_main_create(void *cb)
 		SETTING_TRACE_ERROR("ad->data_roaming is NULL");
 	}
 
-	/* [UI] Network Mode */
-	ad->data_net_mode = setting_create_Gendial_field_def(scroller,
-			&itc_2text_3_parent,
-			setting_network_main_item_Gendial_mouse_up_cb, ad,
-			SWALLOW_Type_INVALID, NULL, NULL, 0,
-			"IDS_ST_BODY_NETWORK_MODE",
-			NULL,
-			NULL);
-
-	if (ad->data_net_mode) {
-		ad->data_net_mode->int_slp_setting_binded =
-				INT_SLP_SETTING_NETWORK_MODE;
-		__BACK_POINTER_SET(ad->data_net_mode);
-	} else {
-		SETTING_TRACE_ERROR("ad->data_net_modeis NULL");
-	}
-
 	/* Don't need to check flight mode,if flight mode is on, thw whole
 	 * Network function will be disable*/
 	/* ***BEGIN***	 Fixed the problem of word twinkle
 	 * SAMSUNG 2010/7/21 add */
 	char sel_network_desc[MAX_COMMON_BUFFER_LEN] = { 0, };
 	_get_network_selected_desc(ad, sel_network_desc, MAX_COMMON_BUFFER_LEN);
-	ad->data_sel_net = setting_create_Gendial_field_def(scroller,
+	ad->data_sel_net = setting_create_Gendial_field_def(genlist,
 			&itc_2text_3,
 			setting_network_main_item_Gendial_mouse_up_cb, ad,
 			SWALLOW_Type_INVALID,
-			NULL, NULL, 0, "IDS_COM_BODY_NETWORK_OPERATORS",
+			NULL, NULL, 0, "IDS_COM_BODY_SEVICE_PROVIDERS",
 			sel_network_desc, NULL);
 	if (ad->data_sel_net) {
 		__BACK_POINTER_SET(ad->data_sel_net);
@@ -854,11 +845,52 @@ static int setting_network_main_create(void *cb)
 		SETTING_TRACE_ERROR("ad->data_sel_net is NULL");
 	}
 
-	/* [UI] Connection mode description */
-	ad->data_connection = setting_create_Gendial_field_def(scroller,
+	/* [UI] Network Modes */
+	TelSimCardStatus_t sim_status = TAPI_SIM_STATUS_UNKNOWN;
+	int sim_id = 0;
+	int sim_ix = 0;
+	char *spn_name = NULL;
+	for (sim_ix = 0; sim_ix < SIM_CARDS_MAX; sim_ix++) {
+		if (ad->handle[sim_ix]) {
+			spn_name = NULL;
+			sim_status = TAPI_SIM_STATUS_UNKNOWN;
+			sim_id = 0;
+
+			if (
+				TAPI_API_SUCCESS !=tel_get_sim_init_info(ad->handle[sim_ix], &sim_status, &sim_id) ||
+				sim_status != TAPI_SIM_STATUS_SIM_INIT_COMPLETED
+				)
+				continue;
+
+			spn_name = NULL;
+			tel_get_property_string(ad->handle[sim_ix], TAPI_PROP_NETWORK_SPN_NAME, &spn_name);
+			snprintf(ad->spn_names[sim_ix], PRE_NETWORK_NAME_MAX, "%s %s", spn_name, _("IDS_ST_BODY_SUFIX_NETWORK_MODE"));
+			free(spn_name);
+			ad->data_net_mode = setting_create_Gendial_field_def(genlist,
+						&itc_2text_3_parent,
+						setting_network_main_item_Gendial_mouse_up_cb, ad,
+						SWALLOW_Type_INVALID, NULL, NULL, 0,
+						ad->spn_names[sim_ix],
+						NULL,
+						NULL);
+			ad->data_net_mode->modem_handle = ad->handle[sim_ix];
+/**TODO: select proper data_net_mode[]*/
+				if (ad->data_net_mode) {
+					ad->data_net_mode->int_slp_setting_binded =
+							INT_SLP_SETTING_NETWORK_MODE;
+					__BACK_POINTER_SET(ad->data_net_mode);
+				} else {
+					SETTING_TRACE_ERROR("ad->data_net_modeis NULL");
+				}
+
+		}
+	}
+
+	/* [UI] Mobile network connections mode description */
+	ad->data_connection = setting_create_Gendial_field_def(genlist,
 			&itc_1text,
 			setting_network_main_item_Gendial_mouse_up_cb, ad,
-			SWALLOW_Type_INVALID, NULL, NULL, 0, CONNECTION_DSC,
+			SWALLOW_Type_INVALID, NULL, NULL, 0, IDS_ST_BODY_MOBILE_NETWORK_CONNECTIONS,
 			NULL, NULL);
 	if (ad->data_connection) {
 		__BACK_POINTER_SET(ad->data_connection);
@@ -999,7 +1031,7 @@ static Eina_Bool __change_search_view_on_timer(void *data)
 	}
 
 	setting_view_change(&setting_view_network_main,
-			&setting_view_network_select_network, ad);
+			&setting_view_network_select_provider, ad);
 	/*ecore_timer_del(ad->timer); */
 	ad->timer = NULL;
 	return ECORE_CALLBACK_CANCEL;
@@ -1119,9 +1151,25 @@ static void setting_network_main_item_Gendial_mouse_up_cb(void *data,
 	int reminder_flag = TRUE;
 	int err;
 
-	if (!safeStrCmp("IDS_ST_BODY_NETWORK_MODE", list_item->keyStr)) {
-		setting_network_mode_popup(ad);
-	} else if (!safeStrCmp("IDS_COM_BODY_NETWORK_OPERATORS",
+	SETTING_TRACE("RRRRRR %s %s: ", _("IDS_ST_BODY_SUFIX_NETWORK_MODE"), _(list_item->keyStr));
+
+	if (safeStrStr(_(list_item->keyStr), _("IDS_ST_BODY_SUFIX_NETWORK_MODE")) != NULL) {
+		/* One of the network mode items was clicked, find its array id: */
+		int sim_ix = -1;
+		int i = 0;
+		SETTING_TRACE("Network mode click for modem handle %p: ", list_item->modem_handle);
+		for(i = 0; i < SIM_CARDS_MAX; i++)
+			if (ad->handle[i] == list_item->modem_handle) {
+				sim_ix = i;
+				break;
+			}
+		if (sim_ix < 0) {
+			SETTING_TRACE("Could not find handle in data structure");
+			return;
+		}
+		SETTING_TRACE("ad->sel_net:%d", ad->sel_net);
+		setting_network_mode_popup(ad, sim_ix);
+	} else if (!safeStrCmp("IDS_COM_BODY_SEVICE_PROVIDERS",
 			list_item->keyStr)) {
 		cm_call_status_e call_status = CM_CALL_STATUS_IDLE;
 		cm_client_h cm_handle = NULL;
@@ -1143,7 +1191,7 @@ static void setting_network_main_item_Gendial_mouse_up_cb(void *data,
 		SETTING_TRACE("ad->sel_net:%d", ad->sel_net);
 
 		ret = setting_view_change(&setting_view_network_main,
-				&setting_view_network_select_network, ad);
+				&setting_view_network_select_provider, ad);
 
 	} else if (!safeStrCmp(KeyStr_UseMobileData, list_item->keyStr)) {
 		/* new status */

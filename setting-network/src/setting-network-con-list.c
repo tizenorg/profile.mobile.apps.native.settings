@@ -173,8 +173,9 @@ static int __con_list_recreate(void *cb)
 	char *def_apn = NULL;
 	char *def_name = NULL;
 	char *def_id = NULL;
+/*TODO: select proper connection[] */
 	connection_profile_h def_profile = NULL;
-	(void)connection_get_default_cellular_service_profile(ad->connection,
+	(void)connection_get_default_cellular_service_profile(ad->connection[0],
 			srvType, &def_profile);
 
 	if (def_profile)
@@ -513,10 +514,10 @@ void __set_default_profile(void *data)
 	Setting_GenGroupItem_Data *list_item = data;
 	SettingNetworkUG *ad = list_item->userdata;
 	setting_retm_if(ad == NULL, "ad parameter is NULL");
-
+/*TODO: select proper connection[] */
 	connection_profile_iterator_h profile_iter = NULL;
 	connection_profile_h profile_h = NULL;
-	int rv = connection_get_profile_iterator(ad->connection,
+	int rv = connection_get_profile_iterator(ad->connection[0],
 			CONNECTION_ITERATOR_TYPE_REGISTERED, &profile_iter);
 	if (rv != CONNECTION_ERROR_NONE) {
 		SETTING_TRACE_ERROR("Fail to get profile iterator [%d]", rv);
@@ -573,8 +574,9 @@ void __set_default_profile(void *data)
 				SETTING_TRACE("Set default[%d] as [%s], profile:%p, id:%s",
 						srvType, apn, profile_h,
 						profile_id);
+/*TODO: select proper connection[] */
 				int ret = connection_set_default_cellular_service_profile(
-						ad->connection, srvType,
+						ad->connection[0], srvType,
 						profile_h);
 				SETTING_TRACE("The result is :%d", ret);
 

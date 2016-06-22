@@ -144,6 +144,7 @@
 #define COUNTRY_CODE_LEN	3
 #define NETWORK_CODE_LEN	3
 #define PRE_NETWORK_NAME_MAX 256
+#define SIM_CARDS_MAX 2
 
 /* the popupresponse action ID */
 #define SETTING_NETWORK_POP_RESPONSE_ACTION_CANCEL	10
@@ -180,10 +181,11 @@ typedef enum {
  */
 struct _SettingNetworkUG {
 	ui_gadget_h ug;
-	TapiHandle *handle;
-	connection_h connection;
+	TapiHandle *handle[SIM_CARDS_MAX];
+	connection_h connection[SIM_CARDS_MAX];
 	connection_profile_h sel_profile_h;
 	setting_view *profile_topper_view;
+	char spn_names[SIM_CARDS_MAX][PRE_NETWORK_NAME_MAX];
 
 	/*xmlDocPtr whitelist_doc; */
 	/*xmlNodePtr whitelist_root_node; */
@@ -235,7 +237,7 @@ struct _SettingNetworkUG {
 
 	bool has_form_changed;
 	Evas_Object *genlist;
-	Evas_Object *genlist_sel_network;
+	Evas_Object *genlist_sel_provider;
 	Evas_Object *connections_gl; /* genlist in connections view */
 	Evas_Object *con_list_gl; /* genlist in connections view */
 	int cur_profile_num;
@@ -366,7 +368,7 @@ struct _SettingNetworkUG {
 };
 
 extern setting_view setting_view_network_main;
-extern setting_view setting_view_network_select_network;
+extern setting_view setting_view_network_select_provider;
 extern setting_view setting_view_network_con;
 extern setting_view setting_view_network_con_list;
 extern setting_view setting_view_network_connection_create;

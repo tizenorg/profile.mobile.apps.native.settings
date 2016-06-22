@@ -389,6 +389,9 @@ typedef struct _Setting_GenGroupItem_Data {
 	/* Sound, ringtone ug, fullpath */
 	char *filepath;
 
+	/* Mobile networks */
+	void *modem_handle;
+
 	/* elm_datetime new */
 	Evas_Object *btn_left;
 	Evas_Object *btn_right;
