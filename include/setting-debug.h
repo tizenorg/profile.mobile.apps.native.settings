@@ -110,119 +110,105 @@
 #ifdef SETTING_ENABLE_TRACE
 
 #ifdef SETTING_USING_PLATFORM_DBG
-#define SETTING_TRACE_SECURE_DEBUG(fmt, arg...) \
-	do {\
+#define SETTING_TRACE_SECURE_DEBUG(fmt, arg...) do {\
 		SECURE_LOGD("\033[0;32mDEBUG: " fmt "\033[0m\n", ##arg);\
-	}while(0)
+} while (0)
 
-#define SETTING_TRACE_DEBUG(fmt, arg...) \
-	do {\
+#define SETTING_TRACE_DEBUG(fmt, arg...) do {\
 		SECURE_LOGD("\033[0;32mDEBUG: " fmt "\033[0m\n", ##arg);\
-	}while(0)
+} while (0)
 
-#define SETTING_TRACE(fmt, arg...) \
-	do {\
+#define SETTING_TRACE(fmt, arg...) do {\
 		SECURE_LOGI("\033[0;36m" fmt "\033[0m\n", ##arg);\
-	}while(0)
+} while (0)
 
-#define SETTING_TRACE_WARNING(fmt, arg...) \
-	do {\
+#define SETTING_TRACE_WARNING(fmt, arg...) do {\
 		SECURE_LOGI("\033[0;33mWARRING: " fmt "\033[0m\n", ##arg);\
-	}while(0)
+} while (0)
 
-#define SETTING_TRACE_ERROR(fmt, arg...) \
-	do {\
+#define SETTING_TRACE_ERROR(fmt, arg...) do {\
 		SECURE_LOGE("\033[0;31mERROR: " fmt "\033[0m\n", ##arg);\
-	}while(0)
+} while (0)
 
 #define SETTING_TRACE_BEGIN do {\
-		SECURE_LOGD("\033[0;35mENTER FUNCTION: %s. \033[0m\n", \
+	SECURE_LOGD("\033[0;35mENTER FUNCTION: %s. \033[0m\n", \
 			__FUNCTION__);\
-	}while(0)
+} while (0)
 
 #define SETTING_TRACE_END  do {\
 		SECURE_LOGD("\033[0;35mEXIT FUNCTION: %s. \033[0m\n", \
 			__FUNCTION__);\
-	}while(0)
+} while (0)
 
 #else
 
-#define SETTING_TRACE(fmt, arg...) \
-	do {\
-		printf("\n[SETTING]\033[0;36m" fmt "\033[0m\t%s:%d\n", \
+#define SETTING_TRACE(fmt, arg...) do {\
+	printf("\n[SETTING]\033[0;36m" fmt "\033[0m\t%s:%d\n", \
 			##arg, (char*)(strrchr(__FILE__, '/')+1), __LINE__);\
-	}while(0)
+} while (0)
 
-#define SETTING_TRACE_SECURE_DEBUG(fmt, arg...) \
-	do {\
-		printf("\n[SETTING]\033[0;32mDEBUG: " fmt "\033[0m\t%s:%d\n", \
+#define SETTING_TRACE_SECURE_DEBUG(fmt, arg...) do {\
+	printf("\n[SETTING]\033[0;32mDEBUG: " fmt "\033[0m\t%s:%d\n", \
 			##arg, (char*)(strrchr(__FILE__, '/')+1), __LINE__);\
-	}while(0)
+} while (0)
 
 
-#define SETTING_TRACE_DEBUG(fmt, arg...) \
-	do {\
-		printf("\n[SETTING]\033[0;32mDEBUG: " fmt "\033[0m\t%s:%d\n", \
+#define SETTING_TRACE_DEBUG(fmt, arg...) do {\
+	printf("\n[SETTING]\033[0;32mDEBUG: " fmt "\033[0m\t%s:%d\n", \
 			##arg, (char*)(strrchr(__FILE__, '/')+1), __LINE__);\
-	}while(0)
+} while (0)
 
-#define SETTING_TRACE_WARNING(fmt, arg...) \
-	do {\
-		{\
-			printf("[SETTING]\033[0;33mWARRING: " fmt \
+#define SETTING_TRACE_WARNING(fmt, arg...) do {\
+	printf("[SETTING]\033[0;33mWARRING: " fmt \
 			"\033[0m\t%s:%d\n", ##arg, \
-			(char*)(strrchr(__FILE__, '/')+1), __LINE__);}\
-	}while(0)
+			(char*)(strrchr(__FILE__, '/')+1), __LINE__);\
+} while (0)
 
-#define SETTING_TRACE_ERROR(fmt, arg...) \
-	do {\
-		{fprintf(stderr, "[SETTING]\033[0;31mERROR: " fmt \
-		"\033[0m\t%s:%d\n", ##arg, (char*)(strrchr(__FILE__, '/')+1), \
-		__LINE__);}\
-	}while(0)
+#define SETTING_TRACE_ERROR(fmt, arg...) do {\
+	fprintf(stderr, "[SETTING]\033[0;31mERROR: " fmt \
+			"\033[0m\t%s:%d\n", ##arg, \
+			(char*)(strrchr(__FILE__, '/')+1), __LINE__);\
+} while (0)
 
 #define SETTING_TRACE_BEGIN do {\
-		{\
-			printf("\n[SETTING]\033[0;35mENTER FUNCTION: %s. \033[0m\t%s:%d\n", \
+	printf("\n[SETTING]\033[0;35mENTER FUNCTION: %s. \033[0m\t%s:%d\n", \
 				__FUNCTION__, \
 				(char*)(strrchr(__FILE__, '/')+1), __LINE__);\
-		}\
-	}while(0)
+} while (0)
 
 #define SETTING_TRACE_END  do {\
-		{\
-			printf("\n[SETTING]\033[0;35mEXIT FUNCTION: %s. \033[0m\t%s:%d\n", \
+	printf("\n[SETTING]\033[0;35mEXIT FUNCTION: %s. \033[0m\t%s:%d\n", \
 				__FUNCTION__, \
 				(char*)(strrchr(__FILE__, '/')+1), __LINE__);\
-		}\
-	}while(0)
+} while (0)
+
 #endif
 
 #else
 
-#define SETTING_TRACE(fmt, arg...) do {} while(0)
-#define SETTING_TRACE_SECURE_DEBUG(fmt, arg...) do {} while(0)
-#define SETTING_TRACE_DEBUG(fmt, arg...) do {} while(0)
-#define SETTING_TRACE_WARNING(fmt, arg...) do {} while(0)
-#define SETTING_TRACE_ERROR(fmt, arg...) do {} while(0)
-#define SETTING_TRACE_BEGIN do {} while(0)
-#define SETTING_TRACE_END do {} while(0)
+#define SETTING_TRACE(fmt, arg...) do {} while (0)
+#define SETTING_TRACE_SECURE_DEBUG(fmt, arg...) do {} while (0)
+#define SETTING_TRACE_DEBUG(fmt, arg...) do {} while (0)
+#define SETTING_TRACE_WARNING(fmt, arg...) do {} while (0)
+#define SETTING_TRACE_ERROR(fmt, arg...) do {} while (0)
+#define SETTING_TRACE_BEGIN do {} while (0)
+#define SETTING_TRACE_END do {} while (0)
 
 #endif
 
 #define setting_retvm_if(expr, val, fmt, arg...) do { \
-		if(expr) { \
-			SETTING_TRACE_ERROR(fmt, ##arg); \
-			return (val); \
-		} \
-	} while (0)
+	if (expr) { \
+		SETTING_TRACE_ERROR(fmt, ##arg); \
+		return (val); \
+	} \
+} while (0)
 
 #define setting_retm_if(expr, fmt, arg...) do { \
-		if(expr) { \
-			SETTING_TRACE_ERROR(fmt, ##arg); \
-			return; \
-		} \
-	} while (0)
+	if (expr) { \
+		SETTING_TRACE_ERROR(fmt, ##arg); \
+		return; \
+	} \
+} while (0)
 
 #ifndef retm_if
 #define retm_if setting_retm_if
@@ -233,38 +219,38 @@
 
 #ifndef retv_if
 #define retv_if(expr, val) do { \
-		if(expr) { \
-			SETTING_TRACE_ERROR("(%s)", #expr); \
-			return (val); \
-		} \
-	} while (0)
+	if (expr) { \
+		SETTING_TRACE_ERROR("(%s)", #expr); \
+		return (val); \
+	} \
+} while (0)
 #endif
 
 #ifndef ret_if
 #define ret_if(expr) do { \
-		if(expr) { \
-			SETTING_TRACE_ERROR("(%s)", #expr); \
-			return ; \
-		} \
-	} while (0)
+	if (expr) { \
+		SETTING_TRACE_ERROR("(%s)", #expr); \
+		return ; \
+	} \
+} while (0)
 #endif
 
 #ifndef warn_if
 #define warn_if(expr, fmt, arg...) do { \
-		if (expr) { \
-			SETTING_TRACE_ERROR(fmt, ##arg); \
-		} \
-	} while (0)
+	if (expr) { \
+		SETTING_TRACE_ERROR(fmt, ##arg); \
+	} \
+} while (0)
 #endif
 
 
 #define __FREE(del, arg) do { \
-		if(arg) { \
-			/*cast any argument to (void*) to avoid build warring*/\
-			del((void *)(arg)); \
-			arg = NULL; \
-		} \
-	} while (0)
+	if (arg) { \
+		/*cast any argument to (void*) to avoid build warring*/\
+		del((void *)(arg)); \
+		arg = NULL; \
+	} \
+} while (0)
 #define FREE(arg) __FREE(free, arg)
 #define G_FREE(arg) __FREE(g_free, arg)
 
@@ -276,19 +262,17 @@
  * use __BACK_POINTER_SET to bind the Setting side point into the Genlist side
  * pointer */
 #define __BACK_POINTER_SET(pData) do { \
-		if (pData)\
-		{\
-			pData->pBack = (void **)(&(pData));\
-		}\
-	} while (0)
+	if (pData) {\
+		pData->pBack = (void **)(&(pData));\
+	} \
+} while (0)
 
 #define __BACK_POINTER_UNSET(pData) do { \
-		/*release Setting side poniter handlers*/\
-		if (pData && pData->pBack)\
-		{\
-			*(pData->pBack) = NULL;\
-		}\
-	} while (0)
+	/*release Setting side poniter handlers*/\
+	if (pData && pData->pBack) {\
+		*(pData->pBack) = NULL;\
+	} \
+} while (0)
 
 #define UNUSED __attribute__((unused))
 
