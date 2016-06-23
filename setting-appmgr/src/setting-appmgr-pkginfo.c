@@ -19,9 +19,7 @@
 #include <appsvc.h>
 #include <aul_svc.h>
 #include <package_manager.h>
-//#include <privilege_information.h>
 #include <privilege_info.h>
-//#include <privilege_manager.h>
 
 #include "setting-appmgr-utils.h"
 #include "setting-appmgr-pkginfo-utils.h"
@@ -243,7 +241,6 @@ static inline void appmgrUg_pkg_append_privilege(SettingAppMgrUG *ad)
 	SETTING_TRACE_BEGIN;
 	int ret = 0;
 	appmgr_pkginfo *info = NULL;
-	package_info_h pkginfo_h = NULL;
 	Setting_GenGroupItem_Data *title_itdata = NULL;
 
 	ret_if(NULL == ad);
@@ -520,6 +517,7 @@ static int appmgrUg_pkg_create(void *data)
 			(setting_call_back_func)appmgrUg_pkg_back_cb,
 			NULL, ad, &ad->gl_pkg, ad->navi);
 	elm_genlist_mode_set(ad->gl_pkg, ELM_LIST_COMPRESS);
+	elm_genlist_homogeneous_set(ad->gl_pkg, EINA_FALSE);
 	elm_naviframe_item_pop_cb_set(navi_it, appmgrUg_pkg_back_cb, ad);
 
 	appmgrUg_pkg_append_genlist(ad);
