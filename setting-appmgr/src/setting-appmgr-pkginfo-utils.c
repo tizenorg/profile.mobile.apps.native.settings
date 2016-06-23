@@ -17,10 +17,10 @@
  *
  */
 #include <appsvc.h>
-#include <privilege_information.h>
 #include <app2ext_interface.h>
 
-#include <package_manager.h>
+#include <privilege_info.h>
+#include <privilege_information.h>
 
 #include "setting-appmgr-utils.h"
 #include "setting-appmgr-pkginfo-utils.h"
@@ -28,16 +28,17 @@
 #define DEFAULT_CLEAR_TEXT "To clear default app settings, go to \
 	Settings > Apps > Default apps, then tap Clear"
 
-static UNUSED int appmgrUg_pkg_get_privileges_help(const char *privilege,
+static int appmgrUg_pkg_get_privileges_help(const char *privilege,
 		void *user_data)
 {
 	SETTING_TRACE_BEGIN;
 
-	int ret;
-	gchar *desc;
-	appmgr_pkginfo *info;
+	int ret = 0;
+	gchar *desc = NULL;
+	appmgr_pkginfo *info = NULL;
 	SettingAppMgrUG *ad = user_data;
-	char *name = NULL, *help = NULL;
+	char *name = NULL;
+	char *help = NULL;
 
 	retv_if(NULL == user_data, -1);
 	retv_if(NULL == ad->pkginfo, -1);
@@ -61,11 +62,6 @@ static UNUSED int appmgrUg_pkg_get_privileges_help(const char *privilege,
 		return 0;
 	}
 
-	/*SETTING_TRACE("-------------------------------------------------"); */
-	/*SETTING_TRACE("NAME: %s", name); */
-	/*SETTING_TRACE("DESC: %s", help); */
-	/*SETTING_TRACE("-------------------------------------------------"); */
-
 	desc = g_strconcat("<font_size=28><B>", name, "</B></font_size><br>",
 			help, "<br><br>", NULL);
 	free(help);
@@ -85,7 +81,7 @@ static UNUSED int appmgrUg_pkg_get_privileges_help(const char *privilege,
  * @param data The view data passed between all callbacks
  * @param it Naviframe item
  */
-static UNUSED Eina_Bool appmgrUg_pkg_privilege_info_softkey_cancel_cb(
+static Eina_Bool appmgrUg_pkg_privilege_info_softkey_cancel_cb(
 		void *data, Elm_Object_Item *it)
 {
 	SETTING_TRACE_BEGIN;
@@ -107,12 +103,11 @@ static void appmgrUg_pkg_privilege_info_view(void *data, Evas_Object *obj,
 {
 	SETTING_TRACE_BEGIN;
 
-#if 0
 	char *grp = data;
-	SettingAppMgrUG *ad;
-	appmgr_pkginfo *info;
+	SettingAppMgrUG *ad = NULL;
+	appmgr_pkginfo *info = NULL;
 	char *grp_name = NULL;
-	Setting_GenGroupItem_Data *d_item;
+	Setting_GenGroupItem_Data *d_item = NULL;
 	Elm_Object_Item *item = event_info;
 
 	ret_if(data == NULL);
@@ -142,42 +137,40 @@ static void appmgrUg_pkg_privilege_info_view(void *data, Evas_Object *obj,
 	privilege_info_foreach_privilege_list_by_pkgid_and_privilege_group(
 			info->pkgid, grp,
 			appmgrUg_pkg_get_privileges_help, ad);
-#endif
 }
 
-static UNUSED int appmgrUg_pkg_get_privileges_iter(const char *privilege,
+static int appmgrUg_pkg_get_privileges_iter(const char *privilege,
 		void *user_data)
 {
 	int ret;
 	gchar **str = user_data;
-	char *old_str, *name = NULL;
+	char *tmp = NULL;
+	char *name = NULL;
 
 	retv_if(NULL == user_data, -1);
 	retv_if(NULL == privilege, 0);
 
 	ret = privilege_info_get_display_name("3.0", privilege, &name);
-	if (PRVINFO_ERROR_NONE != ret) {
+	if (PRVINFO_ERROR_NONE != ret || !name) {
 		SETTING_TRACE_ERROR(
 				"privilege_info_get_display_name() Fail(%d)",
 				ret);
 		return 0;
 	}
 
-	old_str = *str;
-	*str = g_strconcat(*str, name, "<br>", NULL);
-	g_free(old_str);
+	tmp = g_strconcat(*str, name, "<br>", NULL);
+	g_free(*str);
 	free(name);
+	*str = tmp;
 	return 0;
 }
 
 int appmgrUg_pkg_get_privileges_grp_iter(const char *grp, void *user_data)
 {
-#if 0
-	int ret;
-#endif
-	appmgr_pkginfo *info;
+	int ret = 0;
+	appmgr_pkginfo *info = NULL;
 	char *grp_name = NULL;
-	gchar *prv_desc;
+	gchar *prv_desc = NULL;
 	SettingAppMgrUG *ad = user_data;
 
 	retv_if(NULL == user_data, -1);
@@ -185,10 +178,9 @@ int appmgrUg_pkg_get_privileges_grp_iter(const char *grp, void *user_data)
 
 	info = ad->pkginfo;
 
-#if 0
 	/*Deprecated API */
 	ret = privilege_info_get_privilege_group_display_name(grp, &grp_name);
-	if (PRVINFO_ERROR_NONE != ret) {
+	if (PRVMGR_ERR_NONE != ret) {
 		SETTING_TRACE_ERROR(
 				"privilege_info_get_privilege_group_display_"\
 				"name() Fail(%d)",
@@ -196,42 +188,38 @@ int appmgrUg_pkg_get_privileges_grp_iter(const char *grp, void *user_data)
 		return 0;
 	}
 
-#endif
 	prv_desc = g_strdup("");
-#if 0
+
 	/*Deprecated API */
 	ret = privilege_info_foreach_privilege_list_by_pkgid_and_privilege_group(info->pkgid,
 			grp, appmgrUg_pkg_get_privileges_iter, &prv_desc);
-	if (PRVINFO_ERROR_NONE != ret || '\0' == *prv_desc) {
+	if (PRVMGR_ERR_NONE != ret || '\0' == *prv_desc) {
 		SETTING_TRACE_ERROR(
 				"privilege_info_foreach_privilege_list_by_"\
 				"pkgid_and_privilege_group()"
 				" Fail(%d), prv_desc(%p)", ret, prv_desc);
 		G_FREE(prv_desc);
-		FREE(grp_name);
+		free(grp_name);
 		return 0;
 	}
-#endif
 
 	/* remove the last <br> */
 	char *p = strrchr(prv_desc, '<');
 	if (p)
 		*p = '\0';
-
 	info->last_prv = setting_create_Gendial_field_def(ad->gl_pkg,
-			&ad->itc_multiline_2txt,
+			&ad->itc_1txt_1ic_2,
 			appmgrUg_pkg_privilege_info_view, (void *)grp,
 			SWALLOW_Type_INVALID, NULL,
 			NULL, 0, grp_name, prv_desc, NULL);
 	if (info->last_prv) {
 		info->last_prv->userdata = ad;
 
-		if (NULL == info->first_prv) {
+		if (NULL == info->first_prv)
 			info->first_prv = info->last_prv;
-		}
 	}
 
-	FREE(grp_name);
+	free(grp_name);
 	G_FREE(prv_desc);
 
 	return 0;
