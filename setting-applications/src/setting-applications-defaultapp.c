@@ -143,8 +143,13 @@ static int app_default_get_pkg_list_iter(pkgmgrinfo_pkginfo_h handle, void *data
 
 	app_default_get_listinfo(handle, info);
 
-	if(info->defapp == 1)
+	if(info->defapp == 1){
+		SETTING_TRACE_DEBUG("info->pkgid : %s", info->pkgid);
 		*pkg_list = g_list_append(*pkg_list, info);
+	}
+	else{
+		free(info);
+	}
 
 	return 0;
 }
@@ -185,34 +190,38 @@ void default_app_list_init(void *data, Evas_Object *genlist)
 		SETTING_TRACE_ERROR("pkgmgrinfo_pkginfo_get_list() Fail(%d)", ret);
 		return;
 	}
-	if (NULL != pkg_list) {
-		if(g_list_length(pkg_list) > 0){
+	SETTING_TRACE_ERROR("pkg_list : %p", pkg_list);
 
-			pkg_list = g_list_sort(pkg_list, _glist_sort_atoz);
+	if (NULL == pkg_list || g_list_length(pkg_list) == 0){
+		SETTING_TRACE_ERROR("g_list_length(pkg_list) <= 0");
+		
+		Setting_GenGroupItem_Data *item = setting_create_Gendial_field_def(
+				genlist, &(ad->itc_1text),
+				NULL, NULL,
+				SWALLOW_Type_INVALID, NULL,
+				NULL, 0,
+				"There are no apps set as defaults.", NULL, NULL);
+		elm_object_item_disabled_set(item->item, EINA_TRUE);
 
-			while(pkg_list){
-				info = pkg_list->data;
-				pkg_list = pkg_list->next;
+	}
+	else {
+		pkg_list = g_list_sort(pkg_list, _glist_sort_atoz);
 
-				if (NULL == info) {
-					SETTING_TRACE_ERROR("info is a null");
-					continue;
-				}
+		while(pkg_list){
+			info = pkg_list->data;
+			pkg_list = pkg_list->next;
 
-				info->item = elm_genlist_item_append(genlist,
-						&(ad->itc_1icon_1button), info, NULL,
-						ELM_GENLIST_ITEM_NONE,
-						_unset_sel, ad);
+			if (NULL == info) {
+				SETTING_TRACE_ERROR("info is a null");
+				continue;
 			}
-		} else {
-			Setting_GenGroupItem_Data *item = setting_create_Gendial_field_def(
-					genlist, &(ad->itc_1text),
-					NULL, NULL,
-					SWALLOW_Type_INVALID, NULL,
-					NULL, 0,
-					"There are no apps set as defaults.", NULL, NULL);
-			elm_object_item_disabled_set(item->item, EINA_TRUE);
+
+			info->item = elm_genlist_item_append(genlist,
+					&(ad->itc_1icon_1button), info, NULL,
+					ELM_GENLIST_ITEM_NONE,
+					_unset_sel, ad);
 		}
+
 	}
 	ad->pkg_list = pkg_list;
 }
