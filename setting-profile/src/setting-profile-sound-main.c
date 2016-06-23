@@ -1224,6 +1224,45 @@ setting_sound_main_result_myfile_ug_cb(ui_gadget_h ug,
 							ad->data_msg_alert_tone->item);
 				}
 			}
+			if(!safeStrCmp(ringtone_file, "Silent"))
+			{
+				/* Disable */
+				Setting_GenGroupItem_Data *item_to_update = NULL;
+				item_to_update = ad->data_noti_volume;
+				if (item_to_update && item_to_update->item
+						&& item_to_update->eo_check) {
+					item_to_update->chk_status = 0;
+					elm_slider_value_set(item_to_update->eo_check,
+							item_to_update->chk_status);
+
+					sound_manager_set_volume(SOUND_TYPE_NOTIFICATION, 0);
+
+					elm_object_item_disabled_set(item_to_update->item, EINA_TRUE);
+					elm_object_disabled_set(item_to_update->eo_check, EINA_TRUE);
+
+					/* Change notification slider's icon as mute style */
+					setting_sound_update_slider_icon(item_to_update,
+							SND_SLIDER_NOTI);
+				}
+			} else {
+				/* Enable */
+				Setting_GenGroupItem_Data *item_to_update = NULL;
+				item_to_update = ad->data_noti_volume;
+				int mm_value = 0;
+				int ret =  sound_manager_get_volume(
+						SOUND_TYPE_NOTIFICATION, &mm_value);
+				SETTING_TRACE("ret:%d", ret);
+				item_to_update->chk_status = mm_value;
+				elm_slider_value_set(
+						item_to_update->eo_check,
+						item_to_update->chk_status);
+				elm_object_item_disabled_set(item_to_update->item, EINA_FALSE);
+				elm_object_disabled_set(item_to_update->eo_check, EINA_FALSE);
+				sound_manager_set_volume(SOUND_TYPE_NOTIFICATION,
+						SETTING_DEFAULT_NOTI_VOL_INT);
+				setting_sound_update_slider_icon(
+						item_to_update, SND_SLIDER_NOTI);
+			}
 		}
 	}
 
