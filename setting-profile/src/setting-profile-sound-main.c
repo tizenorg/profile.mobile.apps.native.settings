@@ -786,6 +786,12 @@ static void __get_lite_main_list(void *data)
 			__stop_change_cb);
 	__BACK_POINTER_SET(ad->data_call_volume);
 
+	/* Disable Call Volume slider if Silent ringtone is selected */
+	if( !safeStrCmp(ad->data_call_alert_tone->sub_desc, "Silent")){
+		elm_object_item_disabled_set(ad->data_call_volume->item, EINA_TRUE);
+		elm_object_disabled_set(ad->data_call_volume->eo_check, EINA_TRUE);
+	}
+
 	/* 3. Notification alert */
 	if (0 != safeStrCmp(ad->viewtype, VOLUME_APP_NAME)) {
 		pa_ringtone = vconf_get_str(
@@ -843,6 +849,12 @@ static void __get_lite_main_list(void *data)
 			__start_change_cb,
 			__stop_change_cb);
 	__BACK_POINTER_SET(ad->data_noti_volume);
+
+	/* Disable Notification slider if Silent ringtone is selected */
+	if( !safeStrCmp(ad->data_msg_alert_tone->sub_desc, "Silent")){
+		elm_object_item_disabled_set(ad->data_noti_volume->item, EINA_TRUE);
+		elm_object_disabled_set(ad->data_noti_volume->eo_check, EINA_TRUE);
+	}
 
 	/* 5.media volume */
 	if (sound_manager_get_volume(SOUND_TYPE_MEDIA, &mm_value) < 0)

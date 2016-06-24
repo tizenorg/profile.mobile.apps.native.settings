@@ -288,27 +288,31 @@ static void __enable_sound_menu(void *data)
 	item_to_update = ad->data_sound_when_ring;
 	setting_genlist_item_disabled_set(item_to_update, EINA_FALSE);
 
+	elm_object_item_disabled_set(ad->data_call_volume->item, EINA_FALSE);
+	elm_object_disabled_set(ad->data_call_volume->eo_check, EINA_FALSE);
 
 	/*2.Enable "Notification", via Sound Manager */
 	item_to_update = ad->data_noti_volume;
-	if (item_to_update
-			&& item_to_update->item
-			&& item_to_update->eo_check) {
-		int mm_value = 0;
-		int ret =  sound_manager_get_volume(
-				SOUND_TYPE_NOTIFICATION, &mm_value);
-		SETTING_TRACE("ret:%d", ret);
-		item_to_update->chk_status = mm_value;
-		elm_slider_value_set(
-				item_to_update->eo_check,
-				item_to_update->chk_status);
-		elm_object_item_disabled_set(item_to_update->item, EINA_FALSE);
-		elm_object_disabled_set(item_to_update->eo_check, EINA_FALSE);
+	if( safeStrCmp(ad->data_msg_alert_tone->sub_desc, "Silent")){
+		//Enable
+		if (item_to_update
+				&& item_to_update->item
+				&& item_to_update->eo_check) {
+			int mm_value = 0;
+			int ret =  sound_manager_get_volume(
+					SOUND_TYPE_NOTIFICATION, &mm_value);
+			SETTING_TRACE("ret:%d", ret);
+			item_to_update->chk_status = mm_value;
+			elm_slider_value_set(
+					item_to_update->eo_check,
+					item_to_update->chk_status);
+			elm_object_item_disabled_set(item_to_update->item, EINA_FALSE);
+			elm_object_disabled_set(item_to_update->eo_check, EINA_FALSE);
 
-		setting_sound_update_slider_icon(
-				item_to_update, SND_SLIDER_NOTI);
+			setting_sound_update_slider_icon(
+					item_to_update, SND_SLIDER_NOTI);
+		}
 	}
-
 
 	/*3.Enable "System", via Sound Manager */
 	item_to_update = ad->data_touch_volume;
@@ -375,6 +379,11 @@ static void __disable_sound_menu(void *data)
 	/*1.Disable	 "Vibrate when ringing" */
 	item_to_update = ad->data_sound_when_ring;
 	setting_genlist_item_disabled_set(item_to_update, EINA_TRUE);
+	/* Disable Call Volume slider if Silent ringtone is selected */
+	if( !safeStrCmp(ad->data_call_alert_tone->sub_desc, "Silent")){
+		elm_object_item_disabled_set(ad->data_call_volume->item, EINA_TRUE);
+		elm_object_disabled_set(ad->data_call_volume->eo_check, EINA_TRUE);
+	}
 
 	/*2.Disable "Notification" */
 	item_to_update = ad->data_noti_volume;
