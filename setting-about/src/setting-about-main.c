@@ -123,9 +123,9 @@ static void __setting_about_popup_rsp_cb(void *data, Evas_Object *obj,
 			Ecore_IMF_Context *imf_context =
 					(Ecore_IMF_Context *)elm_entry_imf_context_get(
 							ad->item_dev_name->eo_check);
-			if (imf_context) {
+			if (imf_context)
 				ecore_imf_context_input_panel_show(imf_context);
-			}
+
 		}
 		break;
 	}
@@ -230,9 +230,9 @@ static void __setting_about_popup_mobile_ap_turn_off_ask_resp_cb(void *data,
 			Ecore_IMF_Context *imf_context =
 					(Ecore_IMF_Context *)elm_entry_imf_context_get(
 							ad->item_dev_name->eo_check);
-			if (imf_context) {
+			if (imf_context)
 				ecore_imf_context_input_panel_show(imf_context);
-			}
+
 		}
 	} else if (POPUP_RESPONSE_CANCEL == response_type) {
 
@@ -339,11 +339,11 @@ void setting_about_main_get_phone_model_name(char *szStr, int nSize)
 		return;
 	}
 
-	if (value) {
+	if (value)
 		snprintf(szStr, nSize, "%s", value);
-	} else {
+	else
 		snprintf(szStr, nSize, "%s", _("IDS_ST_HEADER_UNAVAILABLE"));
-	}
+
 
 	FREE(value);
 }
@@ -405,11 +405,10 @@ void setting_about_main_get_wifi_mac_address_string(char *str, int size)
 
 	char *mac_addr = NULL;
 	int status = wifi_get_mac_address(&mac_addr);
-	if (WIFI_ERROR_NONE != status) {
+	if (WIFI_ERROR_NONE != status)
 		SETTING_TRACE_ERROR("Failed to call wifi_get_mac_address()");
-	} else {
+	else
 		SETTING_TRACE_ERROR("Success to call wifi_get_mac_address()");
-	}
 
 	if (mac_addr) {
 		safeCopyStr(str, mac_addr, SETTING_ABOUT_WIFI_MAC_STR_LEN);
@@ -421,11 +420,10 @@ void setting_about_main_get_wifi_mac_address_string(char *str, int size)
 
 	int state = 0;
 	int ret = vconf_get_int(VCONFKEY_WIFI_STATE, &state);
-	if (0 != ret) {
+	if (0 != ret)
 		SETTING_TRACE_ERROR("Failed to get wifi state");
-	} else {
+	else
 		SETTING_TRACE("get wifi state: %d", state);
-	}
 
 	if ((status != WIFI_ERROR_NONE) || (safeStrLen(str) == 0)
 			|| 0 == state) {
@@ -444,22 +442,16 @@ static DBusMessage *dbus_method_sync_with_reply(const char *dest,
 	DBusError err;
 
 	conn = dbus_bus_get(DBUS_BUS_SYSTEM, NULL);
-	if (!conn) {
-		return NULL;
-	}
+	retv_if(!conn, NULL);
 
 	msg = dbus_message_new_method_call(dest, path, interface, method);
-	if (!msg) {
-		return NULL;
-	}
+	retv_if(!msg, NULL);
 
 	dbus_message_iter_init_append(msg, &iter);
 
 	dbus_error_init(&err);
 
 	reply = dbus_connection_send_with_reply_and_block(conn, msg, -1, &err);
-	if (!reply) {
-	}
 
 	if (dbus_error_is_set(&err)) {
 		SETTING_TRACE_ERROR("dbus_connection_send error(%s:%s)",
@@ -509,11 +501,10 @@ void setting_about_main_get_sn(char *szStr, int nSize)
 	dbus_message_unref(msg);
 	dbus_error_free(&err);
 
-	if (serial_num && strlen(serial_num)) {
+	if (serial_num && strlen(serial_num))
 		snprintf(szStr, nSize, "%s", serial_num);
-	} else {
+	else
 		snprintf(szStr, nSize, "%s", _("IDS_ST_HEADER_UNAVAILABLE"));
-	}
 }
 
 /**
@@ -588,9 +579,8 @@ void setting_about_main_get_bluetooth_address_string(char *str, int size)
 		snprintf(str, size, "%s", local_address);
 	}
 
-	if (local_address) {
+	if (local_address)
 		free(local_address);
-	}
 }
 
 /**
@@ -621,9 +611,8 @@ int setting_about_main_stat_get_cpuinfo(float *usr_pct, float *sys_pct)
 	tick_per_sec = sysconf(_SC_CLK_TCK);
 	cpu_num = sysconf(_SC_NPROCESSORS_ONLN);
 
-	if (cpu_num < 1) {
+	if (cpu_num < 1)
 		cpu_num = 1;
-	}
 
 	gettimeofday(&cur_tv, NULL);
 	fp = fopen(SETTING_ABOUT_STAT_PATH, "r");
@@ -664,9 +653,8 @@ int setting_about_main_stat_get_cpuinfo(float *usr_pct, float *sys_pct)
 			}
 			i++;
 		}
-		if (i >= 3) {
+		if (i >= 3)
 			break;
-		}
 	}
 
 	fclose(fp);
@@ -697,7 +685,8 @@ int setting_about_main_stat_get_cpuinfo(float *usr_pct, float *sys_pct)
 		*sys_pct = 0;
 	}
 
-	out: old_usr = usr_time;
+out:
+	old_usr = usr_time;
 	/*old_nice = nice_time; */
 	old_sys = sys_time;
 	old_tv = cur_tv;
@@ -761,9 +750,7 @@ static Evas_Object *setting_about_naviframe_btn_create(Evas_Object *parent,
 		const char *text, Evas_Smart_Cb func, void *data)
 {
 	Evas_Object *btn = elm_button_add(parent);
-	if (!btn) {
-		return NULL;
-	}
+	retv_if(!btn, NULL);
 	elm_object_style_set(btn, "naviframe/title_text");
 	elm_object_text_set(btn, text);
 	evas_object_smart_callback_add(btn, "clicked", func, data);
@@ -789,9 +776,9 @@ static void setting_about_naviframe_btn_done_cb(void *data, Evas_Object *obj,
 		char *name_value = NULL;
 
 		entry_str = elm_entry_entry_get(ad->item_dev_name->eo_check);
-		if (entry_str) {
+		if (entry_str)
 			entry_str_utf8 = elm_entry_markup_to_utf8(entry_str);
-		}
+
 		name_value = vconf_get_str(VCONFKEY_SETAPPL_DEVICE_NAME_STR);
 
 		if (!ad->empty_flag
@@ -830,9 +817,9 @@ static void setting_about_naviframe_btn_cancel_cb(void *data, Evas_Object *obj,
 		char *name = NULL;
 		char *pa_sub_desc = NULL;
 		name = vconf_get_str(VCONFKEY_SETAPPL_DEVICE_NAME_STR);
-		if (name) {
+		if (name)
 			pa_sub_desc = elm_entry_utf8_to_markup(name);
-		}
+
 		if (pa_sub_desc) {
 			elm_entry_entry_set(ad->item_dev_name->eo_check,
 					pa_sub_desc);
@@ -842,11 +829,10 @@ static void setting_about_naviframe_btn_cancel_cb(void *data, Evas_Object *obj,
 		}
 		FREE(pa_sub_desc);
 
-		if (isSpaceStr(ad->item_dev_name->sub_desc)) {
+		if (isSpaceStr(ad->item_dev_name->sub_desc))
 			ad->empty_flag = TRUE;
-		} else {
+		else
 			ad->empty_flag = FALSE;
-		}
 
 		SETTING_TRACE("ad->item_dev_name->sub_desc:%s",
 				ad->item_dev_name->sub_desc);
@@ -997,9 +983,8 @@ static void __setting_about_entry_focused(void *data, Evas_Object *obj,
 	/* accessibiliy */
 	elm_entry_cursor_end_set(obj);
 	const char *txt = elm_entry_entry_get(obj);
-	if (!txt || 0 == strlen(txt)) {
+	if (!txt || 0 == strlen(txt))
 		txt = elm_object_part_text_get(obj, "elm.guide");
-	}
 
 	/* Say entry focused */
 	Eina_Stringshare *str = eina_stringshare_printf(
@@ -1012,9 +997,8 @@ static void __setting_about_entry_focused(void *data, Evas_Object *obj,
 	Ecore_IMF_Context *imf_context =
 			(Ecore_IMF_Context *)elm_entry_imf_context_get(
 					item_dev_name->eo_check);
-	if (imf_context) {
+	if (imf_context)
 		ecore_imf_context_input_panel_show(imf_context);
-	}
 }
 
 /**
@@ -1040,13 +1024,11 @@ static void __setting_about_entry_unfocus_cb(void *data, Evas_Object *obj,
 	SettingAboutUG *ad = item_dev_name->userdata;
 
 	if (isSpaceStr(entry_str)) {
-		if (!ad->empty_flag) {
+		if (!ad->empty_flag)
 			ad->empty_flag = TRUE;
-		}
 	} else {
-		if (ad->empty_flag) {
+		if (ad->empty_flag)
 			ad->empty_flag = FALSE;
-		}
 	}
 
 	if (item_dev_name->enterKeyPressFlag == TRUE) {
@@ -1277,9 +1259,7 @@ static void __setting_about_main_certificates_clicked(void *data)
 	SettingAboutUG *ad = (SettingAboutUG *)data;
 
 	struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
-	if (!cbs) {
-		return;
-	}
+	ret_if(!cbs);
 
 	cbs->layout_cb = setting_about_layout_ug_cb;
 	cbs->result_cb = NULL;
@@ -1309,9 +1289,7 @@ static void __setting_about_main_licence_launch(void *data)
 	SettingAboutUG *ad = (SettingAboutUG *)data;
 
 	app_control_h svc;
-	if (app_control_create(&svc)) {
-		return;
-	}
+	ret_if(app_control_create(&svc));
 
 	app_control_add_extra_data(svc, "viewtype", "license");
 
@@ -1443,9 +1421,8 @@ void setting_about_main_exp_cb(void *data, Evas_Object *obj, void *event_info)
 
 	/*for(; i < SETTING_ABOUT_MY_NUMBERS_LEN; i++) { */
 	for (; i < ad->my_numbers.count; i++) {
-		if (ad->my_numbers.list[i].num[0] == '\0') {
+		if (ad->my_numbers.list[i].num[0] == '\0')
 			break;
-		}
 
 		if (sel_idx == -1
 				&& 0 == safeStrCmp(sel_num,
@@ -1458,11 +1435,10 @@ void setting_about_main_exp_cb(void *data, Evas_Object *obj, void *event_info)
 				SWALLOW_Type_1RADIO, rgd, i,
 				ad->my_numbers.list[i].num,
 				__setting_about_sub_list_rd_change);
-		if (item_data) {
+		if (item_data)
 			item_data->userdata = ad;
-		} else {
+		else
 			SETTING_TRACE_ERROR("item_data is NULL");
-		}
 	}
 
 	elm_radio_value_set(rgd, sel_idx);
@@ -1481,9 +1457,7 @@ static Eina_Bool setting_about_main_click_softkey_back_cb(void *data,
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if(data == NULL, EINA_FALSE, "Data parameter is NULL");
 	SettingAboutUG *ad = (SettingAboutUG *)data;
-	if (ad->empty_flag) {
-		return EINA_FALSE;
-	}
+	retv_if(ad->empty_flag, EINA_FALSE);
 
 	/* imf must be hided before view is destroyed. */
 	/* Following code is just to improve the hiding speed. If not add these
@@ -1529,16 +1503,15 @@ static Eina_Bool __setting_about_name_view_key_down(void *data, int type,
 	SETTING_TRACE_BEGIN;
 	Evas_Event_Key_Down *ev = event;
 
-	if (!ev || !data) {
-		return ECORE_CALLBACK_RENEW;
-	}
+	retv_if(!ev || !data, ECORE_CALLBACK_RENEW);
 
 	SettingAboutUG *ad = data;
-	if (!strcmp(ev->keyname, "XF86Back")) {
+	if (!strcmp(ev->keyname, "XF86Back"))
 		setting_about_naviframe_btn_cancel_cb(ad, NULL, NULL);
-	}
+
 	return ECORE_CALLBACK_RENEW;
 }
+
 static Eina_Bool setting_about_name_focus_update_cb(void *data)
 {
 	SETTING_TRACE_BEGIN;
@@ -1583,16 +1556,15 @@ static void __setting_about_main_creat_name_view(void *data)
 	FREE(name_value);
 
 	ad->empty_flag = FALSE;
-	if (NULL == pa_sub_desc || '\0' == pa_sub_desc[0]) {
+	if (NULL == pa_sub_desc || '\0' == pa_sub_desc[0])
 		ad->empty_flag = TRUE;
-	}
 
 	Setting_GenGroupItem_Data *item_data =
 			(Setting_GenGroupItem_Data *)calloc(
 					1, sizeof(Setting_GenGroupItem_Data));
-	if (!item_data) {
+	if (!item_data)
 		FREE(pa_sub_desc);
-	}
+
 	setting_retm_if(!item_data, "calloc failed");
 
 	item_data->keyStr = (char *)g_strdup(SETTING_ABOUT_DEVICE_NAME_STR);
@@ -1624,11 +1596,10 @@ static void __setting_about_main_creat_name_view(void *data)
 
 	item_data->digits_filter_data = calloc(1,
 			sizeof(Elm_Entry_Filter_Accept_Set));
-	if (item_data->digits_filter_data) {
+	if (item_data->digits_filter_data)
 		item_data->digits_filter_data->accepted = NULL;
-	} else {
+	else
 		SETTING_TRACE_ERROR("fail to calloc");
-	}
 
 	item_data->input_panel_disable_flag = EINA_TRUE;
 
@@ -1823,7 +1794,7 @@ static void setting_about_main_gl_mouse_up(void *data, Evas *e,
  * @param data application context
  *
  * @return FALSE for call it once and then destory the timer, TRUE for always
- * 	call it when the timer is reached.
+ *	call it when the timer is reached.
  */
 static Eina_Bool setting_about_main_timer_update_cb(const void *data)
 {
@@ -1880,7 +1851,7 @@ static Eina_Bool setting_about_main_timer_update_cb(const void *data)
  * @param data application data
  *
  * @return FALSE for call it once and then destory the timer, TRUE for always
- * 	call it when the timer is reached.
+ *	call it when the timer is reached.
  */
 int setting_about_main_generate_genlist(void *data)
 {
@@ -1914,11 +1885,10 @@ int setting_about_main_generate_genlist(void *data)
 					ad, SWALLOW_Type_INVALID, NULL, NULL, 0,
 					"IDS_ST_MBODY_SOFTWARE_UPDATE",
 					NULL, NULL);
-			if (item_data) {
+			if (item_data)
 				item_data->userdata = ad;
-			} else {
+			else
 				SETTING_TRACE_ERROR("item_data is NULL");
-			}
 		}
 	}
 
@@ -1928,10 +1898,8 @@ int setting_about_main_generate_genlist(void *data)
 			setting_about_main_mouse_up_Gendial_list_cb, ad,
 			SWALLOW_Type_INVALID, NULL, NULL, 0,
 			"IDS_ST_HEADER_MANAGE_CERTIFICATES_ABB", NULL, NULL);
-	if (item_data) {
-	} else {
+	if (!item_data)
 		SETTING_TRACE_ERROR("item_data is NULL");
-	}
 
 	/* [UI] Legal Information */
 	setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
@@ -1952,9 +1920,9 @@ int setting_about_main_generate_genlist(void *data)
 	FREE(name_value);
 
 	ad->empty_flag = FALSE;
-	if (NULL == pa_sub_desc || '\0' == pa_sub_desc[0]) {
+	if (NULL == pa_sub_desc || '\0' == pa_sub_desc[0])
 		ad->empty_flag = TRUE;
-	}
+
 	/* [UI] Name */
 	ad->item_dev_name_main = item_data = setting_create_Gendial_field_def(
 			scroller, &(ad->itc_2text_2),
@@ -1962,21 +1930,21 @@ int setting_about_main_generate_genlist(void *data)
 			SWALLOW_Type_INVALID, NULL,
 			NULL, 0, SETTING_ABOUT_DEVICE_NAME_STR, pa_sub_desc,
 			NULL);
-	if (item_data) {
+	if (item_data)
 		__BACK_POINTER_SET(ad->item_dev_name_main);
-	} else {
+	else
 		SETTING_TRACE_ERROR("item_data is NULL");
-	}
+
 	FREE(pa_sub_desc);
 
 	/* 2. Phone number */
 	/* Initialize telephony handle */
 	int telephony_init_ret = telephony_init(&tapi_handle_list);
-	if (telephony_init_ret != TELEPHONY_ERROR_NONE) {
+	if (telephony_init_ret != TELEPHONY_ERROR_NONE)
 		tapi_handle_count = 0;
-	} else {
+	else
 		tapi_handle_count = tapi_handle_list.count;
-	}
+
 	SETTING_TRACE_DEBUG("tapi_handle_list.count:%d",
 			tapi_handle_list.count);
 	/* my numbers(SIM1 and SIM2) */
@@ -2078,9 +2046,9 @@ int setting_about_main_generate_genlist(void *data)
 
 	}
 	ret_value = telephony_deinit(&tapi_handle_list);
-	if (ret_value != TELEPHONY_ERROR_NONE) {
+	if (ret_value != TELEPHONY_ERROR_NONE)
 		SETTING_TRACE_ERROR("Deinitialize failed!!!");
-	}
+
 	/*ad->item_data_imei = item_data; */
 
 	/* 6. [UI] Bluetooth address */
@@ -2215,9 +2183,8 @@ int setting_about_main_generate_genlist(void *data)
 	}
 	G_FREE(security_status);
 
-	if (app_info) {
+	if (app_info)
 		app_info_destroy(app_info);
-	}
 
 	ad->update_timer = ecore_timer_add(1,
 			(Ecore_Task_Cb)setting_about_main_timer_update_cb, ad);
@@ -2278,19 +2245,18 @@ static int setting_about_main_create(void *cb)
 
 	int ret = vconf_notify_key_changed(VCONFKEY_WIFI_STATE,
 			__setting_about_main_vconf_change_cb, ad);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("call vconf_notify_key_changed failed");
-	}
+
 	ret = vconf_notify_key_changed(VCONFKEY_BT_STATUS,
 			__setting_about_main_vconf_change_cb, ad);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("call vconf_notify_key_changed failed");
-	}
+
 	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_DEVICE_NAME_STR,
 			__setting_about_main_vconf_change_cb, ad);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("call vconf_notify_key_changed failed");
-	}
 
 	setting_view_about_main.is_create = 1;
 	SETTING_TRACE_END;
@@ -2316,14 +2282,13 @@ static int setting_about_main_destroy(void *cb)
 
 	int ret = vconf_ignore_key_changed(VCONFKEY_WIFI_STATE,
 			__setting_about_main_vconf_change_cb);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("call vconf_ignore_key_changed failed");
-	}
+
 	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_DEVICE_NAME_STR,
 			__setting_about_main_vconf_change_cb);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("call vconf_ignore_key_changed failed");
-	}
 
 	/*__setting_about_main_remove_noti(ad);*/
 
@@ -2406,9 +2371,8 @@ static int setting_about_main_update(void *cb)
 		 }*/
 	}
 
-	if (ad->ly_main != NULL) {
+	if (ad->ly_main != NULL)
 		evas_object_show(ad->ly_main);
-	}
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -2425,11 +2389,10 @@ static int setting_about_main_cleanup(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
+	/*
 	SettingAboutUG *ad = (SettingAboutUG *)cb;
-
-	if (ad->ly_main != NULL) {
-		/*	evas_object_hide(ad->ly_main); */
-	}
+	if (ad->ly_main != NULL)
+		evas_object_hide(ad->ly_main); */
 
 	return SETTING_RETURN_SUCCESS;
 }

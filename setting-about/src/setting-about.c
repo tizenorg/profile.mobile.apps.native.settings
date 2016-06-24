@@ -29,18 +29,13 @@
 
 void setting_about_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode, void *priv)
 {
+	SETTING_TRACE_BEGIN;
 	/*SettingAboutUG *ad = (SettingAboutUG *) priv; */
 	Evas_Object *base;
 
-	if (!priv) {
-		return;
-	}
-	SETTING_TRACE_BEGIN;
-
+	ret_if(!priv);
 	base = (Evas_Object *)ug_get_layout(ug);
-	if (!base) {
-		return;
-	}
+	ret_if(!base);
 
 	switch (mode) {
 	case UG_MODE_FULLVIEW:
@@ -176,9 +171,8 @@ static void setting_about_ug_on_resume(ui_gadget_h ug, app_control_h service,
 			Ecore_IMF_Context *imf_context =
 					(Ecore_IMF_Context *)elm_entry_imf_context_get(
 					aboutUG->item_dev_name->eo_check);
-			if (imf_context) {
+			if (imf_context)
 				ecore_imf_context_input_panel_show(imf_context);
-			}
 		}
 	}
 }
@@ -251,19 +245,16 @@ static void setting_about_ug_on_event(ui_gadget_h ug, enum ug_event event,
 	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN: {
 		/*restore the focus status */
 		SettingAboutUG *ad = (SettingAboutUG *)priv;
-		if (!ad || !ad->is_dev_name_focus || !ad->item_dev_name) {
-			return;
-		}
+		ret_if(!ad || !ad->is_dev_name_focus || !ad->item_dev_name);
 		SETTING_TRACE("ad->is_dev_name_focus:%d",
 				ad->is_dev_name_focus);
 
 		Ecore_IMF_Context *imf_context =
 				(Ecore_IMF_Context *)elm_entry_imf_context_get(
 						ad->item_dev_name->eo_check);
-		if (imf_context) {
-			/*ecore_imf_context_input_panel_hide(imf_context); */
+		if (imf_context)
 			ecore_imf_context_input_panel_show(imf_context);
-		}
+
 		elm_object_focus_set(ad->item_dev_name->eo_check,
 				ad->is_dev_name_focus);
 		elm_entry_cursor_pos_set(ad->item_dev_name->eo_check,
@@ -293,9 +284,7 @@ static void setting_about_ug_on_key_event(ui_gadget_h ug,
 {
 	SETTING_TRACE_BEGIN;
 	SettingAboutUG *ad = (SettingAboutUG *)priv;
-	if (!ug) {
-		return;
-	}
+	ret_if(!ug);
 
 	switch (event) {
 	case UG_KEY_EVENT_END: {
@@ -307,8 +296,8 @@ static void setting_about_ug_on_key_event(ui_gadget_h ug,
 			/* elm_naviframe_item_pop(ad->navi_bar); */
 			setting_view_cb_at_endKey(ad);
 		}
-	}
 		break;
+	}
 	default:
 		break;
 	}
