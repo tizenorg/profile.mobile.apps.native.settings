@@ -2077,6 +2077,7 @@ void setting_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode, void *priv)
 	case UG_MODE_FULLVIEW:
 		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
 		EVAS_HINT_EXPAND);
+		ug_disable_effect(ug);
 		evas_object_show(base);
 		break;
 	default:
