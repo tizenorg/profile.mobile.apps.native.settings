@@ -44,7 +44,7 @@
 
 #include <pkgmgr-info.h>
 
-#define SAFE_STRDUP(src) (src)?strdup(src):NULL
+#define SAFE_STRDUP(src) (src) ? strdup(src) : NULL
 
 #define Keystr_Dynamic		"IDS_ST_BODY_DYNAMIC_T_DISPLAY_EFFECT"
 #define Keystr_Standard		"IDS_ST_BODY_STANDARD_T_DISPLAY_EFFECT"
@@ -252,7 +252,7 @@ struct _SettingApplicationsUG {
 extern setting_view setting_view_applications_main;
 extern setting_view setting_view_applications_defaultapp;
 
-typedef struct _default_app{
+typedef struct _default_app {
 	Elm_Object_Item *item;
 
 	int defapp;

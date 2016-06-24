@@ -114,9 +114,9 @@ static int setting_applications_main_destroy(void *cb)
 
 	SettingApplicationsUG *ad = (SettingApplicationsUG *)cb;
 
-	if (ad->nf_it) {
+	if (ad->nf_it)
 		ad->nf_it = NULL;
-	}
+
 	if (ad->ly_main != NULL) {
 		evas_object_del(ad->ly_main);
 		ad->ly_main = NULL;

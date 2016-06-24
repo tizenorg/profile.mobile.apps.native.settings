@@ -62,13 +62,13 @@ static Eina_Bool setting_accessibility_main_click_softkey_back_cb(void *data,
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if(data == NULL, EINA_FALSE, "Data parameter is NULL");
 	SettingAccessibilityUG *ad = (SettingAccessibilityUG *)data;
-	if (ad->empty_flag) {
-		return EINA_FALSE;
-	}
+	retv_if(ad->empty_flag, EINA_FALSE);
+
 	vconf_ignore_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS,
 			setting_accessibility_screen_reader_key_change_vconf_cb);
 	/* Send destroy request */
 	ug_destroy_me(ad->ug);
+
 	SETTING_TRACE_END;
 	return EINA_FALSE;
 }
@@ -90,7 +90,7 @@ static void setting_accessibility_vision_screen_reader_mouse_up_Gendial_list_cb(
  * @param data application data
  *
  * @return FALSE for call it once and then destory the timer, TRUE for always
- * 	call it when the timer is reached.
+ *	call it when the timer is reached.
  */
 int setting_accessibility_main_generate_genlist(void *data)
 {
