@@ -61,7 +61,7 @@
 		<label xml:lang="zh-sg">设定</label>
 		<label xml:lang="zh-tw">設定</label>
 	</ui-application>
-	<ui-application appid="setting-network-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-network-eufl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+	<ui-application appid="setting-network-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-network-eufl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
 			<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
 			<label>Network</label>
 			<label xml:lang="en-us">Network</label>
@@ -74,7 +74,7 @@
 				<operation name="http://tizen.org/appcontrol/operation/setting/mobile_network"/>
 			</application-service>
 	</ui-application>
-	<ui-application appid="setting-font-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-font-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+	<ui-application appid="setting-font-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-font-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
 			<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
 			<label>Font</label>
 			<label xml:lang="en-us">Font</label>
@@ -94,75 +94,75 @@
 				<operation name="http://tizen.org/appcontrol/operation/configure/font/size"/>
 			</application-service>
 	</ui-application>
-	<ui-application appid="setting-ledindicator-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-ledindicator-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+	<ui-application appid="setting-ledindicator-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-ledindicator-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
                         <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
                         <label>LED indicator</label>
                         <label xml:lang="en-us">LED indicator</label>
 			<label xml:lang="ja-jp">LEDインジケーター</label>
 			<label xml:lang="ko-kr">LED 상태 표시등</label>
         </ui-application>
-        <ui-application appid="setting-accessibility-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-accessibility-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+        <ui-application appid="setting-accessibility-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-accessibility-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
                         <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
                         <label>Accessibility</label>
                         <label xml:lang="en-us">Accessibility</label>
         </ui-application>
-	<ui-application appid="setting-accessory-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-accessory-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+	<ui-application appid="setting-accessory-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-accessory-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
                         <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
                         <label>Accessories</label>
                         <label xml:lang="en-us">Accessories</label>
 			<label xml:lang="ja-jp">アクセサリ</label>
 			<label xml:lang="ko-kr">액세서리</label>
         </ui-application>
-	<ui-application appid="setting-phone-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-phone-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+	<ui-application appid="setting-phone-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-phone-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
                         <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
                         <label>Phone</label>
         </ui-application>
 
-	<ui-application appid="setting-storage-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-storage-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+	<ui-application appid="setting-storage-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-storage-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
                         <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
                         <label>Storage</label>
                         <label xml:lang="en-us">Storage</label>
 			<label xml:lang="ja-jp">ストレージ</label>
 			<label xml:lang="ko-kr">저장소</label>
         </ui-application>
-	<ui-application appid="setting-about-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-about-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+	<ui-application appid="setting-about-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-about-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
                         <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
                         <label>About device</label>
                         <label xml:lang="en-us">About device</label>
 			<label xml:lang="ja-jp">端末情報</label>
 			<label xml:lang="ko-kr">디바이스 정보</label>
         </ui-application>
-	<ui-application appid="setting-ringtone-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-ringtone-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+	<ui-application appid="setting-ringtone-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-ringtone-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
                         <label>Ringtone</label>
                         <label xml:lang="en-us">Ringtone</label>
         </ui-application>
-    <ui-application appid="setting-manage-applications-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-manage-applications-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+    <ui-application appid="setting-manage-applications-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-manage-applications-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
                         <label>Application manager</label>
                         <label xml:lang="en-us">Application manager</label>
                         <label xml:lang="ko-kr">애플리케이션 관리자</label>
    </ui-application>
-	<ui-application appid="setting-security-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-security-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+	<ui-application appid="setting-security-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-security-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
                         <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
 			<label>Security</label>
                         <label xml:lang="en-us">Security</label>
 			<label xml:lang="ja-jp">セキュリティ</label>
 			<label xml:lang="ko-kr">보안</label>
         </ui-application>
-	<ui-application appid="setting-time-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-time-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+	<ui-application appid="setting-time-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-time-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
                         <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
                         <label>Date and time</label>
                         <label xml:lang="en-us">Date and time</label>
 			<label xml:lang="ja-jp">日付と時刻</label>
 			<label xml:lang="ko-kr">날짜 및 시간</label>
         </ui-application>
-	<ui-application appid="setting-profile-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-profile-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+	<ui-application appid="setting-profile-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-profile-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
 			<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
 			<label>Sound</label>
 			<label xml:lang="en-us">Sound</label>
 			<label xml:lang="ja-jp">サウンド</label>
 			<label xml:lang="ko-kr">소리</label>
 	</ui-application>
-	<ui-application appid="setting-plugin-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-plugin-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+	<ui-application appid="setting-plugin-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-plugin-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
 			<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
 			<label>Setting Plugin </label>
 			<label xml:lang="en-us">Setting Plugin view </label>
@@ -173,66 +173,31 @@
 				<operation name="http://tizen.org/appcontrol/operation/app_setting/show"/>
 			</application-service>
 	</ui-application>
-        <ui-application appid="org.tizen.setting-blockingmode-alarm" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-blockingmode-alarm" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
-			<label>Setting-blockingmode-alarm</label>
-	</ui-application>
-	<ui-application appid="setting-motion-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-motion-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
-			<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
-			<label>Motion</label>
-			<label xml:lang="en-us">Motion</label>
-	</ui-application>
-	<ui-application appid="setting-blockingmode-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-blockingmode-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
-			<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
-			<label>Blocking mode</label>
-			<label xml:lang="en-us">Blocking mode</label>
-			<label xml:lang="ja-jp">ブロックモード</label>
-			<label xml:lang="ko-kr">차단 모드</label>
-	</ui-application>
-	<ui-application appid="setting-display-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-display-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+	<ui-application appid="setting-display-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-display-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
 			<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
 			<label>Display</label>
 			<label xml:lang="en-us">Display</label>
 	</ui-application>
-	<ui-application appid="setting-moreconnections-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-moreconnections-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+
+	<ui-application appid="setting-moreconnections-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-moreconnections-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
 			<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
 			<label>MoreConnections</label>
 			<label xml:lang="en-us">MoreConnections</label>
 	</ui-application>
-	<ui-application appid="setting-applications-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-applications-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+
+	<ui-application appid="setting-applications-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-applications-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
 			<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
 			<label>Applications</label>
 			<label xml:lang="en-us">Applications</label>
 	</ui-application>
 
-	<ui-application appid="setting-fileview-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-fileview-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+	<ui-application appid="setting-fileview-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-fileview-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
 			<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
 			<label>Fileview</label>
 			<label xml:lang="en-us">Fileview</label>
 	</ui-application>
 
-	<ui-application appid="setting-multiwindow-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-multiwindow-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
-			<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
-			<label>Multi window</label>
-			<label xml:lang="en-us">Multi window</label>
-	</ui-application>
-	<ui-application appid="setting-firewall-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-firewall-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
-			<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
-			<label>Firewall</label>
-			<label xml:lang="en-us">Firewall</label>
-	</ui-application>
-	<ui-application appid="setting-drivingmode-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-drivingmode-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
-			<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
-			<label>Driving mode</label>
-			<label xml:lang="en-us">Hands-free mode</label>
-			<label xml:lang="ja-jp">ハンズフリーモード</label>
-			<label xml:lang="ko-kr">핸즈프리 모드</label>
-	</ui-application>
-	<ui-application appid="setting-emergency-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-emergency-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
-			<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
-			<label>Emergency Setting</label>
-			<label xml:lang="en-us">Emergency Setting</label>
-	</ui-application>
-	<ui-application appid="setting-flightmode-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-flightmode-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+	<ui-application appid="setting-flightmode-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-flightmode-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
 		<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
 		<label>Flight mode</label>
 		<label xml:lang="en-us">Flgiht mode</label>
@@ -243,23 +208,19 @@
 				<operation name="http://tizen.org/appcontrol/operation/setting/airplane_mode"/>
 			</application-service>
 	</ui-application>
-	<ui-application appid="setting-locktype-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-locktype-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+	<ui-application appid="setting-locktype-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-locktype-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
                         <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
                         <label>Locktype</label>
                         <label xml:lang="en-us">Locktype</label>
        </ui-application>
-	<ui-application appid="setting-password-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-password-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+	<ui-application appid="setting-password-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-password-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
                         <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
                         <label>Password</label>
                         <label xml:lang="en-us">Password</label>
        </ui-application>
-	<ui-application appid="org.tizen.setting.volume" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting_volume_popup" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
+	<ui-application appid="org.tizen.setting.volume" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting_volume_popup" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
 		<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
 		<label>Volume</label>
-	</ui-application>
-	<ui-application appid="org.tizen.setting.turnofflight" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting_turnoff_light" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true">
-		<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
-		<label>Turn off assistive light</label>
 	</ui-application>
 	<privileges>
 		<privilege>http://tizen.org/privilege/appmanager.launch</privilege>
