@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="3.0" package="org.tizen.setting-appmgr" version="0.9.5" install-location="internal-only">
+	<label>settings-display</label>
+	<author email="p.pruski@samsung.com" href="www.samsung.com">Piotr Pruski</author>
+	<description>Setting Application Appmgr Module</description>
+	<ui-application appid="org.tizen.setting-appmgr" exec="setting-appmgr" nodisplay="false" multiple="false" type="capp" taskmanage="true" hw-acceleration="use-GL">
+		<metadata key="http://developer.samsung.com/tizen/metadata/legacylifecycle"/>
+		<label>settings-appmgr</label>
+		<label xml:lang="ar-ae">settings-display</label>
+		<label xml:lang="az-az">settings-display</label>
+		<label xml:lang="bg-bg">settings-display</label>
+		<label xml:lang="ca-es">settings-display</label>
+		<label xml:lang="cs-cz">settings-display</label>
+		<label xml:lang="da-dk">settings-display</label>
+		<label xml:lang="de-de">settings-display</label>
+		<label xml:lang="el-gr">settings-display</label>
+		<label xml:lang="en-gb">settings-display</label>
+		<label xml:lang="en-ph">settings-display</label>
+		<label xml:lang="en-us">settings-display</label>
+		<label xml:lang="es-es">settings-display</label>
+		<label xml:lang="es-us">settings-display</label>
+		<label xml:lang="es-mx">settings-display</label>
+		<label xml:lang="et-ee">settings-display</label>
+		<label xml:lang="eu-es">settings-display</label>
+		<label xml:lang="fi-fi">settings-display</label>
+		<label xml:lang="fr-ca">settings-display</label>
+		<label xml:lang="fr-fr">settings-display</label>
+	</ui-application>
+	<privileges>
+		<privilege>http://tizen.org/privilege/appmanager.launch</privilege>
+		<privilege>http://tizen.org/privilege/appmanager.kill</privilege>
+		<privilege>http://tizen.org/privilege/account.read</privilege>
+		<privilege>http://tizen.org/privilege/account.write</privilege>
+		<privilege>http://tizen.org/privilege/notification</privilege>
+		<privilege>http://tizen.org/privilege/volume.set</privilege>
+		<privilege>http://tizen.org/privilege/telephony.admin</privilege>
+		<privilege>http://tizen.org/privilege/systemsettings.admin</privilege>
+		<privilege>http://tizen.org/privilege/display</privilege>
+
+        <privilege>http://tizen.org/privilege/packagemanager.install</privilege>
+        <privilege>http://tizen.org/privilege/packagemanager.admin</privilege>
+        <privilege>http://tizen.org/privilege/packagemanager.info</privilege>
+        <privilege>http://tizen.org/privilege/packagemanager.clearcache</privilege>
+
+	</privileges>
+</manifest>

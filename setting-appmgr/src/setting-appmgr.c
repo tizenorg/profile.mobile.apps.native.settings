@@ -20,6 +20,9 @@
 #define UG_MODULE_API __attribute__ ((visibility("default")))
 #endif
 
+#include <app.h>
+#include <appsvc.h>
+//#include <appcore-common.h>
 #include <efl_extension.h>
 #include <setting-cfg.h>
 
@@ -30,6 +33,25 @@
 #include "setting-appmgr-main.h"
 #include "setting-appmgr.h"
 
+static Elm_Theme* __theme = NULL;
+
+/******************************APP CONTROL***********************************/
+static bool _setting_appmgr_app_create(void *data);
+static void _setting_appmgr_app_control_cb(app_control_h app_control, void *data);
+static void _setting_appmgr_app_on_pause(void *data);
+static void _setting_appmgr_app_on_resume(void *data);
+static void _setting_appmgr_app_terminate(void *data);
+/********************************OTHER***************************************/
+static void _main_win_del_cb(void *data, Evas_Object *obj, void *event_info);
+
+
+static void _main_win_del_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	elm_exit();
+}
+
+#if 0
 static void appmgrUg_resize(void *data, Evas *e, Evas_Object *obj,
 		void *event_info)
 {
@@ -44,6 +66,8 @@ static void appmgrUg_resize(void *data, Evas *e, Evas_Object *obj,
 	if (ad->main_view->is_create)
 		setting_view_update(ad->main_view, ad);
 }
+#endif
+
 #if 0
 static void _app_mgr_item_del(void *data, Evas_Object *obj)
 {
@@ -155,6 +179,7 @@ static inline Evas_Object *appmgrUg_create_navi(Evas_Object *parent,
 	return navi;
 }
 
+#if 0
 static int appmgrUg_get_tabtype(char *keyword)
 {
 	retv_if(NULL == keyword, APPMGRUG_TAB_DOWNLOAD);
@@ -193,7 +218,6 @@ static void *appmgrUg_on_create(ui_gadget_h ug, enum ug_mode mode,
 	}
 
 	appmgrUg_main_init(ad);
-	appmgrUg_pkginfo_init(ad);
 	appmgrUg_appinfo_init(ad);
 
 	appmgrUg_init_itcs(ad);
@@ -360,6 +384,8 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 	FREE(ops->priv);
 }
 
+#endif
+
 UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
 		char **applocale)
 {
@@ -411,4 +437,120 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
 		*pplist = eina_list_append(*pplist, node);
 	}
 	return 0;
+}
+
+
+static bool _setting_appmgr_app_create(void *data)
+{
+	SETTING_TRACE_BEGIN;
+	setting_retvm_if(NULL == data, false, "!priv");
+
+	elm_app_base_scale_set(2.4);
+	SettingAppMgrUG *appmgr_ad = (SettingAppMgrUG *)data;
+
+	Evas_Object *win;
+	int w, h;
+	const char *name = "setting-appmgr";
+
+    __theme = elm_theme_new();
+    elm_theme_ref_set(__theme, NULL);
+
+    elm_theme_extension_add(__theme, DISPLAY_THEME_EDJ_NAME);
+    elm_theme_extension_add(__theme, DISPLAY_NEWUX_EDJ_NAME);
+    elm_theme_extension_add(__theme, DISPLAY_GENLIST_EDJ_NAME);
+    elm_theme_extension_add(__theme, DISPLAY_NEW_GENLIST_EDJ_NAME);
+    elm_theme_extension_add(__theme, DISPLAY_SLIDER_EDJ_NAME);
+
+//	Create window
+	win = elm_win_add(NULL, name, ELM_WIN_BASIC);
+	if (!win)
+	{
+		SETTING_TRACE_BEGIN;
+		win = elm_win_util_standard_add(name, name);
+	} else {
+		SETTING_TRACE_BEGIN;
+		/* elm_win_util_standard_add creates bg inside */
+		Evas_Object *bg;
+		bg = elm_bg_add(win);
+
+		if (!bg) {
+			evas_object_del(win);
+			return false;
+		}
+		evas_object_size_hint_weight_set(bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+		elm_win_resize_object_add(win, bg);
+		evas_object_show(bg);
+		elm_bg_color_set(bg, 225, 120, 120);
+	}
+
+	if (win) {
+		elm_win_title_set(win, name);
+#ifdef ECORE_X
+		ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
+#else
+		elm_win_screen_size_get(win, NULL, NULL, &w, &h);
+#endif
+		evas_object_resize(win, w, h);
+	}
+
+	elm_win_indicator_mode_set(win, ELM_WIN_INDICATOR_SHOW);
+	elm_win_indicator_opacity_set(win, ELM_WIN_INDICATOR_OPAQUE);
+	setting_set_i18n("setting", DISPLAY_LOCALEDIR);
+	evas_object_smart_callback_add(win, "delete,request",
+                                   _main_win_del_cb, appmgr_ad);
+
+	appmgr_ad->main_win = win;
+	evas_object_show(appmgr_ad->main_win);
+
+	SETTING_TRACE_BEGIN;
+	return true;
+}
+
+static void _setting_appmgr_app_control_cb(app_control_h app_control, void *data)
+{
+	SETTING_TRACE_BEGIN;
+}
+
+static void _setting_appmgr_app_terminate(void *data)
+{
+	SETTING_TRACE_BEGIN;
+	SettingAppMgrUG *ad = (SettingAppMgrUG *)data;
+	setting_view_destroy(&setting_view_appmgr_main, ad);
+	SETTING_TRACE_DEBUG("!!! After setting_view_destroy");
+	if (ad->main_win) {
+		evas_object_del(ad->main_win);
+		ad->main_win = NULL;
+	}
+}
+
+static void _setting_appmgr_app_on_pause(void *data)
+{
+	SETTING_TRACE_BEGIN;
+}
+
+static void _setting_appmgr_app_on_resume(void *data)
+{
+	SETTING_TRACE_BEGIN;
+}
+
+
+EXPORT_PUBLIC
+int main(int argc, char *argv[])
+{
+	SettingAppMgrUG appmgr_ad ;
+
+	ui_app_lifecycle_callback_s ops = {
+        .create = _setting_appmgr_app_create,
+        .pause = _setting_appmgr_app_on_pause,
+        .resume = _setting_appmgr_app_on_resume,
+        .terminate = _setting_appmgr_app_terminate,
+        .app_control = _setting_appmgr_app_control_cb,
+    };
+
+    memset(&appmgr_ad, 0x00, sizeof(SettingAppMgrUG));
+	int r = 0;
+    r = ui_app_main(argc, argv, &ops, &appmgr_ad);
+    retv_if(r == -1, -1);
+
+    return 0;
 }

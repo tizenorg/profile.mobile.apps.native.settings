@@ -144,6 +144,14 @@ Group: Application
 %description display
 replace shared library by stand alone application
 
+%package appmgr
+Summary: A setting appmgr module
+Group: Application
+
+%description appmgr
+Configuration application for setting application manager
+
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -297,6 +305,10 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 mkdir -p %{_prefix}/apps/org.tizen.setting-display/shared
 mkdir -p %{_prefix}/apps/org.tizen.settung-display/shared/res
 
+%post appmgr
+mkdir -p %{_prefix}/apps/org.tizen.setting-display/shared
+mkdir -p %{_prefix}/apps/org.tizen.settung-display/shared/res
+
 %posttrans
 
 %files -n org.tizen.setting
@@ -376,3 +388,9 @@ mkdir -p %{_prefix}/apps/org.tizen.settung-display/shared/res
 
 #%{_prefix}/apps/org.tizen.setting-display/shared/res/*
 #%attr(-,app,app) %dir %{_prefix}/apps/org.tizen.setting-display/shared
+
+%files appmgr
+%manifest setting-appmgr/org.tizen.setting-appmgr.manifest
+%{_prefix}/apps/org.tizen.setting-appmgr/bin/setting-appmgr
+%{_prefix}/apps/org.tizen.setting-appmgr/res/*
+%{_datadir}/packages/org.tizen.setting-appmgr.xml

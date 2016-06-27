@@ -134,6 +134,7 @@ typedef struct _SettingAppMgrUG {
 	setting_view *pkginfo_view;
 
 	Evas_Object *win;
+	Evas_Object *main_win;
 	Evas_Object *lo_parent;
 
 	Evas_Object *lo_main;

@@ -16,9 +16,9 @@
  * limitations under the License.
  *
  */
-#include <appsvc.h>
 /*#include <resourced.h> */
 /*#include <data_usage.h> */
+#include <appsvc.h>
 #include <app_manager.h>
 #include <app_manager_extension.h>
 #include <pkgmgr-info.h>
