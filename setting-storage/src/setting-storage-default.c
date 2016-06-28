@@ -379,6 +379,7 @@ static int storageUg_default_create(void *data)
 		SETTING_TRACE_ERROR("ad->data_wifidirect is NULL");
 	}
 
+#if 0
 	/*Install application */
 	grp_title = STORAGEUG_STR_INSTALLED_APP_H;
 	item_title = STORAGEUG_STR_INSTALLED_APP_B;
@@ -402,6 +403,8 @@ static int storageUg_default_create(void *data)
 	}
 
 	ADD_GL_HELP(genlist, STORAGEUG_STR_APP_LOC_NOTICE);
+
+#endif
 
 	ret = vconf_notify_key_changed(storageUg_MMC_stat,
 			storageUg_default_mmc_changed_cb, ad);
