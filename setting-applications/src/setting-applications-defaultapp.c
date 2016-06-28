@@ -106,9 +106,8 @@ static void app_default_get_listinfo(pkgmgrinfo_pkginfo_h handle,
 	//first check if this app is default
 	ret = aul_svc_is_defapp(info->pkgid);
 	if (info->pkgid && 1 == ret)
-	{
 		info->defapp = 1;
-	} else
+	else
 		return;
 
 	value = NULL;
@@ -143,11 +142,10 @@ static int app_default_get_pkg_list_iter(pkgmgrinfo_pkginfo_h handle, void *data
 
 	app_default_get_listinfo(handle, info);
 
-	if(info->defapp == 1){
+	if (info->defapp == 1) {
 		SETTING_TRACE_DEBUG("info->pkgid : %s", info->pkgid);
 		*pkg_list = g_list_append(*pkg_list, info);
-	}
-	else{
+	} else {
 		free(info);
 	}
 
@@ -192,9 +190,9 @@ void default_app_list_init(void *data, Evas_Object *genlist)
 	}
 	SETTING_TRACE_ERROR("pkg_list : %p", pkg_list);
 
-	if (NULL == pkg_list || g_list_length(pkg_list) == 0){
+	if (NULL == pkg_list || g_list_length(pkg_list) == 0) {
 		SETTING_TRACE_ERROR("g_list_length(pkg_list) <= 0");
-		
+
 		Setting_GenGroupItem_Data *item = setting_create_Gendial_field_def(
 				genlist, &(ad->itc_1text),
 				NULL, NULL,
@@ -203,11 +201,10 @@ void default_app_list_init(void *data, Evas_Object *genlist)
 				"There are no apps set as defaults.", NULL, NULL);
 		elm_object_item_disabled_set(item->item, EINA_TRUE);
 
-	}
-	else {
+	} else {
 		pkg_list = g_list_sort(pkg_list, _glist_sort_atoz);
 
-		while(pkg_list){
+		while (pkg_list) {
 			info = pkg_list->data;
 			pkg_list = pkg_list->next;
 
@@ -322,9 +319,8 @@ static int setting_applications_defaultapp_create(void *cb)
 	int ret = vconf_notify_key_changed(
 			VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME,
 			setting_applications_defaultapp_vconf_change_cb, ad);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("call vconf_notify_key_changed failed");
-	}
 
 	/* org.tizen.homescreen-efl : homescreen-efl */
 	/* org.tizen.homescreen		: Homescreen */

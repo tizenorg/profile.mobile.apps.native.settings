@@ -116,11 +116,10 @@ static void clear_default_cb(void *data, Evas_Object *obj, void *event_info)
 	default_app *info = data;
 	int ret = -1;
 
-	if (NULL != info->pkgid){
+	if (NULL != info->pkgid) {
 		ret = app_control_unset_defapp(info->pkgid);
-		if (ret != APP_CONTROL_ERROR_NONE) {
+		if (ret != APP_CONTROL_ERROR_NONE)
 			SETTING_TRACE_ERROR("app_control_unset_defapp() Fail(%d)", ret);
-		}
 	}
 
 	elm_object_item_del(info->item);
@@ -137,12 +136,11 @@ Evas_Object *_info_1button1_gl_icon_get(void *data, Evas_Object *obj,
 
 	SETTING_TRACE("part:[%s]", part);
 
-	if (!safeStrCmp(part, "elm.swallow.icon"))
-	{
+	if (!safeStrCmp(part, "elm.swallow.icon")) {
 		Evas_Object *icon = NULL;
 		icon = elm_icon_add(obj);
 		SETTING_TRACE("path:[%s]", info->icon_path);
-		if (NULL == info->icon_path){
+		if (NULL == info->icon_path) {
 			char *_icon;
 			pkgmgrinfo_appinfo_h handle = NULL;
 
@@ -166,7 +164,7 @@ Evas_Object *_info_1button1_gl_icon_get(void *data, Evas_Object *obj,
 		SETTING_TRACE_BEGIN;
 		return icon;
 
-	} else if(!safeStrCmp(part, "elm.swallow.end")) {
+	} else if (!safeStrCmp(part, "elm.swallow.end")) {
 		SETTING_TRACE_BEGIN;
 		Evas_Object *button = NULL;
 
@@ -401,9 +399,8 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 	setting_retm_if(!ops, "ops == NULL");
 
 	applicationsUG = ops->priv;
-	if (applicationsUG) {
+	if (applicationsUG)
 		FREE(applicationsUG);
-	}
 }
 
 /* ***************************************************
@@ -428,9 +425,8 @@ static UNUSED int __append_param(DBusMessage *msg, const char *sig,
 	char *str_type;
 	int int_type;
 	int i;
-	if (sig == NULL || param == NULL) {
+	if (sig == NULL || param == NULL)
 		return 0;
-	}
 
 	dbus_message_iter_init_append(msg, &iter);
 	for (ch = (char *)sig, i = 0; *ch != '\0'; ++i, ++ch) {
@@ -497,18 +493,13 @@ static UNUSED DBusMessage *__invoke_dbus_method(const char *dest,
 void setting_applications_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
 		void *priv)
 {
+	SETTING_TRACE_BEGIN;
 	/*SettingApplicationsUG *ad = (SettingApplicationsUG *) priv; */
 	Evas_Object *base;
-
-	if (!priv) {
-		return;
-	}
-	SETTING_TRACE_BEGIN;
+	ret_if(!priv);
 
 	base = (Evas_Object *)ug_get_layout(ug);
-	if (!base) {
-		return;
-	}
+	ret_if(!base);
 
 	switch (mode) {
 	case UG_MODE_FULLVIEW:
@@ -522,4 +513,3 @@ void setting_applications_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
 
 	SETTING_TRACE_END;
 }
-
