@@ -55,9 +55,9 @@ static Eina_Bool _async_worker_idler(void *data)
 	appmgrUg_worker *worker = data;
 
 	retv_if(NULL == data, ECORE_CALLBACK_CANCEL);
-	if (worker && worker->tid) {
+	if (worker && worker->tid)
 		pthread_join(worker->tid, NULL);
-	}
+
 	worker->alive = FALSE;
 
 	if (worker->cb)

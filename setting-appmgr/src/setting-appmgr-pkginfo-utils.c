@@ -322,9 +322,8 @@ void appmgrUg_pkg_update_cache_size(void *data)
 				"elm.text.sub", ELM_GENLIST_ITEM_FIELD_TEXT);
 	}
 
-	if (ad->clear_cache && ad->clear_cache->item) {
+	if (ad->clear_cache && ad->clear_cache->item)
 		elm_genlist_item_update(ad->clear_cache->item);
-	}
 }
 
 static UNUSED int _appmgrUg_pkg_get_pkg_size(int req_id, const char *pkg_type,
@@ -414,9 +413,8 @@ static Eina_Bool __get_pkg_size_on_time(void *data)
 	} else {
 		int ret = package_manager_get_package_size_info(info->pkgid,
 				_get_cache_cb, ad);
-		if (ret != 0) {
+		if (ret != 0)
 			SETTING_TRACE_ERROR("failed to invoke ret = %d", ret);
-		}
 	}
 
 	/*get pkg total & data size */

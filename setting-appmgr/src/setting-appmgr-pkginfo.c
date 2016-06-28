@@ -207,10 +207,8 @@ static inline void appmgrUg_pkg_append_default(SettingAppMgrUG *ad)
 
 	setting_create_Gendial_field_titleItem(ad->gl_pkg, &ad->itc_multiline,
 			MGRAPP_STR_DEFAULT_DESC, NULL);
-	if(1 != ret)
-	{
+	if (1 != ret)
 		elm_object_item_disabled_set(data->item, EINA_TRUE);
-	}
 }
 
 static inline void appmgrUg_pkg_append_website(SettingAppMgrUG *ad)

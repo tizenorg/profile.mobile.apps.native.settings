@@ -32,13 +32,13 @@
 
 #define _S(s)	dgettext("sys_string", s)
 
-#define SAFE_STRDUP(src) (src)?strdup(src):NULL
+#define SAFE_STRDUP(src) (src) ? strdup(src) : NULL
 
 #define FREEandSTRDUP(dest, src) \
-	do{ \
-		if (dest) { free(dest); dest=NULL; }\
+	do { \
+		if (dest) { free(dest); dest = NULL; } \
 		if (src || *src) dest = strdup(src); \
-	}while(false)
+	} while (false)
 
 enum {
 	APPMGRUG_TAB_NONE,
@@ -206,7 +206,7 @@ typedef struct _SettingAppMgrUG {
 		gettimeofday(&tv, NULL); \
 		double now = tv.tv_sec * 1000 + (double)tv.tv_usec/1000; \
 		SETTING_TRACE_DEBUG(fmt" time = %f ms", ##arg, now); \
-	}while(0)
+	} while (0)
 
 
 extern setting_view setting_view_appmgr_pkginfo;
