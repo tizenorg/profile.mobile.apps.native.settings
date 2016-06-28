@@ -1907,7 +1907,7 @@ EXPORT_PUBLIC int app_launcher(const char *pkg_name, app_control_reply_cb callba
 	}
 
 	app_control_set_operation(service, APP_CONTROL_OPERATION_PICK);
-	/*service_set_operation(service, SERVICE_OPERATION_DEFAULT); */
+	app_control_set_launch_mode(service, APP_CONTROL_LAUNCH_MODE_GROUP);
 	if (path) {
 		app_control_set_app_id(service, path);
 		SETTING_TRACE("app path - %s", path);
