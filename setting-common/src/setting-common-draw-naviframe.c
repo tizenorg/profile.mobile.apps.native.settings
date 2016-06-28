@@ -722,12 +722,17 @@ void setting_create_navi_bar_buttons(char *title_str, char *lbutton_str,
  * return main layout of UG or App..
  */
 EXPORT_PUBLIC
-Evas_Object *setting_create_layout_navi_bar(Evas_Object *win_layout,
-		Evas_Object *win_obj, char *title_str, char *lbutton_str,
-		setting_call_back_func lbutton_click_cb, void *cb_data,
+Evas_Object *setting_create_layout_navi_bar(
+		Evas_Object *win_layout,
+		Evas_Object *win_obj,
+		char *title_str,
+		char *lbutton_str,
+		setting_call_back_func lbutton_click_cb,
+		void *cb_data,
 		/*any container obj constructed on any evas obj */
 		Evas_Object *eo_view,
-		Evas_Object **navi_bar, Evas_Object **titleobj)
+		Evas_Object **navi_bar,
+		Evas_Object **titleobj)
 {
 
 	Evas_Object *layout = setting_create_win_layout(win_obj);

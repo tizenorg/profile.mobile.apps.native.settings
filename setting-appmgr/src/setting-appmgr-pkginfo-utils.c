@@ -63,7 +63,7 @@ static int appmgrUg_pkg_get_privileges_help(const char *privilege,
 	}
 
 	desc = g_strconcat("<font_size=28><B>", name, "</B></font_size><br>",
-			help, "<br><br>", NULL);
+			help, NULL);
 	free(help);
 	free(name);
 
@@ -132,6 +132,7 @@ static void appmgrUg_pkg_privilege_info_view(void *data, Evas_Object *obj,
 	elm_naviframe_item_pop_cb_set(navi_it,
 			appmgrUg_pkg_privilege_info_softkey_cancel_cb, ad);
 	elm_genlist_mode_set(info->gl_prv, ELM_LIST_COMPRESS);
+	elm_genlist_homogeneous_set(info->gl_prv, EINA_FALSE);
 
 	/*Deprecated API */
 	privilege_info_foreach_privilege_list_by_pkgid_and_privilege_group(
