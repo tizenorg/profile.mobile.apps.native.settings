@@ -134,6 +134,7 @@
 /* applications keyStr*/
 #define KeyStr_Applications		"IDS_ST_BODY_APPLICATIONS"
 #define KeyStr_Accounts			"IDS_ST_BODY_ACCOUNTS"
+#define KeyStr_Privacy			"IDS_ST_HEADER_PRIVACY_AND_SAFETY_ABB"
 
 #define KeyStr_NFC			"IDS_ST_BODY_NFC"
 #define KeyStr_Storage			"IDS_ST_BODY_STORAGE"

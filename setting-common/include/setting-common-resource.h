@@ -54,6 +54,9 @@
 	SETTING_LIST_ICON_PATH_CFG"settings_lock_screen_and_security.png"
 #define IMG_Accessibility SETTING_LIST_ICON_PATH_CFG"settings_accessibility.png"
 #define IMG_Accounts 	SETTING_LIST_ICON_PATH_CFG"settings_account.png"
+#define IMG_Privacy 	SETTING_LIST_ICON_PATH_CFG"settings_privacy_and_safety.png"
+
+
 #define IMG_BackupReset \
 	SETTING_LIST_ICON_PATH_CFG"settings_backup_and_reset.png"
 
