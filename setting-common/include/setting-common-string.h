@@ -141,7 +141,6 @@
 
 /* applications keyStr*/
 #define KeyStr_DownloadedAPPs		"IDS_ST_BODY_APPLICATION"
-#define KeyStr_AppsInformation		"IDS_ST_BODY_APPLICATION_INFO"
 #define KeyStr_ManageApps		"IDS_ST_BODY_APPLICATION_MANAGER"
 
 

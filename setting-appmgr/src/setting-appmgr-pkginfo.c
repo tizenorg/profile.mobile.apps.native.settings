@@ -513,7 +513,7 @@ static int appmgrUg_pkg_create(void *data)
 	}
 
 	navi_it = setting_push_layout_navi_bar_genlist(ad->lo_parent, ad->win,
-	MGRAPP_STR_APPLICATION_INFO, NULL, NULL,
+			MGRAPP_STR_APPLICATION_INFO, NULL, NULL,
 			(setting_call_back_func)appmgrUg_pkg_back_cb,
 			NULL, ad, &ad->gl_pkg, ad->navi);
 	elm_genlist_mode_set(ad->gl_pkg, ELM_LIST_COMPRESS);
@@ -523,7 +523,6 @@ static int appmgrUg_pkg_create(void *data)
 	appmgrUg_pkg_append_genlist(ad);
 
 	if (ad->support_taskmanager && ad->pc_main == NULL) {
-
 		SETTING_TRACE("Load pkginfo view");
 		appmgrUg_pkgmgr_subscribe(ad);
 	}
