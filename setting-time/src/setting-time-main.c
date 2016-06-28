@@ -283,6 +283,7 @@ static int _alarmmgr_set_systime_helper(time_t t_current)
 
 static void __update_time_via_sim_card(void *data)
 {
+	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "Data parameter is NULL");
 	SettingTimeUG *ad = (SettingTimeUG *) data;
 	int ret = 0;
@@ -297,20 +298,14 @@ static void __update_time_via_sim_card(void *data)
 	ret = 0;/*reset.. */
 
 	/* a.time zone */
-	SETTING_TRACE("tz_path:%s", tzpath);
-
-	char tz_path[MAX_COMMON_BUFFER_LEN / 4 + 1];
-	safeCopyStr(tz_path, SETTING_TIME_ZONEINFO_PATH,
-			MAX_COMMON_BUFFER_LEN / 4);
-	g_strlcat(tz_path, tzpath, sizeof(tz_path));
-	SETTING_TRACE("full tz_path:%s", tz_path);
-	ret = _set_timezone_helper(tz_path);
+	SETTING_TRACE("tzpath : %s", tzpath);
+	ret = _set_timezone_helper(tzpath);
 	if (ret < 0) {
 		SETTING_TRACE("tzpath is not valid.");
 		return;
 	} else
 		SETTING_TRACE("_set_timezone_helper - successful : "
-				"%s \n", tz_path);
+				"%s \n", tzpath);
 	if (!__setting_set_city_tzone(tzpath)) {
 		SETTING_TRACE("__setting_set_city_tzone ERROR");
 		return;
@@ -654,17 +649,13 @@ static int setting_time_main_create(void *cb)
 		char *tzpath = vconf_get_str(VCONFKEY_TELEPHONY_NITZ_ZONE);
 		if (ret == 0 && !isEmptyStr(tzpath)) {
 			/*1.to update timezone */
-			char tz_path[MAX_COMMON_BUFFER_LEN / 4 + 1];
-			safeCopyStr(tz_path, SETTING_TIME_ZONEINFO_PATH,
-					MAX_COMMON_BUFFER_LEN / 4);
-			g_strlcat(tz_path, tzpath, sizeof(tz_path));
-			SETTING_TRACE("full tz_path:%s", tz_path);
-			ret = _set_timezone_helper(tz_path);
+			SETTING_TRACE("tzpath : %s", tzpath);
+			ret = _set_timezone_helper(tzpath);
 			if (ret < 0) {
 				SETTING_TRACE("tzpath is not valid.");
 			} else
 				SETTING_TRACE("_set_timezone_helper - "
-						"successful : %s \n", tz_path);
+						"successful : %s \n", tzpath);
 			if (!__setting_set_city_tzone(tzpath)) {
 				SETTING_TRACE("__setting_set_city_tzone ERROR");
 			}
@@ -1096,14 +1087,10 @@ static void _worldclock_reply_cb(app_control_h request, app_control_h reply,
 	SETTING_TRACE("city : %s", city);
 
 	/* ----------------------------------------------------------------- */
-	char tz_path[MAX_COMMON_BUFFER_LEN / 4 + 1];
-	safeCopyStr(tz_path, SETTING_TIME_ZONEINFO_PATH,
-			MAX_COMMON_BUFFER_LEN / 4);
-	g_strlcat(tz_path, tzpath, sizeof(tz_path));
-	SETTING_TRACE("full tz_path:(%s)", tz_path);
-	SETTING_TRACE("tz_path:(%s)", tz_path+20);
 
-	int ret = _set_timezone_helper(tz_path+20);
+	SETTING_TRACE("tzpath:(%s)", tzpath);
+
+	int ret = _set_timezone_helper(tzpath);
 	if (ret < 0) {
 		SETTING_TRACE("tzpath is not valid.");
 		if (tzpath)
@@ -1113,7 +1100,7 @@ static void _worldclock_reply_cb(app_control_h request, app_control_h reply,
 		return;
 	} else
 		SETTING_TRACE("_set_timezone_helper - successful : "
-				"%s \n", tz_path);
+				"%s \n", tzpath);
 
 	ret = vconf_set_str(VCONFKEY_SETAPPL_CITYNAME_INDEX_INT, city);
 	setting_retm_if(ret != 0, "set vconf failed");
@@ -1648,7 +1635,7 @@ static bool get_city_name(char *tzname)
 		SETTING_TRACE("Database opened!!");
 		char query_str[DEF_BUF_SIZE];
 		snprintf(query_str, DEF_BUF_SIZE, "SELECT city FROM city_table"
-				" where tz_path=\"%s\"", tzname);
+				" where tzpath=\"%s\"", tzname);
 		SETTING_TRACE("%s \n", query_str);
 		rst = sqlite3_exec(pSQLite3, query_str, query_callback, 0,
 				&szErrMsg);
