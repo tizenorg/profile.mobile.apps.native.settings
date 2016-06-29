@@ -95,9 +95,8 @@ static int setting_fileview_create(void *cb)
 			__setting_fileview_policy_navigation_decide, ad);
 
 	app_control_h svc;
-	if (app_control_create(&svc)) {
+	if (app_control_create(&svc))
 		return SETTING_RETURN_FAIL;
-	}
 
 	setting_view_fileview_main.is_create = 1;
 	app_control_destroy(svc);
@@ -140,9 +139,9 @@ static int setting_fileview_update(void *cb)
 	SETTING_TRACE_BEGIN;
 	SettingFileviewUG *ad = (SettingFileviewUG *)cb;
 
-	if (ad->ly_main != NULL) {
+	if (ad->ly_main != NULL)
 		evas_object_show(ad->ly_main);
-	}
+
 	return SETTING_RETURN_SUCCESS;
 
 }
@@ -152,9 +151,9 @@ static int setting_fileview_cleanup(void *cb)
 	SETTING_TRACE_BEGIN;
 	SettingFileviewUG *ad = (SettingFileviewUG *)cb;
 
-	if (ad->ly_main != NULL) {
+	if (ad->ly_main != NULL)
 		evas_object_hide(ad->ly_main);
-	}
+
 	return SETTING_RETURN_SUCCESS;
 }
 
