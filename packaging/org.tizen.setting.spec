@@ -331,7 +331,7 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 
 %{_libdir}/pkgconfig/setting-common-internal.pc
 %{_includedir}/setting-cfg.h
-%{_includedir}/setting-common-data-edj-define.h
+#%{_includedir}/common-data-define.edc
 %{_includedir}/setting-common-data-error.h
 %{_includedir}/setting-common-data-type.h
 %{_includedir}/setting-common-draw-widget.h

@@ -31,8 +31,6 @@
 
 #include <sqlite3.h>
 
-#define EXPORT_PUBLIC __attribute__ ((visibility ("default")))
-
 #define S_FINDER_SETTING_STR "setting_from_sfinder"
 
 #ifndef bool

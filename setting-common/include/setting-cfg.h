@@ -33,8 +33,6 @@
 #include <app.h>
 #include <app_common.h>
 
-#define EXPORT_PUBLIC __attribute__ ((visibility ("default")))
-
 /*****/
 typedef enum _Cfg_Item_Position_Type {
 	Cfg_Item_Pos_Uninstall = -1,
@@ -85,15 +83,15 @@ typedef enum _cfg_error_type {
 typedef enum _Cfg_Item_Type {
 	Cfg_Item_Node_Error = 0, /** Error		- no action */
 	Cfg_Item_Ug_Node = 1, /** general UG		- don't create Grid */
-	/** no UG, no app launching, just menu name 	- create Grid */
+	/** no UG, no app launching, just menu name	- create Grid */
 	Cfg_Item_Ui_Node = 2,
 	Cfg_Item_Title_Node = 3, /** view name		- create Grid */
-	/** app type - by launcher 			- read doc '4' */
+	/** app type - by launcher			- read doc '4' */
 	Cfg_Item_App_Node = 4,
-	Cfg_Item_View_Node = 5, /** view name 		- 2depth search */
-	/** app launcher (NOT Ug) 			- don't create Grid */
+	Cfg_Item_View_Node = 5, /** view name		- 2depth search */
+	/** app launcher (NOT Ug)			- don't create Grid */
 	Cfg_Item_AppLauncher_Node = 6,
-	/** view name 			- 2depth search by app-launcher */
+	/** view name			- 2depth search by app-launcher */
 	Cfg_Item_AppLauncher_View_Node = 7,
 
 	/*------------------------------------------------------------------- */
