@@ -29,7 +29,7 @@
 
 #include <appcore-efl.h>
 
-#define EXPORT_PUBLIC __attribute__ ((visibility ("default")))
+#define EXPORT_PUBLIC __attribute__((visibility("default")))
 
 #ifdef _
 #undef _
