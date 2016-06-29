@@ -79,9 +79,9 @@ EXPORT_PUBLIC int setting_view_node_table_register(setting_view *view,
 		setting_view *topview)
 {
 	/*SETTING_TRACE_BEGIN; */
-	if (g_view_node_table_cur_size >= MAX_VIEWNODE_NUM) {
+	if (g_view_node_table_cur_size >= MAX_VIEWNODE_NUM)
 		return SETTING_RETURN_FAIL;
-	}
+
 	int idx = 0;
 	for (; idx < g_view_node_table_cur_size; idx++) {
 		if (view == g_view_node_table[idx].view
@@ -114,9 +114,9 @@ int setting_view_cb_at_endKey(void *cb)
 			break;
 		}
 	}
-	if (viewnode && viewnode->view && viewnode->topview) {
+	if (viewnode && viewnode->view && viewnode->topview)
 		setting_view_change(viewnode->view, viewnode->topview, cb);
-	}
+
 	return 0;
 }
 
@@ -139,11 +139,11 @@ setting_view *setting_view_get_topview(setting_view *view)
 			break;
 		}
 	}
-	if (viewnode && viewnode->topview) {
+	if (viewnode && viewnode->topview)
 		return viewnode->topview;
-	} else {
+	else
 		return NULL;
-	}
+
 	SETTING_TRACE_END;
 }
 
@@ -166,10 +166,8 @@ void setting_view_update_topview(setting_view *view, setting_view *topview)
 			break;
 		}
 	}
-	if (viewnode) {
+	if (viewnode)
 		viewnode->topview = topview;
-	} else {
-	}
 }
 
 /**
@@ -190,9 +188,10 @@ int setting_view_create(setting_view *view, void *cb)
 	int ret = SETTING_RETURN_FAIL;
 
 	/*error handle:create only when the view doesn't exit */
-	if (!view->is_create && view->create) {
+	if (!view->is_create && view->create)
 		ret = view->create(cb);
-	} LAUNCH_SETTING_OUT();
+
+	LAUNCH_SETTING_OUT();
 	return ret;
 }
 
@@ -212,9 +211,8 @@ EXPORT_PUBLIC int setting_view_destroy(setting_view *view, void *cb)
 	int ret = SETTING_RETURN_FAIL;
 
 	/*error handle:destroy only when the view exits */
-	if (view->is_create && view->destroy) {
+	if (view->is_create && view->destroy)
 		ret = view->destroy(cb);
-	}
 
 	return ret;
 }
@@ -225,7 +223,7 @@ EXPORT_PUBLIC int setting_view_destroy(setting_view *view, void *cb)
  * @param cb The view data passed between all callbacks
  * @return #0 on success, else on failed
  * @warning the function should be invoked on the view which will be toppest
- * 	view
+ *	view
  */
 EXPORT_PUBLIC int setting_view_update(setting_view *view, void *cb)
 {
@@ -236,9 +234,8 @@ EXPORT_PUBLIC int setting_view_update(setting_view *view, void *cb)
 	int ret = SETTING_RETURN_FAIL;
 
 	/*error handle:update only when the view exits */
-	if ((view->is_create == TRUE) && view->update) {
+	if ((view->is_create == TRUE) && view->update)
 		ret = view->update(cb);
-	}
 
 	return ret;
 }
@@ -261,9 +258,8 @@ int setting_view_cleanup(setting_view *view, void *cb)
 	int ret = SETTING_RETURN_FAIL;
 
 	/*error handle:cleanup only when the view exits */
-	if (view->is_create && view->cleanup) {
+	if (view->is_create && view->cleanup)
 		ret = view->cleanup(cb);
-	}
 
 	return ret;
 }
@@ -288,25 +284,20 @@ int setting_view_change(setting_view *from_view, setting_view *to_view,
 			"Invalid arguement");
 
 	int ret = SETTING_RETURN_SUCCESS;
-	if (from_view == setting_view_get_topview(to_view)) {
-		/*from a parent view to his child view, don't need cleanup
-		 * parent view */
-	} 
-	else {
-		/*from a child view to his parent view, need cleanup child
-		 * view */
+	/*from a parent view to his child view, don't need cleanup
+	 * parent view;
+	 *from a child view to his parent view, need cleanup child
+	 * view */
+	if (from_view != setting_view_get_topview(to_view))
 		ret = setting_view_cleanup(from_view, cb);
-	}
 
-	if (ret == SETTING_RETURN_FAIL) {
-		return SETTING_RETURN_FAIL;
-	}
+	retv_if(ret == SETTING_RETURN_FAIL, SETTING_RETURN_FAIL);
 
-	if (to_view->is_create == 1) {
+	if (to_view->is_create == 1)
 		ret = setting_view_update(to_view, cb);
-	} else {
+	else
 		ret = setting_view_create(to_view, cb);
-	}
+
 	g_cur_view = to_view; /* compute new value of g_cur_view. */
 	SETTING_TRACE_END;
 	return ret;

@@ -60,7 +60,7 @@ INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-draw-widget.h D
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-general-func.h DESTINATION ${INCLUDEDIR})
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-resource.h DESTINATION ${INCLUDEDIR})
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-cfg.h DESTINATION ${INCLUDEDIR})
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-data-edj-define.h DESTINATION ${INCLUDEDIR})
+#INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-data-edj-define.h DESTINATION ${INCLUDEDIR})
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-data-error.h DESTINATION ${INCLUDEDIR})
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-search.h DESTINATION ${INCLUDEDIR})
 

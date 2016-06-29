@@ -47,9 +47,7 @@ char *setting_cfg_get_path()
 {
 	if (!cfg_file_path) {
 		char *path = setting_cfg_get_dir_path();
-		if (!path) {
-			return NULL;
-		}
+		retv_if(!path, NULL);
 		char string[PATH_MAX];
 		snprintf(string, PATH_MAX - 1, "%s%s", path, "setting.cfg");
 		cfg_file_path = strdup(string);
@@ -61,41 +59,39 @@ int setting_cfg_file_write(JsonNode *node);
 
 #define __create_an_item(item_name, icon_path, ug_args, shortcut_appid, \
 		defaultPos, item_type,	is_resetable, ug_exist, uuid, \
-		click_times, last_clicked) do\
-	{\
-		if (ug_exist) { \
-			if (!is_ug_installed_by_ug_args(ug_args)) break;\
-		} \
-		menu_item = json_node_new(JSON_NODE_OBJECT); \
-		object = json_object_new(); \
-		json_node_take_object(menu_item, object); \
-		json_object_set_string_member(object, "key_name", item_name); \
-		json_object_set_string_member(object, "icon_path", icon_path); \
-		json_object_set_string_member(object, "ug_args", ug_args); \
-		json_object_set_string_member(object, "shortcut_appid", \
-				shortcut_appid); \
-		json_object_set_int_member(object, "pos", defaultPos); \
-		json_object_set_int_member(object, "click_times", click_times);\
-		json_object_set_int_member(object, "item_type", item_type); \
-		json_object_set_int_member(object, "is_resetable", \
-				is_resetable); \
-		json_object_set_int_member(object, "last_clicked", \
-				last_clicked); \
-		json_object_set_string_member(object, "uuid", uuid); \
-		json_array_add_element(menu, menu_item); \
-	} while (0);\
-	 
-#define __create_a_menu(menu_name)\
-	{\
-		category = json_node_new(JSON_NODE_OBJECT);\
-		object = json_object_new();\
-		json_node_take_object(category, object);\
-		json_object_set_string_member(object, "name", menu_name);\
-		menu = json_array_new();\
-		json_object_set_array_member(object, "menu", menu);\
-		json_array_add_element(json_node_get_array(category_list), \
-				category);\
-	}
+		click_times, last_clicked) do {\
+	if (ug_exist) { \
+		if (!is_ug_installed_by_ug_args(ug_args)) break;\
+	} \
+	menu_item = json_node_new(JSON_NODE_OBJECT); \
+	object = json_object_new(); \
+	json_node_take_object(menu_item, object); \
+	json_object_set_string_member(object, "key_name", item_name); \
+	json_object_set_string_member(object, "icon_path", icon_path); \
+	json_object_set_string_member(object, "ug_args", ug_args); \
+	json_object_set_string_member(object, "shortcut_appid", \
+			shortcut_appid); \
+	json_object_set_int_member(object, "pos", defaultPos); \
+	json_object_set_int_member(object, "click_times", click_times);\
+	json_object_set_int_member(object, "item_type", item_type); \
+	json_object_set_int_member(object, "is_resetable", \
+			is_resetable); \
+	json_object_set_int_member(object, "last_clicked", \
+			last_clicked); \
+	json_object_set_string_member(object, "uuid", uuid); \
+	json_array_add_element(menu, menu_item); \
+} while (0);\
+
+#define __create_a_menu(menu_name) {\
+	category = json_node_new(JSON_NODE_OBJECT);\
+	object = json_object_new();\
+	json_node_take_object(category, object);\
+	json_object_set_string_member(object, "name", menu_name);\
+	menu = json_array_new();\
+	json_object_set_array_member(object, "menu", menu);\
+	json_array_add_element(json_node_get_array(category_list), \
+			category);\
+}
 
 int wifi_toggle_get_state(Cfg_Item_State *stat, void *data);
 int flightmode_toggle_get_state(Cfg_Item_State *stat, void *data);
@@ -165,7 +161,7 @@ void setting_cfg_print(void)
 	g_object_set(generator, "pretty", TRUE, NULL);
 	json_generator_set_root(generator, node);
 	gchar *data = json_generator_to_data(generator, NULL);
-	SETTING_TRACE("%s", (char * )data);
+	SETTING_TRACE("%s", (char *)data);
 
 	g_free(data);
 	g_object_unref(generator);
@@ -326,10 +322,10 @@ EXPORT_PUBLIC Setting_Cfg_Node_T *get_cfg_node_by_keystr(const char *keystr)
 	int i;
 	for (i = 0; i < size; i++) {
 #if 0
-		SETTING_TRACE("keystr: %s",keystr);
+		SETTING_TRACE("keystr: %s", keystr);
 		SETTING_TRACE("s_cfg_node_array[i].key_name: %s",
 				s_cfg_node_array[i].key_name);
-		SETTING_TRACE("---------> _(keystr): %s",_(keystr));
+		SETTING_TRACE("---------> _(keystr): %s", _(keystr));
 		SETTING_TRACE("---------> _(s_cfg_node_array[i].key_name): %s",
 				_(s_cfg_node_array[i].key_name));
 #endif
@@ -354,9 +350,8 @@ EXPORT_PUBLIC int get_index_by_keystr(const char *keystr)
 	for (i = 0; i < size; i++) {
 		/*SETTING_TRACE("s_cfg_node_array[%d].key_name:%s", i,
 		 * s_cfg_node_array[i].key_name); */
-		if (0 == safeStrCmp(keystr, s_cfg_node_array[i].key_name)) {
+		if (0 == safeStrCmp(keystr, s_cfg_node_array[i].key_name))
 			return i;
-		}
 	}
 	/*not found */
 	return -1;
@@ -370,11 +365,10 @@ EXPORT_PUBLIC char *get_iconpath_by_keystr(const char *keystr)
 
 	for (i = 0; i < size; i++) {
 		if (0 == safeStrCmp(keystr, _(s_cfg_node_array[i].key_name))) {
-			if (s_cfg_node_array[i].icon_path) {
+			if (s_cfg_node_array[i].icon_path)
 				return s_cfg_node_array[i].icon_path;
-			} else {
+			else
 				break;
-			}
 		}
 	}
 	return IMG_SETTING;
@@ -387,9 +381,8 @@ EXPORT_PUBLIC void *get_node_pointer(char *name)
 
 	int i;
 	for (i = 0; i < size; i++) {
-		if (0 == safeStrCmp(name, _(s_cfg_node_array[i].key_name))) {
+		if (0 == safeStrCmp(name, _(s_cfg_node_array[i].key_name)))
 			return s_cfg_node_array[i].data;
-		}
 	}
 	return NULL;
 }
@@ -547,9 +540,9 @@ int setting_cfg_file_read(void)
 	struct stat sb;
 	memset(&sb, 0, sizeof(struct stat));
 	int r = stat(setting_cfg_get_path(), &sb);
-	if (0 != r) {
+	if (0 != r)
 		SETTING_TRACE("ERROR, r:%d", r);
-	}
+
 	SETTING_TRACE("sb.st_size:%d", sb.st_size);
 
 	parser = json_parser_new(); /* to be freed on exit */
@@ -563,7 +556,7 @@ int setting_cfg_file_read(void)
 					&error)) {
 		if (error)
 			SETTING_TRACE_ERROR("error->message:%s",
-					(char * )(error->message));
+					(char *)(error->message));
 		/*return FALSE; */
 
 		/* The file is existing and can be accessed normally, but it was
@@ -631,15 +624,14 @@ int setting_cfg_file_write(JsonNode *node)
 EXPORT_PUBLIC
 int setting_cfg_init(void)
 {
-	if (!setting_cfg_get_path()) {
-		return Cfg_Error_Type_OutOfMemory;
-	}
+	retv_if(!setting_cfg_get_path(), Cfg_Error_Type_OutOfMemory);
+
 	if (!access(setting_cfg_get_path(), R_OK | W_OK | F_OK)) {
 		/* succeed to access */
 		if (!setting_cfg_file_read()) { /* return FALSE */
-			if (remove(setting_cfg_get_path())) {
+			if (remove(setting_cfg_get_path()))
 				return Cfg_Error_Type_RemoveCfg_Failed;
-			}
+
 			return Cfg_Error_Type_ReadCfg_Failed;
 		}
 
@@ -673,9 +665,9 @@ int setting_cfg_init(void)
 			if (!setting_cfg_file_read()) { /* return FALSE */
 				SETTING_TRACE_ERROR(
 						"Error to read config file");
-				if (remove(setting_cfg_get_path())) {
+				if (remove(setting_cfg_get_path()))
 					return Cfg_Error_Type_RemoveCfg_Failed;
-				}
+
 				return Cfg_Error_Type_ReadCfg_Failed;
 			}
 
@@ -713,9 +705,9 @@ int setting_cfg_file_update(void)
 	free(cfg_file_path);
 	cfg_dir_path = NULL;
 	cfg_file_path = NULL;
-	if (access(setting_cfg_get_path(), W_OK | F_OK) != 0) {
+	if (access(setting_cfg_get_path(), W_OK | F_OK) != 0)
 		return FALSE;
-	}
+
 	return setting_cfg_file_write(root);
 }
 
@@ -741,9 +733,9 @@ int setting_cfg_migrate(void)
 	struct stat sb;
 	memset(&sb, 0, sizeof(struct stat));
 	int r = stat(setting_cfg_get_path(), &sb);
-	if (0 != r) {
+	if (0 != r)
 		SETTING_TRACE("ERROR, r:%d", r);
-	}
+
 	SETTING_TRACE("sb.st_size:%d", sb.st_size);
 
 	parser = json_parser_new();
@@ -754,19 +746,19 @@ int setting_cfg_migrate(void)
 					&error)) {
 		if (error)
 			SETTING_TRACE_ERROR("error->message:%s",
-					(char * )(error->message));
+					(char *)(error->message));
 
 		/*if read old cfg file unseccessfully, remove it */
 		SETTING_TRACE("Read old cfg fail, Trying to remove it");
-		if (remove(setting_cfg_get_path()) != 0) {
+		if (remove(setting_cfg_get_path()) != 0)
 			SETTING_TRACE_ERROR("Error to remove the damaged file");
-		}
+
 		/*re-create cfg file */
 		SETTING_TRACE("Trying to re-create cfg file.");
-		if (FALSE == setting_cfg_create(true)) {
+		if (FALSE == setting_cfg_create(true))
 			SETTING_TRACE_ERROR(
 					"Error to create a new config file");
-		}
+
 		g_object_unref(parser);
 		parser = NULL;
 		return FALSE;
@@ -1185,9 +1177,7 @@ char *get_ug_path_from_ug_args(void *data)
 {
 	/*SETTING_TRACE_BEGIN;*/
 	char *p = (char *)data;
-	if (NULL == p || '\0' == p[0]) {
-		return NULL;
-	}
+	retv_if(NULL == p || '\0' == p[0], NULL);
 
 	char *q = strchr(p, '|');
 	char *path = NULL;
@@ -1213,9 +1203,7 @@ app_control_h get_bundle_from_ug_args(void *data)
 {
 	/*SETTING_TRACE_BEGIN;*/
 	char *p = (char *)data;
-	if (NULL == p || '\0' == p[0]) {
-		return NULL;
-	}
+	retv_if(NULL == p || '\0' == p[0], NULL);
 	char *m = NULL;
 	char *q = strchr(p, '|');
 	if (q) {
@@ -1301,9 +1289,9 @@ EXPORT_PUBLIC void setting_cfg_dump_basic_info()
 	struct stat sb;
 	memset(&sb, 0, sizeof(struct stat));
 	int r = stat(setting_cfg_get_path(), &sb);
-	if (0 != r) {
+	if (0 != r)
 		SETTING_TRACE("ERROR, r:%d", r);
-	}
+
 	SETTING_TRACE("sb.st_size:%d", sb.st_size);
 #endif
 }
