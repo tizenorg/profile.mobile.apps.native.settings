@@ -50,16 +50,14 @@
 EXPORT_PUBLIC
 char *setting_file_basename(char *path)
 {
-	if (NULL == path || '\0' == path[0]) {
-		return NULL; /* invalid arguement */
-	}
+	retv_if(NULL == path || '\0' == path[0], NULL); /* invalid arguement */
+
 	char *p = strrchr(path, '/');
-	if (!p) {
+	if (!p)
 		return (char *)g_strdup(path); /*	cannot find '/' */
-	}
-	if ('\0' == p[1]) {
-		return NULL; /* end with '/' */
-	}
+
+	retv_if('\0' == p[1], NULL); /* end with '/' */
+
 	return (char *)g_strdup(p + 1);
 }
 
@@ -86,9 +84,7 @@ int setting_file_attr_is_valid_name(const char *filename)
 	regmatch_t pm[1];
 	const size_t nmatch = 1;
 	/*ToDo: ignore the file star with . */
-	if (strncmp(filename, ".", 1) == 0) {
-		return -1;
-	}
+	retv_if(strncmp(filename, ".", 1) == 0, -1);
 
 	pattern = SETTING_FILE_NAME_PATTERN;
 	z = regcomp(&reg, pattern, cflags);
@@ -100,11 +96,11 @@ int setting_file_attr_is_valid_name(const char *filename)
 	}
 
 	z = regexec(&reg, filename, nmatch, pm, 0);
-	if (z == REG_NOMATCH) {
+	if (z == REG_NOMATCH)
 		ret = 0;
-	} else {
+	else
 		ret = -1;
-	}
+
 	regfree(&reg);
 	return ret;
 }
@@ -134,11 +130,10 @@ char *get_brightness_mode_str()
 	int value, err;
 	setting_get_int_slp_key(INT_SLP_SETTING_AUTOMATIC_BRIGHTNESS, &value,
 			&err);
-	if (value != SETTING_BRIGHTNESS_AUTOMATIC_OFF) {
+	if (value != SETTING_BRIGHTNESS_AUTOMATIC_OFF)
 		return "IDS_ST_BODY_ANSWERINGMODE_AUTOMATIC";
-	} else {
+	else
 		return "IDS_ST_BODY_MANUAL";
-	}
 }
 
 #define MAX_SCREEN_MODE_NUM 4
@@ -451,9 +446,8 @@ char *get_pa_Wi_Fi_on_off_str()
 		char *pa_wifi_device = vconf_get_str(
 				VCONFKEY_WIFI_CONNECTED_AP_NAME);
 		SETTING_TRACE("pa_wifi_device:%s", pa_wifi_device);
-		if (NULL != pa_wifi_device && '\0' != pa_wifi_device[0]) {
+		if (NULL != pa_wifi_device && '\0' != pa_wifi_device[0])
 			return pa_wifi_device;
-		}
 
 		return (char *)strdup(setting_gettext("IDS_ST_BODY_ON"));
 	} else {
@@ -504,11 +498,10 @@ char *get_BT_on_off_str()
 				VCONFKEY_BT_STATUS_OFF, &err);
 	}
 
-	if (VCONFKEY_BT_STATUS_OFF == value) {
+	if (VCONFKEY_BT_STATUS_OFF == value)
 		return setting_gettext("IDS_ST_BODY_ALERTTYPE_OFF");
-	} else {
+	else
 		return setting_gettext("IDS_ST_BODY_ON");
-	}
 }
 
 EXPORT_PUBLIC
@@ -526,11 +519,10 @@ char *get_NFC_on_off_str()
 		value = VCONFKEY_NFC_STATE_OFF;
 	}
 
-	if (VCONFKEY_NFC_STATE_OFF == value) {
+	if (VCONFKEY_NFC_STATE_OFF == value)
 		return setting_gettext("IDS_ST_BODY_ALERTTYPE_OFF");
-	} else {
+	else
 		return setting_gettext("IDS_ST_BODY_ON");
-	}
 }
 
 EXPORT_PUBLIC
@@ -810,9 +802,8 @@ char *get_pa_select_network()
 
 	char *net_name = NULL;
 	int service_type = VCONFKEY_TELEPHONY_SVCTYPE_SEARCH;
-	if (vconf_get_int(VCONFKEY_TELEPHONY_SVCTYPE, &service_type) != 0) {
+	if (vconf_get_int(VCONFKEY_TELEPHONY_SVCTYPE, &service_type) != 0)
 		SETTING_TRACE("fail to get VCONFKEY_TELEPHONY_SVCTYPE");
-	}
 
 	retv_if(service_type == VCONFKEY_TELEPHONY_SVCTYPE_NOSVC,
 			(char *)strdup(_("IDS_ST_BODY_NOSERVICE")));
@@ -894,27 +885,22 @@ EXPORT_PUBLIC char *setting_gettext(const char *s)
 {
 	/* fisrt find in app pg */
 
-	if (s == NULL) {
-		return "NULL";
-	}
+	retv_if(s == NULL, "NULL");
 
 	char *p = dgettext(SETTING_PACKAGE, s);
 
-	if (!safeStrCmp(s, p)) { /* not found */
-		/* find in system pkg */
+	/* if not found, find in system pkg */
+	if (!safeStrCmp(s, p))
 		p = dgettext(SYSTEM_PACKAGE, s);
-	}
+
 	return p;
 }
 
 EXPORT_PUBLIC char *modesyspopup_gettext(const char *s)
 {
+	retv_if(s == NULL, "NULL");
+
 	/* fisrt find in app pg */
-
-	if (s == NULL) {
-		return "NULL";
-	}
-
 	char *p = dgettext(MODE_SYSPOPUP_PACKAGE, s);
 
 	if (!safeStrCmp(s, p)) { /* not found */
@@ -926,12 +912,9 @@ EXPORT_PUBLIC char *modesyspopup_gettext(const char *s)
 
 EXPORT_PUBLIC char *setting_gettext2(const char *s, const char *domainname)
 {
+	retv_if(s == NULL, "NULL");
+
 	/* fisrt find in app pg */
-
-	if (s == NULL) {
-		return "NULL";
-	}
-
 	char *p = dgettext(domainname, s);
 
 	if (!safeStrCmp(s, p)) { /* not found */
@@ -943,23 +926,21 @@ EXPORT_PUBLIC char *setting_gettext2(const char *s, const char *domainname)
 
 EXPORT_PUBLIC bool is_digital_str(const char *cstr)
 {
-	if (cstr == NULL || cstr[0] == 0) {
-		return FALSE;
-	}
+	retv_if(cstr == NULL || cstr[0] == 0, FALSE);
 
 	int len = (int)(safeStrLen(cstr));
 	int pos = 0;
 	if (cstr[0] == '-' || cstr[0] == '+') {
-		if (len <= 1) {
+		if (len <= 1)
 			return FALSE;
-		}
+
 		pos++;
 	}
 
 	while (pos < len) {
-		if (cstr[pos] < '0' || cstr[pos] > '9') {
+		if (cstr[pos] < '0' || cstr[pos] > '9')
 			return FALSE;
-		}
+
 		pos++;
 	}
 
@@ -969,8 +950,7 @@ EXPORT_PUBLIC bool is_digital_str(const char *cstr)
 EXPORT_PUBLIC
 bool is_substr_ncase(const char *parentstr, const char *substr)
 {
-	if (NULL == parentstr || '\0' == parentstr[0])
-		return FALSE;
+	retv_if(NULL == parentstr || '\0' == parentstr[0], FALSE);
 
 	int word_len = safeStrLen(parentstr);
 	int search_len = safeStrLen(substr);
@@ -991,9 +971,8 @@ bool is_string_belong_to_array(const char *partern, const char **array,
 {
 	int idx = 0;
 	for (; idx < array_num; idx++) {
-		if (!safeStrCmp(partern, array[idx])) {
+		if (!safeStrCmp(partern, array[idx]))
 			return TRUE;
-		}
 	}
 	return FALSE;
 }
@@ -1052,11 +1031,11 @@ bool isSpaceStr(const char *str)
 	/*if (NULL == str) */
 	/*	return TRUE; */
 	while (str) {
-		if (*str != '\0' && *str != ' ') {
+		if (*str != '\0' && *str != ' ')
 			return FALSE;
-		} else if (*str == '\0') {
+		else if (*str == '\0')
 			return TRUE;
-		}
+
 		str++;
 	}
 	return TRUE;
@@ -1065,13 +1044,12 @@ bool isSpaceStr(const char *str)
 int EXPORT_PUBLIC safeStrCmp(const char *s1, const char *s2)
 {
 	/*	Check NULL value first */
-	if (isEmptyStr(s1) && isEmptyStr(s2)) {
+	if (isEmptyStr(s1) && isEmptyStr(s2))
 		return 0;
-	} else if (isEmptyStr(s1)) {
+	else if (isEmptyStr(s1))
 		return 1;
-	} else if (isEmptyStr(s2)) {
+	else if (isEmptyStr(s2))
 		return SETTING_RETURN_FAIL;
-	}
 
 	return strcmp(s1, s2);
 }
@@ -1081,17 +1059,14 @@ int safeStrNCmp(const char *s1, const char *s2, int len)
 {
 
 	/*	Check NULL value first */
-	if (isEmptyStr(s1) && isEmptyStr(s2)) {
+	if (isEmptyStr(s1) && isEmptyStr(s2))
 		return 0;
-	} else if (isEmptyStr(s1)) {
+	else if (isEmptyStr(s1))
 		return 1;
-	} else if (isEmptyStr(s2)) {
+	else if (isEmptyStr(s2))
 		return SETTING_RETURN_FAIL;
-	}
 
-	if (0 == len) {
-		return 0;
-	}
+	retv_if(0 == len, 0);
 
 	return strncmp(s1, s2, len);
 }
@@ -1099,9 +1074,8 @@ int safeStrNCmp(const char *s1, const char *s2, int len)
 EXPORT_PUBLIC
 char *safeStrNCat(char *dst, const char *src, int maxlen)
 {
-	if (dst && !isEmptyStr(src) && maxlen > 0) {
+	if (dst && !isEmptyStr(src) && maxlen > 0)
 		(void)g_strlcat(dst, src, maxlen + 1);
-	}
 
 	return dst;
 }
@@ -1109,9 +1083,7 @@ char *safeStrNCat(char *dst, const char *src, int maxlen)
 EXPORT_PUBLIC
 char *safeCopyStr(char *dst, const char *src, int maxlen)
 {
-	if (maxlen < 0) {
-		return NULL;
-	}
+	retv_if(maxlen < 0, NULL);
 
 	if (dst) {
 		int len = 0;
@@ -1176,9 +1148,8 @@ EXPORT_PUBLIC bool get_substring_int(const char **ipStr, int *ipValue,
 	int iValue = *ipValue = 0;
 	const char *str = *ipStr;
 
-	if (str == NULL || str[0] == 0) { /* empty string */
-		return FALSE;
-	}
+	/* empty string */
+	retv_if(str == NULL || str[0] == 0, FALSE);
 
 	bool bNegative = FALSE;
 	if ('-' == str[0]) { /* allow Negative number.. */
@@ -1224,30 +1195,29 @@ EXPORT_PUBLIC bool get_substring_int(const char **ipStr, int *ipValue,
 		iValue = iValue * 10 + str[0] - '0';
 		*ipValue = iValue;
 		/* think about overloading */
-		if (((unsigned int)iValue & 0x80000000) != 0) {
+		if (((unsigned int)iValue & 0x80000000) != 0)
 			break;
-		}
+
 		str++;
 		if (str[0] == delim) {
 			str++;
-			if (bNegative) {
+			if (bNegative)
 				iValue = -iValue;
-			}
+
 			*ipStr = str;
 			*ipValue = iValue;
 			return TRUE;
 		}
 		if (str[0] == 0) {
-			if (bNegative) {
+			if (bNegative)
 				iValue = -iValue;
-			}
+
 			*ipStr = str;
 			*ipValue = iValue;
 			return TRUE;
 		}
-		if (str[0] < '0' || str[0] > '9') {
+		if (str[0] < '0' || str[0] > '9')
 			break;
-		}
 	}
 
 	*ipStr = str;
@@ -1265,16 +1235,10 @@ EXPORT_PUBLIC bool get_substring_int(const char **ipStr, int *ipValue,
 EXPORT_PUBLIC
 bool is_ip_string(const char *ipstr, char **output)
 {
-	if (NULL == ipstr || 0 == ipstr[0])
-		return FALSE;
+	retv_if(NULL == ipstr || 0 == ipstr[0], FALSE);
 	int len = (int)safeStrLen(ipstr);
-	if (len > MaxIPAddressLength) {
-		return FALSE;
-	}
-
-	if (ipstr[len - 1] == '.') {
-		return FALSE;
-	}
+	retv_if(len > MaxIPAddressLength, FALSE);
+	retv_if(ipstr[len - 1] == '.', FALSE);
 
 	char output_ipstr[MAX_DISPLAY_NAME_LEN_ON_UI] = { 0, };
 	char speciliztion[MAX_DISPLAY_NAME_LEN_ON_UI / 4] = { 0, };
@@ -1290,13 +1254,11 @@ bool is_ip_string(const char *ipstr, char **output)
 		if (i < 3)
 			g_strlcat(output_ipstr, ".", MAX_SPECIALIZITION_LEN);
 	}
-	if (ipstr[0] != 0) {
-		return FALSE;
-	}
+	retv_if(ipstr[0] != 0, FALSE);
+
 	SETTING_TRACE("....output_ipstr:%s", output_ipstr);
-	if (output) {
+	if (output)
 		*output = g_strdup(output_ipstr);
-	}
 
 	return TRUE;
 }
@@ -1679,9 +1641,8 @@ EXPORT_PUBLIC void font_config_set(char *font_name)
 		size = font_size;
 		EINA_LIST_FOREACH(fo_list, ll, efo)
 		{
-			if (!safeStrCmp(etc->name, efo->text_class)) {
+			if (!safeStrCmp(etc->name, efo->text_class))
 				size = efo->size;
-			}
 		}
 		elm_config_font_overlay_set(etc->name, (const char *)font_name,
 				size);
@@ -1824,9 +1785,9 @@ EXPORT_PUBLIC void update_lang(void)
 		setenv("LANG", lang, 1);
 		setenv("LC_MESSAGES", lang, 1);
 		r = setlocale(LC_ALL, "");
-		if (r == NULL) {
+		if (r == NULL)
 			setlocale(LC_ALL, vconf_get_str(VCONFKEY_LANGSET));
-		}
+
 		free(lang);
 	}
 }
@@ -1862,9 +1823,9 @@ static int __set_i18n(const char *domain, const char *dir)
 
 	r = setlocale(LC_ALL, "");
 	/* if locale is not set properly, try again to set as language base */
-	if (r == NULL) {
+	if (r == NULL)
 		r = setlocale(LC_ALL, vconf_get_str(VCONFKEY_LANGSET));
-	}
+
 	bindtextdomain(domain, dir);
 	textdomain(domain);
 	return 0;
@@ -1989,9 +1950,8 @@ EXPORT_PUBLIC bool get_tethering_status()
 	int err = -1;
 	int ret = setting_get_int_slp_key(INT_SLP_SETTING_MOBILE_AP_STATUS,
 			&mobile_ap_status, &err);
-	if (ret == SETTING_RETURN_FAIL) {
+	if (ret == SETTING_RETURN_FAIL)
 		SETTING_TRACE_ERROR("fail to get vconf");
-	}
 
 	/**
 	 *  - 1 : wi-fi
@@ -2061,17 +2021,13 @@ void setting_ug_destroy(ui_gadget_h parent)
 EXPORT_PUBLIC
 void setting_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode, void *priv)
 {
+	SETTING_TRACE_BEGIN;
 	Evas_Object *base;
 
-	if (!priv) {
-		return;
-	}
-	SETTING_TRACE_BEGIN;
+	ret_if(!priv);
 
 	base = (Evas_Object *)ug_get_layout(ug);
-	if (!base) {
-		return;
-	}
+	ret_if(!base);
 
 	switch (mode) {
 	case UG_MODE_FULLVIEW:

@@ -96,7 +96,7 @@ extern const Elm_Genlist_Item_Class itc_1text_1icon_divider;
 					"item_data is NULL");\
 			elm_genlist_item_select_mode_set(item_data->item, \
 					ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
-		}\
+		} \
 	}
 
 /*//TODO: Remove this */
@@ -114,7 +114,7 @@ extern const Elm_Genlist_Item_Class itc_1text_1icon_divider;
 					"item_data is NULL");\
 			elm_genlist_item_select_mode_set(item_data->item, \
 					ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
-		}\
+		} \
 	}
 
 /*//TODO: Remove this */
@@ -132,7 +132,7 @@ extern const Elm_Genlist_Item_Class itc_1text_1icon_divider;
 					"item_data is NULL");\
 			elm_genlist_item_select_mode_set(item_data->item, \
 					ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
-		}\
+		} \
 	}
 
 #define ADD_GL_BUTTON(scroller, btn_str, btn_cb, cb_data) \
@@ -141,13 +141,13 @@ extern const Elm_Genlist_Item_Class itc_1text_1icon_divider;
 			Setting_GenGroupItem_Data *item_data = \
 				setting_create_Gendial_field_def(\
 					scroller, &(itc_1icon_with_no_line),\
-					NULL,cb_data, SWALLOW_Type_1BUTTON,\
+					NULL, cb_data, SWALLOW_Type_1BUTTON,\
 					NULL, NULL, 0, btn_str, NULL,\
 					btn_cb);\
 			setting_retvm_if(NULL == item_data, NULL, \
 					"item_data is NULL");\
 			item_data->userdata = cb_data;\
-		}\
+		} \
 	}
 
 #define ADD_GL_GIF(scroller, png_list) \
@@ -156,7 +156,7 @@ extern const Elm_Genlist_Item_Class itc_1text_1icon_divider;
 			Setting_GenGroupItem_Data *item_data = \
 				setting_create_Gendial_field_def(\
 					scroller, &(itc_1icon_with_no_line),\
-					NULL,NULL, SWALLOW_Type_1GIF,\
+					NULL, NULL, SWALLOW_Type_1GIF,\
 					NULL, NULL, 0, NULL, NULL,\
 					NULL);\
 			setting_retvm_if(NULL == item_data, NULL,\
@@ -166,14 +166,14 @@ extern const Elm_Genlist_Item_Class itc_1text_1icon_divider;
 				elm_genlist_item_select_mode_set(\
 						item_data->item, \
 						ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
-		}\
+		} \
 	}
 #define ADD_GL_GIF_2(scroller, png_array) \
 	{\
 		Setting_GenGroupItem_Data *item_data = \
 			setting_create_Gendial_field_def(\
 				scroller, &(itc_1icon_with_no_line),\
-				NULL,NULL, SWALLOW_Type_1GIF,\
+				NULL, NULL, SWALLOW_Type_1GIF,\
 				NULL, NULL, 0, NULL, NULL,\
 				NULL);\
 		item_data->belongs_to = (int)png_array;\
@@ -183,13 +183,11 @@ extern const Elm_Genlist_Item_Class itc_1text_1icon_divider;
 
 #define ADD_GL_RADIO(scroller, rdg, radio_idx, keyStr, sel_cb, cb_data) \
 	{\
-		if(!rdg)\
-		{\
+		if (!rdg) {\
 			rdg = elm_radio_add(scroller);\
 			elm_radio_state_value_set(rdg, -1);\
-		}\
-		if (keyStr && rdg)\
-		{\
+		} \
+		if (keyStr && rdg) {\
 			Setting_GenGroupItem_Data *item_data = \
 				setting_create_Gendial_field_1radio(\
 					scroller, &(itc_1text_1icon_2),\
@@ -201,8 +199,8 @@ extern const Elm_Genlist_Item_Class itc_1text_1icon_divider;
 					NULL);\
 			if (item_data) {\
 				item_data->userdata = cb_data;\
-			}\
-		}\
+			} \
+		} \
 	}
 
 void __toogle_gl_sel(void *data, Evas_Object *obj, void *event_info);
@@ -211,8 +209,7 @@ void __toogle_chk_changed(void *data, Evas_Object *obj, void *event_info);
 #define ADD_GL_TOOGLE(scroller, use_vconf, keyStr, isel_cb, cb_data, ichk_cb, \
 		item_data) \
 	{\
-		if (keyStr)\
-		{\
+		if (keyStr) {\
 			int value = 1;\
 			vconf_get_bool(use_vconf, &value);\
 			setting_call_back_func sel_cb = isel_cb;\
@@ -234,14 +231,14 @@ void __toogle_chk_changed(void *data, Evas_Object *obj, void *event_info);
 				item_data->userdata = cb_data;\
 				item_data->int_slp_setting_binded = \
 					(int)use_vconf;\
-			}\
-		}\
+			} \
+		} \
 	}
 
 #define _P(pEvasObj) do { \
 		evas_object_event_callback_add(pEvasObj, EVAS_CALLBACK_DEL, \
 				setting_protect_cb, &(pEvasObj));\
-	}while(0);
+	} while (0);
 
 /**
  * Do process when clicking radio in subitem of expandable item
@@ -696,14 +693,14 @@ extern Evas_Object *setting_create_textbox(Evas_Object *parent,
 /****done_list****/
 
 /*The API is going to register a message to NOTIFICATION_STATUS_MESSAGE_KEY,
- * 	and the message will be shown in indicator
+ *	and the message will be shown in indicator
  * @ Quickpannel App save the value of var message, and it supply
- * 	notification_status_monitor_message_cb_set,
+ *	notification_status_monitor_message_cb_set,
  * @ in which, Indicator can set process of
- * 	vconf(NOTIFICATION_STATUS_MESSAGE_KEY) change event,in the
- * 	call __message_callback,
+ *	vconf(NOTIFICATION_STATUS_MESSAGE_KEY) change event,in the
+ *	call __message_callback,
  * @ it will invoke indicator_part_text_emit_by_win(win,"message.text.compare",
- * 	text); to show message you registered
+ *	text); to show message you registered
  */
 extern void setting_create_indicator_notification(const char *message);
 
@@ -943,7 +940,7 @@ EXPORT_PUBLIC Evas_Object *setting_create_popup2(void *data,
  * @param data			application context
  * @param parent		parent window
  * @param progressbar_style	progressbar style
- * 				(process_small/process_medium/process_large)
+ *				(process_small/process_medium/process_large)
  * @param title			popup title
  * @param text			popup text
  * @param response_cb		called When btn was clicked
