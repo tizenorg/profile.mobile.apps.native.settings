@@ -55,9 +55,8 @@ int setting_common_alarmmgr_create(BM_AData *alarm)
 	struct tm pt;
 	memset(&pt, 0, sizeof(struct tm));
 	time_t ctime = time(NULL);
-	if (NULL == localtime_r(&ctime, &pt)) {
+	if (NULL == localtime_r(&ctime, &pt))
 		SETTING_TRACE_ERROR("fail to call localtime_r");
-	}
 
 	SETTING_TRACE("alarm->hour[%d], alarm->min[%d]", alarm->hour,
 			alarm->min);
@@ -83,17 +82,16 @@ int setting_common_alarmmgr_create(BM_AData *alarm)
 	/*nErr = alarmmgr_add_alarm_appsvc_with_localtime(
 	 * alarm_entry, (void *)b, &alarm_mgr_id); */
 	SETTING_TRACE("alarm_mgr_id [%d]", alarm_mgr_id);
-	if (nErr) {
+	if (nErr)
 		SETTING_TRACE("*** [ERR] alarmmgr_add_alarm_with_localtime failed ***");
-	}
 
 	alarm->alarm_mgr_id = alarm_mgr_id;
 	/*vconf_set_int(VCONFKEY_SETAPPL_BM_ALARM_ID_START,
 	 * alarm->alarm_mgr_id); */
 
-	if (alarm_entry) {
+	if (alarm_entry)
 		alarmmgr_free_alarm(alarm_entry);
-	}
+
 	return nErr;
 }
 

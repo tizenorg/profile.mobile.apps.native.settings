@@ -330,11 +330,10 @@ static void sql_stmt(sqlite3 *db, const char *stmt)
 	int ret;
 
 	ret = sqlite3_exec(db, stmt, 0, 0, &errmsg);
-	if (ret != SQLITE_OK) {
+	if (ret != SQLITE_OK)
 		SETTING_TRACE("Error in statement: %s [%s].", stmt, errmsg);
-	} else if (ret == SQLITE_OK) {
+	else if (ret == SQLITE_OK)
 		SETTING_TRACE("OK running : (%s) --- [%s].", stmt, errmsg);
-	}
 }
 
 EXPORT_PUBLIC
@@ -523,11 +522,10 @@ int setting_search_set_module_item_state(char *keyword, char *ug_name,
 		/*----------------------------------------------------------- */
 		/* ACTUAL PROCESSING */
 		/*----------------------------------------------------------- */
-		if ((ops) && (ops)->set_item_state) {
+		if ((ops) && (ops)->set_item_state)
 			(ops)->set_item_state(item_state, NULL, NULL);
-		}
-		SETTING_TRACE(
-				" ---> ppops.set_item_state(stat, NULL); -- after, sstat" ": %d",
+
+		SETTING_TRACE(" ---> ppops.set_item_state(stat, NULL); -- after, sstat" ": %d",
 				item_state);
 		/*----------------------------------------------------------- */
 	}
