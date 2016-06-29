@@ -147,7 +147,7 @@ setting_view setting_view_sound_main = {
 			elm_genlist_item_select_mode_set( \
 					item_data->item, \
 					ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);\
-		}\
+		} \
 	}
 
 #define ADD_SOUND_SLIDER(item_data, genlist, item_style, l_img, r_img, value, \
@@ -214,9 +214,8 @@ static Eina_Bool __play_ringtone_sound_idle_cb(void *data)
 	 *	2) if user controls the HW volume key, do nothing
 	 *	(DO NOT change volume,DO NOT play sound)
 	*/
-	if (0 == safeStrCmp(ad->viewtype, VOLUME_APP_NAME)) {
+	if (0 == safeStrCmp(ad->viewtype, VOLUME_APP_NAME))
 		return EINA_FALSE;
-	}
 
 	if (ad->mp_ringtone == NULL) {
 		setting_sound_close_other_mm_players_but_type(
@@ -422,9 +421,8 @@ static void __noti_slider_change_cb(
 	 *	2) if user controls the HW volume key, do nothing
 	 *	(DO NOT change volume,DO NOT play sound)
 	*/
-	if (0 == safeStrCmp(ad->viewtype, VOLUME_APP_NAME)) {
+	if (0 == safeStrCmp(ad->viewtype, VOLUME_APP_NAME))
 		return;
-	}
 
 	if (ad->mp_noti == NULL) {
 		setting_sound_close_other_mm_players_but_type(ad, sound_type);
@@ -454,9 +452,8 @@ static void __noti_slider_change_cb(
 		player_state_e state;
 		player_get_state(*(ad->mp_noti), &state);
 		SETTING_TRACE("noti player status : %d", state);
-		if (state == PLAYER_STATE_PAUSED) {
+		if (state == PLAYER_STATE_PAUSED)
 			player_start(*(ad->mp_noti));
-		}
 	}
 }
 
@@ -504,9 +501,8 @@ static void __media_slider_change_cb(
 	 *	2) if user controls the HW volume key, do nothing
 	 *	(DO NOT change volume,DO NOT play sound)
 	*/
-	if (0 == safeStrCmp(ad->viewtype, VOLUME_APP_NAME)) {
+	if (0 == safeStrCmp(ad->viewtype, VOLUME_APP_NAME))
 		return;
-	}
 
 	if (ad->mp_media == NULL) {
 		setting_sound_close_other_mm_players_but_type(ad, sound_type);
@@ -534,9 +530,8 @@ static void __media_slider_change_cb(
 		player_state_e state;
 		player_get_state(*(ad->mp_media), &state);
 		SETTING_TRACE("ringtone player status : %d", state);
-		if (state == PLAYER_STATE_PAUSED) {
+		if (state == PLAYER_STATE_PAUSED)
 			player_start(*(ad->mp_media));
-		}
 	}
 }
 
@@ -599,11 +594,10 @@ void __stop_change_cb(void *data, Evas_Object *obj, void *event_info)
 	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
 	SETTING_TRACE("chk_status : %d, slider : %f", list_item->chk_status,
 			elm_slider_value_get(obj));
-	if (list_item->chk_status == 0) {
+	if (list_item->chk_status == 0)
 		elm_slider_value_set(obj, 0.0);
-	} else if (list_item->chk_status == 15) {
+	else if (list_item->chk_status == 15)
 		elm_slider_value_set(obj, 15.0);
-	}
 	SETTING_TRACE_END;
 }
 
@@ -737,9 +731,9 @@ static void __get_lite_main_list(void *data)
 		vconf_ret = vconf_set_str(
 				VCONFKEY_SETAPPL_CALL_RINGTONE_PATH_STR,
 				pa_ringtone);
-		if (vconf_ret < 0) {
+		if (vconf_ret < 0)
 			SETTING_TRACE_DEBUG("failed to set vconf");
-		}
+
 		sub_desc = setting_media_basename(pa_ringtone);
 		ad->data_call_alert_tone =
 			setting_create_Gendial_field_def(
@@ -789,8 +783,9 @@ static void __get_lite_main_list(void *data)
 	__BACK_POINTER_SET(ad->data_call_volume);
 
 	/* Disable Call Volume slider if Silent ringtone is selected */
-	if(ad->data_call_volume && ad->data_call_alert_tone &&
-			!safeStrCmp(ad->data_call_alert_tone->sub_desc, "Silent")){
+	if (ad->data_call_volume
+			&& ad->data_call_alert_tone
+			&& !safeStrCmp(ad->data_call_alert_tone->sub_desc, "Silent")) {
 		elm_object_item_disabled_set(ad->data_call_volume->item, EINA_TRUE);
 		elm_object_disabled_set(ad->data_call_volume->eo_check, EINA_TRUE);
 	}
@@ -854,8 +849,9 @@ static void __get_lite_main_list(void *data)
 	__BACK_POINTER_SET(ad->data_noti_volume);
 
 	/* Disable Notification slider if Silent ringtone is selected */
-	if( ad->data_noti_volume && ad->data_msg_alert_tone &&
-				!safeStrCmp(ad->data_msg_alert_tone->sub_desc, "Silent")){
+	if (ad->data_noti_volume
+			&& ad->data_msg_alert_tone
+			&& !safeStrCmp(ad->data_msg_alert_tone->sub_desc, "Silent")) {
 		elm_object_item_disabled_set(ad->data_noti_volume->item, EINA_TRUE);
 		elm_object_disabled_set(ad->data_noti_volume->eo_check, EINA_TRUE);
 	}
@@ -1068,9 +1064,9 @@ static int setting_sound_main_destroy(void *cb)
 		ad->play_ringtone_idler = NULL;
 	}
 
-	if (ad->ly_main != NULL) {
+	if (ad->ly_main != NULL)
 		evas_object_del(ad->ly_main);
-	}
+
 	setting_view_sound_main.is_create = FALSE;
 	return SETTING_RETURN_SUCCESS;
 }
@@ -1082,9 +1078,9 @@ static int setting_sound_main_update(void *cb)
 
 	SettingProfileUG *ad = (SettingProfileUG *) cb;
 
-	if (ad->ly_main != NULL) {
+	if (ad->ly_main != NULL)
 		evas_object_show(ad->ly_main);
-	}
+
 	return SETTING_RETURN_SUCCESS;
 }
 
@@ -1095,9 +1091,8 @@ static int setting_sound_main_cleanup(void *cb)
 
 	SettingProfileUG *ad = (SettingProfileUG *) cb;
 
-	if (ad->ly_main != NULL) {
+	if (ad->ly_main != NULL)
 		evas_object_hide(ad->ly_main);
-	}
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -1240,8 +1235,7 @@ setting_sound_main_result_myfile_ug_cb(ui_gadget_h ug,
 							ad->data_msg_alert_tone->item);
 				}
 			}
-			if(!safeStrCmp(ringtone_file, "Silent"))
-			{
+			if (!safeStrCmp(ringtone_file, "Silent")) {
 				/* Disable */
 				Setting_GenGroupItem_Data *item_to_update = NULL;
 				item_to_update = ad->data_noti_volume;
@@ -1436,9 +1430,8 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 
 	SettingProfileUG *ad = data;
 
-	if (SETTING_RETURN_SUCCESS != setting_sound_close_all_mm_players(ad)) {
+	if (SETTING_RETURN_SUCCESS != setting_sound_close_all_mm_players(ad))
 		SETTING_TRACE_ERROR("close player fail.");
-	}
 
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 	if (!safeStrCmp("IDS_ST_MBODY_RINGTONE", list_item->keyStr)
@@ -1466,7 +1459,7 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 				UG_MODE_FULLVIEW, NULL, cbs);
 		FREE(cbs);
 #else
-		app_control_h service=0;
+		app_control_h service = 0;
 		app_control_create(&service);
 		app_control_set_app_id(service,
 				"org.tizen.setting-notification");
@@ -1495,10 +1488,10 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 				UG_MODE_FULLVIEW, NULL, cbs);
 		FREE(cbs);
 #else
-		app_control_h service=0;
+		app_control_h service = 0;
 		app_control_create(&service);
-		app_control_set_app_id(
-				service,"org.tizen.setting-notification");
+		app_control_set_app_id(service,
+				"org.tizen.setting-notification");
 		app_control_set_operation(service, APP_NOTIFICATIONS_OP);
 		app_control_send_launch_request(service, NULL, NULL);
 		app_control_destroy(service);

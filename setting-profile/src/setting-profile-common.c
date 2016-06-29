@@ -89,11 +89,10 @@ char *setting_sound_get_slider_icon(int type, int volume)
 	}
 
 	/* 2.Other types, just have two icon status */
-	if (volume > 0) {
+	if (volume > 0)
 		return slider_icons[type].volume;
-	} else {
+	else
 		return slider_icons[type].mute;
-	}
 }
 
 void setting_sound_update_slider_icon(Setting_GenGroupItem_Data *item_data,
@@ -112,9 +111,7 @@ void setting_sound_update_slider_icon(Setting_GenGroupItem_Data *item_data,
 
 char *setting_media_basename(char *path)
 {
-	if (NULL == path || '\0' == path[0]) {
-		return NULL;	/* invalid arguement */
-	}
+	retv_if(NULL == path || '\0' == path[0], NULL);	/* invalid arguement */
 
 	if (safeStrCmp(path, "silent") == 0)
 		return (char *)g_strdup(_("IDS_ST_BODY_PHONEPROFILES_SILENT"));
@@ -145,7 +142,7 @@ char *setting_media_basename(char *path)
 }
 
 /* ------------------------------------------------------------------------- */
-/* |	 	| elm.swallow.icon.0 | elm.text | elm.swallow.icon.1 |	   | */
+/* |		| elm.swallow.icon.0 | elm.text | elm.swallow.icon.1 |	   | */
 /* | elm.swallow.icon |----------------------------------| elm.swallow.end | */
 /* |		  |	elm.text.sub	  | elm.text.sub.end   |	   | */
 /* ------------------------------------------------------------------------- */
@@ -189,7 +186,7 @@ static Evas_Object *__sound_slider_icon_get(
 		 * So, if warning area has to be started at 10, we need to
 		 * calculate the start point with 9.5.
 		 * Warning start point = (Warning min value - 0.5) /
-		 * 				(Max_Value - Min_Value) */
+		 *				(Max_Value - Min_Value) */
 		msg->val[0] = 0.633333;
 		edje_object_message_send(
 				_EDJ(slider), EDJE_MESSAGE_FLOAT_SET, 0, msg);
@@ -254,9 +251,9 @@ int setting_sound_check_file_exist(void *data, const char *file_path)
 			int ret = vconf_set_str(
 					VCONFKEY_SETAPPL_CALL_VIBRATION_PATTERN_STR,
 					strdup_file_path);
-			if (ret < 0) {
+			if (ret < 0)
 				SETTING_TRACE_DEBUG("failed to set vconf");
-			}
+
 			FREE(strdup_file_path);
 		}
 		return SETTING_RETURN_FAIL;
@@ -293,7 +290,7 @@ static void __enable_sound_menu(void *data)
 
 	/*2.Enable "Notification", via Sound Manager */
 	item_to_update = ad->data_noti_volume;
-	if( safeStrCmp(ad->data_msg_alert_tone->sub_desc, "Silent")){
+	if (safeStrCmp(ad->data_msg_alert_tone->sub_desc, "Silent")) {
 		//Enable
 		if (item_to_update
 				&& item_to_update->item
@@ -380,7 +377,7 @@ static void __disable_sound_menu(void *data)
 	item_to_update = ad->data_sound_when_ring;
 	setting_genlist_item_disabled_set(item_to_update, EINA_TRUE);
 	/* Disable Call Volume slider if Silent ringtone is selected */
-	if( !safeStrCmp(ad->data_call_alert_tone->sub_desc, "Silent")){
+	if (!safeStrCmp(ad->data_call_alert_tone->sub_desc, "Silent")) {
 		elm_object_item_disabled_set(ad->data_call_volume->item, EINA_TRUE);
 		elm_object_disabled_set(ad->data_call_volume->eo_check, EINA_TRUE);
 	}
@@ -481,11 +478,10 @@ static void ___sound_vconf_change_cb(keynode_t *key, void *data)
 			VCONFKEY_SETAPPL_SOUND_STATUS_BOOL)) {
 		status = vconf_keynode_get_bool(key);
 		SETTING_TRACE_DEBUG("sound status is changed. %d", status);
-		if (status) {
+		if (status)
 			__enable_sound_menu(ad);
-		} else {
+		else
 			__disable_sound_menu(ad);
-		}
 
 		setting_sound_update_slider_icon(ad->data_call_volume,
 				SND_SLIDER_CALL);
@@ -837,9 +833,8 @@ static Eina_Bool __volume_key_down_cb(void *data, int type, void *event)
 		 *	2) if user controls the HW volume key, do nothing
 		 *	(DO NOT change volume,DO NOT play sound)
 		*/
-		if (0 != safeStrCmp(ad->viewtype, VOLUME_APP_NAME)) {
+		if (0 != safeStrCmp(ad->viewtype, VOLUME_APP_NAME))
 			return EINA_TRUE;
-		}
 
 		/*if (ad->view_type != SETTING_PROF_VIEW_VOL)
 		 * return EINA_TRUE; */
@@ -962,9 +957,9 @@ static Eina_Bool __volume_key_down_cb(void *data, int type, void *event)
 		 *	2) if user controls the HW volume key, do nothing
 		 *	(DO NOT change volume,DO NOT play sound)
 		*/
-		if (0 != safeStrCmp(ad->viewtype, VOLUME_APP_NAME)) {
+		if (0 != safeStrCmp(ad->viewtype, VOLUME_APP_NAME))
 			return EINA_TRUE;
-		}
+
 		/*if (ad->view_type != SETTING_PROF_VIEW_VOL)
 		 * return EINA_TRUE; */
 		ad->is_pressing = TRUE;
@@ -1042,9 +1037,8 @@ static Eina_Bool __volume_key_down_cb(void *data, int type, void *event)
 				player_get_state(*(ad->mp_ringtone), &state);
 				SETTING_TRACE("ringtone player status : %d",
 						state);
-				if (state == PLAYER_STATE_PAUSED) {
+				if (state == PLAYER_STATE_PAUSED)
 					player_start(*(ad->mp_ringtone));
-				}
 			}
 		}
 		ad->updown_timer = ecore_timer_add(0.5, __volume_down_timer_cb,
@@ -1087,13 +1081,12 @@ void __setting_sound_ug_key_grab(SettingProfileUG *ad)
 	xwin = elm_win_xwindow_get(ad->win_get);
 
 	ret = eext_win_keygrab_set(xwin, "XF86AudioRaiseVolume");
-	if (ret) {
+	if (ret)
 		SETTING_TRACE_DEBUG("KEY_VOLUMEUP grab failed");
-	}
+
 	ret = eext_win_keygrab_set(xwin, "XF86AudioLowerVolume");
-	if (ret) {
+	if (ret)
 		SETTING_TRACE_DEBUG("KEY_VOLUMEDOWN grab failed");
-	}
 #endif
 	if (ad->keydown_handler) {
 		ecore_event_handler_del(ad->keydown_handler);
@@ -1135,13 +1128,12 @@ void __setting_sound_ug_key_ungrab(SettingProfileUG *ad)
 	xwin = elm_win_xwindow_get(ad->win_get);
 
 	ret = eext_win_keygrab_unset(xwin, "XF86AudioRaiseVolume");
-	if (ret) {
+	if (ret)
 		SETTING_TRACE_DEBUG("KEY_VOLUMEUP ungrab failed");
-	}
+
 	ret = eext_win_keygrab_unset(xwin, "XF86AudioLowerVolume");
-	if (ret) {
+	if (ret)
 		SETTING_TRACE_DEBUG("KEY_VOLUMEDOWN ungrab failed");
-	}
 #endif
 
 	if (ad->updown_timer) {
@@ -1491,11 +1483,11 @@ player_h *setting_sound_play_sound(
 		/*err = player_set_session_prelistening(*player); */
 		/*player_prelistening_mode_e mode; */
 
-		if (sound_type == SOUND_TYPE_NOTIFICATION) {
+		if (sound_type == SOUND_TYPE_NOTIFICATION)
 			mode = PLAYER_PRELISTENING_MODE_NOTIFICATION;
-		} else {
+		else
 			mode = PLAYER_PRELISTENING_MODE_CALL;
-		}
+
 		err = player_set_prelistening_mode(*player, mode);
 		if (err != PLAYER_ERROR_NONE) {
 			SETTING_TRACE_ERROR("error to player_set_session_prelistening[%d]",
@@ -1672,9 +1664,9 @@ int __close_player(void *data, SoundType type)
 		retv_if(ad->mp_ringtone == NULL,
 				SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 		SETTING_TRACE("ringtone player (%x)", ad->mp_ringtone);
-		if (ad->mp_prepare_async == ad->mp_ringtone) {
+		if (ad->mp_prepare_async == ad->mp_ringtone)
 			ad->mp_prepare_async = NULL;
-		}
+
 		/*player_unprepare take so much time, so if __mm_player_msg_cb
 		 * was invokeing(it will trigger invoking
 		 * setting_sound_stop_sound), */
@@ -1690,9 +1682,9 @@ int __close_player(void *data, SoundType type)
 		retv_if(ad->mp_noti == NULL,
 				SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 		SETTING_TRACE("noti player (%x)", ad->mp_noti);
-		if (ad->mp_prepare_async == ad->mp_noti) {
+		if (ad->mp_prepare_async == ad->mp_noti)
 			ad->mp_prepare_async = NULL;
-		}
+
 		tmp = ad->mp_noti;
 		ad->mp_noti = NULL;
 		setting_sound_stop_sound(ad, tmp);
@@ -1701,9 +1693,9 @@ int __close_player(void *data, SoundType type)
 		retv_if(ad->mp_media == NULL,
 				SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 		SETTING_TRACE("media player (%x)", ad->mp_media);
-		if (ad->mp_prepare_async == ad->mp_media) {
+		if (ad->mp_prepare_async == ad->mp_media)
 			ad->mp_prepare_async = NULL;
-		}
+
 		tmp = ad->mp_media;
 		ad->mp_media = NULL;
 		setting_sound_stop_sound(ad, tmp);
