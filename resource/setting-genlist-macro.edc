@@ -19,7 +19,7 @@
  *
  */
 
-#include "../setting-common/include/setting-common-data-edj-define.h"
+#include "common-data-define.edc"
 #define SETTING_GENLIST_TREESIZE_DEFAULT          26
 #define SETTING_DIALOGUE_PADDING_SIZE_LEFT        16+20
 #define SETTING_GENLIST_LIST_BG_COLOR                       8 8 8 255

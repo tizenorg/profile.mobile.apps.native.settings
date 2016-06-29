@@ -27,11 +27,11 @@
 /*////////////////////////// */
 /*/////// IMAGE //////////// */
 /*///////////////////////// */
-#define IMG_SETTING 	_TZ_SYS_RO_ICONS"/default/small/org.tizen.setting.png"
+#define IMG_SETTING	_TZ_SYS_RO_ICONS"/default/small/org.tizen.setting.png"
 
-#define IMG_Joyn 	SETTING_OTHER_UG_ICON_PATH"org.tizen.setting.png"
+#define IMG_Joyn	SETTING_OTHER_UG_ICON_PATH"org.tizen.setting.png"
 /* connectivity IMG*/
-#define IMG_WiFi 	SETTING_LIST_ICON_PATH_CFG"settings_wifi.png"
+#define IMG_WiFi	SETTING_LIST_ICON_PATH_CFG"settings_wifi.png"
 #define IMG_Bluetooth	SETTING_LIST_ICON_PATH_CFG"settings_bluetooth.png"
 #define IMG_FlightMode	SETTING_LIST_ICON_PATH_CFG"settings_flight.png"
 #define IMG_MobileAP	SETTING_LIST_ICON_PATH_CFG"settings_tethering.png"
@@ -53,8 +53,8 @@
 #define IMG_LockedScreen \
 	SETTING_LIST_ICON_PATH_CFG"settings_lock_screen_and_security.png"
 #define IMG_Accessibility SETTING_LIST_ICON_PATH_CFG"settings_accessibility.png"
-#define IMG_Accounts 	SETTING_LIST_ICON_PATH_CFG"settings_account.png"
-#define IMG_Privacy 	SETTING_LIST_ICON_PATH_CFG"settings_privacy_and_safety.png"
+#define IMG_Accounts	SETTING_LIST_ICON_PATH_CFG"settings_account.png"
+#define IMG_Privacy	SETTING_LIST_ICON_PATH_CFG"settings_privacy_and_safety.png"
 
 
 #define IMG_BackupReset \

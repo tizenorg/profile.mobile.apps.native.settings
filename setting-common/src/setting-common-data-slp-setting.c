@@ -961,11 +961,11 @@ void __foreach_attr(JsonObject *object, const gchar *public_key,
 			switch (g_sortedarr[i].type) {
 			case eBOOL:
 				/* "true"  --> 1  "false" --> 0 */
-				if (retstr && safeStrCmp(retstr, "true") == 0) {
+				if (retstr && safeStrCmp(retstr, "true") == 0)
 					g_sortedarr[i].value.b = 1;
-				} else if (retstr && safeStrCmp(retstr, "false") == 0) {
+				else if (retstr && safeStrCmp(retstr, "false") == 0)
 					g_sortedarr[i].value.b = 0;
-				}
+
 				break;
 
 			case eINT: {
@@ -990,9 +990,8 @@ void __foreach_attr(JsonObject *object, const gchar *public_key,
 
 			if (g_sortedarr[i].vconf_key)
 				set_vconf(g_sortedarr[i], &result);
-			else {
+			else
 				SETTING_TRACE("vconf key is NULL");
-			}
 
 			run = 0; /* stop loop */
 		}
@@ -1302,7 +1301,8 @@ int get_vconf(VconfNode node, VconfNode *result)
 				">>>>>>>>>>>>>>>>>>>>>>> get vconf ERROR : %s ",
 				node.vconf_key);
 	}
-	endtag: return ret;
+endtag:
+	return ret;
 }
 
 EXPORT_PUBLIC
@@ -1479,9 +1479,8 @@ int _langlist_load(char *path)
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE("language list path: %s ", path);
 
-	if (!s_langlist) {
+	if (!s_langlist)
 		_parseLangListXML(path);
-	}
 
 	return 0;
 }
@@ -1490,9 +1489,8 @@ int _langlist_load(char *path)
 EXPORT_PUBLIC
 Eina_List *setting_get_language_list()
 {
-	if (NULL == s_langlist) {
+	if (NULL == s_langlist)
 		_langlist_load(LANGLIST_FILE_PATH);
-	}
 
 	return s_langlist;
 }
@@ -1501,9 +1499,8 @@ Eina_List *setting_get_language_list()
 EXPORT_PUBLIC
 Eina_List *setting_get_language_list2(char *path)
 {
-	if (NULL == s_langlist) {
+	if (NULL == s_langlist)
 		_langlist_load(path);
-	}
 
 	return s_langlist;
 }
@@ -1679,9 +1676,9 @@ int setting_read_password(char *md_result)
 	if (fp) {
 		int size = fread(md_result, sizeof(char), SHA256_DIGEST_LENGTH,
 				fp);
-		if (size != SHA256_DIGEST_LENGTH) {
+		if (size != SHA256_DIGEST_LENGTH)
 			SETTING_TRACE_ERROR("fread failed");
-		}
+
 		fclose(fp);
 	} else {
 		SETTING_TRACE("ERR: pwd file is not exist \n");
