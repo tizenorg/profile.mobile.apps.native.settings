@@ -121,29 +121,23 @@ static int setting_phone_license_main_cleanup(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
+	/*
 	SettingPhoneUG *ad = (SettingPhoneUG *)cb;
 
-	if (ad->ly_license != NULL) {
-		/*	evas_object_hide(ad->ly_license); */
-	}
+	if (ad->ly_license != NULL)
+		evas_object_hide(ad->ly_license);
+	*/
 
 	return SETTING_RETURN_SUCCESS;
 }
 
 static void __ug_layout_cb(ui_gadget_h ug, enum ug_mode mode, void *priv)
 {
-
-	Evas_Object *base;
-
-	if (!priv) {
-		return;
-	}
 	SETTING_TRACE_BEGIN;
-
+	Evas_Object *base;
+	ret_if(!priv);
 	base = (Evas_Object *)ug_get_layout(ug);
-	if (!base) {
-		return;
-	}
+	ret_if(!base);
 
 	switch (mode) {
 	case UG_MODE_FULLVIEW:
@@ -226,17 +220,15 @@ static void __main_license_clicked(void *data)
 	app_control_add_extra_data(svc, "title",
 			"IDS_ST_BODY_OPEN_SOURCE_LICENCES");
 
-	if (ad->ly_language) {
+	if (ad->ly_language)
 		elm_object_tree_focus_allow_set(ad->ly_language, EINA_FALSE);
-	}
 
 	ad->ug_loading = setting_ug_create(ad->ug, "setting-fileview-efl",
 			UG_MODE_FULLVIEW, svc, cbs);
-	if (NULL == ad->ug_loading) { /* error handling */
+	if (NULL == ad->ug_loading)	/* error handling */
 		setting_create_popup(ad, ad->win_get, NULL,
 				_(UNSUPPORTED_FUNCTION), NULL, 0, false, false,
 				0);
-	}
 
 	app_control_destroy(svc);
 	FREE(cbs);
@@ -269,17 +261,12 @@ void setting_phone_license_main_mouse_up_Gendial_list_cb(void *data,
 void setting_phone_license_main_popup_resp_cb(void *data, Evas_Object *obj,
 		void *event_info)
 {
-	int response_type = btn_type(obj);
-	if (POPUP_RESPONSE_OK == response_type) {
-	}
-
 	setting_retm_if(data == NULL, "Data parameter is NULL");
 	SettingPhoneUG *ad = (SettingPhoneUG *)data;
 	if (ad->popup) {
 		evas_object_del(ad->popup);
 		ad->popup = NULL;
 	}
-
 }
 
 void setting_phone_license_main_click_softkey_cancel(void *data,
