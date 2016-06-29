@@ -481,9 +481,8 @@ char *get_bg_processes()
 	int err;
 	int ret = setting_get_int_slp_key(INT_SLP_SETTING_DEVOPTION_BGPROCESS,
 			&value, &err);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("get vconf failed");
-	}
 
 	if (value >= 0 && value <
 			sizeof(bgprocess_list) / sizeof(bgprocess_list[0]))
@@ -606,11 +605,10 @@ static int setting_connectivity_usb_create(void *cb)
 				&running_flag);
 		setting_retvm_if(ret != 0, SETTING_RETURN_FAIL,
 				"fail to call app_manager_is_running");
-		if (running_flag) {
+		if (running_flag)
 			vconf_val = 1;
-		} else {
+		else
 			vconf_val = 0;
-		}
 
 		ad->cpu_usage = setting_create_Gendial_field_def(scroller,
 				&itc_1text_1icon,
@@ -793,13 +791,12 @@ static void debug_mode_change_vconf_cb(keynode_t *key, void *data)
 			"EBUG_MODE_BOOL)");
 	SETTING_TRACE("debugMode: %d", debugMode);
 
-	if (debugMode == 1) {
+	if (debugMode == 1)
 		setting_update_gl_item_chk_status(ad->debug_mode, EINA_TRUE);
-	} else if (debugMode == 0) {
+	else if (debugMode == 0)
 		setting_update_gl_item_chk_status(ad->debug_mode, EINA_FALSE);
-	} else {
+	else
 		SETTING_TRACE("ERROR: debugMode value is improper");
-	}
 
 	/* Unblock setting UI */
 	SETTING_TRACE("ad->blockUI: EINA_FALSE\n");
@@ -858,9 +855,8 @@ static int setting_connectivity_usb_destroy(void *cb)
 		num_err++;
 	}
 
-	if (ad->ly_usb != NULL) {
+	if (ad->ly_usb != NULL)
 		evas_object_del(ad->ly_usb);
-	}
 
 	SETTING_TRACE_END;
 	if (num_err > 0) {
@@ -887,9 +883,8 @@ static int setting_connectivity_usb_update(void *cb)
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 	SettingConnectivityUG *ad = (SettingConnectivityUG *)cb;
 
-	if (ad->ly_usb != NULL) {
+	if (ad->ly_usb != NULL)
 		evas_object_show(ad->ly_usb);
-	}
 
 	SETTING_TRACE_END;
 	return SETTING_RETURN_SUCCESS;
