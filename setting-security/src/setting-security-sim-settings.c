@@ -80,9 +80,9 @@ static int setting_security_sim_settings_create(void *cb)
 			ad, SWALLOW_Type_1ICON_1RADIO,
 			NULL, NULL, ad->pin1_status, "IDS_ST_BODY_PIN_LOCK",
 			NULL, setting_security_sim_settings_chk_btn_cb);
-	if (ad->data_pin_lk) {
+	if (ad->data_pin_lk)
 		ad->data_pin_lk->userdata = ad;
-	}
+
 	/* h. change pin1 */
 	ad->data_change_pin1 = setting_create_Gendial_field_def(scroller,
 			&(ad->itc_1text),
@@ -91,16 +91,11 @@ static int setting_security_sim_settings_create(void *cb)
 			NULL, NULL, 0, "IDS_ST_HEADER_CHANGE_PIN_ABB", NULL,
 			NULL);
 
-	if (ad->data_change_pin1) {
+	if (ad->data_change_pin1)
 		ad->data_change_pin1->userdata = ad;
-	}
 
-	if (!ad->pin1_status) {
-		if (ad->data_change_pin1) {
-			setting_disable_genlist_item(
-					ad->data_change_pin1->item);
-		}
-	}
+	if (!ad->pin1_status && ad->data_change_pin1)
+		setting_disable_genlist_item(ad->data_change_pin1->item);
 
 	/* i. change pin2 */
 	if (ad->pin2_blocked_flag) {
@@ -119,9 +114,8 @@ static int setting_security_sim_settings_create(void *cb)
 				NULL);
 	}
 
-	if (ad->data_change_pin2) {
+	if (ad->data_change_pin2)
 		ad->data_change_pin2->userdata = ad;
-	}
 
 #if SUPPORT_FDN
 	/* j. FDN */
@@ -326,7 +320,7 @@ void _draw_pin_onoff_status(void *data, Evas_Object *check)
 				tapi_ret);
 		return;
 	}
-	SETTING_TRACE("SIM Type is %d", (int )sim_card);
+	SETTING_TRACE("SIM Type is %d", (int)sim_card);
 	if (sim_card == (TelSimCardType_t)TAPI_SIM_CARD_TYPE_UNKNOWN) {
 		SETTING_TRACE_DEBUG(
 				"%s*** [ERR] tel_get_sim_type. sim_card=%d ***%s",
@@ -616,7 +610,7 @@ static void setting_security_sim_settings_chk_btn_cb(void *data,
 
 /*static void */
 /*setting_security_sim_settings_click_softkey_back_cb(void *data,
- * 		Evas_Object *obj, void *event_info) */
+ *		Evas_Object *obj, void *event_info) */
 Eina_Bool setting_security_sim_settings_click_softkey_back_cb(void *data,
 		Elm_Object_Item *it)
 {
@@ -628,9 +622,8 @@ Eina_Bool setting_security_sim_settings_click_softkey_back_cb(void *data,
 	if (ad->ug_passwd)
 		return EINA_FALSE;
 
-	if (ad->sim_popup) {
+	if (ad->sim_popup)
 		return EINA_FALSE;
-	}
 
 	setting_view_change(&setting_view_security_sim_settings,
 			&setting_view_security_main, ad);

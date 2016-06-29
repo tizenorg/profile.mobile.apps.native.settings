@@ -176,7 +176,7 @@ int __listen_vconf_change(void *data)
 	ret = vconf_notify_key_changed(VCONFKEY_ODE_ENCRYPT_PROGRESS,
 			__vconf_change_cb, data);
 	setting_retvm_if(ret < 0, ret, "%s notifications Failed(%d)",
-			(char * )VCONFKEY_ODE_ENCRYPT_PROGRESS, ret);
+			(char *)VCONFKEY_ODE_ENCRYPT_PROGRESS, ret);
 
 	return ret;
 }

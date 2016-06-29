@@ -309,9 +309,9 @@ int pwd_handler_sec_pw_pin1_blocked(SettingSecurityUG *data, void *arg)
 	}
 
 	/* To do : draw popup, */
-	/* 	   content - PIN Blocked\n The PIN is now blocked. Enter your
+	/*	   content - PIN Blocked\n The PIN is now blocked. Enter your
 	 * PUK code to continue. */
-	/* 	   button - OK */
+	/*	   button - OK */
 	char popup_text[2048] = { 0, };
 	snprintf(popup_text, 2048, "%s", _(PIN_BLOCKED_ENTER_PUK_DESC));
 
@@ -565,9 +565,8 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	SettingSecurityUG *securityUG = (SettingSecurityUG *)data;
-	if (securityUG == NULL || securityUG->win_get == NULL) {
-		return;
-	}
+	ret_if(securityUG == NULL || securityUG->win_get == NULL);
+
 	int change_ang = elm_win_rotation_get(securityUG->win_get);
 	SETTING_TRACE_DEBUG("....change_ang:%d", change_ang);
 	SETTING_TRACE_DEBUG("current_rotation:%d",
@@ -596,17 +595,17 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 
 	if (change_ang != securityUG->current_rotation) {
 		int diff = change_ang - securityUG->current_rotation;
-		if (diff < 0) {
+		if (diff < 0)
 			diff = -diff;
-		}
+
 		/**
 		 * @todo if app didn't launch UG, is the call required to
 		 * invoke?
 		 */
 		ug_send_event(event);
-		if (diff == 180) {
-			/* do nothing */
-		}
+		/* if (diff == 180) {
+			do nothing
+		} */
 		securityUG->current_rotation = change_ang;
 	}
 }
@@ -833,9 +832,9 @@ static void setting_security_ug_on_event(ui_gadget_h ug, enum ug_event event,
 	case UG_EVENT_LOW_BATTERY:
 		break;
 	case UG_EVENT_LANG_CHANGE:
-		if (ad->navi_bar) {
+		if (ad->navi_bar)
 			setting_navi_items_update(ad->navi_bar);
-		}
+
 		break;
 	case UG_EVENT_ROTATE_PORTRAIT:
 		break;
@@ -1072,9 +1071,8 @@ void setting_security_destroy_password_ug_cb(ui_gadget_h ug, void *priv)
 	if (ad->ly_main)
 		elm_object_tree_focus_allow_set(ad->ly_main, EINA_TRUE);
 
-	if (ug) {
+	if (ug)
 		setting_ug_destroy(ug);
-	}
 
 	SETTING_TRACE_DEBUG("[TEST] current : %s", ad->input_pwd);
 }
@@ -1253,12 +1251,12 @@ void setting_security_layout_mmc_encryption_ug_cb(ui_gadget_h ug,
 	return;
 
 	switch (mode) {
-		case UG_MODE_FULLVIEW:
+	case UG_MODE_FULLVIEW:
 		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
 				EVAS_HINT_EXPAND);
 		evas_object_show(base);
 		break;
-		default:
+	default:
 		break;
 	}
 
@@ -1586,9 +1584,9 @@ int setting_security_system_command(const char *command, const char *commandex)
 	char *argv[2] = { NULL, };
 	/*int ret; */
 
-	if (command == 0 && commandex == 0) {
-		/*not exist input */
-	}
+	/* if (command == 0 && commandex == 0) {
+		not exist input
+	} */
 
 	pid = fork();
 
