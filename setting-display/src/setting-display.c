@@ -477,11 +477,10 @@ int get_display_ug_state(Cfg_Item_State *stat, void *data)
 
 	SETTING_TRACE_BEGIN;
 
-	if (value == 1) {
+	if (value == 1)
 		*stat = Cfg_Item_On;
-	} else {
+	else
 		*stat = Cfg_Item_Off;
-	}
 
 	return ret;
 }
@@ -496,11 +495,10 @@ int set_display_ug_state(Cfg_Item_State stat, void *item, void *data)
 
 	SETTING_TRACE_BEGIN;
 
-	if (stat == Cfg_Item_On) {
+	if (stat == Cfg_Item_On)
 		value = 1;
-	} else {
+	else
 		value = 0;
-	}
 
 	return vconf_set_bool(VCONFKEY_SETAPPL_AUTO_ROTATE_SCREEN_BOOL, value);
 }
@@ -523,11 +521,10 @@ int get_display_ug_auto_adjust_state(Cfg_Item_State *stat, void *data)
 
 	SETTING_TRACE_BEGIN;
 
-	if (value == 1) {
+	if (value == 1)
 		*stat = Cfg_Item_On;
-	} else {
+	else
 		*stat = Cfg_Item_Off;
-	}
 
 	return ret;
 }
@@ -540,11 +537,10 @@ int set_display_ug_auto_adjust_state(Cfg_Item_State stat, void *item,
 
 	SETTING_TRACE_BEGIN;
 
-	if (stat == Cfg_Item_On) {
+	if (stat == Cfg_Item_On)
 		value = 1;
-	} else {
+	else
 		value = 0;
-	}
 
 	return vconf_set_bool(VCONFKEY_SETAPPL_LCD_AUTO_DISPLAY_ADJUSTMENT,
 			value);
@@ -567,11 +563,10 @@ int get_display_ug_dynamic_status_state(Cfg_Item_State *stat, void *data)
 
 	SETTING_TRACE_BEGIN;
 
-	if (value == 1) {
+	if (value == 1)
 		*stat = Cfg_Item_On;
-	} else {
+	else
 		*stat = Cfg_Item_Off;
-	}
 
 	return ret;
 }
@@ -584,11 +579,10 @@ int set_display_ug_dynamic_status_state(Cfg_Item_State stat, void *item,
 
 	SETTING_TRACE_BEGIN;
 
-	if (stat == Cfg_Item_On) {
+	if (stat == Cfg_Item_On)
 		value = 1;
-	} else {
+	else
 		value = 0;
-	}
 
 	return vconf_set_bool(VCONFKEY_SETAPPL_DYNAMIC_STATUS_BAR, value);
 }
@@ -612,11 +606,10 @@ int get_display_ug_edit_screen_state(Cfg_Item_State *stat, void *data)
 
 	SETTING_TRACE_BEGIN;
 
-	if (value == 1) {
+	if (value == 1)
 		*stat = Cfg_Item_On;
-	} else {
+	else
 		*stat = Cfg_Item_Off;
-	}
 
 	return ret;
 }
@@ -629,11 +622,10 @@ int set_display_ug_edit_screen_state(Cfg_Item_State stat, void *item,
 
 	SETTING_TRACE_BEGIN;
 
-	if (stat == Cfg_Item_On) {
+	if (stat == Cfg_Item_On)
 		value = 1;
-	} else {
+	else
 		value = 0;
-	}
 
 	return vconf_set_bool(
 			VCONFKEY_SETAPPL_SCREEN_CAPTURE_EDIT_AFTER_CAPTURE,

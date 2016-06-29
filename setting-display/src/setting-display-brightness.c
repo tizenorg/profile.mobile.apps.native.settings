@@ -370,7 +370,7 @@ static void _brightness_overheat_check(void *data)
 	}
 }
 
-void static _brightness_slider_mouse_down_cb(void *data, Evas *e,
+static void _brightness_slider_mouse_down_cb(void *data, Evas *e,
 		Evas_Object *obj, void *event_info)
 {
 	SettingDisplayUG *ad = NULL;
@@ -407,15 +407,14 @@ const char	*setting_brightness_get_slider_icon(int level)
 {
 	int mapped_level = 0;
 
-	if (level <= 1) {
+	if (level <= 1)
 		mapped_level = 0;
-	} else if (level >= 100) {
+	else if (level >= 100)
 		mapped_level = 11;
-	} else if (level > 1 && level <= 9) {
+	else if (level > 1 && level <= 9)
 		mapped_level = 1;
-	} else {
+	else
 		mapped_level = (level / 10);
-	}
 
 	SETTING_TRACE_DEBUG("mapped_level:%d", mapped_level);
 
@@ -459,11 +458,11 @@ void __display_int_vconf_cb(keynode_t *key, void *data)
 					status);
 		}
 
-		if (status <= 2) {
+		if (status <= 2)
 			value = (int)(2 * 1000);
-		} else {
+		else
 			value = (int)(status * 1000);
-		}
+
 		snprintf(strValue, BUF_SIZE, "%d", value);
 
 	} else if (!safeStrCmp(vconf_name,
@@ -573,11 +572,10 @@ const char *__display_brightness_get_vconf_need_save()
 
 	vconf_get_int(VCONFKEY_SETAPPL_BRIGHTNESS_AUTOMATIC_INT, &state);
 
-	if (state) {
+	if (state)
 		return VCONFKEY_SETAPPL_LCD_AUTOMATIC_BRIGHTNESS;
-	} else {
+	else
 		return VCONFKEY_SETAPPL_LCD_BRIGHTNESS;
-	}
 }
 
 static char *_setting_display_brightness_indicator_format(double val)
@@ -747,11 +745,10 @@ void construct_brightness(void *data, Evas_Object *genlist)
 		SETTING_TRACE_ERROR("ad->data_br_sli is NULL");
 	}
 
-	if (auto_value) {
+	if (auto_value)
 		temp = (char *)g_strdup(KeyStr_Brightness_Auto_Adjust);
-	} else {
+	else
 		temp = (char *)g_strdup(KeyStr_Brightness_Adjust);
-	}
 
 	if (ad->data_adjust) {
 		ad->data_adjust->userdata = ad;
