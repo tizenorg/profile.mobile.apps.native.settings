@@ -19,7 +19,7 @@
  *
  */
 
-#include "../setting-common/include/setting-common-data-edj-define.h"
+#include "common-data-define.edc"
 #include "setting-genlist-macro.edc"
 
 

@@ -258,13 +258,12 @@ static void __rotate_ctxpopup_cb(void *data, Evas_Object *obj, void *event_info)
 	ecore_x_window_size_get(ecore_x_window_root_first_get(), &w, &h);
 	pos = elm_win_rotation_get(ug_get_window());
 	SETTING_TRACE_DEBUG("pos: %d, w: %d, h: %d", pos, w, h);
-	if (pos == 90) {
+	if (pos == 90)
 		evas_object_move(btn_data->ctxpopup, 0, w);
-	} else if (pos == 270) {
+	else if (pos == 270)
 		evas_object_move(btn_data->ctxpopup, h, w);
-	} else {
+	else
 		evas_object_move(btn_data->ctxpopup, 0, h);
-	}
 #else
 	/* @todo : repace codes using X with codes tizen 3.0 API */
 #endif
@@ -934,9 +933,8 @@ void setting_go_to_top(Evas_Object *content)
 		/*just only search the first objects level */
 		EINA_LIST_FOREACH(sub_objs, l, sub_obj)
 		{
-			if (!sub_obj) {
+			if (!sub_obj)
 				continue;
-			}
 
 			sub_type = elm_object_widget_type_get(sub_obj);
 			SETTING_TRACE("sub content type :%s", sub_type);
