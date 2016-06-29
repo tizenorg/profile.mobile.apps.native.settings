@@ -44,9 +44,9 @@ static Eina_Bool setting_moreconnections_main_click_softkey_back_cb(void *data,
 {
 	setting_retvm_if(data == NULL, EINA_FALSE, "Data parameter is NULL");
 	SettingMoreConnectionsUG *ad = (SettingMoreConnectionsUG *)data;
-	if (ad->empty_flag) {
+	if (ad->empty_flag)
 		return EINA_FALSE;
-	}
+
 	/* Send destroy request */
 	ug_destroy_me(ad->ug);
 	SETTING_TRACE_END;
@@ -68,9 +68,8 @@ static void setting_moreconnections_main_mouse_up_Gendial_list_cb(void *data,
 
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 
-	if (!safeStrCmp(KeyStr_LocationService, list_item->keyStr)) {
+	if (!safeStrCmp(KeyStr_LocationService, list_item->keyStr))
 		app_launcher("org.tizen.setting-location", NULL, NULL);
-	}
 }
 
 /**
@@ -172,11 +171,10 @@ int setting_moreconnections_main_generate_genlist(void *data)
 			ad, SWALLOW_Type_INVALID,
 			NULL, NULL, 0,
 			KeyStr_VPN, NULL, NULL);
-	if (ad->VPN) {
+	if (ad->VPN)
 		ad->VPN->userdata = ad;
-	} else {
+	else
 		SETTING_TRACE_ERROR("ad->VPN is NULL");
-	}
 #endif
 
 	SETTING_TRACE_END;
