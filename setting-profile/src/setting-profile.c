@@ -89,11 +89,10 @@ static void setting_sound_ug_on_resume(ui_gadget_h ug, app_control_h service,
 	SettingProfileUG *profileUG = (SettingProfileUG *)priv;
 	/* If current view is sound main, block volume app */
 	/* To prevent conflict with volume app */
-	if (!safeStrCmp(profileUG->viewtype, "com.samsung.volume")) {
+	if (!safeStrCmp(profileUG->viewtype, "com.samsung.volume"))
 		vconf_set_int(VCONFKEY_STARTER_USE_VOLUME_KEY, 2);
-	} else {
+	else
 		vconf_set_int(VCONFKEY_STARTER_USE_VOLUME_KEY, 0);
-	}
 
 	/* update path of tones */
 	char *pa_tone_path = NULL;
