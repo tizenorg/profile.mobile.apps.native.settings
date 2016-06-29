@@ -266,7 +266,7 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 		Cfg_Item_Pos_Level0, Cfg_Item_unResetable, 0,
 		Cfg_Item_AppLauncher_Node, NULL, KeyStr_Personal, NULL,
 		uuid_Accounts, 0, "setting-myaccount-efl"},
-	{	KeyStr_Privacy, IMG_Accounts,
+	{	KeyStr_Privacy, IMG_Privacy,
 		"org.tizen.privacy-setting",
 		Cfg_Item_Pos_Level0, Cfg_Item_unResetable, 0,
 		Cfg_Item_AppLauncher_Node, NULL, KeyStr_Personal, NULL,
