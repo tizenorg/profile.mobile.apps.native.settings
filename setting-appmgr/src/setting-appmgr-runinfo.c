@@ -181,11 +181,10 @@ void appmgrUg_run_stop_click(void *data, Evas_Object *obj, void *event_info)
 		ad->info_run->runinfos = NULL;
 		ad->info_run = NULL;
 	}
-	if (APPMGRUG_TAB_RUNNING == ad->tabtype) {
+	if (APPMGRUG_TAB_RUNNING == ad->tabtype)
 		elm_naviframe_item_pop(ad->navi);
-	} else if (APPMGRUG_TAB_DISABLED == ad->tabtype) {
+	else if (APPMGRUG_TAB_DISABLED == ad->tabtype)
 		elm_object_disabled_set(obj, EINA_TRUE);
-	}
 
 	setting_view_update(ad->main_view, ad);
 }

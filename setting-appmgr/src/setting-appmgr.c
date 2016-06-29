@@ -51,9 +51,8 @@ static void _app_mgr_item_del(void *data, Evas_Object *obj)
 	setting_retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *item_data =
 	(Setting_GenGroupItem_Data *) data;
-	if (item_data) {
+	if (item_data)
 		FREE(item_data);
-	}
 }
 #endif
 
@@ -161,9 +160,8 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	SettingAppMgrUG *ad = (SettingAppMgrUG *)data;
-	if (ad == NULL || ad->win == NULL) {
-		return;
-	}
+	ret_if(ad == NULL || ad->win == NULL);
+
 	int change_ang = elm_win_rotation_get(ad->win);
 	SETTING_TRACE_DEBUG("....change_ang:%d", change_ang);
 	SETTING_TRACE_DEBUG("current_rotation:%d", ad->current_rotation);
@@ -190,17 +188,17 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 
 	if (change_ang != ad->current_rotation) {
 		int diff = change_ang - ad->current_rotation;
-		if (diff < 0) {
+		if (diff < 0)
 			diff = -diff;
-		}
+
 		/**
 		 * @todo if app didn't launch UG, is the call required to
 		 * invoke?
 		 */
 		ug_send_event(event);
-		if (diff == 180) {
-			/* do nothing */
-		}
+		/* if (diff == 180) {
+			do nothing
+		} */
 		ad->current_rotation = change_ang;
 	}
 }

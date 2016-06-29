@@ -106,13 +106,12 @@ static void appmgrUg_main_sort_popup(void *data, Evas_Object *obj,
 			MGRAPP_STR_SIZE,
 			NULL);
 	SETTING_TRACE("ad->sort_str:%s", ad->sort_str);
-	if (!safeStrCmp(ad->sort_str, MGRAPP_STR_SIZE)) {
+	if (!safeStrCmp(ad->sort_str, MGRAPP_STR_SIZE))
 		elm_radio_value_set(rdg, 2);
-	} else if (!safeStrCmp(ad->sort_str, MGRAPP_STR_Z_TO_A)) {
+	else if (!safeStrCmp(ad->sort_str, MGRAPP_STR_Z_TO_A))
 		elm_radio_value_set(rdg, 1);
-	} else {
+	else
 		elm_radio_value_set(rdg, 0);
-	}
 }
 
 static void appmgrUg_main_more_popup_rotate(void *data, Evas_Object *obj,
@@ -291,11 +290,10 @@ static inline Evas_Object *appmgrUg_main_no_item_handle(SettingAppMgrUG *ad)
 	}
 
 	if (NULL == ad->lo_noitem || ad->noitem_type != ad->tabtype) {
-		if (ad->tabtype == APPMGRUG_TAB_RUNNING) {
+		if (ad->tabtype == APPMGRUG_TAB_RUNNING)
 			lo = appmgrUg_loading_item(ad->navi, text, help_txt);
-		} else {
+		else
 			lo = appmgrUg_no_item(ad->navi, text, help_txt);
-		}
 	}
 
 	return lo;
@@ -317,9 +315,9 @@ void appmgrUg_main_genlist_append_items(SettingAppMgrUG *ad)
 		return;
 	}
 
-	if (NULL == ad->gl_main) {
+	if (NULL == ad->gl_main)
 		lo_new = ad->gl_main = appmgrUg_main_genlist(ad->navi);
-	} else
+	else
 		elm_genlist_clear(ad->gl_main);
 
 	cursor = ad->pkg_list;

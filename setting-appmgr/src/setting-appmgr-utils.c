@@ -76,9 +76,8 @@ Eina_Bool appmgrUg_get_app_size(void *data)
 
 	int ret = package_manager_get_package_size_info(info->pkgid,
 		_get_size_cb, info);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("failed to invoke ret = %d", ret);
-	}
 
 	return EINA_FALSE;
 }
@@ -873,9 +872,7 @@ Evas_Object *appmgrUg_info_2button1_gl_icon_get(void *data, Evas_Object *obj,
 	Evas_Object *button2 = NULL;
 
 	setting_retvm_if(ad == NULL, NULL, "Data parameter is NULL");
-	if (0 != safeStrCmp(part, "elm.swallow.content")) {
-		return NULL;
-	}
+	retv_if(0 != safeStrCmp(part, "elm.swallow.content"), NULL);
 	setting_retvm_if(ad->pkginfo == NULL, NULL, "ad->pkginfo is NULL");
 	info = ad->pkginfo;
 
@@ -896,9 +893,8 @@ Evas_Object *appmgrUg_info_2button1_gl_icon_get(void *data, Evas_Object *obj,
 		ret = app_manager_is_running(appid, &running_flag);
 		warn_if(APP_MANAGER_ERROR_NONE != ret,
 				"app_manager_is_running Fail(%d)", ret);
-		if (running_flag) {
+		if (running_flag)
 			break;
-		}
 	}
 
 	button1 = setting_create_button(box, MGRAPP_STR_FORCE_STOP,
@@ -1035,9 +1031,8 @@ Evas_Object *appmgrUg_info_1button_gl_icon_get(void *data, Evas_Object *obj,
 			MGRAPP_STR_CLEAR_CACHE, NULL,
 			appmgrUg_pkg_clear_cache_click, ad);
 
-	if (info->sz_cache <= 0) {
+	if (info->sz_cache <= 0)
 		elm_object_disabled_set(button1, EINA_TRUE);
-	}
 
 	/* Fake button to reserve space after button1 */
 	Evas_Object *button2 = setting_create_button(box, "BLANK", NULL, NULL,

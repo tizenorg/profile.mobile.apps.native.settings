@@ -329,8 +329,7 @@ static int storageUg_default_create(void *data)
 	int ret;
 	SettingStorageUG *ad = data;
 	Evas_Object *genlist = NULL;
-	const char *grp_title, *item_title;
-	const char *cur_storage;
+	const char *cur_storage = NULL;
 
 	retv_if(NULL == data, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
