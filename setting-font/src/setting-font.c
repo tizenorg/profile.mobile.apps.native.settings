@@ -55,13 +55,13 @@ setting_view *__default_view_state(void *data, app_control_h service)
 		SETTING_TRACE("HERE ?? <<<<< ");
 		char *viewtype = NULL;
 		app_control_get_extra_data(service, "viewtype", &viewtype);
-		if (!safeStrCmp(viewtype, "FontType_expand")) {
+		if (!safeStrCmp(viewtype, "FontType_expand"))
 			fontUG->font_expand_state = FONT_EXPAND_STATE_FONT_TYPE;
-		} else if (!safeStrCmp(viewtype, "FontSize_expand")) {
+		else if (!safeStrCmp(viewtype, "FontSize_expand"))
 			fontUG->font_expand_state = FONT_EXPAND_STATE_FONT_SIZE;
-		} else {
+		else
 			fontUG->font_expand_state = FONT_EXPAND_STATE_NONE;
-		}
+
 		fontUG->viewmode = FONT_SIZE_AND_FONT_SEL_UG; /* set default */
 		setting_view_node_table_register(&setting_view_font_font_size,
 				&setting_view_font_main);
@@ -120,9 +120,9 @@ setting_view *__app_control_get_operation_handler(void *data,
 		SETTING_TRACE(
 				"failed to call app_control_get_operation with error code %d",
 				ret);
-		if (output_url) {
+		if (output_url)
 			FREE(output_url);
-		}
+
 		return NULL;
 	}
 }
@@ -159,9 +159,9 @@ setting_view *__get_font_view_to_load(void *data, app_control_h service)
 		return __app_control_get_operation_handler(fontUG, service);
 
 	} else {
-		if (output_url) {
+		if (output_url)
 			FREE(output_url);
-		}
+
 		/* service is not OK, but need to handle default action */
 		return __default_view_state(fontUG, service);
 	}
@@ -299,9 +299,7 @@ static void setting_font_ug_on_key_event(ui_gadget_h ug,
 		enum ug_key_event event, app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
-	if (!ug) {
-		return;
-	}
+	ret_if(!ug);
 
 	switch (event) {
 	case UG_KEY_EVENT_END:
@@ -341,9 +339,8 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 	setting_retm_if(!ops, "ops == NULL");
 
 	fontUG = ops->priv;
-	if (fontUG) {
+	if (fontUG)
 		FREE(fontUG);
-	}
 }
 
 /* ***************************************************
