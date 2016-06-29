@@ -49,15 +49,13 @@ bool __parse_ug_argument(app_control_h service, void *priv)
 
 	char *silent = NULL;
 	app_control_get_extra_data(service, "silent", &silent);
-	if (!safeStrCmp(silent, "silent show")) {
+	if (!safeStrCmp(silent, "silent show"))
 		ad->is_show_silent = 1;
-	}
 
 	char *default_str = NULL;
 	app_control_get_extra_data(service, "default", &default_str);
-	if (!safeStrCmp(default_str, "default show")) {
+	if (!safeStrCmp(default_str, "default show"))
 		ad->is_show_def = 1;
-	}
 
 	SETTING_TRACE("dir path: %s", ad->dir_path);
 	SETTING_TRACE("current file path: %s", ad->file_path);
@@ -114,9 +112,8 @@ bindtextdomain(SETTING_PACKAGE, SETTING_LOCALEDIR);
 		return NULL;
 	}
 
-	if (0 != app_control_clone(&(ringtoneUG->source_svc), service)) {
+	if (0 != app_control_clone(&(ringtoneUG->source_svc), service))
 		SETTING_TRACE_ERROR("failed to clone svc");
-	}
 
 	setting_view_create(&setting_view_ringtone_main, (void *)ringtoneUG);
 	evas_object_event_callback_add(ringtoneUG->win_main_layout,
@@ -258,9 +255,8 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 	setting_retm_if(!ops, "ops == NULL");
 
 	ringtoneUG = ops->priv;
-	if (ringtoneUG) {
+	if (ringtoneUG)
 		FREE(ringtoneUG);
-	}
 }
 
 /* ***************************************************

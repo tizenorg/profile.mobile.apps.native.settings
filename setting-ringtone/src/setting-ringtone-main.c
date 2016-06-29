@@ -72,24 +72,20 @@ static void setting_ringtone_done_click_cb(void *data, Evas_Object *obj,
 				"title",
 				&titleID);
 
-		if(!safeStrCmp(titleID, "IDS_ST_MBODY_RINGTONE"))
-		{
+		if (!safeStrCmp(titleID, "IDS_ST_MBODY_RINGTONE")) {
 			if (ad->sel_item_data && !safeStrCmp(ad->sel_item_data->keyStr,
 					"IDS_ST_BODY_PHONEPROFILES_SILENT"))
-			{
 				vconf_set_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, FALSE);
-			} else {
+			else
 				vconf_set_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, TRUE);
-			}
 		}
 		free(titleID);
 
-		if (is_def_seleted) {
+		if (is_def_seleted)
 			/*if default item is seleted, return "default" */
 			ad->rlt_file_path = strdup("default");
-		} else {
+		else
 			ad->rlt_file_path = strdup(ad->sel_file_path);
-		}
 
 		app_control_h reply;
 		if (ad->rlt_file_path && ad->source_svc && !app_control_create(
@@ -189,12 +185,11 @@ static void ringtone_item_sel(void *data, Evas_Object *obj, void *event_info)
 	ad->sel_item_data = list_item;
 
 	SETTING_TRACE("sel file: %s", ad->sel_file_path);
-	if (ad->mp_ringtone) {
+	if (ad->mp_ringtone)
 		ringtone_stop_sound(ad);
-	}
-	if (safeStrCmp(list_item->keyStr, "IDS_ST_BODY_PHONEPROFILES_SILENT")) {
+
+	if (safeStrCmp(list_item->keyStr, "IDS_ST_BODY_PHONEPROFILES_SILENT"))
 		ringtone_play_sound(ad->sel_file_path, &ad->mp_ringtone);
-	}
 }
 
 static int _compare_cb(const void *d1, const void *d2)
@@ -413,9 +408,8 @@ static int setting_ringtone_destroy(void *cb)
 		setting_view_ringtone_main.is_create = 0;
 	}
 
-	if (ad->mp_ringtone) {
+	if (ad->mp_ringtone)
 		ringtone_stop_sound(ad);
-	}
 
 	FREE(ad->dir_path);
 	FREE(ad->file_path);
@@ -443,11 +437,10 @@ static int setting_ringtone_update(void *cb)
 	SETTING_TRACE_BEGIN;
 	SettingRingtoneUG *ad = (SettingRingtoneUG *)cb;
 
-	if (ad->ly_main != NULL) {
+	if (ad->ly_main != NULL)
 		evas_object_show(ad->ly_main);
-	}
-	return SETTING_RETURN_SUCCESS;
 
+	return SETTING_RETURN_SUCCESS;
 }
 
 static int setting_ringtone_cleanup(void *cb)
@@ -455,9 +448,9 @@ static int setting_ringtone_cleanup(void *cb)
 	SETTING_TRACE_BEGIN;
 	SettingRingtoneUG *ad = (SettingRingtoneUG *)cb;
 
-	if (ad->ly_main != NULL) {
+	if (ad->ly_main != NULL)
 		evas_object_hide(ad->ly_main);
-	}
+
 	return SETTING_RETURN_SUCCESS;
 }
 
