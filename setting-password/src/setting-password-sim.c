@@ -350,9 +350,9 @@ static int setting_password_sim_update(void *cb)
 
 	SettingPasswordUG *ad = (SettingPasswordUG *)cb;
 
-	if (ad->ly_main != NULL) {
+	if (ad->ly_main != NULL)
 		evas_object_show(ad->ly_main);
-	}
+
 	if (ad->puk_verified_flag == TRUE
 			&& ad->view_type == SETTING_PW_TYPE_PIN_BLOCKED) {
 		ad->puk_verified_flag = FALSE;
@@ -379,9 +379,8 @@ static int setting_password_sim_cleanup(void *cb)
 
 	SettingPasswordUG *ad = (SettingPasswordUG *)cb;
 
-	if (ad->ly_main != NULL) {
+	if (ad->ly_main != NULL)
 		evas_object_hide(ad->ly_main);
-	}
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -1797,15 +1796,14 @@ void setting_password_sim_click_softkey_done_cb(void *data, Evas_Object *obj,
 
 	SettingPasswordUG *ad = (SettingPasswordUG *)data;
 
-	if (ad->ed_pw1 && ad->ed_pw1->eo_check) {
+	if (ad->ed_pw1 && ad->ed_pw1->eo_check)
 		elm_object_focus_set(ad->ed_pw1->eo_check, EINA_FALSE);
-	}
-	if (ad->ed_pw2 && ad->ed_pw2->eo_check) {
+
+	if (ad->ed_pw2 && ad->ed_pw2->eo_check)
 		elm_object_focus_set(ad->ed_pw2->eo_check, EINA_FALSE);
-	}
-	if (ad->ed_pw3 && ad->ed_pw3->eo_check) {
+
+	if (ad->ed_pw3 && ad->ed_pw3->eo_check)
 		elm_object_focus_set(ad->ed_pw3->eo_check, EINA_FALSE);
-	}
 
 	if (ad->err_desc && ad->err_desc->item) {
 		elm_object_item_del(ad->err_desc->item);

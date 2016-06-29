@@ -99,7 +99,8 @@ static void __launch_lockscreen(void)
 	saddr.sun_path[strlen("/tmp/phlock")] = 0;
 
 	SETTING_TRACE("saddr.sun_path = %s", saddr.sun_path);
-	retry_con: if (connect(fd, (struct sockaddr *)&saddr,
+retry_con:
+	if (connect(fd, (struct sockaddr *)&saddr,
 			sizeof(saddr)) < 0) {
 		if (retry > 0) {
 			usleep(100 * 1000);
@@ -223,9 +224,8 @@ static int setting_password_forgot_password_update(void *cb)
 
 	SettingPasswordUG *ad = (SettingPasswordUG *)cb;
 
-	if (ad->ly_main != NULL) {
+	if (ad->ly_main != NULL)
 		evas_object_show(ad->ly_main);
-	}
 
 	return SETTING_RETURN_SUCCESS;
 }

@@ -244,15 +244,13 @@ static void __destroy_view(SettingPasswordUG *ad)
 {
 	ret_if(!ad);
 
-	if (pw_its[ad->view_type].category == SETTING_PW_CATEGORY_SIM) {
+	if (pw_its[ad->view_type].category == SETTING_PW_CATEGORY_SIM)
 		setting_view_destroy(&setting_view_password_sim, ad);
-	}
-	if (pw_its[ad->view_type].category & SETTING_PW_SUB_CATEGORY_SIMPLE) {
+
+	if (pw_its[ad->view_type].category & SETTING_PW_SUB_CATEGORY_SIMPLE)
 		setting_view_destroy(&setting_view_password_simple, ad);
-	} else {
-		/*	delete the allocated objects. */
+	else	/*	delete the allocated objects. */
 		setting_view_destroy(&setting_view_password_main, ad);
-	}
 }
 
 static char *__gl_err_desc_text_get(void *data, Evas_Object *obj,
@@ -614,9 +612,8 @@ void setting_password_ug_popup_resp_cb(void *data, Evas_Object *obj,
 		}
 #if SUPPORT_SIMLOCK
 		char *diable_view_type = NULL;
-		if (ad->disable_item_type == SETTING_PW_TYPE_SIM_LOCK_OFF) {
+		if (ad->disable_item_type == SETTING_PW_TYPE_SIM_LOCK_OFF)
 			diable_view_type = "SETTING_PW_TYPE_SIM_LOCK_DISABLE";
-		}
 
 		if (diable_view_type) {
 			/*	Success to Operate */
