@@ -119,40 +119,40 @@ static void __screen_timeout_cb(void *data, Evas_Object *obj, void *event_info)
 
 static int get_max_inactivity_time_device_lock_handler(int *max_inactivity_time)
 {
-    dpm_context_h handle;
-    dpm_password_policy_h password_policy_handle;
+	dpm_context_h handle;
+	dpm_password_policy_h password_policy_handle;
 
-    handle = dpm_context_create();
-    if (handle == NULL) {
-        printf("Failed to create client handle\n");
-        return -1;
-    }
+	handle = dpm_context_create();
+	if (handle == NULL) {
+		printf("Failed to create client handle\n");
+		return -1;
+	}
 
-    password_policy_handle = dpm_context_acquire_password_policy(handle);
-    if (password_policy_handle == NULL) {
-        printf("Failed to create password policy handle\n");
-        return -1;
-    }
+	password_policy_handle = dpm_context_acquire_password_policy(handle);
+	if (password_policy_handle == NULL) {
+		printf("Failed to create password policy handle\n");
+		return -1;
+	}
 
-    if (dpm_password_get_max_inactivity_time_device_lock(password_policy_handle, max_inactivity_time) == 0) {
-        dpm_context_release_password_policy(handle, password_policy_handle);
-        dpm_context_destroy(handle);
-        return 0;
-    }
+	if (dpm_password_get_max_inactivity_time_device_lock(
+			password_policy_handle, max_inactivity_time) == 0) {
+		dpm_context_release_password_policy(handle,
+				password_policy_handle);
+		dpm_context_destroy(handle);
+		return 0;
+	}
 
-    dpm_context_release_password_policy(handle, password_policy_handle);
-    dpm_context_destroy(handle);
-    return -1;
+	dpm_context_release_password_policy(handle, password_policy_handle);
+	dpm_context_destroy(handle);
+	return -1;
 }
 
 static void _pdm_handle(int radio_num, int max_inactivity_time, Setting_GenGroupItem_Data *data)
 {
 	if (timeout_val_list[radio_num] <= max_inactivity_time)
-	{
 		setting_enable_genlist_item(data->item);
-	} else {
+	else
 		setting_disable_genlist_item(data->item);
-	}
 }
 
 static void setting_display_screen_timeout_popup(void *data)
@@ -183,14 +183,18 @@ static void setting_display_screen_timeout_popup(void *data)
 	evas_object_data_set(menu_glist, "radio", rdg);
 	ad->screen_timeout_rdg = rdg;
 
-	int radio_num =0;
+	int radio_num = 0;
 	SETTING_TRACE_ERROR(">>>>>>>>>>>>>> EMULATOR is on!!");
 	ad->data_backlight_always_on = setting_create_Gendial_field_1radio(
-			menu_glist, &(ad->itc_1text_1icon),
-			   __screen_timeout_cb,ad,
+			menu_glist,
+			&(ad->itc_1text_1icon),
+			__screen_timeout_cb,
+			ad,
 			SWALLOW_Type_1RADIO_RIGHT,
-			rdg, radio_num,		  /* Always ON */
-			timeout_str_list[radio_num], NULL);
+			rdg,
+			radio_num,			/* Always ON */
+			timeout_str_list[radio_num],
+			NULL);
 
 	if (ad->data_backlight_always_on) {
 		ad->data_backlight_always_on->userdata = ad;
@@ -205,10 +209,14 @@ static void setting_display_screen_timeout_popup(void *data)
 	radio_num++;
 
 	ad->data_backlight_15sec = setting_create_Gendial_field_1radio(
-			menu_glist, &(ad->itc_1text_1icon),
-			__screen_timeout_cb, ad,
+			menu_glist,
+			&(ad->itc_1text_1icon),
+			__screen_timeout_cb,
+			ad,
 			SWALLOW_Type_1RADIO_RIGHT,
-            rdg, radio_num, timeout_str_list[1],
+			rdg,
+			radio_num,
+			timeout_str_list[1],
 			NULL);
 	if (ad->data_backlight_15sec) {
 		ad->data_backlight_15sec->userdata = ad;
@@ -222,10 +230,14 @@ static void setting_display_screen_timeout_popup(void *data)
 	radio_num++;
 
 	ad->data_backlight_30sec = setting_create_Gendial_field_1radio(
-			menu_glist, &(ad->itc_1text_1icon),
-			__screen_timeout_cb, ad,
+			menu_glist,
+			&(ad->itc_1text_1icon),
+			__screen_timeout_cb,
+			ad,
 			SWALLOW_Type_1RADIO_RIGHT,
-            rdg, radio_num, timeout_str_list[2],
+			rdg,
+			radio_num,
+			timeout_str_list[2],
 			NULL);
 	if (ad->data_backlight_30sec) {
 		ad->data_backlight_30sec->userdata = ad;
@@ -238,44 +250,53 @@ static void setting_display_screen_timeout_popup(void *data)
 	radio_num++;
 
 	ad->data_backlight_1min = setting_create_Gendial_field_1radio(
-			menu_glist, &(ad->itc_1text_1icon),
-			__screen_timeout_cb, ad,
+			menu_glist,
+			&(ad->itc_1text_1icon),
+			__screen_timeout_cb,
+			ad,
 			SWALLOW_Type_1RADIO_RIGHT,
-            rdg, radio_num, timeout_str_list[3],
+			rdg, radio_num,
+			timeout_str_list[3],
 			NULL);
 	if (ad->data_backlight_1min) {
 		ad->data_backlight_1min->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_1min);
-
 		_pdm_handle(3, max_inactivity_time, ad->data_backlight_1min);
-} else {
+	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_1min is NULL");
 	}
-	
+
 	radio_num++;
 
 	ad->data_backlight_2min = setting_create_Gendial_field_1radio(
-			menu_glist, &(ad->itc_1text_1icon),
-			__screen_timeout_cb, ad,
+			menu_glist,
+			&(ad->itc_1text_1icon),
+			__screen_timeout_cb,
+			ad,
 			SWALLOW_Type_1RADIO_RIGHT,
-            rdg, radio_num, timeout_str_list[4],
+			rdg,
+			radio_num,
+			timeout_str_list[4],
 			NULL);
 	if (ad->data_backlight_2min) {
 		ad->data_backlight_2min->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_2min);
-
 		_pdm_handle(4, max_inactivity_time, ad->data_backlight_2min);
 	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_2min is NULL");
 	}
-	
+
 	radio_num++;
 
 	ad->data_backlight_5min = setting_create_Gendial_field_1radio(
-			menu_glist, &(ad->itc_1text_1icon),
-			__screen_timeout_cb, ad,
+			menu_glist,
+			&(ad->itc_1text_1icon),
+			__screen_timeout_cb,
+			ad,
 			SWALLOW_Type_1RADIO_RIGHT,
-            rdg, radio_num, timeout_str_list[5],
+			rdg,
+			radio_num,
+			timeout_str_list[5],
 			NULL);
 	if (ad->data_backlight_5min) {
 		ad->data_backlight_5min->userdata = ad;
@@ -289,10 +310,14 @@ static void setting_display_screen_timeout_popup(void *data)
 	radio_num++;
 
 	ad->data_backlight_10min = setting_create_Gendial_field_1radio(
-			menu_glist, &(ad->itc_1text_1icon),
-			__screen_timeout_cb, ad,
+			menu_glist,
+			&(ad->itc_1text_1icon),
+			__screen_timeout_cb,
+			ad,
 			SWALLOW_Type_1RADIO_RIGHT,
-            rdg, radio_num, timeout_str_list[6],
+			rdg,
+			radio_num,
+			timeout_str_list[6],
 			NULL);
 	if (ad->data_backlight_10min) {
 		ad->data_backlight_10min->userdata = ad;
@@ -310,21 +335,20 @@ static void setting_display_screen_timeout_popup(void *data)
 			ad->data_back->int_slp_setting_binded, &value, &err);
 
 	radio_num = 0;
-	if (0 == value) {
+	if (0 == value)
 		elm_radio_value_set(rdg, radio_num + 0);
-	} else if (15 == value) {
+	else if (15 == value)
 		elm_radio_value_set(rdg, radio_num + 1);
-	} else if (30 == value) {
+	else if (30 == value)
 		elm_radio_value_set(rdg, radio_num + 2);
-	} else if (60 == value) {
+	else if (60 == value)
 		elm_radio_value_set(rdg, radio_num + 3);
-	} else if (120 == value) {
+	else if (120 == value)
 		elm_radio_value_set(rdg, radio_num + 4);
-	} else if (300 == value) {
+	else if (300 == value)
 		elm_radio_value_set(rdg, radio_num + 5);
-	} else if (600 == value) {
+	else if (600 == value)
 		elm_radio_value_set(rdg, radio_num + 6);
-	}
 }
 
 #if !SUPPORT_SEPARATE_BRIGHTNESS
@@ -606,9 +630,9 @@ static int setting_display_main_destroy(void *cb)
 		SETTING_TRACE_ERROR("vconf ignore Failed %d", ret);
 
 
-	if (ad->nf_it) {
+	if (ad->nf_it)
 		ad->nf_it = NULL;
-	}
+
 	if (ad->ly_main != NULL) {
 		evas_object_del(ad->ly_main);
 		ad->ly_main = NULL;
