@@ -42,11 +42,10 @@ int check_usb_jack_status()
 	bool usb_connection = false;
 	int ret = runtime_info_get_value_bool(RUNTIME_INFO_KEY_USB_CONNECTED,
 			&usb_connection);
-	if (ret == RUNTIME_INFO_ERROR_NONE && usb_connection == true) {
+	if (ret == RUNTIME_INFO_ERROR_NONE && usb_connection == true)
 		return USB_CONNECTED; /*	USB is connected */
-	} else {
+	else
 		return USB_DISCONNECTED; /*  USB is disconnected */
-	}
 }
 
 setting_view *__get_connective_view_to_load(app_control_h service)
@@ -284,9 +283,8 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 	setting_retm_if(!ops, "ops == NULL");
 
 	connectiveUG = ops->priv;
-	if (connectiveUG) {
+	if (connectiveUG)
 		FREE(connectiveUG);
-	}
 }
 
 UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
