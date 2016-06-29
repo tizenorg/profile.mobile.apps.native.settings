@@ -252,9 +252,8 @@ static int setting_flightmode_main_create(void *cb)
 	int value, err, ret;
 	ret = setting_get_bool_slp_key(BOOL_SLP_SETTING_FLIGHT_MODE, &value,
 			&err);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("get vconf failed");
-	}
 
 	/* create flightmode_mode */
 	ad->data_flightmode = setting_create_Gendial_field_def(genlist,
@@ -275,9 +274,8 @@ static int setting_flightmode_main_create(void *cb)
 
 	ret = vconf_notify_key_changed(VCONFKEY_TELEPHONY_FLIGHT_MODE,
 			_flightmode_vconf_change_cb, ad);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("call vconf_notify_key_changed failed");
-	}
 
 	/* update info */
 	setting_view_flightmode_main.is_create = 1;
@@ -298,9 +296,8 @@ static int setting_flightmode_main_destroy(void *cb)
 
 	int ret = vconf_ignore_key_changed(VCONFKEY_TELEPHONY_FLIGHT_MODE,
 			_flightmode_vconf_change_cb);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("call vconf_ignore_key_changed failed");
-	}
 
 	if (ad->handle) {
 		int tapi_ret = tel_deinit(ad->handle);
