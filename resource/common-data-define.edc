@@ -19,8 +19,6 @@
  *
  */
 
-#ifndef __SETTING_COMMON_DATA_EDJ_DEFINE_H__
-#define __SETTING_COMMON_DATA_EDJ_DEFINE_H__
 /*Cnnot be fixed when select multiple resolution */
 #define ITEM_X_DEN (480.0)
 #define ITEM_Y_DEN (112.0)
@@ -101,7 +99,6 @@
 	action: STATE_SET "default" 0.0;\
 	target: "focus_bg";\
 	}\
-	 
 
 #define ADD_PART_CLICKED_SOUND_HEADER \
 	sounds {\
@@ -117,5 +114,3 @@
 	source: part;\
 	action: PLAY_SAMPLE "touch_sound" 1.0;\
 	}
-
-#endif				/* __SETTING_COMMON_DATA_EDJ_DEFINE_H__ */
