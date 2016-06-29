@@ -55,10 +55,8 @@ static void setting_font_rot_changed_cb(void *data, Evas_Object *obj,
 		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	SettingFontUG *ad = (SettingFontUG *) data;
-	if (ad == NULL || ad->win_get == NULL) {
-		return;
-	}
+	SettingFontUG *ad = (SettingFontUG *)data;
+	ret_if(ad == NULL || ad->win_get == NULL);
 	int change_ang = elm_win_rotation_get(ad->win_get);
 
 	switch (change_ang) {
@@ -93,7 +91,7 @@ char *get_example_style_text(const char *font_size, const char *font_type)
 			"<align=middle>abcde</align>",
 			"<align=middle>12345!@#$</align>");
 
-	return (char *) g_strdup(default_example_str);
+	return (char *)g_strdup(default_example_str);
 
 }
 static int _format_font_name_by_id(char *font_data, char *font_name_id,
@@ -146,7 +144,7 @@ char *_item_text_keystr2_get(void *data, Evas_Object *obj, const char *part)
 {
 	setting_retvm_if(data == NULL, NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *item_data =
-			(Setting_GenGroupItem_Data *) data;
+			(Setting_GenGroupItem_Data *)data;
 	char *ret_str = NULL;
 
 	if (!safeStrCmp(part, "elm.text")) {
@@ -157,12 +155,11 @@ char *_item_text_keystr2_get(void *data, Evas_Object *obj, const char *part)
 					item_data->keyStr2, temp,
 					FONT_BUF_SIZE);
 
-			if (ret == 0) { /* error condition */
+			if (ret == 0)	/* error condition */
 				SETTING_TRACE_ERROR("Error condition font");
-			}
 
-			SETTING_TRACE_DEBUG("temp : %s", (char * )temp);
-			ret_str = (char *) g_strdup(temp);
+			SETTING_TRACE_DEBUG("temp : %s", (char *)temp);
+			ret_str = (char *)g_strdup(temp);
 		}
 	}
 	/*SETTING_TRACE_END; */
@@ -232,8 +229,7 @@ static Evas_Object *_font_size_slider_get(void *data, Evas_Object *obj,
 					li_slider);
 			return layout;
 		}
-	}
-	else if (!safeStrCmp(part, "elm.text")) {
+	} else if (!safeStrCmp(part, "elm.text")) {
 		SETTING_TRACE("item_data->keyStr:%s",
 				item_data->keyStr);
 		SETTING_TRACE("item_data->sub_desc:%s",
@@ -268,14 +264,11 @@ static int setting_font_style_is_exist_string(const Eina_List *list,
 		const char *key)
 {
 	Eina_List *l = NULL;
-	if ((key == NULL) || (list == NULL)) {
-		return 0;
-	}
+	retv_if((key == NULL) || (list == NULL), 0);
 
-	for (l = (Eina_List *) list; l; l = eina_list_next(l)) {
-		if (l->data && (!strcmp((char *) l->data, key))) {
+	for (l = (Eina_List *)list; l; l = eina_list_next(l)) {
+		if (l->data && (!strcmp((char *)l->data, key)))
 			return 1;
-		}
 	}
 
 	return 0;
@@ -304,7 +297,7 @@ static Eina_List *__setting_font_main_available_list_get()
 
 	pat = FcPatternCreate();
 
-	os = FcObjectSetBuild(FC_FAMILY, FC_FILE, FC_FAMILYLANG, (char *) 0);
+	os = FcObjectSetBuild(FC_FAMILY, FC_FILE, FC_FAMILYLANG, (char *)0);
 
 	if (os) {
 		fs = FcFontList(font_config, pat, os);
@@ -351,25 +344,23 @@ static Eina_List *__setting_font_main_available_list_get()
 							!= FcResultMatch) {
 						break;
 					}
-					family_result = (char *) family;
+					family_result = (char *)family;
 
 					/* Find proper family name for current locale. */
 					while (locale && family && lang) {
 						if (!strncmp(locale,
-								(char *) lang,
-								strlen(
-										(char *) lang))) {
-							family_result = (char *) family;
+								(char *)lang,
+								strlen((char *)lang))) {
+							family_result = (char *)family;
 							break;
 						}
 
 						/* I will set english as default family language. */
 						/* If there is no proper family language for current locale, */
 						/* we have to show the english family name. */
-						if (!strcmp((char *) lang,
-								"en")) {
-							family_result = (char *) family;
-						}
+						if (!strcmp((char *)lang, "en"))
+							family_result = (char *)family;
+
 						id++;
 						if (FcPatternGetString(
 								fs->fonts[j],
@@ -392,7 +383,7 @@ static Eina_List *__setting_font_main_available_list_get()
 									family_result)) {
 						list = eina_list_sorted_insert(
 								list,
-								(Eina_Compare_Cb) safeStrCmp,
+								(Eina_Compare_Cb)safeStrCmp,
 								strdup(
 										family_result));
 						SETTING_TRACE_DEBUG(
@@ -415,15 +406,15 @@ static Eina_List *__setting_font_main_available_list_get()
 int get_font_name_id(char *font_data, char *temp, int bufsize)
 {
 	/*SETTING_TRACE("font data : %s", (char*)font_data); */
-	if (safeStrCmp(font_data, "Choco cooky") == 0) {
+	if (safeStrCmp(font_data, "Choco cooky") == 0)
 		snprintf(temp, bufsize, "%s", "IDS_ST_BODY_CHOCO_COOKY");
-	} else if (safeStrCmp(font_data, "Cool jazz") == 0) {
+	else if (safeStrCmp(font_data, "Cool jazz") == 0)
 		snprintf(temp, bufsize, "%s", "IDS_ST_BODY_COOL_JAZZ");
-	} else if (safeStrCmp(font_data, "Rosemary") == 0) {
+	else if (safeStrCmp(font_data, "Rosemary") == 0)
 		snprintf(temp, bufsize, "%s", "IDS_ST_BODY_FONTSTYLE_ROSEMARY");
-	} else {
+	else
 		snprintf(temp, bufsize, "%s", font_data);
-	}
+
 	return 1;
 }
 
@@ -431,29 +422,27 @@ int get_font_name_str(char *font_type_name, char *trans_font_type_name,
 		int bufsize)
 {
 	/*SETTING_TRACE_BEGIN; */
-	if (safeStrCmp(font_type_name, "Choco cooky") == 0) {
+
+	if (safeStrCmp(font_type_name, "Choco cooky") == 0)
 		snprintf(trans_font_type_name, bufsize, "%s",
 				_("IDS_ST_BODY_CHOCO_COOKY"));
-		/*SETTING_TRACE("%s", trans_font_type_name); */
-	} else if (safeStrCmp(font_type_name, "Cool jazz") == 0) {
+	else if (safeStrCmp(font_type_name, "Cool jazz") == 0)
 		snprintf(trans_font_type_name, bufsize, "%s",
 				_("IDS_ST_BODY_COOL_JAZZ"));
-		/*SETTING_TRACE("%s", trans_font_type_name); */
-	} else if (safeStrCmp(font_type_name, "Rosemary") == 0) {
+	else if (safeStrCmp(font_type_name, "Rosemary") == 0)
 		snprintf(trans_font_type_name, bufsize, "%s",
 				_("IDS_ST_BODY_FONTSTYLE_ROSEMARY"));
-		/*SETTING_TRACE("%s", trans_font_type_name); */
-	} else {
+	else
 		snprintf(trans_font_type_name, bufsize, "%s", font_type_name);
-		/*SETTING_TRACE("%s", trans_font_type_name); */
-	}
+
+	/*SETTING_TRACE("%s", trans_font_type_name); */
 	return 1;
 }
 
 static void __setting_progress_popup_cb(void *data, Evas_Object *obj,
 		void *event_info)
 {
-	SettingFontUG *ad = (SettingFontUG *) data;
+	SettingFontUG *ad = (SettingFontUG *)data;
 	SETTING_TRACE("send ug_destroy_me by callback");
 	if (ad->main_popup) {
 		evas_object_del(ad->main_popup);
@@ -472,16 +461,16 @@ static Eina_Bool __slide_timer(void *data)
 	SettingFontUG *ad = list_item->userdata;
 
 	double val = elm_slider_value_get(list_item->eo_check);
-	int value = (int) (val + 0.5);
+	int value = (int)(val + 0.5);
 	SETTING_TRACE("val:%f", val);
 	elm_slider_value_set(list_item->eo_check, value);
 	list_item->chk_status = elm_slider_value_get(list_item->eo_check);
 
-	if (ad->init_font_size == list_item->chk_status) {
+	if (ad->init_font_size == list_item->chk_status)
 		ad->size_change_flag = FALSE;
-	} else {
+	else
 		ad->size_change_flag = TRUE;
-	}
+
 	ad->ret_font_size = list_item->chk_status;
 
 	if (ad->font_example) {
@@ -493,8 +482,8 @@ static Eina_Bool __slide_timer(void *data)
 		elm_entry_entry_set(ad->font_example->eo_check,
 				ad->font_example->sub_desc);
 
-		elm_genlist_item_fields_update(ad->font_example->item, "elm.text",ELM_GENLIST_ITEM_FIELD_ALL);
-
+		elm_genlist_item_fields_update(ad->font_example->item,
+				"elm.text", ELM_GENLIST_ITEM_FIELD_ALL);
 	}
 
 	/* finalize */
@@ -516,7 +505,7 @@ static void __font_size_slider_value_change_cb(void *data, Evas_Object *obj,
 		ecore_timer_del(ad->timer);
 		ad->timer = NULL;
 	}
-	ad->timer = ecore_timer_add(0.2, (Ecore_Task_Cb) __slide_timer,
+	ad->timer = ecore_timer_add(0.2, (Ecore_Task_Cb)__slide_timer,
 			list_item);
 }
 
@@ -530,22 +519,22 @@ void setting_font_main_list_sel_cb(void *data, Evas_Object *obj,
 
 	/* error check */
 	retm_if(event_info == NULL, "Invalid argument: event info is NULL");
-	Elm_Object_Item *subitem = (Elm_Object_Item *) event_info;
+	Elm_Object_Item *subitem = (Elm_Object_Item *)event_info;
 	elm_genlist_item_selected_set(subitem, 0);
 	Setting_GenGroupItem_Data *data_subItem = elm_object_item_data_get(
 			subitem);
 	ret_if(NULL == data_subItem);
 
-	SettingFontUG *ad = (SettingFontUG *) data;
+	SettingFontUG *ad = (SettingFontUG *)data;
 
 	/*	if not change, return */
 	if (ad->prev_font == data_subItem->chk_status) {
 		SETTING_TRACE("NOT CHANGED ");
 		return;
 	}
-	if (ad->font_change_status == SELECTED_FONT_CHANGE_IN_PROCESS) {
+	if (ad->font_change_status == SELECTED_FONT_CHANGE_IN_PROCESS)
 		return;
-	}
+
 	ad->subitem = data_subItem;
 	/* Fix PLM P131016-04680
 	 when user check the option, make sure the radio button is checked for
@@ -566,7 +555,7 @@ void setting_font_main_list_sel_cb(void *data, Evas_Object *obj,
 	 * to store "UDMDu4"*/
 
 	if (ad->font_type) {
-		ad->font_type->sub_desc = (char *) g_strdup(
+		ad->font_type->sub_desc = (char *)g_strdup(
 				ad->subitem->keyStr);
 		elm_object_item_data_set(ad->font_type->item, ad->font_type);
 		elm_genlist_item_update(ad->font_type->item);
@@ -582,21 +571,21 @@ void setting_font_main_list_sel_cb(void *data, Evas_Object *obj,
 		elm_entry_entry_set(ad->font_example->eo_check,
 				ad->font_example->sub_desc);
 
-		elm_genlist_item_fields_update(ad->font_example->item, "elm.text",ELM_GENLIST_ITEM_FIELD_ALL);
+		elm_genlist_item_fields_update(ad->font_example->item,
+				"elm.text", ELM_GENLIST_ITEM_FIELD_ALL);
 	}
 
-	if (ad->init_font_type == data_subItem->chk_status) {
+	if (ad->init_font_type == data_subItem->chk_status)
 		ad->type_change_flag = FALSE;
-	} else {
+	else
 		ad->type_change_flag = TRUE;
-	}
 
 	/* sub - descc */
 	char *font_name = ad->subitem->sub_desc;
 
 	ad->prev_font = ad->subitem->chk_status;
 	G_FREE(ad->font_name);
-	ad->font_name = (char *) g_strdup(_(font_name));
+	ad->font_name = (char *)g_strdup(_(font_name));
 	SETTING_TRACE("ad->subitem->keyStr2 = %s", font_name);
 
 	/*when the expandlist item is NOT expanded, the subitem object is not
@@ -613,7 +602,7 @@ static void __font_vconf_change_cb(keynode_t *key, void *data)
 
 	setting_retm_if(NULL == key, "key is NULL");
 	setting_retm_if(NULL == data, "data is NULL");
-	SettingFontUG *ad = (SettingFontUG *) data;
+	SettingFontUG *ad = (SettingFontUG *)data;
 
 	char *vconf_name = vconf_keynode_get_name(key);
 
@@ -626,7 +615,7 @@ static void __font_vconf_change_cb(keynode_t *key, void *data)
 			SETTING_TRACE("system-setting call failed with error code %d",
 					ret);
 		}
-		SETTING_TRACE("---------------- system-setting call : (%s) ",
+		SETTING_TRACE("---------------- system-setting call : (%s)",
 				font_type_name);
 		char *default_font_name = NULL;
 		default_font_name = _get_default_font();
@@ -641,7 +630,7 @@ static void __font_vconf_change_cb(keynode_t *key, void *data)
 
 		if (ad->font_type) {
 			G_FREE(ad->font_type->sub_desc);
-			ad->font_type->sub_desc = (char *) g_strdup(
+			ad->font_type->sub_desc = (char *)g_strdup(
 					trans_font_type_name);
 			elm_object_item_data_set(ad->font_type->item,
 					ad->font_type);
@@ -684,15 +673,15 @@ static void __font_vconf_change_cb(keynode_t *key, void *data)
 
 #define SLIDER_MAX_VALUE 4
 
-#define SLIDER_START_POINT_X( ad )	_slider_startpoint_x(ad)
-#define SLIDER_END_POINT_X( ad ) (_slider_get_width(ad) - SLIDER_START_POINT_X(ad))
+#define SLIDER_START_POINT_X(ad)	_slider_startpoint_x(ad)
+#define SLIDER_END_POINT_X(ad) (_slider_get_width(ad) - SLIDER_START_POINT_X(ad))
 #define SLIDER_LENGTH(ad) (SLIDER_END_POINT_X(ad) - SLIDER_START_POINT_X(ad))
 
 static int _slider_get_width(void *data)
 {
 	SETTING_TRACE_BEGIN;
 
-	SettingFontUG *ad = (SettingFontUG *) data;
+	SettingFontUG *ad = (SettingFontUG *)data;
 
 	int x, y, w, h;
 	elm_win_screen_size_get(ad->win_get, &x, &y, &w, &h);
@@ -799,7 +788,7 @@ static void _slider_mouse_cb(void *data, Evas_Object *obj, void *event_info)
 		ecore_timer_del(ad->timer);
 		ad->timer = NULL;
 	}
-	ad->timer = ecore_timer_add(0.2, (Ecore_Task_Cb) __slide_timer,
+	ad->timer = ecore_timer_add(0.2, (Ecore_Task_Cb)__slide_timer,
 			list_item);
 	return;
 }
@@ -807,7 +796,7 @@ static void _slider_mouse_cb(void *data, Evas_Object *obj, void *event_info)
 static Eina_Bool __font_change_call(void *data)
 {
 	SETTING_TRACE_BEGIN;
-	SettingFontUG *ad = (SettingFontUG *) data;
+	SettingFontUG *ad = (SettingFontUG *)data;
 
 	/* logic3 */
 	if (ad->size_change_flag == TRUE) {
@@ -837,7 +826,7 @@ static void setting_font_done_click_cb(void *data, Evas_Object *obj,
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");
-	SettingFontUG *ad = (SettingFontUG *) data;
+	SettingFontUG *ad = (SettingFontUG *)data;
 
 	SETTING_TRACE_DEBUG("ad->size_change_flag = %d", ad->size_change_flag);
 	SETTING_TRACE_DEBUG("ad->type_change_flag = %d", ad->type_change_flag);
@@ -858,7 +847,7 @@ static void setting_font_done_click_cb(void *data, Evas_Object *obj,
 
 		/* ecore timer for change actual font */
 		ad->font_type_timer = ecore_timer_add(1,
-				(Ecore_Task_Cb) __font_change_call, ad);
+				(Ecore_Task_Cb)__font_change_call, ad);
 	} else {
 		/* Send destroy request */
 		ug_destroy_me(ad->ug);
@@ -871,7 +860,7 @@ static void setting_font_cancel_click_cb(void *data, Evas_Object *obj,
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");
-	SettingFontUG *ad = (SettingFontUG *) data;
+	SettingFontUG *ad = (SettingFontUG *)data;
 
 	/* Send destroy request */
 	ug_destroy_me(ad->ug);
@@ -882,26 +871,26 @@ static void __setting_get_font_size_str(void *data, int size)
 	SETTING_TRACE_BEGIN;
 
 	ret_if(data == NULL);
-	SettingFontUG *ad = (SettingFontUG *) data;
+	SettingFontUG *ad = (SettingFontUG *)data;
 
 	switch (size) {
 	case SYSTEM_SETTINGS_FONT_SIZE_SMALL:
-		ad->font_size_str = (char *) g_strdup(STR_LABEL_FONT_SIZE_SMALL);
+		ad->font_size_str = (char *)g_strdup(STR_LABEL_FONT_SIZE_SMALL);
 		break;
 	case SYSTEM_SETTINGS_FONT_SIZE_NORMAL:
-		ad->font_size_str = (char *) g_strdup(STR_LABEL_FONT_SIZE_NORMAL);
+		ad->font_size_str = (char *)g_strdup(STR_LABEL_FONT_SIZE_NORMAL);
 		break;
 	case SYSTEM_SETTINGS_FONT_SIZE_LARGE:
-		ad->font_size_str = (char *) g_strdup(STR_LABEL_FONT_SIZE_LARGE);
+		ad->font_size_str = (char *)g_strdup(STR_LABEL_FONT_SIZE_LARGE);
 		break;
 	case SYSTEM_SETTINGS_FONT_SIZE_HUGE:
-		ad->font_size_str = (char *) g_strdup(STR_LABEL_FONT_SIZE_HUGE);
+		ad->font_size_str = (char *)g_strdup(STR_LABEL_FONT_SIZE_HUGE);
 		break;
 	case SYSTEM_SETTINGS_FONT_SIZE_GIANT:
-		ad->font_size_str = (char *) g_strdup(STR_LABEL_FONT_SIZE_GIANT);
+		ad->font_size_str = (char *)g_strdup(STR_LABEL_FONT_SIZE_GIANT);
 		break;
 	default:
-		ad->font_size_str = (char *) g_strdup(STR_LABEL_FONT_SIZE_NORMAL);
+		ad->font_size_str = (char *)g_strdup(STR_LABEL_FONT_SIZE_NORMAL);
 	}
 }
 
@@ -911,7 +900,7 @@ static void __setting_get_font_type_str(void *data, char *font_data)
 	ret_if(data == NULL);
 	ret_if(font_data == NULL);
 
-	SettingFontUG *ad = (SettingFontUG *) data;
+	SettingFontUG *ad = (SettingFontUG *)data;
 
 	char *pos = font_data;
 	char new_name[FONT_BUF_SIZE];
@@ -947,7 +936,7 @@ static int setting_font_main_create(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingFontUG *ad = (SettingFontUG *) cb;
+	SettingFontUG *ad = (SettingFontUG *)cb;
 
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
 			&(ad->itc_1text_1icon_2));
@@ -969,7 +958,7 @@ static int setting_font_main_create(void *cb)
 			ad->win_main_layout, ad->win_get, "IDS_ST_BODY_FONT",
 			_("IDS_ST_BUTTON_BACK"),
 			NULL,
-			(setting_call_back_func) __setting_font_main_click_softkey_back_cb,
+			(setting_call_back_func)__setting_font_main_click_softkey_back_cb,
 			NULL, ad, &ad->genlist, &ad->navibar);
 	ad->navi_it_font = elm_naviframe_top_item_get(ad->navibar);
 
@@ -1019,11 +1008,11 @@ static int setting_font_main_create(void *cb)
 			NULL, ad, SWALLOW_Type_INVALID, NULL,
 			NULL, 0, NULL, default_example_str, NULL);
 
-	if (ad->font_example) {
+	if (ad->font_example)
 		__BACK_POINTER_SET(ad->font_example);
-	} else {
+	else
 		SETTING_TRACE_ERROR("ad->font_example is NULL");
-	}
+
 	G_FREE(default_example_str);
 
 	/*2.Font Size..... */
@@ -1077,8 +1066,7 @@ static int setting_font_main_create(void *cb)
 				"Failed to call system_settings_get_value_string with error cdoe %d",
 				ret);
 		ad->font_name = _get_default_font();
-	}
-	else{
+	} else{
 		SETTING_TRACE_DEBUG("ad->font_name dfrom vconf :%s", ad->font_name);
 	}
 
@@ -1090,15 +1078,14 @@ static int setting_font_main_create(void *cb)
 	if (NULL != default_font_name) {
 		/*char font_name_dispaly[FONT_BUF_SIZE] = {0,}; */
 		SETTING_TRACE_DEBUG("default_font_name:%s", default_font_name);
-		Setting_GenGroupItem_Data *item_data =
-				(Setting_GenGroupItem_Data *) calloc(
-				1, sizeof(Setting_GenGroupItem_Data));
+		Setting_GenGroupItem_Data *item_data = (Setting_GenGroupItem_Data *)
+				calloc(1, sizeof(Setting_GenGroupItem_Data));
 		setting_retvm_if(!item_data, SETTING_RETURN_SUCCESS,
 				"calloc failed");
-		item_data->keyStr2 = (char *) g_strdup(
+		item_data->keyStr2 = (char *)g_strdup(
 				SETTING_DEFAULT_FONT_TYPE);/*for display */
 		/*for tts reading */
-		item_data->keyStr = (char *) g_strdup(
+		item_data->keyStr = (char *)g_strdup(
 				_(SETTING_DEFAULT_FONT_TYPE));
 		item_data->swallow_type = SWALLOW_Type_1RADIO_RIGHT;
 		item_data->chk_status = i;
@@ -1114,16 +1101,15 @@ static int setting_font_main_create(void *cb)
 		if (item_data) {
 			item_data->userdata = ad;
 			if (!safeStrCmp(ad->font_name,
-					(const char *) item_data->sub_desc)) {
+					(const char *)item_data->sub_desc)) {
 				matched_font = i;
 			}
 		}
 		i++;
 		ad->font_type_list = eina_list_append(ad->font_type_list,
 				item_data);
-	}
-	else {
-		SETTING_TRACE_DEBUG("default_font_name is NULL");		
+	} else {
+		SETTING_TRACE_DEBUG("default_font_name is NULL");
 	}
 
 	Eina_List *font_list = NULL;
@@ -1132,30 +1118,30 @@ static int setting_font_main_create(void *cb)
 	font_list = __setting_font_main_available_list_get();
 	EINA_LIST_FOREACH(font_list, l, font_data)
 	{
-		if (safeStrCmp(default_font_name, (char *) font_data) != 0) {
+		if (safeStrCmp(default_font_name, (char *)font_data) != 0) {
 			char keyStr[FONT_BUF_SIZE] = { 0, };
-			get_font_name_str((char *) font_data, keyStr,
+			get_font_name_str((char *)font_data, keyStr,
 					FONT_BUF_SIZE);
 			char temp[FONT_BUF_SIZE] = { 0, };
 			/*int ret = get_font_name_tag(font_data, temp,
 			 * FONT_BUF_SIZE); */
-			get_font_name_id((char *) font_data, temp,
+			get_font_name_id((char *)font_data, temp,
 					FONT_BUF_SIZE);
 			SETTING_TRACE_DEBUG("font data : %s",
-					(char * )font_data);
-			Setting_GenGroupItem_Data *item_data = (Setting_GenGroupItem_Data *) calloc(
+					(char *)font_data);
+			Setting_GenGroupItem_Data *item_data = (Setting_GenGroupItem_Data *)calloc(
 					1, sizeof(Setting_GenGroupItem_Data));
 			setting_retvm_if(!item_data, SETTING_RETURN_SUCCESS,
 					"calloc failed");
 			/*for display */
-			item_data->keyStr2 = (char *) g_strdup(temp);
+			item_data->keyStr2 = (char *)g_strdup(temp);
 			/*for tts reading */
-			item_data->keyStr = (char *) g_strdup(keyStr);
+			item_data->keyStr = (char *)g_strdup(keyStr);
 			item_data->swallow_type = SWALLOW_Type_1RADIO_RIGHT;
 			item_data->chk_status = i;
 			item_data->rgd = rgd;
 			item_data->chk_change_cb = NULL;
-			item_data->sub_desc = strdup((char *) font_data);
+			item_data->sub_desc = strdup((char *)font_data);
 			item_data->item = elm_genlist_item_append(ad->genlist,
 					&(ad->itc_1text_1icon_2), item_data,
 					NULL, ELM_GENLIST_ITEM_NONE,
@@ -1166,7 +1152,7 @@ static int setting_font_main_create(void *cb)
 				/*if (!safeStrCmp(ad->font_name,
 				 * (const char*)font_data)) { */
 				if (!safeStrCmp(ad->font_name,
-						(const char *) item_data->sub_desc)) {
+						(const char *)item_data->sub_desc)) {
 					matched_font = i;
 				}
 			}
@@ -1189,14 +1175,14 @@ static int setting_font_main_create(void *cb)
 
 	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_FONT_NAME,
 			__font_vconf_change_cb, ad);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("call vconf_notify_key_changed failed");
-	}
+
 	ret = vconf_notify_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_FONT_SIZE,
 			__font_vconf_change_cb, ad);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("call vconf_notify_key_changed failed");
-	}
+
 	/*__setting_font_main_genlist_item_create(ad); */
 
 	evas_font_reinit();
@@ -1215,18 +1201,18 @@ static int setting_font_main_destroy(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingFontUG *ad = (SettingFontUG *) cb;
+	SettingFontUG *ad = (SettingFontUG *)cb;
 	int ret = vconf_ignore_key_changed(
 			VCONFKEY_SETAPPL_ACCESSIBILITY_FONT_NAME,
 			__font_vconf_change_cb);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("call vconf_ignore_key_changed failed");
-	}
+
 	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_FONT_SIZE,
 			__font_vconf_change_cb);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("call vconf_ignore_key_changed failed");
-	}
+
 	if (ad->font_name) {
 		G_FREE(ad->font_name);
 		ad->font_name = NULL;
@@ -1261,9 +1247,9 @@ static int setting_font_main_destroy(void *cb)
 		evas_object_del(ad->ly_main);
 		ad->ly_main = NULL;
 	}
-	if (ad->navi_it_font != NULL) {
+	if (ad->navi_it_font != NULL)
 		ad->navi_it_font = NULL;
-	}
+
 	if (ad->font_type_list != NULL) {
 		eina_list_free(ad->font_type_list);
 		ad->font_type_list = NULL;
@@ -1280,7 +1266,7 @@ static int setting_font_main_update(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingFontUG *ad = (SettingFontUG *) cb;
+	SettingFontUG *ad = (SettingFontUG *)cb;
 
 	if (ad->ly_main != NULL) {
 		evas_object_show(ad->ly_main);
@@ -1290,13 +1276,12 @@ static int setting_font_main_update(void *cb)
 		int ret = setting_get_int_slp_key(
 				INT_SLP_SETTING_ACCESSIBILITY_FONT_SIZE, &value,
 				&err);
-		if (ret != 0) {
+		if (ret != 0)
 			SETTING_TRACE_ERROR("get vconf failed");
-		}
 
 		if (ad->font_size) {
 			G_FREE(ad->font_size->sub_desc);
-			ad->font_size->sub_desc = (char *) g_strdup(
+			ad->font_size->sub_desc = (char *)g_strdup(
 					__get_font_size_str(value));
 			elm_object_item_data_set(ad->font_size->item,
 					ad->font_size);
@@ -1305,9 +1290,9 @@ static int setting_font_main_update(void *cb)
 		/* setting_font_update_vconf_key(ad, SETTING_VCONF_INT_TYPE,
 		 * INT_SLP_SETTING_LCD_TIMEOUT_NORMAL); */
 	}
-	if (ad->font_type) {
+	if (ad->font_type)
 		elm_genlist_item_update(ad->font_type->item);
-	}
+
 	return SETTING_RETURN_SUCCESS;
 }
 
@@ -1316,11 +1301,10 @@ static int setting_font_main_cleanup(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingFontUG *ad = (SettingFontUG *) cb;
+	SettingFontUG *ad = (SettingFontUG *)cb;
 
-	if (ad->ly_main != NULL) {
+	if (ad->ly_main != NULL)
 		evas_object_hide(ad->ly_main);
-	}
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -1338,13 +1322,12 @@ static Eina_Bool __setting_font_main_click_softkey_back_cb(void *data,
 	/* error check */
 	retv_if(data == NULL, EINA_FALSE);
 
-	SettingFontUG *ad = (SettingFontUG *) data;
+	SettingFontUG *ad = (SettingFontUG *)data;
 
 	if (ad->viewmode == FONT_SEL_VIEW_APPCONTROL) {
 		app_control_h svc;
-		if (app_control_create(&svc)) {
+		if (app_control_create(&svc))
 			return EINA_FALSE;
-		}
 
 		app_control_add_extra_data(svc, "category", "FontType");
 		app_control_add_extra_data(svc, "FontType", ad->font_name);
@@ -1365,9 +1348,8 @@ static Eina_Bool __setting_font_main_click_softkey_back_cb(void *data,
 				ad->ret_font_size, &err);
 		setting_retvm_if(ret == -1, EINA_FALSE, "Failed to set vconf");
 
-		if (app_control_create(&svc)) {
+		if (app_control_create(&svc))
 			return EINA_FALSE;
-		}
 
 		char font_size[SETTING_FONT_MAX_LEN] = { 0, };
 		snprintf(font_size, SETTING_FONT_MAX_LEN, "%d",
