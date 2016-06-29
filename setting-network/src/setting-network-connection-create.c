@@ -1199,11 +1199,13 @@ static int setting_network_connection_create(void *cb)
 	if (ad->data_auth_type) {
 		ad->data_auth_type->userdata = ad;
 		__BACK_POINTER_SET(ad->data_auth_type);
+
+		ad->item_above_user_name = ad->data_auth_type->item;
 	} else {
 		SETTING_TRACE_ERROR("ad->data_auth_type is NULL");
 	}
 
-	ad->item_above_user_name = ad->data_auth_type->item;
+	
 	ad->is_show_user = 0;
 	if (CONNECTION_CELLULAR_AUTH_TYPE_NONE != ad->chkType) {
 		/* [UI] User ID */
@@ -1253,11 +1255,13 @@ static int setting_network_connection_create(void *cb)
 			ad->data_pwd->win_main = ad->win_get;
 			ad->data_pwd->isSinglelineFlag = TRUE;
 			ad->is_show_user = 1;
+
+			ad->item_above_proxy_add = ad->data_pwd->item;
 		} else {
 			SETTING_TRACE_ERROR("ad->data_pwd is NULL");
 		}
 
-		ad->item_above_proxy_add = ad->data_pwd->item;
+		
 	}
 
 	/* [UI] Proxy address */

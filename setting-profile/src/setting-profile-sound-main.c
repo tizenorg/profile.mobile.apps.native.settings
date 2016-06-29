@@ -657,6 +657,8 @@ static void __get_lite_main_list(void *data)
 	ret_if(!data);
 	SettingProfileUG *ad = (SettingProfileUG *)data;
 
+
+
 	int vconf_value = 0;
 	char *sub_desc = NULL;
 	char *left_icon = NULL;
@@ -787,7 +789,8 @@ static void __get_lite_main_list(void *data)
 	__BACK_POINTER_SET(ad->data_call_volume);
 
 	/* Disable Call Volume slider if Silent ringtone is selected */
-	if( !safeStrCmp(ad->data_call_alert_tone->sub_desc, "Silent")){
+	if(ad->data_call_volume && ad->data_call_alert_tone &&
+			!safeStrCmp(ad->data_call_alert_tone->sub_desc, "Silent")){
 		elm_object_item_disabled_set(ad->data_call_volume->item, EINA_TRUE);
 		elm_object_disabled_set(ad->data_call_volume->eo_check, EINA_TRUE);
 	}
@@ -851,7 +854,8 @@ static void __get_lite_main_list(void *data)
 	__BACK_POINTER_SET(ad->data_noti_volume);
 
 	/* Disable Notification slider if Silent ringtone is selected */
-	if( !safeStrCmp(ad->data_msg_alert_tone->sub_desc, "Silent")){
+	if( ad->data_noti_volume && ad->data_msg_alert_tone &&
+				!safeStrCmp(ad->data_msg_alert_tone->sub_desc, "Silent")){
 		elm_object_item_disabled_set(ad->data_noti_volume->item, EINA_TRUE);
 		elm_object_disabled_set(ad->data_noti_volume->eo_check, EINA_TRUE);
 	}

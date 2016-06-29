@@ -195,11 +195,13 @@ static void setting_display_screen_timeout_popup(void *data)
 	if (ad->data_backlight_always_on) {
 		ad->data_backlight_always_on->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_always_on);
+
+
+		_pdm_handle(0, max_inactivity_time, ad->data_backlight_always_on);
 	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_always_on is NULL");
 	}
 
-	_pdm_handle(0, max_inactivity_time, ad->data_backlight_always_on);
 	radio_num++;
 
 	ad->data_backlight_15sec = setting_create_Gendial_field_1radio(
@@ -211,10 +213,12 @@ static void setting_display_screen_timeout_popup(void *data)
 	if (ad->data_backlight_15sec) {
 		ad->data_backlight_15sec->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_15sec);
+
+		_pdm_handle(1, max_inactivity_time, ad->data_backlight_15sec);
 	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_15sec is NULL");
 	}
-	_pdm_handle(1, max_inactivity_time, ad->data_backlight_15sec);
+
 	radio_num++;
 
 	ad->data_backlight_30sec = setting_create_Gendial_field_1radio(
@@ -226,10 +230,11 @@ static void setting_display_screen_timeout_popup(void *data)
 	if (ad->data_backlight_30sec) {
 		ad->data_backlight_30sec->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_30sec);
+
+		_pdm_handle(2, max_inactivity_time, ad->data_backlight_30sec);
 	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_30sec is NULL");
 	}
-	_pdm_handle(2, max_inactivity_time, ad->data_backlight_30sec);
 	radio_num++;
 
 	ad->data_backlight_1min = setting_create_Gendial_field_1radio(
@@ -241,10 +246,12 @@ static void setting_display_screen_timeout_popup(void *data)
 	if (ad->data_backlight_1min) {
 		ad->data_backlight_1min->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_1min);
-	} else {
+
+		_pdm_handle(3, max_inactivity_time, ad->data_backlight_1min);
+} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_1min is NULL");
 	}
-	_pdm_handle(3, max_inactivity_time, ad->data_backlight_1min);
+	
 	radio_num++;
 
 	ad->data_backlight_2min = setting_create_Gendial_field_1radio(
@@ -256,10 +263,12 @@ static void setting_display_screen_timeout_popup(void *data)
 	if (ad->data_backlight_2min) {
 		ad->data_backlight_2min->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_2min);
+
+		_pdm_handle(4, max_inactivity_time, ad->data_backlight_2min);
 	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_2min is NULL");
 	}
-	_pdm_handle(4, max_inactivity_time, ad->data_backlight_2min);
+	
 	radio_num++;
 
 	ad->data_backlight_5min = setting_create_Gendial_field_1radio(
@@ -271,10 +280,12 @@ static void setting_display_screen_timeout_popup(void *data)
 	if (ad->data_backlight_5min) {
 		ad->data_backlight_5min->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_5min);
+
+
+		_pdm_handle(5, max_inactivity_time, ad->data_backlight_5min);
 	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_5min is NULL");
 	}
-	_pdm_handle(5, max_inactivity_time, ad->data_backlight_5min);
 	radio_num++;
 
 	ad->data_backlight_10min = setting_create_Gendial_field_1radio(
@@ -286,10 +297,12 @@ static void setting_display_screen_timeout_popup(void *data)
 	if (ad->data_backlight_10min) {
 		ad->data_backlight_10min->userdata = ad;
 		__BACK_POINTER_SET(ad->data_backlight_10min);
+
+		_pdm_handle(6, max_inactivity_time, ad->data_backlight_10min);
 	} else {
 		SETTING_TRACE_ERROR("ad->data_backlight_10min is NULL");
 	}
-	_pdm_handle(6, max_inactivity_time, ad->data_backlight_10min);
+
 	radio_num++;
 
 	/* update radio */

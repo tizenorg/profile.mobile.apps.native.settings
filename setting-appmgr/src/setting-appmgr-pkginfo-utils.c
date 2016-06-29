@@ -345,28 +345,6 @@ static UNUSED int _appmgrUg_pkg_get_pkg_size(int req_id, const char *pkg_type,
 	return 0;
 }
 
-static inline void appmgrUg_pkg_get_pkg_size(appmgr_pkginfo *info)
-{
-	int ret;
-
-	ret_if(NULL == info);
-
-	if (info->pc_size)
-		pkgmgr_client_free(info->pc_size);
-
-	info->pc_size = pkgmgr_client_new(PC_REQUEST);
-	if (NULL == info->pc_size) {
-		SETTING_TRACE_ERROR("pkgmgr_client_new() Fail");
-		return;
-	}
-	/*
-	 @FIX ME add correct callback handler for this pkgmgr call
-	 ret = pkgmgr_client_get_size(info->pc_size, info->pkgid,
-	 PM_GET_TOTAL_SIZE,
-	 NULL, info);
-	 */
-	warn_if(ret, "pkgmgr_client_get_size(%s) Fail(%d)", info->pkgid, ret);
-}
 
 static void _get_cache_cb(const char *package_id,
 		const package_size_info_h size_info, void *data)
