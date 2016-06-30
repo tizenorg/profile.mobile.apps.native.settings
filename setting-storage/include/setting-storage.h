@@ -77,6 +77,8 @@ struct _SettingStorageUG {
 	Evas_Object *lo_main;
 	Evas_Object *gl_main;
 
+	Ecore_Timer *event_freeze_timer;
+
 	/* storage setting */
 	Evas_Object *popup;
 

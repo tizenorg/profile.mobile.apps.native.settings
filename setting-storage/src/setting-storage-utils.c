@@ -161,31 +161,41 @@ void storageUg_fail_popup(SettingStorageUG *ad)
 	SETTING_STORAGE_POPUP_TIMER, FALSE, FALSE, 0);
 }
 
-void storageUg_manage_app_ug(SettingStorageUG *ad)
+
+
+
+static Eina_Bool storageUg_manage_apps_freeze_event_timer_cb(
+		void *cb)
 {
-	app_control_h svc;
-	ui_gadget_h ug;
-	struct ug_cbs cbs;
+	SETTING_TRACE_BEGIN;
+	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+	SettingStorageUG *ad = (SettingStorageUG *)cb;
+
+	evas_object_freeze_events_set(ad->navi, EINA_FALSE);
+
+	ad->event_freeze_timer = NULL;
+	SETTING_TRACE_END;
+	return EINA_FALSE;
+}
+
+
+void storageUg_manage_apps_ug(SettingStorageUG *ad)
+{
+	SETTING_TRACE_BEGIN;
 
 	ret_if(NULL == ad);
-
-	if (app_control_create(&svc))
-		return;
-
-	app_control_add_extra_data(svc, "viewtype", "manage-applications");
-
-	memset(&cbs, 0, sizeof(struct ug_cbs));
-	cbs.layout_cb = storageUg_ug_layout_cb;
-	cbs.destroy_cb = storageUg_ug_destroy_cb;
-	cbs.priv = (void *) ad;
-
-	elm_object_tree_focus_allow_set(ad->lo_main, EINA_FALSE);
-	ug = setting_ug_create(ad->ug, "setting-manage-applications-efl",
-			UG_MODE_FULLVIEW, svc, &cbs);
-	warn_if(NULL == ug, "setting_ug_create() Fail");
-
-	app_control_destroy(svc);
+	
+	if (app_launcher(
+			"setting-manage-applications-efl|viewtype:manage-applications", NULL, NULL)
+			== 0) {
+		ad->event_freeze_timer = ecore_timer_add(1,
+				storageUg_manage_apps_freeze_event_timer_cb,
+				ad);
+		evas_object_freeze_events_set(ad->navi, EINA_TRUE);
+	}
 }
+
+
 
 struct _calculated_sizes {
 	double video_total;

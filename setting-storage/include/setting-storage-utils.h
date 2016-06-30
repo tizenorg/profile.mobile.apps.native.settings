@@ -32,7 +32,7 @@ void storageUg_size_to_str(double size, char *desc, int desc_size);
 void storageUg_ug_layout_cb(ui_gadget_h ug, enum ug_mode mode, void *priv);
 void storageUg_ug_destroy_cb(ui_gadget_h ug, void *priv);
 void storageUg_fail_popup(SettingStorageUG *ad);
-void storageUg_manage_app_ug(SettingStorageUG *ad);
+void storageUg_manage_apps_ug(SettingStorageUG *ad);
 
 int storageUg_get_internal_detail(SettingStorageUG *ad);
 void storageUg_get_internal_detail_cb(int fn_result, SettingStorageUG *ad);
