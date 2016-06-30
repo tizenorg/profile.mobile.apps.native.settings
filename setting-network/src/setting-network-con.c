@@ -59,13 +59,13 @@ static void __setting_network_con_genlist_create(void *data)
 			SWALLOW_Type_INVALID, NULL, NULL, 0,
 			"IDS_ST_BODY_INTERNET_CONNECTION",
 			g_strdup(ad->apn_internet), NULL);
-	if (!internet_conn) {
+	if (!internet_conn)
 		SETTING_TRACE_ERROR("internet_conn is NULL");
-	}
+
 	ad->internet_conn = internet_conn;
 
-	if (internet_conn) {
-	}
+	/* if (internet_conn) {
+	} */
 	ad->apn_MMS = __get_profile_name(CONNECTION_CELLULAR_SERVICE_TYPE_MMS,
 			ad);
 	/* [MMS Connections] Internet Connections */
@@ -206,9 +206,8 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj,
 	Evas_Object *win;
 	/*Elm_Object_Item *it; */
 
-	if (ctxpopup != NULL) {
+	if (ctxpopup != NULL)
 		evas_object_del(ctxpopup);
-	}
 
 	ctxpopup = elm_ctxpopup_add(nf);
 	elm_ctxpopup_auto_hide_disabled_set(ctxpopup, EINA_TRUE);
@@ -373,7 +372,7 @@ static void setting_network_con_item_Gendial_mouse_up_cb(void *data,
 		/** @todo check 'err' variable for exception handling */
 		SETTING_TRACE("INT_SLP_SETTING_SIM_SLOT value:%d", value);
 		switch (value) {
-			case VCONFKEY_TELEPHONY_SIM_INSERTED:
+		case VCONFKEY_TELEPHONY_SIM_INSERTED:
 			/* To Recreate the view in order to search the perferred
 			 * network again. */
 			/* ret = setting_view_destroy(
@@ -385,7 +384,7 @@ static void setting_network_con_item_Gendial_mouse_up_cb(void *data,
 
 			break;
 
-			case VCONFKEY_TELEPHONY_SIM_NOT_PRESENT:
+		case VCONFKEY_TELEPHONY_SIM_NOT_PRESENT:
 
 			/* this code is not used now, so remove the ID which is
 			 * not in po file*/
@@ -398,8 +397,8 @@ static void setting_network_con_item_Gendial_mouse_up_cb(void *data,
 
 			break;
 
-			case VCONFKEY_TELEPHONY_SIM_CARD_ERROR:
-			case VCONFKEY_TELEPHONY_SIM_UNKNOWN:
+		case VCONFKEY_TELEPHONY_SIM_CARD_ERROR:
+		case VCONFKEY_TELEPHONY_SIM_UNKNOWN:
 
 			setting_create_popup(NULL, ad->win_get,
 					NULL,
@@ -412,7 +411,7 @@ static void setting_network_con_item_Gendial_mouse_up_cb(void *data,
 			return;
 
 			break;
-			default:
+		default:
 			SETTING_TRACE("Unknown SIM information from vconf");
 			break;
 		}
@@ -528,11 +527,10 @@ static void setting_network_con_reset_popup_cb(void *data, Evas_Object *obj,
 			ret = connection_reset_profile(ad->connection,
 					CONNECTION_RESET_DEFAULT_PROFILE, 0,
 					_reset_do_default_cb, ad);
-			if (CONNECTION_ERROR_NONE == ret) {
+			if (CONNECTION_ERROR_NONE == ret)
 				SETTING_TRACE("Reset successfully");
-			} else {
+			else
 				SETTING_TRACE("Failed to reset, ret = %d", ret);
-			}
 		}
 	}
 
