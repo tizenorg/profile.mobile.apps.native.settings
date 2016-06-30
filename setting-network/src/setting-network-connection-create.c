@@ -587,11 +587,11 @@ void __get_connection_info(void *cb)
 
 	int ServiceType = ad->profile_service_type;
 	char *con_name_utf8 = NULL;
-	if (ad->access_name) {
+	if (ad->access_name)
 		con_name_utf8 = strdup(ad->access_name);
-	} else {
+	else
 		con_name_utf8 = strdup("");
-	}
+
 	SETTING_TRACE("con_name_utf8:%s", con_name_utf8);
 
 	/*match with the correct profile */
@@ -786,9 +786,9 @@ void __get_connection_info(void *cb)
 		 * "127.0.0.1" */
 		full_addr = ProxyAddr;
 		int url_head_len = strlen(URL_HEAD);
-		if (0 == safeStrNCmp(full_addr, URL_HEAD, url_head_len)) {
+		if (0 == safeStrNCmp(full_addr, URL_HEAD, url_head_len))
 			full_addr += url_head_len;
-		}
+
 		addr = strsep(&full_addr, ":");
 		if (NULL == full_addr) { /*format like "http://127.0.0.1/" or
 		"http://127.0.0.1" */
@@ -996,9 +996,8 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj,
 	Evas_Object *win;
 	/*Elm_Object_Item *it; */
 
-	if (ctxpopup != NULL) {
+	if (ctxpopup != NULL)
 		evas_object_del(ctxpopup);
-	}
 
 	ctxpopup = elm_ctxpopup_add(nf);
 	elm_ctxpopup_auto_hide_disabled_set(ctxpopup, EINA_TRUE);
@@ -1205,7 +1204,6 @@ static int setting_network_connection_create(void *cb)
 		SETTING_TRACE_ERROR("ad->data_auth_type is NULL");
 	}
 
-	
 	ad->is_show_user = 0;
 	if (CONNECTION_CELLULAR_AUTH_TYPE_NONE != ad->chkType) {
 		/* [UI] User ID */
@@ -1260,8 +1258,6 @@ static int setting_network_connection_create(void *cb)
 		} else {
 			SETTING_TRACE_ERROR("ad->data_pwd is NULL");
 		}
-
-		
 	}
 
 	/* [UI] Proxy address */
@@ -1350,11 +1346,10 @@ static int setting_network_connection_create(void *cb)
 			SWALLOW_Type_INVALID,
 			NULL, NULL, 0, "APN protocol",
 			(char *) ad->ed_pdn_type_desc, NULL);
-	if (ad->data_pdn_type) {
+	if (ad->data_pdn_type)
 		ad->data_pdn_type->userdata = ad;
-	} else {
+	else
 		SETTING_TRACE_ERROR("ad->data_pdn_type is NULL");
-	}
 
 	/* [UI] APN roaming protocol */
 	ad->data_roam_pdn_type = setting_create_Gendial_field_def(scroller,
@@ -1362,11 +1357,10 @@ static int setting_network_connection_create(void *cb)
 			SWALLOW_Type_INVALID,
 			NULL, NULL, 0, "APN roaming protocol",
 			(char *) ad->ed_roam_pdn_type_desc, NULL);
-	if (ad->data_roam_pdn_type) {
+	if (ad->data_roam_pdn_type)
 		ad->data_roam_pdn_type->userdata = ad;
-	} else {
+	else
 		SETTING_TRACE_ERROR("ad->data_roam_pdn_type is NULL");
-	}
 
 	setting_view_network_connection_create.is_create = 1;
 	ad->scl_edit = scroller;
@@ -1479,9 +1473,9 @@ bool need_check_default_profile(void *data,
 	connection_cellular_service_type_e service_type =
 			CONNECTION_CELLULAR_SERVICE_TYPE_UNKNOWN;
 	while (connection_profile_iterator_has_next(profile_iter)) {
-		if (cnt >= MAX_PROFILE_NUM) {
+		if (cnt >= MAX_PROFILE_NUM)
 			break;
-		}
+
 		cnt++;
 		if (connection_profile_iterator_next(profile_iter, &profile_h)
 				!= CONNECTION_ERROR_NONE) {
@@ -1947,28 +1941,26 @@ setting_network_connection_click_softkey_done_cb(void *data,
 	retm_if(data == NULL, "Data parameter is NULL");
 
 	SettingNetworkUG *ad = (SettingNetworkUG *) data;
-	if (ad->data_profile_name) {
+	if (ad->data_profile_name)
 		setting_hide_input_pannel_cb(ad->data_profile_name->eo_check);
-	}
 
-	if (ad->data_acs_name) {
+	if (ad->data_acs_name)
 		setting_hide_input_pannel_cb(ad->data_acs_name->eo_check);
-	}
-	if (ad->data_user_name) {
+
+	if (ad->data_user_name)
 		setting_hide_input_pannel_cb(ad->data_user_name->eo_check);
-	}
-	if (ad->data_pwd) {
+
+	if (ad->data_pwd)
 		setting_hide_input_pannel_cb(ad->data_pwd->eo_check);
-	}
-	if (ad->data_pxy_addr) {
+
+	if (ad->data_pxy_addr)
 		setting_hide_input_pannel_cb(ad->data_pxy_addr->eo_check);
-	}
-	if (ad->data_pxy_port) {
+
+	if (ad->data_pxy_port)
 		setting_hide_input_pannel_cb(ad->data_pxy_port->eo_check);
-	}
-	if (ad->data_hm_url) {
+
+	if (ad->data_hm_url)
 		setting_hide_input_pannel_cb(ad->data_hm_url->eo_check);
-	}
 }
 #endif
 
@@ -2329,26 +2321,25 @@ static void setting_network_connection_hide_input_pannel(void *data)
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
 	SettingNetworkUG *ad = data;
-	if (ad->data_profile_name && ad->data_profile_name->eo_check) {
+	if (ad->data_profile_name && ad->data_profile_name->eo_check)
 		setting_hide_input_pannel_cb(ad->data_profile_name->eo_check);
-	}
-	if (ad->data_acs_name && ad->data_acs_name->eo_check) {
+
+	if (ad->data_acs_name && ad->data_acs_name->eo_check)
 		setting_hide_input_pannel_cb(ad->data_acs_name->eo_check);
-	}
-	if (ad->data_user_name && ad->data_user_name->eo_check) {
+
+	if (ad->data_user_name && ad->data_user_name->eo_check)
 		setting_hide_input_pannel_cb(ad->data_user_name->eo_check);
-	}
-	if (ad->data_pwd && ad->data_pwd->eo_check) {
+
+	if (ad->data_pwd && ad->data_pwd->eo_check)
 		setting_hide_input_pannel_cb(ad->data_pwd->eo_check);
-	}
-	if (ad->data_pxy_addr && ad->data_pxy_addr->eo_check) {
+
+	if (ad->data_pxy_addr && ad->data_pxy_addr->eo_check)
 		setting_hide_input_pannel_cb(ad->data_pxy_addr->eo_check);
-	}
-	if (ad->data_pxy_port && ad->data_pxy_port->eo_check) {
+
+	if (ad->data_pxy_port && ad->data_pxy_port->eo_check)
 		setting_hide_input_pannel_cb(ad->data_pxy_port->eo_check);
-	}
-	if (ad->data_hm_url && ad->data_hm_url->eo_check) {
+
+	if (ad->data_hm_url && ad->data_hm_url->eo_check)
 		setting_hide_input_pannel_cb(ad->data_hm_url->eo_check);
-	}
 }
 

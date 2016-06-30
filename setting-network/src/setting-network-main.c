@@ -120,9 +120,8 @@ static Eina_Bool __set_net_mode_on_delay(void *data)
 		int ret = setting_get_int_slp_key(
 				ad->data_net_mode->int_slp_setting_binded,
 				&(ad->net_mode), &err);
-		if (ret == SETTING_RETURN_FAIL) {
+		if (ret == SETTING_RETURN_FAIL)
 			SETTING_TRACE_ERROR("failed to get vconf");
-		}
 	} else {
 		SETTING_TRACE("tel_set_network_mode()=TAPI_API_SUCCESS");
 	}
@@ -260,9 +259,8 @@ void __network_sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 		int ret = setting_get_int_slp_key(
 				ad->data_net_mode->int_slp_setting_binded,
 				&(ad->net_mode), &err);
-		if (ret == SETTING_RETURN_FAIL) {
+		if (ret == SETTING_RETURN_FAIL)
 			SETTING_TRACE_ERROR("failed to get vconf");
-		}
 	} else {
 		SETTING_TRACE("tel_set_network_mode()=TAPI_API_SUCCESS");
 	}
@@ -434,28 +432,27 @@ static char *_get_network_mode_sub_desc()
 		SETTING_TRACE("VCONFKEY_SETAPPL_NETWORK_MODE_INT value:%d",
 				value);
 		switch (value) {
-			case TAPI_NETWORK_MODE_AUTO:
-			case TAPI_NETWORK_MODE_LTE|TAPI_NETWORK_MODE_GSM
-			|TAPI_NETWORK_MODE_WCDMA: {
-				SETTING_TRACE("_(Keystr_NetBrand_Auto):%s",
-						_(Keystr_NetBrand_Auto));
-				sub_des = _(Keystr_NetBrand_Auto);
-				break;
-			}
-
-			case TAPI_NETWORK_MODE_GSM:
+		case TAPI_NETWORK_MODE_AUTO:
+		case TAPI_NETWORK_MODE_LTE|TAPI_NETWORK_MODE_GSM
+				|TAPI_NETWORK_MODE_WCDMA: {
+			SETTING_TRACE("_(Keystr_NetBrand_Auto):%s",
+					_(Keystr_NetBrand_Auto));
+			sub_des = _(Keystr_NetBrand_Auto);
+			break;
+		}
+		case TAPI_NETWORK_MODE_GSM:
 			sub_des = _(Keystr_NetBrand_GSM);
 			break;
-			case TAPI_NETWORK_MODE_WCDMA:
+		case TAPI_NETWORK_MODE_WCDMA:
 			sub_des = _(Keystr_NetBrand_WCDMA);
 			break;
-			case TAPI_NETWORK_MODE_LTE|TAPI_NETWORK_MODE_WCDMA:
+		case TAPI_NETWORK_MODE_LTE|TAPI_NETWORK_MODE_WCDMA:
 			sub_des = _(Keystr_NetBrand_LTE_WCDMA);
 			break;
-			case TAPI_NETWORK_MODE_GSM|TAPI_NETWORK_MODE_WCDMA:
+		case TAPI_NETWORK_MODE_GSM|TAPI_NETWORK_MODE_WCDMA:
 			sub_des = _(Keystr_NetBrand_Auto_WCDMA_GSM);
 			break;
-			default:
+		default:
 			break;
 		}
 	} else {
@@ -512,9 +509,8 @@ static void __popup_cb(void *data, Evas_Object *obj, void *event_info)
 		evas_object_del(ad->popup);
 		ad->popup = NULL;
 	}
-	if (0 == safeStrCmp(txt, _(keyStr_OK))) {
+	if (0 == safeStrCmp(txt, _(keyStr_OK)))
 		ug_destroy_me(ad->ug);
-	}
 }
 
 static void __check_sim_card(void *cb)
@@ -561,9 +557,8 @@ static void __popup_cb2(void *data, Evas_Object *obj, void *event_info)
 		evas_object_del(ad->popup);
 		ad->popup = NULL;
 	}
-	if (0 == safeStrCmp(txt, _(keyStr_OK))) {
+	if (0 == safeStrCmp(txt, _(keyStr_OK)))
 		ug_destroy_me(ad->ug);
-	}
 }
 
 static void __check_flight_mode(void *cb)
@@ -932,9 +927,8 @@ static int setting_network_main_update(void *cb)
 
 	SettingNetworkUG *ad = (SettingNetworkUG *)cb;
 
-	if (ad->ly_main != NULL) {
+	if (ad->ly_main != NULL)
 		evas_object_show(ad->ly_main);
-	}
 
 	SETTING_TRACE_END;
 	return SETTING_RETURN_SUCCESS;

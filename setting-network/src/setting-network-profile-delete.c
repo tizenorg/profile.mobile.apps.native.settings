@@ -231,9 +231,8 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj,
 	Evas_Object *win;
 	/*Elm_Object_Item *it; */
 
-	if (ctxpopup != NULL) {
+	if (ctxpopup != NULL)
 		evas_object_del(ctxpopup);
-	}
 
 	ctxpopup = elm_ctxpopup_add(nf);
 	elm_ctxpopup_auto_hide_disabled_set(ctxpopup, EINA_TRUE);
@@ -356,9 +355,8 @@ static int setting_network_profile_delete_destroy(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	SettingNetworkUG *ad = (SettingNetworkUG *)cb;
-	if (!setting_view_network_profile_delete.is_create) {
+	if (!setting_view_network_profile_delete.is_create)
 		return SETTING_RETURN_SUCCESS;
-	}
 
 	/* free data */
 	if (ad->profile_del_list != NULL) {
@@ -411,9 +409,9 @@ void ___profile_selected(void *data)
 
 		SETTING_TRACE("%s :%d", _(item_data->keyStr),
 				item_data->chk_status);
-		if (item_data->chk_status) {
+		if (item_data->chk_status)
 			selnum++;
-		}
+
 		check_list = eina_list_next(check_list);
 	}
 	Elm_Object_Item *navi_it = elm_naviframe_top_item_get(ad->navi_bar);
@@ -660,11 +658,11 @@ static void setting_network_profile_delete_click_softkey_select_all_cb(
 
 		SETTING_TRACE("%s :%d", _(item_data->keyStr),
 				item_data->chk_status);
-		if (item_data->chk_status) {
+		if (item_data->chk_status)
 			selnum++;
-		} else {
+		else
 			un_selnum++;
-		}
+
 		check_list = eina_list_next(check_list);
 	}
 	SETTING_TRACE("selnum:%d, un_selnum:%d", selnum, un_selnum);

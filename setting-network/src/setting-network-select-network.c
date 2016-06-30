@@ -143,9 +143,8 @@ static void __network_main_gl_mouse_move(void *data, Evas *e, Evas_Object *obj,
 	if (y_offset < 0)
 		y_offset = -y_offset;
 	/*SETTING_TRACE("x_offset:%d, y_offset:%d", x_offset, y_offset); */
-	if (x_offset <= MIN_MOVE_DISTANCE && y_offset <= MIN_MOVE_DISTANCE) {
+	if (x_offset <= MIN_MOVE_DISTANCE && y_offset <= MIN_MOVE_DISTANCE)
 		return;
-	}
 
 	/*SETTING_TRACE("xxxxxxxxxx"); */
 	if (ad->data_auto_network_item->chk_status) {

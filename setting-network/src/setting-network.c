@@ -58,9 +58,9 @@ char *__get_profile_name(int conType, void *data)
 
 		int cnt = 0;
 		while (connection_profile_iterator_has_next(profile_iter)) {
-			if (cnt >= MAX_PROFILE_NUM) {
+			if (cnt >= MAX_PROFILE_NUM)
 				break;
-			}
+
 			if (connection_profile_iterator_next(profile_iter,
 					&profile_h) != CONNECTION_ERROR_NONE) {
 				SETTING_TRACE_ERROR(
@@ -172,19 +172,16 @@ static void __selected_network_change_cb(keynode_t *key, void *data)
 			|| !safeStrCmp(vconf_name,
 					VCONFKEY_TELEPHONY_SVCTYPE)) {
 		ad->sel_network = get_pa_select_network();
-		if (!ad->sel_network) {
+		if (!ad->sel_network)
 			ad->sel_network = strdup(Keystr_UNKNOWN_NETWORK);
-		}
 
 		if (0 != vconf_set_int(VCONFKEY_SETAPPL_SELECT_NETWORK_INT,
-				ad->sel_net)) {
+				ad->sel_net))
 			SETTING_TRACE_ERROR("vconf[%s] set failed");
-		}
 
 		if (0 != vconf_set_int(VCONFKEY_SETAPPL_SELECT_OLD_NT_ACT,
-				ad->sel_act)) {
+				ad->sel_act))
 			SETTING_TRACE_ERROR("vconf[%s] set failed");
-		}
 
 		setting_network_update_sel_network(ad);
 	} else if (!safeStrCmp(vconf_name, VCONFKEY_TELEPHONY_FLIGHT_MODE)) {
@@ -335,9 +332,9 @@ static void *___load_popup_view(ui_gadget_h ug, enum ug_mode mode,
 		}
 
 	}
-	if (viewtype) {
+	if (viewtype)
 		FREE(viewtype);
-	}
+
 	return ad->popup;
 }
 
@@ -359,9 +356,8 @@ static void *setting_network_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 			"cannot get main window ");
 #if 1
 	Evas_Object *popup_view = ___load_popup_view(ug, mode, service, priv);
-	if (popup_view) {
+	if (popup_view)
 		return popup_view;
-	}
 #endif
 
 	/* init */
@@ -601,13 +597,12 @@ static void setting_network_ug_on_event(ui_gadget_h ug, enum ug_event event,
 			if (ad->data_mobile_data) {
 				item = elm_genlist_item_next_get(
 						ad->data_mobile_data->item);
-				if (item) {
+				if (item)
 					item = elm_genlist_item_next_get(item);
-				}
-				if (item) {
+
+				if (item)
 					item_data = (Setting_GenGroupItem_Data *)elm_object_item_data_get(
 							item);
-				}
 			}
 			if (item_data) {
 				const char *title = Data_packet_Sub_desc;
@@ -997,9 +992,9 @@ void ___sort_merge_handle(void *usrdata, TelNetworkPlmnList_t *list)
 				break;
 			}
 		}
-		if (alread_exist) {
+		if (alread_exist)
 			continue;
-		}
+
 		memcpy(&(ad->plmn_info.network_list[cnt++]),
 				&(list->network_list[idx]),
 				sizeof(TelNetworkIdentity_t));
@@ -1030,23 +1025,22 @@ void __process_special_char(char *dst, const char *src)
 	while (NULL != temp2) {
 		if (0 == safeStrNCmp(temp2, "&amp;", strlen("&amp;"))) {
 			temp = temp2 + 1;
-			if ('\0' == temp[0]) {
+			if ('\0' == temp[0])
 				break;
-			}
+
 			temp2 = strchr(temp, '&');
 		} else {
 			g_strlcat(dst, temp1, temp2 - temp1 + 1);
 			g_strlcat(dst, "&amp;", MAX_SPECIALIZITION_LEN);
 			temp1 = temp2 + 1;
-			if ('\0' == temp1[0]) {
+			if ('\0' == temp1[0])
 				break;
-			}
+
 			temp2 = strchr(temp1, '&');
 		}
 	}
-	if ('\0' != temp1[0]) {
+	if ('\0' != temp1[0])
 		g_strlcat(dst, temp1, MAX_SPECIALIZITION_LEN);
-	}
 }
 
 /**
@@ -1283,11 +1277,10 @@ void __register_network(Setting_GenGroupItem_Data *list_item)
 
 			ad->network_select_registering_pop = __create_registering_popup(
 					list_item);
-			if (ad->network_select_registering_pop) {
+			if (ad->network_select_registering_pop)
 				SETTING_TRACE("Registering popup appeared");
-			} else {
+			else
 				SETTING_TRACE("Registering popup failed");
-			}
 
 			if (ad->data_auto_network_item) {
 				/*ad->data_auto_network_item->sub_desc =
@@ -1345,8 +1338,8 @@ void __register_network(Setting_GenGroupItem_Data *list_item)
 				ad->plmn_info.network_list[cnt].network_name,
 				ad->plmn_info.network_list[cnt].service_provider_name,
 				ad->plmn_info.network_list[cnt].plmn,
-				(int )(ad->plmn_info.network_list[cnt].type_of_plmn),
-				(int )(ad->plmn_info.network_list[cnt].access_technology));
+				(int)(ad->plmn_info.network_list[cnt].type_of_plmn),
+				(int)(ad->plmn_info.network_list[cnt].access_technology));
 
 		/*ASYNC API - TAPI_EVENT_NETWORK_SELECT_CNF */
 		SETTING_TRACE("Sending tel_select_network_manual..");
@@ -1375,11 +1368,10 @@ void __register_network(Setting_GenGroupItem_Data *list_item)
 
 			ad->network_select_registering_pop = __create_registering_popup(
 					list_item);
-			if (ad->network_select_registering_pop) {
+			if (ad->network_select_registering_pop)
 				SETTING_TRACE("Registering popup appeared");
-			} else {
+			else
 				SETTING_TRACE("Registering popup failed");
-			}
 
 			ad->sel_act = ad->plmn_info.network_list[cnt].access_technology;
 			FREE(ad->sel_network);
@@ -1733,9 +1725,9 @@ void __switch_automatic_network(Setting_GenGroupItem_Data *list_item)
 			last_item = elm_genlist_last_item_get(
 					ad->genlist_sel_network);
 			SETTING_TRACE("last_item:%p", last_item);
-			if (last_item == ad->data_auto_network_item->item) {
+			if (last_item == ad->data_auto_network_item->item)
 				break;
-			}
+
 			elm_object_item_del(last_item);
 		}
 
@@ -2041,12 +2033,12 @@ static int __profile_item_sort_cb(const void *d1, const void *d2)
 	connection_profile_h pf1 = (connection_profile_h)d1;
 	connection_profile_h pf2 = (connection_profile_h)d2;
 
-	if (!pf1) {
+	if (!pf1)
 		return (-1);
-	}
-	if (!pf2) {
+
+	if (!pf2)
 		return (1);
-	}
+
 	char *id_str1 = NULL;
 	char *id_str2 = NULL;
 	connection_profile_get_id(pf1, &id_str1);
@@ -2081,28 +2073,28 @@ static int __profile_item_sort_cb(const void *d1, const void *d2)
 	char *p = NULL;
 	/*for id1.. */
 	p = safeStrRStr(str1, "_");
-	if (!p) {
+	if (!p)
 		return (-1);
-	}
+
 	*p = '\0';
 	p = safeStrRStr(str1, "_");
-	if (!p) {
+	if (!p)
 		return (-1);
-	}
+
 	p++;
 	int id1 = atoi(p);
 	/*SETTING_TRACE("id1:%d", id1); */
 
 	/*for id2.. */
 	p = safeStrRStr(str2, "_");
-	if (!p) {
+	if (!p)
 		return (1);
-	}
+
 	*p = '\0';
 	p = safeStrRStr(str2, "_");
-	if (!p) {
+	if (!p)
 		return (1);
-	}
+
 	p++;
 	int id2 = atoi(p);
 
@@ -2136,9 +2128,9 @@ void setting_network_reget_profile_list(void *cb)
 			CONNECTION_CELLULAR_SERVICE_TYPE_UNKNOWN;
 
 	while (connection_profile_iterator_has_next(profile_iter)) {
-		if (cnt >= MAX_PROFILE_NUM) {
+		if (cnt >= MAX_PROFILE_NUM)
 			break;
-		}
+
 		if (connection_profile_iterator_next(profile_iter, &profile_h)
 				!= CONNECTION_ERROR_NONE) {
 			SETTING_TRACE_ERROR("Fail to get profile handle");
