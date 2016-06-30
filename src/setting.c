@@ -80,9 +80,8 @@ static void setting_main_low_battery_cb(app_event_info_h event_info, void *data)
 	retm_if(!data, "Invalid argument: data is NULL");
 	setting_main_appdata *ad = data;
 
-	if (ad->ug) {
+	if (ad->ug)
 		ug_send_event(UG_EVENT_LOW_BATTERY);
-	}
 }
 #endif
 
@@ -91,10 +90,9 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	setting_main_appdata *ad = (setting_main_appdata *)data;
-	if (ad == NULL || ad->win_main == NULL) {
-		return;
-	}
+	ret_if(ad == NULL || ad->win_main == NULL);
 	int change_ang = elm_win_rotation_get(ad->win_main);
+
 	SETTING_TRACE_DEBUG("....change_ang:%d", change_ang);
 	SETTING_TRACE_DEBUG("current_rotation:%d", ad->current_rotation);
 	/*Send the rotation event to UGs.. */
@@ -121,17 +119,17 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 
 	if (change_ang != ad->current_rotation) {
 		int diff = change_ang - ad->current_rotation;
-		if (diff < 0) {
+		if (diff < 0)
 			diff = -diff;
-		}
+
 		/**
 		 * @todo if app didn't launch UG, is the call required to
 		 * invoke?
 		 */
 		ug_send_event(event);
-		if (diff == 180) {
-			/* do nothing */
-		}
+		/* if (diff == 180)
+			do nothing */
+
 		ad->current_rotation = change_ang;
 	}
 }
@@ -146,9 +144,8 @@ static void setting_main_region_changed_cb(app_event_info_h event_info,
 	retm_if(!data, "Invalid argument: data is NULL");
 	setting_main_appdata *ad = data;
 
-	if (ad->ug) {
+	if (ad->ug)
 		ug_send_event(UG_EVENT_REGION_CHANGE);
-	}
 }
 
 /**
@@ -288,9 +285,8 @@ static bool setting_main_app_create(void *data)
 
 	setting_main_appdata *ad = data;
 	/* regitering sigterm */
-	if (signal(SIGTERM, termination_handler) == SIG_IGN) {
+	if (signal(SIGTERM, termination_handler) == SIG_IGN)
 		signal(SIGTERM, SIG_IGN);
-	}
 
 	app_event_handler_h handlers[5] = { NULL, };
 #if LOW_BATTERY_DO_NOTHING
@@ -447,9 +443,8 @@ static void setting_main_app_pause(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	setting_main_appdata *ad = data;
-	if (ad->ug) {
+	if (ad->ug)
 		ug_pause();
-	}
 }
 
 /**
@@ -471,9 +466,8 @@ static void setting_main_app_resume(void *data)
 		SETTING_TRACE("update main genlist in resuming app without UG");
 		Eina_Bool is_freezed = evas_object_freeze_events_get(ad->navibar_main);
 		SETTING_TRACE_DEBUG("is_freezed : %d", is_freezed);
-		if (is_freezed) {
+		if (is_freezed)
 			evas_object_freeze_events_set(ad->navibar_main, EINA_FALSE);
-		}
 
 	} else if (ad->ug) {
 		ug_resume();
@@ -489,11 +483,11 @@ static void setting_main_app_reset(app_control_h service, void *data)
 	SETTING_TRACE_BEGIN;
 	setting_main_appdata *ad = data;
 
-	if (is_searchmode_app(ad->is_searchmode)) {
+	if (is_searchmode_app(ad->is_searchmode))
 		evas_object_hide(ad->view_layout);
-	} else {
+	else
 		evas_object_show(ad->view_layout);
-	}
+
 	vconf_callback_fn cb = NULL;
 
 	cb = setting_int_vconf_change_cb;
@@ -533,9 +527,8 @@ static void setting_main_app_reset(app_control_h service, void *data)
 
 	/*------------------------------------------------------------------ */
 
-	if (ad->win_main) {
+	if (ad->win_main)
 		elm_win_activate(ad->win_main);
-	}
 
 	/* Disable data_network if flight mode is ON */
 	int flight_mode = 0;

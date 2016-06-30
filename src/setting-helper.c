@@ -85,16 +85,12 @@ void setting_main_click_list_item_reset_data(void *data, Evas_Object *obj)
 void setting_main_destroy_ug_cb(ui_gadget_h ug, void *priv)
 {
 	setting_main_appdata *ad = (setting_main_appdata *)priv;
-
-	if (!ad) {
-		return; /*	do nothing if ad is NULL */
-	}
+	ret_if(!ad);	/* do nothing if ad is NULL */
 
 	evas_object_show(ad->navibar_main);
 
-	if (ug) {
+	if (ug)
 		setting_ug_destroy(ug);
-	}
 
 	SETTING_TRACE("ad->ug:%p", ad->ug);
 	SETTING_TRACE("g_main_ad->isInUGMode:%d", g_main_ad->isInUGMode);
@@ -126,10 +122,8 @@ void setting_main_destroy_ug_cb(ui_gadget_h ug, void *priv)
 void setting_main_result_ug_cb(ui_gadget_h ug, app_control_h service,
 		void *priv)
 {
-	if (!priv) {
-		return;
-	}
 	SETTING_TRACE_BEGIN;
+	ret_if(!priv);
 	/* setting_main_appdata *ad = (setting_main_appdata *) priv; */
 
 	SETTING_TRACE_END;
@@ -137,21 +131,15 @@ void setting_main_result_ug_cb(ui_gadget_h ug, app_control_h service,
 
 void setting_main_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode, void *priv)
 {
-	/*setting_main_appdata *ad = (setting_main_appdata *) priv; */
-	Evas_Object *base;
-
-	if (!priv) {
-		return;
-	}
 	SETTING_TRACE_BEGIN;
-
+	Evas_Object *base = NULL;
 	setting_main_appdata *ad = (setting_main_appdata *)priv;
+	ret_if(!ad);
+
 	evas_object_hide(ad->navibar_main);
 
 	base = (Evas_Object *)ug_get_layout(ug);
-	if (!base) {
-		return;
-	}
+	ret_if(!base);
 
 	switch (mode) {
 	case UG_MODE_FULLVIEW:
