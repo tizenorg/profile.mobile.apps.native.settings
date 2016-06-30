@@ -59,14 +59,11 @@ void __all_gl_realized_cb(void *data, Evas_Object *obj, void *event_info)
 			"invalid parameter: event_info is NULL");
 	Elm_Object_Item *item = (Elm_Object_Item *)event_info;
 	Setting_GenGroupItem_Data *item_data = elm_object_item_data_get(item);
-	if (!item_data) {
-		return;
-	}
+	ret_if(!item_data);
 
-	if (item_data->isPlaying) {
+	if (item_data->isPlaying)
 		elm_object_item_signal_emit(item_data->item,
 				"elm,state,expanded", "elm");
-	}
 }
 
 static void __all_gl_group_clicked_cb(void *data, Evas_Object *obj,
@@ -101,9 +98,8 @@ static void __all_gl_group_clicked_cb(void *data, Evas_Object *obj,
 		elm_object_item_signal_emit(data_parentItem->item,
 				"elm,state,expanded", "elm");
 
-	if (!start_item) {
+	if (!start_item)
 		SETTING_TRACE_ERROR(" ------------------> start_item IS NULL");
-	}
 }
 
 Evas_Object *_view_list_geter(void *data)
@@ -219,9 +215,8 @@ static Eina_Bool _navibar_back_pop_cb(void *data, Elm_Object_Item *it)
 	retv_if(!data, EINA_FALSE);
 	setting_main_appdata *ad = (setting_main_appdata *) data;
 
-	if (ad && ad->win_main) {
+	if (ad && ad->win_main)
 		elm_win_lower(ad->win_main);
-	}
 
 	SETTING_TRACE_END;
 	return EINA_FALSE;
@@ -248,11 +243,10 @@ static void _setting_tapi_init(void *cb)
 	setting_main_appdata *ad = (setting_main_appdata *) cb;
 	/*pass NULL to let TAPI access default module */
 	ad->handle = tel_init(NULL);
-	if (!ad->handle) {
+	if (!ad->handle)
 		SETTING_TRACE_ERROR("*** [ERR] tel_init failed ***");
-	} else {
+	else
 		SETTING_TRACE("tel_init ok[handle:%p]", ad->handle);
-	}
 }
 
 static void _setting_tapi_deinit(void *cb)
@@ -348,9 +342,7 @@ Evas_Object *setting_main_layout_conform_create(Evas_Object *win_layout,
 	conform = elm_conformant_add(win_obj);
 
 	setting_main_appdata *ad = (setting_main_appdata *)data;
-	if (!conform) {
-		return NULL;
-	}
+	retv_if(!conform, NULL);
 
 	SETTING_TRACE_DEBUG("Add conformant!!!!!");
 
@@ -506,11 +498,10 @@ static int setting_main_update(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	setting_main_appdata *ad = (setting_main_appdata *)cb;
+	/* setting_main_appdata *ad = (setting_main_appdata *)cb;
 
-	if (ad->ly_main != NULL) {
-		/*evas_object_show(ad->ly_main); */
-	}
+	if (ad->ly_main != NULL)
+		evas_object_show(ad->ly_main); */
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -521,11 +512,10 @@ static int setting_main_cleanup(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	setting_main_appdata *ad = (setting_main_appdata *)cb;
+	/* setting_main_appdata *ad = (setting_main_appdata *)cb;
 
 	if (ad->ly_main != NULL) {
-		/*evas_object_hide(ad->ly_main); */
-	}
+		evas_object_hide(ad->ly_main); */
 
 	return SETTING_RETURN_SUCCESS;
 }

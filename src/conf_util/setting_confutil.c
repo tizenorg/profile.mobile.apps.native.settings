@@ -29,23 +29,23 @@ static void get_gmt_offset(char *str_buf, int size)
 {
 	/* timezone string +/-<n> ex. +9, -1 */
 	time_t t = time(0);		/* get unix time. sec. */
+	struct tm *pdata;
+	struct tm *data;
 
-	struct tm *pdata,data;
 	pdata = localtime_r(&t, &data);		/* save time as structure. */
 	setting_retm_if(!pdata, "data is NULL");
 	pdata->tm_isdst = 0;			/* summer time, not applied. */
 	time_t a = mktime(pdata);
 
-	pdata = gmtime_r(&a,&data);
+	pdata = gmtime_r(&a, &data);
 	setting_retm_if(!pdata, "data is NULL");
 	pdata->tm_isdst = 0;			/* summer time, not applied. */
 	time_t b = mktime(pdata);
 
 	int gmtoffset_hour = (a - b) / 3600;	/* result : hour. */
 	int gmtoffset_min = ((a - b) % 3600) / 60;	/* result : min. */
-	if (gmtoffset_min != 0) {
+	if (gmtoffset_min != 0)
 		gmtoffset_min = 30;
-	}
 
 	snprintf(str_buf, size, "%+d:%02u", gmtoffset_hour, gmtoffset_min);
 	SETTING_TRACE("szTimezone is of a valid format: GMT: %s", str_buf);
@@ -76,9 +76,9 @@ void timezone_init()
 {
 	char *tzpath = get_timezone();
 	int ret = vconf_set_str(VCONFKEY_SETAPPL_TIMEZONE_ID, tzpath + 20);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE("fail to set vconf");
-	}
+
 	char str_buf[256] = {0, };
 	get_gmt_offset(str_buf, 256);
 	SETTING_TRACE(">>> time zone GMT string : %s", str_buf);
@@ -90,9 +90,9 @@ void get_current_font()
 	char *value = NULL;
 	int retcode = system_settings_get_value_string(
 			SYSTEM_SETTINGS_KEY_FONT_TYPE, &value);
-	if (retcode != 0) {
+	if (retcode != 0)
 		SETTING_TRACE("fail to set SYSTEM_SETTINGS_KEY_FONT_TYPE");
-	}
+
 	SETTING_TRACE(">>> get current font type : %s \n", value);
 }
 
@@ -113,24 +113,23 @@ int main(int argc, char *argv[])
 	elm_init(argc, argv);
 	setting_set_i18n_force(SETTING_PACKAGE, SETTING_LOCALEDIR);
 
-	if ((argc == 2) && (0 == strcmp(argv[1], "export_json"))) {
+	if ((argc == 2) && (0 == strcmp(argv[1], "export_json")))
 		setting_export_json(status_fp, NULL);
-	} else if ((argc == 2) && (0 == strcmp(argv[1], "import_json"))) {
+	else if ((argc == 2) && (0 == strcmp(argv[1], "import_json")))
 		setting_import_json(status_fp, NULL);
-	} else if ((argc == 2) && (0 == strcmp(argv[1], "timezone_init"))) {
+	else if ((argc == 2) && (0 == strcmp(argv[1], "timezone_init")))
 		timezone_init();
-	} else if ((argc == 2) && (0 == strcmp(argv[1], "get_current_font"))) {
+	else if ((argc == 2) && (0 == strcmp(argv[1], "get_current_font")))
 		get_current_font();
-	} else if ((argc == 2) && (0 == strcmp(argv[1], "gen_cfg"))) {
+	else if ((argc == 2) && (0 == strcmp(argv[1], "gen_cfg")))
 		generate_setting_cfg();
-	} else if ((argc == 2) && (0 == strcmp(argv[1], "mig_cfg"))) {
+	else if ((argc == 2) && (0 == strcmp(argv[1], "mig_cfg")))
 		migrate_setting_cfg();
-	}
+
 #if SETTING_SEARCH
 	else if ((argc == 2) && (0 == strcmp(argv[1], "search_db_indexing"))) {
 		/* app db search */
 		__setting_init_search_index_app();
-
 		__setting_init_search_index_module();
 	}
 #endif
