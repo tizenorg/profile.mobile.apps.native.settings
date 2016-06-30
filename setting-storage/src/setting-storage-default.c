@@ -68,12 +68,10 @@ Evas_Object *storageUg_default_notice_get_icon(void *data, Evas_Object *obj,
 static Eina_Bool storageUg_default_back_cb(void *data, Elm_Object_Item *it)
 {
 	SettingStorageUG *ad = data;
-
 	retv_if(data == NULL, EINA_FALSE);
 
-	SETTING_TRACE_DEBUG("ad->main_view->is_create:%d", ad->main_view->is_create);
-	
-	
+	SETTING_TRACE_DEBUG("ad->main_view->is_create:%d",
+			ad->main_view->is_create);
 	setting_view_change(ad->default_view, ad->main_view, ad);
 
 	return EINA_TRUE;

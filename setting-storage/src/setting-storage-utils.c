@@ -184,7 +184,7 @@ void storageUg_manage_apps_ug(SettingStorageUG *ad)
 	SETTING_TRACE_BEGIN;
 
 	ret_if(NULL == ad);
-	
+
 	if (app_launcher(
 			"setting-manage-applications-efl|viewtype:manage-applications", NULL, NULL)
 			== 0) {
@@ -385,15 +385,15 @@ static void storageUG_get_app_cache_size_cb(pkgmgr_client *pc,
 
 	/*char * path = app_get_cache_path(); */
 	/*SETTING_TRACE_DEBUG("cache path:%s",path); */
-	
+
 	SettingStorageUG *ad = user_data;
 
 	ad->sz_apps = (double) (size_info->app_size	+ size_info->ext_app_size);
 	ad->sz_caches = (double) (size_info->cache_size + size_info->ext_cache_size);
-	
+
 	SETTING_TRACE_DEBUG("size_info->app_size : %ld", ad->sz_apps);
 	SETTING_TRACE_DEBUG("ad->sz_caches:%lf", ad->sz_caches);
-	
+
 	storageug_genlist_text_update(ad->apps, ad->sz_apps);
 	storageug_genlist_text_update(ad->caches, ad->sz_caches);
 
@@ -408,8 +408,6 @@ static void storageUG_get_app_cache_size_cb(pkgmgr_client *pc,
 void storageUG_update_apps_cache_info(SettingStorageUG *ad)
 {
 	SETTING_TRACE_BEGIN;
-	
-
 	int ret;
 
 	ret_if(NULL == ad);

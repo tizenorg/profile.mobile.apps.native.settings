@@ -214,10 +214,9 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	SettingStorageUG *ad = (SettingStorageUG *)data;
-	if (ad == NULL || ad->win == NULL) {
-		return;
-	}
+	ret_if(ad == NULL || ad->win == NULL);
 	int change_ang = elm_win_rotation_get(ad->win);
+
 	SETTING_TRACE_DEBUG("....change_ang:%d", change_ang);
 	SETTING_TRACE_DEBUG("current_rotation:%d", ad->current_rotation);
 	/*Send the rotation event to UGs.. */
@@ -243,17 +242,17 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 
 	if (change_ang != ad->current_rotation) {
 		int diff = change_ang - ad->current_rotation;
-		if (diff < 0) {
+		if (diff < 0)
 			diff = -diff;
-		}
+
 		/**
 		 * @todo if app didn't launch UG, is the call required to
 		 * invoke?
 		 */
 		ug_send_event(event);
-		if (diff == 180) {
-			/* do nothing */
-		}
+		/* if (diff == 180) {
+			do nothing
+		} */
 		ad->current_rotation = change_ang;
 	}
 }

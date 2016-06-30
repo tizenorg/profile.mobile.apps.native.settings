@@ -298,10 +298,8 @@ static void storageUg_SD_format_first_confirm_resp(void *data, Evas_Object *obj,
 		ad->popup = NULL;
 	}
 
-	if (POPUP_RESPONSE_OK == response_type) {
+	if (POPUP_RESPONSE_OK == response_type)
 		storageUg_SD_prepare_format(ad);
-	}
-
 }
 
 static inline void storageUg_SD_handle_format(SettingStorageUG *ad)
@@ -366,11 +364,10 @@ static inline void storageUg_SD_info_removed(SettingStorageUG *ad)
 			ad->sd_card->item, NULL, NULL, STORAGEUG_STR_MOUNT_SD,
 			STORAGEUG_STR_INSERT,
 			NULL);
-	if (ad->sd_mount) {
+	if (ad->sd_mount)
 		elm_object_item_disabled_set(ad->sd_mount->item, EINA_TRUE);
-	} else {
+	else
 		SETTING_TRACE_ERROR("ad->sd_mount is NULL");
-	}
 }
 
 static inline void storageUg_SD_info_inserted_not_mounted(SettingStorageUG *ad)

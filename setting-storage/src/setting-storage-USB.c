@@ -262,22 +262,20 @@ static inline void storageUg_USB_append_mounted_info(SettingStorageUG *ad)
 			&(ad->itc_1text), storageUg_main_USB_sel, ad,
 			SWALLOW_Type_INVALID, NULL, NULL, 0,
 			STORAGEUG_STR_UNMOUNT_USB, NULL, NULL);
-	if (ad->usb_unmount) {
+	if (ad->usb_unmount)
 		ad->usb_unmount->userdata = ad;
-	} else {
+	else
 		SETTING_TRACE_ERROR("ad->usb_unmount is NULL");
-	}
 
 	/* Usb Format*/
 	ad->usb_format = setting_create_Gendial_field_def(ad->gl_main,
 			&(ad->itc_1text), storageUg_main_USB_sel, ad,
 			SWALLOW_Type_INVALID, NULL, NULL, 0,
 			STORAGEUG_STR_FORMAT_USB, NULL, NULL);
-	if (ad->usb_format) {
+	if (ad->usb_format)
 		ad->usb_format->userdata = ad;
-	} else {
+	else
 		SETTING_TRACE_ERROR("ad->usb_format is NULL");
-	}
 }
 
 static inline void storageUg_main_append_USB_info(SettingStorageUG *ad)
@@ -302,11 +300,10 @@ static inline void storageUg_main_append_USB_info(SettingStorageUG *ad)
 				&(ad->itc_1text), storageUg_main_USB_sel, ad,
 				SWALLOW_Type_INVALID, NULL, NULL, 0,
 				STORAGEUG_STR_MOUNT_USB, NULL, NULL);
-		if (ad->usb_mount) {
+		if (ad->usb_mount)
 			ad->usb_mount->userdata = ad;
-		} else {
+		else
 			SETTING_TRACE_ERROR("ad->usb_mount is NULL");
-		}
 	}
 }
 

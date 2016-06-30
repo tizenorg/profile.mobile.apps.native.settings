@@ -111,9 +111,9 @@ static void _genlist_check_hide(SettingStorageUG *ad, bool hide)
 		sel->isItemHideFlag = hide;
 
 		/* reset if check boxs get hidden */
-		if (hide == true) {
+		if (hide == true)
 			sel->chk_status = 0;
-		}
+
 		SETTING_TRACE(" item_update %d ", count++);
 		elm_genlist_item_fields_update(it, "elm.swallow.end",
 				ELM_GENLIST_ITEM_FIELD_CONTENT);
@@ -137,13 +137,11 @@ static void setting_storage_ctx_click_softkey_cb(void *data, Evas_Object *obj,
 	/* check genlist check box show/hide */
 	/*------------------------------------------------------------------- */
 
-	if(!ad->misces_ctx_popup_selected) {
-	
+	if (!ad->misces_ctx_popup_selected) {
 		ad->misces_ctx_popup_selected = true;
 
 		storageUg_misces_gl_append_select_all_item(ad);
 		_genlist_check_hide(ad, false);
-
 	}
 
 	if (ctxpopup != NULL) {
@@ -160,15 +158,12 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj,
 	SettingStorageUG *ad = (SettingStorageUG *)data;
 	Evas_Object *nf = ad->navi;
 
-	if (ctxpopup != NULL) {
+	if (ctxpopup != NULL)
 		evas_object_del(ctxpopup);
-	}
-
 
 	/* do not float more menu (popup) in file selection mode */
-	if(ad->misces_ctx_popup_selected) {
+	if (ad->misces_ctx_popup_selected)
 		return;
-	}
 
 	ctxpopup = elm_ctxpopup_add(nf);
 	elm_ctxpopup_auto_hide_disabled_set(ctxpopup, EINA_TRUE);
@@ -428,12 +423,15 @@ static void storageUg_misces_handle_selecting(SettingStorageUG *ad)
 	else
 		ad->misces_is_select_all = EINA_FALSE;
 
-	if( was_select_all != ad->misces_is_select_all && ad->misces_ctx_popup_selected){
+	if (was_select_all != ad->misces_is_select_all
+			&& ad->misces_ctx_popup_selected) {
 		Evas_Object *gl = ad->gl_misces;
 		Elm_Object_Item *it = elm_genlist_first_item_get(gl);
 		if (it) {
-			Setting_GenGroupItem_Data *d_item= (Setting_GenGroupItem_Data *) elm_object_item_data_get(it);
-			setting_update_gl_item_chk_status(d_item, ad->misces_is_select_all );
+			Setting_GenGroupItem_Data *d_item =
+					(Setting_GenGroupItem_Data *)elm_object_item_data_get(it);
+			setting_update_gl_item_chk_status(d_item,
+					ad->misces_is_select_all);
 		}
 
 	}
@@ -501,8 +499,7 @@ static void storageUg_misces_genlist_sel(void *data, Evas_Object *obj,
 	SETTING_TRACE_BEGIN;
 
 	SettingStorageUG *ad = data;
-	if(ad->misces_ctx_popup_selected) {
-
+	if (ad->misces_ctx_popup_selected) {
 		Node_Info *node;
 		SettingStorageUG *ad = data;
 		Elm_Object_Item *item = event_info;
@@ -643,7 +640,7 @@ static inline void setting_storage_select_all_chk_btn_cb(void *data, Evas_Object
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");
-	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *) data;
+	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *)data;
 	SettingStorageUG *ad = (SettingStorageUG *)list_item->userdata;
 
 	list_item->chk_status = elm_check_state_get(obj);/*	for genlist update status */
@@ -662,9 +659,8 @@ static inline void storageUg_misces_gl_remove_select_all_item(
 	Evas_Object *gl = ad->gl_misces;
 
 	Elm_Object_Item *it = elm_genlist_first_item_get(gl);
-	if (it) {
+	if (it)
 		elm_object_item_del(it);
-	}
 }
 
 /**

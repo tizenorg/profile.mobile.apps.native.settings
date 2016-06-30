@@ -73,12 +73,12 @@ static int dpm_usb_mass_storage(int* enable)
 		return 0;
 	}
 
-    policy = dpm_context_acquire_restriction_policy(context);
-    if (policy == NULL) {
-        SETTING_TRACE_ERROR("Failed to get storage policy interface\n");
-        dpm_context_destroy(context);
-        return 0;
-    }
+	policy = dpm_context_acquire_restriction_policy(context);
+	if (policy == NULL) {
+		SETTING_TRACE_ERROR("Failed to get storage policy interface\n");
+		dpm_context_destroy(context);
+		return 0;
+	}
 
 	int rval = 0;
 	ret = dpm_restriction_get_external_storage_state(policy, &rval);
@@ -596,9 +596,9 @@ static Eina_Bool storageUg_update_timer(void *data)
 	storageUg_main_dev_memory_update(ad);
 	SETTING_TRACE_DEBUG("ad->misces_view->is_create:%d",
 			ad->misces_view->is_create);
-	if (ad->misces_view->is_create) {
-		/* setting_view_update(ad->misces_view, ad); */
-	}
+	/* if (ad->misces_view->is_create) {
+		setting_view_update(ad->misces_view, ad);
+	} */
 	if (ad->size_worker)
 		storageUg_stop_async_worker(ad->size_worker);
 	ad->size_worker = storageUg_start_async_worker(
@@ -851,11 +851,10 @@ static int storageUg_main_update(void *data)
 	/*storageUg_main_update_media_data(ad); */
 	storageUG_update_apps_cache_info(ad);
 
-	if (ad->misces_list) {
-		/*setting_view_update(ad->misces_view, ad); */
-	} else {
+	if (!ad->misces_list)
 		evas_object_show(ad->lo_main);
-	}
+	/* else
+		setting_view_update(ad->misces_view, ad); */
 
 	return SETTING_RETURN_SUCCESS;
 }
