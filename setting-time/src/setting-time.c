@@ -93,9 +93,8 @@ static void *setting_time_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 
 	char *viewtype = NULL;
 	app_control_get_extra_data(service, "viewtype", &viewtype);
-	if (!safeStrCmp(viewtype, "format_expand")) {
+	if (!safeStrCmp(viewtype, "format_expand"))
 		timeUG->is_expand_time_format_list = 1;
-	}
 
 	/*	creating a view. */
 	setting_view_node_set_cur_view(&setting_view_time_main);
@@ -170,9 +169,8 @@ static void setting_time_ug_on_event(ui_gadget_h ug, enum ug_event event,
 			const char *pa_lang = vconf_get_str(VCONFKEY_LANGSET);
 			if (pa_lang) {
 				char *q = strchr(pa_lang, '.');
-				if (q) {
+				if (q)
 					*q = '\0';
-				}
 			}
 			int err = -1;
 

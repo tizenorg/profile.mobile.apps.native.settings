@@ -129,9 +129,8 @@ void time_changed_callback(keynode_t *key, void *data)
 	SettingTimeUG *ad = (SettingTimeUG *)data;
 
 	int ret = setting_time_update_cb(ad);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE("FAIL: setting_time_update_db(ad)\n");
-	}
 
 	/* update time */
 	if (ad->refresh_time_idler) {
@@ -292,10 +291,8 @@ static void __update_time_via_sim_card(void *data)
 	ret += vconf_get_int(VCONFKEY_TELEPHONY_NITZ_GMT, &t_nitz);
 	ret += vconf_get_int(VCONFKEY_TELEPHONY_NITZ_EVENT_GMT, &t_offset);
 	char *tzpath = vconf_get_str(VCONFKEY_TELEPHONY_NITZ_ZONE);
-	if (ret != 0 || isEmptyStr(tzpath)) {
-		return;
-	}
-	ret = 0;/*reset.. */
+	ret_if(ret != 0 || isEmptyStr(tzpath));
+	ret = 0;	/*reset.. */
 
 	/* a.time zone */
 	SETTING_TRACE("tzpath : %s", tzpath);
@@ -324,9 +321,9 @@ static void __update_time_via_sim_card(void *data)
 	int t_uptime = 0;
 	FILE *fp = fopen("/proc/uptime", "r");
 	if (fp) {
-		if (!fscanf(fp, "%d", &t_uptime)) {
+		if (!fscanf(fp, "%d", &t_uptime))
 			SETTING_TRACE_ERROR("fscanf error");
-		}
+
 		fclose(fp);
 		fp = NULL;
 	} else {
@@ -531,9 +528,8 @@ static void setting_time_main_datefield_set_cb(void *data, Evas_Object *object,
 		SETTING_TRACE("AUTO_TIME ON: no action");
 		SETTING_TRACE_END;
 #ifdef USE_TIMER_UPDATE_TIME_IN_TIME_VIEW
-		if (ad->update_timer) {
+		if (ad->update_timer)
 			ecore_timer_thaw(ad->update_timer);
-		}
 #endif
 		return;
 	}
@@ -555,9 +551,8 @@ static void setting_time_main_datefield_set_cb(void *data, Evas_Object *object,
 	int ret = _alarmmgr_set_systime_helper(the_time);
 
 #ifdef USE_TIMER_UPDATE_TIME_IN_TIME_VIEW
-	if (ad->update_timer) {
+	if (ad->update_timer)
 		ecore_timer_thaw(ad->update_timer);
-	}
 #endif
 
 #if 1
@@ -656,12 +651,12 @@ static int setting_time_main_create(void *cb)
 			} else
 				SETTING_TRACE("_set_timezone_helper - "
 						"successful : %s \n", tzpath);
-			if (!__setting_set_city_tzone(tzpath)) {
+			if (!__setting_set_city_tzone(tzpath))
 				SETTING_TRACE("__setting_set_city_tzone ERROR");
-			}
+
 			get_city_name(tzpath);
 			char *city = get_city_name_result();
-			SETTING_TRACE("city:%s", city);
+			SETTING_TRACE("city: %s", city);
 			ret = vconf_set_str(VCONFKEY_SETAPPL_CITYNAME_INDEX_INT,
 					city);
 
@@ -669,9 +664,9 @@ static int setting_time_main_create(void *cb)
 			int t_uptime = 0;
 			FILE *fp = fopen("/proc/uptime", "r");
 			if (fp) {
-				if (!fscanf(fp, "%d", &t_uptime)) {
+				if (!fscanf(fp, "%d", &t_uptime))
 					SETTING_TRACE_ERROR("fscanf error");
-				}
+
 				fclose(fp);
 				fp = NULL;
 			} else {
@@ -697,11 +692,10 @@ static int setting_time_main_create(void *cb)
 				NULL, value,
 				DATE_TIME_STR_AUTOMATIC_UPDATE, NULL,
 				setting_time_main_chk_btn_cb);
-	if (ad->data_auto) {
+	if (ad->data_auto)
 		ad->data_auto->userdata = ad;
-	} else {
+	else
 		SETTING_TRACE_ERROR("ad->data_auto is NULL");
-	}
 
 	/*ADD_GL_HELP(scroller,SETTING_TIME_AUTO_UPDATE_DESC); */
 	/*} */
@@ -750,17 +744,15 @@ static int setting_time_main_create(void *cb)
 				CITY_BUF_SIZE + GMT_BUF_SIZE + 2, "%s, GMT %s",
 				displayTimezone, _(str_buf));
 		FREE(timezone_str);
-		if (ret < 0) {
+		if (ret < 0)
 			SETTING_TRACE_ERROR("cannot snprintf");
-		}
 	} else {
 		/* default code */
 		ret = snprintf(time_zone_sub_str,
 				CITY_BUF_SIZE + GMT_BUF_SIZE + 2,
 				"Korean Standard Time, GMT +9:00");
-		if (ret < 0) {
+		if (ret < 0)
 			SETTING_TRACE_ERROR("cannot snprintf");
-		}
 	}
 	FREE(displayTimezone);
 
@@ -771,11 +763,10 @@ static int setting_time_main_create(void *cb)
 				ad, SWALLOW_Type_INVALID, NULL,
 				NULL, 0, DATE_TIME_STR_TIME_ZONE,
 				time_zone_sub_str, NULL);
-	if (ad->data_tz) {
+	if (ad->data_tz)
 		ad->data_tz->userdata = ad;
-	} else {
+	else
 		SETTING_TRACE_ERROR("ad->data_tz is NULL");
-	}
 
 	/*	UI create "Time format" */
 	value = VCONFKEY_TIME_FORMAT_12;
@@ -820,12 +811,11 @@ static int setting_time_main_create(void *cb)
 #endif
 
 	if (auto_flag) {
-		if (ad->data_tz) {
+		if (ad->data_tz)
 			setting_disable_genlist_item(ad->data_tz->item);
-		}
-		if (ad->data_time) {
+
+		if (ad->data_time)
 			setting_disable_genlist_item(ad->data_time->item);
-		}
 	}
 
 	setting_view_time_main.is_create = 1;
@@ -1197,16 +1187,15 @@ static void __setting_update_datefield_cb(void *cb)
 	date_arr[DEF_BUF_SIZE - 1] = '\0';
 	time_arr[DEF_BUF_SIZE - 1] = '\0';
 
-	if (ad->data_time->btn_left) {
+	if (ad->data_time->btn_left)
 		elm_object_text_set(ad->data_time->btn_left, date_arr);
-	} else {
+	else
 		SETTING_TRACE_ERROR("ad->data_time->btn_left is NULL");
-	}
-	if (ad->data_time->btn_right) {
+
+	if (ad->data_time->btn_right)
 		elm_object_text_set(ad->data_time->btn_right, time_arr);
-	} else {
+	else
 		SETTING_TRACE_ERROR("ad->data_time->btn_right is NULL");
-	}
 
 	FREE(pa_time_format);
 }
@@ -1311,9 +1300,8 @@ static void __time_auto_update(void *data)
 	int err;
 	setting_set_bool_slp_key(BOOL_SLP_SETTING_AUTOMATIC_TIME_UPDATE,
 			SETTING_ON_OFF_BTN_ON, &err);
-	if (ad->data_tz) {
+	if (ad->data_tz)
 		setting_disable_genlist_item(ad->data_tz->item);
-	}
 
 #if 0
 	elm_object_text_set(ad->data_time->btn_left, date);
@@ -1357,9 +1345,8 @@ setting_time_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 					SETTING_ON_OFF_BTN_OFF, &err);
 			setting_update_gl_item_chk_status(ad->data_auto, 0);
 
-			if (ad->data_tz) {
+			if (ad->data_tz)
 				setting_enable_genlist_item(ad->data_tz->item);
-			}
 
 			if (ad->data_time) {
 				ad->data_time->isItemDisableFlag = FALSE;
@@ -1410,9 +1397,9 @@ setting_time_main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 	if (ad->data_time_fmt == list_item) {
 		int err = 0;
 		int value = VCONFKEY_TIME_FORMAT_12;
-		if (list_item->chk_status) {
+		if (list_item->chk_status)
 			value = VCONFKEY_TIME_FORMAT_24;
-		}
+
 		setting_set_int_slp_key(INT_SLP_SETTING_REGIONFORMAT_TIME1224,
 				value, &err);
 	}
@@ -1471,9 +1458,8 @@ static void setting_time_main_mouse_up_Gendial_list_cb(
 			(BOOL_SLP_SETTING_AUTOMATIC_TIME_UPDATE,
 			 SETTING_ON_OFF_BTN_OFF, &err);
 
-			if (ad->data_tz) {
+			if (ad->data_tz)
 				setting_enable_genlist_item(ad->data_tz->item);
-			}
 
 			if (ad->data_time) {
 				ad->data_time->isItemDisableFlag = FALSE;
@@ -1592,10 +1578,8 @@ static void get_gmt_offset(char *str_buf, int size)
 			str_buf);
 
 	int ret = vconf_set_str(VCONFKEY_SETAPPL_TIMEZONE_INT, str_buf);
-	if (ret == -1) {
+	if (ret == -1)
 		SETTING_TRACE_ERROR("set vconf failed");
-	}
-
 }
 
 
@@ -1668,7 +1652,7 @@ static char *get_timezone_displayname()
 	time_t t = time(0);
 	struct tm *pdata, data;
 
-	pdata= localtime_r(&t, &data);
+	pdata = localtime_r(&t, &data);
 
 	ICU_set_timezone(get_timezone_str());
 
