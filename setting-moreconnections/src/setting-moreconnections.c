@@ -167,7 +167,6 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 	setting_retm_if(!ops, "ops == NULL");
 
 	moreconnectionsUG = ops->priv;
-	if (moreconnectionsUG) {
+	if (moreconnectionsUG)
 		FREE(moreconnectionsUG);
-	}
 }
