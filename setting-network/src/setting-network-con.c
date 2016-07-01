@@ -356,9 +356,9 @@ static void setting_network_con_item_Gendial_mouse_up_cb(void *data,
 
 	ad->profile_service_type = 0;
 
-	if (!safeStrCmp("IDS_COM_BODY_NETWORK_OPERATORS", list_item->keyStr)) {
+	if (!safeStrCmp("IDS_COM_BODY_SEVICE_PROVIDERS", list_item->keyStr)) {
 		setting_view_change(&setting_view_network_con,
-				&setting_view_network_select_network, ad);
+				&setting_view_network_select_provider, ad);
 	}
 #ifdef ENABLED_PREFERRED_NETWORKS
 	else if (!safeStrCmp("IDS_ST_BODY_PREFERRED_NETWORKS",
@@ -522,9 +522,9 @@ static void setting_network_con_reset_popup_cb(void *data, Evas_Object *obj,
 				ad, ad->win_get,
 				PROGRESSBAR_STYLE, NULL, IDS_ST_SK2_PLEASE_WAIT,
 				NULL, 0, TRUE, TRUE, 0);
-
+/*TODO: select proper connection[] */
 		if (ad->connection) {
-			ret = connection_reset_profile(ad->connection,
+			ret = connection_reset_profile(ad->connection[0],
 					CONNECTION_RESET_DEFAULT_PROFILE, 0,
 					_reset_do_default_cb, ad);
 			if (CONNECTION_ERROR_NONE == ret)

@@ -521,7 +521,8 @@ static void setting_network_profile_delete_click_softkey_delete_cb(void *data,
 	char *def_name = NULL;
 	char *def_id = NULL;
 	connection_profile_h def_profile = NULL;
-	(void)connection_get_default_cellular_service_profile(ad->connection,
+/*TODO: select proper connection[] */
+	(void)connection_get_default_cellular_service_profile(ad->connection[0],
 			ad->profile_service_type, &def_profile);
 	if (def_profile)
 		connection_profile_get_cellular_apn(def_profile, &def_apn);
@@ -560,7 +561,8 @@ static void setting_network_profile_delete_click_softkey_delete_cb(void *data,
 				&& !safeStrCmp(def_id, id)) {
 			is_default = TRUE;
 		}
-		if ((err = connection_remove_profile(ad->connection, profile_h))
+/*TODO: select proper connection[] */
+		if ((err = connection_remove_profile(ad->connection[0], profile_h))
 				!= CONNECTION_ERROR_NONE) {
 			SETTING_TRACE_ERROR(
 					"*** [ERR] connection_add_profile. err=%d ***",
@@ -584,8 +586,9 @@ static void setting_network_profile_delete_click_softkey_delete_cb(void *data,
 				if (first_valid_item) {
 					connection_profile_h first_profile_h =
 							(connection_profile_h)(first_valid_item->belongs_to);
+/*TODO: select proper connection[] */
 					(void)connection_set_default_cellular_service_profile(
-							ad->connection,
+							ad->connection[0],
 							ad->profile_service_type,
 							first_profile_h);
 				}

@@ -144,6 +144,7 @@
 #define COUNTRY_CODE_LEN	3
 #define NETWORK_CODE_LEN	3
 #define PRE_NETWORK_NAME_MAX 256
+#define SIM_CARDS_MAX 2
 
 /* the popupresponse action ID */
 #define SETTING_NETWORK_POP_RESPONSE_ACTION_CANCEL	10
@@ -180,10 +181,11 @@ typedef enum {
  */
 struct _SettingNetworkUG {
 	ui_gadget_h ug;
-	TapiHandle *handle;
-	connection_h connection;
+	TapiHandle *handle[SIM_CARDS_MAX];
+	connection_h connection[SIM_CARDS_MAX];
 	connection_profile_h sel_profile_h;
 	setting_view *profile_topper_view;
+	char spn_names[SIM_CARDS_MAX][PRE_NETWORK_NAME_MAX];
 
 	/*xmlDocPtr whitelist_doc; */
 	/*xmlNodePtr whitelist_root_node; */
@@ -235,7 +237,7 @@ struct _SettingNetworkUG {
 
 	bool has_form_changed;
 	Evas_Object *genlist;
-	Evas_Object *genlist_sel_network;
+	Evas_Object *genlist_sel_provider;
 	Evas_Object *connections_gl; /* genlist in connections view */
 	Evas_Object *con_list_gl; /* genlist in connections view */
 	int cur_profile_num;
@@ -264,7 +266,7 @@ struct _SettingNetworkUG {
 
 	Setting_GenGroupItem_Data *data_sel_net;
 #ifdef UI_NETWORK_MODE
-	Setting_GenGroupItem_Data *data_net_mode;
+	Setting_GenGroupItem_Data *data_net_mode[SIM_CARDS_MAX];
 #endif
 	Setting_GenGroupItem_Data *data_connection;
 	Setting_GenGroupItem_Data *data_mobile_data;
@@ -274,10 +276,10 @@ struct _SettingNetworkUG {
 	Setting_GenGroupItem_Data *mms_conn;
 	Setting_GenGroupItem_Data *selected_profile;
 
-	Setting_GenGroupItem_Data *lte_wcdma_gsm;
-	Setting_GenGroupItem_Data *wcdma_gsm;
-	Setting_GenGroupItem_Data *wcdma_only;
-	Setting_GenGroupItem_Data *gsm_only;
+	Setting_GenGroupItem_Data *lte_wcdma_gsm[SIM_CARDS_MAX];
+	Setting_GenGroupItem_Data *wcdma_gsm[SIM_CARDS_MAX];
+	Setting_GenGroupItem_Data *wcdma_only[SIM_CARDS_MAX];
+	Setting_GenGroupItem_Data *gsm_only[SIM_CARDS_MAX];
 
 	Evas_Object *chk_sel;
 	Evas_Object *chk_mode;
@@ -288,7 +290,7 @@ struct _SettingNetworkUG {
 	int sel_act; /**< like vconf key:VCONFKEY_SETAPPL_SELECT_OLD_NT_ACT */
 	char *sel_network;
 #ifdef UI_NETWORK_MODE
-	int net_mode; /* like vconf key */
+	int net_mode[SIM_CARDS_MAX]; /* like vconf key */
 #endif
 
 	TelNetworkPlmnList_t plmn_info;
@@ -367,7 +369,7 @@ struct _SettingNetworkUG {
 };
 
 extern setting_view setting_view_network_main;
-extern setting_view setting_view_network_select_network;
+extern setting_view setting_view_network_select_provider;
 extern setting_view setting_view_network_con;
 extern setting_view setting_view_network_con_list;
 extern setting_view setting_view_network_connection_create;
@@ -411,5 +413,6 @@ int setting_network_get_state_mobile_data();
 
 void setting_network_set_state_data_roaming(ButtonState state);
 int setting_network_get_state_data_roaming(int *value);
+int get_sim_ix_from_tapi_handle(TapiHandle *handle, SettingNetworkUG *ad);
 
 #endif				/* __SETTING_NETWORK_H__ */
