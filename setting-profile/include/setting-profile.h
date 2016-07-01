@@ -130,10 +130,12 @@ struct _SettingProfileUG {
 	Ecore_Idler *play_ringtone_idler;
 
 	Ecore_Event_Handler *keydown_handler;
-	Ecore_Event_Handler *keyup_handler;bool is_pressing;
+	Ecore_Event_Handler *keyup_handler;
+	bool is_pressing;
 	Ecore_Timer *updown_timer;
 	Evas_Object *calling_popup; /* Unable to pre-listening during a call */
-	int backup_ringtong_volume;bool is_ringtone_slidering;
+	int backup_ringtong_volume;
+	bool is_ringtone_slidering;
 };
 
 extern setting_view setting_view_sound_main;
