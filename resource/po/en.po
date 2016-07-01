@@ -154,8 +154,8 @@ msgstr "Your SIM card does not allow a connection to this network."
 msgid "IDS_COM_BODY_TYPE_A_PIN_THAT_IS_4_TO_8_NUMBERS"
 msgstr "Type PIN that is 4 to 8 numbers"
 
-msgid "IDS_COM_BODY_NETWORK_OPERATORS"
-msgstr "Network operators"
+msgid "IDS_COM_BODY_SEVICE_PROVIDERS"
+msgstr "Service providers"
 
 msgid "IDS_COM_BODY_FORMATTING_SD_CARD_ING"
 msgstr "Formatting SD card..."
@@ -1510,6 +1510,9 @@ msgstr "Network type"
 msgid "IDS_ST_BODY_NETWORK_MODE"
 msgstr "Network mode"
 
+msgid "IDS_ST_BODY_SUFIX_NETWORK_MODE"
+msgstr "network mode"
+
 msgid "IDS_ST_BODY_NETWORK_LIST"
 msgstr "Network list"
 
@@ -1956,6 +1959,9 @@ msgstr "Connections"
 
 msgid "IDS_ST_BODY_CONNECTION"
 msgstr "Connection"
+
+msgid "IDS_ST_BODY_MOBILE_NETWORK_CONNECTIONS"
+msgstr "Mobile network connections"
 
 msgid "IDS_ST_BODY_CONFIRM_NEW_PIN2"
 msgstr "Confirm new PIN2"

@@ -32,7 +32,7 @@ SET(CMAKE_EXE_LINKER_FLAGS "-Wl,--as-needed -Wl,--rpath=/usr/lib")
 ADD_LIBRARY(${SETTING_NETWORK_UG} SHARED
 	./src/setting-network.c
 	./src/setting-network-main.c
-	./src/setting-network-select-network.c
+	./src/setting-network-select-provider.c
 	./src/setting-network-con.c
 	./src/setting-network-con-list.c
 	./src/setting-network-profile-delete.c
