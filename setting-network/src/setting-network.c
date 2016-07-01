@@ -21,6 +21,8 @@
 #include <setting-network.h>
 #include <setting-debug.h>
 #include <setting-cfg.h>
+#include <TelMisc.h>
+#include <ITapiModem.h>
 
 #ifndef UG_MODULE_API
 #define UG_MODULE_API __attribute__ ((visibility("default")))
@@ -28,6 +30,21 @@
 
 const char *STR_SETTING_OPERATION_FAILED = "IDS_BT_POP_OPERATION_FAILED";
 static Evas_Object *__create_registering_popup(void *data);
+
+int get_sim_ix_from_tapi_handle(TapiHandle *handle, SettingNetworkUG *ad)
+{
+	int i = 0;
+	int sim_ix = -1;
+
+	if (handle && ad)
+		for (i = 0; i < SIM_CARDS_MAX; i++)
+			if (ad->handle[i] == handle) {
+				sim_ix = i;
+				break;
+			}
+
+	return sim_ix;
+}
 
 char *__get_profile_name(int conType, void *data)
 {
@@ -46,8 +63,8 @@ char *__get_profile_name(int conType, void *data)
 				CONNECTION_PROFILE_TYPE_CELLULAR;
 		connection_cellular_service_type_e service_type =
 				CONNECTION_CELLULAR_SERVICE_TYPE_UNKNOWN;
-
-		int rv = connection_get_profile_iterator(ad->connection,
+/*TODO: select proper connection[] */
+		int rv = connection_get_profile_iterator(ad->connection[0],
 				CONNECTION_ITERATOR_TYPE_REGISTERED,
 				&profile_iter);
 		if (rv != CONNECTION_ERROR_NONE) {
@@ -133,9 +150,9 @@ char *__get_profile_name(int conType, void *data)
 
 		return def_name != NULL ? def_name : strdup(KeyStr_No_Profile);
 	}
-
+/*TODO: select proper connection[] */
 	connection_profile_h def_profile = NULL;
-	(void)connection_get_default_cellular_service_profile(ad->connection,
+	(void)connection_get_default_cellular_service_profile(ad->connection[0],
 			conType, &def_profile);
 	if (def_profile)
 		connection_profile_get_name(def_profile, &def_name);
@@ -215,14 +232,14 @@ static setting_view *__get_network_view_to_load(void *data,
 
 	if (0 == safeStrCmp(networkUG->view_type_string, "netsearch")) {
 		setting_view_node_table_register(
-				&setting_view_network_select_network, NULL);
-		return &setting_view_network_select_network;
+				&setting_view_network_select_provider, NULL);
+		return &setting_view_network_select_provider;
 
 	} else {
 		setting_view_node_table_register(&setting_view_network_main,
 				NULL);
 		setting_view_node_table_register(
-				&setting_view_network_select_network,
+				&setting_view_network_select_provider,
 				&setting_view_network_main);
 
 		setting_view_node_table_register(&setting_view_network_con,
@@ -367,18 +384,24 @@ static void *setting_network_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	/* init */
 	ecore_imf_init();
 
-	/*pass NULL to let TAPI access default module */
-	networkUG->handle = tel_init(NULL);
-	if (!networkUG->handle) {
-		SETTING_TRACE_DEBUG("%s*** [ERR] tel_init. ***%s",
-				SETTING_FONT_RED, SETTING_FONT_BLACK);
-	}
+	char **cps = tel_get_cp_name_list();
 
-	if (CONNECTION_ERROR_NONE != connection_create(
-			&(networkUG->connection))) {
-		SETTING_TRACE_ERROR("***Failed to connection_create.***");
+	int i = 0;
+	if(cps) {
+		while(cps[i])
+		{
+			networkUG->handle[i] = tel_init(cps[i]);
+			if (!networkUG->handle[i]) {
+				SETTING_TRACE_DEBUG("%s*** [ERR] tel_init. ***%s",
+						SETTING_FONT_RED, SETTING_FONT_BLACK);
+			}
+			if (CONNECTION_ERROR_NONE != connection_create(
+					&(networkUG->connection[i]))) {
+				SETTING_TRACE_ERROR("***Failed to connection_create.***");
+			}
+			i++;
+		}
 	}
-
 	setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR);
 
 	networkUG->view_type_string = NULL;
@@ -407,27 +430,43 @@ static void *setting_network_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	}
 	setting_view_create(networkUG->view_to_load, (void *)networkUG);
 
+	i = 0;
+	if(cps) {
+		while(cps[i])
+		{
+			TelSimCardStatus_t sim_status = TAPI_SIM_STATUS_UNKNOWN;
+			if (TAPI_API_SUCCESS != tel_get_sim_init_info(networkUG->handle[i], &sim_status, NULL) ||
+				!(sim_status == TAPI_SIM_STATUS_SIM_INIT_COMPLETED ||
+				  sim_status == TAPI_SIM_STATUS_SIM_INIT_COMPLETED
+				  )
+				) {
+				i++;
+				continue;
+			}
+
 	/* register view node table */
 #ifdef UI_NETWORK_MODE
-	if (tel_get_network_mode(networkUG->handle, setting_tapi_get_band_cb,
-			networkUG) != TAPI_API_SUCCESS) {
-		SETTING_TRACE_ERROR("*** [ERR] tel_get_network_band. ***");
-	}
+			if (tel_get_network_mode(networkUG->handle[i], setting_tapi_get_band_cb,
+					networkUG) != TAPI_API_SUCCESS) {
+				SETTING_TRACE_ERROR("*** [ERR] tel_get_network_band. ***");
+			}
 #endif
 
-	if (tel_get_network_selection_mode(networkUG->handle,
-			setting_tapi_get_plmn_mode_cb, networkUG)
-			!= TAPI_API_SUCCESS) {
-		SETTING_TRACE_ERROR(
-				"*** [ERR] tel_get_network_selection_mode. ***");
-	}
+			if (tel_get_network_selection_mode(networkUG->handle[i],
+					setting_tapi_get_plmn_mode_cb, networkUG)
+					!= TAPI_API_SUCCESS) {
+				SETTING_TRACE_ERROR(
+						"*** [ERR] tel_get_network_selection_mode. ***");
+			}
 
-	if (tel_get_network_serving(networkUG->handle,
-			setting_tapi_get_serving_network_cb, networkUG)
-			!= TAPI_API_SUCCESS) {
-		SETTING_TRACE_ERROR("*** [ERR] tel_get_network_serving. ***");
+			if (tel_get_network_serving(networkUG->handle[i],
+					setting_tapi_get_serving_network_cb, networkUG)
+					!= TAPI_API_SUCCESS) {
+				SETTING_TRACE_ERROR("*** [ERR] tel_get_network_serving. ***");
+			}
+			i++;
+		}
 	}
-
 	evas_object_event_callback_add(networkUG->win_main_layout,
 			EVAS_CALLBACK_RESIZE, setting_network_ug_cb_resize,
 			networkUG);
@@ -507,25 +546,27 @@ static void setting_network_ug_on_destroy(ui_gadget_h ug, app_control_h service,
 	ecore_imf_shutdown();
 
 	/*	unregister dnet client */
-	if (networkUG->connection) {
-		connection_destroy(networkUG->connection);
-		networkUG->connection = NULL;
-	}
+	int i = 0;
+	for (; i < SIM_CARDS_MAX; i++) {
+		if (networkUG->connection[i]) {
+			connection_destroy(networkUG->connection[i]);
+			networkUG->connection[i] = NULL;
+		}
 
-	if (networkUG->handle
-			&& tel_deinit(networkUG->handle) != TAPI_API_SUCCESS) {
-		SETTING_TRACE_DEBUG(
-				"%s*** [ERR] setting_network_unsubscribe_tapi_events. ***%s",
-				SETTING_FONT_RED, SETTING_FONT_BLACK);
+		if (networkUG->handle[i]
+				&& tel_deinit(networkUG->handle[i]) != TAPI_API_SUCCESS) {
+			SETTING_TRACE_DEBUG(
+					"%s*** [ERR] setting_network_unsubscribe_tapi_events. ***%s",
+					SETTING_FONT_RED, SETTING_FONT_BLACK);
+		}
+		if (networkUG->profile_list != NULL) {
+			eina_list_free(networkUG->profile_list);
+			networkUG->profile_list = NULL;
+		}
 	}
-	if (networkUG->profile_list != NULL) {
-		eina_list_free(networkUG->profile_list);
-		networkUG->profile_list = NULL;
-	}
-
 	setting_network_popup_delete(networkUG);
 	/*	delete the allocated objects. */
-	setting_view_destroy(&setting_view_network_select_network, networkUG);
+	setting_view_destroy(&setting_view_network_select_provider, networkUG);
 
 	setting_view_destroy(&setting_view_network_con, networkUG);
 	setting_view_destroy(&setting_view_network_con_list, networkUG);
@@ -586,6 +627,7 @@ static void setting_network_ug_on_event(ui_gadget_h ug, enum ug_event event,
 {
 	SETTING_TRACE_BEGIN;
 	SettingNetworkUG *ad = (SettingNetworkUG *)priv;
+	int i = 0;
 
 	switch (event) {
 	case UG_EVENT_LOW_MEMORY:
@@ -617,14 +659,16 @@ static void setting_network_ug_on_event(ui_gadget_h ug, enum ug_event event,
 				elm_genlist_item_update(item_data->item);
 			}
 #ifdef UI_NETWORK_MODE
-			/*update sub text */
-			if (ad->handle && tel_get_network_mode(ad->handle,
-					setting_tapi_get_band_cb, ad)
-					!= TAPI_API_SUCCESS) {
-				SETTING_TRACE_ERROR(
-						"*** [ERR] tel_get_network_band. ***");
+			for (i = 0; i < SIM_CARDS_MAX; i++) {
+				/*update sub text */
+				if (ad->handle[i] && tel_get_network_mode(ad->handle[i],
+						setting_tapi_get_band_cb, ad)
+						!= TAPI_API_SUCCESS) {
+					SETTING_TRACE_ERROR(
+							"*** [ERR] tel_get_network_band. ***");
+				}
+				setting_network_update_sel_network(ad);
 			}
-			setting_network_update_sel_network(ad);
 #endif
 			/*update title */
 			Elm_Object_Item *navi_it = elm_naviframe_bottom_item_get(
@@ -745,6 +789,7 @@ void setting_network_popup_delete(void *data)
 void setting_tapi_get_band_cb(TapiHandle *handle, int result, void *data,
 		void *user_data)
 {
+	int sim_ix = -1;
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE(" - result = 0x%x", result);
 	ret_if(!user_data);
@@ -809,14 +854,18 @@ void setting_tapi_get_band_cb(TapiHandle *handle, int result, void *data,
 		default:
 			break;
 		}
-
-		if (ad->data_net_mode) {
-			ad->data_net_mode->sub_desc = (char *)g_strdup(
+		sim_ix = get_sim_ix_from_tapi_handle(handle, ad);
+		if (sim_ix < 0) {
+			SETTING_TRACE_ERROR("Problem obtaining sim index");
+			return;
+		}
+		if (ad->data_net_mode[sim_ix]) {
+			ad->data_net_mode[sim_ix]->sub_desc = (char *)g_strdup(
 					sub_desc);
-			elm_object_item_data_set(ad->data_net_mode->item,
-					ad->data_net_mode);
-			elm_genlist_item_update(ad->data_net_mode->item);
-			elm_genlist_item_expanded_set(ad->data_net_mode->item,
+			elm_object_item_data_set(ad->data_net_mode[sim_ix]->item,
+					ad->data_net_mode[sim_ix]);
+			elm_genlist_item_update(ad->data_net_mode[sim_ix]->item);
+			elm_genlist_item_expanded_set(ad->data_net_mode[sim_ix]->item,
 					FALSE);
 		}
 
@@ -836,17 +885,24 @@ void setting_tapi_get_band_cb(TapiHandle *handle, int result, void *data,
 void setting_tapi_set_band_cb(TapiHandle *handle, int result, void *data,
 		void *user_data)
 {
+	int sim_ix = -1;
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE(" - result = 0x%x	 , %d", result, result);
 	ret_if(!user_data);
 	SettingNetworkUG *ad = user_data;
-	ret_if(NULL == ad->data_net_mode);
+
+	sim_ix = get_sim_ix_from_tapi_handle(handle, ad);
+	if (sim_ix < 0 || !ad->data_net_mode[sim_ix]) {
+		SETTING_TRACE_ERROR("Problem: sim_ix: %d");
+		return;
+	}
+
 	if (ad->network_ug_pop) {
 		evas_object_del(ad->network_ug_pop);
 		ad->network_ug_pop = NULL;
 	}
 
-	if (tel_get_network_mode(ad->handle, setting_tapi_get_band_cb, ad)
+	if (tel_get_network_mode(handle, setting_tapi_get_band_cb, ad)
 			!= TAPI_API_SUCCESS) {
 		SETTING_TRACE_ERROR("*** [ERR] tel_get_network_band. ***");
 	}
@@ -864,7 +920,7 @@ void __back_to_previous_cb(void *data, Evas_Object *obj, void *event_info)
 	}
 
 	/*go back to previous view if set successfully */
-	setting_view_change(&setting_view_network_select_network,
+	setting_view_change(&setting_view_network_select_provider,
 			&setting_view_network_main, ad);
 }
 
@@ -1086,7 +1142,7 @@ void setting_tapi_search_network_cb(TapiHandle *handle, int result, void *data,
 
 		const char *pa_net_name = get_pa_select_network();
 		char *cur_plmn = NULL;
-		tel_get_property_string(ad->handle, TAPI_PROP_NETWORK_PLMN,
+		tel_get_property_string(handle, TAPI_PROP_NETWORK_PLMN,
 				&cur_plmn);
 		SETTING_TRACE("VCONFKEY_TELEPHONY_NWNAME:pa_net_name:%s",
 				pa_net_name);
@@ -1122,7 +1178,7 @@ void setting_tapi_search_network_cb(TapiHandle *handle, int result, void *data,
 			/* check the code */
 			SETTING_TRACE("name:%s", speciliztion);
 			item_data = setting_create_Gendial_field_1radio(
-					ad->genlist_sel_network,
+					ad->genlist_sel_provider,
 					&itc_multiline_1text_1icon,
 					setting_network_Gendial_select_plmn_cb,
 					ad,
@@ -1247,10 +1303,10 @@ void __register_network(Setting_GenGroupItem_Data *list_item)
 		elm_object_item_del(ad->data_search_network_item->item);
 		ad->data_search_network_item = NULL;
 	}
-
+/*TODO: select proper handle:*/
 	if (ad->b_searching_network) {
 		SETTING_TRACE("Sending tel_cancel_network_manual_search..");
-		tapi_ret = tel_cancel_network_manual_search(ad->handle,
+		tapi_ret = tel_cancel_network_manual_search(ad->handle[0],
 				setting_tapi_cancel_manual_search_cb, ad);
 		if (tapi_ret != TAPI_API_SUCCESS) {
 			SETTING_TRACE_ERROR(
@@ -1260,12 +1316,12 @@ void __register_network(Setting_GenGroupItem_Data *list_item)
 			ad->b_searching_network = FALSE;
 		}
 	}
-
+/*TODO: select proper handle:*/
 	if (0 == safeStrCmp(list_item->keyStr,
 			"IDS_ST_BODY_SELECT_AUTOMATICALLY")) {
 		ad->sel_net = TAPI_NETWORK_SELECTIONMODE_AUTOMATIC;
 		SETTING_TRACE("Sending tel_select_network_automatic..");
-		tapi_ret = tel_select_network_automatic(ad->handle,
+		tapi_ret = tel_select_network_automatic(ad->handle[0],
 				setting_tapi_set_plmn_mode_cb, ad);
 		if (tapi_ret != TAPI_API_SUCCESS) {
 			SETTING_TRACE_DEBUG(
@@ -1349,8 +1405,9 @@ void __register_network(Setting_GenGroupItem_Data *list_item)
 				(int )(ad->plmn_info.network_list[cnt].access_technology));
 
 		/*ASYNC API - TAPI_EVENT_NETWORK_SELECT_CNF */
+/*TODO: select proper handle:*/
 		SETTING_TRACE("Sending tel_select_network_manual..");
-		tapi_ret = tel_select_network_manual(ad->handle,
+		tapi_ret = tel_select_network_manual(ad->handle[0],
 				ad->plmn_info.network_list[cnt].plmn,
 				ad->plmn_info.network_list[cnt].access_technology,
 				setting_tapi_set_plmn_mode_cb, ad);
@@ -1482,7 +1539,9 @@ static void __search_network_cancel_cb(void *data, Evas_Object *obj,
 	}
 	if (ad->b_searching_network) {
 		SETTING_TRACE("Sending tel_cancel_network_manual_search..");
-		int tapi_ret = tel_cancel_network_manual_search(ad->handle,
+/*TODO select proper handle: */
+		int tapi_ret = -1;
+		tel_cancel_network_manual_search(ad->handle[0],
 				setting_tapi_cancel_manual_search_cb, ad);
 		if (tapi_ret != TAPI_API_SUCCESS) {
 			SETTING_TRACE_ERROR(
@@ -1604,7 +1663,8 @@ static Eina_Bool __search_net_on_timer(void *data)
 	int tapi_ret;
 	/*searching list */
 	/*ASYNC API - TAPI_EVENT_NETWORK_SEARCH_CNF */
-	tapi_ret = tel_search_network(ad->handle,
+/*TODO select handle:*/
+	tapi_ret = tel_search_network(ad->handle[0],
 			setting_tapi_search_network_cb, ad);
 	if (tapi_ret != TAPI_API_SUCCESS) { /* error handling.. */
 		SETTING_TRACE_ERROR(
@@ -1624,7 +1684,7 @@ static Eina_Bool __search_net_on_timer(void *data)
 	ad->b_searching_network = TRUE;
 	/*
 	 ad->data_search_network_item = setting_create_Gendial_field_1radio(
-	 ad->genlist_sel_network,
+	 ad->genlist_sel_provider,
 	 &itc_1icon,
 	 NULL, NULL,
 	 SWALLOW_Type_1RADIO_1SEARCH,
@@ -1726,12 +1786,12 @@ void __switch_automatic_network(Setting_GenGroupItem_Data *list_item)
 	if (list_item->chk_status) {
 		/* Automatic selected */
 		Elm_Object_Item *last_item = elm_genlist_last_item_get(
-				ad->genlist_sel_network);
+				ad->genlist_sel_provider);
 		SETTING_TRACE("ad->data_auto_network_item->item:%p",
 				ad->data_auto_network_item->item);
 		for (;;) {
 			last_item = elm_genlist_last_item_get(
-					ad->genlist_sel_network);
+					ad->genlist_sel_provider);
 			SETTING_TRACE("last_item:%p", last_item);
 			if (last_item == ad->data_auto_network_item->item) {
 				break;
@@ -1774,7 +1834,8 @@ void setting_network_searching_network(Setting_GenGroupItem_Data *list_item)
 	int tapi_ret;
 	/*searching list */
 	/*ASYNC API - TAPI_EVENT_NETWORK_SEARCH_CNF */
-	tapi_ret = tel_search_network(ad->handle,
+/*TODO select handle:*/
+	tapi_ret = tel_search_network(ad->handle[0],
 			setting_tapi_search_network_cb, ad);
 	if (tapi_ret != TAPI_API_SUCCESS) { /* error handling.. */
 		SETTING_TRACE_ERROR(
@@ -1793,7 +1854,7 @@ void setting_network_searching_network(Setting_GenGroupItem_Data *list_item)
 	ad->b_searching_network = TRUE;
 	/*latest UI: show progress popup instead of progress item
 	 ad->data_search_network_item = setting_create_Gendial_field_1radio(
-	 ad->genlist_sel_network,
+	 ad->genlist_sel_provider,
 	 &itc_1icon,
 	 NULL, NULL,
 	 SWALLOW_Type_1RADIO_1SEARCH,
@@ -2119,9 +2180,10 @@ void setting_network_reget_profile_list(void *cb)
 		eina_list_free(ad->profile_list);
 		ad->profile_list = NULL;
 	}
+/*TODO: select proper connection[] */
 	connection_profile_iterator_h profile_iter = NULL;
 	connection_profile_h profile_h = NULL;
-	int rv = connection_get_profile_iterator(ad->connection,
+	int rv = connection_get_profile_iterator(ad->connection[0],
 			CONNECTION_ITERATOR_TYPE_REGISTERED, &profile_iter);
 	if (rv != CONNECTION_ERROR_NONE) {
 		SETTING_TRACE_ERROR("Fail to get profile iterator [%d]", rv);
@@ -2202,9 +2264,9 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = { {
 	NULL,
 	NULL,
 	NULL }, {
-	"IDS_COM_BODY_NETWORK_OPERATORS",
+	"IDS_COM_BODY_SEVICE_PROVIDERS",
 	NULL,
-	"viewtype:frontpage;tab:first;keyword:IDS_COM_BODY_NETWORK_OPERATORS",
+	"viewtype:frontpage;tab:first;keyword:IDS_COM_BODY_SEVICE_PROVIDERS",
 	0,
 	0,
 	0,

@@ -240,8 +240,9 @@ void __sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 					" Error code (%d): %s",
 					ret, get_error_message(ret));
 		} else {
+/*TODO: select proper connection[] */
 			ad->chkType_pdn = chk_status;
-			connection_update_profile(ad->connection,
+			connection_update_profile(ad->connection[0],
 					ad->sel_profile_h);
 		}
 
@@ -266,8 +267,9 @@ void __sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 			SETTING_TRACE_ERROR("Fail to set cellular roam pdn "
 					"type: %s", get_error_message(ret));
 		} else {
+/*TODO: select proper connection[] */
 			ad->chkType_roam_pdn = chk_status;
-			connection_update_profile(ad->connection,
+			connection_update_profile(ad->connection[0],
 					ad->sel_profile_h);
 		}
 
@@ -604,7 +606,8 @@ void __get_connection_info(void *cb)
 			CONNECTION_PROFILE_TYPE_CELLULAR;
 	connection_cellular_service_type_e service_type =
 			CONNECTION_CELLULAR_SERVICE_TYPE_UNKNOWN;
-	int err = connection_get_profile_iterator(ad->connection,
+/*TODO: select proper connection[] */
+	int err = connection_get_profile_iterator(ad->connection[0],
 			CONNECTION_ITERATOR_TYPE_REGISTERED, &profile_iter);
 	if (err != CONNECTION_ERROR_NONE) {
 		SETTING_TRACE_ERROR("Fail to get profile iterator [%d]", err);
@@ -1462,7 +1465,8 @@ bool need_check_default_profile(void *data,
 	SETTING_TRACE("inputtype:%d", inputtype);
 	connection_profile_iterator_h profile_iter = NULL;
 	connection_profile_h profile_h = NULL;
-	int rv = connection_get_profile_iterator(ad->connection,
+/*TODO: select proper connection[] */
+	int rv = connection_get_profile_iterator(ad->connection[0],
 			CONNECTION_ITERATOR_TYPE_REGISTERED, &profile_iter);
 	if (rv != CONNECTION_ERROR_NONE) {
 		SETTING_TRACE_ERROR("Fail to get profile iterator [%d]", rv);
@@ -1834,8 +1838,8 @@ static int __save_connection(void *data)
 				CONNECTION_CELLULAR_SERVICE_TYPE_UNKNOWN;
 		(void) connection_profile_get_cellular_service_type(con_info,
 				&type);
-
-		err = connection_add_profile(ad->connection, con_info);
+/*TODO: select proper connection[] */
+		err = connection_add_profile(ad->connection[0], con_info);
 		if (err != CONNECTION_ERROR_NONE) {
 			SETTING_TRACE_ERROR(
 					"*** [ERR] connection_add_profile. "
@@ -1847,19 +1851,21 @@ static int __save_connection(void *data)
 					false, 0);
 			return ret;
 		}
+/*TODO: select proper connection[] */
 		connection_profile_h tmp_profile = NULL;
 		(void) connection_get_default_cellular_service_profile(
-				ad->connection, type, &tmp_profile);
+				ad->connection[0], type, &tmp_profile);
 		/*
 		 => if there is already default profile, after_profile will be
 		 handle of default profile.
 		 => there is no default profile, after_profile will be handle
 		 of the profile which we have added just before.
 		 */
+/*TODO: select proper connection[] */
 		if (setting_network_equal_profile(con_info, tmp_profile)) {
 			SETTING_TRACE_ERROR("Going to set profile");
 			(void) connection_set_default_cellular_service_profile(
-					ad->connection, type, tmp_profile);
+					ad->connection[0], type, tmp_profile);
 		} else {
 			/*nothing to do */
 		}
@@ -1873,8 +1879,9 @@ static int __save_connection(void *data)
 					CONNECTION_CELLULAR_SERVICE_TYPE_UNKNOWN;
 			(void) connection_profile_get_cellular_service_type(
 					con_info_2, &type);
+/*TODO: select proper connection[] */
 			/*Add a new profile */
-			err = connection_add_profile(ad->connection,
+			err = connection_add_profile(ad->connection[0],
 					con_info_2);
 			if (err != CONNECTION_ERROR_NONE) {
 				SETTING_TRACE_ERROR(
@@ -1887,20 +1894,22 @@ static int __save_connection(void *data)
 						0, false, false, 0);
 				return ret;
 			}
+/*TODO: select proper connection[] */
 			connection_profile_h tmp_profile = NULL;
 			(void) connection_get_default_cellular_service_profile(
-					ad->connection, type, &tmp_profile);
+					ad->connection[0], type, &tmp_profile);
 			/*
 			 => if there is already default profile, after_profile
 			  will be handle of default profile.
 			 => there is no default profile, after_profile will be
 			  handle of the profile which we have added just before.
 			 */
+/*TODO: select proper connection[] */
 			if (setting_network_equal_profile(con_info_2,
 					tmp_profile)) {
 				SETTING_TRACE_ERROR("Going to set profile");
 				(void) connection_set_default_cellular_service_profile(
-						ad->connection, type,
+						ad->connection[0], type,
 						tmp_profile);
 			} else {
 				/*nothing to do */
@@ -1911,7 +1920,7 @@ static int __save_connection(void *data)
 		}
 	} else {
 
-		err = connection_update_profile(ad->connection, con_info);
+		err = connection_update_profile(ad->connection[0], con_info);
 		if (err != CONNECTION_ERROR_NONE) {
 			SETTING_TRACE_ERROR(
 					"%s*** [ERR] net_modify_profile."
