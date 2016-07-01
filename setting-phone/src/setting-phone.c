@@ -52,9 +52,7 @@ setting_view *__get_phone_view_to_load(app_control_h service)
 
 	char *viewtype = NULL;
 	app_control_get_extra_data(service, "viewtype", &viewtype);
-	if (!viewtype) {
-		return NULL;
-	}
+	retv_if(!viewtype, NULL);
 
 	SETTING_TRACE("viewtype:%s", viewtype);
 
@@ -118,9 +116,7 @@ Evas_Object *__get_phone_layout_to_return(app_control_h service, void *priv)
 	char *viewtype = NULL;
 
 	app_control_get_extra_data(service, "viewtype", &viewtype);
-	if (!viewtype) {
-		return NULL;
-	}
+	retv_if(!viewtype, NULL);
 	SETTING_TRACE("viewtype:%s", viewtype);
 
 	if (!safeStrCmp(viewtype, "language")) {
@@ -150,11 +146,9 @@ const char *get_language_by_mobile_country_code(char *mcc)
 	setting_lang_entry *pnode = NULL;
 	Eina_List *langlist = setting_get_language_list();
 
-	EINA_LIST_FOREACH(langlist, elist, pnode)
-	{
-		if (strstr(pnode->mcc, mcc) != NULL) {
+	EINA_LIST_FOREACH(langlist, elist, pnode) {
+		if (strstr(pnode->mcc, mcc) != NULL)
 			snprintf(temp, 127, "%s.UTF-8", pnode->locale);
-		}
 	}
 
 	if (safeStrLen(temp) > 0) {
@@ -195,9 +189,8 @@ static void setting_phone_update_item(void *data)
 		int region_automatic = 1;
 		int ret = vconf_get_bool(VCONFKEY_SETAPPL_REGION_AUTOMATIC_BOOL,
 				&region_automatic);
-		if (ret == VCONF_ERROR) {
+		if (ret == VCONF_ERROR)
 			SETTING_TRACE_ERROR("get vconf region automatic err.");
-		}
 
 		if (region_automatic == 1) {
 			item_to_update->sub_desc = (char *)g_strdup(
@@ -240,9 +233,9 @@ char *setting_phone_lang_get_region_str(const char *region)
 	const char *pa_lang = vconf_get_str(VCONFKEY_LANGSET);
 	if (pa_lang) {
 		char *q = strchr(pa_lang, '.');
-		if (q) {
+		if (q)
 			*q = '\0';
-		}
+
 		SETTING_TRACE("pa_lang:%s", pa_lang);
 		int err = -1;
 		uloc_setDefault(pa_lang, &err);
@@ -300,9 +293,7 @@ char *setting_phone_lang_str_to_utf8(const UChar *unichars)
 	len = u_strlen(unichars);
 	len_str = sizeof(char) * 4 * (len + 1);
 	str = (char *)calloc(1, len_str);
-	if (!str) {
-		return NULL;
-	}
+	retv_if(!str, NULL);
 
 	u_strToUTF8(str, len_str, &len_utf8, unichars, len, &status);
 	return str;
@@ -318,15 +309,14 @@ char *setting_phone_lang_get_by_pattern(const char *locale,
 
 	/*remove ".UTF-8" in locale */
 	char locale_tmp[32] = { 0, };
-	if (strlen(locale) < 32) {
+	if (strlen(locale) < 32)
 		strncpy(locale_tmp, locale, 32);
-	} else {
+	else
 		return NULL;
-	}
+
 	char *p = safeStrStr(locale_tmp, ".UTF-8");
-	if (p) {
+	if (p)
 		*p = 0;
-	}
 
 	char *ret_str = NULL;
 	UChar customSkeleton[SETTING_STR_SLP_LEN] = { 0, };
@@ -399,17 +389,16 @@ static char *__setting_phone_number_format_get(const char *region)
 	int len_seq = safeStrLen(separator);
 	decimal_ch = decimal[0];
 	separator_ch = separator[0];
-	if (len_seq == 2 || len_seq == 0) {
+	if (len_seq == 2 || len_seq == 0)
 		separator_ch = 32;
-	}
-	if (len_seq == 3 && !safeStrCmp(separator, "\xe2\x80\x99")) {
+
+	if (len_seq == 3 && !safeStrCmp(separator, "\xe2\x80\x99"))
 		separator_ch = 39;
-	}
 
 	len_seq = safeStrLen(decimal);
-	if (len_seq == 2 || len_seq == 0) {
+	if (len_seq == 2 || len_seq == 0)
 		decimal_ch = 44;
-	}
+
 	SETTING_TRACE("separator, decimal = %c, %c", separator_ch, decimal_ch);
 
 	unum_close(fmt);
@@ -461,9 +450,9 @@ static char *__setting_phone_number_format_get(const char *region)
 	int len_seq = safeStrLen(separator);
 	decimal_ch = decimal[0];
 	separator_ch = separator[0];
-	if (len_seq == 2 || len_seq == 0) {
+	if (len_seq == 2 || len_seq == 0)
 		separator_ch = 32;
-	}
+
 	SETTING_TRACE("separator, decimal = %c, %c", separator_ch, decimal_ch);
 
 	/*make example */
@@ -490,9 +479,8 @@ char *setting_phone_lang_get_example_desc(const char *region, void *data)
 	}
 
 	char *time_skeleton = "hhmm";
-	if (timeformat == APPCORE_TIME_FORMAT_24) {
+	if (timeformat == APPCORE_TIME_FORMAT_24)
 		time_skeleton = "HHmm";
-	}
 
 	/*char *region_jp = vconf_get_str(VCONFKEY_REGIONFORMAT); */
 	char *time = NULL;
@@ -542,9 +530,8 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	SettingPhoneUG *phoneUG = (SettingPhoneUG *)data;
-	if (phoneUG == NULL || phoneUG->win_get == NULL) {
-		return;
-	}
+	ret_if(phoneUG == NULL || phoneUG->win_get == NULL);
+
 	int change_ang = elm_win_rotation_get(phoneUG->win_get);
 	SETTING_TRACE_DEBUG("....change_ang:%d", change_ang);
 	SETTING_TRACE_DEBUG("current_rotation:%d", phoneUG->current_rotation);
@@ -572,17 +559,18 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 
 	if (change_ang != phoneUG->current_rotation) {
 		int diff = change_ang - phoneUG->current_rotation;
-		if (diff < 0) {
+		if (diff < 0)
 			diff = -diff;
-		}
+
 		/**
 		 * @todo if app didn't launch UG, is the call required to
 		 * invoke?
 		 */
 		ug_send_event(event);
-		if (diff == 180) {
-			/* do nothing */
-		}
+
+		/* if (diff == 180) {
+			do nothing
+		} */
 		phoneUG->current_rotation = change_ang;
 	}
 }
@@ -635,9 +623,9 @@ bindtextdomain(SETTING_PACKAGE, SETTING_LOCALEDIR);
 	int err;
 	int ret = setting_get_int_slp_key(INT_SLP_SETTING_SIM_SLOT, &value,
 			&err);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE("fail to get vconf");
-	}
+
 	if (value == VCONFKEY_TELEPHONY_SIM_INSERTED) {
 		phoneUG->handle = tel_init(NULL);
 		SETTING_TRACE("phoneUG->handle:%d", phoneUG->handle);
@@ -754,9 +742,9 @@ static void setting_phone_ug_on_destroy(ui_gadget_h ug, app_control_h service,
 				phoneUG);
 		setting_view_destroy(&setting_view_phone_language_region,
 				phoneUG);
-	}
+
 #ifdef ENABLE_TICKER_NOTI
-	else if (&setting_view_phone_ticker_notification ==
+	} else if (&setting_view_phone_ticker_notification ==
 			phoneUG->view_to_load) {
 		setting_view_destroy(&setting_view_phone_ticker_notification,
 				phoneUG);
@@ -764,9 +752,9 @@ static void setting_phone_ug_on_destroy(ui_gadget_h ug, app_control_h service,
 				&setting_view_phone_ticker_notification_details,
 				phoneUG);
 
-	}
+
 #endif
-	else if (&setting_view_phone_license_main == phoneUG->view_to_load) {
+	} else if (&setting_view_phone_license_main == phoneUG->view_to_load) {
 		setting_view_destroy(&setting_view_phone_license_main, phoneUG);
 	}
 
@@ -894,9 +882,8 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 	setting_retm_if(!ops, "ops == NULL");
 
 	phoneUG = ops->priv;
-	if (phoneUG) {
+	if (phoneUG)
 		FREE(phoneUG);
-	}
 }
 
 /************* n-depth search **************/

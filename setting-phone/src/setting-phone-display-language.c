@@ -46,9 +46,8 @@ static void setting_phone_display_language_caller_exist_right_cb(void *data,
 	SettingPhoneUG *ad = (SettingPhoneUG *)data;
 	/*	Create Bundle and send message */
 	app_control_h svc;
-	if (app_control_create(&svc)) {
+	if (app_control_create(&svc))
 		return;
-	}
 
 	app_control_add_extra_data(svc, "result", "rbutton_click");
 	ug_send_result(ad->ug, svc);
@@ -108,9 +107,8 @@ static void setting_phone_display_language_close_popup_ex(void *data)
 	setting_retm_if(data == NULL, "Data parameter is NULL");
 	SettingPhoneUG *ad = (SettingPhoneUG *)data;
 
-	if (ad->selected_locale == NULL) {
+	if (ad->selected_locale == NULL)
 		return;
-	}
 
 	if (safeStrCmp(ad->selected_locale,
 			"IDS_ST_BODY_ANSWERINGMODE_AUTOMATIC") == 0) {
@@ -178,9 +176,8 @@ static void setting_phone_display_language_close_popup_ex(void *data)
 	const char *pa_lang = vconf_get_str(VCONFKEY_LANGSET);
 	if (pa_lang) { /* remove the */
 		char *q = strchr(pa_lang, '.');
-		if (q) {
+		if (q)
 			*q = '\0';
-		}
 	}
 	SETTING_TRACE("pa_lang:%s", pa_lang);
 	int err = -1;
@@ -197,9 +194,8 @@ static void setting_phone_display_language_close_popup_ex(void *data)
 	if (caller) {
 		int ret = setting_phone_region_format_set_dateformat(pa_lang,
 				ad);
-		if (ret == SETTING_RETURN_FAIL) {
+		if (ret == SETTING_RETURN_FAIL)
 			SETTING_TRACE_ERROR("[Error] set date format fail");
-		}
 
 		char *lang = vconf_get_str(VCONFKEY_LANGSET);
 		if (lang) {
@@ -214,9 +210,8 @@ static void setting_phone_display_language_close_popup_ex(void *data)
 
 		/*	Create Bundle and send message */
 		app_control_h svc;
-		if (app_control_create(&svc)) {
+		if (app_control_create(&svc))
 			return;
-		}
 
 		app_control_add_extra_data(svc, "result", "rbutton_click");
 		ug_send_result(ad->ug, svc);

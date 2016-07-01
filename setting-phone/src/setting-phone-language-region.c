@@ -72,7 +72,7 @@ static Eina_Bool setting_phone_language_region_freeze_event_timer_cb(void *cb)
  * @brief Finds appid with specific category
  *
  * @return 0 if success, negative value(<0) if fail. Callback is not called if
- * 	return value is negative
+ *	return value is negative
  */
 static int _find_appid_ime_list(const pkgmgrinfo_appinfo_h handle,
 		void *user_data)
@@ -84,11 +84,10 @@ static int _find_appid_ime_list(const pkgmgrinfo_appinfo_h handle,
 
 		/* Get appid */
 		ret = pkgmgrinfo_appinfo_get_appid(handle, &appid);
-		if (ret == PMINFO_R_OK) {
+		if (ret == PMINFO_R_OK)
 			*result = strdup(appid);
-		} else {
+		else
 			LOGW("pkgmgrinfo_appinfo_get_appid failed!");
-		}
 	} else {
 		LOGW("user_data is null!");
 	}
@@ -317,41 +316,40 @@ static int setting_phone_language_region_create(void *cb)
 			NULL, NULL, 0, "IDS_ST_HEADER_DISPLAY_LANGUAGE",
 			_(pa_display_lang),
 			NULL);
-	if (ad->data_display_language) {
+	if (ad->data_display_language)
 		ad->data_display_language->userdata = ad;
-	} else {
+	else
 		SETTING_TRACE_ERROR("ad->data_display_language is NULL");
-	}
+
 	G_FREE(pa_display_lang);
 
 	char *pa_region = vconf_get_str(VCONFKEY_REGIONFORMAT);
-	if (pa_region == NULL) {
+	if (pa_region == NULL)
 		SETTING_TRACE_ERROR(
 				"[Error] get value of VCONFKEY_REGIONFORMAT fail.");
-	}
+
 	ad->prev_locale = (char *)g_strdup(pa_region);
 	/*check if the region is set to auto */
 	char *region_format_str = NULL;
 	vconf_get_bool(VCONFKEY_SETAPPL_REGION_AUTOMATIC_BOOL,
 			&region_automatic);
-	if (region_automatic == 1) {
+	if (region_automatic == 1)
 		region_format_str = (char *)g_strdup(
 				_("IDS_ST_BODY_ANSWERINGMODE_AUTOMATIC"));
-	} else {
+	else
 		region_format_str = setting_phone_lang_get_region_str(
 				pa_region);
-	}
+
 	ad->data_region_fmt = setting_create_Gendial_field_def(scroller,
 			&(ad->itc_2text_2),
 			setting_phone_lang_item_Gendial_mouse_up_cb, ad,
 			SWALLOW_Type_INVALID,
 			NULL, NULL, 0, _(REGION_FORMAT_LOWER),
 			region_format_str, NULL);
-	if (ad->data_region_fmt) {
+	if (ad->data_region_fmt)
 		ad->data_region_fmt->userdata = ad;
-	} else {
+	else
 		SETTING_TRACE_ERROR("ad->data_region_fmt is NULL");
-	}
 
 	char *example_desc = setting_phone_lang_get_example_desc(pa_region, ad);
 	ad->data_region_fmt_example = setting_create_Gendial_field_def(scroller,
@@ -388,12 +386,11 @@ static int setting_phone_language_region_create(void *cb)
 			SWALLOW_Type_INVALID, NULL,
 			NULL, 0, "IDS_ST_BODY_TTS",
 			NULL, NULL);
-	if (pa_region) {
+	if (pa_region)
 		FREE(pa_region);
-	}
-	if (example_desc) {
+
+	if (example_desc)
 		FREE(example_desc);
-	}
 
 	setting_view_phone_language_region.is_create = 1;
 	return SETTING_RETURN_SUCCESS;

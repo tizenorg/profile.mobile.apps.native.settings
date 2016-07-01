@@ -198,9 +198,8 @@ static int setting_phone_region_format_get_region_fmt(char *list[],
 
 	for (; i < loc_count; i++) {
 
-		if (tmp_region_num >= REGION_ITEM_MAX) {
+		if (tmp_region_num >= REGION_ITEM_MAX)
 			break;
-		}
 
 		loc_list = uloc_getAvailable(i);
 		setting_retvm_if(NULL == loc_list,
@@ -442,15 +441,13 @@ EXPORT_PUBLIC int setting_phone_region_format_set_dateformat(const char *region,
 	/* default is "Mdy" */
 	int date_format_vconf_value = DATA_FORMAT_DEFAULT;
 	for (i = 0; i < DATA_FORMAT_CATEGORY_NUM; i++) {
-		if (!safeStrCmp(region_format, date_format_str[i])) {
+		if (!safeStrCmp(region_format, date_format_str[i]))
 			date_format_vconf_value = i;
-		}
 	}
 
 	/* if region_format is null, should be set as default */
-	if (isEmptyStr(region_format) || isSpaceStr(region_format)) {
+	if (isEmptyStr(region_format) || isSpaceStr(region_format))
 		date_format_vconf_value = 1;
-	}
 
 	SETTING_TRACE("bestPatternString : %s, format: %s, index: %d",
 			bestPatternString, region_format,
@@ -615,13 +612,12 @@ static Eina_Bool __region_genlist_update(void *data)
 	int automatic_select = 0;
 	vconf_get_bool(VCONFKEY_SETAPPL_REGION_AUTOMATIC_BOOL,
 			&automatic_select);
-	if (automatic_select) {
-		ad->selected_region_idx = 0;
-	}
 
-	if (ad->selected_region_idx > -1) {
+	if (automatic_select)
+		ad->selected_region_idx = 0;
+
+	if (ad->selected_region_idx > -1)
 		elm_radio_value_set(ad->chk_region, ad->selected_region_idx);
-	}
 #endif
 
 	ad->search_idler = NULL;
@@ -643,22 +639,16 @@ static void __searchbar_changed_cb(void *data, Evas_Object *obj,
 
 	Evas_Object *entry = elm_object_part_content_get(ad->search_bar,
 			"elm.swallow.content");
-	if (!entry) {
-		return;
-	}
+	ret_if(!entry);
 
 	const char *str = elm_entry_entry_get(entry);
 	/* empty string is useful */
-	if (!str) {
-		return;
-	}
+	ret_if(!str);
 
 	SETTING_TRACE_DEBUG("str: %s", str);
 
 	int len = setting_entry_str_get_displaying_part(str, ad->search_text);
-	if (len < 0) {
-		return;
-	}
+	ret_if(len < 0);
 
 	SETTING_TRACE_DEBUG("ad->search_text: %s", ad->search_text);
 
@@ -687,21 +677,15 @@ static void __searchbar_prediction_changed_cb(void *data, Evas_Object *obj,
 
 	Evas_Object *entry = elm_object_part_content_get(ad->search_bar,
 			"elm.swallow.content");
-	if (!entry) {
-		return;
-	}
+	ret_if(!entry);
 
 	const char *str = elm_entry_entry_get(entry);
 	/* empty string is useful */
-	if (!str) {
-		return;
-	}
+	ret_if(!str);
 	SETTING_TRACE_DEBUG("str: %s", str);
 
 	int len = setting_entry_str_get_displaying_part(str, ad->search_text);
-	if (len < 0) {
-		return;
-	}
+	ret_if(len < 0);
 
 	SETTING_TRACE_DEBUG("ad->search_text: %s", ad->search_text);
 
@@ -833,17 +817,15 @@ static Eina_Bool __region_animator_cb(void *data)
 				NULL, ad->region_index[i],
 				ad->region_desc[i]/* HERE */, NULL, NULL);
 
-		if (item_data) {
+		if (item_data)
 			item_data->userdata = ad;
-		} else {
+		else
 			SETTING_TRACE_ERROR("item_data is NULL");
-		}
 
 		if (!safeStrCmp(ad->region_vconf_str, ad->region_keyStr[i])) {
 			ad->selected_region_idx = i;
-			if (item_data) {
+			if (item_data)
 				ad->selected_item = item_data->item;
-			}
 		}
 	}
 
@@ -869,9 +851,8 @@ static Eina_Bool __region_popup_timer_cb(void *data)
 	}
 
 	/* recover it when popup disappear */
-	if (ad->ly_region) {
+	if (ad->ly_region)
 		elm_object_tree_focus_allow_set(ad->ly_region, EINA_TRUE);
-	}
 
 	ad->popup_timer = NULL;
 	return ECORE_CALLBACK_CANCEL;
@@ -948,9 +929,8 @@ static void __region_genlist_create(void *data)
 			if (!safeStrCmp(ad->region_vconf_str,
 					ad->region_keyStr[i])) {
 				ad->selected_region_idx = i;
-				if (item_data) {
+				if (item_data)
 					ad->selected_item = item_data->item;
-				}
 			}
 			ad->gl_region_index++;
 		}
@@ -1034,9 +1014,8 @@ static Eina_Bool setting_phone_region_format_caller_exist_right_cb(void *data,
 	SettingPhoneUG *ad = (SettingPhoneUG *)data;
 	/* Create Bundle and send message */
 	app_control_h svc;
-	if (app_control_create(&svc)) {
+	if (app_control_create(&svc))
 		return EINA_FALSE;
-	}
 
 	app_control_add_extra_data(svc, "result", "rbutton_click");
 	ug_send_result(ad->ug, svc);
@@ -1135,9 +1114,8 @@ static int setting_phone_region_format_create(void *cb)
 
 	int ret = setting_phone_region_format_get_region_fmt(ad->region_desc,
 			ad->region_index, ad->region_keyStr, &ad->region_num);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("get region format list failed");
-	}
 
 	ad->prev_region = 0;
 	memset(ad->search_text, '\0', MAX_SEARCH_STR_LEN + 1);
@@ -1159,11 +1137,10 @@ static int setting_phone_region_format_create(void *cb)
 	ret = system_settings_get_value_int(SYSTEM_SETTINGS_KEY_FONT_SIZE,
 			&value);
 
-	if (value == SYSTEM_SETTINGS_FONT_SIZE_GIANT) {
+	if (value == SYSTEM_SETTINGS_FONT_SIZE_GIANT)
 		elm_object_signal_emit(ad->search_bar, "set,show,giant", "*");
-	} else {
+	else
 		elm_object_signal_emit(ad->search_bar, "set,show,normal", "*");
-	}
 
 	elm_object_part_content_set(sub_layout, "elm.swallow.content",
 			ad->gl_region);
@@ -1195,9 +1172,9 @@ static int setting_phone_region_format_destroy(void *cb)
 
 	/* FIXED : destroy only if it was created. */
 	if (setting_view_phone_region_format.is_create) {
-		if (ad->region_search_id) {
+		if (ad->region_search_id)
 			FREE(ad->region_search_id);
-		}
+
 		if (ad->search_idler) {
 			ecore_idler_del(ad->search_idler);
 			ad->search_idler = NULL;
