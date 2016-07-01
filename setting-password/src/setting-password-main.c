@@ -237,9 +237,9 @@ static int setting_password_main_update(void *cb)
 
 	SettingPasswordUG *ad = (SettingPasswordUG *) cb;
 
-	if (ad->ly_main != NULL) {
+	if (ad->ly_main != NULL)
 		evas_object_show(ad->ly_main);
-	}
+
 	return SETTING_RETURN_SUCCESS;
 }
 
@@ -250,9 +250,8 @@ static int setting_password_main_cleanup(void *cb)
 
 	SettingPasswordUG *ad = (SettingPasswordUG *) cb;
 
-	if (ad->ly_main != NULL) {
+	if (ad->ly_main != NULL)
 		evas_object_hide(ad->ly_main);
-	}
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -1076,9 +1075,8 @@ void setting_password_main_click_softkey_done_cb(void *data, Evas_Object *obj,
 
 	SettingPasswordUG *ad = (SettingPasswordUG *) data;
 
-	if (ad->ed_pw1 && ad->ed_pw1->eo_check) {
+	if (ad->ed_pw1 && ad->ed_pw1->eo_check)
 		elm_object_focus_set(ad->ed_pw1->eo_check, EINA_FALSE);
-	}
 
 	if (ad->err_desc && ad->err_desc->item) {
 		elm_object_item_del(ad->err_desc->item);

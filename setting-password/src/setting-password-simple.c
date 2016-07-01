@@ -680,9 +680,9 @@ static int setting_password_simple_update(void *cb)
 
 	SettingPasswordUG *ad = (SettingPasswordUG *) cb;
 
-	if (ad->ly_main != NULL) {
+	if (ad->ly_main != NULL)
 		evas_object_show(ad->ly_main);
-	}
+
 	return SETTING_RETURN_SUCCESS;
 }
 
@@ -693,9 +693,8 @@ static int setting_password_simple_cleanup(void *cb)
 
 	SettingPasswordUG *ad = (SettingPasswordUG *) cb;
 
-	if (ad->ly_main != NULL) {
+	if (ad->ly_main != NULL)
 		evas_object_hide(ad->ly_main);
-	}
 
 	return SETTING_RETURN_SUCCESS;
 }
