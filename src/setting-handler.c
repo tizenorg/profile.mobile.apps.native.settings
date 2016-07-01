@@ -23,9 +23,8 @@ static Setting_GenGroupItem_Data *__mobileap_handler(void *data, char *keyStr,
 			NULL,
 			NULL);
 	__BACK_POINTER_SET(obj);
-	if (obj) {
+	if (obj)
 		obj->userdata = ad;
-	}
 
 	return obj;
 }
@@ -81,9 +80,9 @@ static Setting_GenGroupItem_Data *__developer_option_handler(void *data,
 	int ret = 0;
 	ret = vconf_get_bool(VCONFKEY_SETAPPL_DEVELOPER_OPTION_STATE,
 			&dev_op_state);
-	if (ret != 0) {
+	if (ret != 0)
 		SETTING_TRACE_ERROR("Failed to ger vconf value %d", ret);
-	}
+
 	if (dev_op_state) {
 		obj = setting_create_Gendial_field_def(genlist,
 				&(ad->itc_table[GENDIAL_Type_1text_1icon_2]),
@@ -329,12 +328,12 @@ void setting_main_click_list_ex_ug_cb(void *data, Evas_Object *obj,
 	char *path = get_ug_path_from_ug_args(data);
 	app_control_h svc = get_bundle_from_ug_args(data);
 	setting_main_click_list_item_ug_cb(ad, obj, path, svc, cbs);
-	if (path) {
+	if (path)
 		FREE(path);
-	}
-	if (cbs) {
+
+	if (cbs)
 		FREE(cbs);
-	}
+
 	path = NULL;
 	cbs = NULL;
 	app_control_destroy(svc);

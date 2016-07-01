@@ -114,15 +114,14 @@ static Eina_Bool __key_press_cb(void *data, int type, void *event)
 {
 	SETTING_TRACE_BEGIN;
 	Evas_Event_Key_Down *ev = event;
-	if (!ev || !data) {
+	if (!ev || !data)
 		return ECORE_CALLBACK_RENEW;
-	}
 
 	support_help_appdata *ad = data;
 
-	if (strcmp(ev->keyname, "XF86Home") == 0) {
+	if (strcmp(ev->keyname, "XF86Home") == 0)
 		setting_ug_destroy(ad->ug);
-	}
+
 	return ECORE_CALLBACK_RENEW;
 }
 
@@ -286,9 +285,9 @@ EXPORT_PUBLIC void update_lang(void)
 		setenv("LANG", lang, 1);
 		setenv("LC_MESSAGES", lang, 1);
 		r = setlocale(LC_ALL, "");
-		if (r == NULL) {
+		if (r == NULL)
 			setlocale(LC_ALL, vconf_get_str(VCONFKEY_LANGSET));
-		}
+
 		free(lang);
 	}
 }
@@ -324,9 +323,9 @@ static int __set_i18n(const char *domain, const char *dir)
 
 	r = setlocale(LC_ALL, "");
 	/* if locale is not set properly, try again to set as language base */
-	if (r == NULL) {
+	if (r == NULL)
 		r = setlocale(LC_ALL, vconf_get_str(VCONFKEY_LANGSET));
-	}
+
 	bindtextdomain(domain, dir);
 	textdomain(domain);
 	return 0;
