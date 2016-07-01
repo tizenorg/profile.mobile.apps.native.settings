@@ -105,9 +105,9 @@ static int setting_view_security_update_create(void *cb)
 			setting_security_update_mouse_up_Gendial_list_cb, ad,
 			SWALLOW_Type_INVALID,
 			NULL, NULL, 1, _(UPDATE_TEXT), NULL, NULL);
-	if (ad->data_security_update_bt) {
+	if (ad->data_security_update_bt)
 		__BACK_POINTER_SET(ad->data_security_update_bt);
-	}
+
 	/* Update button desc*/
 	/*D_GL_HELP(scroller,CHECK_UPDATES); */
 	/* separator */
@@ -322,9 +322,9 @@ static void __get_toggle_status_form_msa(void *data)
 			(void *)data);
 	SETTING_TRACE_DEBUG("send launch service (KEY,STATUS) request ret=%d",
 			ret);
-	if (ret != APP_CONTROL_ERROR_NONE) {
+	if (ret != APP_CONTROL_ERROR_NONE)
 		SETTING_TRACE_ERROR("Cannot launch app");
-	}
+
 	app_control_destroy(service);
 }
 
@@ -483,9 +483,9 @@ static void __ask_create_auto_update_pop_on_cb(void *data, Evas_Object *obj,
 			SETTING_TRACE_DEBUG(
 					"send launch service (KEY,AUTO_ON) request ret=%d",
 					ret);
-			if (ret != APP_CONTROL_ERROR_NONE) {
+			if (ret != APP_CONTROL_ERROR_NONE)
 				SETTING_TRACE_ERROR("Cannot launch app");
-			}
+
 			if (ad->data_security_wifi_update_chk) {
 				elm_object_item_disabled_set(
 						ad->data_security_wifi_update_chk->item,
@@ -543,9 +543,9 @@ static void __ask_create_auto_update_pop_off_cb(void *data, Evas_Object *obj,
 			SETTING_TRACE_DEBUG(
 					"send launch service (KEY,AUTO_OFF) request ret=%d",
 					ret);
-			if (ret != APP_CONTROL_ERROR_NONE) {
+			if (ret != APP_CONTROL_ERROR_NONE)
 				SETTING_TRACE_ERROR("Cannot launch app");
-			}
+
 			/*if (ad->data_security_wifi_update_chk) { */
 			/* elm_object_item_disabled_set(
 			 * ad->data_security_wifi_update_chk->item,
@@ -556,6 +556,7 @@ static void __ask_create_auto_update_pop_off_cb(void *data, Evas_Object *obj,
 			/*} */
 		}
 		app_control_destroy(service);
+
 	} else if (POPUP_RESPONSE_CANCEL == response_type) {
 		SETTING_TRACE("CANCEL");
 		setting_update_gl_item_chk_status(ad->data_security_update_chk,
@@ -727,11 +728,11 @@ static void setting_security_update_mouse_up_Gendial_list_cb(void *data,
 			app_control_set_operation(service,
 					"http://org.tizen.msa/appcontrol/operation/query");
 			char *type = NULL;
-			if (chk_status) {
+			if (chk_status)
 				type = "WIFI_ON";
-			} else {
+			else
 				type = "WIFI_OFF";
-			}
+
 			ret = app_control_add_extra_data(service, "KEY", type);
 
 			if (chk_status == 1)
@@ -745,9 +746,8 @@ static void setting_security_update_mouse_up_Gendial_list_cb(void *data,
 			SETTING_TRACE_DEBUG(
 					"send launch service (MSA_QUERY, %s) request ret=%d",
 					type, ret);
-			if (ret != APP_CONTROL_ERROR_NONE) {
+			if (ret != APP_CONTROL_ERROR_NONE)
 				SETTING_TRACE_ERROR("Cannot launch app");
-			}
 		}
 		app_control_destroy(service);
 	}
@@ -814,11 +814,11 @@ static void setting_security_update_mouse_up_Gendial_chk_cb(void *data,
 			app_control_set_operation(service,
 					"http://org.tizen.msa/appcontrol/operation/query");
 			char *type = NULL;
-			if (chk_status) {
+			if (chk_status)
 				type = "WIFI_ON";
-			} else {
+			else
 				type = "WIFI_OFF";
-			}
+
 			ret = app_control_add_extra_data(service, "KEY", type);
 
 			if (chk_status == 1)
@@ -832,9 +832,8 @@ static void setting_security_update_mouse_up_Gendial_chk_cb(void *data,
 			SETTING_TRACE_DEBUG(
 					"send launch service (KEY, %s) request ret=%d",
 					type, ret);
-			if (ret != APP_CONTROL_ERROR_NONE) {
+			if (ret != APP_CONTROL_ERROR_NONE)
 				SETTING_TRACE_ERROR("Cannot launch app");
-			}
 		}
 		list_item->chk_status = !list_item->chk_status;
 		elm_check_state_set(obj, list_item->chk_status);

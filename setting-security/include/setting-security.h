@@ -469,7 +469,9 @@ struct _SettingSecurityUG {
 	/*for Security engine */
 	GList *secrity_engine_list;
 
-	bool ug_removed;bool pin2_blocked_flag;bool samsung_account_is_running;
+	bool ug_removed;
+	bool pin2_blocked_flag;
+	bool samsung_account_is_running;
 
 	/* Handle exception of SD card encryption */
 	struct mmc_contents mmc_content;

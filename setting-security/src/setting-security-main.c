@@ -198,9 +198,9 @@ static int setting_security_main_destroy(void *cb)
 			setting_security_main_vconf_change_cb);
 	vconf_ignore_key_changed(VCONFKEY_WIFI_STATE,
 			setting_security_main_vconf_change_cb);
-	if (ad->secrity_engine_list) {
+	if (ad->secrity_engine_list)
 		g_list_free(ad->secrity_engine_list);
-	}
+
 	if (ad->ly_main != NULL) {
 		evas_object_del(ad->ly_main);
 
@@ -252,13 +252,12 @@ static Eina_Bool setting_security_main_click_softkey_back_cb(void *data,
 	app_manager_is_running("gr47by21a5.SamsungAccount", &is_running);
 	/* If samsung account is running from Find my mobile, security ug can't
 	 * be destroyed. */
-	if (is_running && ad->samsung_account_is_running) {
+	if (is_running && ad->samsung_account_is_running)
 		return EINA_FALSE;
-	}
+
 	/* If find my mobile ug is running, security ug can't be destroyed. */
-	if (ad->ug_mt) {
+	if (ad->ug_mt)
 		return EINA_FALSE;
-	}
 
 	/* Send destroy request */
 	ug_destroy_me(ad->ug);
@@ -384,9 +383,9 @@ static UNUSED void setting_security_lockscreen_destroy_ug_cb(ui_gadget_h ug,
 	SETTING_TRACE_BEGIN;
 	ret_if(priv == NULL);
 	SettingSecurityUG *ad = (SettingSecurityUG *)priv;
-	if (ug) {
+	if (ug)
 		setting_ug_destroy(ug);
-	}
+
 	elm_genlist_realized_items_update(ad->genlist);
 }
 
