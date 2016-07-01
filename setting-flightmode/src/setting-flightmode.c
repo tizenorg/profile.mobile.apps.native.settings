@@ -111,9 +111,9 @@ static void setting_flightmode_ug_on_destroy(ui_gadget_h ug,
 	evas_object_event_callback_del(flightmodeUG->win_main_layout,
 			EVAS_CALLBACK_RESIZE, setting_flightmode_ug_cb_resize);
 	flightmodeUG->ug = ug;
-	if (flightmodeUG->bg) {
+	if (flightmodeUG->bg)
 		evas_object_del(flightmodeUG->bg);
-	}
+
 	flightmodeUG->bg = NULL;
 
 	/* called when this shared gadget is terminated. similar with
@@ -209,9 +209,8 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 	setting_retm_if(!ops, "ops == NULL");
 
 	flightmodeUG = ops->priv;
-	if (flightmodeUG) {
+	if (flightmodeUG)
 		FREE(flightmodeUG);
-	}
 }
 
 /* ***************************************************
