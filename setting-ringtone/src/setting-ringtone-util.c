@@ -39,17 +39,15 @@ char *get_filename_from_fullname(const char *fullname)
 	snprintf(tmp, sizeof(tmp), "%s", fullname);
 
 	char *name = strrchr(tmp, '.');
-	if (name != NULL) {
+	if (name != NULL)
 		*name = '\0';
-	}
+
 	return g_strdup(tmp);
 }
 
 char *get_media_basename(const char *dir_path, const char *name)
 {
-	if (isEmptyStr(dir_path) || isEmptyStr(name)) {
-		return NULL;
-	}
+	retv_if(isEmptyStr(dir_path) || isEmptyStr(name), NULL);
 
 	char path[512] = {0, };
 	snprintf(path, sizeof(path), "%s/%s", dir_path, name);
@@ -88,28 +86,26 @@ int get_filelist_from_dir_path(char *path, Eina_List **file_list)
 
 	pDir = opendir(path);
 
-	if (pDir == NULL) {
+	if (pDir == NULL)
 		return -2;
-	}
 
-	while (readdir_r(pDir,&ent,&result) ==0) {
-		if (result == NULL) break;
+	while (readdir_r(pDir, &ent, &result) == 0) {
+		if (result == NULL)
+			break;
 
 		fileNodeInfo *pNode = NULL;
 
 		if (strncmp(ent.d_name, ".", 1) == 0
-				|| strcmp(ent.d_name, "..") == 0) {
+				|| strcmp(ent.d_name, "..") == 0)
 			continue;
-		}
 
-		if ((ent.d_type & DT_REG) == 0) {
+		if ((ent.d_type & DT_REG) == 0)
 			continue;
-		}
 
 		pNode = (fileNodeInfo *) malloc(sizeof(fileNodeInfo));
-		if (pNode == NULL) {
+		if (pNode == NULL)
 			continue;
-		}
+
 		memset(pNode, 0, sizeof(fileNodeInfo));
 
 		pNode->path = g_strdup(path);
