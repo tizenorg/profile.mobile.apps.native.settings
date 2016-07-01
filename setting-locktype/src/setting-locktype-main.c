@@ -78,7 +78,7 @@ static int dpm_get_password_policy(dpm_password_quality_e *quality, int *minimum
 	SETTING_TRACE_BEGIN;
 	dpm_context_h context;
 	dpm_restriction_policy_h policy;
-
+	int ret;
 
 	context = dpm_context_create();
 	if (context == NULL) {
@@ -93,16 +93,18 @@ static int dpm_get_password_policy(dpm_password_quality_e *quality, int *minimum
 		return 0;
 	}
 
-	int ret;
-	if ((ret=dpm_password_get_quality(policy, quality)) != DPM_ERROR_NONE){
-		SETTING_TRACE_ERROR("Failed to dpm_password_get_quality : %d", ret);
+	ret = dpm_password_get_quality(policy, quality);
+	if (ret != DPM_ERROR_NONE) {
+		SETTING_TRACE_ERROR("Failed to dpm_password_get_quality : %d",
+				ret);
 		dpm_context_release_password_policy(context, policy);
 		dpm_context_destroy(context);
 		return 0;
 	}
 	SETTING_TRACE("quality : %d", *quality);
 
-	if ((ret=dpm_password_get_minimum_length(policy, minimum_length)) != DPM_ERROR_NONE){
+	ret = dpm_password_get_minimum_length(policy, minimum_length);
+	if (ret != DPM_ERROR_NONE) {
 		SETTING_TRACE_ERROR("Failed to dpm_password_get_minimum_length : %d", ret);
 		dpm_context_release_password_policy(context, policy);
 		dpm_context_destroy(context);
@@ -311,11 +313,10 @@ static int __add_3rd_party_lock(void *data)
 				SETTING_SCREEN_LOCK_TYPE_OTHER + index,
 				list->app_name,
 				NULL);
-		if (ad->data_locktype_3rd[index]) {
+		if (ad->data_locktype_3rd[index])
 			ad->data_locktype_3rd[index]->userdata = ad;
-		} else {
+		else
 			SETTING_TRACE_ERROR("item_data is NULL");
-		}
 
 		char *open_lock_name = NULL;
 		open_lock_name = vconf_get_str(
@@ -398,11 +399,10 @@ void __add_locktype_items(void *data)
 			NULL, NULL, SETTING_SCREEN_LOCK_TYPE_NONE,
 			"IDS_ST_BODY_NONE",
 			NULL, NULL);
-	if (ad->data_locktype_none) {
+	if (ad->data_locktype_none)
 		ad->data_locktype_none->userdata = ad;
-	} else {
+	else
 		SETTING_TRACE_ERROR("item_data is NULL");
-	}
 
 	/* 1) swipe */
 	ad->data_locktype_swipe = setting_create_Gendial_field_def(ad->genlist,
@@ -414,11 +414,10 @@ void __add_locktype_items(void *data)
 			NULL, NULL, SETTING_SCREEN_LOCK_TYPE_SWIPE,
 			Keystr_Swipe,
 			NULL, NULL);
-	if (ad->data_locktype_swipe) {
+	if (ad->data_locktype_swipe)
 		ad->data_locktype_swipe->userdata = ad;
-	} else {
+	else
 		SETTING_TRACE_ERROR("item_data is NULL");
-	}
 
 	/* 4) simple password */
 	ad->data_locktype_simple = setting_create_Gendial_field_def(
@@ -434,11 +433,10 @@ void __add_locktype_items(void *data)
 			"IDS_ST_BODY_SIMPLE_PASSWORD",
 			NULL,
 			NULL);
-	if (ad->data_locktype_simple) {
+	if (ad->data_locktype_simple)
 		ad->data_locktype_simple->userdata = ad;
-	} else {
+	else
 		SETTING_TRACE_ERROR("item_data is NULL");
-	}
 
 	/* 5) password */
 	ad->data_locktype_password = setting_create_Gendial_field_def(
@@ -454,13 +452,10 @@ void __add_locktype_items(void *data)
 			"IDS_ST_BODY_PASSWORD",
 			NULL,
 			NULL);
-	if (ad->data_locktype_password) {
+	if (ad->data_locktype_password)
 		ad->data_locktype_password->userdata = ad;
-	} else {
+	else
 		SETTING_TRACE_ERROR("item_data is NULL");
-	}
-
-
 
 	dpm_password_quality_e quality;
 	int minimum_length;
@@ -468,32 +463,44 @@ void __add_locktype_items(void *data)
 
 #if 0
 typedef enum {
-    DPM_PASSWORD_QUALITY_UNSPECIFIED     = 0x00,    /**< No requirements for password. */
-    DPM_PASSWORD_QUALITY_SIMPLE_PASSWORD = 0x01,    /**< EAS(Exchange ActiveSync) requirement for simple password */
-    DPM_PASSWORD_QUALITY_SOMETHING       = 0x10,    /**< Some kind password is required, but doesn't care what it is */
-    DPM_PASSWORD_QUALITY_NUMERIC         = 0x20,    /**< Containing at least numeric characters */
-    DPM_PASSWORD_QUALITY_ALPHABETIC      = 0x40,    /**< Containing at least alphabetic (or other symbol) characters */
-    DPM_PASSWORD_QUALITY_ALPHANUMERIC    = 0x80,    /**< Containing at least numeric and alphabetic characters */
+	DPM_PASSWORD_QUALITY_UNSPECIFIED     = 0x00,    /**< No requirements for password. */
+	DPM_PASSWORD_QUALITY_SIMPLE_PASSWORD = 0x01,    /**< EAS(Exchange ActiveSync) requirement for simple password */
+	DPM_PASSWORD_QUALITY_SOMETHING       = 0x10,    /**< Some kind password is required, but doesn't care what it is */
+	DPM_PASSWORD_QUALITY_NUMERIC         = 0x20,    /**< Containing at least numeric characters */
+	DPM_PASSWORD_QUALITY_ALPHABETIC      = 0x40,    /**< Containing at least alphabetic (or other symbol) characters */
+	DPM_PASSWORD_QUALITY_ALPHANUMERIC    = 0x80,    /**< Containing at least numeric and alphabetic characters */
 } dpm_password_quality_e;
 #endif
 
-	if(quality == DPM_PASSWORD_QUALITY_UNSPECIFIED){
+	if (quality == DPM_PASSWORD_QUALITY_UNSPECIFIED) {
 		/* no dim*/
-	}
-	else if(quality == DPM_PASSWORD_QUALITY_SIMPLE_PASSWORD || quality == DPM_PASSWORD_QUALITY_SOMETHING || quality == DPM_PASSWORD_QUALITY_NUMERIC){
+	} else if (quality == DPM_PASSWORD_QUALITY_SIMPLE_PASSWORD
+			|| quality == DPM_PASSWORD_QUALITY_SOMETHING
+			|| quality == DPM_PASSWORD_QUALITY_NUMERIC) {
 		// dim swipe, none
-		if(ad->data_locktype_none) setting_disable_genlist_item(ad->data_locktype_none->item);
-		if(ad->data_locktype_swipe) setting_disable_genlist_item(ad->data_locktype_swipe->item);
-		if(minimum_length>=5){
+		if (ad->data_locktype_none)
+			setting_disable_genlist_item(
+					ad->data_locktype_none->item);
+		if (ad->data_locktype_swipe)
+			setting_disable_genlist_item(
+					ad->data_locktype_swipe->item);
+		if (minimum_length >= 5)
 			/* dim simple password */
-			if(ad->data_locktype_simple) setting_disable_genlist_item(ad->data_locktype_simple->item);
-		}
-	}
-	else if(quality == DPM_PASSWORD_QUALITY_ALPHABETIC || quality == DPM_PASSWORD_QUALITY_ALPHANUMERIC){
+			if (ad->data_locktype_simple)
+				setting_disable_genlist_item(
+						ad->data_locktype_simple->item);
+	} else if (quality == DPM_PASSWORD_QUALITY_ALPHABETIC
+			|| quality == DPM_PASSWORD_QUALITY_ALPHANUMERIC) {
 		// dim swipe, none, simple password
-		if(ad->data_locktype_none) setting_disable_genlist_item(ad->data_locktype_none->item);
-		if(ad->data_locktype_swipe) setting_disable_genlist_item(ad->data_locktype_swipe->item);
-		if(ad->data_locktype_simple) setting_disable_genlist_item(ad->data_locktype_simple->item);
+		if (ad->data_locktype_none)
+			setting_disable_genlist_item(
+					ad->data_locktype_none->item);
+		if (ad->data_locktype_swipe)
+			setting_disable_genlist_item(
+					ad->data_locktype_swipe->item);
+		if (ad->data_locktype_simple)
+			setting_disable_genlist_item(
+					ad->data_locktype_simple->item);
 	}
 
 
@@ -716,7 +723,7 @@ static void setting_locktype_main_mouse_up_Gendial_list_cb(void *data,
 		ug_destroy_me(ad->ug);
 		break;
 #if 0
-		case SETTING_SCREEN_LOCK_TYPE_MOTION:
+	case SETTING_SCREEN_LOCK_TYPE_MOTION:
 		ad->old_type = old_type;
 		setting_create_guild_layout(ad->navi_bar,
 				_(About_Motion_Unlock_Str),
@@ -809,8 +816,8 @@ setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj,
 	return;
 
 	switch (lock_type) {
-		case SETTING_SCREEN_LOCK_TYPE_NONE:
-		case SETTING_SCREEN_LOCK_TYPE_SWIPE:
+	case SETTING_SCREEN_LOCK_TYPE_NONE:
+	case SETTING_SCREEN_LOCK_TYPE_SWIPE:
 		/* To do : Call security-server API. pw : 0000 */
 		if (old_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD
 				|| old_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
@@ -818,7 +825,7 @@ setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj,
 //			int result = security_server_set_pwd(
 //			ad->input_pwd, "0000", 0, 0);
 			int result = auth_passwd_set_passwd(
-					AUTH_PWD_NORMAL,ad->input_pwd, "0000");
+					AUTH_PWD_NORMAL, ad->input_pwd, "0000");
 			SETTING_TRACE_DEBUG("set_pwd result : %d", result);
 #endif
 #if 0
@@ -834,7 +841,7 @@ setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj,
 		ug_destroy_me(ad->ug);
 		break;
 #if 0
-		case SETTING_SCREEN_LOCK_TYPE_MOTION:
+	case SETTING_SCREEN_LOCK_TYPE_MOTION:
 		ad->old_type = old_type;
 		elm_radio_value_set(obj, old_type);
 		setting_create_guild_layout(ad->navi_bar,
@@ -849,7 +856,7 @@ setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj,
 				NULL, ad);
 		break;
 #endif
-		case SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD:
+	case SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD:
 		elm_radio_value_set(obj, old_type);
 		ad->pw_type = SETTING_SEC_PW_SIMPLE_PASSWD;
 		if (old_type != SETTING_SCREEN_LOCK_TYPE_PASSWORD) {
@@ -858,7 +865,7 @@ setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj,
 		}
 		setting_locktype_create_password_sg(ad);
 		break;
-		case SETTING_SCREEN_LOCK_TYPE_PASSWORD:
+	case SETTING_SCREEN_LOCK_TYPE_PASSWORD:
 		elm_radio_value_set(obj, old_type);
 		ad->pw_type = SETTING_SEC_PW_PASSWORD;
 		if (old_type != SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
@@ -867,47 +874,47 @@ setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj,
 		}
 		setting_locktype_create_password_sg(ad);
 		break;
-		case SETTING_SCREEN_LOCK_TYPE_OTHER: {
-			int index = -1;
-			char *pkg_name = NULL;
-			if (old_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD
-					|| old_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
+	case SETTING_SCREEN_LOCK_TYPE_OTHER: {
+		int index = -1;
+		char *pkg_name = NULL;
+		if (old_type == SETTING_SCREEN_LOCK_TYPE_PASSWORD
+				|| old_type == SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD) {
 #if SECURITY_SERVER
 //				int result = security_server_set_pwd(
 //				ad->input_pwd, "0000", 0, 0);
-				int result = auth_passwd_set_passwd(
-						AUTH_PWD_NORMAL,ad->input_pwd,
-						"0000");
-				SETTING_TRACE_DEBUG("set_pwd result : %d",
-						result);
+			int result = auth_passwd_set_passwd(
+					AUTH_PWD_NORMAL, ad->input_pwd,
+					"0000");
+			SETTING_TRACE_DEBUG("set_pwd result : %d",
+					result);
 #endif
 #if 0
-				uid_t user = 5000;
-				int ckmc_ret = CKMC_ERROR_NONE;
-				ckmc_ret = ckmc_change_user_password(user,
-						ad->input_pwd, NULL);
-				SETTING_TRACE("ckmc_change_user_password() returns %d",
-						ckmc_ret);
+			uid_t user = 5000;
+			int ckmc_ret = CKMC_ERROR_NONE;
+			ckmc_ret = ckmc_change_user_password(user,
+					ad->input_pwd, NULL);
+			SETTING_TRACE("ckmc_change_user_password() returns %d",
+					ckmc_ret);
 #endif
-			}
-			index = __get_lockapp_index_from_appname(
-					list_item->keyStr);
-			pkg_name = __get_lockapp_pkgname_from_appname(
-					list_item->keyStr);
-			SETTING_TRACE_DEBUG(
-					"3rd lock selected. index[%d] pkg_name[%s]",
-					index, pkg_name);
-			vconf_set_str(VCONFKEY_SETAPPL_3RD_LOCK_PKG_NAME_STR,
-					pkg_name);
-			vconf_set_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT,
-					lock_type);
-			/* set radio */
-			elm_radio_value_set(list_item->eo_check,
-					lock_type + index);
-			ug_destroy_me(ad->ug);
 		}
+		index = __get_lockapp_index_from_appname(
+				list_item->keyStr);
+		pkg_name = __get_lockapp_pkgname_from_appname(
+				list_item->keyStr);
+		SETTING_TRACE_DEBUG(
+				"3rd lock selected. index[%d] pkg_name[%s]",
+				index, pkg_name);
+		vconf_set_str(VCONFKEY_SETAPPL_3RD_LOCK_PKG_NAME_STR,
+				pkg_name);
+		vconf_set_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT,
+				lock_type);
+		/* set radio */
+		elm_radio_value_set(list_item->eo_check,
+				lock_type + index);
+		ug_destroy_me(ad->ug);
 		break;
-		default:
+	}
+	default:
 		break;
 	}
 }
@@ -923,9 +930,9 @@ Eina_Bool setting_locktype_main_click_softkey_back_cb(void *data,
 			"[Setting > Security] Data parameter is NULL");
 
 	SettingLocktypeUG *ad = (SettingLocktypeUG *) data;
-	if (ad->ug_passwd) {
+	if (ad->ug_passwd)
 		return EINA_FALSE;
-	}
+
 	/* Send destroy request */
 	ug_destroy_me(ad->ug);
 	SETTING_TRACE_END;

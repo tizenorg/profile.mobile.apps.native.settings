@@ -369,9 +369,8 @@ void setting_locktype_destroy_password_ug_cb(ui_gadget_h ug, void *priv)
 
 	if (ad->ly_main)
 		elm_object_tree_focus_allow_set(ad->ly_main, EINA_TRUE);
-	if (ug) {
+	if (ug)
 		ug_destroy(ug);
-	}
 }
 
 void setting_locktype_end_password_ug_cb(ui_gadget_h ug, void *priv)
