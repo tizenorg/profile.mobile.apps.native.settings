@@ -25,7 +25,7 @@
 #ifndef __SETTING_COMMON_VIEW_H__
 #define __SETTING_COMMON_VIEW_H__
 
-#define EXPORT_PUBLIC __attribute__ ((visibility ("default")))
+#define EXPORT_PUBLIC __attribute__((visibility("default")))
 
 typedef struct _setting_view {
 	int (*create)(void *cb);
@@ -35,7 +35,6 @@ typedef struct _setting_view {
 	int (*langchanged)(void *cb);
 
 	int is_create;		/* 1:exist */
-
 } setting_view;
 /**
  * @brief Set current loaded view
@@ -109,7 +108,7 @@ extern int setting_view_create(setting_view *view, void *cb);
  * @param cb The view data passed between all callbacks
  * @return #0 on success, else on failed
  * @warning the function should be invoked on the view which will be toppest
- * 	view
+ *	view
  */
 extern int setting_view_update(setting_view *view, void *cb);
 

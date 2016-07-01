@@ -284,8 +284,8 @@ typedef struct _Vconf_Change_Node {
 } Vconf_Change_Node;
 #define DEREGISTER_VCONFS(listened_list) \
 	setting_destory_listen_list(&(listened_list))
-#define REGISTER_VCONF_NODE(listened_list,vconf,cb,data) \
-	setting_add_listen_node(&(listened_list),vconf,cb,data)
+#define REGISTER_VCONF_NODE(listened_list, vconf, cb, data) \
+	setting_add_listen_node(&(listened_list), vconf, cb, data)
 
 extern void setting_destory_listen_list(Eina_List **listened_list);
 extern bool setting_add_listen_node(Eina_List **listened_list,

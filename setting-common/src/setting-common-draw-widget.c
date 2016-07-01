@@ -33,9 +33,8 @@ void setting_hide_input_pannel_cb(Evas_Object *entry)
 	ret_if(entry == NULL);
 	Ecore_IMF_Context *imf_context =
 			(Ecore_IMF_Context *)elm_entry_imf_context_get(entry);
-	if (imf_context) {
+	if (imf_context)
 		ecore_imf_context_input_panel_hide(imf_context);
-	}
 
 	elm_object_focus_set(entry, EINA_FALSE);
 	Evas_Object *entry_container = elm_object_parent_widget_get(entry);
@@ -68,9 +67,8 @@ Evas_Object *setting_create_button(
 	Evas_Object *button = elm_button_add(parent);
 	retv_if(!button, NULL);
 
-	if (btn_style) {
+	if (btn_style)
 		elm_object_style_set(button, btn_style);
-	}
 
 	/* not '<-' button */
 	if (0 != safeStrCmp("naviframe/end_btn/default", btn_style)) {
@@ -276,9 +274,8 @@ void create_image_box_add_ex(
 
 	evas_object_image_file_set(*img, img_path, NULL);
 	/*error handling. load the image as it's own size */
-	if (img_h <= 0 || temp_w <= 0) {
+	if (img_h <= 0 || temp_w <= 0)
 		evas_object_image_size_get(*img, &temp_w, &temp_h);
-	}
 
 	evas_object_image_load_size_set(*img, temp_w, temp_h);
 	evas_object_image_fill_set(*img, 0, 0, temp_w, temp_h);
@@ -442,9 +439,9 @@ Eina_Bool __gif_updater(void *data)
 
 	gif_data->cur_png_idx++;
 	/*the last element of current array. */
-	if (NULL == gif_data->png_list[gif_data->cur_png_idx]) {
+	if (NULL == gif_data->png_list[gif_data->cur_png_idx])
 		gif_data->cur_png_idx = 0;
-	}
+
 	elm_image_file_set(
 			gif, gif_data->png_list[gif_data->cur_png_idx], NULL);
 	int w = 0;
@@ -581,9 +578,8 @@ int setting_update_chk_status(Evas_Object *chk, setting_int_slp_list type)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
-	if (chk == NULL) {
+	if (chk == NULL)
 		return SETTING_GENERAL_ERR_NULL_DATA_PARAMETER;
-	}
 
 	SETTING_TRACE_BEGIN;
 
@@ -725,9 +721,8 @@ EXPORT_PUBLIC
 void setting_disable_evas_object(Evas_Object *obj)
 {
 	/* layout\genlist\scroller\elm_entry  etc.. */
-	if (obj) {
+	if (obj)
 		evas_object_pass_events_set(obj, EINA_TRUE);
-	}
 }
 
 /**
@@ -739,9 +734,8 @@ void setting_disable_evas_object(Evas_Object *obj)
 EXPORT_PUBLIC
 void setting_enable_evas_object(Evas_Object *obj)
 {
-	if (obj) {
+	if (obj)
 		evas_object_pass_events_set(obj, EINA_FALSE);
-	}
 }
 
 /**
@@ -805,9 +799,9 @@ void setting_undo_dim_evas_object(Evas_Object *obj, bool b_transparenct)
 		evas_object_color_get(obj, &r, &g, &b, &a);
 		/*the appearence of obj is made up of transparent backgroud
 		 * color. */
-		if (b_transparenct) {
+		if (b_transparenct)
 			a *= DIFF_TIMES;
-		}
+
 		evas_object_color_set(
 				obj,
 				r * DIFF_TIMES,
@@ -836,9 +830,9 @@ void setting_dim_evas_object(Evas_Object *obj, bool b_transparenct)
 		evas_object_color_get(obj, &r, &g, &b, &a);
 		/*the appearence of obj is made up of transparent backgroud
 		 * color. */
-		if (b_transparenct) {
+		if (b_transparenct)
 			a /= DIFF_TIMES;
-		}
+
 		evas_object_color_set(
 				obj,
 				r / DIFF_TIMES,
@@ -880,9 +874,9 @@ static void __btn_mouse_move_cb(
 	int y_offset = ev->cur.output.y - point_down->y;
 	if (x_offset < 0) x_offset = -x_offset;
 	if (y_offset < 0) y_offset = -y_offset;
-	if (x_offset <= MIN_MOVE_DISTANCE && y_offset <= MIN_MOVE_DISTANCE) {
+	if (x_offset <= MIN_MOVE_DISTANCE && y_offset <= MIN_MOVE_DISTANCE)
 		return;
-	}
+
 	setting_undo_dim_evas_object(obj, FALSE);
 }
 static void __btn_del_cb(
@@ -1187,9 +1181,8 @@ EXPORT_PUBLIC Evas_Object *setting_create_navibar_title_text_btn(
 		void *data)
 {
 	Evas_Object *btn = elm_button_add(parent);
-	if (!btn) {
-		return NULL;
-	}
+	retv_if(!btn, NULL);
+
 	elm_object_style_set(btn, "naviframe/title_text");
 	evas_object_event_callback_add(btn, EVAS_CALLBACK_DEL,
 			__title_btn_del_cb, NULL);
@@ -1197,9 +1190,9 @@ EXPORT_PUBLIC Evas_Object *setting_create_navibar_title_text_btn(
 		elm_object_text_set(btn, _(text));
 		evas_object_data_set(btn, "text", text);
 	}
-	if (func) {
+	if (func)
 		evas_object_smart_callback_add(btn, "clicked", func, data);
-	}
+
 	return btn;
 }
 

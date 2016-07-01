@@ -47,16 +47,16 @@
 			char *btn_str[3];\
 			int argno = 0;\
 			\
-			char *btn_part_str[] = {\
+			char *btn_part_str[] = { \
 				_("button1"), _("button2"), _("button3")\
 			};\
 			\
 			int i = 0;\
-			for (; i < btn_num; i++) {\
+			for (; i < btn_num; i++) { \
 				btn_str[i] = va_arg(args, char *);\
-			}\
+			} \
 			\
-			for (; argno < btn_num; argno++) {\
+			for (; argno < btn_num; argno++) { \
 				SETTING_TRACE("Parameter #%d is: %s, btn_part_str;%s", \
 				argno, btn_str[btn_num - 1 - argno], \
 				btn_part_str[argno]);\
@@ -73,21 +73,21 @@
 					evas_object_data_set(popup, \
 							btn_part_str[argno], \
 							btn_str[btn_num - 1 - argno]);\
-				}\
-			}\
+				} \
+			} \
 			va_end(args);\
 		} else { /* btn_num > 3 */\
 			SETTING_TRACE_ERROR(\
 					"incorrect button number for popup");\
 			return NULL;\
-		}\
+		} \
 	} else if (btn_num == 0) {\
 		SETTING_TRACE("btn_num is zero");\
 	} else { /* btn_num < 0 */\
 		SETTING_TRACE_ERROR("incorrect button number for popup");\
 		return NULL;\
-	}\
-	 
+	} \
+
 #define ADD_POPUP_MULTI_LANGUAGE_AUTO_UPDATE(popup, title, text, button1_str, \
 		button2_str, button3_str) \
 	evas_object_data_set(popup, "title", title);\
@@ -183,9 +183,8 @@ static void _popup_lang_change_cb(keynode_t *key, void *data)
 	setting_retm_if(NULL == data, "data is NULL");
 	Evas_Object *popup = data;
 	char *vconf_name = vconf_keynode_get_name(key);
-	if (!safeStrCmp(vconf_name, VCONFKEY_LANGSET)) {
+	if (!safeStrCmp(vconf_name, VCONFKEY_LANGSET))
 		__setting_popup_lang_update(popup);
-	}
 }
 
 static void _popup_lang_del_cb(void *data, Evas *e, Evas_Object *obj,
@@ -226,15 +225,13 @@ EXPORT_PUBLIC void __popup_keygrab_del_cb(void *data, Evas *e, Evas_Object *obj,
 
 	/*ungrab the "Home key" */
 	ret = eext_win_keygrab_unset(xwin, "XF86Home");
-	if (ret) {
+	if (ret)
 		SETTING_TRACE_ERROR("KEY_HOME ungrab error ret[%d]", ret);
-	}
 
 	/*ungrab the "back key" */
 	ret = eext_win_keygrab_unset(xwin, "XF86Back");
-	if (ret) {
+	if (ret)
 		SETTING_TRACE_ERROR("KEY_BACK ungrab error ret[%d]", ret);
-	}
 #else
 	/* @todo : repace codes using X with codes tizen 3.0 API */
 #endif
@@ -280,9 +277,8 @@ EXPORT_PUBLIC void setting_popup_event_set2(Evas_Object *popup, void *data,
 		Ecore_X_Window xwin = elm_win_xwindow_get(popup);
 
 		int ret = eext_win_keygrab_set(xwin, "XF86Home");
-		if (ret) {
+		if (ret)
 			SETTING_TRACE_ERROR("KEY_HOME grab error ret[%d]", ret);
-		}
 #else
 		/* @todo : repace codes using X with codes tizen 3.0 API */
 #endif
@@ -320,15 +316,14 @@ Evas_Object *setting_create_popup2(void *data, Evas_Object *parent, char *title,
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND,
 			EVAS_HINT_EXPAND);
 
-	if (text) {
+	if (text)
 		elm_object_text_set(popup, _(text));
-	}
-	if (title) {
+
+	if (title)
 		elm_object_part_text_set(popup, "title,text", _(title));
-	}
-	if (timeout > 0) {
+
+	if (timeout > 0)
 		elm_popup_timeout_set(popup, timeout);
-	}
 
 	setting_popup_event_set2(popup, data, response_cb, back_cb, timeout,
 			blocked_flag, keygrab_flag);
@@ -339,9 +334,8 @@ Evas_Object *setting_create_popup2(void *data, Evas_Object *parent, char *title,
 		Ecore_X_Window xwin = elm_win_xwindow_get(popup);
 
 		int ret = eext_win_keygrab_set(xwin, "XF86Home");
-		if (ret) {
+		if (ret)
 			SETTING_TRACE_ERROR("KEY_HOME grab error ret[%d]", ret);
-		}
 #else
 		/* @todo : repace codes using X with codes tizen 3.0 API */
 #endif
@@ -400,15 +394,14 @@ Evas_Object *setting_create_popup(void *data, Evas_Object *parent,
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND,
 			EVAS_HINT_EXPAND);
 
-	if (text) {
+	if (text)
 		elm_object_text_set(popup, _(text));
-	}
-	if (title) {
+
+	if (title)
 		elm_object_part_text_set(popup, "title,text", _(title));
-	}
-	if (timeout > 0) {
+
+	if (timeout > 0)
 		elm_popup_timeout_set(popup, timeout);
-	}
 
 	setting_popup_event_set(popup, data, response_cb, timeout, blocked_flag,
 			keygrab_flag);
@@ -435,7 +428,7 @@ Evas_Object *setting_create_popup(void *data, Evas_Object *parent,
  * @param data			application context
  * @param parent		parent window
  * @param progressbar_style	progressbar style(
- * 				process_small/process_medium/process_large)
+ *				process_small/process_medium/process_large)
  * @param title			popup title
  * @param text			popup text
  * @param response_cb		called When btn was clicked
@@ -474,11 +467,8 @@ Evas_Object *setting_create_popup_with_progressbar(void *data,
 
 	progressbar = elm_progressbar_add(layout);
 
-	if (!safeStrCmp("default", progressbar_style)) {
-		/* do nothing */
-	} else {
+	if (safeStrCmp("default", progressbar_style) != 0)
 		elm_object_style_set(progressbar, progressbar_style);
-	}
 
 	evas_object_size_hint_align_set(progressbar, EVAS_HINT_FILL, 0.5);
 	evas_object_size_hint_weight_set(progressbar, EVAS_HINT_EXPAND,
@@ -488,9 +478,9 @@ Evas_Object *setting_create_popup_with_progressbar(void *data,
 
 	elm_object_content_set(popup, layout);
 
-	if (timeout > 0) {
+	if (timeout > 0)
 		elm_popup_timeout_set(popup, timeout);
-	}
+
 	setting_popup_event_set(popup, data, response_cb, timeout, blocked_flag,
 			keygrab_flag);
 
@@ -535,12 +525,11 @@ Evas_Object *setting_create_popup_with_list(Evas_Object **genlist, void *data,
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND,
 			EVAS_HINT_EXPAND);
 
-	if (title) {
+	if (title)
 		elm_object_part_text_set(popup, "title,text", _(title));
-	}
-	if (timeout > 0) {
+
+	if (timeout > 0)
 		elm_popup_timeout_set(popup, timeout);
-	}
 
 	setting_popup_event_set(popup, data, response_cb, timeout, blocked_flag,
 			keygrab_flag);
@@ -562,9 +551,8 @@ Evas_Object *setting_create_popup_with_list(Evas_Object **genlist, void *data,
 	elm_scroller_content_min_limit(scroller, EINA_FALSE, EINA_TRUE);
 	evas_object_show(scroller);
 
-	if (genlist) {
+	if (genlist)
 		*genlist = scroller;
-	}
 
 	elm_object_content_set(popup, scroller);
 
