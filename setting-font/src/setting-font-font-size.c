@@ -44,17 +44,17 @@ static char *result_str_arr[] = { "Small", "Normal", "Large", "Huge", "Giant" };
 static int convert_font_size(int size)
 {
 	int font_size;
-	if (SYSTEM_SETTINGS_FONT_SIZE_SMALL == size) {
+	if (SYSTEM_SETTINGS_FONT_SIZE_SMALL == size)
 		font_size = LABEL_FONT_SIZE_SMALL;
-	} else if (SYSTEM_SETTINGS_FONT_SIZE_LARGE == size) {
+	else if (SYSTEM_SETTINGS_FONT_SIZE_LARGE == size)
 		font_size = LABEL_FONT_SIZE_LARGE;
-	} else if (SYSTEM_SETTINGS_FONT_SIZE_HUGE == size) {
+	else if (SYSTEM_SETTINGS_FONT_SIZE_HUGE == size)
 		font_size = LABEL_FONT_SIZE_HUGE;
-	} else if (SYSTEM_SETTINGS_FONT_SIZE_GIANT == size) {
+	else if (SYSTEM_SETTINGS_FONT_SIZE_GIANT == size)
 		font_size = LABEL_FONT_SIZE_GIANT;
-	} else {
+	else
 		font_size = LABEL_FONT_SIZE_NORMAL;
-	}
+
 	return font_size;
 }
 
@@ -209,12 +209,12 @@ static int setting_font_font_size_destroy(void *cb)
 	} else {
 		elm_naviframe_item_pop(ad->navibar);
 	}
-	if (ad->navi_it_font_size) {
+	if (ad->navi_it_font_size)
 		ad->navi_it_font_size = NULL;
-	}
-	if (ad->size_rdg != NULL) {
+
+	if (ad->size_rdg != NULL)
 		ad->size_rdg = NULL;
-	}
+
 	setting_view_font_font_size.is_create = 0;
 
 	return SETTING_RETURN_SUCCESS;
@@ -263,9 +263,8 @@ static Eina_Bool __setting_font_font_size_click_softkey_back_cb(void *data,
 		setting_retvm_if(ret != 0, EINA_FALSE, "fail to get vconf");
 
 		app_control_h svc;
-		if (app_control_create(&svc)) {
+		if (app_control_create(&svc))
 			return EINA_FALSE;
-		}
 
 		app_control_add_extra_data(svc, "category", "FontSize");
 		app_control_add_extra_data(svc, "FontSize",
@@ -348,9 +347,8 @@ void setting_font_font_size_list_mouse_up_cb(void *data, Evas_Object *obj,
 		SETTING_TRACE_ERROR("system call failed with error code %d",
 				ret);
 	}
-	if (old_value == list_item->chk_status) {
+	if (old_value == list_item->chk_status)
 		return;
-	}
 
 	ad->ret_font_size = list_item->chk_status;
 
