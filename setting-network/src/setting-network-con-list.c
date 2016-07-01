@@ -106,9 +106,8 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj,
 	Evas_Object *win;
 	/*Elm_Object_Item *it; */
 
-	if (ctxpopup != NULL) {
+	if (ctxpopup != NULL)
 		evas_object_del(ctxpopup);
-	}
 
 	ctxpopup = elm_ctxpopup_add(nf);
 	elm_ctxpopup_auto_hide_disabled_set(ctxpopup, EINA_TRUE);
@@ -241,7 +240,7 @@ static int __con_list_recreate(void *cb)
 				elm_radio_state_value_get(item_data->eo_check),
 				elm_radio_value_get(item_data->eo_check),
 				item_data->chk_change_cb,
-				(void * )setting_network_con_list_chk_changed);
+				(void *)setting_network_con_list_chk_changed);
 
 		SETTING_TRACE("profile_h:%p, apn:%s, id:%s", profile_h, apn,
 				id);
@@ -451,11 +450,11 @@ static void ___network_con_set_default_cb(connection_error_e result, void *data)
 	}
 
 	int srvType = CONNECTION_CELLULAR_SERVICE_TYPE_APPLICATION;
-	if (0 == safeStrCmp(ad->con_name, "IDS_ST_BODY_INTERNET_CONNECTION")) {
+	if (0 == safeStrCmp(ad->con_name, "IDS_ST_BODY_INTERNET_CONNECTION"))
 		srvType = CONNECTION_CELLULAR_SERVICE_TYPE_INTERNET;
-	} else if (0 == safeStrCmp(ad->con_name, STR_SETTING_MMS_CONNECTIONS)) {
+	else if (0 == safeStrCmp(ad->con_name, STR_SETTING_MMS_CONNECTIONS))
 		srvType = CONNECTION_CELLULAR_SERVICE_TYPE_MMS;
-	}
+
 	SETTING_TRACE("The result is :%d,but it is meaningless for our Setting",
 			result);
 	ad->selected_profile = list_item;
@@ -481,11 +480,11 @@ static void __set_default_response_cb(void *data, Evas_Object *obj,
 	SettingNetworkUG *ad = list_item->userdata;
 
 	int srvType = CONNECTION_CELLULAR_SERVICE_TYPE_APPLICATION;
-	if (0 == safeStrCmp(ad->con_name, "IDS_ST_BODY_INTERNET_CONNECTION")) {
+	if (0 == safeStrCmp(ad->con_name, "IDS_ST_BODY_INTERNET_CONNECTION"))
 		srvType = CONNECTION_CELLULAR_SERVICE_TYPE_INTERNET;
-	} else if (0 == safeStrCmp(ad->con_name, STR_SETTING_MMS_CONNECTIONS)) {
+	else if (0 == safeStrCmp(ad->con_name, STR_SETTING_MMS_CONNECTIONS))
 		srvType = CONNECTION_CELLULAR_SERVICE_TYPE_MMS;
-	}
+
 	/*SETTING_TRACE("The result is :%d,but it is meaningless for our Setting",
 	 * result); */
 	ad->selected_profile = list_item;
@@ -530,15 +529,15 @@ void __set_default_profile(void *data)
 			CONNECTION_CELLULAR_SERVICE_TYPE_UNKNOWN;
 
 	int srvType = CONNECTION_CELLULAR_SERVICE_TYPE_APPLICATION;
-	if (0 == safeStrCmp(ad->con_name, "IDS_ST_BODY_INTERNET_CONNECTION")) {
+	if (0 == safeStrCmp(ad->con_name, "IDS_ST_BODY_INTERNET_CONNECTION"))
 		srvType = CONNECTION_CELLULAR_SERVICE_TYPE_INTERNET;
-	} else if (0 == safeStrCmp(ad->con_name, STR_SETTING_MMS_CONNECTIONS)) {
+	else if (0 == safeStrCmp(ad->con_name, STR_SETTING_MMS_CONNECTIONS))
 		srvType = CONNECTION_CELLULAR_SERVICE_TYPE_MMS;
-	}
+
 	while (connection_profile_iterator_has_next(profile_iter)) {
-		if (cnt >= MAX_PROFILE_NUM) {
+		if (cnt >= MAX_PROFILE_NUM)
 			break;
-		}
+
 		if (connection_profile_iterator_next(profile_iter, &profile_h)
 				!= CONNECTION_ERROR_NONE) {
 			SETTING_TRACE_ERROR("Fail to get profile handle");

@@ -314,7 +314,8 @@ struct _SettingNetworkUG {
 	int chkType;
 	int chkType_pdn;
 	int chkType_roam_pdn;
-	int srvType;bool is_editable;
+	int srvType;
+	bool is_editable;
 	Elm_Object_Item *item_above_user_name;
 	Elm_Object_Item *item_above_proxy_add;
 
