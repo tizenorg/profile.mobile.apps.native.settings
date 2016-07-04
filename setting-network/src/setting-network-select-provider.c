@@ -18,18 +18,18 @@
  * limitations under the License.
  *
  */
-#include <setting-network-select-network.h>
+#include <setting-network-select-provider.h>
 
-static int setting_network_select_network_create(void *cb);
-static int setting_network_select_network_destroy(void *cb);
-static int setting_network_select_network_update(void *cb);
-static int setting_network_select_network_cleanup(void *cb);
+static int setting_view_network_select_provider_create(void *cb);
+static int setting_view_network_select_provider_destroy(void *cb);
+static int setting_view_network_select_provider_update(void *cb);
+static int setting_view_network_select_provider_cleanup(void *cb);
 
-setting_view setting_view_network_select_network = {
-	.create = setting_network_select_network_create,
-	.destroy = setting_network_select_network_destroy,
-	.update = setting_network_select_network_update,
-	.cleanup = setting_network_select_network_cleanup, };
+setting_view setting_view_network_select_provider = {
+	.create = setting_view_network_select_provider_create,
+	.destroy = setting_view_network_select_provider_destroy,
+	.update = setting_view_network_select_provider_update,
+	.cleanup = setting_view_network_select_provider_cleanup, };
 
 /* ***************************************************
  *
@@ -44,7 +44,7 @@ static void __network_main_gl_mouse_up(void *data, Evas *e, Evas_Object *obj,
 	SettingNetworkUG *ad = (SettingNetworkUG *)data;
 	Evas_Event_Mouse_Up *ev = (Evas_Event_Mouse_Up *)event_info;
 	Elm_Object_Item *selected_item = elm_genlist_at_xy_item_get(
-			ad->genlist_sel_network, ev->output.x, ev->output.y,
+			ad->genlist_sel_provider, ev->output.x, ev->output.y,
 			NULL);
 	ret_if(!selected_item);
 	Setting_GenGroupItem_Data *data_Item = elm_object_item_data_get(
@@ -96,7 +96,7 @@ static void __network_main_gl_mouse_down(void *data, Evas *e, Evas_Object *obj,
 	ad->point_down.x = ev->output.x;
 	ad->point_down.y = ev->output.y;
 	Elm_Object_Item *selected_item = elm_genlist_at_xy_item_get(
-			ad->genlist_sel_network, ev->output.x, ev->output.y,
+			ad->genlist_sel_provider, ev->output.x, ev->output.y,
 			NULL);
 	ret_if(!selected_item);
 	Setting_GenGroupItem_Data *data_Item = elm_object_item_data_get(
@@ -169,38 +169,59 @@ static void __network_main_gl_mouse_move(void *data, Evas *e, Evas_Object *obj,
 			ELM_GENLIST_ITEM_FIELD_TEXT);
 }
 
-static int setting_network_select_network_create(void *cb)
+static int setting_view_network_select_provider_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+	Elm_Object_Item *navi_it = NULL;
 
 	SettingNetworkUG *ad = (SettingNetworkUG *)cb;
-	if (ad->view_to_load == &setting_view_network_select_network) {
+	if (ad->view_to_load == &setting_view_network_select_provider) {
 		ad->ly_main = setting_create_layout_navi_bar_genlist(
 				ad->win_main_layout, ad->win_get,
-				"IDS_COM_BODY_NETWORK_OPERATORS",
+				"IDS_COM_BODY_SEVICE_PROVIDERS",
 				_("IDS_ST_BUTTON_BACK"), NULL,
 				setting_network_select_network_click_softkey_cancel_cb,
-				NULL, ad, &ad->genlist_sel_network,
+				NULL,
+				ad,
+				&ad->genlist_sel_provider,
 				&ad->navi_bar);
 	} else {
-		setting_push_layout_navi_bar_genlist(ad->win_main_layout,
-				ad->win_get, "IDS_COM_BODY_NETWORK_OPERATORS",
-				_("IDS_ST_BUTTON_BACK"),
-				NULL,
+		navi_it = setting_push_layout_navi_bar_genlist(
+				ad->win_main_layout, ad->win_get,
+				"IDS_COM_BODY_SEVICE_PROVIDERS",
+				_("IDS_ST_BUTTON_BACK"), NULL,
 				setting_network_select_network_click_softkey_cancel_cb,
-				NULL, ad, &ad->genlist_sel_network,
+				NULL,
+				ad,
+				&ad->genlist_sel_provider,
 				ad->navi_bar);
 	}
 
-	/*m_Object_Item *item = elm_genlist_item_append(ad->genlist_sel_network,
+	elm_naviframe_item_style_set(navi_it, "tabbar");
+
+	Evas_Object *toolbar = elm_toolbar_add(ad->navi_bar);
+	elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
+	//elm_object_style_set(toolbar, "tabbar");
+	elm_toolbar_reorder_mode_set(toolbar, EINA_FALSE);
+	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
+	elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
+	elm_object_item_part_content_set(navi_it, "tabbar", toolbar);
+
+	elm_toolbar_item_append(toolbar, NULL, "SIM1", NULL, ad);
+	elm_toolbar_item_append(toolbar, NULL, "SIM2", NULL, ad);
+
+	evas_object_show(toolbar);
+
+
+	/*m_Object_Item *item = elm_genlist_item_append(ad->genlist_sel_provider,
 	 &(itc_seperator), NULL, NULL,
 	 ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	 elm_genlist_item_select_mode_set(item,
 	 ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);*/
 
 	/* scroller is a genlist */
-	ad->chk_sel = elm_radio_add(ad->genlist_sel_network);
+	ad->chk_sel = elm_radio_add(ad->genlist_sel_provider);
 	elm_radio_state_value_set(ad->chk_sel, -1);
 	/*retrieve here */
 	vconf_get_int(VCONFKEY_SETAPPL_SELECT_NETWORK_INT, &ad->sel_net);
@@ -220,20 +241,20 @@ static int setting_network_select_network_create(void *cb)
 	}
 
 	/* resolve abnormal height issue */
-	elm_genlist_mode_set(ad->genlist_sel_network, ELM_LIST_COMPRESS);
+	elm_genlist_mode_set(ad->genlist_sel_provider, ELM_LIST_COMPRESS);
 
-	evas_object_event_callback_add(ad->genlist_sel_network,
+	evas_object_event_callback_add(ad->genlist_sel_provider,
 			EVAS_CALLBACK_MOUSE_UP, __network_main_gl_mouse_up, ad);
-	evas_object_event_callback_add(ad->genlist_sel_network,
+	evas_object_event_callback_add(ad->genlist_sel_provider,
 			EVAS_CALLBACK_MOUSE_DOWN, __network_main_gl_mouse_down,
 			ad);
-	evas_object_event_callback_add(ad->genlist_sel_network,
+	evas_object_event_callback_add(ad->genlist_sel_provider,
 			EVAS_CALLBACK_MOUSE_MOVE, __network_main_gl_mouse_move,
 			ad);
 
 	if (TAPI_NETWORK_SELECTIONMODE_AUTOMATIC == ad->sel_net) {
 		ad->data_auto_network_item = setting_create_Gendial_field_1radio(
-				ad->genlist_sel_network, &(itc_1text_1icon),
+				ad->genlist_sel_provider, &(itc_1text_1icon),
 				setting_network_Gendial_select_plmn_cb, ad,
 				SWALLOW_Type_1ICON_1RADIO,
 				NULL, TRUE, "IDS_ST_BODY_SELECT_AUTOMATICALLY",
@@ -250,7 +271,7 @@ static int setting_network_select_network_create(void *cb)
 	} else if (TAPI_NETWORK_SELECTIONMODE_MANUAL == ad->sel_net) {
 
 		ad->data_auto_network_item = setting_create_Gendial_field_1radio(
-				ad->genlist_sel_network, &(itc_1text_1icon),
+				ad->genlist_sel_provider, &(itc_1text_1icon),
 				setting_network_Gendial_select_plmn_cb, ad,
 				SWALLOW_Type_1ICON_1RADIO,
 				NULL, FALSE, "IDS_ST_BODY_SELECT_AUTOMATICALLY",
@@ -267,13 +288,13 @@ static int setting_network_select_network_create(void *cb)
 		FREE(sub_text);
 		ad->data_auto_network_item->userdata = ad;
 
-		setting_view_network_select_network.is_create = TRUE;
+		setting_view_network_select_provider.is_create = TRUE;
 
 		setting_network_searching_network(ad->data_auto_network_item);
 
 		/* Searching icon appeared.
 		 ad->data_search_network_item = setting_create_Gendial_field_1radio(
-		 ad->genlist_sel_network,
+		 ad->genlist_sel_provider,
 		 &itc_1icon,
 		 NULL, NULL,
 		 SWALLOW_Type_1RADIO_1SEARCH,
@@ -299,7 +320,7 @@ static int setting_network_select_network_create(void *cb)
 		 {
 		 //no service case:
 		 ad->data_search_network_item = setting_create_Gendial_field_1radio(
-		 ad->genlist_sel_network,
+		 ad->genlist_sel_provider,
 		 &itc_1icon,
 		 NULL, NULL,
 		 SWALLOW_Type_1RADIO_1SEARCH,
@@ -319,7 +340,7 @@ static int setting_network_select_network_create(void *cb)
 		 snprintf(sel_network_desc, MAX_COMMON_BUFFER_LEN, "%s",
 		 _(ad->sel_network));
 		 item_Data = setting_create_Gendial_field_1radio(
-		 ad->genlist_sel_network,
+		 ad->genlist_sel_provider,
 		 &itc_multiline_1text_1icon,
 		 setting_network_Gendial_select_plmn_cb, ad,
 		 SWALLOW_Type_1RADIO,
@@ -331,7 +352,7 @@ static int setting_network_select_network_create(void *cb)
 		 item_Data->userdata = ad;
 
 		 ad->data_search_network_item = setting_create_Gendial_field_1radio(
-		 ad->genlist_sel_network,
+		 ad->genlist_sel_provider,
 		 &itc_1icon,
 		 NULL, NULL,
 		 SWALLOW_Type_1RADIO_1SEARCH,
@@ -347,16 +368,16 @@ static int setting_network_select_network_create(void *cb)
 		 */
 	}
 
-	setting_view_network_select_network.is_create = TRUE;
+	setting_view_network_select_provider.is_create = TRUE;
 	return SETTING_RETURN_SUCCESS;
 	/*
 	 err_handle:
-	 setting_view_network_select_network.is_create = TRUE;
+	 setting_view_network_select_provider.is_create = TRUE;
 	 return SETTING_RETURN_FAIL;
 	 */
 }
 
-static int setting_network_select_network_destroy(void *cb)
+static int setting_view_network_select_provider_destroy(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -364,11 +385,11 @@ static int setting_network_select_network_destroy(void *cb)
 
 	SettingNetworkUG *ad = (SettingNetworkUG *)cb;
 
-	evas_object_event_callback_del(ad->genlist_sel_network,
+	evas_object_event_callback_del(ad->genlist_sel_provider,
 			EVAS_CALLBACK_MOUSE_UP, __network_main_gl_mouse_up);
-	evas_object_event_callback_del(ad->genlist_sel_network,
+	evas_object_event_callback_del(ad->genlist_sel_provider,
 			EVAS_CALLBACK_MOUSE_DOWN, __network_main_gl_mouse_down);
-	evas_object_event_callback_del(ad->genlist_sel_network,
+	evas_object_event_callback_del(ad->genlist_sel_provider,
 			EVAS_CALLBACK_MOUSE_MOVE, __network_main_gl_mouse_move);
 
 	if (ad->timer) {
@@ -383,8 +404,9 @@ static int setting_network_select_network_destroy(void *cb)
 
 	/*cancel the searching operation */
 	if (ad->b_searching_network) {
-		int tapi_ret;
-		tapi_ret = tel_cancel_network_manual_search(ad->handle,
+		int tapi_ret = -1;
+/*TODO select handle:*/
+		tapi_ret = tel_cancel_network_manual_search(ad->handle[0],
 				setting_tapi_cancel_manual_search_cb, ad);
 		if (tapi_ret != TAPI_API_SUCCESS) {
 			SETTING_TRACE_ERROR(
@@ -416,7 +438,7 @@ static int setting_network_select_network_destroy(void *cb)
 	ad->b_set_auto_network = FALSE;
 	setting_network_update_sel_network(ad);
 
-	if (ad->view_to_load == &setting_view_network_select_network) {
+	if (ad->view_to_load == &setting_view_network_select_provider) {
 		if (ad->ly_main) {
 			evas_object_del(ad->ly_main);
 			ad->ly_main = NULL;
@@ -431,12 +453,12 @@ static int setting_network_select_network_destroy(void *cb)
 	ad->data_auto_network_item = NULL;
 	/*data_sel_net was created in main view, it won't be destoryed. */
 	/*ad->data_sel_net = NULL; */
-	setting_view_network_select_network.is_create = FALSE;
+	setting_view_network_select_provider.is_create = FALSE;
 
 	return SETTING_RETURN_SUCCESS;
 }
 
-static int setting_network_select_network_update(void *cb)
+static int setting_view_network_select_provider_update(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -448,10 +470,10 @@ static int setting_network_select_network_update(void *cb)
 	return SETTING_RETURN_SUCCESS;
 }
 
-static int setting_network_select_network_cleanup(void *cb)
+static int setting_view_network_select_provider_cleanup(void *cb)
 {
 	SETTING_TRACE_BEGIN;
-	return setting_network_select_network_destroy(cb);
+	return setting_view_network_select_provider_destroy(cb);
 }
 
 /* ***************************************************
@@ -482,12 +504,12 @@ static void setting_network_select_network_click_softkey_cancel_cb(void *data,
 	retm_if(data == NULL,
 			"[Setting > Network > Select] Data parameter is NULL");
 
-	if (ad->view_to_load == &setting_view_network_select_network) {
+	if (ad->view_to_load == &setting_view_network_select_provider) {
 		/* exit */
 		ug_destroy_me(ad->ug);
 		return;
 	} else {
-		setting_view_change(&setting_view_network_select_network,
+		setting_view_change(&setting_view_network_select_provider,
 				&setting_view_network_main, ad);
 	}
 	return;
