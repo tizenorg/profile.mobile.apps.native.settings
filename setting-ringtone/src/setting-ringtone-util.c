@@ -130,15 +130,18 @@ void ringtone_play_sound(const char *sound_file, player_h **mp_handle)
 		return;
 	}
 
-	sound_manager_set_session_type(SOUND_SESSION_TYPE_MEDIA);
-	sound_manager_set_media_session_option(
-			SOUND_SESSION_OPTION_PAUSE_OTHERS_WHEN_START,
-			SOUND_SESSION_OPTION_INTERRUPTIBLE_DURING_PLAY);
-
 	int err = player_create(player);
 	if (err != PLAYER_ERROR_NONE) {
 		SETTING_TRACE_ERROR("creating the player handle failed[%d]",
 							err);
+		FREE(player);
+		return;
+	}
+
+	err = player_set_sound_type(*player, SOUND_TYPE_RINGTONE);
+	if (err != PLAYER_ERROR_NONE) {
+		SETTING_TRACE_ERROR("error to set sound_type[%d]", err);
+		player_destroy(*player);
 		FREE(player);
 		return;
 	}
@@ -221,8 +224,6 @@ void ringtone_stop_sound(void *data)
 		SETTING_TRACE("mm player destroy failed");
 		ret = SETTING_MMPLAYER_DESTROY_ERR;
 	}
-
-	sound_manager_set_session_type(SOUND_SESSION_TYPE_MEDIA);
 
 	FREE(ad->mp_ringtone);
 	ad->mp_ringtone = NULL;
