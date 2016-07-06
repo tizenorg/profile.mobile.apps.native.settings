@@ -28,6 +28,7 @@
 
 
 #include <glib-object.h>
+#include "setting-common-init.h"
 
 #include <setting-common-draw-widget.h>
 #include <setting-common-view.h>
@@ -91,30 +92,30 @@ typedef enum {
 	SETTING_DISPLAY_VIEWTYPE_MAX,
 } display_viewtype;
 
-typedef struct _SettingDisplayUG SettingDisplayUG;
-
 /**
  * Setting Display UG context
  * all UG function has void* as an agument. this is casted back to
  * SettingDisplayUG and the functions access app context.
  */
-struct _SettingDisplayUG {
-	ui_gadget_h ug;
+typedef struct _SettingDisplayUG {
+	MainData md;
 
 	/* add more variables here (move your appdata to here) */
 	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-
-	ui_gadget_h ug_loading;
-	ui_gadget_h ug_font;
-	ui_gadget_h ug_passwd;
-	ui_gadget_h ug_ledindicator;
-
-	Evas_Object *ly_main;	/**< link to src/setting-display-main.c */
-
-	Evas_Object *navi_bar;	/*	for navigation effect */
-	Elm_Object_Item *nf_it;
+//
+//	Evas_Object *main_win;
+//	Evas_Object *win_main_layout;
+//	Evas_Object *win_get;
+//
+//	ui_gadget_h ug_loading;
+//	ui_gadget_h ug_font;
+//	ui_gadget_h ug_passwd;
+//	ui_gadget_h ug_ledindicator;
+//
+//	Evas_Object *ly_main;	/**< link to src/setting-display-main.c */
+//
+//	Evas_Object *navi_bar;	/*	for navigation effect */
+//	Elm_Object_Item *nf_it;
 	Ecore_Timer *event_freeze_timer;
 
 	Evas_Object *screen_timeout_popup;
@@ -206,7 +207,7 @@ struct _SettingDisplayUG {
 
 	DisplayExpandState display_expand_state;
 
-};
+} SettingDisplayUG;
 
 extern setting_view setting_view_display_main;
 extern setting_view setting_view_display_brightness;

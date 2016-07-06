@@ -62,18 +62,18 @@ setting_view setting_view_display_brightness = {
 #define DBUS_SIGNAL_NAME "ChangedSiop"
 
 const char *iconPath[SETTING_DISPLAY_ICON_PATH] = {
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_00.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_01.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_02.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_03.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_04.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_05.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_06.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_07.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_08.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_09.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_10.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_11.png"
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_00.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_01.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_02.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_03.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_04.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_05.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_06.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_07.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_08.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_09.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_10.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_11.png"
 };
 
 
@@ -545,7 +545,7 @@ void __display_int_vconf_cb(keynode_t *key, void *data)
 			if (err != DEVICE_ERROR_NONE) {
 				SETTING_TRACE(" device_display_set_brightness "
 						": failed[ret=%d]", err);
-				setting_create_popup(ad, ad->win_get, NULL,
+				setting_create_popup(ad, ad->md.win_main, NULL,
 						"IDS_CST_POP_FAILED",
 						NULL, POPUP_INTERVAL, FALSE,
 						FALSE, 0);
@@ -613,7 +613,7 @@ static Evas_Object *__setting_brightness_add_slider(void *data,
 
 	/* Set custom layout style */
 	layout = elm_layout_add(obj);
-	elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME,
+	elm_layout_file_set(layout, DISPLAY_THEME_EDJ_NAME,
 			"gl_custom_item");
 	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL,
 			EVAS_HINT_FILL);
@@ -630,12 +630,17 @@ static Evas_Object *__setting_brightness_add_slider(void *data,
 			&auto_value, &err);
 	elm_layout_signal_emit(item_data->eo_check,
 			"elm,state,val,hide", "");
-	/*add error handle,due to different target env.. */
+	/* add error handle,due to different target env.. */
 	if (ret != 0) {
 		SETTING_TRACE_ERROR(
 				"Failed to get value of [%s]",
 				VCONFKEY_SETAPPL_BRIGHTNESS_AUTOMATIC_INT);
 	}
+
+
+
+
+
 
 	if (auto_value) {
 		elm_slider_indicator_format_function_set(
@@ -726,7 +731,7 @@ void construct_brightness(void *data, Evas_Object *genlist)
 			setting_display_birghtness_bright_slider_value_change_cb);
 
 	if (ad->data_br_sli) {
-		ad->data_br_sli->win_main = ad->win_main_layout;
+		ad->data_br_sli->win_main = ad->md.win_main;
 		ad->data_br_sli->evas = ad->evas;
 		if (auto_value) {
 			ad->data_br_sli->isIndicatorVisible = 1;
@@ -790,7 +795,7 @@ static int setting_display_brightness_create(void *cb)
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	genlist = elm_genlist_add(ad->win_main_layout);
+	genlist = elm_genlist_add(ad->md.view_layout);
 
 	retvm_if(genlist == NULL, SETTING_RETURN_FAIL,
 			"Cannot set scroller object as content of layout");
@@ -799,22 +804,22 @@ static int setting_display_brightness_create(void *cb)
 
 	/* add basic layout */
 	if (&setting_view_display_brightness == ad->view_to_load) {
-		ad->ly_main = setting_create_layout_navi_bar(
-				ad->win_main_layout,
-				ad->win_get,
+		ad->md.ly_main = setting_create_layout_navi_bar(
+				ad->md.view_layout,
+				ad->md.win_main,
 				"IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING",
 				_("IDS_ST_BUTTON_BACK"),
 				setting_display_brightness_click_softkey_cancel_cb,
 				ad,
 				genlist,
-				&ad->navi_bar, NULL);
+				&ad->md.navibar_main, NULL);
 	} else {
 		setting_push_layout_navi_bar(
 				"IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING",
 				_("IDS_ST_BUTTON_BACK"), NULL, NULL,
 				setting_display_brightness_click_softkey_cancel_cb,
 				NULL,
-				NULL, ad, genlist, ad->navi_bar, NULL);
+				NULL, ad, genlist, ad->md.navibar_main, NULL);
 	}
 
 	evas_object_smart_callback_add(
@@ -852,14 +857,14 @@ static int setting_display_brightness_destroy(void *cb)
 				__display_int_vconf_cb);
 
 	if (&setting_view_display_brightness == ad->view_to_load) {
-		if (ad->ly_main != NULL) {
-			evas_object_del(ad->ly_main);
-			ad->ly_main = NULL;
+		if (ad->md.ly_main != NULL) {
+			evas_object_del(ad->md.ly_main);
+			ad->md.ly_main = NULL;
 		}
 		setting_view_display_brightness.is_create = 0;
 	} else {
 		setting_view_display_brightness.is_create = 0;
-		elm_naviframe_item_pop(ad->navi_bar);
+		elm_naviframe_item_pop(ad->md.navibar_main);
 	}
 
 	return SETTING_RETURN_SUCCESS;
@@ -903,11 +908,11 @@ setting_display_brightness_click_softkey_cancel_cb(
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");
-	if (&setting_view_display_brightness == ad->view_to_load) {
-		/* Send destroy request */
-		ug_destroy_me(ad->ug);
-		return;
-	}
+//	if (&setting_view_display_brightness == ad->view_to_load) {
+//		/* Send destroy request */
+//		ug_destroy_me(ad->ug);
+//		return;
+//	}
 
 	setting_view_change(&setting_view_display_brightness,
 			&setting_view_display_main, ad);
@@ -948,7 +953,7 @@ static void setting_display_set_slider_value(
 					&tmp, &err);
 			vconf_get_int(VCONFKEY_SETAPPL_LCD_BRIGHTNESS, &tmp);
 			elm_slider_value_set(obj, tmp);
-			setting_create_popup(ad, ad->win_get, NULL,
+			setting_create_popup(ad, ad->md.win_main, NULL,
 					"IDS_CST_POP_FAILED",
 					NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
 		}
@@ -958,7 +963,7 @@ static void setting_display_set_slider_value(
 				value);
 		/*add error handle.. */
 		if (0 != ret) {
-			setting_create_popup(ad, ad->win_get, NULL,
+			setting_create_popup(ad, ad->md.win_main, NULL,
 					"IDS_CST_POP_FAILED",
 					NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
 		}

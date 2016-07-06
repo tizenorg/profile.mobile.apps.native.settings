@@ -19,13 +19,30 @@
  *
  */
 
-#include <setting-display.h>
-#include <Eina.h>
+#include "setting-display.h"
 #include <setting-cfg.h>
 
-#ifndef UG_MODULE_API
-#define UG_MODULE_API __attribute__ ((visibility("default")))
-#endif
+#include <app.h>
+#include <appcore-common.h>
+#include <Eina.h>
+
+#define SETTING_DISPLAY_PACKAGE_NAME "org.tizen.setting-display"
+
+/******************************APP CONTROL***********************************/
+static bool _setting_display_app_create(void *data);
+static void _setting_display_app_control_cb(app_control_h app_control, void *data);
+static void _setting_display_app_on_pause(void *data);
+static void _setting_display_app_on_resume(void *data);
+static void _setting_display_app_terminate(void *data);
+/********************************OTHER***************************************/
+static void _main_win_del_cb(void *data, Evas_Object *obj, void *event_info);
+
+
+static void _main_win_del_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	elm_exit();
+}
 
 /**
  * view selection by service variable
@@ -42,6 +59,9 @@ setting_view *__get_display_view_to_load(void *data, app_control_h service)
 
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if((!data), NULL, "!data");
+	app_control_get_extra_data(service, "viewtype", &viewtype);
+	if (!viewtype)
+		return NULL;
 
 	ret = app_control_get_uri(service, &uri);
 	if (!ret && uri) {
@@ -104,7 +124,7 @@ Evas_Object *__get_display_layout_to_return(app_control_h service, void *priv)
 
 	ret = app_control_get_uri(service, &uri);
 	if (!ret && uri)
-		return displayUG->ly_main;
+		return displayUG->md.view_layout;
 
 	app_control_get_extra_data(service, "viewtype", &viewtype);
 	if (!viewtype)
@@ -113,7 +133,7 @@ Evas_Object *__get_display_layout_to_return(app_control_h service, void *priv)
 	SETTING_TRACE("viewtype:%s", viewtype);
 	FREE(viewtype);
 
-	return displayUG->ly_main;
+	return displayUG->md.win_main;
 }
 
 static void setting_display_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
@@ -166,203 +186,148 @@ Eina_Bool __show_smartrotation_guide_popup(void *data)
 	return ECORE_CALLBACK_CANCEL;
 }
 
-static void *setting_display_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
-		app_control_h service, void *priv)
-{
-	setting_retvm_if((!priv), NULL, "!priv");
-	SETTING_TRACE_BEGIN;
 
-	SettingDisplayUG *displayUG = priv;
-	displayUG->ug = ug;
-	setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR);
 
-	displayUG->win_main_layout = (Evas_Object *)ug_get_parent_layout(ug);
-	displayUG->win_get = (Evas_Object *)ug_get_window();
 
-	/*evas_object_show(displayUG->win_main_layout); */
-	displayUG->evas = evas_object_evas_get(displayUG->win_main_layout);
 
-	setting_retvm_if(displayUG->win_main_layout == NULL, NULL,
-			"cannot get main window ");
+//static void setting_display_ug_on_destroy(ui_gadget_h ug, app_control_h service,
+//		void *priv)
+//{
+//	SettingDisplayUG *displayUG = priv;
+//
+//	SETTING_TRACE_BEGIN;
+//	setting_retm_if((!priv), "!priv");
+//
+//	/* fix flash issue for gallery */
+//	evas_object_event_callback_del(displayUG->win_main_layout,
+//			EVAS_CALLBACK_RESIZE, setting_display_ug_cb_resize);
+//	displayUG->ug = ug;
+//
+//	FREE(displayUG->uri);
+//	if (displayUG->help_popup) {
+//		evas_object_del(displayUG->help_popup);
+//		displayUG->help_popup = NULL;
+//	}
+//
+//	/*	called when this shared gadget is terminated. similar with
+//	 * app_exit */
+//	if (&setting_view_display_main == displayUG->view_to_load) {
+//		setting_view_destroy(&setting_view_display_brightness,
+//				displayUG);
+//		setting_view_destroy(&setting_view_display_main, displayUG);
+//	} else if (&setting_view_display_brightness ==
+//			displayUG->view_to_load) {
+//		setting_view_destroy(&setting_view_display_brightness,
+//				displayUG);
+//	} else if (&setting_view_display_backlight == displayUG->view_to_load) {
+//		setting_view_destroy(&setting_view_display_backlight,
+//				displayUG);
+//	}
+//
+//	if (NULL != ug_get_layout(displayUG->ug)) {
+//		evas_object_hide((Evas_Object *)ug_get_layout(displayUG->ug));
+//		evas_object_del((Evas_Object *)ug_get_layout(displayUG->ug));
+//	}
+//
+//	SETTING_TRACE_END;
+//}
+//
+//static void setting_display_ug_on_message(ui_gadget_h ug, app_control_h msg,
+//		app_control_h service, void *priv)
+//{
+//}
+//
+//static void setting_display_ug_on_event(ui_gadget_h ug, enum ug_event event,
+//		app_control_h service, void *priv)
+//{
+//	SettingDisplayUG *ad = priv;
+//
+//	SETTING_TRACE_BEGIN;
+//	setting_retm_if(NULL == ad, "ad is NULL");
+//
+//	switch (event) {
+//	case UG_EVENT_LOW_MEMORY:
+//		break;
+//	case UG_EVENT_LOW_BATTERY:
+//		break;
+//	case UG_EVENT_LANG_CHANGE:
+//		setting_navi_items_update(ad->navi_bar);
+//		break;
+//	case UG_EVENT_ROTATE_PORTRAIT:
+//	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
+//		break;
+//	case UG_EVENT_ROTATE_LANDSCAPE:
+//	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
+//		break;
+//	case UG_EVENT_REGION_CHANGE:
+//		break;
+//	default:
+//		break;
+//	}
+//}
+//
+//static void setting_display_ug_on_key_event(ui_gadget_h ug,
+//		enum ug_key_event event, app_control_h service, void *priv)
+//{
+//	SettingDisplayUG *ad = (SettingDisplayUG *)priv;
+//
+//	SETTING_TRACE_BEGIN;
+//	setting_retm_if(NULL == ad, "ad is NULL");
+//
+//	switch (event) {
+//	case UG_KEY_EVENT_END: {
+//		if (elm_naviframe_top_item_get(ad->navi_bar) ==
+//				elm_naviframe_bottom_item_get(
+//						ad->navi_bar)) {
+//			ug_destroy_me(ug);
+//		} else {
+//			if (&setting_view_display_brightness ==
+//					setting_view_node_get_cur_view()) {
+//				/* ????? */
+//			}
+//			setting_view_cb_at_endKey(ad);
+//		}
+//	}
+//		break;
+//	default:
+//		break;
+//	}
+//}
+//
+//UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
+//{
+//	SettingDisplayUG *displayUG = calloc(1, sizeof(SettingDisplayUG));
+//
+//	SETTING_TRACE_BEGIN;
+//	setting_retvm_if(!displayUG, -1, "Create SettingDisplayUG obj failed");
+//
+//	memset(displayUG, 0x00, sizeof(SettingDisplayUG));
+//
+//	ops->create = setting_display_ug_on_create;
+//	ops->start = setting_display_ug_on_start;
+//	ops->pause = setting_display_ug_on_pause;
+//	ops->resume = setting_display_ug_on_resume;
+//	ops->destroy = setting_display_ug_on_destroy;
+//	ops->message = setting_display_ug_on_message;
+//	ops->event = setting_display_ug_on_event;
+//	ops->key_event = setting_display_ug_on_key_event;
+//	ops->priv = displayUG;
+//	ops->opt = UG_OPT_INDICATOR_ENABLE;
+//
+//	return 0;
+//}
 
-	/* register view node table */
-	setting_view_node_table_intialize();
-
-	setting_create_Gendial_itc("1line.top", &(displayUG->itc_1text));
-	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(displayUG->itc_1text_1icon));
-	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(displayUG->itc_1text));
-	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(displayUG->itc_2text_3));
-
-	/*	creating a view. */
-	displayUG->view_to_load = __get_display_view_to_load(displayUG,
-			service);
-	setting_retvm_if(NULL == displayUG->view_to_load, NULL,
-			"NULL == displayUG->view_to_load");
-	setting_view_node_set_cur_view(displayUG->view_to_load);
-	setting_view_create(displayUG->view_to_load, (void *)displayUG);
-	evas_object_event_callback_add(displayUG->win_main_layout,
-			EVAS_CALLBACK_RESIZE, setting_display_ug_cb_resize,
-			displayUG);
-
-	return __get_display_layout_to_return(service, displayUG);
-}
-
-static void setting_display_ug_on_start(ui_gadget_h ug, app_control_h service,
-		void *priv)
-{
-}
-
-static void setting_display_ug_on_pause(ui_gadget_h ug, app_control_h service,
-		void *priv)
-{
-}
-
-static void setting_display_ug_on_resume(ui_gadget_h ug, app_control_h service,
-		void *priv)
-{
-}
-
-static void setting_display_ug_on_destroy(ui_gadget_h ug, app_control_h service,
-		void *priv)
-{
-	SettingDisplayUG *displayUG = priv;
-
-	SETTING_TRACE_BEGIN;
-	setting_retm_if((!priv), "!priv");
-
-	/* fix flash issue for gallery */
-	evas_object_event_callback_del(displayUG->win_main_layout,
-			EVAS_CALLBACK_RESIZE, setting_display_ug_cb_resize);
-	displayUG->ug = ug;
-
-	FREE(displayUG->uri);
-	if (displayUG->help_popup) {
-		evas_object_del(displayUG->help_popup);
-		displayUG->help_popup = NULL;
-	}
-
-	/*	called when this shared gadget is terminated. similar with
-	 * app_exit */
-	if (&setting_view_display_main == displayUG->view_to_load) {
-		setting_view_destroy(&setting_view_display_brightness,
-				displayUG);
-		setting_view_destroy(&setting_view_display_main, displayUG);
-	} else if (&setting_view_display_brightness ==
-			displayUG->view_to_load) {
-		setting_view_destroy(&setting_view_display_brightness,
-				displayUG);
-	} else if (&setting_view_display_backlight == displayUG->view_to_load) {
-		setting_view_destroy(&setting_view_display_backlight,
-				displayUG);
-	}
-
-	if (NULL != ug_get_layout(displayUG->ug)) {
-		evas_object_hide((Evas_Object *)ug_get_layout(displayUG->ug));
-		evas_object_del((Evas_Object *)ug_get_layout(displayUG->ug));
-	}
-
-	SETTING_TRACE_END;
-}
-
-static void setting_display_ug_on_message(ui_gadget_h ug, app_control_h msg,
-		app_control_h service, void *priv)
-{
-}
-
-static void setting_display_ug_on_event(ui_gadget_h ug, enum ug_event event,
-		app_control_h service, void *priv)
-{
-	SettingDisplayUG *ad = priv;
-
-	SETTING_TRACE_BEGIN;
-	setting_retm_if(NULL == ad, "ad is NULL");
-
-	switch (event) {
-	case UG_EVENT_LOW_MEMORY:
-		break;
-	case UG_EVENT_LOW_BATTERY:
-		break;
-	case UG_EVENT_LANG_CHANGE:
-		setting_navi_items_update(ad->navi_bar);
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT:
-	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE:
-	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-		break;
-	case UG_EVENT_REGION_CHANGE:
-		break;
-	default:
-		break;
-	}
-}
-
-static void setting_display_ug_on_key_event(ui_gadget_h ug,
-		enum ug_key_event event, app_control_h service, void *priv)
-{
-	SettingDisplayUG *ad = (SettingDisplayUG *)priv;
-
-	SETTING_TRACE_BEGIN;
-	setting_retm_if(NULL == ad, "ad is NULL");
-
-	switch (event) {
-	case UG_KEY_EVENT_END: {
-		if (elm_naviframe_top_item_get(ad->navi_bar) ==
-				elm_naviframe_bottom_item_get(
-						ad->navi_bar)) {
-			ug_destroy_me(ug);
-		} else {
-			if (&setting_view_display_brightness ==
-					setting_view_node_get_cur_view()) {
-				/* ????? */
-			}
-			setting_view_cb_at_endKey(ad);
-		}
-	}
-		break;
-	default:
-		break;
-	}
-}
-
-UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
-{
-	SettingDisplayUG *displayUG = calloc(1, sizeof(SettingDisplayUG));
-
-	SETTING_TRACE_BEGIN;
-	setting_retvm_if(!displayUG, -1, "Create SettingDisplayUG obj failed");
-
-	memset(displayUG, 0x00, sizeof(SettingDisplayUG));
-
-	ops->create = setting_display_ug_on_create;
-	ops->start = setting_display_ug_on_start;
-	ops->pause = setting_display_ug_on_pause;
-	ops->resume = setting_display_ug_on_resume;
-	ops->destroy = setting_display_ug_on_destroy;
-	ops->message = setting_display_ug_on_message;
-	ops->event = setting_display_ug_on_event;
-	ops->key_event = setting_display_ug_on_key_event;
-	ops->priv = displayUG;
-	ops->opt = UG_OPT_INDICATOR_ENABLE;
-
-	return 0;
-}
-
-UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
-{
-	struct SettingDisplayUG *displayUG;
-
-	SETTING_TRACE_BEGIN;
-	setting_retm_if(!ops, "ops == NULL");
-
-	displayUG = ops->priv;
-	if (displayUG)
-		FREE(displayUG);
-}
+//UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
+//{
+//	struct SettingDisplayUG *displayUG;
+//
+//	SETTING_TRACE_BEGIN;
+//	setting_retm_if(!ops, "ops == NULL");
+//
+//	displayUG = ops->priv;
+//	if (displayUG)
+//		FREE(displayUG);
+//}
 
 /* ***************************************************
  *
@@ -394,79 +359,6 @@ void setting_display_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode, void *priv)
 }
 
 #define SUBINDEX_NAME "Display"
-
-static Setting_Cfg_Node_T s_cfg_node_array[] = {
-	{
-		"IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING", IMG_Display,
-		"viewtype:brightness", Cfg_Item_Pos_Level0, 0, 0,
-		Cfg_Item_View_Node, NULL, SUBINDEX_NAME, NULL, NULL},
-	{
-		"IDS_ST_BODY_BACKLIGHT_TIME", IMG_Display,
-		"viewtype:frontpage_backlight", Cfg_Item_Pos_Level0, 0, 0,
-		Cfg_Item_View_Node, NULL, SUBINDEX_NAME, NULL, NULL},
-	{
-		"IDS_ST_HEADER_TOUCH_KEY_LIGHT_DURATION", IMG_Display,
-		"viewtype:frontpage_duration", Cfg_Item_Pos_Level0, 0, 0,
-		Cfg_Item_View_Node, NULL, SUBINDEX_NAME, NULL, NULL},
-	{
-		"IDS_ST_MBODY_AUTO_ADJUST_SCREEN_TONE", IMG_Display,
-		"viewtype:frontpage", Cfg_Item_Pos_Level0, 0, 0,
-		Cfg_Item_View_Node_Toggle, NULL, SUBINDEX_NAME, NULL, NULL},
-	{
-		"IDS_ST_HEADER_AUTO_ROTATE_SCREEN_ABB", IMG_Display,
-		"viewtype:frontpage", Cfg_Item_Pos_Level0, 0, 0,
-		Cfg_Item_View_Node_Toggle, NULL, SUBINDEX_NAME, NULL, NULL},
-	{
-		"IDS_ST_BODY_DYNAMIC_STATUS_BAR", IMG_Display,
-		"viewtype:frontpage", Cfg_Item_Pos_Level0, 0, 0,
-		Cfg_Item_View_Node_Toggle, NULL, SUBINDEX_NAME, NULL, NULL},
-	{
-		"IDS_ST_MBODY_EDIT_AFTER_SCREEN_CAPTURE", IMG_Display,
-		"viewtype:frontpage", Cfg_Item_Pos_Level0, 0, 0,
-		Cfg_Item_View_Node_Toggle, NULL, SUBINDEX_NAME, NULL, NULL},
-	{
-		"IDS_ST_BODY_ANSWERINGMODE_AUTOMATIC", IMG_Display,
-		"viewtype:brightness", Cfg_Item_Pos_Level0, 0, 0,
-		Cfg_Item_View_Node, NULL, SUBINDEX_NAME, NULL, NULL},
-	{
-		"IDS_ST_MBODY_SMART_STAY", IMG_SmartScreen,
-		"viewtype:smartscreen", Cfg_Item_Pos_Level0, 0, 0,
-		Cfg_Item_View_Node_Toggle, NULL, SUBINDEX_NAME, NULL, NULL},
-	{
-		"IDS_ST_MBODY_SMART_ROTATION", IMG_SmartScreen,
-		"viewtype:smartscreen", Cfg_Item_Pos_Level0, 0, 0,
-		Cfg_Item_View_Node_Toggle, NULL, SUBINDEX_NAME, NULL, NULL},
-};
-
-UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
-		char **applocale)
-{
-	Eina_List **pplist = (Eina_List **)priv;
-	int i, size = 0;
-	Setting_Cfg_Node_T *node = NULL;
-
-	SETTING_TRACE_BEGIN;
-	SETTING_TRACE(">> setting-display-efl DB search code");
-	setting_retvm_if(!priv || !applocale,
-			SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
-			"pplist/applocale is NULL");
-
-	*applocale = strdup("setting:"_TZ_SYS_RO_APP\
-			"/org.tizen.setting/res/locale");
-
-	size = sizeof(s_cfg_node_array) / sizeof(s_cfg_node_array[0]);
-	for (i = 0; i < size; i++) {
-		node = setting_plugin_search_item_subindex_add(
-				s_cfg_node_array[i].key_name,
-				s_cfg_node_array[i].ug_args,
-				s_cfg_node_array[i].icon_path,
-				s_cfg_node_array[i].item_type,
-				s_cfg_node_array[i].data,
-				s_cfg_node_array[i].sub_index);
-		*pplist = eina_list_append(*pplist, node);
-	}
-	return 0;
-}
 
 EXPORT_PUBLIC
 int get_display_ug_state(Cfg_Item_State *stat, void *data)
@@ -662,25 +554,122 @@ cfg_func_table opt_tab_edit_screen = {
 	.set_item_update_ui = set_display_ug_edit_screen_update_ui, };
 
 /* cfg_func_table* tfunc; */
-UG_MODULE_API int setting_plugin_search_query_ops(char *str_id,
-		void **tfunc_obj)
+//UG_MODULE_API int setting_plugin_search_query_ops(char *str_id,
+//		void **tfunc_obj)
+//{
+//	SETTING_TRACE_BEGIN;
+//	SETTING_TRACE(">> get tfunc operation via plugin-model 1");
+//	if (str_id && !safeStrCmp(str_id,
+//			_("IDS_ST_HEADER_AUTO_ROTATE_SCREEN_ABB"))) {
+//		*tfunc_obj = (void *)&opt_tab_rotation;
+//	} else if (str_id && !safeStrCmp(str_id,
+//			_("IDS_ST_MBODY_AUTO_ADJUST_SCREEN_TONE"))) {
+//		*tfunc_obj = (void *)&opt_tab_auto_adjust;
+//	} else if (str_id && !safeStrCmp(str_id,
+//			_("IDS_ST_BODY_DYNAMIC_STATUS_BAR"))) {
+//		*tfunc_obj = (void *)&opt_tab_dynamic_status;
+//	}
+//	if (str_id && !safeStrCmp(str_id,
+//			_("IDS_ST_MBODY_EDIT_AFTER_SCREEN_CAPTURE"))) {
+//		*tfunc_obj = (void *)&opt_tab_edit_screen;
+//	}
+//	SETTING_TRACE(">> get tfunc operation via plugin-model 2");
+//	return 0;
+//}
+
+
+static void _setting_display_app_control_cb(app_control_h app_control, void *data)
 {
 	SETTING_TRACE_BEGIN;
-	SETTING_TRACE(">> get tfunc operation via plugin-model 1");
-	if (str_id && !safeStrCmp(str_id,
-			_("IDS_ST_HEADER_AUTO_ROTATE_SCREEN_ABB"))) {
-		*tfunc_obj = (void *)&opt_tab_rotation;
-	} else if (str_id && !safeStrCmp(str_id,
-			_("IDS_ST_MBODY_AUTO_ADJUST_SCREEN_TONE"))) {
-		*tfunc_obj = (void *)&opt_tab_auto_adjust;
-	} else if (str_id && !safeStrCmp(str_id,
-			_("IDS_ST_BODY_DYNAMIC_STATUS_BAR"))) {
-		*tfunc_obj = (void *)&opt_tab_dynamic_status;
+}
+
+static bool _setting_display_app_create(void *data)
+{
+	SETTING_TRACE_BEGIN;
+	setting_retvm_if(NULL == data, false, "!data");
+
+	SettingDisplayUG *display_ad = (SettingDisplayUG *)data;
+
+//	Evas_Object *win;
+//	int w, h;
+//	const char *name = "setting-display";
+	setting_set_i18n("setting", DISPLAY_LOCALEDIR);
+	//	elm_app_base_scale_set(2.4);
+
+//    __theme = elm_theme_new();
+//    elm_theme_ref_set(__theme, NULL);
+//
+//    elm_theme_extension_add(__theme, DISPLAY_THEME_EDJ_NAME);
+//    elm_theme_extension_add(__theme, DISPLAY_GENLIST_EDJ_NAME);
+//    elm_theme_extension_add(__theme, DISPLAY_NEWUX_EDJ_NAME);
+//    elm_theme_extension_add(__theme, DISPLAY_NEW_GENLIST_EDJ_NAME);
+//    elm_theme_extension_add(__theme, DISPLAY_SLIDER_EDJ_NAME);
+
+if (app_init(&display_ad->md, SETTING_DISPLAY_PACKAGE_NAME)
+			!= SETTING_RETURN_SUCCESS) {
+	SETTING_TRACE_ERROR("Cannot initialize application");
+	return false;
+}
+
+	evas_object_smart_callback_add(display_ad->md.win_main, "delete,request",
+                                   _main_win_del_cb, display_ad);
+
+//	Create base Layout
+	setting_create_Gendial_itc("1line.top", &(display_ad->itc_1text));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(display_ad->itc_1text_1icon));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(display_ad->itc_1text));
+	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE, &(display_ad->itc_2text_3));
+	setting_view_create(&setting_view_display_main, display_ad);
+	SETTING_TRACE_BEGIN;
+	evas_object_event_callback_add(display_ad->md.win_main,
+									EVAS_CALLBACK_RESIZE,
+									setting_display_ug_cb_resize, display_ad);
+	SETTING_TRACE_BEGIN;
+	return true;
+}
+
+static void _setting_display_app_terminate(void *data)
+{
+	SETTING_TRACE_BEGIN;
+	SettingDisplayUG *ad = (SettingDisplayUG *)data;
+	setting_view_destroy(&setting_view_display_main, ad);
+	SETTING_TRACE_DEBUG("!!! After setting_view_destroy");
+	if (ad->md.win_main) {
+		evas_object_del(ad->md.win_main);
+		ad->md.win_main = NULL;
 	}
-	if (str_id && !safeStrCmp(str_id,
-			_("IDS_ST_MBODY_EDIT_AFTER_SCREEN_CAPTURE"))) {
-		*tfunc_obj = (void *)&opt_tab_edit_screen;
-	}
-	SETTING_TRACE(">> get tfunc operation via plugin-model 2");
-	return 0;
+}
+
+static void _setting_display_app_on_pause(void *data)
+{
+	SETTING_TRACE_BEGIN;
+}
+
+static void _setting_display_app_on_resume(void *data)
+{
+	SETTING_TRACE_BEGIN;
+}
+
+EXPORT_PUBLIC
+int main(int argc, char *argv[])
+{
+	SettingDisplayUG display_ad ;
+
+	ui_app_lifecycle_callback_s ops = {
+        .create = _setting_display_app_create,
+        .pause = _setting_display_app_on_pause,
+        .resume = _setting_display_app_on_resume,
+        .terminate = _setting_display_app_terminate,
+        .app_control = _setting_display_app_control_cb,
+    };
+
+//    app_event_handler_h hLowBatteryHandle;
+//    app_event_handler_h hLanguageChangedHandle;
+
+    memset(&display_ad, 0x00, sizeof(SettingDisplayUG));
+	int r = 0;
+    r = ui_app_main(argc, argv, &ops, &display_ad);
+    retv_if(r == -1, -1);
+
+    return 0;
 }
