@@ -50,11 +50,11 @@ static int setting_display_backlight_create(void *cb)
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
 	/* add basic layout */
-	ad->ly_main = setting_create_layout_navi_bar_genlist(
-			ad->win_main_layout, ad->win_get,
+	ad->md.ly_main = setting_create_layout_navi_bar_genlist(
+			ad->md.view_layout, ad->md.win_main,
 			_(KeyStr_BacklightTime), _("IDS_ST_BUTTON_BACK"),
 			NULL, setting_display_backlight_click_softkey_back_cb,
-			NULL, ad, &scroller, &(ad->navi_bar));
+			NULL, ad, &scroller, &(ad->md.navibar_main));
 
 	rgd = elm_radio_add(scroller);
 	elm_radio_value_set(rgd, -1);
@@ -167,9 +167,9 @@ static int setting_display_backlight_destroy(void *cb)
 	retv_if(!(setting_view_display_backlight.is_create),
 			SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	if (ad->ly_main != NULL) {
-		evas_object_del(ad->ly_main);
-		ad->ly_main = NULL;
+	if (ad->md.ly_main != NULL) {
+		evas_object_del(ad->md.ly_main);
+		ad->md.ly_main = NULL;
 	}
 
 	setting_view_display_backlight.is_create = 0;
@@ -243,14 +243,16 @@ static void setting_display_backlight_mouse_up_Gendial_list_cb(void *data,
 static void setting_display_backlight_click_softkey_back_cb(void *data,
 		Evas_Object *obj, void *event_info)
 {
-	SettingDisplayUG *ad = (SettingDisplayUG *)data;
-
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retm_if(data == NULL, "[Setting > Security] Data parameter is NULL");
-
+/*
+	SettingDisplayUG *ad = (SettingDisplayUG *)data;
+*/
 	/* Send destroy request */
+/*
 	ug_destroy_me(ad->ug);
+*/
 
 	return;
 }
