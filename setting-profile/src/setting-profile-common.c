@@ -1377,13 +1377,6 @@ static void __mm_player_prepared_cb(void *user_data)
 	/* Do not call mm API in mm cb : Add timer to avoid it */
 	/* ecore_timer_add(0.0, (Ecore_Task_Cb)__play_timer_cb, ad); */
 	__play_timer_cb(ad);
-
-	/* wake main thread up for timer to work well */
-	Ecore_Pipe *pipe;
-	pipe = ecore_pipe_add(__mm_player_pipe_handler, NULL);
-	ecore_pipe_write_close(pipe);
-	ecore_pipe_del(pipe);
-	/* end */
 }
 
 player_h *setting_sound_play_sound(
@@ -1444,12 +1437,6 @@ player_h *setting_sound_play_sound(
 	}
 
 	int err = 0;
-
-	sound_manager_set_session_type(SOUND_SESSION_TYPE_MEDIA);
-	/*sound_manager_set_media_session_option(
-	 * SOUND_SESSION_OPTION_PAUSE_OTHERS_WHEN_START,
-	 * SOUND_SESSION_OPTION_INTERRUPTIBLE_DURING_PLAY); */
-	/*sound_manager_session_set_state_others(SOUND_STATE_PAUSE); */
 
 	err = player_create(player);
 	if (err != PLAYER_ERROR_NONE) {
