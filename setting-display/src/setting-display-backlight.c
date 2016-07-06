@@ -24,6 +24,7 @@
 #include <setting-common-view.h>
 
 #include <setting-display-backlight.h>
+#include <efl_extension.h>
 
 static int setting_display_backlight_create(void *cb);
 static int setting_display_backlight_destroy(void *cb);
@@ -41,20 +42,70 @@ setting_view setting_view_display_backlight = {
  **basic func
  **
  ****************************************************/
+Eina_Bool _backlight_back_cb(void *data, Elm_Object_Item *it)
+{
+	SETTING_TRACE_BEGIN;
+	ui_app_exit();
+	return EINA_TRUE;
+}
+
 static int setting_display_backlight_create(void *cb)
 {
-	SettingDisplayUG *ad = (SettingDisplayUG *)cb;
+	SETTING_TRACE_BEGIN;
+	SettingDisplay *ad = (SettingDisplay *)cb;
 	Evas_Object *scroller = NULL, *rgd = NULL;
+	Elm_Object_Item *nf_it = NULL;
 
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	/* add basic layout */
-	ad->ly_main = setting_create_layout_navi_bar_genlist(
-			ad->win_main_layout, ad->win_get,
-			_(KeyStr_BacklightTime), _("IDS_ST_BUTTON_BACK"),
-			NULL, setting_display_backlight_click_softkey_back_cb,
-			NULL, ad, &scroller, &(ad->navi_bar));
+	// Conformant
+	Evas_Object *conform= elm_conformant_add(ad->md.win_main);
+	evas_object_size_hint_weight_set(conform, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_win_resize_object_add(ad->md.win_main, conform);
+	evas_object_show(conform);
+
+	/* navi frame */
+	Evas_Object *navi = NULL;
+	navi = elm_naviframe_add(conform);
+
+	elm_naviframe_prev_btn_auto_pushed_set(navi, EINA_TRUE);
+	elm_object_part_content_set(conform, "elm.swallow.content", navi);
+	eext_object_event_callback_add(navi, EEXT_CALLBACK_BACK, eext_naviframe_back_cb, NULL);
+	eext_object_event_callback_add(navi, EEXT_CALLBACK_MORE, eext_naviframe_more_cb, NULL);
+
+	if (navi == NULL) {
+		SETTING_TRACE(" *** elm_naviframe_add returns NULL *** ");
+		return SETTING_GENERAL_ERR_NULL_DATA_PARAMETER;
+	}
+	evas_object_show(navi);
+	ad->md.navibar_main = navi;
+
+	Evas_Object *button = elm_button_add(ad->md.navibar_main);
+	elm_object_style_set(button, NAVI_BACK_ARROW_BUTTON_STYLE);
+	evas_object_smart_callback_add(button, "clicked",
+			setting_display_backlight_click_softkey_back_cb,
+			ad);
+	evas_object_show(button);
+
+
+	scroller = elm_genlist_add(navi);
+	nf_it = elm_naviframe_item_push(navi, _(KeyStr_BacklightTime), button, NULL, scroller, NULL);
+	elm_naviframe_item_pop_cb_set(nf_it, _backlight_back_cb, ad);
+
+
+	elm_genlist_mode_set(scroller, ELM_LIST_COMPRESS);
+	evas_object_size_hint_weight_set(scroller, EVAS_HINT_EXPAND,
+			EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(scroller, EVAS_HINT_FILL,
+			EVAS_HINT_FILL);
+	/*essential to auto compute the height of genlist */
+	elm_scroller_content_min_limit(scroller, EINA_FALSE, EINA_TRUE);
+	evas_object_show(scroller);
+
+
+	retvm_if(scroller == NULL, SETTING_RETURN_FAIL,
+			"Cannot set genlist object as content of layout");
 
 	rgd = elm_radio_add(scroller);
 	elm_radio_value_set(rgd, -1);
@@ -77,7 +128,6 @@ static int setting_display_backlight_create(void *cb)
 			SETTING_TRACE_ERROR(
 					"ad->data_backlight_always_on is NULL");
 		}
-
 	}
 	ad->data_backlight_15sec = setting_create_Gendial_field_1radio(scroller,
 			&itc_1text_1icon_2,
@@ -159,7 +209,7 @@ static int setting_display_backlight_create(void *cb)
 
 static int setting_display_backlight_destroy(void *cb)
 {
-	SettingDisplayUG *ad = (SettingDisplayUG *)cb;
+	SettingDisplay *ad = (SettingDisplay *)cb;
 
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -167,9 +217,9 @@ static int setting_display_backlight_destroy(void *cb)
 	retv_if(!(setting_view_display_backlight.is_create),
 			SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	if (ad->ly_main != NULL) {
-		evas_object_del(ad->ly_main);
-		ad->ly_main = NULL;
+	if (ad->md.ly_main != NULL) {
+		evas_object_del(ad->md.ly_main);
+		ad->md.ly_main = NULL;
 	}
 
 	setting_view_display_backlight.is_create = 0;
@@ -243,14 +293,13 @@ static void setting_display_backlight_mouse_up_Gendial_list_cb(void *data,
 static void setting_display_backlight_click_softkey_back_cb(void *data,
 		Evas_Object *obj, void *event_info)
 {
-	SettingDisplayUG *ad = (SettingDisplayUG *)data;
-
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retm_if(data == NULL, "[Setting > Security] Data parameter is NULL");
 
 	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+	ui_app_exit();
+
 
 	return;
 }
