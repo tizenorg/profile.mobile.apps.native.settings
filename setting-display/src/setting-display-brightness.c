@@ -62,18 +62,18 @@ setting_view setting_view_display_brightness = {
 #define DBUS_SIGNAL_NAME "ChangedSiop"
 
 const char *iconPath[SETTING_DISPLAY_ICON_PATH] = {
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_00.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_01.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_02.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_03.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_04.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_05.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_06.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_07.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_08.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_09.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_10.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_11.png"
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_00.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_01.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_02.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_03.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_04.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_05.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_06.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_07.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_08.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_09.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_10.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_11.png"
 };
 
 
@@ -613,7 +613,7 @@ static Evas_Object *__setting_brightness_add_slider(void *data,
 
 	/* Set custom layout style */
 	layout = elm_layout_add(obj);
-	elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME,
+	elm_layout_file_set(layout, DISPLAY_THEME_EDJ_NAME,
 			"gl_custom_item");
 	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL,
 			EVAS_HINT_FILL);
@@ -630,12 +630,17 @@ static Evas_Object *__setting_brightness_add_slider(void *data,
 			&auto_value, &err);
 	elm_layout_signal_emit(item_data->eo_check,
 			"elm,state,val,hide", "");
-	/*add error handle,due to different target env.. */
+	/* add error handle,due to different target env.. */
 	if (ret != 0) {
 		SETTING_TRACE_ERROR(
 				"Failed to get value of [%s]",
 				VCONFKEY_SETAPPL_BRIGHTNESS_AUTOMATIC_INT);
 	}
+
+
+
+
+
 
 	if (auto_value) {
 		elm_slider_indicator_format_function_set(
@@ -726,7 +731,7 @@ void construct_brightness(void *data, Evas_Object *genlist)
 			setting_display_birghtness_bright_slider_value_change_cb);
 
 	if (ad->data_br_sli) {
-		ad->data_br_sli->win_main = ad->win_main_layout;
+		ad->data_br_sli->win_main = ad->main_win;
 		ad->data_br_sli->evas = ad->evas;
 		if (auto_value) {
 			ad->data_br_sli->isIndicatorVisible = 1;
