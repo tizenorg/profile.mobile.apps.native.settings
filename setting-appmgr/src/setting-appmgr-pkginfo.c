@@ -204,6 +204,7 @@ static inline void appmgrUg_pkg_append_default(SettingAppMgrUG *ad)
 		appmgrUg_pkg_clear_default, ad, SWALLOW_Type_INVALID,
 		NULL, NULL, 0,
 		MGRAPP_STR_CLEAR_DEFAULTS, NULL, NULL);
+	ret_if(NULL == data);
 
 	setting_create_Gendial_field_titleItem(ad->gl_pkg, &ad->itc_multiline,
 			MGRAPP_STR_DEFAULT_DESC, NULL);
