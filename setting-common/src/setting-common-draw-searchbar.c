@@ -218,6 +218,7 @@ Evas_Object *setting_create_searchbar(void *data, Evas_Object *parent,
 			"region_searchbar");
 	elm_object_part_content_set(parent, "searchbar", searchbar_layout);
 	Evas_Object *entry = elm_entry_add(searchbar_layout);
+	elm_entry_single_line_set(entry, EINA_TRUE);
 
 	if (change_cb) {
 		evas_object_smart_callback_add(entry, "changed", change_cb,
