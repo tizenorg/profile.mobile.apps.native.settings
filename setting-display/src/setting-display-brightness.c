@@ -22,6 +22,7 @@
 #include <setting-display-brightness.h>
 #include <dbus/dbus.h>
 #include <dbus/dbus-glib-lowlevel.h>
+#include <efl_extension.h>
 
 #define BRIGHTNESS_MAX 100
 #define BRIGHTNESS_MIN 1
@@ -62,24 +63,30 @@ setting_view setting_view_display_brightness = {
 #define DBUS_SIGNAL_NAME "ChangedSiop"
 
 const char *iconPath[SETTING_DISPLAY_ICON_PATH] = {
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_00.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_01.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_02.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_03.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_04.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_05.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_06.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_07.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_08.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_09.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_10.png",
-	SETTING_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_11.png"
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_00.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_01.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_02.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_03.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_04.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_05.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_06.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_07.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_08.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_09.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_10.png",
+	DISPLAY_ICON_PATH_CFG"brightness_icon/quick_icon_brightness_11.png"
 };
 
+Eina_Bool _brightness_back_cb(void *data, Elm_Object_Item *it)
+{
+	SETTING_TRACE_BEGIN;
+	ui_app_exit();
+	return EINA_TRUE;
+}
 
 static void update_overheating_text(void *data)
 {
-	SettingDisplayUG *ad = (SettingDisplayUG *)data;
+	SettingDisplay *ad = (SettingDisplay *)data;
 	int auto_brightnes = 0;
 
 	vconf_get_int(VCONFKEY_SETAPPL_BRIGHTNESS_AUTOMATIC_INT,
@@ -105,7 +112,7 @@ static void update_overheating_text(void *data)
 static DBusHandlerResult setting_brightness_dbus_signal_filter(
 		DBusConnection *conn, DBusMessage *message, void *user_data)
 {
-	SettingDisplayUG *ad = (SettingDisplayUG *)user_data;
+	SettingDisplay *ad = (SettingDisplay *)user_data;
 	DBusError error;
 	int brightness_level;
 
@@ -152,7 +159,7 @@ static DBusHandlerResult setting_brightness_dbus_signal_filter(
 }
 static int setting_brightness_dbus_handler_fini(void *user_data)
 {
-	SettingDisplayUG *ad = (SettingDisplayUG *)user_data;
+	SettingDisplay *ad = (SettingDisplay *)user_data;
 	DBusError error;
 	char rule[MAX_LOCAL_BUFSIZE + 1] = {0, };
 
@@ -187,7 +194,7 @@ static int setting_brightness_dbus_handler_fini(void *user_data)
 
 static int setting_brightness_dbus_handler_init(void *user_data)
 {
-	SettingDisplayUG *ad = (SettingDisplayUG *)user_data;
+	SettingDisplay *ad = (SettingDisplay *)user_data;
 	DBusError error;
 	char rule[MAX_LOCAL_BUFSIZE + 1] = {0,};
 
@@ -247,7 +254,7 @@ static int setting_brightness_dbus_handler_init(void *user_data)
 static void _brightness_register_event_cb(void *data)
 {
 	int ret = 0;
-	SettingDisplayUG *ad = (SettingDisplayUG *) data;
+	SettingDisplay *ad = (SettingDisplay *)data;
 
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, , "Data parameter is NULL");
@@ -279,7 +286,7 @@ static void _brightness_register_event_cb(void *data)
 static void _brightness_deregister_event_cb(void *data)
 {
 	int ret = 0;
-	SettingDisplayUG *ad = (SettingDisplayUG *) data;
+	SettingDisplay *ad = (SettingDisplay *)data;
 
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, , "Data parameter is NULL");
@@ -314,7 +321,7 @@ _brightness_slider_delayed_changed_cb(
 		void *event_info)
 {
 	int value = 0;
-	SettingDisplayUG *ad = NULL;
+	SettingDisplay *ad = NULL;
 	Setting_GenGroupItem_Data *list_item =
 			(Setting_GenGroupItem_Data *) data;
 
@@ -336,7 +343,7 @@ static void _brightness_overheat_check(void *data)
 {
 	int value = 0;
 	int max_brightness = BRIGHTNESS_MAX;
-	SettingDisplayUG *ad = data;
+	SettingDisplay *ad = data;
 	int automatic_on = 0;
 
 	SETTING_TRACE_BEGIN;
@@ -373,7 +380,7 @@ static void _brightness_overheat_check(void *data)
 static void _brightness_slider_mouse_down_cb(void *data, Evas *e,
 		Evas_Object *obj, void *event_info)
 {
-	SettingDisplayUG *ad = NULL;
+	SettingDisplay *ad = NULL;
 	Setting_GenGroupItem_Data *list_item =
 			(Setting_GenGroupItem_Data *) data;
 
@@ -389,7 +396,7 @@ static void _brightness_slider_mouse_down_cb(void *data, Evas *e,
 static void _brightness_slider_mouse_up_cb(void *data, Evas *e,
 		Evas_Object *obj, void *event_info)
 {
-	SettingDisplayUG *ad = NULL;
+	SettingDisplay *ad = NULL;
 	Setting_GenGroupItem_Data *list_item =
 			(Setting_GenGroupItem_Data *) data;
 
@@ -436,7 +443,7 @@ void setting_display_update_slider_icon(Setting_GenGroupItem_Data *item_data,
 
 void __display_int_vconf_cb(keynode_t *key, void *data)
 {
-	SettingDisplayUG *ad = data;
+	SettingDisplay *ad = data;
 	int status = 0;
 	char *vconf_name = NULL;
 
@@ -545,7 +552,7 @@ void __display_int_vconf_cb(keynode_t *key, void *data)
 			if (err != DEVICE_ERROR_NONE) {
 				SETTING_TRACE(" device_display_set_brightness "
 						": failed[ret=%d]", err);
-				setting_create_popup(ad, ad->win_get, NULL,
+				setting_create_popup(ad, ad->md.win_main, NULL,
 						"IDS_CST_POP_FAILED",
 						NULL, POPUP_INTERVAL, FALSE,
 						FALSE, 0);
@@ -613,7 +620,7 @@ static Evas_Object *__setting_brightness_add_slider(void *data,
 
 	/* Set custom layout style */
 	layout = elm_layout_add(obj);
-	elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME,
+	elm_layout_file_set(layout, DISPLAY_THEME_EDJ_NAME,
 			"gl_custom_item");
 	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL,
 			EVAS_HINT_FILL);
@@ -630,7 +637,7 @@ static Evas_Object *__setting_brightness_add_slider(void *data,
 			&auto_value, &err);
 	elm_layout_signal_emit(item_data->eo_check,
 			"elm,state,val,hide", "");
-	/*add error handle,due to different target env.. */
+	/* add error handle,due to different target env.. */
 	if (ret != 0) {
 		SETTING_TRACE_ERROR(
 				"Failed to get value of [%s]",
@@ -671,7 +678,7 @@ static Evas_Object *__setting_brightness_add_slider(void *data,
 
 void construct_brightness(void *data, Evas_Object *genlist)
 {
-	SettingDisplayUG *ad = (SettingDisplayUG *) data;
+	SettingDisplay *ad = (SettingDisplay *)data;
 	const char *left_icon = NULL;
 	int auto_value = SETTING_BRIGHTNESS_AUTOMATIC_ON;
 	int err;
@@ -710,7 +717,7 @@ void construct_brightness(void *data, Evas_Object *genlist)
 	}
 
 	left_icon = setting_brightness_get_slider_icon(value);
-
+	SETTING_TRACE("###> left_icon: [%d]", left_icon);
 	/* [UI] Slider control for Bightness */
 	ad->data_br_sli = setting_create_Gendial_field_def(
 			genlist,
@@ -726,8 +733,7 @@ void construct_brightness(void *data, Evas_Object *genlist)
 			setting_display_birghtness_bright_slider_value_change_cb);
 
 	if (ad->data_br_sli) {
-		ad->data_br_sli->win_main = ad->win_main_layout;
-		ad->data_br_sli->evas = ad->evas;
+		ad->data_br_sli->win_main = ad->md.win_main;
 		if (auto_value) {
 			ad->data_br_sli->isIndicatorVisible = 1;
 			ad->data_br_sli->slider_min = BRIGHTNESS_MIN;
@@ -764,7 +770,7 @@ void construct_brightness(void *data, Evas_Object *genlist)
 
 void destruct_brightness(void *data)
 {
-	SettingDisplayUG *ad = (SettingDisplayUG *) data;
+	SettingDisplay *ad = (SettingDisplay *)data;
 
 	SETTING_TRACE_BEGIN;
 	ret_if(data == NULL);
@@ -784,37 +790,71 @@ void destruct_brightness(void *data)
 
 static int setting_display_brightness_create(void *cb)
 {
-	SettingDisplayUG *ad = (SettingDisplayUG *) cb;
+	SettingDisplay *ad = (SettingDisplay *)cb;
 	Evas_Object *genlist = NULL;
 
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	genlist = elm_genlist_add(ad->win_main_layout);
-
-	retvm_if(genlist == NULL, SETTING_RETURN_FAIL,
-			"Cannot set scroller object as content of layout");
-
-	elm_genlist_clear(genlist);	/* first to clear list */
-
 	/* add basic layout */
 	if (&setting_view_display_brightness == ad->view_to_load) {
-		ad->ly_main = setting_create_layout_navi_bar(
-				ad->win_main_layout,
-				ad->win_get,
-				"IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING",
-				_("IDS_ST_BUTTON_BACK"),
-				setting_display_brightness_click_softkey_cancel_cb,
-				ad,
-				genlist,
-				&ad->navi_bar, NULL);
+		SETTING_TRACE_BEGIN;
+
+		// Conformant
+		Evas_Object *conform= elm_conformant_add(ad->md.win_main);
+		evas_object_size_hint_weight_set(conform, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+		elm_win_resize_object_add(ad->md.win_main, conform);
+		evas_object_show(conform);
+
+		/* navi frame */
+		Evas_Object *navi = NULL;
+		navi = elm_naviframe_add(conform);
+
+		elm_naviframe_prev_btn_auto_pushed_set(navi, EINA_TRUE);
+		elm_object_part_content_set(conform, "elm.swallow.content", navi);
+		eext_object_event_callback_add(navi, EEXT_CALLBACK_BACK, eext_naviframe_back_cb, NULL);
+		eext_object_event_callback_add(navi, EEXT_CALLBACK_MORE, eext_naviframe_more_cb, NULL);
+
+		if (navi == NULL) {
+			SETTING_TRACE(" *** elm_naviframe_add returns NULL *** ");
+			return SETTING_GENERAL_ERR_NULL_DATA_PARAMETER;
+		}
+		evas_object_show(navi);
+		ad->md.navibar_main = navi;
+		Evas_Object *button = elm_button_add(ad->md.navibar_main);
+		elm_object_style_set(button, NAVI_BACK_ARROW_BUTTON_STYLE);
+		evas_object_smart_callback_add(button, "clicked",
+				(setting_call_back_func)_brightness_back_cb,
+				ad);
+		evas_object_show(button);
+
+		genlist = elm_genlist_add(navi);
+		Elm_Object_Item *nf_it = NULL;
+		nf_it = elm_naviframe_item_push(navi, _("IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING"), button, NULL, genlist, NULL);
+		elm_naviframe_item_pop_cb_set(nf_it, _brightness_back_cb, ad);
+
+
+		elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
+		evas_object_size_hint_weight_set(genlist, EVAS_HINT_EXPAND,
+				EVAS_HINT_EXPAND);
+		evas_object_size_hint_align_set(genlist, EVAS_HINT_FILL,
+				EVAS_HINT_FILL);
+		/*essential to auto compute the height of genlist */
+		elm_scroller_content_min_limit(genlist, EINA_FALSE, EINA_TRUE);
+		evas_object_show(genlist);
+
+
+		retvm_if(genlist == NULL, SETTING_RETURN_FAIL,
+				"Cannot set genlist object as content of layout");
+
 	} else {
+		SETTING_TRACE_BEGIN;
 		setting_push_layout_navi_bar(
 				"IDS_ST_BODY_BRIGHTNESS_M_POWER_SAVING",
 				_("IDS_ST_BUTTON_BACK"), NULL, NULL,
 				setting_display_brightness_click_softkey_cancel_cb,
 				NULL,
-				NULL, ad, genlist, ad->navi_bar, NULL);
+				NULL, ad, genlist, ad->md.navibar_main, NULL);
 	}
 
 	evas_object_smart_callback_add(
@@ -836,7 +876,7 @@ static int setting_display_brightness_create(void *cb)
 
 static int setting_display_brightness_destroy(void *cb)
 {
-	SettingDisplayUG *ad = (SettingDisplayUG *) cb;
+	SettingDisplay *ad = (SettingDisplay *)cb;
 
 	SETTING_TRACE_BEGIN;
 	/* error check */
@@ -852,14 +892,14 @@ static int setting_display_brightness_destroy(void *cb)
 				__display_int_vconf_cb);
 
 	if (&setting_view_display_brightness == ad->view_to_load) {
-		if (ad->ly_main != NULL) {
-			evas_object_del(ad->ly_main);
-			ad->ly_main = NULL;
+		if (ad->md.ly_main != NULL) {
+			evas_object_del(ad->md.ly_main);
+			ad->md.ly_main = NULL;
 		}
 		setting_view_display_brightness.is_create = 0;
 	} else {
 		setting_view_display_brightness.is_create = 0;
-		elm_naviframe_item_pop(ad->navi_bar);
+		elm_naviframe_item_pop(ad->md.navibar_main);
 	}
 
 	return SETTING_RETURN_SUCCESS;
@@ -898,16 +938,11 @@ setting_display_brightness_click_softkey_cancel_cb(
 		Evas_Object *obj,
 		void *event_info)
 {
-	SettingDisplayUG *ad = (SettingDisplayUG *) data;
+	SettingDisplay *ad = (SettingDisplay *)data;
 
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");
-	if (&setting_view_display_brightness == ad->view_to_load) {
-		/* Send destroy request */
-		ug_destroy_me(ad->ug);
-		return;
-	}
 
 	setting_view_change(&setting_view_display_brightness,
 			&setting_view_display_main, ad);
@@ -919,7 +954,7 @@ setting_display_brightness_click_softkey_cancel_cb(
 static void setting_display_set_slider_value(
 		void *data, Evas_Object *obj, double value)
 {
-	SettingDisplayUG *ad = data;
+	SettingDisplay *ad = data;
 	const char *vconf_str = NULL;
 
 	SETTING_TRACE_BEGIN;
@@ -948,7 +983,7 @@ static void setting_display_set_slider_value(
 					&tmp, &err);
 			vconf_get_int(VCONFKEY_SETAPPL_LCD_BRIGHTNESS, &tmp);
 			elm_slider_value_set(obj, tmp);
-			setting_create_popup(ad, ad->win_get, NULL,
+			setting_create_popup(ad, ad->md.win_main, NULL,
 					"IDS_CST_POP_FAILED",
 					NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
 		}
@@ -958,7 +993,7 @@ static void setting_display_set_slider_value(
 				value);
 		/*add error handle.. */
 		if (0 != ret) {
-			setting_create_popup(ad, ad->win_get, NULL,
+			setting_create_popup(ad, ad->md.win_main, NULL,
 					"IDS_CST_POP_FAILED",
 					NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
 		}
@@ -971,7 +1006,7 @@ setting_display_birghtness_bright_slider_value_change_cb(
 		Evas_Object *obj,
 		void *event_info)
 {
-	SettingDisplayUG *ad = NULL;
+	SettingDisplay *ad = NULL;
 	Setting_GenGroupItem_Data *list_item =
 			(Setting_GenGroupItem_Data *) data;
 	int value = 0;
