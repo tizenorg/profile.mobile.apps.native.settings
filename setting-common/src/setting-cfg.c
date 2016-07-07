@@ -252,10 +252,17 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 #if 0
 	/*Accessbility - not supported since 2015.8.12 */
 	{	KeyStr_Accessibility, IMG_Accessibility,
-		"setting-accessibility-efl",
-		Cfg_Item_Pos_Level0, Cfg_Item_unResetable, 0,
-		Cfg_Item_AppLauncher_Node, NULL, KeyStr_Personal, NULL,
-		uuid_Accounts, 0, "setting-accessibility-efl"},
+		"org.tizen.setting-accessibility",
+		Cfg_Item_Pos_Level0,
+		Cfg_Item_unResetable,
+		0,
+		Cfg_Item_AppLauncher_Node,
+		NULL,
+		KeyStr_Personal,
+		NULL,
+		uuid_Accounts,
+		0,
+		"org.tizen.setting-accessibility"},
 #endif
 	{	KeyStr_Accounts, IMG_Accounts,
 		"setting-myaccount-efl|mode:account_list",
