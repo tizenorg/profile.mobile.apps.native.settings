@@ -22,9 +22,10 @@
 #define __SETTING_ACCESSIBILITY_H__
 
 #include <Elementary.h>
-
 #include <setting-common-draw-widget.h>
 #include <setting-common-view.h>
+
+#include "setting-common-init.h"
 
 #define DEVOPTION_STR_ACCESSIBILITY_VISION	"IDS_ST_HEADER_VISION"
 #define DEVOPTION_STR_ACCESSIBILITY_SCREEN_READER_SETTINGS_SPEECH \
@@ -64,19 +65,9 @@
 typedef struct _SettingAccessibilityUG SettingAccessibilityUG;
 
 struct _SettingAccessibilityUG {
-	ui_gadget_h ug;
+	MainData md;
 
 	Elm_Genlist_Item_Class itc_1text;
-
-	/* add more variables here (move your appdata to here) */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-	Evas_Object *navi_bar;
-	Evas_Object *ly_main;
-	Elm_Object_Item *navi_item;
-
-	Evas_Object *genlist;
 
 	bool empty_flag;
 };
