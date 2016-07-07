@@ -131,6 +131,13 @@ Group: Application Framework/Settings
 #Requires: pkgconfig(setting-common-internal)
 %description devel
 
+%package accessibility
+Summary: A setting-accessibility application
+Group: Application
+
+%description accessibility
+Configuration application for accessibility
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -342,3 +349,10 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %files ref
 %{_datadir}/mime/packages/mime.setting.xml
 %{_datadir}/packages/org.tizen.setting.xml.ref
+
+%files accessibility
+%manifest setting-accessibility/org.tizen.setting-accessibility.manifest
+%{_prefix}/apps/org.tizen.setting-accessibility/bin/setting-accessibility
+%{_datadir}/packages/org.tizen.setting-accessibility.xml
+%{_prefix}/apps/org.tizen.setting-accessibility/res/*
+
