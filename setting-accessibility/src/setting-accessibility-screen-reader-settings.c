@@ -67,7 +67,7 @@ static Eina_Bool __setting_accessibility_screen_reader_settings_page_hide(
 	/* error check */
 	retv_if(data == NULL, EINA_TRUE);
 	SettingAccessibilityUG *ad = (SettingAccessibilityUG *) data;
-	elm_naviframe_item_pop(ad->navi_bar);
+	elm_naviframe_item_pop(ad->md.navibar_main);
 	SETTING_TRACE_END;
 	return EINA_TRUE;
 }
@@ -189,7 +189,7 @@ static void setting_accessibility_screen_reader_settings_status_bar_info_mouse_u
 
 	elm_genlist_item_selected_set(item, EINA_FALSE);
 
-	popup = elm_popup_add(ad->win_main_layout);
+	popup = elm_popup_add(ad->md.ly_main);
 	elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
 	/* eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK,
 	 *  eext_popup_back_cb, NULL); */
@@ -266,7 +266,7 @@ void setting_accessibility_screen_reader_settings_page_create(
 		SettingAccessibilityUG *data)
 {
 	SettingAccessibilityUG *ad = (SettingAccessibilityUG *) data;
-	Evas_Object *genlist = elm_genlist_add(ad->navi_bar);
+	Evas_Object *genlist = elm_genlist_add(ad->md.navibar_main);
 	retm_if(genlist == NULL,
 			"Cannot set genlist object as content of layout");
 	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
@@ -303,7 +303,7 @@ void setting_accessibility_screen_reader_settings_page_create(
 	multiline_status_bar_information_description->userdata = ad;
 	__BACK_POINTER_SET(multiline_status_bar_information_description);
 
-	Elm_Object_Item *navi_it = elm_naviframe_item_push(ad->navi_bar,
+	Elm_Object_Item *navi_it = elm_naviframe_item_push(ad->md.navibar_main,
 			_(DEVOPTION_STR_ACCESSIBILITY_SCREEN_READER_SETTINGS),
 			NULL, NULL, genlist, NULL);
 	elm_object_item_domain_text_translatable_set(navi_it, SETTING_PACKAGE,
