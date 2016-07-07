@@ -101,11 +101,6 @@
 			<label xml:lang="ja-jp">LEDインジケーター</label>
 			<label xml:lang="ko-kr">LED 상태 표시등</label>
         </ui-application>
-        <ui-application appid="setting-accessibility-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-accessibility-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
-                        <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
-                        <label>Accessibility</label>
-                        <label xml:lang="en-us">Accessibility</label>
-        </ui-application>
 	<ui-application appid="setting-accessory-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-accessory-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
                         <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
                         <label>Accessories</label>

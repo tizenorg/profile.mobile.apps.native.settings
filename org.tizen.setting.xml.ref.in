@@ -168,13 +168,6 @@
 				<operation name="http://tizen.org/appcontrol/operation/app_setting/show"/>
 			</application-service>
 	</ui-application>
-	<ui-application appid="setting-accessibility-efl" exec="@TZ_SYS_RO_UG@/bin/setting-accessibility-efl" type="capp" nodisplay="true" taskmanage="false">
-                        <icon>@TZ_SYS_RO_APP@/org.tizen.setting/res/icons/Accessibility.png</icon>
-                        <label>Accessibility</label>
-                        <label xml:lang="en-us">Accessibility</label>
-			<label xml:lang="ja-jp">ユーザー補助</label>
-			<label xml:lang="ko-kr">접근성</label>
-        </ui-application>
         <ui-application appid="org.tizen.setting-blockingmode-alarm" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-blockingmode-alarm" type="capp" nodisplay="true" taskmanage="false">
         		<label>Setting-blockingmode-alarm</label>
 	</ui-application>
@@ -482,7 +475,7 @@
 			<size preview="@TZ_SYS_RO_APP@/org.tizen.setting/shared/res/icons/livebox/accessibility_1x1.png" need_frame="true">1x1</size>
 			<size preview="@TZ_SYS_RO_APP@/org.tizen.setting/shared/res/icons/livebox/accessibility_2x2.png" need_frame="true">2x2</size>
 		</box>
-		<ui-appid>setting-accessibility-efl</ui-appid>
+		<ui-appid>org.tizen.setting-accessibility</ui-appid>
 	</livebox>
 </manifest>
 
