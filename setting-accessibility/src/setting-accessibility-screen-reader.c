@@ -45,7 +45,7 @@ static Eina_Bool __setting_accessibility_screen_reader_page_hide(void *data,
 	SettingAccessibilityUG *ad = (SettingAccessibilityUG *)data;
 	vconf_ignore_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS,
 			screen_reader_key_change_vconf_cb);
-	elm_naviframe_item_pop(ad->navi_bar);
+	elm_naviframe_item_pop(ad->md.navibar_main);
 	SETTING_TRACE_END;
 	return EINA_TRUE;
 }
@@ -112,7 +112,7 @@ void setting_accessibility_screen_reader_page_create(
 		SettingAccessibilityUG *data)
 {
 	SettingAccessibilityUG *ad = (SettingAccessibilityUG *)data;
-	Evas_Object *genlist = elm_genlist_add(ad->navi_bar);
+	Evas_Object *genlist = elm_genlist_add(ad->md.navibar_main);
 	retm_if(genlist == NULL,
 			"Cannot set genlist object as content of layout");
 	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
@@ -159,7 +159,7 @@ void setting_accessibility_screen_reader_page_create(
 	screen_reader_settings->userdata = ad;
 	__BACK_POINTER_SET(screen_reader_settings);
 
-	Elm_Object_Item *navi_it = elm_naviframe_item_push(ad->navi_bar,
+	Elm_Object_Item *navi_it = elm_naviframe_item_push(ad->md.navibar_main,
 			_(DEVOPTION_STR_ACCESSIBILITY_SCREENREADER), NULL, NULL,
 			genlist, NULL);
 	elm_object_item_domain_text_translatable_set(navi_it, SETTING_PACKAGE,

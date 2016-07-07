@@ -34,7 +34,7 @@ SET(SETTING_FILEVIEW setting-fileview)
 SET(SETTING_RINGTONE setting-ringtone)
 SET(SETTING_APPMGR setting-appmgr)
 SET(SETTING_FLIGHTMODE setting-flightmode)
-#SET(SETTING_ACCESSIBILITY setting-accessibility)
+SET(SETTING_ACCESSIBILITY setting-accessibility)
 
 SET(SETTING_PROFILE_UG setting-profile-efl)
 SET(SETTING_DEVELOPEROPTION_UG setting-developeroption-efl)
@@ -55,7 +55,7 @@ SET(SETTING_FONT_UG setting-font-efl)
 SET(SETTING_STORAGE_UG setting-storage-efl)
 SET(SETTING_MANAGE_APPS_UG setting-manage-applications-efl)
 SET(SETTING_FLIGHTMODE_UG setting-flightmode-efl)
-#SET(SETTING_ACCESSIBILITY_UG setting-accessibility-efl)
+SET(SETTING_ACCESSIBILITY_UG setting-accessibility-efl)
 
 
 SET(LIB_SETTING_COMMON setting-common)
@@ -102,7 +102,7 @@ CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting.xml.in 
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting_font-lite.xml.in ${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting_font-lite.xml @ONLY)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/mime.setting.xml.in ${CMAKE_SOURCE_DIR}/mime.setting.xml @ONLY)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/src/setting-common-internal.pc.in ${CMAKE_SOURCE_DIR}/src/setting-common-internal.pc @ONLY)
-
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/setting-accessibility/org.tizen.setting-accessibility.xml.in ${CMAKE_SOURCE_DIR}/org.tizen.setting-accessibility.xml @ONLY)
 
 # setting bin
 # setting plugin
@@ -127,5 +127,5 @@ ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_FILEVIEW})
 ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_RINGTONE})
 ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_APPMGR})
 ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_FLIGHTMODE})
-#ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_ACCESSIBILITY})
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_ACCESSIBILITY})
 
