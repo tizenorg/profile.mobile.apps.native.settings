@@ -56,21 +56,20 @@ static void setting_accessibility_screen_reader_key_change_vconf_cb(
  * @param obj evas object
  * @param event_info event type
  */
-static Eina_Bool setting_accessibility_main_click_softkey_back_cb(void *data,
-		Evas_Object *obj, void *event_info)
+static void _softkey_back_click_cb(void *data, Evas_Object *obj,
+		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	setting_retvm_if(data == NULL, EINA_FALSE, "Data parameter is NULL");
-	SettingAccessibilityUG *ad = (SettingAccessibilityUG *)data;
-	retv_if(ad->empty_flag, EINA_FALSE);
+	SettingAccessibility *ad = (SettingAccessibility *)data;
+	ret_if(!ad || ad->empty_flag);
 
 	vconf_ignore_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS,
 			setting_accessibility_screen_reader_key_change_vconf_cb);
-	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+	if (ad->md.win_main)
+		elm_win_lower(ad->md.win_main);
 
 	SETTING_TRACE_END;
-	return EINA_FALSE;
+	return;
 }
 
 static void setting_accessibility_vision_screen_reader_mouse_up_Gendial_list_cb(
@@ -78,7 +77,7 @@ static void setting_accessibility_vision_screen_reader_mouse_up_Gendial_list_cb(
 {
 	SETTING_TRACE_BEGIN;
 	Elm_Object_Item *item = (Elm_Object_Item *)event_info;
-	SettingAccessibilityUG *ad = (SettingAccessibilityUG *)data;
+	SettingAccessibility *ad = (SettingAccessibility *)data;
 	elm_genlist_item_selected_set(item, 0);
 	setting_accessibility_screen_reader_page_create(ad);
 	SETTING_TRACE_END;
@@ -98,8 +97,8 @@ int setting_accessibility_main_generate_genlist(void *data)
 	/* error check */
 	retv_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingAccessibilityUG *ad = (SettingAccessibilityUG *)data;
-	Evas_Object *scroller = ad->genlist;
+	SettingAccessibility *ad = (SettingAccessibility *)data;
+	Evas_Object *scroller = ad->md.genlist;
 	(void)setting_create_Gendial_field_titleItem(scroller,
 			&(itc_group_item),
 			_(DEVOPTION_STR_ACCESSIBILITY_VISION), NULL);
@@ -133,23 +132,22 @@ int setting_accessibility_main_generate_genlist(void *data)
 static int setting_accessibility_main_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
-	/* error check */
-	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	SettingAccessibilityUG *ad = (SettingAccessibilityUG *)cb;
-	Evas_Object *scroller = elm_genlist_add(ad->win_main_layout);
-	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
-			"Cannot set scroller object  as contento of layout");
-	elm_object_style_set(scroller, "dialogue");
-	elm_genlist_clear(scroller); /* first to clear list */
-	ad->genlist = scroller;
-	ad->ly_main = setting_create_layout_navi_bar(ad->win_main_layout,
-			ad->win_get,
-			KeyStr_Accessibility, _("IDS_ST_BUTTON_BACK"),
-			(setting_call_back_func)setting_accessibility_main_click_softkey_back_cb,
-			ad, scroller, &ad->navi_bar, NULL);
-	ad->navi_item = elm_naviframe_top_item_get(ad->navi_bar);
+	SettingAccessibility *ad = (SettingAccessibility *)cb;
+	retv_if(ad == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+
+	view_init(&ad->md, _("IDS_ST_BODY_ACCESSIBILITY"));
+	elm_object_style_set(ad->md.genlist, "dialogue");
+
+	setting_create_navi_bar_buttons(
+			_("IDS_ST_BODY_ACCESSIBILITY"),
+			_("IDS_ST_BUTTON_BACK"),
+			_softkey_back_click_cb,
+			ad, ad->md.genlist, ad->md.navibar_main,
+			NULL);
+	ad->md.navibar_main_it = elm_naviframe_top_item_get(ad->md.navibar_main);
 
 	setting_accessibility_main_generate_genlist((void *)ad);
+
 	setting_view_accessibility_main.is_create = 1;
 	SETTING_TRACE_END;
 	return SETTING_RETURN_SUCCESS;
