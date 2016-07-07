@@ -58,7 +58,8 @@ void _get_size_cb(const char *package_id, const package_size_info_h size_info,
 
 	info->valid_size = true;
 	if (info->size_idler) {
-		ecore_timer_del(info->size_idler);
+		//ecore_timer_del(info->size_idler);
+		ecore_idler_del(info->size_idler);
 		info->size_idler = NULL;
 	}
 	elm_genlist_item_fields_update(info->item, "elm.text.sub",
@@ -528,7 +529,10 @@ static int appmgrUg_get_all_pkg_size(uid_t target_uid, int req_id, const char *p
 
 		if (APPMGRUG_SORT_SIZE == ad->sorttype) {
 			if (ad->size_idler)
+			{
 				ecore_idler_del(ad->size_idler);
+				ad->size_idler = NULL;
+			}
 			ad->size_idler = ecore_idler_add(
 					appmgrUg_get_all_pkg_sizesort, ad);
 		} else {
@@ -598,8 +602,10 @@ int appmgrUg_get_listinfos(SettingAppMgrUG *ad)
 
 	APPMGRUG_STOP_POINT;
 
-	if (ad->pc_all_size)
+	if (ad->pc_all_size) {
 		pkgmgr_client_free(ad->pc_all_size);
+		ad->pc_all_size = NULL;
+	}
 
 	APPMGRUG_STOP_POINT;
 
@@ -619,8 +625,10 @@ int appmgrUg_get_listinfos(SettingAppMgrUG *ad)
 	if (ret < 0) {
 		SETTING_TRACE_ERROR("pkgmgr_client_set_status_type() Fail(%d)",
 				ret);
-		pkgmgr_client_free(ad->pc_all_size);
-		ad->pc_all_size = NULL;
+		if (ad->pc_all_size) {
+			pkgmgr_client_free(ad->pc_all_size);
+			ad->pc_all_size = NULL;
+		}
 		return SETTING_RETURN_FAIL;
 	}
 
@@ -631,8 +639,10 @@ int appmgrUg_get_listinfos(SettingAppMgrUG *ad)
 	if (ret < 0) {
 		SETTING_TRACE_ERROR("pkgmgr_client_listen_status() Fail(%d)",
 				ret);
-		pkgmgr_client_free(ad->pc_all_size);
-		ad->pc_all_size = NULL;
+		if (ad->pc_all_size) {
+			pkgmgr_client_free(ad->pc_all_size);
+			ad->pc_all_size = NULL;
+		}
 		return SETTING_RETURN_FAIL;
 	}
 
@@ -695,8 +705,10 @@ void appmgrUg_pkgmgr_subscribe(SettingAppMgrUG *ad)
 	if (ret < 0) {
 		SETTING_TRACE_ERROR("pkgmgr_client_set_status_type() Fail(%d)",
 				ret);
-		pkgmgr_client_free(ad->pc_all_size);
-		ad->pc_main = NULL;
+		if (ad->pc_all_size) {
+			pkgmgr_client_free(ad->pc_all_size);
+			ad->pc_all_size = NULL;
+		}
 	}
 
 	ret = pkgmgr_client_listen_status(ad->pc_main,
@@ -704,14 +716,17 @@ void appmgrUg_pkgmgr_subscribe(SettingAppMgrUG *ad)
 	if (ret < 0) {
 		SETTING_TRACE_ERROR("pkgmgr_client_listen_status() Fail(%d)",
 				ret);
-		pkgmgr_client_free(ad->pc_main);
-		ad->pc_main = NULL;
+		if (ad->pc_main) {
+			pkgmgr_client_free(ad->pc_main);
+			ad->pc_main = NULL;
+		}
 		return;
 	}
 }
 
 void appmgrUg_pkgmgr_deinit(SettingAppMgrUG *ad)
 {
+#if 0
 	if (ad->pc_main) {
 		pkgmgr_client_free(ad->pc_main);
 		ad->pc_main = NULL;
@@ -720,6 +735,7 @@ void appmgrUg_pkgmgr_deinit(SettingAppMgrUG *ad)
 		pkgmgr_client_free(ad->pc_all_size);
 		ad->pc_all_size = NULL;
 	}
+#endif
 	if (ad->size_idler) {
 		ecore_idler_del(ad->size_idler);
 		ad->size_idler = NULL;
@@ -791,7 +807,10 @@ void appmgrUg_pkg_disable_enable_cb(void *data, Evas_Object *obj,
 	appmgr_pkginfo *info = ad->pkginfo;
 
 	if (info->pc_request)
+	{
 		pkgmgr_client_free(info->pc_request);
+		info->pc_request = NULL;
+	}
 	info->pc_request = pkgmgr_client_new(PC_REQUEST);
 	if (NULL == info->pc_request) {
 		SETTING_TRACE_ERROR("pkgmgr_client_new() Fail");

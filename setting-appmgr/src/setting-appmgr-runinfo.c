@@ -43,9 +43,9 @@ void appmgrUg_free_runinfo(gpointer data)
 
 	ret_if(NULL == data);
 
-	free(info->appid);
-	free(info->label);
-	free(info);
+	FREE(info->appid);
+	FREE(info->label);
+	FREE(info);
 }
 
 static void appmgrUg_del_running_list(gpointer data, gpointer user_data)
