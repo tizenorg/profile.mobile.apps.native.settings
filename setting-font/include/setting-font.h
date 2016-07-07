@@ -88,7 +88,7 @@ struct _SettingFontUG {
 	Elm_Genlist_Item_Class itc_group_item;
 	Elm_Genlist_Item_Class itc_bg_1icon;
 	/*Elm_Genlist_Item_Class itc_seperator;*/
-	Elm_Genlist_Item_Class itc_1icon;
+	Elm_Genlist_Item_Class itc_preview;
 
 	Setting_GenGroupItem_Data *subitem;
 	Setting_GenGroupItem_Data *font_type;
