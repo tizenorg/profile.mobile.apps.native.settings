@@ -690,15 +690,6 @@ void appmgrUg_pkgmgr_subscribe(SettingAppMgrUG *ad)
 		return;
 	}
 
-	ret = pkgmgr_client_set_status_type(ad->pc_all_size,
-			PKGMGR_CLIENT_STATUS_GET_SIZE);
-	if (ret < 0) {
-		SETTING_TRACE_ERROR("pkgmgr_client_set_status_type() Fail(%d)",
-				ret);
-		pkgmgr_client_free(ad->pc_all_size);
-		ad->pc_main = NULL;
-	}
-
 	ret = pkgmgr_client_listen_status(ad->pc_main,
 			(pkgmgr_handler) appmgrUg_pkgmgr_changed_cb, ad);
 	if (ret < 0) {
