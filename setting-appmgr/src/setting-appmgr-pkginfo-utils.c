@@ -89,8 +89,8 @@ static Eina_Bool appmgrUg_pkg_privilege_info_softkey_cancel_cb(
 			"[Setting > Application Manager > Pkg info ] Data "\
 			"parameter is NULL");
 
-	if (ad->navi)
-		elm_naviframe_item_pop(ad->navi);
+	if (ad->md.navibar_main)
+		elm_naviframe_item_pop(ad->md.navibar_main);
 
 	return EINA_TRUE;
 }
@@ -122,10 +122,10 @@ static void appmgrUg_pkg_privilege_info_view(void *data, Evas_Object *obj,
 	privilege_info_get_privilege_group_display_name(grp, &grp_name);
 
 	Elm_Object_Item *navi_it = setting_push_layout_navi_bar_genlist(
-			ad->lo_parent, ad->win, grp_name,
+			ad->lo_parent, ad->md.win_main, grp_name,
 			NULL, NULL,/* here */
 			appmgrUg_pkg_privilege_info_softkey_cancel_cb, NULL,
-			ad, &info->gl_prv, ad->navi);
+			ad, &info->gl_prv, ad->md.navibar_main);
 	elm_naviframe_item_pop_cb_set(navi_it,
 			appmgrUg_pkg_privilege_info_softkey_cancel_cb, ad);
 	elm_genlist_mode_set(info->gl_prv, ELM_LIST_COMPRESS);
@@ -594,7 +594,7 @@ void appmgrUg_pkg_moveto_worker_finish(SettingAppMgrUG *ad)
 		if (ad->popup)
 			evas_object_del(ad->popup);
 
-		ad->popup = setting_create_popup(ad, ad->win, NULL,
+		ad->popup = setting_create_popup(ad, ad->md.win_main, NULL,
 		MGRAPP_STR_MOVE_COMPLETED, appmgrUg_popup_del, 0, FALSE, FALSE,
 				1, MGRAPP_STR_OK);
 		setting_view_update(ad->pkginfo_view, ad);
@@ -680,14 +680,14 @@ static void appmgrUg_pkg_ug_destroy_cb(ui_gadget_h ug, void *priv)
 	if (ug)
 		setting_ug_destroy(ug);
 
-	elm_object_tree_focus_allow_set(ad->lo_main, EINA_TRUE);
+	elm_object_tree_focus_allow_set(ad->md.ly_main, EINA_TRUE);
 }
 
 void appmgrUg_pkg_webapp_ug(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	app_control_h svc;
-	ui_gadget_h ug;
+//	ui_gadget_h ug;
 	struct ug_cbs cbs;
 	SettingAppMgrUG *ad = data;
 	Elm_Object_Item *item = event_info;
@@ -708,10 +708,10 @@ void appmgrUg_pkg_webapp_ug(void *data, Evas_Object *obj, void *event_info)
 	cbs.destroy_cb = appmgrUg_pkg_ug_destroy_cb;
 	cbs.priv = (void *)ad;
 
-	elm_object_tree_focus_allow_set(ad->lo_main, EINA_FALSE);
-	ug = setting_ug_create(ad->ug, "webapp-detail-efl", UG_MODE_FULLVIEW,
-			svc, &cbs);
-	warn_if(NULL == ug, "setting_ug_create() Fail");
+	elm_object_tree_focus_allow_set(ad->md.ly_main, EINA_FALSE);
+//	ug = setting_ug_create(ad->ug, "webapp-detail-efl", UG_MODE_FULLVIEW,
+//			svc, &cbs);
+//	warn_if(NULL == ug, "setting_ug_create() Fail");
 
 	app_control_destroy(svc);
 	SETTING_TRACE_END;
@@ -738,7 +738,7 @@ void appmgrUg_pkg_clear_default(void *data, Evas_Object *obj, void *event_info)
 
 	ad->popup = setting_create_popup(
 			ad,
-			ad->win,
+			ad->md.win_main,
 			MGRAPP_STR_CLEAR_DEFAULT_POPUP_TITLE,
 			MGRAPP_STR_DEFAULT_CLEAR_TEXT,
 			appmgrUg_pkg_clear_default_cb,

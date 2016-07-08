@@ -62,6 +62,8 @@
 	"/org.tizen.setting/res/locale"
 #define DISPLAY_LOCALEDIR		_TZ_SYS_RO_APP\
 	"/org.tizen.setting-display/res/locale"
+#define APPMGR_LOCALEDIR		_TZ_SYS_RO_APP\
+	"/org.tizen.setting-appmgr/res/locale"
 
 #define MODE_SYSPOPUP_PACKAGE		"mode-syspopup"
 #define MODE_SYSPOPUP_LOCALEDIR	_TZ_SYS_RO_APP\
@@ -102,10 +104,15 @@
 
 #define DISPLAY_THEME_EDJ_NAME		DISPLAYEDJ"/setting-theme.edj"
 #define DISPLAY_GENLIST_EDJ_NAME	DISPLAYEDJ"/setting-genlist.edj"
-//#define DISPLAY_SLIDER_EDJ_NAME		DISPLAYEDJ"/setting-slider.edj"
-//#define DISPLAY_NEWUX_EDJ_NAME		DISPLAYEDJ"/setting-newux.edj"
-//#define DISPLAY_NEW_GENLIST_EDJ_NAME	DISPLAYEDJ"/setting-new-genlist.edj"
 
+/* APPMGR PART */
+#if !defined(APPMGREDJ)
+#define APPMGREDJ _TZ_SYS_RO_APP"/org.tizen.setting-appmgr/res/edje"
+#endif
+
+#define APPMGR_THEME_EDJ_NAME	APPMGREDJ"/setting-theme.edj"
+#define APPMGR_GENLIST_EDJ_NAME	APPMGREDJ"/setting-genlist.edj"
+#define APPMGR_ICON_PATH	_TZ_SYS_RO_APP"/org.tizen.setting-appmgr/res/icons"
 
 #define RCS_CHECHING_FILE		_TZ_SYS_SHARE"/ims/.RCS_ENABLED"
 
