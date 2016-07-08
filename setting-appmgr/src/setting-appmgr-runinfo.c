@@ -182,7 +182,7 @@ void appmgrUg_run_stop_click(void *data, Evas_Object *obj, void *event_info)
 		ad->info_run = NULL;
 	}
 	if (APPMGRUG_TAB_RUNNING == ad->tabtype)
-		elm_naviframe_item_pop(ad->navi);
+		elm_naviframe_item_pop(ad->md.navibar_main);
 	else if (APPMGRUG_TAB_DISABLED == ad->tabtype)
 		elm_object_disabled_set(obj, EINA_TRUE);
 
@@ -237,10 +237,10 @@ static int appmgrUg_run_create(void *data)
 	retv_if(NULL == data, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
 	Elm_Object_Item *navi_item = setting_push_layout_navi_bar_genlist(
-			ad->lo_parent, ad->win,
+			ad->md.ly_main, ad->md.win_main,
 			MGRAPP_STR_ACTIVE_APP, NULL, NULL,
 			(setting_call_back_func)appmgrUg_run_back_cb,
-			NULL, ad, &ad->gl_run, ad->navi);
+			NULL, ad, &ad->gl_run, ad->md.navibar_main);
 	elm_naviframe_item_pop_cb_set(navi_item, appmgrUg_run_back_cb, ad);
 
 	elm_genlist_mode_set(ad->gl_run, ELM_LIST_COMPRESS);
@@ -287,7 +287,7 @@ static int appmgrUg_run_destroy(void *data)
 	SettingAppMgrUG *ad = data;
 
 	setting_view_appmgr_runinfo.is_create = 0;
-	elm_naviframe_item_pop(ad->navi);
+	elm_naviframe_item_pop(ad->md.navibar_main);
 
 	retv_if(NULL == data, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 

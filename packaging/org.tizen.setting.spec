@@ -139,6 +139,15 @@ Requires(post): org.tizen.setting
 %description display
 Replace for org.tizen.setting-display from ug to app-control
 
+%package appmgr
+Summary: replacement for org.tizen.setting-appmgr
+Group: Application/Core Applications
+Requires(post): org.tizen.setting
+
+%description appmgr
+Replace for org.tizen.setting-appmgr from ug to app-control
+
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -292,6 +301,10 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 mkdir -p %{_prefix}/apps/org.tizen.setting-display/shared
 mkdir -p %{_prefix}/apps/org.tizen.setting-display/shared/res
 
+%post appmgr
+mkdir -p %{_prefix}/apps/org.tizen.setting-appmgr/shared
+mkdir -p %{_prefix}/apps/org.tizen.setting-appmgr/shared/res
+
 %posttrans
 
 %files -n org.tizen.setting
@@ -360,3 +373,9 @@ mkdir -p %{_prefix}/apps/org.tizen.setting-display/shared/res
 %{_prefix}/apps/org.tizen.setting-display/bin/setting-display
 %{_datadir}/packages/org.tizen.setting-display.xml
 %{_prefix}/apps/org.tizen.setting-display/res/*
+
+%files appmgr
+%manifest setting-appmgr/org.tizen.setting-appmgr.manifest
+%{_prefix}/apps/org.tizen.setting-appmgr/bin/setting-appmgr
+%{_datadir}/packages/org.tizen.setting-appmgr.xml
+%{_prefix}/apps/org.tizen.setting-appmgr/res/*

@@ -143,7 +143,7 @@ void appmgrUg_fail_popup(char *str, SettingAppMgrUG *ad)
 		ad->popup = NULL;
 	}
 
-	ad->popup = setting_create_popup(ad, ad->win, NULL, str,
+	ad->popup = setting_create_popup(ad, ad->md.win_main, NULL, str,
 			appmgrUg_popup_del, 0, FALSE, FALSE, 1, MGRAPP_STR_OK);
 }
 
@@ -197,13 +197,13 @@ static int appmgrUg_pkgmgr_changed_cb(uid_t target_uid, int req_id, const char *
 		if (0 == safeStrCmp(ad->sel_pkgid, pkgid)) {
 			if (APPMGRUG_PKG_REQUEST_UNINSTALL == ad->pkg_request) {
 				if (APPMGRUG_TAB_NONE == ad->tabtype)
-					ug_destroy_me(ad->ug);
+					elm_exit();
 				else
-					elm_naviframe_item_pop(ad->navi);
+					elm_naviframe_item_pop(ad->md.navibar_main);
 
 				if (ad->popup)
 					evas_object_del(ad->popup);
-				ad->popup = setting_create_popup(ad, ad->win,
+				ad->popup = setting_create_popup(ad, ad->md.win_main,
 						NULL,
 						MGRAPP_STR_UNINSTALL_COMPLETE,
 						appmgrUg_popup_del, 0, FALSE,
@@ -1126,7 +1126,7 @@ int appmgrUg_reset_app_settings(SettingAppMgrUG *ad)
 	if (ad->popup)
 		evas_object_del(ad->popup);
 	/* do not show popup
-	 ad->popup = setting_create_popup_with_progressbar(ad, ad->win,
+	 ad->popup = setting_create_popup_with_progressbar(ad, ad->md.win_main,
 	 PROGRESSBAR_STYLE,
 	 NULL, NULL, appmgrUg_popup_del, 0, TRUE, TRUE, 0);
 	 */

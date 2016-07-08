@@ -37,7 +37,7 @@ static Eina_Bool appmgrUg_pkg_back_cb(void *data, Elm_Object_Item *it)
 	retv_if(data == NULL, EINA_FALSE);
 
 	if (ad->support_taskmanager) {
-		ug_destroy_me(ad->ug);
+		elm_exit();
 		return EINA_FALSE;
 	} else {
 		setting_view_destroy(ad->pkginfo_view, ad);
@@ -295,7 +295,7 @@ static void appmgrUg_pkg_uninstall(void *data, Evas_Object *obj,
 	if (0 != ret)
 		return;
 
-	ad->popup = setting_create_popup_with_progressbar(ad, ad->win,
+	ad->popup = setting_create_popup_with_progressbar(ad, ad->md.win_main,
 			PROGRESSBAR_STYLE, NULL,
 			MGRAPP_STR_UNINSTALLING, appmgrUg_popup_del, 0, TRUE,
 			TRUE, 0);
@@ -329,7 +329,7 @@ void appmgrUg_pkg_uninstall_click(void *data, Evas_Object *obj,
 
 	if (ad->popup)
 		evas_object_del(ad->popup);
-	ad->popup = setting_create_popup(ad, ad->win, MGRAPP_STR_UNINSTALL,
+	ad->popup = setting_create_popup(ad, ad->md.win_main, MGRAPP_STR_UNINSTALL,
 			MGRAPP_STR_UNINSTALL_MSG, appmgrUg_pkg_uninstall, 0,
 			FALSE, FALSE, 2, MGRAPP_STR_UNINSTALL,
 			MGRAPP_STR_CANCEL);
@@ -367,7 +367,7 @@ void appmgrUg_pkg_moveto_cb(void *data, Evas_Object *obj, void *event_info)
 	if (ad->popup)
 		evas_object_del(ad->popup);
 
-	ad->popup = setting_create_popup_with_progressbar(ad, ad->win,
+	ad->popup = setting_create_popup_with_progressbar(ad, ad->md.win_main,
 			PROGRESSBAR_STYLE,
 			NULL, MGRAPP_STR_MOVEING, appmgrUg_popup_del, 0, TRUE,
 			TRUE, 0);
@@ -511,10 +511,10 @@ static int appmgrUg_pkg_create(void *data)
 		return -1;
 	}
 
-	navi_it = setting_push_layout_navi_bar_genlist(ad->lo_parent, ad->win,
+	navi_it = setting_push_layout_navi_bar_genlist(ad->lo_parent, ad->md.win_main,
 			MGRAPP_STR_APPLICATION_INFO, NULL, NULL,
 			(setting_call_back_func)appmgrUg_pkg_back_cb,
-			NULL, ad, &ad->gl_pkg, ad->navi);
+			NULL, ad, &ad->gl_pkg, ad->md.navibar_main);
 	elm_genlist_mode_set(ad->gl_pkg, ELM_LIST_COMPRESS);
 	elm_genlist_homogeneous_set(ad->gl_pkg, EINA_FALSE);
 	elm_naviframe_item_pop_cb_set(navi_it, appmgrUg_pkg_back_cb, ad);
@@ -564,7 +564,7 @@ static int appmgrUg_pkg_destroy(void *data)
 	FREE(ad->sel_icon);
 
 	setting_view_appmgr_pkginfo.is_create = 0;
-	elm_naviframe_item_pop(ad->navi);
+	elm_naviframe_item_pop(ad->md.navibar_main);
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -593,7 +593,7 @@ static int appmgrUg_pkg_update(void *data)
 	ret = appmgrUg_pkg_get_info(ad);
 	if (ret) {
 		SETTING_TRACE_ERROR("appmgrUg_pkg_get_info() Fail", ret);
-		elm_naviframe_item_pop(ad->navi);
+		elm_naviframe_item_pop(ad->md.navibar_main);
 		return -1;
 	}
 
