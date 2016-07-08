@@ -14,6 +14,8 @@ SET(EDJDIR "${RESDIR}/edje")
 SET(IMAGEDIR "${RESDIR}/images")
 SET(CMAKE_SKIP_BUILD_RPATH true)
 
+SET(ABOUTEDJ "${TZ_SYS_RO_APP}/org.tizen.setting-about/res/edje")
+
 #set variable
 SET(SETTING_PROFILE setting-profile)
 SET(SETTING_CONNECTIVITY setting-connectivity)
