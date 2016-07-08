@@ -125,13 +125,6 @@
 			<label xml:lang="ja-jp">ストレージ</label>
 			<label xml:lang="ko-kr">저장소</label>
         </ui-application>
-	<ui-application appid="setting-about-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-about-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
-                        <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
-                        <label>About device</label>
-                        <label xml:lang="en-us">About device</label>
-			<label xml:lang="ja-jp">端末情報</label>
-			<label xml:lang="ko-kr">디바이스 정보</label>
-        </ui-application>
 	<ui-application appid="setting-ringtone-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-ringtone-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
                         <label>Ringtone</label>
                         <label xml:lang="en-us">Ringtone</label>

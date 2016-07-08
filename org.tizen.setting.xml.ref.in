@@ -112,13 +112,6 @@
 			<label xml:lang="ja-jp">ストレージ</label>
 			<label xml:lang="ko-kr">저장소</label>
         </ui-application>
-	<ui-application appid="setting-about-efl" exec="@TZ_SYS_RO_UG@/bin/setting-about-efl" type="capp" nodisplay="true" taskmanage="false">
-                        <icon>@TZ_SYS_RO_APP@/org.tizen.setting/res/icons/A01-1_icon_About_phone.png</icon>
-                        <label>About device</label>
-                        <label xml:lang="en-us">About device</label>
-			<label xml:lang="ja-jp">端末情報</label>
-			<label xml:lang="ko-kr">디바이스 정보</label>
-        </ui-application>
 	<ui-application appid="setting-security-efl" exec="@TZ_SYS_RO_UG@/bin/setting-security-efl" type="capp" nodisplay="true" taskmanage="false">
                         <icon>@TZ_SYS_RO_APP@/org.tizen.setting/res/icons/settings_security.png</icon>
 			<label>Security</label>

@@ -14,6 +14,8 @@ SET(EDJDIR "${RESDIR}/edje")
 SET(IMAGEDIR "${RESDIR}/images")
 SET(CMAKE_SKIP_BUILD_RPATH true)
 
+SET(ABOUTEDJ "${TZ_SYS_RO_APP}/org.tizen.setting-about/res/edje")
+
 #set variable
 SET(SETTING_PROFILE setting-profile)
 SET(SETTING_CONNECTIVITY setting-connectivity)
@@ -46,7 +48,6 @@ SET(SETTING_MORECONNECTIONS_UG setting-moreconnections-efl)
 SET(SETTING_TIME_UG setting-time-efl)
 SET(SETTING_PHONE_UG setting-phone-efl)
 SET(SETTING_NETWORK_UG setting-network-efl)
-SET(SETTING_ABOUT_UG setting-about-efl)
 SET(SETTING_FILEVIEW_UG setting-fileview-efl)
 SET(SETTING_RINGTONE_UG setting-ringtone-efl)
 
