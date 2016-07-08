@@ -39,6 +39,7 @@
 
 #define SETTING_ICON_PATH_CFG	_TZ_SYS_RO_APP"/org.tizen.setting/res/icons/"
 #define DISPLAY_ICON_PATH_CFG	_TZ_SYS_RO_APP"/org.tizen.setting-display/res/icons/"
+//#define APPMGR_ICON_PATH_CFG	_TZ_SYS_RO_APP"/org.tizen.setting-appmgr/res/icons/"
 #define SETTING_LIST_ICON_PATH_CFG SETTING_ICON_PATH_CFG"list_icon/"
 
 #define SETTING_IMAGE_PATH_CFG	_TZ_SYS_RO_APP"/org.tizen.setting/res/images/"

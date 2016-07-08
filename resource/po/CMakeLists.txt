@@ -2,6 +2,7 @@
 
 
 SET(SETTING_PKG_DISPLAY "org.tizen.setting-display")
+SET(SETTING_PKG_APPMGR "org.tizen.setting-appmgr")
 
 #KIRAN INDIA
 #SET(POFILES bn.po en.po gu.po hi.po kn.po ml.po si.po ta.po te.po ur.po)
@@ -29,6 +30,7 @@ FOREACH(pofile ${POFILES})
 	)
 	INSTALL(FILES ${moFile} DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/locale/${lang}/LC_MESSAGES RENAME setting.mo)
 	INSTALL(FILES ${moFile} DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_DISPLAY}/res/locale/${lang}/LC_MESSAGES RENAME setting.mo)
+	INSTALL(FILES ${moFile} DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_APPMGR}/res/locale/${lang}/LC_MESSAGES RENAME setting.mo)
 
 #${TZ_SYS_RO_APP}/org.tizen.mode-syspopup
 

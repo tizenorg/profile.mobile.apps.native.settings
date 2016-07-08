@@ -26,9 +26,10 @@
 #include <pkgmgr-info.h>
 #include <package-manager.h>
 
-#include "setting-common-view.h"
 #include "setting-common-draw-widget.h"
+#include "setting-common-init.h"
 #include "setting-appmgr-string.h"
+#include "setting-common-view.h"
 
 #define _S(s)	dgettext("sys_string", s)
 
@@ -120,7 +121,8 @@ typedef struct _appmgr_runinfo {
 } appmgr_runinfo;
 
 typedef struct _SettingAppMgrUG {
-	ui_gadget_h ug;
+	MainData md;
+//	ui_gadget_h ug;
 	int tabtype;
 	int sorttype;
 	int can_sizesort;
@@ -133,15 +135,15 @@ typedef struct _SettingAppMgrUG {
 	setting_view *runinfo_view;
 	setting_view *pkginfo_view;
 
-	Evas_Object *win;
+//	Evas_Object *win;
 	Evas_Object *lo_parent;
 
-	Evas_Object *lo_main;
-	Evas_Object *navi;
+//	Evas_Object *lo_main;
+//	Evas_Object *navi;
 	Evas_Object *popup;
 
 	/*main view */
-	Elm_Object_Item *navi_main_it;
+//	Elm_Object_Item *navi_main_it;
 	Evas_Object *gl_main;
 	Evas_Object *lo_noitem;
 	int noitem_type;

@@ -154,9 +154,8 @@ static Eina_Bool setting_applications_manage_apps_freeze_event_timer_cb(
 static void setting_applications_manage_apps_ug(SettingApplicationsUG *ad)
 {
 	SETTING_TRACE_BEGIN;
-	if (app_launcher(
-			"setting-manage-applications-efl|viewtype:manage-applications", NULL, NULL)
-			== 0) {
+	if (app_launcher("org.tizen.setting-appmgr", NULL, NULL) == 0) {
+//			"setting-manage-applications-efl|viewtype:manage-applications", NULL, NULL)
 		ad->event_freeze_timer = ecore_timer_add(1,
 				setting_applications_manage_apps_freeze_event_timer_cb,
 				ad);

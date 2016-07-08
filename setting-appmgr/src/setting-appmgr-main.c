@@ -78,7 +78,7 @@ static void appmgrUg_main_sort_popup(void *data, Evas_Object *obj,
 		evas_object_del(ad->popup);
 
 	Evas_Object *menu_glist = NULL;
-	ad->popup = setting_create_popup_with_list(&menu_glist, ad, ad->win,
+	ad->popup = setting_create_popup_with_list(&menu_glist, ad, ad->md.win_main,
 	MGRAPP_STR_SORT_BY, NULL, 0, false, false, 0);
 
 	Evas_Object *rdg = elm_radio_add(menu_glist);
@@ -123,9 +123,9 @@ static void appmgrUg_main_more_popup_rotate(void *data, Evas_Object *obj,
 
 	ret_if(data == NULL);
 
-	elm_win_screen_size_get(ad->win, NULL, NULL, &w, &h);
+	elm_win_screen_size_get(ad->md.win_main, NULL, NULL, &w, &h);
 
-	pos = elm_win_rotation_get(ad->win);
+	pos = elm_win_rotation_get(ad->md.win_main);
 	switch (pos) {
 	case 90:
 		evas_object_move(ad->popup, 0, w);
@@ -171,7 +171,7 @@ static void appmgrUg_main_create_more_popup(void *data, Evas_Object *obj,
 
 	ret_if(NULL == data);
 
-	ctxpopup = elm_ctxpopup_add(ad->navi);
+	ctxpopup = elm_ctxpopup_add(ad->md.navibar_main);
 	elm_object_style_set(ctxpopup, "more/default");
 	elm_ctxpopup_auto_hide_disabled_set(ctxpopup, EINA_TRUE);
 	eext_object_event_callback_add(ctxpopup, EEXT_CALLBACK_BACK,
@@ -291,9 +291,9 @@ static inline Evas_Object *appmgrUg_main_no_item_handle(SettingAppMgrUG *ad)
 
 	if (NULL == ad->lo_noitem || ad->noitem_type != ad->tabtype) {
 		if (ad->tabtype == APPMGRUG_TAB_RUNNING)
-			lo = appmgrUg_loading_item(ad->navi, text, help_txt);
+			lo = appmgrUg_loading_item(ad->md.navibar_main, text, help_txt);
 		else
-			lo = appmgrUg_no_item(ad->navi, text, help_txt);
+			lo = appmgrUg_no_item(ad->md.navibar_main, text, help_txt);
 	}
 
 	return lo;
@@ -308,15 +308,15 @@ void appmgrUg_main_genlist_append_items(SettingAppMgrUG *ad)
 
 	/*For first Empty view */
 	if (NULL == ad->pkg_list) {
-		lo_new = appmgrUg_no_item(ad->navi, MGRAPP_STR_CHECKING, "");
-		elm_object_item_part_content_set(ad->navi_main_it,
+		lo_new = appmgrUg_no_item(ad->md.navibar_main, MGRAPP_STR_CHECKING, "");
+		elm_object_item_part_content_set(ad->md.navibar_main_it,
 				"elm.swallow.content", lo_new);
 		ad->lo_noitem = lo_new;
 		return;
 	}
 
 	if (NULL == ad->gl_main)
-		lo_new = ad->gl_main = appmgrUg_main_genlist(ad->navi);
+		lo_new = ad->gl_main = appmgrUg_main_genlist(ad->md.navibar_main);
 	else
 		elm_genlist_clear(ad->gl_main);
 
@@ -376,7 +376,7 @@ void appmgrUg_main_genlist_append_items(SettingAppMgrUG *ad)
 	}
 
 	if (lo_new) {
-		elm_object_item_part_content_set(ad->navi_main_it,
+		elm_object_item_part_content_set(ad->md.navibar_main_it,
 				"elm.swallow.content", lo_new);
 		if (ad->gl_main)
 			ad->lo_noitem = NULL;
@@ -475,6 +475,7 @@ static Eina_Bool appmgrUg_main_back_cb(void *data, Elm_Object_Item *it)
 {
 	SettingAppMgrUG *ad = data;
 
+
 	retv_if(data == NULL, EINA_TRUE);
 
 	appmgrUg_stop_async_worker_all();
@@ -487,7 +488,7 @@ static Eina_Bool appmgrUg_main_back_cb(void *data, Elm_Object_Item *it)
 		ad->reset_worker = NULL;
 	}
 
-	ug_destroy_me(ad->ug);
+	ui_app_exit();
 
 	return EINA_FALSE;
 }
@@ -532,7 +533,7 @@ static void appmgrUg_main_clear_defapp_click(void *data, Evas_Object *obj,
 	if (ad->popup)
 		evas_object_del(ad->popup);
 
-	ad->popup = setting_create_popup(ad, ad->win, NULL,
+	ad->popup = setting_create_popup(ad, ad->md.win_main, NULL,
 	MGRAPP_STR_CLEAR_DEFAULT_APPS_Q, appmgrUg_main_clear_defapp, 0, FALSE,
 			FALSE, 2, MGRAPP_STR_OK, MGRAPP_STR_CANCEL);
 }
@@ -685,12 +686,14 @@ static Eina_Bool setting_appmgr_main_click_softkey_back_cb(void *data,
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
-	setting_retvm_if(data == NULL, EINA_FALSE,
-			"[Setting > APPMGR] Data parameter is NULL");
-	SettingAppMgrUG *ad = (SettingAppMgrUG *)data;
+//	setting_retvm_if(data == NULL, EINA_FALSE,
+//			"[Setting > APPMGR] Data parameter is NULL");
+//	SettingAppMgrUG *ad = (SettingAppMgrUG *)data;
 
 	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+//	ug_destroy_me(ad->ug);
+//	elm_exit();
+	ui_app_exit();
 	SETTING_TRACE_END;
 	return EINA_FALSE;
 }
@@ -702,33 +705,55 @@ static int appmgrUg_main_create(void *data)
 	SettingAppMgrUG *ad = data;
 
 	retv_if(NULL == data, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	retv_if(NULL == ad->navi, SETTING_GENERAL_ERR_WRONG_PARAMETER);
+//	retv_if(NULL == ad->md.navibar_main, SETTING_GENERAL_ERR_WRONG_PARAMETER);
+
+	// Conformant
+	Evas_Object *conform= elm_conformant_add(ad->md.win_main);
+	evas_object_size_hint_weight_set(conform, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_win_resize_object_add(ad->md.win_main, conform);
+	evas_object_show(conform);
+
+	/* navi frame */
+	Evas_Object *navi = NULL;
+	navi = elm_naviframe_add(conform);
+
+	elm_naviframe_prev_btn_auto_pushed_set(navi, EINA_TRUE);
+	elm_object_part_content_set(conform, "elm.swallow.content", navi);
+	eext_object_event_callback_add(navi, EEXT_CALLBACK_BACK, eext_naviframe_back_cb, NULL);
+	eext_object_event_callback_add(navi, EEXT_CALLBACK_MORE, eext_naviframe_more_cb, NULL);
+
+	if (navi == NULL) {
+		SETTING_TRACE(" *** elm_naviframe_add returns NULL *** ");
+		return SETTING_GENERAL_ERR_NULL_DATA_PARAMETER;
+	}
+	evas_object_show(navi);
+	ad->md.navibar_main = navi;
 
 	ad->list_worker = appmgrUg_start_async_worker(appmgrUg_get_listinfos,
 			appmgrUg_get_listinfos_cb, ad);
 
 	/* back button */
-	back_btn = setting_create_button(ad->navi, MGRAPP_STR_APP_MANAGER,
+	back_btn = setting_create_button(ad->md.navibar_main, MGRAPP_STR_APP_MANAGER,
 	NAVI_BACK_ARROW_BUTTON_STYLE,
 			(setting_call_back_func)setting_appmgr_main_click_softkey_back_cb,
 			ad);
 
-	navi_it = elm_naviframe_item_push(ad->navi, MGRAPP_STR_APP_MANAGER,
+	navi_it = elm_naviframe_item_push(ad->md.navibar_main, MGRAPP_STR_APP_MANAGER,
 			back_btn, NULL, NULL, "tabbar");
 	elm_object_item_domain_text_translatable_set(navi_it, SETTING_PACKAGE,
 			EINA_TRUE);
 	elm_naviframe_item_pop_cb_set(navi_it, appmgrUg_main_back_cb, ad);
-	ad->navi_main_it = navi_it;
+	ad->md.navibar_main_it = navi_it;
 
-	toolbar = appmgrUg_main_create_top_tabbar(ad->navi, ad);
+	toolbar = appmgrUg_main_create_top_tabbar(ad->md.navibar_main, ad);
 	if (NULL == toolbar) {
 		SETTING_TRACE_ERROR("appmgrUg_main_create_top_tabbar() Fail");
 		return SETTING_RETURN_FAIL;
 	}
 	elm_object_item_part_content_set(navi_it, "tabbar", toolbar);
-	setting_tabbar_enable_swip_effect(ad->lo_main, toolbar);
+	setting_tabbar_enable_swip_effect(ad->md.ly_main, toolbar);
 
-	more_btn = appmgrUg_main_creat_more_btn(ad->navi, ad);
+	more_btn = appmgrUg_main_creat_more_btn(ad->md.navibar_main, ad);
 	if (NULL == more_btn) {
 		SETTING_TRACE_ERROR("appmgrUg_main_creat_more_btn() Fail");
 		return SETTING_RETURN_FAIL;

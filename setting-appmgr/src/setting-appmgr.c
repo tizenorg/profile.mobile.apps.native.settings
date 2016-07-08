@@ -30,6 +30,27 @@
 #include "setting-appmgr-main.h"
 #include "setting-appmgr.h"
 
+#include <app.h>
+#include <appcore-common.h>
+
+#define SETTING_APPMGR_PACKAGE_NAME "org.tizen.setting-appmgr"
+
+/******************************APP CONTROL***********************************/
+static bool _setting_appmgr_app_create(void *data);
+static void _setting_appmgr_app_control_cb(app_control_h app_control, void *data);
+static void _setting_appmgr_app_on_pause(void *data);
+static void _setting_appmgr_app_on_resume(void *data);
+static void _setting_appmgr_app_terminate(void *data);
+/********************************OTHER***************************************/
+static void _main_win_del_cb(void *data, Evas_Object *obj, void *event_info);
+
+
+static void _main_win_del_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	elm_exit();
+}
+
 static void appmgrUg_resize(void *data, Evas *e, Evas_Object *obj,
 		void *event_info)
 {
@@ -160,31 +181,35 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	SettingAppMgrUG *ad = (SettingAppMgrUG *)data;
-	ret_if(ad == NULL || ad->win == NULL);
+	ret_if(ad == NULL || ad->md.win_main == NULL);
 
-	int change_ang = elm_win_rotation_get(ad->win);
+	int change_ang = elm_win_rotation_get(ad->md.win_main);
 	SETTING_TRACE_DEBUG("....change_ang:%d", change_ang);
 	SETTING_TRACE_DEBUG("current_rotation:%d", ad->current_rotation);
 	/*Send the rotation event to UGs.. */
-	enum ug_event event = UG_EVENT_ROTATE_PORTRAIT;
+//	enum ug_event event = UG_EVENT_ROTATE_PORTRAIT;
 	switch (change_ang) {
 	case APP_DEVICE_ORIENTATION_0:
-		event = UG_EVENT_ROTATE_PORTRAIT;
+		SETTING_TRACE("ROTARY: 0");
+//		event = UG_EVENT_ROTATE_PORTRAIT;
 		break;
 	case APP_DEVICE_ORIENTATION_180:
-		event = UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN;
+		SETTING_TRACE("ROTARY: 180");
+//		event = UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN;
 		break;
 	case APP_DEVICE_ORIENTATION_270:
-		event = UG_EVENT_ROTATE_LANDSCAPE;
+		SETTING_TRACE("ROTARY: 270");
+//		event = UG_EVENT_ROTATE_LANDSCAPE;
 		break;
 	case APP_DEVICE_ORIENTATION_90:
-		event = UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN;
+		SETTING_TRACE("ROTARY: 90");
+//		event = UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN;
 		break;
 	default:
 		return;
 	}
 	SETTING_TRACE_DEBUG("diff:%d",
-			elm_win_rotation_get(ad->win) - ad->current_rotation);
+			elm_win_rotation_get(ad->md.win_main) - ad->current_rotation);
 
 	if (change_ang != ad->current_rotation) {
 		int diff = change_ang - ad->current_rotation;
@@ -195,7 +220,7 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 		 * @todo if app didn't launch UG, is the call required to
 		 * invoke?
 		 */
-		ug_send_event(event);
+//		ug_send_event(event);
 		/* if (diff == 180) {
 			do nothing
 		} */
@@ -205,117 +230,415 @@ static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
 #endif
 
 
+//static int appmgrUg_get_tabtype(char *keyword)
+//{
+//	retv_if(NULL == keyword, APPMGRUG_TAB_DOWNLOAD);
+//
+//	if (0 == safeStrCmp(keyword, MGRAPP_STR_DOWNLOADS))
+//		return APPMGRUG_TAB_DOWNLOAD;
+//	else if (0 == safeStrCmp(keyword, MGRAPP_STR_RUNNING))
+//		return APPMGRUG_TAB_RUNNING;
+//	else if (0 == safeStrCmp(keyword, MGRAPP_STR_ALL))
+//		return APPMGRUG_TAB_ALL;
+//	else
+//		return APPMGRUG_TAB_DOWNLOAD;
+//}
 
-static int appmgrUg_get_tabtype(char *keyword)
-{
-	retv_if(NULL == keyword, APPMGRUG_TAB_DOWNLOAD);
+//static void *appmgrUg_on_create(ui_gadget_h ug, enum ug_mode mode,
+//		app_control_h service, void *priv)
+//{
+//	SETTING_TRACE_BEGIN;
+//
+//	char *viewtype = NULL;
+//	SettingAppMgrUG *ad = priv;
+//	char *search_keyword = NULL;
+//
+//	retvm_if(NULL == ug || NULL == ad, NULL, "ug=%p, priv=%p is Invalid",
+//			ug, ad);
+//
+//	bindtextdomain(SETTING_PACKAGE, SETTING_LOCALEDIR);
+//	textdomain(SETTING_PACKAGE);
+//
+//	ad->ug = ug;
+//	ad->win = ug_get_window();
+//	ad->lo_parent = ug_get_parent_layout(ug);
+//	if (NULL == ad->lo_parent) {
+//		SETTING_TRACE_ERROR("ug_get_parent_layout(ug) Fail");
+//		return NULL;
+//	}
+//
+//
+//	ad->current_rotation = elm_win_rotation_get(ad->win);
+//	SETTING_TRACE_DEBUG("ad->current_rotation:%d", ad->current_rotation);
+//	if (elm_win_wm_rotation_supported_get(ad->win)) {
+//		int rots[4] = { 0, 90, 180, 270 }; /* rotation value that app
+//		may want */
+//		elm_win_wm_rotation_available_rotations_set(ad->win, rots, 4);
+//	}
+//	evas_object_smart_callback_add(ad->win, "wm,rotation,changed",
+//			_rot_changed_cb, ad);
+//
+//
+//	appmgrUg_main_init(ad);
+//	appmgrUg_pkginfo_init(ad);
+//	appmgrUg_appinfo_init(ad);
+//
+//	appmgrUg_init_itcs(ad);
+//
+//	ad->lo_main = setting_create_win_layout(ad->win);
+//	ad->navi = appmgrUg_create_navi(ad->lo_main, ad);
+//	if (NULL == ad->navi) {
+//		SETTING_TRACE_ERROR("calloc() Fail");
+//		return NULL;
+//	}
+//	elm_object_part_content_set(ad->lo_main, "elm.swallow.content",
+//			ad->navi);
+//
+//	app_control_get_extra_data(service, "viewtype", &viewtype);
+//	app_control_get_extra_data(service, "keyword", &search_keyword);
+//
+//	if (0 == safeStrCmp(viewtype, "application-info")) {
+//		/*register view table */
+//		setting_view_node_table_register(&setting_view_appmgr_pkginfo,
+//		NULL);
+//
+//		SETTING_TRACE("viewtype : %s", viewtype);
+//		char *pkgid = NULL;
+//		app_control_get_extra_data(service, "pkgname", &pkgid);
+//		SETTING_TRACE("pkgname : %s", pkgid);
+//		ad->sel_pkgid = pkgid;
+//		ad->sel_total = -1;
+//		ad->sel_data_size = -1;
+//		ad->support_taskmanager = TRUE;
+//		ad->sel_is_disabled = FALSE;
+//		ad->sel_icon = NULL;
+//		ad->sel_label = NULL;
+//		setting_view_create(ad->pkginfo_view, ad);
+//	} else {
+//		/*register view table */
+//		setting_view_node_table_register(&setting_view_appmgr_main,
+//		NULL);
+//		setting_view_node_table_register(&setting_view_appmgr_pkginfo,
+//				&setting_view_appmgr_main);
+//
+//		ad->tabtype = appmgrUg_get_tabtype(search_keyword);
+//		setting_view_create(ad->main_view, ad);
+//	}
+//	free(viewtype);
+//
+//	evas_object_event_callback_add(ad->lo_parent, EVAS_CALLBACK_RESIZE,
+//			appmgrUg_resize, ad);
+//	return ad->lo_main;
+//}
 
-	if (0 == safeStrCmp(keyword, MGRAPP_STR_DOWNLOADS))
-		return APPMGRUG_TAB_DOWNLOAD;
-	else if (0 == safeStrCmp(keyword, MGRAPP_STR_RUNNING))
-		return APPMGRUG_TAB_RUNNING;
-	else if (0 == safeStrCmp(keyword, MGRAPP_STR_ALL))
-		return APPMGRUG_TAB_ALL;
-	else
-		return APPMGRUG_TAB_DOWNLOAD;
-}
+//static void appmgrUg_on_destroy(ui_gadget_h ug, app_control_h service,
+//		void *priv)
+//{
+//	SettingAppMgrUG *ad = priv;
+//
+//	retm_if(NULL == ug || NULL == ad, "ug=%p, priv=%p is Invalid", ug, ad);
+//
+//	evas_object_event_callback_del(ad->lo_parent, EVAS_CALLBACK_RESIZE,
+//			appmgrUg_resize);
+//
+//	if (ad->runinfo_view->is_create)
+//		setting_view_destroy(ad->runinfo_view, ad);
+//	if (ad->pkginfo_view->is_create)
+//		setting_view_destroy(ad->pkginfo_view, ad);
+//	if (ad->main_view->is_create)
+//		setting_view_destroy(ad->main_view, ad);
+//
+//	if (ad->lo_main) {
+//		evas_object_del(ad->lo_main);
+//		ad->lo_main = NULL;
+//	}
+//}
 
-static void *appmgrUg_on_create(ui_gadget_h ug, enum ug_mode mode,
-		app_control_h service, void *priv)
+//static void appmgrUg_on_pause(ui_gadget_h ug, app_control_h service, void *priv)
+//{
+//	SettingAppMgrUG *ad = priv;
+//
+//	retm_if(NULL == ug || NULL == ad, "ug=%p, priv=%p is Invalid", ug, ad);
+//
+//	if (ad->runinfo_view->is_create)
+//		setting_view_update(ad->runinfo_view, ad);
+//}
+
+//static void appmgrUg_on_resume(ui_gadget_h ug, app_control_h service,
+//		void *priv)
+//{
+//	SettingAppMgrUG *ad = priv;
+//
+//	retm_if(NULL == ug || NULL == ad, "ug=%p, priv=%p is Invalid", ug, ad);
+//
+//	if (ad->pkginfo_view->is_create)
+//		setting_view_update(ad->pkginfo_view, ad);
+//	if (ad->main_view->is_create)
+//		setting_view_update(ad->main_view, ad);
+//
+//	evas_object_show(ad->lo_main);
+//}
+//
+//static void appmgrUg_on_event(ui_gadget_h ug, enum ug_event event,
+//		app_control_h service, void *priv)
+//{
+//	SettingAppMgrUG *ad = priv;
+//
+//	SETTING_TRACE_BEGIN;
+//	setting_retm_if(NULL == ad, "ad is NULL");
+//
+//	switch (event) {
+//	case UG_EVENT_LOW_MEMORY:
+//		break;
+//	case UG_EVENT_LOW_BATTERY:
+//		break;
+//	case UG_EVENT_LANG_CHANGE:
+//		setting_navi_items_update(ad->navi);
+//		break;
+//	case UG_EVENT_ROTATE_PORTRAIT:
+//	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
+//		break;
+//	case UG_EVENT_ROTATE_LANDSCAPE:
+//	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
+//		break;
+//	case UG_EVENT_REGION_CHANGE:
+//		break;
+//	default:
+//		break;
+//	}
+//}
+//
+//static void appmgrUg_on_key_event(ui_gadget_h ug, enum ug_key_event event,
+//		app_control_h service, void *priv)
+//{
+//	if (!ug)
+//		return;
+//
+//	switch (event) {
+//	case UG_KEY_EVENT_END:
+//		ug_destroy_me(ug);
+//		break;
+//	default:
+//		break;
+//	}
+//}
+//
+//UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
+//{
+//	SettingAppMgrUG *ad;
+//
+//	retv_if(NULL == ops, -1);
+//
+//	ad = calloc(1, sizeof(SettingAppMgrUG));
+//	if (NULL == ad) {
+//		SETTING_TRACE_ERROR("calloc() Fail");
+//		return -1;
+//	}
+//
+//	ops->create = appmgrUg_on_create;
+//	ops->start = NULL;
+//	ops->pause = appmgrUg_on_pause;
+//	ops->resume = appmgrUg_on_resume;
+//	ops->destroy = appmgrUg_on_destroy;
+//	ops->message = NULL;
+//	ops->event = appmgrUg_on_event;
+//	ops->key_event = appmgrUg_on_key_event;
+//	ops->priv = ad;
+//	ops->opt = UG_OPT_INDICATOR_ENABLE;
+//
+//	return 0;
+//}
+//
+//UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
+//{
+//	ret_if(NULL == ops);
+//
+//	FREE(ops->priv);
+//}
+//
+//UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
+//		char **applocale)
+//{
+//	int i, size;
+//	Setting_Cfg_Node_T *node;
+//	Eina_List **pplist = priv;
+//	char ug_args[APPMGRUG_MAX_STR_LEN];
+//	const Setting_Cfg_Node_T search_configs[] = { {
+//	MGRAPP_STR_DOWNLOADS,
+//	NULL,
+//	NULL, 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node,
+//	NULL,
+//	NULL,
+//	NULL,
+//	NULL }, {
+//	MGRAPP_STR_RUNNING,
+//	NULL,
+//	NULL, 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node,
+//	NULL,
+//	NULL,
+//	NULL,
+//	NULL }, {
+//	MGRAPP_STR_ALL,
+//	NULL,
+//	NULL, 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node,
+//	NULL,
+//	NULL,
+//	NULL,
+//	NULL }, };
+//
+//	retv_if(NULL == priv, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+//	retv_if(NULL == applocale, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+//
+//	size = sizeof(search_configs) / sizeof(Setting_Cfg_Node_T);
+//
+//	for (i = 0; i < size; i++) {
+//		snprintf(ug_args, APPMGRUG_MAX_STR_LEN, "keyword:%s",
+//				search_configs[i].key_name);
+//		node = setting_plugin_search_item_subindex_add(
+//				search_configs[i].key_name,
+//				ug_args,
+//				IMG_Applications,
+//				search_configs[i].item_type,
+//				search_configs[i].data, "Application Manager");
+//
+//		*pplist = eina_list_append(*pplist, node);
+//	}
+//	return 0;
+//}
+
+/*****************************************************************************/
+
+static void _setting_appmgr_app_control_cb(app_control_h app_control, void *data)
 {
 	SETTING_TRACE_BEGIN;
+}
 
-	char *viewtype = NULL;
-	SettingAppMgrUG *ad = priv;
-	char *search_keyword = NULL;
+static bool _setting_appmgr_app_create(void *data)
+{
+	SETTING_TRACE_BEGIN;
+	setting_retvm_if(NULL == data, false, "!data");
 
-	retvm_if(NULL == ug || NULL == ad, NULL, "ug=%p, priv=%p is Invalid",
-			ug, ad);
+	SettingAppMgrUG *appmgr_ad = (SettingAppMgrUG *)data;
 
-	bindtextdomain(SETTING_PACKAGE, SETTING_LOCALEDIR);
-	textdomain(SETTING_PACKAGE);
-
-	ad->ug = ug;
-	ad->win = ug_get_window();
-	ad->lo_parent = ug_get_parent_layout(ug);
-	if (NULL == ad->lo_parent) {
-		SETTING_TRACE_ERROR("ug_get_parent_layout(ug) Fail");
-		return NULL;
+	setting_set_i18n("setting", APPMGR_LOCALEDIR);
+	SETTING_TRACE_BEGIN;
+	SETTING_TRACE_BEGIN;
+	if (app_init(&appmgr_ad->md, SETTING_APPMGR_PACKAGE_NAME)
+				!= SETTING_RETURN_SUCCESS) {
+		SETTING_TRACE_ERROR("Cannot initialize application");
+		return false;
 	}
+	evas_object_smart_callback_add(appmgr_ad->md.win_main, "delete,request",
+                                   _main_win_del_cb, appmgr_ad);
+
+	appmgrUg_init_itcs(appmgr_ad);
+
+//	Create base Layout
+	appmgrUg_main_init(appmgr_ad);
+	appmgrUg_pkginfo_init(appmgr_ad);
+	appmgrUg_appinfo_init(appmgr_ad);
+
+//	setting_view_create(&setting_view_appmgr_main, appmgr_ad);
+	evas_object_event_callback_add(appmgr_ad->md.win_main,
+									EVAS_CALLBACK_RESIZE,
+									appmgrUg_resize, appmgr_ad);
 
 
-	ad->current_rotation = elm_win_rotation_get(ad->win);
-	SETTING_TRACE_DEBUG("ad->current_rotation:%d", ad->current_rotation);
-	if (elm_win_wm_rotation_supported_get(ad->win)) {
-		int rots[4] = { 0, 90, 180, 270 }; /* rotation value that app
-		may want */
-		elm_win_wm_rotation_available_rotations_set(ad->win, rots, 4);
-	}
-	evas_object_smart_callback_add(ad->win, "wm,rotation,changed",
-			_rot_changed_cb, ad);
+//	app_control_get_extra_data(app_control, "viewtype", &viewtype);
+//	app_control_get_extra_data(app_control, "keyword", &search_keyword);
 
-
-	appmgrUg_main_init(ad);
-	appmgrUg_pkginfo_init(ad);
-	appmgrUg_appinfo_init(ad);
-
-	appmgrUg_init_itcs(ad);
-
-	ad->lo_main = setting_create_win_layout(ad->win);
-	ad->navi = appmgrUg_create_navi(ad->lo_main, ad);
-	if (NULL == ad->navi) {
-		SETTING_TRACE_ERROR("calloc() Fail");
-		return NULL;
-	}
-	elm_object_part_content_set(ad->lo_main, "elm.swallow.content",
-			ad->navi);
-
-	app_control_get_extra_data(service, "viewtype", &viewtype);
-	app_control_get_extra_data(service, "keyword", &search_keyword);
-
-	if (0 == safeStrCmp(viewtype, "application-info")) {
-		/*register view table */
-		setting_view_node_table_register(&setting_view_appmgr_pkginfo,
-		NULL);
-
-		SETTING_TRACE("viewtype : %s", viewtype);
-		char *pkgid = NULL;
-		app_control_get_extra_data(service, "pkgname", &pkgid);
-		SETTING_TRACE("pkgname : %s", pkgid);
-		ad->sel_pkgid = pkgid;
-		ad->sel_total = -1;
-		ad->sel_data_size = -1;
-		ad->support_taskmanager = TRUE;
-		ad->sel_is_disabled = FALSE;
-		ad->sel_icon = NULL;
-		ad->sel_label = NULL;
-		setting_view_create(ad->pkginfo_view, ad);
-	} else {
-		/*register view table */
+//	if (0 == safeStrCmp(viewtype, "application-info")) {
+//		/*register view table */
+//		setting_view_node_table_register(&setting_view_appmgr_pkginfo,
+//		NULL);
+//
+//		SETTING_TRACE("viewtype : %s", viewtype);
+//		char *pkgid = NULL;
+//		app_control_get_extra_data(app_control, "pkgname", &pkgid);
+//		SETTING_TRACE("pkgname : %s", pkgid);
+//		appmgr_ad->sel_pkgid = pkgid;
+//		appmgr_ad->sel_total = -1;
+//		appmgr_ad->sel_data_size = -1;
+//		appmgr_ad->support_taskmanager = TRUE;
+//		appmgr_ad->sel_is_disabled = FALSE;
+//		appmgr_ad->sel_icon = NULL;
+//		appmgr_ad->sel_label = NULL;
+//		setting_view_create(appmgr_ad->pkginfo_view, appmgr_ad);
+//	} else {
+//		/*register view table */
+	SETTING_TRACE_BEGIN;
 		setting_view_node_table_register(&setting_view_appmgr_main,
 		NULL);
+	SETTING_TRACE_BEGIN;
 		setting_view_node_table_register(&setting_view_appmgr_pkginfo,
 				&setting_view_appmgr_main);
 
-		ad->tabtype = appmgrUg_get_tabtype(search_keyword);
-		setting_view_create(ad->main_view, ad);
-	}
-	free(viewtype);
+//		appmgr_ad->tabtype = appmgrUg_get_tabtype(search_keyword);
+		SETTING_TRACE_BEGIN;
+		setting_view_create(appmgr_ad->main_view, appmgr_ad);
 
-	evas_object_event_callback_add(ad->lo_parent, EVAS_CALLBACK_RESIZE,
-			appmgrUg_resize, ad);
-	return ad->lo_main;
+//	}
+//	free(viewtype);
+
+	evas_object_smart_callback_add(appmgr_ad->md.win_main, "wm,rotation,changed",
+			_rot_changed_cb, appmgr_ad);
+
+	SETTING_TRACE_BEGIN;
+	return true;
+
+
+//	ad->lo_main = setting_create_win_layout(ad->win);
+//	ad->navi = appmgrUg_create_navi(ad->lo_main, ad);
+//	if (NULL == ad->navi) {
+//		SETTING_TRACE_ERROR("calloc() Fail");
+//		return NULL;
+//	}
+//	elm_object_part_content_set(ad->lo_main, "elm.swallow.content",
+//			ad->navi);
+//
+//	app_control_get_extra_data(service, "viewtype", &viewtype);
+//	app_control_get_extra_data(service, "keyword", &search_keyword);
+//
+//	if (0 == safeStrCmp(viewtype, "application-info")) {
+//		/*register view table */
+//		setting_view_node_table_register(&setting_view_appmgr_pkginfo,
+//		NULL);
+//
+//		SETTING_TRACE("viewtype : %s", viewtype);
+//		char *pkgid = NULL;
+//		app_control_get_extra_data(service, "pkgname", &pkgid);
+//		SETTING_TRACE("pkgname : %s", pkgid);
+//		ad->sel_pkgid = pkgid;
+//		ad->sel_total = -1;
+//		ad->sel_data_size = -1;
+//		ad->support_taskmanager = TRUE;
+//		ad->sel_is_disabled = FALSE;
+//		ad->sel_icon = NULL;
+//		ad->sel_label = NULL;
+//		setting_view_create(ad->pkginfo_view, ad);
+//	} else {
+//		/*register view table */
+//		setting_view_node_table_register(&setting_view_appmgr_main,
+//		NULL);
+//		setting_view_node_table_register(&setting_view_appmgr_pkginfo,
+//				&setting_view_appmgr_main);
+//
+//		ad->tabtype = appmgrUg_get_tabtype(search_keyword);
+//		setting_view_create(ad->main_view, ad);
+//	}
+//	free(viewtype);
+//
+//	evas_object_event_callback_add(ad->lo_parent, EVAS_CALLBACK_RESIZE,
+//			appmgrUg_resize, ad);
+//	return ad->lo_main;
+
 }
 
-static void appmgrUg_on_destroy(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void _setting_appmgr_app_terminate(void *data)
 {
-	SettingAppMgrUG *ad = priv;
-
-	retm_if(NULL == ug || NULL == ad, "ug=%p, priv=%p is Invalid", ug, ad);
-
-	evas_object_event_callback_del(ad->lo_parent, EVAS_CALLBACK_RESIZE,
-			appmgrUg_resize);
+	SETTING_TRACE_BEGIN;
+	SettingAppMgrUG *ad = (SettingAppMgrUG *)data;
+	retm_if(NULL == ad, "data=%p is Invalid", data);
 
 	if (ad->runinfo_view->is_create)
 		setting_view_destroy(ad->runinfo_view, ad);
@@ -324,163 +647,40 @@ static void appmgrUg_on_destroy(ui_gadget_h ug, app_control_h service,
 	if (ad->main_view->is_create)
 		setting_view_destroy(ad->main_view, ad);
 
-	if (ad->lo_main) {
-		evas_object_del(ad->lo_main);
-		ad->lo_main = NULL;
+	SETTING_TRACE_DEBUG("!!! After setting_view_destroy");
+	if (ad->md.win_main) {
+		evas_object_del(ad->md.win_main);
+		ad->md.win_main = NULL;
 	}
 }
 
-static void appmgrUg_on_pause(ui_gadget_h ug, app_control_h service, void *priv)
+static void _setting_appmgr_app_on_pause(void *data)
 {
-	SettingAppMgrUG *ad = priv;
-
-	retm_if(NULL == ug || NULL == ad, "ug=%p, priv=%p is Invalid", ug, ad);
-
-	if (ad->runinfo_view->is_create)
-		setting_view_update(ad->runinfo_view, ad);
-}
-
-static void appmgrUg_on_resume(ui_gadget_h ug, app_control_h service,
-		void *priv)
-{
-	SettingAppMgrUG *ad = priv;
-
-	retm_if(NULL == ug || NULL == ad, "ug=%p, priv=%p is Invalid", ug, ad);
-
-	if (ad->pkginfo_view->is_create)
-		setting_view_update(ad->pkginfo_view, ad);
-	if (ad->main_view->is_create)
-		setting_view_update(ad->main_view, ad);
-
-	evas_object_show(ad->lo_main);
-}
-
-static void appmgrUg_on_event(ui_gadget_h ug, enum ug_event event,
-		app_control_h service, void *priv)
-{
-	SettingAppMgrUG *ad = priv;
-
 	SETTING_TRACE_BEGIN;
-	setting_retm_if(NULL == ad, "ad is NULL");
-
-	switch (event) {
-	case UG_EVENT_LOW_MEMORY:
-		break;
-	case UG_EVENT_LOW_BATTERY:
-		break;
-	case UG_EVENT_LANG_CHANGE:
-		setting_navi_items_update(ad->navi);
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT:
-	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE:
-	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-		break;
-	case UG_EVENT_REGION_CHANGE:
-		break;
-	default:
-		break;
-	}
 }
 
-static void appmgrUg_on_key_event(ui_gadget_h ug, enum ug_key_event event,
-		app_control_h service, void *priv)
+static void _setting_appmgr_app_on_resume(void *data)
 {
-	if (!ug)
-		return;
-
-	switch (event) {
-	case UG_KEY_EVENT_END:
-		ug_destroy_me(ug);
-		break;
-	default:
-		break;
-	}
+	SETTING_TRACE_BEGIN;
 }
 
-UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
+EXPORT_PUBLIC
+int main(int argc, char *argv[])
 {
-	SettingAppMgrUG *ad;
+	SettingAppMgrUG appmgr_ad;
 
-	retv_if(NULL == ops, -1);
+	ui_app_lifecycle_callback_s ops = {
+        .create = _setting_appmgr_app_create,
+        .pause = _setting_appmgr_app_on_pause,
+        .resume = _setting_appmgr_app_on_resume,
+        .terminate = _setting_appmgr_app_terminate,
+        .app_control = _setting_appmgr_app_control_cb,
+    };
 
-	ad = calloc(1, sizeof(SettingAppMgrUG));
-	if (NULL == ad) {
-		SETTING_TRACE_ERROR("calloc() Fail");
-		return -1;
-	}
+    memset(&appmgr_ad, 0x00, sizeof(SettingAppMgrUG));
+	int r = 0;
+    r = ui_app_main(argc, argv, &ops, &appmgr_ad);
+    retv_if(r == -1, -1);
 
-	ops->create = appmgrUg_on_create;
-	ops->start = NULL;
-	ops->pause = appmgrUg_on_pause;
-	ops->resume = appmgrUg_on_resume;
-	ops->destroy = appmgrUg_on_destroy;
-	ops->message = NULL;
-	ops->event = appmgrUg_on_event;
-	ops->key_event = appmgrUg_on_key_event;
-	ops->priv = ad;
-	ops->opt = UG_OPT_INDICATOR_ENABLE;
-
-	return 0;
-}
-
-UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
-{
-	ret_if(NULL == ops);
-
-	FREE(ops->priv);
-}
-
-UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
-		char **applocale)
-{
-	int i, size;
-	Setting_Cfg_Node_T *node;
-	Eina_List **pplist = priv;
-	char ug_args[APPMGRUG_MAX_STR_LEN];
-	const Setting_Cfg_Node_T search_configs[] = { {
-	MGRAPP_STR_DOWNLOADS,
-	NULL,
-	NULL, 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node,
-	NULL,
-	NULL,
-	NULL,
-	NULL }, {
-	MGRAPP_STR_RUNNING,
-	NULL,
-	NULL, 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node,
-	NULL,
-	NULL,
-	NULL,
-	NULL }, {
-	MGRAPP_STR_ALL,
-	NULL,
-	NULL, 0, Cfg_Item_unResetable, 0, Cfg_Item_View_Node,
-	NULL,
-	NULL,
-	NULL,
-	NULL }, };
-
-	retv_if(NULL == priv, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	retv_if(NULL == applocale, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-
-	*applocale = strdup("setting:"_TZ_SYS_RO_APP\
-			"/org.tizen.setting/res/locale");
-
-	size = sizeof(search_configs) / sizeof(Setting_Cfg_Node_T);
-
-	for (i = 0; i < size; i++) {
-		snprintf(ug_args, APPMGRUG_MAX_STR_LEN, "keyword:%s",
-				search_configs[i].key_name);
-		node = setting_plugin_search_item_subindex_add(
-				search_configs[i].key_name,
-				ug_args,
-				IMG_Applications,
-				search_configs[i].item_type,
-				search_configs[i].data, "Application Manager");
-
-		*pplist = eina_list_append(*pplist, node);
-	}
-	return 0;
+    return 0;
 }
