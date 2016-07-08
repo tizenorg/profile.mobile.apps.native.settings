@@ -153,7 +153,6 @@
 #define KeyStr_Select_Item	"IDS_ST_HEADER_SELECT_VIBRATION_PATTERNS_ABB"
 #define KeyStr_INFO			"IDS_PB_BODY_INFO"
 #define KeyStr_DeviceMange		"IDS_ST_HEADER_DEVICE_MANAGER"
-#define KeyStr_Regulatory_Info		"IDS_ST_BODY_REGULATORY_INFORMATION_ABB"
 #define KeyStr_Loading			"IDS_ST_POP_LOADING_ING"
 
 #endif /* __SETTING_COMMON_STRING_H__ */
