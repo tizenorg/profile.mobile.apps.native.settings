@@ -663,7 +663,6 @@ int __setting_init_search_index_module()
 		"setting-privacy-efl", /* NO CODE !!! */
 		"isfsetting-efl", /* NO CODE !!! */
 		"setting-developeroption-efl", /* NO CODE !!! */
-		"setting-about-efl", /* NO CODE !!! */
 		"setting-network-efl", /*finish */
 		"setting-datausage-efl",
 		"setting-fingerscanner-efl",

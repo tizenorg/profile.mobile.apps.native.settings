@@ -65,14 +65,6 @@ setting_view setting_view_about_main = {
 		.update = setting_about_main_update,
 		.cleanup = setting_about_main_cleanup, };
 
-void __setting_about_gl_realized_cb(void *data, Evas_Object *obj,
-		void *event_info)
-{
-	/*SETTING_TRACE_BEGIN; */
-	setting_retm_if(event_info == NULL,
-			"invalid parameter: event_info is NULL");
-}
-
 /**
  * @brief popup response callback fuc.
  *
@@ -89,7 +81,7 @@ static void __setting_about_popup_rsp_cb(void *data, Evas_Object *obj,
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(obj == NULL, "obj parameter is NULL");
 	setting_retm_if(data == NULL, "Data parameter is NULL");
-	SettingAboutUG *ad = (SettingAboutUG *)data;
+	SettingAbout *ad = (SettingAbout *)data;
 	/*Evas_Object *popup = data; */
 	switch (btn_type(obj)) {
 	case POPUP_RESPONSE_OK: {
@@ -146,7 +138,7 @@ static void __setting_about_popup_rsp_cb(void *data, Evas_Object *obj,
 static Eina_Bool __setting_about_popup_remove_delay(void *data)
 {
 	SETTING_TRACE_BEGIN;
-	SettingAboutUG *ad = data;
+	SettingAbout *ad = data;
 	if (ad->popup_space) {
 		evas_object_del(ad->popup_space);
 		ad->popup_space = NULL;
@@ -169,7 +161,7 @@ static void __setting_about_popup_del_cb(void *data, Evas *e, Evas_Object *obj,
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
-	SettingAboutUG *ad = (SettingAboutUG *)data;
+	SettingAbout *ad = (SettingAbout *)data;
 	ad->popup = NULL;
 	ad->popup_showed_flag = FALSE;
 }
@@ -183,7 +175,7 @@ static Eina_Bool __setting_about_popup_show_delay(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	retvm_if(data == NULL, FALSE, "Data parameter is NULL");
-	SettingAboutUG *ad = (SettingAboutUG *)data;
+	SettingAbout *ad = (SettingAbout *)data;
 
 	/* popup the message and display the original name if the input is
 	 * empty*/
@@ -191,7 +183,7 @@ static Eina_Bool __setting_about_popup_show_delay(void *data)
 
 	if (NULL == ad->popup) {
 		ad->popup_showed_flag = true;
-		ad->popup = setting_create_popup(ad, ad->win_get,
+		ad->popup = setting_create_popup(ad, ad->md.win_main,
 				"IDS_ST_HEADER_ENTER_VALID_DEVICE_NAME_ABB",
 				"IDS_ST_POP_YOU_MUST_ENTER_A_DEVICE_NAME",
 				__setting_about_popup_rsp_cb, 0, FALSE, FALSE,
@@ -215,7 +207,7 @@ static void __setting_about_popup_mobile_ap_turn_off_ask_resp_cb(void *data,
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "Data parameter is NULL");
-	SettingAboutUG *ad = (SettingAboutUG *)data;
+	SettingAbout *ad = (SettingAbout *)data;
 	int response_type = btn_type(obj);
 
 	if (POPUP_RESPONSE_OK == response_type) {
@@ -272,19 +264,19 @@ static void __setting_about_popup_regulatory_info(void *data)
 	SETTING_TRACE_BEGIN;
 
 	Evas_Object *popup;
-	SettingAboutUG *ad;
+	SettingAbout *ad;
 	Evas_Object *layout;
 	Evas_Object *icon;
 	Evas_Object *btn1;
 	char buf[4096];
 
-	ad = (SettingAboutUG *)data;
-	popup = elm_popup_add(ad->win_main_layout);
+	ad = (SettingAbout *)data;
+	popup = elm_popup_add(ad->md.ly_main);
 	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK,
 			eext_popup_back_cb, NULL);
 
 	elm_object_part_text_set(popup, "title,text",
-			_(KeyStr_Regulatory_Info));
+			_("IDS_ST_BODY_REGULATORY_INFORMATION_ABB"));
 	layout = elm_layout_add(popup);
 	elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME,
 			"popup_center_image");
@@ -769,7 +761,7 @@ static void setting_about_naviframe_btn_done_cb(void *data, Evas_Object *obj,
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "data is NULL");
-	SettingAboutUG *ad = (SettingAboutUG *)data;
+	SettingAbout *ad = (SettingAbout *)data;
 	if (ad->item_dev_name && ad->item_dev_name->eo_check) {
 		const char *entry_str = NULL;
 		char *entry_str_utf8 = NULL;
@@ -796,7 +788,7 @@ static void setting_about_naviframe_btn_done_cb(void *data, Evas_Object *obj,
 		}
 		FREE(entry_str_utf8);
 	}
-	elm_naviframe_item_pop(ad->navi_bar);
+	elm_naviframe_item_pop(ad->md.navibar_main);
 	SETTING_TRACE_END;
 }
 
@@ -812,7 +804,7 @@ static void setting_about_naviframe_btn_cancel_cb(void *data, Evas_Object *obj,
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "data is NULL");
-	SettingAboutUG *ad = (SettingAboutUG *)data;
+	SettingAbout *ad = (SettingAbout *)data;
 	if (ad->item_dev_name && ad->item_dev_name->eo_check) {
 		char *name = NULL;
 		char *pa_sub_desc = NULL;
@@ -843,7 +835,7 @@ static void setting_about_naviframe_btn_cancel_cb(void *data, Evas_Object *obj,
 					EINA_FALSE);
 		}
 	}
-	elm_naviframe_item_pop(ad->navi_bar);
+	elm_naviframe_item_pop(ad->md.navibar_main);
 	SETTING_TRACE_END;
 }
 static void __setting_about_main_popup_cb(void *data, Evas_Object *obj,
@@ -852,7 +844,7 @@ static void __setting_about_main_popup_cb(void *data, Evas_Object *obj,
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(obj == NULL, "obj parameter is NULL");
 	setting_retm_if(data == NULL, "Data parameter is NULL");
-	SettingAboutUG *ad = (SettingAboutUG *)data;
+	SettingAbout *ad = (SettingAbout *)data;
 
 	switch (btn_type(obj)) {
 	case POPUP_RESPONSE_OK: {
@@ -884,7 +876,7 @@ static void __setting_about_entry_changed_cb(void *data, Evas_Object *obj)
 	/*return if entry is not focused too */
 
 	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *)data;
-	SettingAboutUG *ad = list_item->userdata;
+	SettingAbout *ad = list_item->userdata;
 	retm_if(ad == NULL, "Data parameter is NULL");
 
 	const char *entry_str = elm_entry_entry_get(obj);
@@ -938,7 +930,7 @@ static void __setting_about_entry_device_name_changed_cb(void *data,
 	setting_retm_if(data == NULL, "data is NULL");
 	Setting_GenGroupItem_Data *list_item =
 			(Setting_GenGroupItem_Data *)data;
-	SettingAboutUG *ad = list_item->userdata;
+	SettingAbout *ad = list_item->userdata;
 	retm_if(ad == NULL, "Data parameter is NULL");
 
 	/* 1. entry is empty */
@@ -992,7 +984,7 @@ static void __setting_about_entry_focused(void *data, Evas_Object *obj,
 	elm_access_say((char *)str);
 	eina_stringshare_del(str);
 
-	SettingAboutUG *ad = item_dev_name->userdata;
+	SettingAbout *ad = item_dev_name->userdata;
 	retm_if(!ad, "ad parameter is NULL");
 	Ecore_IMF_Context *imf_context =
 			(Ecore_IMF_Context *)elm_entry_imf_context_get(
@@ -1021,7 +1013,7 @@ static void __setting_about_entry_unfocus_cb(void *data, Evas_Object *obj,
 			VCONFKEY_SETAPPL_DEVICE_NAME_STR);
 
 	Setting_GenGroupItem_Data *item_dev_name = data;
-	SettingAboutUG *ad = item_dev_name->userdata;
+	SettingAbout *ad = item_dev_name->userdata;
 
 	if (isSpaceStr(entry_str)) {
 		if (!ad->empty_flag)
@@ -1075,7 +1067,7 @@ static void __setting_about_entry_max_len_reached(void *data, Evas_Object *obj,
 	Setting_GenGroupItem_Data *list_item = (Setting_GenGroupItem_Data *)data;
 	list_item->maxLengthReachFlag = true;
 
-	SettingAboutUG *ad = list_item->userdata;
+	SettingAbout *ad = list_item->userdata;
 	if (list_item->maxLengthReachFlag
 			&& list_item->enterKeyPressFlag == FALSE) {
 
@@ -1087,7 +1079,7 @@ static void __setting_about_entry_max_len_reached(void *data, Evas_Object *obj,
 					_("IDS_ST_POP_THE_MAXIMUM_NUMBERS_OF_CHARACTERS_FOR_YOUR_DEVICE_NAME_HPD_HAS_BEEN_EXCEEDED"),
 					MAX_DEVICE_NAME_LEN);
 
-			ad->popup_space = setting_create_popup(ad, ad->win_get,
+			ad->popup_space = setting_create_popup(ad, ad->md.win_main,
 					"IDS_ST_HEADER_ENTER_VALID_DEVICE_NAME_ABB",
 					strMax, __setting_about_main_popup_cb,
 					0, FALSE, FALSE, 1,
@@ -1110,7 +1102,7 @@ static void __setting_about_entry_input_panel_event_cb(void *data,
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
 	retm_if(ctx == NULL, "obj parameter is NULL");
-	SettingAboutUG *ad = (SettingAboutUG *)data;
+	SettingAbout *ad = (SettingAbout *)data;
 
 	if (value == ECORE_IMF_INPUT_PANEL_STATE_SHOW) {
 		SETTING_TRACE("value == ECORE_IMF_INPUT_PANEL_STATE_SHOW");
@@ -1131,13 +1123,13 @@ static void __setting_about_entry_input_panel_event_cb(void *data,
 			ad->idler_remove_popup = ecore_idler_add(
 					__setting_about_popup_remove_delay, ad);
 		}
-		elm_object_focus_set(ad->navi_bar, EINA_FALSE);
+		elm_object_focus_set(ad->md.navibar_main, EINA_FALSE);
 
 	}
 }
 
 /**
- * @brief aboutUG vconf changed callback
+ * @brief ad vconf changed callback
  *
  * @param key the changed vconf key node.
  * @param data application data
@@ -1148,7 +1140,7 @@ static void __setting_about_main_vconf_change_cb(keynode_t *key, void *data)
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(NULL == key, "key is NULL");
 	setting_retm_if(NULL == data, "data is NULL");
-	SettingAboutUG *ad = (SettingAboutUG *)data;
+	SettingAbout *ad = (SettingAbout *)data;
 
 	int status = vconf_keynode_get_int(key);
 	char *vconf_name = vconf_keynode_get_name(key);
@@ -1227,92 +1219,21 @@ static void __setting_about_main_vconf_change_cb(keynode_t *key, void *data)
 }
 
 /**
- * @brief UG destroy callback
- *
- * @param ug the UG which is needed to be destoried
- * @param priv application data
- */
-static void __destroy_ug_cb(ui_gadget_h ug, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-
-	/* restore the '<-' button on the navigate bar */
-	ret_if(!priv);
-	SettingAboutUG *ad = (SettingAboutUG *)priv; /* ad is point to priv */
-
-	if (ug) {
-		setting_ug_destroy(ug);
-		ad->ug_loading = NULL;
-	}
-	elm_object_tree_focus_allow_set(ad->ly_main, EINA_TRUE);
-}
-
-/**
- * @brief Lunch cetificates UG(setting-manage-certificates-efl)
+ * @brief Lunch cetificates (setting-manage-certificates-efl)
  *
  * @param data application data
  */
 static void __setting_about_main_certificates_clicked(void *data)
 {
+	app_control_h svc = NULL;
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
-	SettingAboutUG *ad = (SettingAboutUG *)data;
 
-	struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
-	ret_if(!cbs);
-
-	cbs->layout_cb = setting_about_layout_ug_cb;
-	cbs->result_cb = NULL;
-	cbs->destroy_cb = __destroy_ug_cb;
-	cbs->priv = (void *)ad;
-
-	elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
-	ad->ug_loading = setting_ug_create(ad->ug,
-			"setting-manage-certificates-efl", UG_MODE_FULLVIEW,
-			NULL, cbs);
-
-	if (NULL == ad->ug_loading) { /* error handling */
-		SETTING_TRACE_ERROR("NULL == ad->ug_loading");
-	}
-	FREE(cbs);
-}
-
-/**
- * @brief Lunch UG setting-phone-efl
- *
- * @param data application context
- */
-static void __setting_about_main_licence_launch(void *data)
-{
-	SETTING_TRACE_BEGIN;
-	retm_if(data == NULL, "Data parameter is NULL");
-	SettingAboutUG *ad = (SettingAboutUG *)data;
-
-	app_control_h svc;
 	ret_if(app_control_create(&svc));
 
-	app_control_add_extra_data(svc, "viewtype", "license");
-
-	struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
-	if (!cbs) {
-		app_control_destroy(svc);
-		return;
-	}
-
-	cbs->layout_cb = setting_about_layout_ug_cb;
-	cbs->result_cb = NULL;
-	cbs->destroy_cb = __destroy_ug_cb;
-	cbs->priv = (void *)ad;
-
-	elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
-	ad->ug_loading = setting_ug_create(ad->ug, "setting-phone-efl",
-			UG_MODE_FULLVIEW, svc, cbs);
-
-	if (NULL == ad->ug_loading) { /* error handling */
-		SETTING_TRACE_ERROR("NULL == ad->ug_loading");
-	}
+	app_control_set_app_id(svc, "setting-manage-certificates-efl");
+	app_control_send_launch_request(svc, NULL, NULL);
 	app_control_destroy(svc);
-	FREE(cbs);
 }
 
 /**
@@ -1398,7 +1319,7 @@ void setting_about_main_exp_cb(void *data, Evas_Object *obj, void *event_info)
 	setting_retm_if(data == NULL, "Data parameter is NULL");
 	setting_retm_if(event_info == NULL, "event_info parameter is NULL");
 
-	SettingAboutUG *ad = (SettingAboutUG *)data;
+	SettingAbout *ad = (SettingAbout *)data;
 	Elm_Object_Item *parentItem = event_info; /* parent item */
 	Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(
 			parentItem);
@@ -1451,13 +1372,14 @@ void setting_about_main_exp_cb(void *data, Evas_Object *obj, void *event_info)
  * @param obj evas object
  * @param event_info event type
  */
-static Eina_Bool setting_about_main_click_softkey_back_cb(void *data,
+static void setting_about_main_click_softkey_back_cb(void *data,
 		Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	setting_retvm_if(data == NULL, EINA_FALSE, "Data parameter is NULL");
-	SettingAboutUG *ad = (SettingAboutUG *)data;
-	retv_if(ad->empty_flag, EINA_FALSE);
+	SettingAbout *ad = (SettingAbout *)data;
+
+	if(!ad || !!ad->empty_flag)
+		return;
 
 	/* imf must be hided before view is destroyed. */
 	/* Following code is just to improve the hiding speed. If not add these
@@ -1467,11 +1389,6 @@ static Eina_Bool setting_about_main_click_softkey_back_cb(void *data,
 		elm_object_focus_set(ad->item_dev_name->eo_check, EINA_FALSE);
 		setting_hide_input_pannel_cb(ad->item_dev_name->eo_check);
 	}
-
-	/* Send destroy request */
-	ug_destroy_me(ad->ug);
-
-	return EINA_FALSE;
 }
 
 static Eina_Bool __setting_about_child_view_back_cb(void *data,
@@ -1481,7 +1398,7 @@ static Eina_Bool __setting_about_child_view_back_cb(void *data,
 	/* error check */
 	retvm_if(data == NULL, EINA_TRUE, "Data parameter is NULL");
 
-	SettingAboutUG *ad = data;
+	SettingAbout *ad = data;
 	if (ad->empty_flag) {
 		return EINA_FALSE;
 	} else {
@@ -1505,7 +1422,7 @@ static Eina_Bool __setting_about_name_view_key_down(void *data, int type,
 
 	retv_if(!ev || !data, ECORE_CALLBACK_RENEW);
 
-	SettingAboutUG *ad = data;
+	SettingAbout *ad = data;
 	if (!strcmp(ev->keyname, "XF86Back"))
 		setting_about_naviframe_btn_cancel_cb(ad, NULL, NULL);
 
@@ -1518,7 +1435,7 @@ static Eina_Bool setting_about_name_focus_update_cb(void *data)
 	/* error check */
 	setting_retvm_if(data == NULL, ECORE_CALLBACK_RENEW,
 			"Data parameter is NULL");
-	SettingAboutUG *ad = data;
+	SettingAbout *ad = data;
 	if (ad->item_dev_name && ad->item_dev_name->eo_check) {
 		evas_object_show(ad->item_dev_name->eo_check);
 		elm_object_focus_set(ad->item_dev_name->eo_check, EINA_TRUE);
@@ -1528,7 +1445,154 @@ static Eina_Bool setting_about_name_focus_update_cb(void *data)
 	} else {
 		return ECORE_CALLBACK_RENEW;
 	}
+}
 
+
+static Evas_Object *__add_entry_without_layout(
+		Setting_GenGroupItem_Data *item_data, Evas_Object *parent)
+{
+	SETTING_TRACE_BEGIN;
+
+	/* resolve abnormal height issue */
+	elm_genlist_mode_set(parent, ELM_LIST_COMPRESS);
+	Evas_Object *entry = NULL;
+	item_data->eo_check = entry = elm_entry_add(parent);
+	if (item_data->isPasswordFlag)
+		elm_entry_password_set(entry, EINA_TRUE);
+	else if (item_data->isSinglelineFlag)
+		elm_entry_single_line_set(entry, EINA_TRUE);
+	else
+		elm_entry_single_line_set(entry, EINA_FALSE);
+
+	evas_object_size_hint_weight_set(entry, EVAS_HINT_EXPAND,
+			EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(entry, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	if (item_data->focus_unallowed)
+		elm_object_focus_allow_set(entry, EINA_FALSE);
+
+	elm_entry_input_panel_layout_set(entry, item_data->input_type);
+	elm_entry_prediction_allow_set(entry, FALSE);
+	elm_entry_input_panel_return_key_type_set(entry,
+			item_data->return_key_type);
+	if (item_data->disable_auto_cap) {
+		elm_entry_autocapital_type_set(entry,
+				ELM_AUTOCAPITAL_TYPE_NONE);
+	}
+
+	if (item_data->isSinglelineFlag) {
+		elm_entry_scrollable_set(entry, EINA_TRUE);
+		elm_entry_single_line_set(entry, EINA_TRUE);
+		elm_object_signal_emit(entry, "elm,state,scroll,enabled", "");
+	}
+
+	if (item_data->limit_filter_data) {
+		elm_entry_markup_filter_append(entry,
+				elm_entry_filter_limit_size,
+				item_data->limit_filter_data);
+
+		if (item_data->maxlength_reached_cb) {
+			evas_object_smart_callback_add(entry,
+					"maxlength,reached",
+					item_data->maxlength_reached_cb,
+					item_data);
+		}
+	}
+
+	/*SETTING_TRACE("item_data->stop_change_cb:%p",
+	 * item_data->stop_change_cb); */
+	if (item_data->stop_change_cb) {/*invoked when stop focusing on */
+		evas_object_smart_callback_add(entry, "unfocused",
+				item_data->stop_change_cb, item_data);
+	}
+
+	if (item_data->digits_filter_data) {
+		elm_entry_markup_filter_append(entry,
+				elm_entry_filter_accept_set,
+				item_data->digits_filter_data);
+	}
+
+	if (item_data->sub_desc && safeStrLen(item_data->sub_desc) > 0) {
+		elm_entry_entry_set(entry, item_data->sub_desc);
+	} else {
+		if (item_data->guide_text) {
+			/* Add guide text to elm_entry. */
+			elm_object_part_text_set(entry, "elm.guide",
+					_(item_data->guide_text));
+		} else {
+			elm_object_part_text_set(entry, "elm.guide",
+					_("IDS_ST_BODY_TAP_TO_INSERT"));
+		}
+	}
+
+	/* for Setting App, All the entrys's context popup shouldn't be able */
+	/* to insert images, text is the only one can be inserted. */
+	elm_entry_cnp_mode_set(entry, ELM_CNP_MODE_PLAINTEXT);
+
+	if (item_data->chk_change_cb) {
+		evas_object_smart_callback_add(entry, "changed",
+				item_data->chk_change_cb, item_data);
+		evas_object_smart_callback_add(entry, "preedit,changed",
+				item_data->chk_change_cb, item_data);
+	}
+
+	/* callback for handling enter key */
+	if (item_data->activated_cb) {
+		evas_object_smart_callback_add(entry, "activated",
+				item_data->activated_cb, item_data);
+	}
+
+	/*SETTING_TRACE("item_data->focus_cb:%p", item_data->focus_cb); */
+
+	if (item_data->focus_cb) {
+		evas_object_smart_callback_add(entry, "focused",
+				item_data->focus_cb, item_data);
+	}
+
+	if (item_data->start_change_cb) {
+		evas_object_event_callback_add(entry, EVAS_CALLBACK_KEY_DOWN,
+				(Evas_Object_Event_Cb)(item_data->start_change_cb),
+				item_data->userdata);
+	}
+
+	Ecore_IMF_Context *imf_context =
+			(Ecore_IMF_Context *)elm_entry_imf_context_get(
+			entry);
+	if (imf_context && item_data->x_callback_cb) {
+		ecore_imf_context_input_panel_event_callback_add(imf_context,
+				ECORE_IMF_INPUT_PANEL_STATE_EVENT,
+				item_data->x_callback_cb, item_data->userdata);
+	}
+	if (item_data->input_panel_disable_flag)
+		elm_entry_input_panel_enabled_set(entry, EINA_FALSE);
+
+	if (entry && item_data->entry_auto_focus) {
+		evas_object_show(entry);
+		elm_object_focus_set(entry, EINA_TRUE);
+	}
+
+	return entry;
+}
+
+static Evas_Object *_device_name_genlist_content_get(void *data, Evas_Object *genlist, const char *part)
+{
+	Evas_Object *layout = NULL;
+	retv_if(!data || !genlist, NULL);
+	if (!safeStrCmp(part, "elm.icon.entry")) {
+
+		layout = elm_layout_add(genlist);
+		elm_layout_file_set(layout, SETTING_ABOUT_EDJEDIR"/setting-theme.edj", "entry_layout");
+		evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND,
+				EVAS_HINT_EXPAND);
+		evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
+		setting_retvm_if(layout == NULL, FALSE, "layout == NULL");
+
+		Evas_Object *entry = __add_entry_without_layout(data, genlist);
+		elm_object_part_content_set(layout, "elm.swallow.content", entry);
+
+		return layout;
+	}
+
+	return NULL;
 }
 
 /**
@@ -1537,17 +1601,20 @@ static Eina_Bool setting_about_name_focus_update_cb(void *data)
 static void __setting_about_main_creat_name_view(void *data)
 {
 	SETTING_TRACE_BEGIN;
+	Evas_Object *list = NULL;
+	Evas_Object *btn = NULL;
+	Elm_Object_Item *navi_it = NULL;
+	Setting_GenGroupItem_Data *item_data = NULL;
+	SettingAbout *ad = data;
 	/* error check */
 	setting_retm_if(data == NULL, "Data parameter is NULL");
-	SettingAboutUG *ad = data;
 
-	Evas_Object *scroller = NULL;
-	scroller = elm_genlist_add(ad->navi_bar);
-	setting_retm_if(scroller == NULL,
-			"Cannot set scroller object  as content of layout");
-	elm_genlist_clear(scroller); /* first to clear list */
-	elm_genlist_mode_set(scroller, ELM_LIST_COMPRESS);
-	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb,
+	list = elm_genlist_add(ad->md.navibar_main);
+	setting_retm_if(list == NULL, "Cannot set scroller object  as content of layout");
+	elm_genlist_clear(list);	/* first to clear list */
+
+	elm_genlist_mode_set(list, ELM_LIST_COMPRESS);
+	evas_object_smart_callback_add(list, "realized", __gl_realized_cb,
 			NULL);
 
 	/* Device name */
@@ -1559,25 +1626,39 @@ static void __setting_about_main_creat_name_view(void *data)
 	if (NULL == pa_sub_desc || '\0' == pa_sub_desc[0])
 		ad->empty_flag = TRUE;
 
-	Setting_GenGroupItem_Data *item_data =
-			(Setting_GenGroupItem_Data *)calloc(
-					1, sizeof(Setting_GenGroupItem_Data));
+	elm_theme_extension_add(NULL, SETTING_ABOUT_EDJEDIR"/setting-genlist.edj");
+	setting_create_Gendial_itc(SETTING_GENLIST_ENTRY_STYLE,
+			&(ad->itc_editfield));
+	ad->itc_editfield.func.content_get =_device_name_genlist_content_get;
+
+	/* add genlist item here for the device name */
+	item_data = setting_create_Gendial_field_editfield(
+			list,
+			&(ad->itc_editfield),
+			NULL,
+			ad,
+			SWALLOW_Type_LAYOUT_EDITFIELD,
+			SETTING_ABOUT_DEVICE_NAME_STR,
+			pa_sub_desc,
+			__setting_about_entry_device_name_changed_cb,
+			__setting_about_entry_focused,
+			__setting_about_entry_unfocus_cb,
+			NULL,
+			__setting_about_entry_max_len_reached,
+			ELM_INPUT_PANEL_LAYOUT_NORMAL,
+			false,
+			TRUE,
+			MAX_DEVICE_NAME_LEN,
+			0,
+			NULL,
+			NULL);
+
 	if (!item_data)
 		FREE(pa_sub_desc);
 
 	setting_retm_if(!item_data, "calloc failed");
-
-	item_data->keyStr = (char *)g_strdup(SETTING_ABOUT_DEVICE_NAME_STR);
-	item_data->sub_desc = (char *)g_strdup(pa_sub_desc);
 	item_data->swallow_type = SWALLOW_Type_LAYOUT_EDITFIELD;
-	item_data->chk_status = 0;
-	item_data->chk_change_cb = __setting_about_entry_device_name_changed_cb;
-	item_data->userdata = ad;
-	/*item_data->isSinglelineFlag = FALSE; */
-	item_data->isSinglelineFlag = TRUE;
-	item_data->stop_change_cb = __setting_about_entry_unfocus_cb;
-	item_data->maxlength_reached_cb = __setting_about_entry_max_len_reached;
-	item_data->focus_cb = __setting_about_entry_focused;
+	item_data->isSinglelineFlag = FALSE;
 	item_data->x_callback_cb = __setting_about_entry_input_panel_event_cb;
 	item_data->guide_text = (char *)g_strdup(EMPTY_LIMITATION_STR);
 	item_data->focus_unallowed = get_tethering_status();
@@ -1587,9 +1668,8 @@ static void __setting_about_main_creat_name_view(void *data)
 			sizeof(Elm_Entry_Filter_Limit_Size));
 	if (item_data->limit_filter_data) {
 		/*max byte len is 32 -> MAX_DEVICE_NAME_LEN */
-		item_data->limit_filter_data->max_byte_count =
-				MAX_DEVICE_NAME_LEN;
-		item_data->win_main = ad->win_get;
+		item_data->limit_filter_data->max_byte_count = MAX_DEVICE_NAME_LEN;
+		item_data->win_main = ad->md.win_main;
 	} else {
 		SETTING_TRACE_ERROR("fail to calloc");
 	}
@@ -1601,12 +1681,7 @@ static void __setting_about_main_creat_name_view(void *data)
 	else
 		SETTING_TRACE_ERROR("fail to calloc");
 
-	item_data->input_panel_disable_flag = EINA_TRUE;
-
-	/* add genlist item here for the device name */
-	item_data->item = elm_genlist_item_append(scroller, &(itc_editfield),
-			item_data, NULL, ELM_GENLIST_ITEM_NONE,
-			NULL, ad);
+	item_data->input_panel_disable_flag = EINA_FALSE;
 
 	ad->item_dev_name = item_data;
 	if (ad->item_dev_name) {
@@ -1619,22 +1694,21 @@ static void __setting_about_main_creat_name_view(void *data)
 
 	FREE(pa_sub_desc);
 
-	Elm_Object_Item *navi_it = setting_push_layout_navi_bar(_(DEVICE_NAME),
-	NULL, NULL, NULL,
-	NULL, NULL, NULL, ad, scroller, ad->navi_bar, NULL);
+	navi_it = setting_push_layout_navi_bar(_(DEVICE_NAME),
+								NULL, NULL, NULL,
+								NULL, NULL, NULL, ad, list, ad->md.navibar_main, NULL);
 	elm_naviframe_item_pop_cb_set(navi_it,
 			__setting_about_child_view_back_cb, ad);
 
-	Evas_Object *btn;
 	/* Title Cancel Button */
-	btn = elm_button_add(ad->navi_bar);
+	btn = elm_button_add(ad->md.navibar_main);
 	elm_object_style_set(btn, "naviframe/title_cancel");
 	evas_object_smart_callback_add(btn, "clicked",
 			setting_about_naviframe_btn_cancel_cb, ad);
 	elm_object_item_part_content_set(navi_it, "title_left_btn", btn);
 
 	/* Title Done Button */
-	btn = elm_button_add(ad->navi_bar);
+	btn = elm_button_add(ad->md.navibar_main);
 	elm_object_style_set(btn, "naviframe/title_done");
 	evas_object_smart_callback_add(btn, "clicked",
 			setting_about_naviframe_btn_done_cb, ad);
@@ -1672,17 +1746,21 @@ static void setting_about_main_mouse_up_Gendial_list_cb(void *data,
 	if (!safeStrCmp("IDS_ST_HEADER_MANAGE_CERTIFICATES_ABB",
 			list_item->keyStr)) {
 		__setting_about_main_certificates_clicked(data);
-	} else if (!safeStrCmp(KeyStr_Regulatory_Info, list_item->keyStr)) {
+	} else if (!safeStrCmp("IDS_ST_BODY_REGULATORY_INFORMATION_ABB",
+			list_item->keyStr)) {
 		__setting_about_popup_regulatory_info(data);
 	} else if (!safeStrCmp("IDS_ST_MBODY_LEGAL_INFORMATION_ABB",
 			list_item->keyStr)) {
-		__setting_about_main_licence_launch(data);
+		app_launcher("org.tizen.setting-phone|viewtype:license",
+				NULL, NULL);
 	} else if (!safeStrCmp("IDS_ST_MBODY_SOFTWARE_UPDATE",
 			list_item->keyStr)) {
 #ifdef SUPPORT_FOTA
-		SettingAboutUG *ad = (SettingAboutUG *)list_item->userdata;
+		SettingAbout *ad = (SettingAbout *)list_item->userdata;
+
 		Evas_Object *back_btn = elm_object_item_part_content_get(
-				ad->navi_item, "prev_btn");
+				ad->md.navibar_main_it, "prev_btn");
+
 		if (back_btn) {
 			SETTING_TRACE_DEBUG("Change focus to back_btn");
 			elm_object_focus_set(back_btn, EINA_TRUE);
@@ -1708,7 +1786,7 @@ static void setting_about_main_gl_drag(void *data, Evas_Object *obj,
 {
 	ret_if(!data);
 	retm_if(event == NULL, "Invalid argument: event info is NULL");
-	SettingAboutUG *ad = (SettingAboutUG *)data;
+	SettingAbout *ad = (SettingAbout *)data;
 	ad->drag_flag = TRUE;
 }
 
@@ -1723,11 +1801,12 @@ static void setting_about_main_gl_drag(void *data, Evas_Object *obj,
 static void setting_about_main_gl_mouse_up(void *data, Evas *e,
 		Evas_Object *obj, void *event)
 {
-	/*SETTING_TRACE_BEGIN; */
-	ret_if(!data);
-	SettingAboutUG *ad = (SettingAboutUG *)data;
-	retm_if(event == NULL, "Invalid argument: event info is NULL");
+	SettingAbout *ad = (SettingAbout *)data;
 	Evas_Event_Mouse_Up *ev = (Evas_Event_Mouse_Up *)event;
+	Ecore_IMF_Context *imf_context = NULL;
+
+	ret_if(!data);
+	retm_if(event == NULL, "Invalid argument: event info is NULL");
 
 	if (ad->drag_flag) {
 		ad->drag_flag = FALSE;
@@ -1736,10 +1815,11 @@ static void setting_about_main_gl_mouse_up(void *data, Evas *e,
 
 	if (ad->item_dev_name) {
 		Elm_Object_Item *selected_item = elm_genlist_at_xy_item_get(
-				ad->genlsit, ev->output.x, ev->output.y, NULL);
+				ad->md.genlist, ev->output.x, ev->output.y, NULL);
+
 		if (ad->item_dev_name->item == selected_item) {
 			if (elm_object_focus_get(ad->item_dev_name->eo_check)) {
-				Ecore_IMF_Context *imf_context =
+				imf_context =
 						(Ecore_IMF_Context *)elm_entry_imf_context_get(
 						ad->item_dev_name->eo_check);
 				if (imf_context) {
@@ -1756,14 +1836,15 @@ static void setting_about_main_gl_mouse_up(void *data, Evas *e,
 				}
 
 				ad->popup = setting_create_popup(ad,
-						ad->win_get,
-						NULL,
-						SETTING_ABOUT_MOBILE_AP_TURNED_OFF,
-						__setting_about_popup_mobile_ap_turn_off_ask_resp_cb,
-						0,
-						FALSE, FALSE, 2,
-						"IDS_ST_BODY_TURN_OFF",
-						"IDS_ST_BUTTON_CANCEL_ABB2");
+					ad->md.win_main,
+					NULL,
+					SETTING_ABOUT_MOBILE_AP_TURNED_OFF,
+					__setting_about_popup_mobile_ap_turn_off_ask_resp_cb,
+					0,
+					FALSE, FALSE, 2,
+					"IDS_ST_BODY_TURN_OFF",
+					"IDS_ST_BUTTON_CANCEL_ABB2");
+
 			} else {
 				elm_object_focus_set(
 						ad->item_dev_name->eo_check,
@@ -1771,7 +1852,7 @@ static void setting_about_main_gl_mouse_up(void *data, Evas *e,
 				elm_entry_cursor_end_set(
 						ad->item_dev_name->eo_check);
 
-				Ecore_IMF_Context *imf_context =
+				imf_context =
 						(Ecore_IMF_Context *)elm_entry_imf_context_get(
 								ad->item_dev_name->eo_check);
 				if (imf_context) {
@@ -1785,7 +1866,6 @@ static void setting_about_main_gl_mouse_up(void *data, Evas *e,
 					EINA_FALSE);
 		}
 	}
-	/*SETTING_TRACE_END; */
 }
 
 /**
@@ -1799,7 +1879,7 @@ static void setting_about_main_gl_mouse_up(void *data, Evas *e,
 static Eina_Bool setting_about_main_timer_update_cb(const void *data)
 {
 	retv_if(data == NULL, TRUE);
-	SettingAboutUG *ad = (SettingAboutUG *)data;
+	SettingAbout *ad = (SettingAbout *)data;
 
 	char str[MAX_DISPLAY_STR_LEN_ON_PHONE_INFO] = { 0, };
 	if (ad->item_data_cpu) {
@@ -1859,28 +1939,30 @@ int setting_about_main_generate_genlist(void *data)
 	/* error check */
 	retv_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingAboutUG *ad = (SettingAboutUG *)data;
+	SettingAbout *ad = (SettingAbout *)data;
+
 	bool is_emul_bin = isEmulBin();
 
-	Evas_Object *scroller = ad->genlsit;
+	Evas_Object *scroller = ad->md.genlist;
 	Setting_GenGroupItem_Data *item_data = NULL;
 	char str[MAX_DISPLAY_STR_LEN_ON_PHONE_INFO] = { 0, };
 	telephony_handle_list_s tapi_handle_list;
 	int i = 0;
 	int tapi_handle_count = 0;
 	int ret_value = 0;
-	int ret_get_app_info = 0;
+//	int ret_get_app_info = 0;
 	app_info_h app_info = NULL;
-	ret_get_app_info = app_info_create("org.tizen.oma-dm", &app_info);
+
+	//ret_get_app_info = app_info_create("org.tizen.oma-dm", &app_info);
 
 	/* [UI] Software update */
-	if (ret_get_app_info != APP_MANAGER_ERROR_NONE) {
-		SETTING_TRACE("No corresponding app_id for [%s]\n",
-				"org.tizen.oma-dm");
-	} else {
+	//if (ret_get_app_info != APP_MANAGER_ERROR_NONE) {
+		//SETTING_TRACE("No corresponding app_id for [%s]\n",
+			//	"org.tizen.oma-dm");
+	//} else {
 		if (!is_emul_bin) {
 			item_data = setting_create_Gendial_field_def(scroller,
-					&(ad->itc_1text),
+					&(ad->itc_table[GENDIAL_Type_1text_1icon_2]),
 					setting_about_main_mouse_up_Gendial_list_cb,
 					ad, SWALLOW_Type_INVALID, NULL, NULL, 0,
 					"IDS_ST_MBODY_SOFTWARE_UPDATE",
@@ -1890,11 +1972,11 @@ int setting_about_main_generate_genlist(void *data)
 			else
 				SETTING_TRACE_ERROR("item_data is NULL");
 		}
-	}
+	//}
 
 	/* [UI] Certificates */
 	/* implementation is in progress. */
-	item_data = setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
+	item_data = setting_create_Gendial_field_def(scroller, &(ad->itc_table[GENDIAL_Type_1text_1icon_2]),
 			setting_about_main_mouse_up_Gendial_list_cb, ad,
 			SWALLOW_Type_INVALID, NULL, NULL, 0,
 			"IDS_ST_HEADER_MANAGE_CERTIFICATES_ABB", NULL, NULL);
@@ -1902,14 +1984,14 @@ int setting_about_main_generate_genlist(void *data)
 		SETTING_TRACE_ERROR("item_data is NULL");
 
 	/* [UI] Legal Information */
-	setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
+	setting_create_Gendial_field_def(scroller, &(ad->itc_table[GENDIAL_Type_1text_1icon_2]),
 			setting_about_main_mouse_up_Gendial_list_cb, ad,
 			SWALLOW_Type_INVALID, NULL, NULL, 0,
 			"IDS_ST_MBODY_LEGAL_INFORMATION_ABB", NULL, NULL);
 
 	/*////////////////////////////////////////////////////////////////// */
 	(void)setting_create_Gendial_field_titleItem(scroller,
-			&(ad->itc_group_item), "IDS_ST_BODY_DEVICE_INFORMATION",
+			&(ad->itc_table[GENDIAL_Type_expandable_proc]), "IDS_ST_BODY_DEVICE_INFORMATION",
 			NULL);
 	/*////////////////////////////////////////////////////////////////// */
 
@@ -1925,7 +2007,7 @@ int setting_about_main_generate_genlist(void *data)
 
 	/* [UI] Name */
 	ad->item_dev_name_main = item_data = setting_create_Gendial_field_def(
-			scroller, &(ad->itc_2text_2),
+			scroller, &(ad->itc_table[GENDIAL_Type_1text_1icon_2]),
 			setting_about_main_mouse_up_Gendial_list_cb, ad,
 			SWALLOW_Type_INVALID, NULL,
 			NULL, 0, SETTING_ABOUT_DEVICE_NAME_STR, pa_sub_desc,
@@ -1947,6 +2029,7 @@ int setting_about_main_generate_genlist(void *data)
 
 	SETTING_TRACE_DEBUG("tapi_handle_list.count:%d",
 			tapi_handle_list.count);
+
 	/* my numbers(SIM1 and SIM2) */
 	for (i = 0; i < tapi_handle_count; i++) {
 		memset(str, 0x00, sizeof(str));
@@ -1967,7 +2050,7 @@ int setting_about_main_generate_genlist(void *data)
 		}
 		/* [UI] Phone number */
 		item_data = setting_create_Gendial_field_def(scroller,
-				&(ad->itc_2text_2), NULL,
+				&(ad->itc_table[GENDIAL_Type_1text_1icon_2]), NULL,
 				NULL, SWALLOW_Type_INVALID, NULL,
 				NULL, 0, "IDS_ST_BODY_PHONE_NUMBER", my_number,
 				NULL);
@@ -1987,7 +2070,7 @@ int setting_about_main_generate_genlist(void *data)
 	memset(str, 0x00, sizeof(str));
 	setting_about_main_get_phone_model_name(str, sizeof(str));
 	item_data = setting_create_Gendial_field_def(scroller,
-			&(ad->itc_2text_2), NULL,
+			&(ad->itc_table[GENDIAL_Type_1text_1icon_2]), NULL,
 			NULL, SWALLOW_Type_INVALID, NULL,
 			NULL, 0, "IDS_ST_BODY_MODEL_NUMBER", str, NULL);
 	if (item_data) {
@@ -2003,7 +2086,7 @@ int setting_about_main_generate_genlist(void *data)
 	memset(str, 0x00, sizeof(str));
 	setting_about_main_get_sw_version(str, sizeof(str));
 	item_data = setting_create_Gendial_field_def(scroller,
-			&(ad->itc_2text_2), NULL,
+			&(ad->itc_table[GENDIAL_Type_1text_1icon_2]), NULL,
 			NULL, SWALLOW_Type_INVALID, NULL,
 			NULL, 0, "IDS_ST_MBODY_TIZEN_VERSION", str, NULL);
 	if (item_data) {
@@ -2031,7 +2114,7 @@ int setting_about_main_generate_genlist(void *data)
 		}
 		/* [UI] IMEI */
 		item_data = setting_create_Gendial_field_def(scroller,
-				&(ad->itc_2text_2), NULL,
+				&(ad->itc_table[GENDIAL_Type_1text_1icon_2]), NULL,
 				NULL, SWALLOW_Type_INVALID, NULL,
 				NULL, 0, SETTING_ABOUT_IMEI_STR, imei, NULL);
 		if (item_data) {
@@ -2057,10 +2140,10 @@ int setting_about_main_generate_genlist(void *data)
 		setting_about_main_get_bluetooth_address_string(str,
 				sizeof(str));
 		ad->item_data_bt = setting_create_Gendial_field_def(scroller,
-				&(ad->itc_2text_2), NULL,
+				&(ad->itc_table[GENDIAL_Type_1text_1icon_2]), NULL,
 				NULL, SWALLOW_Type_INVALID, NULL,
 				NULL, 0, "IDS_ST_MBODY_BLUETOOTH_ADDRESS", str,
-				NULL); /*ad->itc_2text_2 */
+				NULL); /*ad->itc_table[GENDIAL_Type_1text_1icon_2] */
 		if (ad->item_data_bt) {
 			elm_object_item_disabled_set(ad->item_data_bt->item,
 					EINA_TRUE);
@@ -2079,7 +2162,7 @@ int setting_about_main_generate_genlist(void *data)
 	SETTING_TRACE_DEBUG("[about main] get_wifi_mac_address : %s", str);
 
 	ad->item_data_wifi = setting_create_Gendial_field_def(scroller,
-			&(ad->itc_2text_2), NULL,
+			&(ad->itc_table[GENDIAL_Type_1text_1icon_2]), NULL,
 			NULL, SWALLOW_Type_INVALID, NULL,
 			NULL, 0, "IDS_ST_BODY_WI_FI_MAC_ADDRESS", str, NULL);
 	if (ad->item_data_wifi) {
@@ -2096,7 +2179,7 @@ int setting_about_main_generate_genlist(void *data)
 	memset(str, 0x00, sizeof(str));
 	setting_about_main_get_sn(str, sizeof(str));
 	item_data = setting_create_Gendial_field_def(scroller,
-			&(ad->itc_2text_2), NULL,
+			&(ad->itc_table[GENDIAL_Type_1text_1icon_2]), NULL,
 			NULL, SWALLOW_Type_INVALID, NULL,
 			NULL, 0, SETTING_ABOUT_SN_STR, str, NULL);
 	if (item_data) {
@@ -2112,7 +2195,7 @@ int setting_about_main_generate_genlist(void *data)
 	memset(str, 0x00, sizeof(str));
 	setting_about_main_get_battery_string(str, sizeof(str));
 	item_data = setting_create_Gendial_field_def(scroller,
-			&(ad->itc_2text_2), NULL,
+			&(ad->itc_table[GENDIAL_Type_1text_1icon_2]), NULL,
 			NULL, SWALLOW_Type_INVALID, NULL,
 			NULL, 0, "IDS_ST_BUTTON_BATTERY_POWER_ABB", str, NULL);
 	if (item_data) {
@@ -2137,7 +2220,7 @@ int setting_about_main_generate_genlist(void *data)
 		snprintf(str, sizeof(str), "%.0f%s", usr + sys, "\%");
 	}
 	ad->item_data_cpu = item_data = setting_create_Gendial_field_def(
-			scroller, &(ad->itc_2text_2), NULL,
+			scroller, &(ad->itc_table[GENDIAL_Type_1text_1icon_2]), NULL,
 			NULL, SWALLOW_Type_INVALID, NULL,
 			NULL, 0, SETTING_ABOUT_CPU_USAGE_STR, str, NULL);
 	if (ad->item_data_cpu) {
@@ -2170,7 +2253,7 @@ int setting_about_main_generate_genlist(void *data)
 	char *security_status = (char *)g_strdup("IDS_ST_HEADER_UNAVAILABLE");
 #endif
 	item_data = setting_create_Gendial_field_def(scroller,
-			&(ad->itc_2text_2), NULL,
+			&(ad->itc_table[GENDIAL_Type_1text_1icon_2]), NULL,
 			NULL, SWALLOW_Type_INVALID, NULL,
 			NULL, 0, "IDS_ST_TMBODY_SECURITY_STATUS",
 			security_status, NULL);
@@ -2193,9 +2276,9 @@ int setting_about_main_generate_genlist(void *data)
 }
 
 /**
- * @brief create aboutUG main view layout
+ * @brief create ad main view layout
  *
- * @param cb aboutUG data
+ * @param cb ad data
  * @return 1 for success
  */
 static int setting_about_main_create(void *cb)
@@ -2204,44 +2287,27 @@ static int setting_about_main_create(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingAboutUG *ad = (SettingAboutUG *)cb;
+	SettingAbout *ad = (SettingAbout *)cb;
 
-	Evas_Object *scroller = elm_genlist_add(ad->win_main_layout);
-	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
-			"Cannot set scroller object  as contento of layout");
-	elm_genlist_mode_set(scroller, ELM_LIST_COMPRESS);
-	elm_genlist_clear(scroller); /* first to clear list */
-	ad->genlsit = scroller;
-	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb,
-			NULL);
-	evas_object_smart_callback_add(scroller, "realized",
-			__setting_about_gl_realized_cb, NULL);
+	view_init(&ad->md, _("IDS_ST_BODY_ABOUT_DEVICE"));
 
-	ad->ly_main = setting_create_layout_navi_bar(ad->win_main_layout,
-			ad->win_get,
-			KeyStr_AboutDevice,
-			NULL,
-			(setting_call_back_func)setting_about_main_click_softkey_back_cb,
-			ad, scroller, &ad->navi_bar, NULL);
-
-	ad->btn_done = setting_about_naviframe_btn_create(ad->navi_bar,
-			_("IDS_SA_BUTTON_DONE_ABB"),
-			setting_about_naviframe_btn_done_cb, ad);
+	ad->btn_done = setting_about_naviframe_btn_create(ad->md.navibar_main, _("IDS_SA_BUTTON_DONE_ABB"), setting_about_naviframe_btn_done_cb, ad);
 	/*Title Text Right Button */
-	ad->btn_cancel = setting_about_naviframe_btn_create(ad->navi_bar,
-			_("IDS_ST_BUTTON_CANCEL_ABB"),
-			setting_about_naviframe_btn_cancel_cb, ad);
-	ad->genlsit = scroller;
+	ad->btn_cancel = setting_about_naviframe_btn_create(ad->md.navibar_main, _("IDS_ST_BUTTON_CANCEL_ABB"), setting_about_naviframe_btn_cancel_cb, ad);
 
-	evas_object_smart_callback_add(scroller, "drag",
-			setting_about_main_gl_drag, ad);
+	evas_object_smart_callback_add(ad->md.genlist, "drag", setting_about_main_gl_drag, ad);
 
-	evas_object_event_callback_add(scroller, EVAS_CALLBACK_MOUSE_UP,
-			setting_about_main_gl_mouse_up, ad);
-
-	ad->navi_item = elm_naviframe_top_item_get(ad->navi_bar);
+	evas_object_event_callback_add(ad->md.genlist, EVAS_CALLBACK_MOUSE_UP, setting_about_main_gl_mouse_up, ad);
 
 	setting_about_main_generate_genlist((void *)ad);
+
+	setting_create_navi_bar_buttons(
+			_("IDS_ST_BODY_ABOUT_DEVICE"),
+	       _("IDS_ST_BUTTON_BACK"),
+	       setting_about_main_click_softkey_back_cb,
+	       &ad->md, ad->md.genlist, ad->md.navibar_main,
+	       NULL);
+
 
 	int ret = vconf_notify_key_changed(VCONFKEY_WIFI_STATE,
 			__setting_about_main_vconf_change_cb, ad);
@@ -2264,9 +2330,9 @@ static int setting_about_main_create(void *cb)
 }
 
 /**
- * @brief destroy aboutUG main view layout
+ * @brief destroy ad main view layout
  *
- * @param cb aboutUG data
+ * @param cb ad data
  * @return 1 for success
  */
 static int setting_about_main_destroy(void *cb)
@@ -2275,10 +2341,10 @@ static int setting_about_main_destroy(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingAboutUG *ad = (SettingAboutUG *)cb;
+	SettingAbout *ad = (SettingAbout *)cb;
 
-	evas_object_smart_callback_del(ad->genlsit, "realized",
-			__gl_realized_cb);
+	//evas_object_smart_callback_del(ad->genlsit, "realized",
+		//	__gl_realized_cb);
 
 	int ret = vconf_ignore_key_changed(VCONFKEY_WIFI_STATE,
 			__setting_about_main_vconf_change_cb);
@@ -2296,56 +2362,44 @@ static int setting_about_main_destroy(void *cb)
 		SETTING_TRACE_ERROR("call vconf_ignore_key_changed failed");
 
 
-	if (ad->update_timer) {
-		ecore_timer_del(ad->update_timer);
-		ad->update_timer = NULL;
-	}
-	if (ad->update_idler) {
-		ecore_idler_del(ad->update_idler);
-		ad->update_idler = NULL;
-	}
-	if (ad->idler_add_popup) {
-		ecore_idler_del(ad->idler_add_popup);
-		ad->idler_add_popup = NULL;
-	}
-	if (ad->idler_remove_popup) {
-		ecore_idler_del(ad->idler_remove_popup);
-		ad->idler_remove_popup = NULL;
-	}
-	if (ad->idler_remove_space_popup) {
-		ecore_idler_del(ad->idler_remove_space_popup);
-		ad->idler_remove_space_popup = NULL;
-	}
-	if (ad->popup) {
-		evas_object_del(ad->popup);
-		ad->popup = NULL;
-	}
-	if (ad->popup_space) {
-		evas_object_del(ad->popup_space);
-		ad->popup_space = NULL;
-	}
+	ecore_timer_del(ad->update_timer);
+	ad->update_timer = NULL;
 
-	if (ad->ly_main != NULL) {
-		evas_object_del(ad->ly_main);
-		ad->ly_main = NULL;
-	}
+	ecore_idler_del(ad->update_idler);
+	ad->update_idler = NULL;
 
-	if (ad->event_handler) {
-		ecore_event_handler_del(ad->event_handler);
-		ad->event_handler = NULL;
-	}
-	if (ad->name_update_idler) {
-		ecore_idler_del(ad->name_update_idler);
-		ad->name_update_idler = NULL;
-	}
+	ecore_idler_del(ad->idler_add_popup);
+	ad->idler_add_popup = NULL;
+
+	ecore_idler_del(ad->idler_remove_popup);
+	ad->idler_remove_popup = NULL;
+
+	ecore_idler_del(ad->idler_remove_space_popup);
+	ad->idler_remove_space_popup = NULL;
+
+	evas_object_del(ad->popup);
+	ad->popup = NULL;
+
+	evas_object_del(ad->popup_space);
+	ad->popup_space = NULL;
+
+	evas_object_del(ad->md.ly_main);
+	ad->md.ly_main = NULL;
+
+	ecore_event_handler_del(ad->event_handler);
+	ad->event_handler = NULL;
+
+	ecore_idler_del(ad->name_update_idler);
+	ad->name_update_idler = NULL;
+
 	setting_view_about_main.is_create = 0;
 	return SETTING_RETURN_SUCCESS;
 }
 
 /**
- * @brief update aboutUG main view
+ * @brief update ad main view
  *
- * @param cb aboutUG data
+ * @param cb ad data
  * @return 1 for success
  */
 static int setting_about_main_update(void *cb)
@@ -2354,7 +2408,7 @@ static int setting_about_main_update(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingAboutUG *ad = (SettingAboutUG *)cb;
+	SettingAbout *ad = (SettingAbout *)cb;
 
 	if (ad->item_dev_name) {
 		ad->is_dev_name_focus = elm_object_focus_get(
@@ -2375,28 +2429,26 @@ static int setting_about_main_update(void *cb)
 		 }*/
 	}
 
-	if (ad->ly_main != NULL)
-		evas_object_show(ad->ly_main);
+	if (ad->md.ly_main != NULL) {
+		evas_object_show(ad->md.ly_main);
+	}
 
 	return SETTING_RETURN_SUCCESS;
 }
 
 /**
- * @brief hide aboutUG main view
+ * @brief hide ad main view
  *
- * @param cb aboutUG data
+ * @param cb ad data
  * @return 1 for success
  */
 static int setting_about_main_cleanup(void *cb)
 {
 	SETTING_TRACE_BEGIN;
-	/* error check */
+	SettingAbout *ad = (SettingAbout *)cb;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	/*
-	SettingAboutUG *ad = (SettingAboutUG *)cb;
-	if (ad->ly_main != NULL)
-		evas_object_hide(ad->ly_main); */
+	evas_object_hide(ad->md.ly_main);
 
 	return SETTING_RETURN_SUCCESS;
 }

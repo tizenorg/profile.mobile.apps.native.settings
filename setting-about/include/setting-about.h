@@ -42,7 +42,7 @@
 #include <glib-object.h>
 
 /* #include <mobileap_lib.h> */
-#include<telephony.h>
+#include <telephony.h>
 
 #include <setting-common-draw-widget.h>
 #include <setting-common-view.h>
@@ -53,6 +53,7 @@
 /*#include <tethering.h> */
 #include <notification.h>
 #include <dbus/dbus.h>
+#include "setting-common-init.h"
 
 #define MAX_DISPLAY_STR_LEN_ON_PHONE_INFO	256
 
@@ -66,6 +67,8 @@
 #define SETTING_ABOUT_PUK_LOCKED "PUK is locked"
 #define SETTING_SIM_MSISDN_DIALING_NUMBER_LEN TAPI_SIM_MSISDN_DIALING_NUMBER_LEN+1
 
+#define SETTING_ABOUT_EDJEDIR _TZ_SYS_RO_APP"/org.tizen.setting-about/res/edje"
+
 typedef enum _SETTING_SIM_STATUS {
 	SETTING_SIM_STATUS_UNKNOWN = 0,
 	SETTING_SIM_STATUS_IN_CHECKING = 1,
@@ -73,16 +76,13 @@ typedef enum _SETTING_SIM_STATUS {
 	SETTING_SIM_STATUS_PERM_BLOCKED = 3
 } SETTING_SIM_STATUS;
 
-typedef struct _SettingAboutUG SettingAboutUG;
+typedef struct _SettingAbout SettingAbout;
 
 /**
- * Setting About UG context
- * all UG function has void* as an agument. this is casted back to SettingAboutUG
- * and the functions access app context.
+ * Setting About context
  */
-struct _SettingAboutUG {
-	ui_gadget_h ug;
-	TapiHandle *handle;
+struct _SettingAbout {
+	MainData md;
 	bool tapi_responsed;
 	bool pause_flag;
 
@@ -94,21 +94,8 @@ struct _SettingAboutUG {
 	Elm_Genlist_Item_Class itc_2text_3_parent;
 	Elm_Genlist_Item_Class itc_1icon_1text_sub;
 	Elm_Genlist_Item_Class itc_help_style;
-
-	/* add more variables here (move your appdata to here) */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-
-	ui_gadget_h ug_loading;
-
-	Evas_Object *navi_bar;
-	Evas_Object *ly_main;
-	Evas_Object *genlsit;
-	Elm_Object_Item *navi_item;
-	Evas_Object *back_key;
-	Evas_Object *btn_done;
-	Evas_Object *btn_cancel;
+	Elm_Genlist_Item_Class itc_editfield;
+	Elm_Genlist_Item_Class itc_table[GENDIAL_Type_MAX];
 
 	Ecore_Timer *update_timer;
 	Ecore_Idler *update_idler;
@@ -128,10 +115,13 @@ struct _SettingAboutUG {
 	Setting_GenGroupItem_Data *item_data_status;
 	Evas_Object *popup;
 	Evas_Object *popup_space;
+	Evas_Object *btn_done;
+	Evas_Object *btn_cancel;
 	char *old_name;
 	bool empty_flag;
 	/*char *my_numbers[SETTING_ABOUT_MY_NUMBERS_LEN]; */
 	TelSimMsisdnList_t my_numbers;
+	TapiHandle *modem_handle;
 	bool popup_showed_flag; /* if popup has been showed, do not show again*/
 	bool drag_flag;
 	int noti_id;
@@ -152,16 +142,6 @@ extern void setting_about_main_get_wifi_mac_address_string(char *str, int size);
 extern void setting_about_main_get_bluetooth_address_string(char *str,
 		int size);
 
-
-/**
-* @brief ug layout callback
-*
-* @param ug
-* @param mode
-* @param priv
-*/
-void setting_about_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode,
-		void *priv);
 
 /**
  * @}

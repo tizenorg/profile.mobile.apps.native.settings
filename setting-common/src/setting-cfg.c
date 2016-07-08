@@ -297,10 +297,19 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 	 * Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_DeviceMange,
 	 * NULL, uuid_DeveloperOption, 0,
 	 * "org.tizen.setting.developeroptions"}, */
-	{	KeyStr_AboutDevice, IMG_AboutDevice, "setting-about-efl",
-		Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0,
-		Cfg_Item_Ug_Node, NULL, KeyStr_System, NULL,
-		uuid_AboutPhone, 0, NULL},
+	{	KeyStr_AboutDevice,
+		IMG_AboutDevice,
+		"org.tizen.setting-about",
+		Cfg_Item_Pos_Level0,
+		Cfg_Item_Resetable,
+		0,
+		Cfg_Item_AppLauncher_Node,
+		NULL,
+		KeyStr_System,
+		NULL,
+		uuid_AboutPhone,
+		0,
+		"org.tizen.setting-about"},
 
 #if 0
 	{	KeyStr_Security, IMG_Security, "setting-security-efl",

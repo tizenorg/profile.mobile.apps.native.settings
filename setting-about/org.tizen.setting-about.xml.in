@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="3.0" package="org.tizen.setting-about" version="0.9.5" install-location="internal-only">
+	<label>settings-about</label>
+	<description>Setting About Application</description>
+	<ui-application appid="org.tizen.setting-about" exec="setting-about" nodisplay="true" multiple="false" type="capp" taskmanage="false" hw-acceleration="use-GL" launch_mode="caller">
+		<metadata key="http://developer.samsung.com/tizen/metadata/legacylifecycle"/>
+		<label>About device</label>
+		<label xml:lang="en-us">About device</label>
+		<label xml:lang="ja-jp">端末情報</label>
+		<label xml:lang="ko-kr">디바이스 정보</label>
+	</ui-application>
+	<privileges>
+		<privilege>http://tizen.org/privilege/appmanager.launch</privilege>
+		<privilege>http://tizen.org/privilege/appmanager.kill</privilege>
+		<privilege>http://tizen.org/privilege/account.read</privilege>
+		<privilege>http://tizen.org/privilege/account.write</privilege>
+		<privilege>http://tizen.org/privilege/notification</privilege>
+		<privilege>http://tizen.org/privilege/volume.set</privilege>
+		<privilege>http://tizen.org/privilege/telephony.admin</privilege>
+		<privilege>http://tizen.org/privilege/systemsettings.admin</privilege>
+		<privilege>http://tizen.org/privilege/display</privilege>
+	</privileges>
+</manifest>
