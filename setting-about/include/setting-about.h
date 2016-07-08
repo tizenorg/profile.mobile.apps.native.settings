@@ -42,7 +42,7 @@
 #include <glib-object.h>
 
 /* #include <mobileap_lib.h> */
-#include<telephony.h>
+#include <telephony.h>
 
 #include <setting-common-draw-widget.h>
 #include <setting-common-view.h>
@@ -53,6 +53,7 @@
 /*#include <tethering.h> */
 #include <notification.h>
 #include <dbus/dbus.h>
+#include "setting-common-init.h"
 
 #define MAX_DISPLAY_STR_LEN_ON_PHONE_INFO	256
 
@@ -81,8 +82,7 @@ typedef struct _SettingAboutUG SettingAboutUG;
  * and the functions access app context.
  */
 struct _SettingAboutUG {
-	ui_gadget_h ug;
-	TapiHandle *handle;
+	MainData md;
 	bool tapi_responsed;
 	bool pause_flag;
 
@@ -95,20 +95,6 @@ struct _SettingAboutUG {
 	Elm_Genlist_Item_Class itc_1icon_1text_sub;
 	Elm_Genlist_Item_Class itc_help_style;
 
-	/* add more variables here (move your appdata to here) */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-
-	ui_gadget_h ug_loading;
-
-	Evas_Object *navi_bar;
-	Evas_Object *ly_main;
-	Evas_Object *genlsit;
-	Elm_Object_Item *navi_item;
-	Evas_Object *back_key;
-	Evas_Object *btn_done;
-	Evas_Object *btn_cancel;
 
 	Ecore_Timer *update_timer;
 	Ecore_Idler *update_idler;
@@ -128,10 +114,13 @@ struct _SettingAboutUG {
 	Setting_GenGroupItem_Data *item_data_status;
 	Evas_Object *popup;
 	Evas_Object *popup_space;
+	Evas_Object *btn_done;
+	Evas_Object *btn_cancel;
 	char *old_name;
 	bool empty_flag;
 	/*char *my_numbers[SETTING_ABOUT_MY_NUMBERS_LEN]; */
 	TelSimMsisdnList_t my_numbers;
+	TapiHandle *modem_handle;
 	bool popup_showed_flag; /* if popup has been showed, do not show again*/
 	bool drag_flag;
 	int noti_id;
