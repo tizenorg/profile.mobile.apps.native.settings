@@ -199,7 +199,8 @@ void default_app_list_init(void *data, Evas_Object *genlist)
 				SWALLOW_Type_INVALID, NULL,
 				NULL, 0,
 				MGRAPP_STR_DEFAULT_NO_APPS, NULL, NULL);
-		elm_object_item_disabled_set(item->item, EINA_TRUE);
+		if (item)
+			elm_object_item_disabled_set(item->item, EINA_TRUE);
 
 	} else {
 		pkg_list = g_list_sort(pkg_list, _glist_sort_atoz);
