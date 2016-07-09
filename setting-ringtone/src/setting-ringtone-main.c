@@ -67,7 +67,7 @@ static void setting_ringtone_done_click_cb(void *data, Evas_Object *obj,
 		}
 		SETTING_TRACE("is_def_seleted: %d", is_def_seleted);
 
-		char *titleID;
+		char *titleID = NULL;
 		app_control_get_extra_data(ad->source_svc,
 				"title",
 				&titleID);
@@ -79,8 +79,10 @@ static void setting_ringtone_done_click_cb(void *data, Evas_Object *obj,
 			else
 				vconf_set_bool(VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, TRUE);
 		}
-		free(titleID);
-
+		if (titleID) {
+			free(titleID);
+			titleID = NULL;
+		}
 		if (is_def_seleted)
 			/*if default item is seleted, return "default" */
 			ad->rlt_file_path = strdup("default");
