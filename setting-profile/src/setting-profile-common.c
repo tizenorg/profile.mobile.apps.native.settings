@@ -290,7 +290,10 @@ static void __enable_sound_menu(void *data)
 
 	/*2.Enable "Notification", via Sound Manager */
 	item_to_update = ad->data_noti_volume;
-	if (safeStrCmp(ad->data_msg_alert_tone->sub_desc, "Silent")) {
+
+	// @todo make sure data_msg_alert_tone is correct for 'Silent' set.
+	//if (item_to_update && safeStrCmp(item_to_update->sub_desc, "Silent")) {
+	if (ad->data_msg_alert_tone && safeStrCmp(ad->data_msg_alert_tone->sub_desc, "Silent")) {
 		//Enable
 		if (item_to_update
 				&& item_to_update->item
