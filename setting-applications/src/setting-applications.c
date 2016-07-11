@@ -24,6 +24,8 @@
 #include <setting-applications.h>
 #include <setting-cfg.h>
 
+#define SETTING_APPLICATIONS_PACKAGE_NAME "org.tizen.setting-applications"
+#define APPLICATIONS_LOCALEDIR _TZ_SYS_RO_APP"/org.tizen.setting-applications/res/locale"
 #define SETTING_BRIGHTNESS_DEFAULT_LEVEL 60
 
 #ifndef UG_MODULE_API
@@ -57,7 +59,7 @@ Evas_Object *__get_applications_layout_to_return(app_control_h service,
 {
 	SETTING_TRACE_BEGIN;
 	SettingApplicationsUG *applicationsUG = priv;
-	return applicationsUG->ly_main;
+	return applicationsUG->md.ly_main;
 
 }
 
@@ -181,88 +183,70 @@ Evas_Object *_gl_1button1_icon_get(void *data, Evas_Object *obj,
 		return NULL;
 }
 
-static void *setting_applications_ug_on_create(ui_gadget_h ug,
-		enum ug_mode mode, app_control_h service, void *priv)
+static bool app_create(void *priv)
 {
-	setting_retvm_if((!priv), NULL, "!priv");
 	SETTING_TRACE_BEGIN;
+	SettingApplicationsUG *ad = priv;
+	setting_retvm_if((!priv), NULL, "!priv");
 
-	SettingApplicationsUG *applicationsUG = priv;
-	applicationsUG->ug = ug;
 	setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR);
 
-	applicationsUG->win_main_layout = (Evas_Object *)ug_get_parent_layout(
-			ug);
-	applicationsUG->win_get = (Evas_Object *)ug_get_window();
-
-	/*evas_object_show(applicationsUG->win_main_layout); */
-	applicationsUG->evas = evas_object_evas_get(
-			applicationsUG->win_main_layout);
-
-	setting_retvm_if(applicationsUG->win_main_layout == NULL, NULL,
-			"cannot get main window ");
+	if (app_init(&ad->md, SETTING_APPLICATIONS_PACKAGE_NAME)
+			!= SETTING_RETURN_SUCCESS) {
+		SETTING_TRACE_ERROR("Cannot initialize application");
+		return false;
+	}
 
 	/* register view node table */
 	setting_view_node_table_intialize();
 
 	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
-			&(applicationsUG->itc_2text_2));
+			&(ad->itc_2text_2));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(applicationsUG->itc_1text_1icon));
+			&(ad->itc_1text_1icon));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(applicationsUG->itc_1icon_1text_sub));
+			&(ad->itc_1icon_1text_sub));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(applicationsUG->itc_1text));
+			&(ad->itc_1text));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(applicationsUG->itc_2text_3));
+			&(ad->itc_2text_3));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(applicationsUG->itc_1text_1icon_divider));
+			&(ad->itc_1text_1icon_divider));
 	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE,
-			&(applicationsUG->itc_grp_title));
+			&(ad->itc_grp_title));
 
-	applicationsUG->itc_1icon_1button.item_style = SETTING_GENLIST_2LINE_STYLE;
-	applicationsUG->itc_1icon_1button.func.text_get = _gl_label_new_get;
-	applicationsUG->itc_1icon_1button.func.content_get =
+	ad->itc_1icon_1button.item_style = SETTING_GENLIST_2LINE_STYLE;
+	ad->itc_1icon_1button.func.text_get = _gl_label_new_get;
+	ad->itc_1icon_1button.func.content_get =
 			_gl_1button1_icon_get;
-	applicationsUG->itc_1icon_1button.func.state_get = NULL;
-	applicationsUG->itc_1icon_1button.func.del = NULL;
-
+	ad->itc_1icon_1button.func.state_get = NULL;
+	ad->itc_1icon_1button.func.del = NULL;
 
 	/*	creating a view. */
-	applicationsUG->view_to_load = __get_applications_view_to_load(
-			applicationsUG, service);
-	setting_retvm_if(NULL == applicationsUG->view_to_load, NULL,
+	ad->view_to_load = __get_applications_view_to_load(
+			ad, service);
+	setting_retvm_if(NULL == ad->view_to_load, NULL,
 			"NULL == applicationsUG->view_to_load");
 
-	setting_view_node_set_cur_view(applicationsUG->view_to_load);
-	setting_view_create(applicationsUG->view_to_load,
-			(void *)applicationsUG);
-	evas_object_event_callback_add(applicationsUG->win_main_layout,
-			EVAS_CALLBACK_RESIZE, setting_applications_ug_cb_resize,
-			applicationsUG);
-	return __get_applications_layout_to_return(service, applicationsUG);
+	setting_view_node_set_cur_view(ad->view_to_load);
+	setting_view_create(ad->view_to_load, (void *)ad);
+	evas_object_event_callback_add(ad->md.view_layout, EVAS_CALLBACK_RESIZE,
+			setting_applications_ug_cb_resize, ad);
+	return true;
 }
 
-static void setting_applications_ug_on_start(ui_gadget_h ug,
-		app_control_h service, void *priv)
-{
-}
-
-static void setting_applications_ug_on_pause(ui_gadget_h ug,
-		app_control_h service, void *priv)
+static void app_pause(void *data)
 {
 	SETTING_TRACE_BEGIN;
-	setting_retm_if((!priv), "!priv");
 }
 
-static void setting_applications_ug_on_resume(ui_gadget_h ug,
-		app_control_h service, void *priv)
+static void app_resume(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
 
 #if 0
-	SettingApplicationsUG *applicationsUG = priv;
+	SettingApplicationsUG *applicationsUG = data;
 	if (applicationsUG->data_home) {
 		char *appid = vconf_get_str(
 				VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME);
@@ -277,37 +261,31 @@ static void setting_applications_ug_on_resume(ui_gadget_h ug,
 #endif
 }
 
-static void setting_applications_ug_on_destroy(ui_gadget_h ug,
-		app_control_h service, void *priv)
+static void app_terminate(void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
-	SettingApplicationsUG *applicationsUG = priv;
+	SettingApplicationsUG *ad = priv;
 
 	/* fix flash issue for gallery */
-	evas_object_event_callback_del(applicationsUG->win_main_layout,
+	evas_object_event_callback_del(ad->md.view_layout,
 			EVAS_CALLBACK_RESIZE,
 			setting_applications_ug_cb_resize);
-	applicationsUG->ug = ug;
-
-	FREE(applicationsUG->uri);
+	FREE(ad->uri);
 
 	/* called when this shared gadget is terminated. similar with
 	 * app_exit */
-	if (&setting_view_applications_main == applicationsUG->view_to_load) {
-		setting_view_destroy(&setting_view_applications_main,
-				applicationsUG);
-	} else {
-		/* do nothing */
+	if (&setting_view_applications_main == ad->view_to_load) {
+		setting_view_destroy(&setting_view_applications_main, ad);
 	}
 
-	if (NULL != ug_get_layout(applicationsUG->ug)) {
+	if (NULL != ug_get_layout(ad->ug)) {
 		evas_object_hide(
 				(Evas_Object *)ug_get_layout(
-						applicationsUG->ug));
+						ad->ug));
 		evas_object_del(
 				(Evas_Object *)ug_get_layout(
-						applicationsUG->ug));
+						ad->ug));
 	}
 
 	SETTING_TRACE_END;
@@ -331,7 +309,7 @@ static void setting_applications_ug_on_event(ui_gadget_h ug,
 	case UG_EVENT_LOW_BATTERY:
 		break;
 	case UG_EVENT_LANG_CHANGE:
-		setting_navi_items_update(ad->navi_bar);
+		setting_navi_items_update(ad->md.navibar_main);
 		break;
 	case UG_EVENT_ROTATE_PORTRAIT:
 		break;
@@ -353,9 +331,9 @@ static void setting_applications_ug_on_key_event(ui_gadget_h ug,
 
 	switch (event) {
 	case UG_KEY_EVENT_END: {
-		if (elm_naviframe_top_item_get(ad->navi_bar)
+		if (elm_naviframe_top_item_get(ad->md.navibar_main)
 				== elm_naviframe_bottom_item_get(
-						ad->navi_bar)) {
+						ad->md.navibar_main)) {
 			ug_destroy_me(ug);
 		} else {
 			setting_view_cb_at_endKey(ad);
@@ -377,11 +355,11 @@ UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
 
 	memset(applicationsUG, 0x00, sizeof(SettingApplicationsUG));
 
-	ops->create = setting_applications_ug_on_create;
+	ops->create = app_create;
 	ops->start = setting_applications_ug_on_start;
-	ops->pause = setting_applications_ug_on_pause;
-	ops->resume = setting_applications_ug_on_resume;
-	ops->destroy = setting_applications_ug_on_destroy;
+	ops->pause = app_pause;
+	ops->resume = app_resume;
+	ops->destroy = app_terminate;
 	ops->message = setting_applications_ug_on_message;
 	ops->event = setting_applications_ug_on_event;
 	ops->key_event = setting_applications_ug_on_key_event;
