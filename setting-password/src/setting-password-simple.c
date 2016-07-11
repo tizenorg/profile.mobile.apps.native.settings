@@ -29,7 +29,7 @@
 #include <time.h>
 #include <notification.h>
 
-
+extern int set_password_status_handler(SettingPasswordUG *ad, int status);
 int setting_password_simple_check_simple_password(const char *collection);
 int setting_password_simple_draw_next_simple_password(void *data,
 		int title_index);
@@ -97,6 +97,7 @@ static void setting_password_simple_click_softkey_cancel_cb(void *data,
 		ug_send_result(ad->ug, svc);
 		SETTING_TRACE("Send Result : %s", "Cancel");
 
+		set_password_status_handler(ad, 2);  /* temporiry codes only for dpm */
 		app_control_destroy(svc);
 	}
 	/* Send destroy request */
@@ -202,6 +203,8 @@ static int _handle_step1(void *data, char *collection)
 
 	ug_send_result(ad->ug, svc);
 	SETTING_TRACE("Send Result : %s", ad->view_type_string);
+
+	set_password_status_handler(ad, 1);  /* temporiry codes only for dpm */
 	app_control_destroy(svc);
 	/* Send destroy request */
 	ug_destroy_me(ad->ug);
@@ -271,6 +274,8 @@ static int _handle_step2(void *data, int *step, char *collection1,
 					ug_send_result(ad->ug, svc);
 					SETTING_TRACE("Send Result : %s",
 							ad->view_type_string);
+
+					set_password_status_handler(ad, 1);  /* temporiry codes only for dpm */
 					app_control_destroy(svc);
 					/* Send destroy request */
 					ug_destroy_me(ad->ug);

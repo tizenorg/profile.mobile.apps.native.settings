@@ -409,6 +409,7 @@ static void setting_security_main_mouse_up_Gendial_list_cb(void *data,
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 
 	if (!safeStrCmp(KeyStr_LockScreen, list_item->keyStr)) {
+		elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
 		if (0 == app_launcher("org.tizen.ug-lockscreen-options", NULL, NULL)) {
 			/*if (0 == app_launcher(
 			 * "setting-lockscreen-options-efl")) { */
