@@ -19,35 +19,32 @@
  *
  */
 
-#include <setting-applications-defaultapp.h>
 #include <aul_svc.h>
-#include <dbus/dbus.h>
-#include <dbus/dbus-glib-lowlevel.h>
+#include <pkgmgr-info.h>
 
-static int setting_applications_defaultapp_create(void *cb);
-static int setting_applications_defaultapp_destroy(void *cb);
-static int setting_applications_defaultapp_update(void *cb);
-static int setting_applications_defaultapp_cleanup(void *cb);
+#include "setting-applications-defaultapp.h"
 
-static void setting_applications_defaultapp_click_softkey_cancel_cb(void *data,
-		Evas_Object *obj, void *event_info);
-static void setting_applications_defaultapp_mouse_up_Gendial_list_cb(void *data,
-		Evas_Object *obj, void *event_info);
+static int _view_create(void *cb);
+static int _view_destroy(void *cb);
+static int _view_update(void *cb);
+static int _view_cleanup(void *cb);
 
-static gboolean setting_applications_create_homescreen_setting_ug(void *data);
-static char *setting_application_get_defaultapp_name(const char *appid);
+static void _click_softkey_cancel_cb(void *data, Evas_Object *obj,
+		void *event_info);
+static void _mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
+		void *event_info);
 
 setting_view setting_view_applications_defaultapp = {
-		.create = setting_applications_defaultapp_create,
-		.destroy = setting_applications_defaultapp_destroy,
-		.update = setting_applications_defaultapp_update,
-		.cleanup = setting_applications_defaultapp_cleanup, };
+		.create = _view_create,
+		.destroy = _view_destroy,
+		.update = _view_update,
+		.cleanup = _view_cleanup, };
 /* ***************************************************
  *
  *basic func
  *
  ***************************************************/
-static char *setting_application_get_defaultapp_name(const char *appid)
+static char *_get_defaultapp_name(const char *appid)
 {
 	SETTING_TRACE_BEGIN;
 	int ret = PMINFO_R_ERROR;
@@ -88,8 +85,7 @@ void _unset_sel(void *data, Evas_Object *obj, void *event_info)
 	elm_genlist_item_selected_set(item, EINA_FALSE);
 }
 
-static void app_default_get_listinfo(pkgmgrinfo_pkginfo_h handle,
-		default_app *info)
+static void _get_listinfo(pkgmgrinfo_pkginfo_h handle, default_app *info)
 {
 	int ret = 0;
 	char *value;
@@ -126,7 +122,7 @@ static void app_default_get_listinfo(pkgmgrinfo_pkginfo_h handle,
 
 }
 
-static int app_default_get_pkg_list_iter(pkgmgrinfo_pkginfo_h handle, void *data)
+static int _get_pkg_list_iter(pkgmgrinfo_pkginfo_h handle, void *data)
 {
 	GList **pkg_list = data;
 	default_app *info = NULL;
@@ -140,7 +136,7 @@ static int app_default_get_pkg_list_iter(pkgmgrinfo_pkginfo_h handle, void *data
 		return 0;
 	}
 
-	app_default_get_listinfo(handle, info);
+	_get_listinfo(handle, info);
 
 	if (info->defapp == 1) {
 		SETTING_TRACE_DEBUG("info->pkgid : %s", info->pkgid);
@@ -171,18 +167,18 @@ static gint _glist_sort_atoz(gconstpointer a, gconstpointer b)
 	return strncasecmp(info1->pkg_label, info2->pkg_label, len);
 }
 
-void default_app_list_init(void *data, Evas_Object *genlist)
+static void _list_init(void *data, Evas_Object *genlist)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(data == NULL);
-	SettingApplicationsUG *ad = (SettingApplicationsUG *)data;
+	SettingApplications *ad = (SettingApplications *)data;
 	GList *pkg_list = NULL;
 	default_app *info = NULL;
 	int ret = -1;
 
 	/* Get list of default app by package manager */
 	/* init app list */
-	ret = pkgmgrinfo_pkginfo_get_list(app_default_get_pkg_list_iter,
+	ret = pkgmgrinfo_pkginfo_get_list(_get_pkg_list_iter,
 			&pkg_list);
 	if (ret < 0) {
 		SETTING_TRACE_ERROR("pkgmgrinfo_pkginfo_get_list() Fail(%d)", ret);
@@ -223,19 +219,19 @@ void default_app_list_init(void *data, Evas_Object *genlist)
 	ad->pkg_list = pkg_list;
 }
 
-void construct_defaultapp(void *data, Evas_Object *genlist)
+static void _construct_defaultapp(void *data, Evas_Object *genlist)
 {
 	ret_if(data == NULL);
-	SettingApplicationsUG *ad = (SettingApplicationsUG *)data;
+	SettingApplications *ad = (SettingApplications *)data;
 
 	/* "Set defaults" */
 	setting_create_Gendial_field_titleItem(genlist, &(ad->itc_grp_title),
 			MGRAPP_STR_LAUNCH_BY_DEFAULT, NULL);
 	char *appid = vconf_get_str(VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME);
-	char *sub_desc = setting_application_get_defaultapp_name(appid);
+	char *sub_desc = _get_defaultapp_name(appid);
 	ad->data_home = setting_create_Gendial_field_def(genlist,
 			&(ad->itc_2text_2),
-			setting_applications_defaultapp_mouse_up_Gendial_list_cb,
+			_mouse_up_Gendial_list_cb,
 			ad, SWALLOW_Type_INVALID, NULL,
 			NULL, 0, KeyStr_Home, sub_desc, NULL);
 	if (ad->data_home) {
@@ -248,28 +244,19 @@ void construct_defaultapp(void *data, Evas_Object *genlist)
 	/* Create default app list */
 	setting_create_Gendial_field_titleItem(genlist, &(ad->itc_grp_title),
 			MGRAPP_STR_CLEAR_DEFAULT, NULL);
-	default_app_list_init(ad, genlist);
+	_list_init(ad, genlist);
 }
 
-void destruct_defaultapp(void *data)
+static void _destruct_defaultapp(void *data)
 {
 	SETTING_TRACE_BEGIN;
-	ret_if(data == NULL);
-#if 0
-	SettingApplicationsUG *ad = (SettingApplicationsUG *) data;
-	if (ad->popup) {
-		evas_object_del(ad->popup);
-		ad->popup = NULL;
-	}
-#endif
 }
 
-static void setting_applications_defaultapp_vconf_change_cb(keynode_t *key,
-		void *data)
+static void _vconf_change_cb(keynode_t *key, void *data)
 {
 	ret_if(data == NULL);
 
-	SettingApplicationsUG *ad = data;
+	SettingApplications *ad = data;
 
 	char *vconf_name = vconf_keynode_get_name(key);
 
@@ -282,7 +269,7 @@ static void setting_applications_defaultapp_vconf_change_cb(keynode_t *key,
 					VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME);
 
 			/* pkgname --> label */
-			char *label = setting_application_get_defaultapp_name(
+			char *label = _get_defaultapp_name(
 					pkgname);
 			ad->data_home->sub_desc = label;
 			elm_object_item_data_set(ad->data_home->item,
@@ -292,13 +279,13 @@ static void setting_applications_defaultapp_vconf_change_cb(keynode_t *key,
 	}
 }
 
-static int setting_applications_defaultapp_create(void *cb)
+static int _view_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingApplicationsUG *ad = (SettingApplicationsUG *)cb;
-	Evas_Object *genlist = elm_genlist_add(ad->win_main_layout);
+	SettingApplications *ad = (SettingApplications *)cb;
+	Evas_Object *genlist = elm_genlist_add(ad->md.view_layout);
 	retvm_if(genlist == NULL, SETTING_RETURN_FAIL,
 			"Cannot set scroller object as contento of layout");
 	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
@@ -306,19 +293,19 @@ static int setting_applications_defaultapp_create(void *cb)
 
 	setting_push_layout_navi_bar(KeyStr_DefaultApplications,
 			_("IDS_ST_BUTTON_BACK"), NULL, NULL,
-			setting_applications_defaultapp_click_softkey_cancel_cb,
+			_click_softkey_cancel_cb,
 			NULL,
-			NULL, ad, genlist, ad->navi_bar, NULL);
+			NULL, ad, genlist, ad->md.navibar_main, NULL);
 
 	/*ad->genlist = genlist; */
 	evas_object_smart_callback_add(genlist, "realized", __gl_realized_cb,
 			ad);
 
-	construct_defaultapp(ad, genlist);/*------- */
+	_construct_defaultapp(ad, genlist);/*------- */
 	/* ad->data_home */
 	int ret = vconf_notify_key_changed(
 			VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME,
-			setting_applications_defaultapp_vconf_change_cb, ad);
+			_vconf_change_cb, ad);
 	if (ret != 0)
 		SETTING_TRACE_ERROR("call vconf_notify_key_changed failed");
 
@@ -330,7 +317,7 @@ static int setting_applications_defaultapp_create(void *cb)
 	return SETTING_RETURN_SUCCESS;
 }
 
-static int setting_applications_defaultapp_destroy(void *cb)
+static int _view_destroy(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 
@@ -339,32 +326,31 @@ static int setting_applications_defaultapp_destroy(void *cb)
 	retv_if(!(setting_view_applications_defaultapp.is_create),
 			SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	destruct_defaultapp(cb);/*------- */
+	_destruct_defaultapp(cb);/*------- */
 
-	SettingApplicationsUG *ad = (SettingApplicationsUG *)cb;
+	SettingApplications *ad = (SettingApplications *)cb;
 
 	vconf_ignore_key_changed(VCONFKEY_SETAPPL_SELECTED_PACKAGE_NAME,
-			setting_applications_defaultapp_vconf_change_cb);
+			_vconf_change_cb);
 
 	setting_view_applications_defaultapp.is_create = 0;
-	elm_naviframe_item_pop(ad->navi_bar);
+	elm_naviframe_item_pop(ad->md.navibar_main);
 
 	return SETTING_RETURN_SUCCESS;
 }
 
-static int setting_applications_defaultapp_update(void *cb)
+static int _view_update(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	return SETTING_RETURN_SUCCESS;
-
 }
 
-static int setting_applications_defaultapp_cleanup(void *cb)
+static int _view_cleanup(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	setting_applications_defaultapp_destroy(cb);
+	_view_destroy(cb);
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -381,57 +367,31 @@ static int setting_applications_defaultapp_cleanup(void *cb)
  *
  ***************************************************/
 
-static void setting_applications_defaultapp_click_softkey_cancel_cb(void *data,
-		Evas_Object *obj, void *event_info)
+static void _click_softkey_cancel_cb(void *data, Evas_Object *obj,
+		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");
-	SettingApplicationsUG *ad = (SettingApplicationsUG *)data;
+	SettingApplications *ad = (SettingApplications *)data;
 
 	setting_view_change(&setting_view_applications_defaultapp,
 			&setting_view_applications_main, ad);
 }
 
-void setting_applications_defaultapp_mouse_up_Gendial_list_cb(void *data,
-		Evas_Object *obj, void *event_info)
+void _mouse_up_Gendial_list_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	/* error check */
-	setting_retm_if(data == NULL, "Data parameter is NULL");
-
-	SettingApplicationsUG *ad = (SettingApplicationsUG *)data;
-	retm_if(event_info == NULL, "Invalid argument: event info is NULL");
 	Elm_Object_Item *item = (Elm_Object_Item *)event_info;
+	Setting_GenGroupItem_Data *list_item = NULL;
+	ret_if(!item);
+
 	elm_genlist_item_selected_set(item, 0);
-	Setting_GenGroupItem_Data *list_item =
-			(Setting_GenGroupItem_Data *)elm_object_item_data_get(
-					item);
+	list_item = (Setting_GenGroupItem_Data *)elm_object_item_data_get(item);
 
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
-	/*SETTING_TRACE("chk_status[%d]", list_item->chk_status); */
 	if (!safeStrCmp(KeyStr_Home, list_item->keyStr)) {
-		SETTING_TRACE("click Home and run UG");
-		setting_applications_create_homescreen_setting_ug(ad);
+		SETTING_TRACE("click Home and run");
+		app_launcher("org.tizen.setting-homescreen", NULL, NULL);
 	}
 }
-
-static gboolean setting_applications_create_homescreen_setting_ug(void *data)
-{
-	SETTING_TRACE_BEGIN;
-	/* error check */
-	retv_if(data == NULL, FALSE);
-
-	/* ad is point to data */
-	SettingApplicationsUG *ad = (SettingApplicationsUG *)data;
-
-	if (ad->ug_homescreen) {
-		SETTING_TRACE("Font UG is already loaded.");
-		return FALSE;
-	}
-
-	app_launcher("org.tizen.setting-homescreen", NULL, NULL);
-
-	return TRUE;
-}
-

@@ -21,123 +21,39 @@
 #ifndef __SETTING_APPLICATION_H__
 #define __SETTING_APPLICATION_H__
 
-#include <stdio.h>
-#include <string.h>
-
 #include <glib.h>
-#include <pkgmgr-info.h>
-#include <package-manager.h>
-
 #include <Elementary.h>
 
-#include <glib-object.h>
-
-#include <setting-common-draw-widget.h>
-#include <setting-common-view.h>
-
-#include <device.h>
-#include <dd-display.h>
-#include <dd-deviced.h>
-#include <dbus/dbus.h>
-/*#include <devman.h> */
-
-#include <pkgmgr-info.h>
+#include "setting-common-draw-widget.h"
+#include "setting-common-view.h"
+#include "setting-common-init.h"
 
 #define SAFE_STRDUP(src) (src) ? strdup(src) : NULL
 
 #define Keystr_Clear		"Clear"
 
-#define SMART_SCREEN_TRY_IT_IMAGE_L \
-	SETTING_ICON_PATH_CFG"air_jump_try_full_h.png"
-#define SMART_SCREEN_TRY_IT_IMAGE_P \
-	SETTING_ICON_PATH_CFG"air_jump_try_full.png"
-
-#define KeyStr_ScreenCapture "IDS_MF_BODY_SCREEN_CAPTURE_M_NOUN"
-#define KeyStr_ScreenCapture_Destination "IDS_LBS_BODY_DESTINATION"
-#define KeyStr_ScreenCapture_Ask "IDS_SKM_BODY_ASK_M_IDEA_SKETCH"
-#define KeyStr_ScreenCapture_Gallery "IDS_ST_BODY_GALLERY"
-#define KeyStr_ScreenCapture_KeepIt \
-	"IDS_KEEPIT_HEADER_KEEPIT_M_APPLICATION_NAME"
-#define KeyStr_ScreenCapture_Edit "IDS_ST_MBODY_EDIT_AFTER_SCREEN_CAPTURE"
-#define KeyStr_Dynamic_Status_Bar "IDS_ST_BODY_DYNAMIC_STATUS_BAR"
-
-typedef struct _SettingApplicationsUG SettingApplicationsUG;
+typedef struct _SettingApplications SettingApplications;
 
 /**
- * Setting Applications UG context
- * all UG function has void* as an agument. this is casted back to
- * SettingApplicationsUG and the functions access app context.
+ * Setting Applications context
  */
-struct _SettingApplicationsUG {
-	ui_gadget_h ug;
-
-	/* add more variables here (move your appdata to here) */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-
-	ui_gadget_h ug_loading;
-	ui_gadget_h ug_appmgr;
-	ui_gadget_h ug_homescreen;
-	ui_gadget_h ug_passwd;
-	ui_gadget_h ug_ledindicator;
-
-	Evas_Object *ly_main;
-
-	Evas_Object *navi_bar;	/*	for navigation effect */
-	Elm_Object_Item *nf_it;
-	Ecore_Timer *event_freeze_timer;
-
-
-	Setting_GenGroupItem_Data *data_home;
-
-	Setting_GenGroupItem_Data *data_back;
-
-	Setting_GenGroupItem_Data *data_auto_rotate;
-	Setting_GenGroupItem_Data *data_tts;
-
+struct _SettingApplications {
+	MainData md;
 	setting_view *view_to_load;
 
-	Evas_Object *popup_chk;
-	Evas_Object *popup;
+	Ecore_Timer *event_freeze_timer;
+	Setting_GenGroupItem_Data *data_home;
 
 	Elm_Genlist_Item_Class itc_2text_2;
 	Elm_Genlist_Item_Class itc_1text_1icon;
 	Elm_Genlist_Item_Class itc_1icon_1text_sub;
 	Elm_Genlist_Item_Class itc_1text;
-	Elm_Genlist_Item_Class itc_screen_mode;
 	Elm_Genlist_Item_Class itc_2text_3;
 	Elm_Genlist_Item_Class itc_1text_1icon_divider;
-	Elm_Genlist_Item_Class itc_1icon;
 	Elm_Genlist_Item_Class itc_grp_title;
 	Elm_Genlist_Item_Class itc_1icon_1button;
-	Elm_Genlist_Item_Class itc_variable_height;
-	Elm_Genlist_Item_Class itc_2text_3_parent_backlight;
-	Elm_Genlist_Item_Class itc_2text_3_parent_touch_duration;
-	Elm_Genlist_Item_Class itc_1icon_1text_sub_back;
-	Elm_Genlist_Item_Class itc_1icon_1text_sub_touch;
-	Elm_Genlist_Item_Class itc_multiline_text;
-	Elm_Genlist_Item_Class itc_multiline_overheating;
-
-
-	/*Improve response speed */
-	Ecore_Idler *set_idler;
-	Ecore_Timer *set_timer;
-
-	/* genlist */
-	Evas_Object *genlist;
-
-	DBusConnection *bus;
-	char *uri;
 
 	GList *pkg_list;
-
-	/*for smart screen try it*/
-	Evas_Object *smart_stay_image;
-	Evas_Object *smart_rotation_image;
-	Evas_Object *smart_stay_sublayout;
-	Evas_Object *smart_rotation_sublayout;
-	Ecore_Timer *timer_show_guide;
 };
 
 extern setting_view setting_view_applications_main;
@@ -145,15 +61,10 @@ extern setting_view setting_view_applications_defaultapp;
 
 typedef struct _default_app {
 	Elm_Object_Item *item;
-
 	int defapp;
 	char *pkgid;
 	char *icon_path;
 	char *pkg_label;
-
 } default_app;
-
-void setting_applications_layout_ug_cb(
-		ui_gadget_h ug, enum ug_mode mode, void *priv);
 
 #endif				/* __SETTING_APPLICATION_H__ */
