@@ -32,6 +32,7 @@
 #include <Ecore.h>
 #include <time.h>
 #include <notification.h>
+#include <dpm/password.h>
 
 void __add_help_of_password_fails(int ret, SettingPasswordUG *ad);
 
@@ -58,6 +59,40 @@ extern struct _pw_item pw_its[];
  *
  ***************************************************/
 
+
+int set_password_status_handler(SettingPasswordUG *ad, int status)
+{
+	if(!ad->caller_string || safeStrCmp(ad->caller_string,"DPM") != 0){
+		SETTING_TRACE("Failed : caller is NOT DPM");
+		return -1;
+	}
+
+	dpm_context_h handle;
+	dpm_password_policy_h password_policy_handle;
+
+	handle = dpm_context_create();
+	if (handle == NULL) {
+		SETTING_TRACE("Failed to create client handle");
+		return -1;
+	}
+
+	password_policy_handle = dpm_context_acquire_password_policy(handle);
+	if (password_policy_handle == NULL) {
+		SETTING_TRACE("Failed to create password policy handle");
+		return -1;
+	}
+
+	if (dpm_password_set_status(password_policy_handle, status) == 0) {
+		dpm_context_release_password_policy(handle, password_policy_handle);
+		dpm_context_destroy(handle);
+		return 0;
+	}
+
+	dpm_context_release_password_policy(handle, password_policy_handle);
+	dpm_context_destroy(handle);
+	return -1;
+}
+
 static void setting_password_main_click_softkey_cancel_cb(void *data,
 		Evas_Object *obj, void *event_info)
 {
@@ -83,6 +118,7 @@ static void setting_password_main_click_softkey_cancel_cb(void *data,
 		ug_send_result(ad->ug, svc);
 		SETTING_TRACE("Send Result : %s\n", "Cancel");
 
+		set_password_status_handler(ad, 2);  /* temporiry codes only for dpm */
 		app_control_destroy(svc);
 	}
 	/* Send destroy request */
@@ -898,6 +934,7 @@ static void setting_password_main_done_password(void *data)
 			SETTING_TRACE("Send Result : %s\n",
 					ad->view_type_string);
 
+			set_password_status_handler(ad, 1);  /* temporiry codes only for dpm */
 			app_control_destroy(svc);
 			/* Send destroy request */
 			ug_destroy_me(ad->ug);
@@ -916,6 +953,7 @@ static void setting_password_main_done_password(void *data)
 	ug_send_result(ad->ug, svc);
 	SETTING_TRACE("Send Result : %s\n", ad->view_type_string);
 
+	set_password_status_handler(ad, 1);  /* temporiry codes only for dpm */
 	app_control_destroy(svc);
 	/* Send destroy request */
 	ug_destroy_me(ad->ug);

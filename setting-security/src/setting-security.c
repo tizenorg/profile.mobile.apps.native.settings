@@ -1235,7 +1235,9 @@ gboolean setting_security_create_lockscreen_options_sg(void *data)
 		return FALSE;
 	}
 
-	app_launcher("lockscreen-options", NULL, NULL);
+	if (ad->ly_main)
+		elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
+	app_launcher("org.tizen.ug-lockscreen-options", NULL, NULL);
 
 	return TRUE;
 }
