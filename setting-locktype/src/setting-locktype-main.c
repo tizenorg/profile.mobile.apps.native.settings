@@ -565,8 +565,10 @@ static int setting_locktype_main_create(void *cb)
 
 	__add_locktype_items(ad);
 
+#if 0
 	vconf_notify_key_changed(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT,
 			__lock_type_key_changed_cb, ad);
+#endif
 
 	setting_view_locktype_main.is_create = 1;
 	return SETTING_RETURN_SUCCESS;
@@ -585,8 +587,10 @@ static int setting_locktype_main_destroy(void *cb)
 		ad->notify = NULL;
 	}
 
+#if 0
 	(void) vconf_ignore_key_changed(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT,
 			__lock_type_key_changed_cb);
+#endif
 
 	evas_object_del(ad->ly_main);
 	ad->screen_lock_main_item = NULL;
