@@ -50,27 +50,27 @@ static int setting_applications_main_create(void *cb)
 
 	Evas_Object *genlist = NULL;
 
-	ad->ly_main = setting_create_layout_navi_bar_genlist(
-			ad->win_main_layout, ad->win_get,
+	ad->md.ly_main = setting_create_layout_navi_bar_genlist(
+			ad->md.view_layout, ad->md.win_main,
 			KeyStr_Applications, NULL,/* ARROW */
 			NULL,
 			(setting_call_back_func)setting_applications_main_click_softkey_back_cb,
-			NULL, ad, &genlist, &(ad->navi_bar));
+			NULL, ad, &genlist, &(ad->md.navibar_main));
 
-	ad->genlist = genlist;
-	elm_genlist_mode_set(ad->genlist, ELM_LIST_COMPRESS);
+	ad->md.genlist = genlist;
+	elm_genlist_mode_set(ad->md.genlist, ELM_LIST_COMPRESS);
 	/*register vconf key */
 
-	evas_object_smart_callback_add(ad->genlist, "realized",
+	evas_object_smart_callback_add(ad->md.genlist, "realized",
 			__gl_realized_cb, NULL);
 
-	setting_create_Gendial_field_def(ad->genlist, &itc_1text,
+	setting_create_Gendial_field_def(ad->md.genlist, &itc_1text,
 			setting_applications_main_mouse_up_Gendial_list_cb, ad,
 			SWALLOW_Type_INVALID, NULL,
 			NULL, 0,
 			KeyStr_ApplicationManager, NULL, NULL);
 
-	setting_create_Gendial_field_def(ad->genlist, &itc_1text,
+	setting_create_Gendial_field_def(ad->md.genlist, &itc_1text,
 			setting_applications_main_mouse_up_Gendial_list_cb, ad,
 			SWALLOW_Type_INVALID, NULL,
 			NULL, 0,
@@ -90,12 +90,12 @@ static int setting_applications_main_destroy(void *cb)
 
 	SettingApplicationsUG *ad = (SettingApplicationsUG *)cb;
 
-	if (ad->nf_it)
-		ad->nf_it = NULL;
+	if (ad->md.navibar_main_it)
+		ad->md.navibar_main_it = NULL;
 
-	if (ad->ly_main != NULL) {
-		evas_object_del(ad->ly_main);
-		ad->ly_main = NULL;
+	if (ad->md.ly_main != NULL) {
+		evas_object_del(ad->md.ly_main);
+		ad->md.ly_main = NULL;
 		/* if(ad->back_dialData) FREE(ad->back_dialData); */
 	}
 	setting_view_applications_main.is_create = 0;
@@ -110,8 +110,8 @@ static int setting_applications_main_update(void *cb)
 /*
 	SettingApplicationsUG *ad = (SettingApplicationsUG *)cb;
 
-	if (ad->ly_main != NULL) {
-		evas_object_show(ad->ly_main);
+	if (ad->md.ly_main != NULL) {
+		evas_object_show(ad->md.ly_main);
 		if (ad->data_br) {
 			ad->data_br->sub_desc = (char *)g_strdup(
 					get_brightness_mode_str());
@@ -144,7 +144,7 @@ static Eina_Bool setting_applications_manage_apps_freeze_event_timer_cb(
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 	SettingApplicationsUG *ad = (SettingApplicationsUG *)cb;
 
-	evas_object_freeze_events_set(ad->navi_bar, EINA_FALSE);
+	evas_object_freeze_events_set(ad->md.navibar_main, EINA_FALSE);
 
 	ad->event_freeze_timer = NULL;
 	SETTING_TRACE_END;
@@ -160,7 +160,7 @@ static void setting_applications_manage_apps_ug(SettingApplicationsUG *ad)
 		ad->event_freeze_timer = ecore_timer_add(1,
 				setting_applications_manage_apps_freeze_event_timer_cb,
 				ad);
-		evas_object_freeze_events_set(ad->navi_bar, EINA_TRUE);
+		evas_object_freeze_events_set(ad->md.navibar_main, EINA_TRUE);
 	}
 }
 
