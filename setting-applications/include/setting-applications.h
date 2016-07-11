@@ -23,25 +23,20 @@
 
 #include <stdio.h>
 #include <string.h>
-
 #include <glib.h>
 #include <pkgmgr-info.h>
 #include <package-manager.h>
-
 #include <Elementary.h>
-
 #include <glib-object.h>
-
-#include <setting-common-draw-widget.h>
-#include <setting-common-view.h>
-
 #include <device.h>
 #include <dd-display.h>
 #include <dd-deviced.h>
 #include <dbus/dbus.h>
-/*#include <devman.h> */
-
 #include <pkgmgr-info.h>
+
+#include "setting-common-draw-widget.h"
+#include "setting-common-view.h"
+#include "setting-common-init.h"
 
 #define SAFE_STRDUP(src) (src) ? strdup(src) : NULL
 
@@ -69,35 +64,23 @@ typedef struct _SettingApplicationsUG SettingApplicationsUG;
  * SettingApplicationsUG and the functions access app context.
  */
 struct _SettingApplicationsUG {
-	ui_gadget_h ug;
+	MainData md;
 
 	/* add more variables here (move your appdata to here) */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-
 	ui_gadget_h ug_loading;
 	ui_gadget_h ug_appmgr;
 	ui_gadget_h ug_homescreen;
 	ui_gadget_h ug_passwd;
 	ui_gadget_h ug_ledindicator;
 
-	Evas_Object *ly_main;
-
-	Evas_Object *navi_bar;	/*	for navigation effect */
-	Elm_Object_Item *nf_it;
 	Ecore_Timer *event_freeze_timer;
 
-
 	Setting_GenGroupItem_Data *data_home;
-
 	Setting_GenGroupItem_Data *data_back;
-
 	Setting_GenGroupItem_Data *data_auto_rotate;
 	Setting_GenGroupItem_Data *data_tts;
 
 	setting_view *view_to_load;
-
 	Evas_Object *popup_chk;
 	Evas_Object *popup;
 
@@ -119,17 +102,12 @@ struct _SettingApplicationsUG {
 	Elm_Genlist_Item_Class itc_multiline_text;
 	Elm_Genlist_Item_Class itc_multiline_overheating;
 
-
 	/*Improve response speed */
 	Ecore_Idler *set_idler;
 	Ecore_Timer *set_timer;
 
-	/* genlist */
-	Evas_Object *genlist;
-
 	DBusConnection *bus;
 	char *uri;
-
 	GList *pkg_list;
 
 	/*for smart screen try it*/
