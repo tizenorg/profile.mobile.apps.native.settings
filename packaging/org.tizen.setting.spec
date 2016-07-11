@@ -97,6 +97,7 @@ BuildRequires:  pkgconfig(callmgr_client)
 BuildRequires:  pkgconfig(privilege-info)
 BuildRequires:  pkgconfig(security-privilege-manager)
 #BuildRequires:	pkgconfig(capi-location-manager)
+BuildRequires:  pkgconfig(dpm)
 BuildRequires:  pkgconfig(auth-fw)
 BuildRequires:  pkgconfig(dpm)
 BuildRequires:  libcap-devel

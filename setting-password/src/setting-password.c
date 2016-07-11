@@ -25,6 +25,7 @@
 
 extern void setting_get_pin_lock_info_cb(TapiHandle *handle, int result,
 		void *data, void *user_data);
+extern int set_password_status_handler(SettingPasswordUG *ad, int status);
 
 #ifndef UG_MODULE_API
 #define UG_MODULE_API __attribute__ ((visibility("default")))
@@ -163,10 +164,15 @@ void __get_extra_data(SettingPasswordUG *ad, app_control_h service)
 	app_control_get_extra_data(service, "viewtype",
 			&(ad->view_type_string));
 	SETTING_TRACE("viewtype:%s", ad->view_type_string);
+
 	/* #2. current pw */
 	app_control_get_extra_data(service, "current", &(ad->cur_pwd));
 	if (ad->cur_pwd)
 		SETTING_TRACE_SECURE_DEBUG("Receive current : %s", ad->cur_pwd);
+
+	/* #3. caller */
+	app_control_get_extra_data(service, "caller", &(ad->caller_string));
+	SETTING_TRACE("caller:%s", ad->caller_string);
 }
 
 void __get_password_view_type(SettingPasswordUG *ad, app_control_h service)
@@ -436,6 +442,10 @@ static void setting_password_ug_on_resume(ui_gadget_h ug, app_control_h service,
 			ecore_imf_context_focus_in(passwordUG->imf_context);
 		}
 	}
+
+#if 0
+	set_password_status_handler(passwordUG, 0);  /* temporiry codes only for dpm */
+#endif
 }
 
 static void setting_password_ug_on_destroy(ui_gadget_h ug,
@@ -456,6 +466,9 @@ static void setting_password_ug_on_destroy(ui_gadget_h ug,
 
 	if (passwordUG->cur_pwd)
 		FREE(passwordUG->cur_pwd);
+
+	if (passwordUG->caller_string)
+		FREE(passwordUG->caller_string);
 
 	if (passwordUG->t_info) {
 		FREE(passwordUG->t_info);
@@ -599,6 +612,12 @@ void setting_password_ug_popup_resp_cb(void *data, Evas_Object *obj,
 		ug_send_result(ad->ug, svc);
 		SETTING_TRACE("Send Result : %s\n", ad->view_type_string);
 
+		if(ad->view_type == SETTING_PW_TYPE_SIMPLE_PASSWORD)
+			set_password_status_handler(ad, 2);  /* temporiry codes only for dpm */
+		else if(ad->view_type == SETTING_PW_TYPE_SET_SIMPLE_PASSWORD)
+			set_password_status_handler(ad, 1);  /* temporiry codes only for dpm */
+
+		
 		app_control_destroy(svc);
 		/* Send destroy request */
 		ug_destroy_me(ad->ug);
@@ -624,6 +643,11 @@ void setting_password_ug_popup_resp_cb(void *data, Evas_Object *obj,
 			app_control_add_extra_data(svc, "result",
 					diable_view_type);
 			ug_send_result(ad->ug, svc);
+
+			if(ad->view_type == SETTING_PW_TYPE_SIMPLE_PASSWORD)
+				set_password_status_handler(ad, 2);  /* temporiry codes only for dpm */
+			else if(ad->view_type == SETTING_PW_TYPE_SET_SIMPLE_PASSWORD)
+				set_password_status_handler(ad, 1);  /* temporiry codes only for dpm */
 
 			app_control_destroy(svc);
 			/* Send destroy request */

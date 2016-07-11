@@ -427,6 +427,9 @@ gboolean setting_locktype_create_password_sg(void *data)
 	if (ad->input_pwd)
 		app_control_add_extra_data(svc, "current", ad->input_pwd);
 
+	if (ad->caller && !safeStrCmp(ad->caller, "DPM")) 
+		app_control_add_extra_data(svc, "caller", "DPM");
+
 	elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
 	ad->ug_passwd = setting_ug_create(ad->ug, "setting-password-efl",
 			UG_MODE_FULLVIEW, svc, cbs);
