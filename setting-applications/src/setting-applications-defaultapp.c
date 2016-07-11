@@ -33,7 +33,6 @@ static void setting_applications_defaultapp_click_softkey_cancel_cb(void *data,
 		Evas_Object *obj, void *event_info);
 static void setting_applications_defaultapp_mouse_up_Gendial_list_cb(void *data,
 		Evas_Object *obj, void *event_info);
-
 static gboolean setting_applications_create_homescreen_setting_ug(void *data);
 static char *setting_application_get_defaultapp_name(const char *appid);
 
@@ -298,7 +297,7 @@ static int setting_applications_defaultapp_create(void *cb)
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
 	SettingApplicationsUG *ad = (SettingApplicationsUG *)cb;
-	Evas_Object *genlist = elm_genlist_add(ad->win_main_layout);
+	Evas_Object *genlist = elm_genlist_add(ad->md.view_layout);
 	retvm_if(genlist == NULL, SETTING_RETURN_FAIL,
 			"Cannot set scroller object as contento of layout");
 	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
@@ -308,7 +307,7 @@ static int setting_applications_defaultapp_create(void *cb)
 			_("IDS_ST_BUTTON_BACK"), NULL, NULL,
 			setting_applications_defaultapp_click_softkey_cancel_cb,
 			NULL,
-			NULL, ad, genlist, ad->navi_bar, NULL);
+			NULL, ad, genlist, ad->md.navibar_main, NULL);
 
 	/*ad->genlist = genlist; */
 	evas_object_smart_callback_add(genlist, "realized", __gl_realized_cb,
@@ -347,7 +346,7 @@ static int setting_applications_defaultapp_destroy(void *cb)
 			setting_applications_defaultapp_vconf_change_cb);
 
 	setting_view_applications_defaultapp.is_create = 0;
-	elm_naviframe_item_pop(ad->navi_bar);
+	elm_naviframe_item_pop(ad->md.navibar_main);
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -356,7 +355,6 @@ static int setting_applications_defaultapp_update(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	return SETTING_RETURN_SUCCESS;
-
 }
 
 static int setting_applications_defaultapp_cleanup(void *cb)

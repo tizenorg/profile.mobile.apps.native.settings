@@ -14,6 +14,8 @@ SET(POFILES ar.po az.po bg.po ca.po cs.po da.po de.po el_GR.po en.po en_PH.po en
 
 SET(MSGFMT "/usr/bin/msgfmt")
 
+SET(SETTING_PKG_APPLICATIONS "org.tizen.setting-applications")
+
 FOREACH(pofile ${POFILES})
 	SET(pofile ${CMAKE_CURRENT_SOURCE_DIR}/${pofile})
 	MESSAGE("PO: ${pofile}")
@@ -26,6 +28,7 @@ FOREACH(pofile ${POFILES})
 			DEPENDS ${absPofile}
 	)
 	INSTALL(FILES ${moFile} DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/locale/${lang}/LC_MESSAGES RENAME setting.mo)
+	INSTALL(FILES ${moFile} DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_APPLICATIONS}/res/locale/${lang}/LC_MESSAGES RENAME setting.mo)
 
 #${TZ_SYS_RO_APP}/org.tizen.mode-syspopup
 
@@ -34,3 +37,4 @@ ENDFOREACH(pofile)
 
 MESSAGE(".mo files: ${moFiles}")
 ADD_CUSTOM_TARGET(po ALL DEPENDS ${moFiles})
+
