@@ -131,6 +131,13 @@ Group: Application Framework/Settings
 #Requires: pkgconfig(setting-common-internal)
 %description devel
 
+%package applications
+Summary: A setting applications application
+Group: Application
+
+%description applications
+Configuration application for applications
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -342,3 +349,10 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %files ref
 %{_datadir}/mime/packages/mime.setting.xml
 %{_datadir}/packages/org.tizen.setting.xml.ref
+
+%files applications
+%manifest setting-applications/org.tizen.setting-applications.manifest
+%{_prefix}/apps/org.tizen.setting-applications/bin/setting-applications
+%{_datadir}/packages/org.tizen.setting-applications.xml
+%{_prefix}/apps/org.tizen.setting-applications/res/*
+
