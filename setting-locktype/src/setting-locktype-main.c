@@ -62,17 +62,6 @@ openlock_appdata *lockapp_data = NULL;
  **
  ****************************************************/
 
-/*
-static void dpm_dpmusb_policy_changed_cb(const char* policy, const char* state, void* data)
-{
-	SETTING_TRACE_BEGIN;
-
-	SETTING_TRACE("External storag policy changed: %s : %s", policy, state);
-
-	SETTING_TRACE_END;
-}
-*/
-
 static int dpm_get_password_policy(dpm_password_quality_e *quality, int *minimum_length)
 {
 	SETTING_TRACE_BEGIN;
@@ -520,6 +509,7 @@ typedef enum {
 	SETTING_TRACE_END;
 }
 
+#if 0
 static void __lock_type_key_changed_cb(keynode_t *key, void *data)
 {
 	ret_if(data == NULL);
@@ -542,6 +532,7 @@ static void __lock_type_key_changed_cb(keynode_t *key, void *data)
 	}
 	/*ug_destroy_me(ad->ug); */
 }
+#endif
 
 static int setting_locktype_main_create(void *cb)
 {

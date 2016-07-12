@@ -273,7 +273,7 @@ static Evas_Object *_font_size_slider_get(void *data, Evas_Object *obj,
 			return layout;
 		}
 	}
-	
+
 	return NULL;
 }
 
