@@ -384,6 +384,74 @@ Evas_Object *setting_main_layout_conform_create(Evas_Object *win_layout,
 	return layout;
 }
 
+// data : data as a callback
+// user_data :
+static void system_setting_get_ringtone_list(int key, void *data, void *user_data)
+{
+	SETTING_TRACE_BEGIN;
+	setting_main_appdata *ad = (setting_main_appdata *) user_data;
+	SETTING_TRACE(" *** RINGTONE FILE NAME IN SETTING (%d) : %s *** ", key, (char*)data);
+}
+
+#if 0
+static void test_timezone(void * cb)
+{
+	SETTING_TRACE_BEGIN;
+	setting_main_appdata *ad = (setting_main_appdata *) cb;
+
+	char *tz = NULL;
+	int ret = system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_TIMEZONE, &tz);
+	if (ret == 0 && tz) {
+		SETTING_TRACE("current timezone : %s", tz);
+		free(tz);
+	} else {
+		SETTING_TRACE_ERROR("current timezone ERROR");
+	}
+}
+#endif
+
+static void test_ringtonelist(void * cb)
+{
+	SETTING_TRACE_BEGIN;
+	setting_main_appdata *ad = (setting_main_appdata *) cb;
+
+	//char *font_type_name = NULL;
+	int ret = system_settings_list_value_string(SYSTEM_SETTINGS_KEY_INCOMING_CALL_RINGTONE, system_setting_get_ringtone_list, ad);
+
+}
+
+static void test_ringtone_add(void * cb)
+{
+	SETTING_TRACE_BEGIN;
+	setting_main_appdata *ad = (setting_main_appdata *) cb;
+
+	//char* path = "/home/owner/content/Sounds/Ringtones/ringtone_user2.mp3";
+	//int ret = system_settings_add_value_string(SYSTEM_SETTINGS_KEY_INCOMING_CALL_RINGTONE, path);
+	int ret = -1;
+	ret = system_settings_add_value_string(SYSTEM_SETTINGS_KEY_INCOMING_CALL_RINGTONE, "/home/owner/content/Sounds/Ringtones/ringtone_user6.mp3");
+	SETTING_TRACE("%d - Ringtone ADD", ret);
+	ret = system_settings_add_value_string(SYSTEM_SETTINGS_KEY_INCOMING_CALL_RINGTONE, "/home/owner/content/Sounds/Ringtones/ringtone_user7.mp3");
+	SETTING_TRACE("%d - Ringtone ADD", ret);
+	ret = system_settings_add_value_string(SYSTEM_SETTINGS_KEY_INCOMING_CALL_RINGTONE, "/home/owner/content/Sounds/Ringtones/ringtone_user8.mp3");
+	SETTING_TRACE("%d - Ringtone ADD", ret);
+	ret = system_settings_add_value_string(SYSTEM_SETTINGS_KEY_INCOMING_CALL_RINGTONE, "/home/owner/content/Sounds/Ringtones/ringtone_user11.mp3");
+	SETTING_TRACE("%d - Ringtone ADD", ret);
+}
+
+static void test_ringtone_del(void * cb)
+{
+	SETTING_TRACE_BEGIN;
+	setting_main_appdata *ad = (setting_main_appdata *) cb;
+
+	int ret = -1;
+	//ret = system_settings_del_value_string(SYSTEM_SETTINGS_KEY_INCOMING_CALL_RINGTONE, "/home/owner/content/Sounds/Ringtones/ringtone_user6.mp3");
+	//ret = system_settings_del_value_string(SYSTEM_SETTINGS_KEY_INCOMING_CALL_RINGTONE, "/home/owner/content/Sounds/Ringtones/ringtone_user7.mp3");
+	//ret = system_settings_del_value_string(SYSTEM_SETTINGS_KEY_INCOMING_CALL_RINGTONE, "/home/owner/content/Sounds/Ringtones/ringtone_user8.mp3");
+	ret = system_settings_del_value_string(SYSTEM_SETTINGS_KEY_INCOMING_CALL_RINGTONE, "/home/owner/content/Sounds/Ringtones/ringtone_user11.mp3");
+}
+
+
+
 /**
  * @brief create all view layout
  *
@@ -439,6 +507,12 @@ static int setting_main_create(void *cb)
 		elm_object_part_content_set(view_layout, "elm.swallow.content", all_list);
 
 	}
+
+	//test_timezone(ad);
+	test_ringtone_add(ad);
+	//test_ringtone_del(ad);
+
+	test_ringtonelist(ad);
 
 	setting_view_main.is_create = 1;
 	LAUNCH_SETTING_OUT();
