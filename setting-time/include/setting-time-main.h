@@ -51,7 +51,7 @@ static void setting_time_main_mouse_up_Gendial_list_cb(void *data,
 		Evas_Object *obj, void *event_info);
 void setting_time_main_btn_update_ok_cb(void *cb);
 void setting_time_main_btn_update_cancel_cb(void *cb);
-void setting_time_update_time_date_format_string(SettingTimeUG *ad);
+void setting_time_update_time_date_format_string(SettingTimeData *ad);
 Eina_Bool setting_update_datefield_cb(void *cb);
 int setting_time_check_automatic_time_update_state();
 static int __setting_set_city_tzone(const char *pTZPath);

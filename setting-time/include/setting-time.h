@@ -34,6 +34,7 @@
 
 #include <setting-common-draw-widget.h>
 #include <setting-common-view.h>
+#include "setting-common-init.h"
 
 #define ERR_BIGGER_THAN_2037 "Cannot Set the year bigger than 2037"
 #define AUTO_TIME_UPDATE_ON	 "Automatic time update is ON!"
@@ -48,33 +49,24 @@
 #define DATE_TIME_STR_DATE_AND_TIME "IDS_ST_BODY_DATE_AND_TIME"
 #define DATE_TIME_STR_TIME_FORMAT	"IDS_ST_BODY_MSG_TIME_FORMAT"
 
+#define SETTING_TIME_EDJEDIR _TZ_SYS_RO_APP"/org.tizen.setting-time/res/edje"
 
-typedef struct _SettingTimeUG SettingTimeUG;
+typedef struct _SettingTimeData SettingTimeData;
 
 /**
  * Setting Time UG context
- * all UG function has void* as an agument. this is casted back to SettingTimeUG
+ * all UG function has void* as an agument. this is casted back to SettingTimeData
  * and the functions access app context.
  */
-struct _SettingTimeUG {
-
-	ui_gadget_h ug;	/**< ug struct itself */
+struct _SettingTimeData {
 
 	/* add more variables here (move your appdata to here) */
 	int noti_fd;
 
-	app_control_h bundle_data; /* when loading this UG, bundle is stored */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-	Evas_Object *ly_main;
-
-	ui_gadget_h ug_loading;
-
-	Evas_Object *navi_bar;
-	Evas_Object *scrl_main;
 	char *caller;
 	Ecore_Timer *event_freeze_timer;
+
+	MainData md;
 
 #ifdef USE_TIMER_UPDATE_TIME_IN_TIME_VIEW
 	Ecore_Timer *update_timer;

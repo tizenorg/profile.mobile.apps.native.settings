@@ -288,10 +288,10 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 		Cfg_Item_AppLauncher_Node, NULL, KeyStr_System, NULL,
 		uuid_Storage, 0, "setting-storage-efl"},
 #endif
-	{	KeyStr_DateTime, IMG_DateTime, "setting-time-efl",
+	{	KeyStr_DateTime, IMG_DateTime, "org.tizen.setting-time",
 		Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0,
-		Cfg_Item_Ug_Node, NULL, KeyStr_System, NULL,
-		uuid_DateTime, 0, NULL},
+		Cfg_Item_AppLauncher_Node, NULL, KeyStr_System, NULL,
+		uuid_DateTime, 0, "org.tizen.setting-time"},
 	/*{KeyStr_DeveloperOption, IMG_USBconnection,
 	 * "setting-developeroption-efl|viewtype:usb", Cfg_Item_Pos_Level0,
 	 * Cfg_Item_Resetable, 0, Cfg_Item_Ug_Node, NULL, KeyStr_DeviceMange,

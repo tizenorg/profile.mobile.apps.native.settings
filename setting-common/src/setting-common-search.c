@@ -655,7 +655,6 @@ int __setting_init_search_index_module()
 		"setting-voice-efl", /* NO CODE !!! */
 		"setting-motion-efl", /* NO CODE !!! */
 		"setting-palmmotion-efl", /* NO CODE !!! */
-		"setting-time-efl", /* NO CODE !!! */
 		"setting-accessory-efl", /* NO CODE !!! */
 		"setting-powersaving-efl", /* NO CODE !!! */
 		"setting-storage-efl", /* NO CODE !!! */

@@ -43,7 +43,6 @@ SET(SETTING_LOCKTYPE_UG setting-locktype-efl)
 SET(SETTING_DISPLAY_UG setting-display-efl)
 SET(SETTING_APPLICATIONS_UG setting-applications-efl)
 SET(SETTING_MORECONNECTIONS_UG setting-moreconnections-efl)
-SET(SETTING_TIME_UG setting-time-efl)
 SET(SETTING_PHONE_UG setting-phone-efl)
 SET(SETTING_NETWORK_UG setting-network-efl)
 SET(SETTING_ABOUT_UG setting-about-efl)
@@ -102,7 +101,7 @@ CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting.xml.in 
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting_font-lite.xml.in ${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting_font-lite.xml @ONLY)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/mime.setting.xml.in ${CMAKE_SOURCE_DIR}/mime.setting.xml @ONLY)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/src/setting-common-internal.pc.in ${CMAKE_SOURCE_DIR}/src/setting-common-internal.pc @ONLY)
-
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/setting-time/org.tizen.setting-time.xml.in ${CMAKE_SOURCE_DIR}/org.tizen.setting-time.xml @ONLY)
 
 # setting bin
 # setting plugin
