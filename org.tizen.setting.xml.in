@@ -148,13 +148,6 @@
 			<label xml:lang="ja-jp">セキュリティ</label>
 			<label xml:lang="ko-kr">보안</label>
         </ui-application>
-	<ui-application appid="setting-time-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-time-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
-                        <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
-                        <label>Date and time</label>
-                        <label xml:lang="en-us">Date and time</label>
-			<label xml:lang="ja-jp">日付と時刻</label>
-			<label xml:lang="ko-kr">날짜 및 시간</label>
-        </ui-application>
 	<ui-application appid="setting-profile-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-profile-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
 			<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
 			<label>Sound</label>
