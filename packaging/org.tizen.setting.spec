@@ -131,6 +131,14 @@ Group: Application Framework/Settings
 #Requires: pkgconfig(setting-common-internal)
 %description devel
 
+
+%package time
+Summary: The setting time module
+Group: Application
+
+%description time
+Application for setting device time
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -342,3 +350,9 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %files ref
 %{_datadir}/mime/packages/mime.setting.xml
 %{_datadir}/packages/org.tizen.setting.xml.ref
+
+%files time
+%manifest setting-time/org.tizen.setting-time.manifest
+%{_prefix}/apps/org.tizen.setting-time/bin/setting-time
+%{_datadir}/packages/org.tizen.setting-time.xml
+%{_prefix}/apps/org.tizen.setting-time/res/*

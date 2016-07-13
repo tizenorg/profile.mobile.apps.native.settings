@@ -187,7 +187,7 @@ int view_init(MainData *ad, char *name)
 {
 	retv_if(ad == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	_genlist_itc_init(ad);
+	//_genlist_itc_init(ad);
 	eina_init();
 
 	/* create a layout conformant */

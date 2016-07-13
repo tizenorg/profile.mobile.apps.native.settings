@@ -34,6 +34,7 @@
 
 #include <setting-common-draw-widget.h>
 #include <setting-common-view.h>
+#include "setting-common-init.h"
 
 #define ERR_BIGGER_THAN_2037 "Cannot Set the year bigger than 2037"
 #define AUTO_TIME_UPDATE_ON	 "Automatic time update is ON!"
@@ -58,23 +59,13 @@ typedef struct _SettingTimeUG SettingTimeUG;
  */
 struct _SettingTimeUG {
 
-	ui_gadget_h ug;	/**< ug struct itself */
-
 	/* add more variables here (move your appdata to here) */
 	int noti_fd;
 
-	app_control_h bundle_data; /* when loading this UG, bundle is stored */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-	Evas_Object *ly_main;
-
-	ui_gadget_h ug_loading;
-
-	Evas_Object *navi_bar;
-	Evas_Object *scrl_main;
 	char *caller;
 	Ecore_Timer *event_freeze_timer;
+
+	MainData md;
 
 #ifdef USE_TIMER_UPDATE_TIME_IN_TIME_VIEW
 	Ecore_Timer *update_timer;
