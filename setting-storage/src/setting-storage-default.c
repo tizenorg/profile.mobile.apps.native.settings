@@ -72,7 +72,7 @@ static Eina_Bool storageUg_default_back_cb(void *data, Elm_Object_Item *it)
 
 	SETTING_TRACE_DEBUG("ad->main_view->is_create:%d",
 			ad->main_view->is_create);
-	setting_view_change(ad->default_view, ad->main_view, ad);
+	setting_view_destroy(ad->default_view, ad);
 
 	return EINA_TRUE;
 }
