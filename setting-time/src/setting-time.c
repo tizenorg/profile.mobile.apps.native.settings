@@ -23,20 +23,19 @@
 #include <setting-cfg.h>
 #include <unicode/uloc.h>
 
-#ifndef UG_MODULE_API
-#define UG_MODULE_API __attribute__ ((visibility("default")))
-#endif
+#define SETTING_TIME_PACKAGE_NAME "org.tizen.setting-time"
+#define SETTING_TIME_LOCALEDIR _TZ_SYS_RO_APP"/org.tizen.setting-time/res/locale"
 
 /**
 * @callback handler for EVAS_CALLBACK_RESIZE
 *
-* @param data user data (SettingTimeUG *)
+* @param data user data (SettingTimeData *)
 */
-static void setting_time_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
+static void _setting_time_resize_cb(void *data, Evas *e, Evas_Object *obj,
 		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	SettingTimeUG *ad = (SettingTimeUG *) data;
+	SettingTimeData *ad = (SettingTimeData *) data;
 	setting_view_update(&setting_view_time_main, ad);
 }
 
@@ -46,235 +45,144 @@ static void setting_time_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
 * @param ug ug object itself.
 * @param mode
 * @param data bundle (key, value pair) data as arguments into UG.
-* @param priv SettingTimeUG context
+* @param priv SettingTimeData context
 *
 * @return
 */
-static void *setting_time_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
-		app_control_h service, void *priv)
+static bool _setting_time_app_create(void *priv)
 {
+	SettingTimeData *ad = (SettingTimeData *)priv;
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if((!priv), NULL, "!priv");
 
-	SettingTimeUG *timeUG = priv;
-	timeUG->ug = ug;
-	timeUG->bundle_data = service;
-	timeUG->win_main_layout = (Evas_Object *) ug_get_parent_layout(ug);
-	timeUG->win_get = (Evas_Object *) ug_get_window();
-	evas_object_show(timeUG->win_main_layout);
-	timeUG->evas = evas_object_evas_get(timeUG->win_main_layout);
+	if (app_init(&ad->md, SETTING_TIME_PACKAGE_NAME)
+	        != SETTING_RETURN_SUCCESS) {
+	    SETTING_TRACE_ERROR("Cannot initialize application");
+	    return false;
+	}
 
-	timeUG->pop_progress = NULL;
+	ad->pop_progress = NULL;
 	/*	Initialize Caller value */
-	timeUG->caller = NULL;
-
-	setting_retvm_if(timeUG->win_main_layout == NULL, NULL,
-			"cannot get main window ");
+	ad->caller = NULL;
 
 	/* set launguage */
-	setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR);
+	setting_set_i18n(SETTING_PACKAGE, SETTING_TIME_LOCALEDIR);
 
 	/* register view node table */
-	elm_theme_extension_add(NULL, SETTING_GENLIST_EDJ_NAME);
+	elm_theme_extension_add(NULL, SETTING_TIME_EDJEDIR"/setting-genlist.edj");
+
 	setting_view_node_table_intialize();
 	setting_view_node_table_register(&setting_view_time_main, NULL);
 
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(timeUG->itc_1text_1icon));
-	setting_create_Gendial_itc("entry.main", &(timeUG->itc_layout));
+			&(ad->itc_1text_1icon));
+
+	/*date and time buttons item calss: */
+	setting_create_Gendial_itc("entry.main", &(ad->itc_layout));
 	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
-			&(timeUG->itc_2text_2));
+			&(ad->itc_2text_2));
 	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
-			&(timeUG->itc_2text_3_parent));
+			&(ad->itc_2text_3_parent));
 	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
-			&(timeUG->itc_1icon_1text_sub));
+			&(ad->itc_1icon_1text_sub));
 
-	timeUG->is_expand_time_format_list = 0;
+	ad->is_expand_time_format_list = 0;
 
-	char *viewtype = NULL;
-	app_control_get_extra_data(service, "viewtype", &viewtype);
-	if (!safeStrCmp(viewtype, "format_expand"))
-		timeUG->is_expand_time_format_list = 1;
-
-	/*	creating a view. */
-	setting_view_node_set_cur_view(&setting_view_time_main);
-	setting_view_create(&setting_view_time_main, (void *)timeUG);
-	evas_object_event_callback_add(timeUG->win_main_layout,
-			EVAS_CALLBACK_RESIZE,
-			setting_time_ug_cb_resize, timeUG);
-	return timeUG->ly_main;
+	return true;
 }
 
-static void setting_time_ug_on_start(ui_gadget_h ug, app_control_h service,
-			void *priv)
+static void _setting_time_app_pause(void *data)
 {
-	SETTING_TRACE_BEGIN;
-	/*	do nothing */
 }
 
-static void setting_time_ug_on_pause(ui_gadget_h ug, app_control_h service,
-			void *priv)
+static void _setting_time_app_resume(void *data)
 {
-	SETTING_TRACE_BEGIN;
-	/*	do nothing */
 }
 
-static void setting_time_ug_on_resume(ui_gadget_h ug, app_control_h service,
-			void *priv)
-{
-	/*	do nothing */
-}
-
-static void setting_time_ug_on_destroy(ui_gadget_h ug, app_control_h service,
-			void *priv)
+static void _setting_time_app_terminate(void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
-	SettingTimeUG *timeUG = priv;
+	SettingTimeData *ad = priv;
 
 	/* fix flash issue for gallery */
-	evas_object_event_callback_del(timeUG->win_main_layout,
-			EVAS_CALLBACK_RESIZE, setting_time_ug_cb_resize);
-	timeUG->ug = ug;
+	evas_object_event_callback_del(ad->md.view_layout,
+			EVAS_CALLBACK_RESIZE, _setting_time_resize_cb);
 
 	/*	delete the allocated objects. */
-	setting_view_destroy(&setting_view_time_main, timeUG);
-
-	if (NULL != ug_get_layout(timeUG->ug)) {
-		evas_object_hide((Evas_Object *) ug_get_layout(timeUG->ug));
-		evas_object_del((Evas_Object *) ug_get_layout(timeUG->ug));
-	}
+	setting_view_destroy(&setting_view_time_main, ad);
 
 	SETTING_TRACE_END;
 }
 
-static void setting_time_ug_on_message(ui_gadget_h ug, app_control_h msg,
-		app_control_h service, void *priv)
+static void _setting_time_app_controll(app_control_h service, void *priv)
 {
-	SETTING_TRACE_BEGIN;
+	SettingTimeData *ad = (SettingTimeData *)priv;
+	char *viewtype = NULL;
+
+	if (!ad)
+		return;
+
+	app_control_get_extra_data(service, "viewtype", &viewtype);
+	if (!safeStrCmp(viewtype, "format_expand"))
+		ad->is_expand_time_format_list = 1;
+
+	/*	creating a view. */
+	setting_view_node_set_cur_view(&setting_view_time_main);
+	setting_view_create(&setting_view_time_main, (void *)ad);
+	evas_object_event_callback_add(ad->md.view_layout,
+			EVAS_CALLBACK_RESIZE,
+			_setting_time_resize_cb, ad);
+
 }
 
-static void setting_time_ug_on_event(ui_gadget_h ug, enum ug_event event,
-		app_control_h service, void *priv)
+static void _setting_time_lang_changed(app_event_info_h event_info, void *data)
 {
-	SETTING_TRACE_BEGIN;
-	SettingTimeUG *ad = (SettingTimeUG *) priv;
+    char *lang = NULL;
+    if (app_event_get_language(event_info, &lang) == APP_ERROR_NONE) {
 
-	switch (event) {
-	case UG_EVENT_LOW_MEMORY:
-		break;
-	case UG_EVENT_LOW_BATTERY:
-		break;
-	case UG_EVENT_LANG_CHANGE: {
-			const char *pa_lang = vconf_get_str(VCONFKEY_LANGSET);
-			if (pa_lang) {
-				char *q = strchr(pa_lang, '.');
-				if (q)
-					*q = '\0';
-			}
-			int err = -1;
+        SETTING_TRACE_DEBUG("Setting - language is changed : %s", lang);
+        elm_language_set(lang);
+        elm_config_all_flush();
+        free(lang);
 
-			uloc_setDefault(pa_lang, &err);
-			FREE(pa_lang);
-			setting_view_update(&setting_view_time_main, ad);
-		}
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT:
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-		break;
-	case UG_EVENT_REGION_CHANGE:
-		break;
-	default:
-		break;
-	}
+    } else {
+        SETTING_TRACE_ERROR("Cannot get language from event_info");
+    }
 }
 
-/**
-* @brief key event handler for UG
-*/
-static void setting_time_ug_on_key_event(ui_gadget_h ug,
-		enum ug_key_event event, app_control_h service,
-		void *priv)
+EXPORT_PUBLIC
+int main(int argc, char *argv[])
 {
-	SETTING_TRACE_BEGIN;
-	SettingTimeUG *ad = (SettingTimeUG *) priv;
+	SettingTimeData app_data;
+	app_event_handler_h handlers[5] = {NULL, };
 
-	switch (event) {
-	case UG_KEY_EVENT_END: {
-#if 0
-			if (0 == safeStrCmp(ad->caller, "pwlock")) {
-				/*	Create Bundle and send message */
+	ui_app_lifecycle_callback_s ops = {
+		.create = _setting_time_app_create,
+		.pause = _setting_time_app_pause,
+		.resume = _setting_time_app_resume,
+		.terminate = _setting_time_app_terminate,
+		.app_control = _setting_time_app_controll,
+	};
 
-				app_control_h svc;
-				if (app_control_create(&svc))
-					return;
+	memset(&app_data, 0, sizeof(app_data));
 
-				app_control_add_extra_data(svc, "result",
-						"lbutton_click");
-				ug_send_result(ad->ug, svc);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY],
+			APP_EVENT_LOW_MEMORY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY],
+			APP_EVENT_LOW_BATTERY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED],
+			APP_EVENT_LANGUAGE_CHANGED, _setting_time_lang_changed, &app_data);
+	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED],
+			APP_EVENT_REGION_FORMAT_CHANGED, NULL, NULL);
+	ui_app_add_event_handler(
+			&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED],
+			APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
 
-				app_control_destroy(svc);
-			}
-#endif
-
-			if (elm_naviframe_top_item_get(ad->navi_bar) ==
-				elm_naviframe_bottom_item_get(ad->navi_bar)) {
-				ug_destroy_me(ug);
-			} else {
-				/* elm_naviframe_item_pop(ad->navi_bar); */
-				setting_view_cb_at_endKey(ad);
-			}
-		}
-		break;
-	default:
-		break;
-	}
+	return ui_app_main(argc, argv, &ops, &app_data);
 }
 
-/**
-* @brief UG entry point - create the SettingTimeUG context
-* @return 0
-*/
-UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
-{
-	SETTING_TRACE_BEGIN;
-	SettingTimeUG *timeUG = calloc(1, sizeof(SettingTimeUG));
-	setting_retvm_if(!timeUG, -1, "Create SettingTimeUG obj failed");
-
-	ops->create = setting_time_ug_on_create;
-	ops->start = setting_time_ug_on_start;
-	ops->pause = setting_time_ug_on_pause;
-	ops->resume = setting_time_ug_on_resume;
-	ops->destroy = setting_time_ug_on_destroy;
-	ops->message = setting_time_ug_on_message;
-	ops->event = setting_time_ug_on_event;
-	ops->key_event = setting_time_ug_on_key_event;
-	ops->priv = timeUG;
-	ops->opt = UG_OPT_INDICATOR_ENABLE;
-
-	return 0;
-}
-
-/**
-* @brief UG finalizer - destroy the SettingTimeUG context
-*/
-UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
-{
-	SETTING_TRACE_BEGIN;
-	struct SettingTimeUG *timeUG;
-	setting_retm_if(!ops, "ops == NULL");
-
-	timeUG = ops->priv;
-	if (timeUG)
-		FREE(timeUG);
-}
-
-UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
+int setting_plugin_search_init(app_control_h service, void *priv,
 		char **applocale)
 {
 	int i, size;

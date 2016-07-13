@@ -25,7 +25,7 @@
 int setting_time_update_cb(void *data)
 {
 	retv_if(data == NULL, -1);
-	SettingTimeUG *ad = data;
+	SettingTimeData *ad = data;
 	/*
 	char time_str[SETTING_TIME_ENGINE_TIME_STR_LEN];
 	struct tm *ts;

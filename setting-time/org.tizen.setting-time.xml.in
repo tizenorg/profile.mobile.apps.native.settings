@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="3.0" package="org.tizen.setting-time" version="0.9.5" install-location="internal-only">
+	<label>setting-time</label>
+	<description>Time Setting Application</description>
+	<ui-application appid="org.tizen.setting-time" exec="setting-time" nodisplay="true" multiple="false" type="capp" taskmanage="false" hw-acceleration="use-GL" launch_mode="caller">
+		<category name="http://tizen.org/category/homeapp"/>
+		<metadata key="http://developer.samsung.com/tizen/metadata/legacylifecycle"/>
+		<label>Date and time</label>
+			<label xml:lang="en-us">Date and time</label>
+			<label xml:lang="ja-jp">日付と時刻</label>
+			<label xml:lang="ko-kr">날짜 및 시간</label>
+	</ui-application>
+	<privileges>
+		<privilege>http://tizen.org/privilege/appmanager.launch</privilege>
+		<privilege>http://tizen.org/privilege/appmanager.kill</privilege>
+		<privilege>http://tizen.org/privilege/notification</privilege>
+		<privilege>http://tizen.org/privilege/telephony.admin</privilege>
+		<privilege>http://tizen.org/privilege/systemsettings.admin</privilege>
+		<privilege>http://tizen.org/privilege/display</privilege>
+	</privileges>
+</manifest>
+
