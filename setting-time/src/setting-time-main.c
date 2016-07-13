@@ -23,6 +23,8 @@
 #include <dd-deviced-managed.h>
 #include <dd-deviced.h>
 
+#include <efl_extension.h>
+
 #include <stdio.h>
 #include <malloc.h>
 #include <time.h>
@@ -583,6 +585,282 @@ Eina_Bool __refresh_date_timer(void *data)
 }
 #endif
 
+typedef struct _tagParamData {
+	Setting_GenGroupItem_Data *item_data;
+	Evas_Object *parent;
+	Evas_Object *box;
+} Datefield_Paramdata;
+
+static void _datefield_set_min_max(Evas_Object *datetime)
+{
+	/* get the current local time */
+	time_t t = time(NULL);
+	struct tm time1;
+	localtime_r(&t, &time1);
+
+	/* set the max year as 2030 and the remaining fields are equal to
+	 *	current time values */
+	/*time1.tm_year = 2030; */
+	/*elm_datetime_value_max_set(datetime, &time1); */
+
+	/* set the min time limit as "2000 January 1th 00:0 AM" */
+	time1.tm_year = 100;
+	time1.tm_mon = 1;
+	time1.tm_mday = 1;
+	time1.tm_hour = 0;
+	time1.tm_min = 0;
+	elm_datetime_value_min_set(datetime, &time1);
+}
+
+static void __picker_popup_cancel_btn_clicked_cb(void *data, Evas_Object *obj,
+		void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+
+	Evas_Object *popup = data;
+	evas_object_del(popup);
+}
+
+static void __picker_popup_set_btn_clicked_cb(void *data, Evas_Object *obj,
+		void *event_info)
+{
+	/*printf("Set clicked\n"); */
+	SETTING_TRACE_BEGIN;
+
+	SETTING_TRACE("DEFAULT @@@");
+	elm_object_signal_emit(data, "picker,action,value,set", "");
+	/*Evas_Object *popup = evas_object_data_get((Evas_Object *)data,
+	 *  "popup"); */
+	/*evas_object_del(popup); */
+}
+
+static Evas_Object *_datefield_picker_popup_add(Evas_Object *parent,
+		Evas_Object *datetime, void *data)
+{
+	Datefield_Paramdata *param = (Datefield_Paramdata *)data;
+
+	Setting_GenGroupItem_Data *item_data = param->item_data;
+
+	Evas_Object *popup = elm_popup_add(parent);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK,
+			eext_popup_back_cb, NULL);
+
+	Evas_Object *cancel_btn = elm_button_add(popup);
+	elm_object_style_set(cancel_btn, "popup");
+	elm_object_text_set(cancel_btn, _("IDS_ST_BUTTON_CANCEL"));
+	elm_object_part_content_set(popup, "button1", cancel_btn);
+	evas_object_smart_callback_add(cancel_btn, "clicked",
+			__picker_popup_cancel_btn_clicked_cb, popup);
+
+	Evas_Object *set_btn = elm_button_add(popup);
+	elm_object_style_set(set_btn, "popup");
+	elm_object_text_set(set_btn, _("IDS_ST_SK_SET_LITE"));
+	elm_object_part_content_set(popup, "button2", set_btn);
+
+	if (item_data->activated_cb)
+		/*evas_object_smart_callback_add(set_btn, "clicked",
+		 * item_data->activated_cb, datetime); */
+		evas_object_smart_callback_add(set_btn, "clicked",
+				item_data->activated_cb, item_data);
+	else
+		evas_object_smart_callback_add(set_btn, "clicked",
+				__picker_popup_set_btn_clicked_cb, datetime);
+
+	return popup;
+}
+
+static void _datefield_time_btn_clicked_cb(void *data, Evas_Object *obj,
+		void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+
+	Datefield_Paramdata *param = (Datefield_Paramdata *)data;
+
+	Evas_Object *datetime = elm_datetime_add(param->parent);
+#if 1
+	_datefield_set_min_max(datetime);
+#endif
+
+	elm_object_style_set(datetime, "date_layout");
+
+	char *pa_time_format = get_pa_time_format_str();
+	if (pa_time_format) {
+		if (!strncmp(pa_time_format, "IDS_ST_BODY_12_HOURS",
+				strlen("IDS_ST_BODY_12_HOURS"))) {
+			elm_object_style_set(datetime, "time_layout");
+			elm_datetime_format_set(datetime, "%d/%b/%Y %I:%M %p");
+		} else {
+			elm_object_style_set(datetime, "time_layout_24hr");
+			elm_datetime_format_set(datetime, "%d/%b/%Y %H:%M");
+		}
+	}
+
+	evas_object_size_hint_align_set(datetime, 0.5, 0.5);
+	evas_object_show(datetime);
+
+	Evas_Object *popup = _datefield_picker_popup_add(param->parent, obj,
+			(void *)data);
+	elm_object_part_text_set(popup, "title,text",
+			_("IDS_ST_BODY_SET_TIME"));
+
+	evas_object_data_set(datetime, "popup", popup);
+
+	/*--------------------------------------- */
+	param->item_data->eo_check = datetime;
+	/*--------------------------------------- */
+
+	elm_object_content_set(popup, datetime);
+	evas_object_show(popup);
+
+	FREE(pa_time_format);
+	/*--------------------------------------- */
+	/*param->item_data->eo_check = param->box; */
+	/*--------------------------------------- */
+}
+
+static void _datefield_date_btn_clicked_cb(void *data, Evas_Object *obj,
+		void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+
+	/*Evas_Object *parent = data; */
+	Datefield_Paramdata *param = (Datefield_Paramdata *)data;
+	Evas_Object *popup = _datefield_picker_popup_add(param->parent,
+			obj/*elm_button*/, param/* context */);
+
+	elm_object_part_text_set(popup, "title,text",
+			_("IDS_ST_BODY_SET_DATE"));
+
+	Evas_Object *datetime = elm_datetime_add(param->parent);
+	elm_object_style_set(datetime, "date_layout");
+	elm_datetime_format_set(datetime, "%d/%b/%Y");
+#if 1
+	_datefield_set_min_max(datetime);
+#endif
+	evas_object_data_set(datetime, "popup", popup);
+
+	/*--------------------------------------- */
+	param->item_data->eo_check = datetime;
+	/*--------------------------------------- */
+
+	elm_object_content_set(popup, datetime);
+	evas_object_show(popup);
+
+	/*--------------------------------------- */
+	/*param->item_data->eo_check = param->box; */
+	/*--------------------------------------- */
+}
+
+static Evas_Object *_add_datefield_new(Setting_GenGroupItem_Data *item_data,
+		Evas_Object *parent)
+{
+	SETTING_TRACE_BEGIN;
+	retv_if(!item_data || !parent, NULL);
+
+	Datefield_Paramdata *param = malloc(sizeof(Datefield_Paramdata));
+	setting_retvm_if(NULL == param, NULL, "param is NULL");
+
+	param->item_data = item_data;
+	/*param->parent = parent; */
+	param->parent = item_data->nf;
+
+	char *region = NULL;
+	/*int err = system_settings_get_value_string(
+	 * SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, &lang); */
+	/*? int err = */
+	system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_COUNTRY,
+			&region);
+
+	char *date = __setting_phone_lang_get_by_pattern(region, "MMM/d/yyyy");
+	char *pa_time_format = get_pa_time_format_str();
+	char *time = NULL;
+
+	if (pa_time_format) {
+		if (!strncmp(pa_time_format, "IDS_ST_BODY_12_HOURS",
+				strlen("IDS_ST_BODY_12_HOURS")))
+			time = __setting_phone_lang_get_by_pattern(region,
+					"hhmm");
+		else
+			time = __setting_phone_lang_get_by_pattern(region,
+					"Hm");
+		SETTING_TRACE("DATE : %s ", date);
+		SETTING_TRACE("TIME : %s ", time);
+	}
+
+	Evas_Object *btn_left = elm_button_add(parent);
+	elm_object_style_set(btn_left, "datetime");
+	evas_object_size_hint_weight_set(btn_left, EVAS_HINT_EXPAND,
+			EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn_left, EVAS_HINT_FILL, 0.5);
+
+	elm_object_text_set(btn_left, date);
+	evas_object_smart_callback_add(btn_left, "clicked",
+			_datefield_date_btn_clicked_cb, param);
+	evas_object_show(btn_left);
+
+	Evas_Object *btn_right = elm_button_add(parent);
+	elm_object_style_set(btn_right, "datetime");
+	evas_object_size_hint_weight_set(btn_right, EVAS_HINT_EXPAND,
+			EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn_right, EVAS_HINT_FILL, 0.5);
+
+	elm_object_text_set(btn_right, time);
+	evas_object_smart_callback_add(btn_right, "clicked",
+			_datefield_time_btn_clicked_cb, param);
+	evas_object_show(btn_right);
+
+#if 1
+	param->item_data->btn_left = btn_left;
+	param->item_data->btn_right = btn_right;
+#endif
+	Evas_Object *box = elm_box_add(parent);
+	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND,
+			EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
+
+	Evas_Object *box1 = elm_box_add(box);
+	evas_object_size_hint_weight_set(box1, EVAS_HINT_EXPAND,
+			EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(box1, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	elm_box_horizontal_set(box1, 1);
+	elm_box_align_set(box1, 0.5, 0.0);
+	elm_box_padding_set(box1, ELM_SCALE_SIZE(15), ELM_SCALE_SIZE(5));
+
+	Evas_Object *layout = elm_layout_add(box1);
+	Eina_Bool
+	ret = elm_layout_file_set(layout, SETTING_TIME_EDJEDIR"/setting-theme.edj",
+			"date_time_layout");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND,
+			EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	if (ret == EINA_TRUE) { /* error condition */
+		SETTING_TRACE("elm_layout_file_set - OK --> date_time_layout");
+	} else {
+		SETTING_TRACE_ERROR("elm_layout_file_set - FAILED "
+				"--> date_time_layout");
+	}
+
+	elm_layout_content_set(layout, "date_field", btn_left);
+	elm_layout_content_set(layout, "time_field", btn_right);
+	evas_object_show(layout);
+	elm_box_pack_end(box1, layout);
+	evas_object_show(box1);
+
+	elm_box_pack_end(box, box1);
+	evas_object_show(box);
+
+	FREE(pa_time_format);
+	return box;
+}
+
+static Evas_Object *_date_and_time_genlist_content_get(void *data, Evas_Object *genlist, const char *part)
+{
+	if (!safeStrCmp(part, "elm.icon.entry"))
+			return _add_datefield_new((Setting_GenGroupItem_Data *)data, genlist);
+
+	return NULL;
+}
+
 static int setting_time_main_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
@@ -590,38 +868,17 @@ static int setting_time_main_create(void *cb)
 
 	SettingTimeUG *ad = (SettingTimeUG *) cb;
 
-	char *title = _(DATE_TIME_STR_DATE_AND_TIME);
 	char *caller = NULL;
 	ad->is_datefield_selected = EINA_FALSE;
 
-	app_control_h service = ad->bundle_data;
+	view_init(&ad->md, _("IDS_ST_BODY_DATE_AND_TIME"));
 
-	app_control_get_extra_data(service, "caller", &caller);
-	app_control_get_extra_data(service, "title", &title);
+	/////app_control_h service = ad->bundle_data;
 
-	Evas_Object *scroller;	/*	scroller is a genlist */
+	/////app_control_get_extra_data(service, "caller", &caller);
+	/////app_control_get_extra_data(service, "title", &title);
 
 	ad->caller = caller;
-
-	title = DATE_TIME_STR_DATE_AND_TIME;
-	gchar *title_str = NULL;
-
-	if (title)
-		title_str = title;
-
-	ad->ly_main =
-		setting_create_layout_navi_bar_genlist(
-				ad->win_main_layout,
-				ad->win_get, title_str,
-				NULL,
-				NULL,
-				setting_time_main_click_softkey_left_cb,
-				NULL, ad, &scroller,
-				&ad->navi_bar);
-
-	ad->scrl_main = scroller;
-	elm_scroller_policy_set(scroller, ELM_SCROLLER_POLICY_OFF,
-			ELM_SCROLLER_POLICY_OFF);
 
 	int value;
 	int err;
@@ -629,8 +886,6 @@ static int setting_time_main_create(void *cb)
 	setting_get_bool_slp_key(BOOL_SLP_SETTING_AUTOMATIC_TIME_UPDATE, &value,
 			&err);
 
-	/*int enable_automatic = __setting_time_check_enable_automatic_update();
-	 * */
 	bool auto_flag = value;
 
 	if (auto_flag) { /*do special process only when auto mode */
@@ -684,25 +939,29 @@ static int setting_time_main_create(void *cb)
 
 	/*	UI automatic */
 	/*if (!isEmulBin()) { */
+
+	/* For date and time specific buttons:*/
+
 	ad->data_auto =
-		setting_create_Gendial_field_def(scroller,
+		setting_create_Gendial_field_def(ad->md.genlist,
 				&(ad->itc_1text_1icon),
 				setting_time_main_mouse_up_Gendial_list_cb,
 				ad, SWALLOW_Type_1ICON_1RADIO, NULL,
 				NULL, value,
 				DATE_TIME_STR_AUTOMATIC_UPDATE, NULL,
 				setting_time_main_chk_btn_cb);
+
 	if (ad->data_auto)
 		ad->data_auto->userdata = ad;
 	else
 		SETTING_TRACE_ERROR("ad->data_auto is NULL");
 
-	/*ADD_GL_HELP(scroller,SETTING_TIME_AUTO_UPDATE_DESC); */
-	/*} */
+	/*ADD_GL_HELP(ad->md.genlist,SETTING_TIME_AUTO_UPDATE_DESC);*/
 
 	/* create DATE_AND_TIME */
+	ad->itc_layout.func.content_get = _date_and_time_genlist_content_get;
 	ad->data_time =
-		setting_create_Gendial_field_def(scroller, &(ad->itc_layout),
+		setting_create_Gendial_field_def(ad->md.genlist, &(ad->itc_layout),
 				setting_time_main_mouse_up_Gendial_list_cb,
 				ad, SWALLOW_Type_LAYOUT_DATEFIELD,
 				NULL, NULL, 0,
@@ -712,7 +971,7 @@ static int setting_time_main_create(void *cb)
 
 	if (ad->data_time) {
 		ad->data_time->userdata = ad;
-		ad->data_time->nf = ad->navi_bar;
+		ad->data_time->nf = ad->md.navibar_main;
 		ad->data_time->isItemDisableFlag = auto_flag;
 		ad->data_time->activated_cb = setting_time_main_datefield_set_cb;
 		elm_genlist_item_select_mode_set(ad->data_time->item,
@@ -757,12 +1016,14 @@ static int setting_time_main_create(void *cb)
 	FREE(displayTimezone);
 
 	/*	UI create time zone */
+
 	ad->data_tz =
-		setting_create_Gendial_field_def(scroller, &(ad->itc_2text_2),
+		setting_create_Gendial_field_def(ad->md.genlist, &(ad->itc_2text_2),
 				setting_time_main_mouse_up_Gendial_list_cb,
 				ad, SWALLOW_Type_INVALID, NULL,
 				NULL, 0, DATE_TIME_STR_TIME_ZONE,
 				time_zone_sub_str, NULL);
+
 	if (ad->data_tz)
 		ad->data_tz->userdata = ad;
 	else
@@ -772,8 +1033,9 @@ static int setting_time_main_create(void *cb)
 	value = VCONFKEY_TIME_FORMAT_12;
 	setting_get_int_slp_key(INT_SLP_SETTING_REGIONFORMAT_TIME1224, &value,
 			&err);
+
 	ad->data_time_fmt = setting_create_Gendial_field_def(
-			scroller,
+			ad->md.genlist,
 			&(ad->itc_1text_1icon),
 			setting_time_main_mouse_up_Gendial_list_cb,
 			ad,
@@ -784,18 +1046,19 @@ static int setting_time_main_create(void *cb)
 			"IDS_ST_MBODY_24_HOUR_CLOCK",
 			NULL,
 			setting_time_main_chk_btn_cb);
+
 	if (ad->data_time_fmt) {
 		__BACK_POINTER_SET(ad->data_time_fmt);
 		ad->data_time_fmt->userdata = ad;
 	} else {
 		SETTING_TRACE_ERROR("ad->data_time_fmt is NULL");
 	}
-	setting_add_gl_help(scroller, "IDS_ST_SBODY_SHOW_THE_TIME_IN_24_HOUR_"
+	setting_add_gl_help(ad->md.genlist, "IDS_ST_SBODY_SHOW_THE_TIME_IN_24_HOUR_"
 			"FORMAT_INSTEAD_OF_12_HOUR_HAM_PM_FORMAT");
 
 #if APPLIED_DATATIME_DATA_FORMAT
 	char *pa_date_format = get_pa_date_format_str();
-	ad->data_date_fmt = setting_create_Gendial_exp_parent_field(scroller,
+	ad->data_date_fmt = setting_create_Gendial_exp_parent_field(ad->md.genlist,
 			&(ad->itc_2text_3_parent),
 			setting_time_main_mouse_up_Gendial_list_cb,
 			ad, SWALLOW_Type_INVALID,
@@ -913,9 +1176,9 @@ static int setting_time_main_destroy(void *cb)
 			VCONFKEY_SETAPPL_STATE_AUTOMATIC_TIME_UPDATE_BOOL,
 			setting_time_main_bool_vconf_change_cb);
 
-	if (ad->ly_main != NULL) {
-		evas_object_del(ad->ly_main);
-		ad->ly_main = NULL;
+	if (ad->md.ly_main != NULL) {
+		evas_object_del(ad->md.ly_main);
+		ad->md.ly_main = NULL;
 		setting_view_time_main.is_create = 0;
 	}
 
@@ -929,8 +1192,8 @@ static int setting_time_main_update(void *cb)
 
 	SettingTimeUG *ad = (SettingTimeUG *) cb;
 
-	if (ad->ly_main != NULL) {
-		evas_object_show(ad->ly_main);
+	if (ad->md.ly_main != NULL) {
+		evas_object_show(ad->md.ly_main);
 		/* update timezone */
 		if (ad->update_timezone_idler) {
 			ecore_idler_del(ad->update_timezone_idler);
@@ -1002,13 +1265,13 @@ void setting_time_main_launch_worldclock_destroy_ug_cb(ui_gadget_h ug,
 	ret_if(!priv);
 	SettingTimeUG *ad = (SettingTimeUG *) priv;
 	if (ug) {
-		setting_ug_destroy(ug);
-		ad->ug_loading = NULL;
+		//setting_ug_destroy(ug);
+		//ad->ug_loading = NULL;
 	}
-	Elm_Object_Item *navi_it = elm_naviframe_top_item_get(ad->navi_bar);
+	Elm_Object_Item *navi_it = elm_naviframe_top_item_get(ad->md.navibar_main);
 	ret_if(!navi_it);
 
-	elm_object_tree_focus_allow_set(ad->ly_main, EINA_TRUE);
+	elm_object_tree_focus_allow_set(ad->md.ly_main, EINA_TRUE);
 }
 
 void setting_time_main_launch_worldclock_layout_ug_cb(
@@ -1031,7 +1294,7 @@ void setting_time_main_launch_worldclock_layout_ug_cb(
 	case UG_MODE_FULLVIEW:
 		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
 				EVAS_HINT_EXPAND);
-		/*elm_win_resize_object_add(ad->win_get, base); */
+		/*elm_win_resize_object_add(ad->md.win_main, base); */
 		evas_object_show(base);
 		break;
 	default:
@@ -1047,7 +1310,7 @@ Eina_Bool ___time_freeze_event_timer_cb(void *cb)
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, EINA_FALSE);
 
-	evas_object_freeze_events_set(ad->navi_bar, EINA_FALSE);
+	evas_object_freeze_events_set(ad->md.navibar_main, EINA_FALSE);
 	ad->event_freeze_timer = NULL;
 
 	return EINA_FALSE;
@@ -1135,7 +1398,7 @@ void setting_time_main_launch_worldclock_sg(void *data)
 		}
 		ad->event_freeze_timer = ecore_timer_add(
 				1, ___time_freeze_event_timer_cb, ad);
-		evas_object_freeze_events_set(ad->navi_bar, EINA_TRUE);
+		evas_object_freeze_events_set(ad->md.navibar_main, EINA_TRUE);
 	}
 }
 
@@ -1232,7 +1495,7 @@ setting_time_main_click_softkey_left_cb(void *data, Evas_Object *obj,
 	/*__finalize_resource(ad); */
 
 	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+	//ug_destroy_me(ad->ug);
 }
 
 /* ***************************************************
@@ -1258,12 +1521,12 @@ setting_time_main_click_softkey_caller_exist_left_cb(void *data,
 		return;
 
 	app_control_add_extra_data(svc, "result", "lbutton_click");
-	ug_send_result(ad->ug, svc);
+	//ug_send_result(ad->ug, svc);
 
 	app_control_destroy(svc);
 
 	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+	//ug_destroy_me(ad->ug);
 }
 
 void
@@ -1283,12 +1546,12 @@ setting_time_main_click_softkey_caller_exist_right_cb(void *data,
 		return;
 
 	app_control_add_extra_data(svc, "result", "rbutton_click");
-	ug_send_result(ad->ug, svc);
+	//ug_send_result(ad->ug, svc);
 
 	app_control_destroy(svc);
 
 	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+	//ug_destroy_me(ad->ug);
 }
 
 
@@ -1429,7 +1692,7 @@ static void setting_time_main_mouse_up_Gendial_list_cb(
 	if (ad->data_tz == list_item) {
 		ad->is_datefield_selected = EINA_FALSE;
 		if (1 == setting_time_check_automatic_time_update_state()) {
-			setting_create_popup(ad, ad->win_get, NULL,
+			setting_create_popup(ad, ad->md.win_main, NULL,
 					_(AUTO_TIME_UPDATE_ON), NULL, 0, false,
 					false, 0);
 		} else {
@@ -1439,7 +1702,7 @@ static void setting_time_main_mouse_up_Gendial_list_cb(
 	} else if (ad->data_time == list_item) {
 		ad->is_datefield_selected = EINA_TRUE;
 		if (1 == setting_time_check_automatic_time_update_state()) {
-			setting_create_popup(ad, ad->win_get, NULL,
+			setting_create_popup(ad, ad->md.win_main, NULL,
 					_(AUTO_TIME_UPDATE_ON), NULL, 0, false,
 					false, 0);
 		} else {
