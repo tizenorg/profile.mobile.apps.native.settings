@@ -770,8 +770,11 @@ static int storageUg_main_create(void *data)
 	ad->usb_otg_status = SETTING_STORAGE_USB_OTG_REMOVE;
 
 	storageUg_init_USB(ad);
-
-	setting_view_storage_main.is_create = 1;
+	/* TODO Temporary fix for white screen issue
+	* Application can be called from myfiles app then we have more than one instance
+	* then the new view is updated and then the white screen occurs
+	*/
+	/* setting_view_storage_main.is_create = 1; */
 
 	media_content_set_db_updated_cb(storageUg_media_filesys_changed_cb, ad);
 	SETTING_TRACE("-----------------------------------------------");

@@ -216,7 +216,7 @@ static Eina_Bool storageUg_misces_back_cb(void *data, Elm_Object_Item *it)
 
 
 	ad->misces_ctx_popup_selected = EINA_FALSE;
-	setting_view_change(ad->misces_view, ad->main_view, ad);
+	setting_view_destroy(ad->misces_view, ad);
 
 	return EINA_TRUE;
 }
