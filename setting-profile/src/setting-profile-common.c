@@ -1365,11 +1365,6 @@ static Eina_Bool __play_timer_cb(void *data)
 	return EINA_FALSE;
 }
 
-static void __mm_player_pipe_handler(void *data, void *buf, unsigned int len)
-{
-	SETTING_TRACE_BEGIN;
-}
-
 /* Async cb : to improve slider's performance when creating player */
 static void __mm_player_prepared_cb(void *user_data)
 {
