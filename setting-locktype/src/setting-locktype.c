@@ -30,9 +30,15 @@
 #include <auth-passwd.h>
 
 #define Max_Passwd_View_Type_Len	64
-#ifndef UG_MODULE_API
-#define UG_MODULE_API __attribute__ ((visibility("default")))
-#endif
+#define SETTING_LOCKTYPE_PACKAGE_NAME "org.tizen.setting-locktype"
+#define LOCKTYPE_LOCALEDIR _TZ_SYS_RO_APP"/org.tizen.setting-locktype/res/locale"
+
+
+static void _result_password_ug_cb(ui_gadget_h ug, app_control_h service,
+		void *priv);
+static void _destroy_password_ug_cb(ui_gadget_h ug, void *priv);
+static void _layout_passwd_ug_cb(ui_gadget_h ug, enum ug_mode mode, void *priv);
+
 
 void setting_locktype_ug_popup_resp_cb(void *data, Evas_Object *obj,
 		void *event_info)
@@ -45,7 +51,8 @@ void setting_locktype_ug_popup_resp_cb(void *data, Evas_Object *obj,
 		evas_object_del(ad->save_popup);
 		ad->save_popup = NULL;
 	}
-	ug_destroy_me(ad->ug);
+	if (ad->md.win_main)
+		elm_win_lower(ad->md.win_main);
 }
 
 int pwd_handler_do_nothing(SettingLocktypeUG *data, void *arg)
@@ -68,7 +75,7 @@ int pwd_handler_sec_pw_passwd(SettingLocktypeUG *data, void *arg)
 			elm_radio_value_set(ad->lock_type_rd,
 					SETTING_SCREEN_LOCK_TYPE_PASSWORD);
 
-		ad->save_popup = setting_create_popup(ad, ad->win_get, NULL,
+		ad->save_popup = setting_create_popup(ad, ad->md.win_main, NULL,
 				"IDS_ST_POP_NEW_PASSWD_SAVED",
 				setting_locktype_ug_popup_resp_cb,
 				POPUP_INTERVAL, FALSE, FALSE, 0);
@@ -95,7 +102,7 @@ int pwd_handler_sec_pw_simple_passwd(SettingLocktypeUG *data, void *arg)
 		if (ad->lock_type_rd)
 			elm_radio_value_set(ad->lock_type_rd, lock_type);
 
-		ad->save_popup = setting_create_popup(ad, ad->win_get, NULL,
+		ad->save_popup = setting_create_popup(ad, ad->md.win_main, NULL,
 				"IDS_ST_POP_NEW_PASSWD_SAVED",
 				setting_locktype_ug_popup_resp_cb,
 				POPUP_INTERVAL, FALSE, FALSE, 0);
@@ -132,53 +139,51 @@ static void setting_locktype_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
 	setting_view_update(&setting_view_locktype_main, ad);
 }
 
-static void *setting_locktype_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
-		app_control_h service, void *priv)
+bool on_app_create(void *priv)
 {
-	setting_retvm_if((!priv), NULL, "!priv");
+	SettingLocktypeUG *ad = priv;
+	retv_if(!ad, false);
 
-	SettingLocktypeUG *locktypeUG = priv;
-	locktypeUG->ug = ug;
+	if (app_init(&ad->md, SETTING_LOCKTYPE_PACKAGE_NAME)
+			!= SETTING_RETURN_SUCCESS) {
+		SETTING_TRACE_ERROR("Cannot initialize application");
+		return false;
+	}
 
-	locktypeUG->win_main_layout = (Evas_Object *)ug_get_parent_layout(ug);
-	locktypeUG->win_get = (Evas_Object *)ug_get_window();
-	evas_object_show(locktypeUG->win_main_layout);
-	locktypeUG->evas = evas_object_evas_get(locktypeUG->win_main_layout);
-
-	setting_retvm_if(locktypeUG->win_main_layout == NULL, NULL,
-			"[Setting >> About] cannot get main window ");
-
-	/*setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR); */
-	bindtextdomain(SETTING_PACKAGE, SETTING_LOCALEDIR);
+	bindtextdomain(SETTING_PACKAGE, LOCKTYPE_LOCALEDIR);
 
 	/* register view node table */
 	setting_view_node_table_intialize();
 	setting_view_node_table_register(&setting_view_locktype_main, NULL);
 
-	setting_create_Gendial_itc("dialogue/1text", &(locktypeUG->itc_1text));
-	setting_create_Gendial_itc("multiline/1text",
-			&(locktypeUG->itc_bg_1icon));
-	setting_create_Gendial_itc("dialogue/2text.3",
-			&(locktypeUG->itc_2text_2));
+	setting_create_Gendial_itc("dialogue/1text", &(ad->itc_1text));
+	setting_create_Gendial_itc("multiline/1text", &(ad->itc_bg_1icon));
+	setting_create_Gendial_itc("dialogue/2text.3", &(ad->itc_2text_2));
 	setting_create_Gendial_itc("dialogue/1text.1icon",
-			&(locktypeUG->itc_1text_1icon));
-	setting_create_Gendial_itc("dialogue/title",
-			&(locktypeUG->itc_group_item));
+			&(ad->itc_1text_1icon));
+	setting_create_Gendial_itc("dialogue/title", &(ad->itc_group_item));
 	setting_create_Gendial_itc("dialogue/2text.3/expandable",
-			&(locktypeUG->itc_2text_3_parent));
+			&(ad->itc_2text_3_parent));
 
-	locktypeUG->input_pwd = NULL;
-	locktypeUG->notify = NULL;
+	ad->input_pwd = NULL;
+	ad->notify = NULL;
 
-	app_control_get_extra_data(service, "current",
-			&(locktypeUG->input_pwd));
-	app_control_get_extra_data(service, "caller", &(locktypeUG->caller));
-	if (locktypeUG->caller && !safeStrCmp(locktypeUG->caller,
-			"encryption")) {
-		locktypeUG->viewtype = SETTING_LOCKTYPE_VIEWTYPE_ENCRYPTION;
-	} else if (locktypeUG->caller && !safeStrCmp(locktypeUG->caller,
-			"lockscreen")) {
-		locktypeUG->viewtype = SETTING_LOCKTYPE_VIEWTYPE_RECOVERY;
+	return true;
+}
+
+static void on_app_control(app_control_h service, void *priv)
+{
+	SETTING_TRACE_BEGIN;
+	SettingLocktypeUG *ad = priv;
+	ret_if(!ad);
+
+	app_control_get_extra_data(service, "current", &ad->input_pwd);
+	app_control_get_extra_data(service, "caller", &ad->caller);
+
+	if (ad->caller && !safeStrCmp(ad->caller, "encryption")) {
+		ad->viewtype = SETTING_LOCKTYPE_VIEWTYPE_ENCRYPTION;
+	} else if (ad->caller && !safeStrCmp(ad->caller, "lockscreen")) {
+		ad->viewtype = SETTING_LOCKTYPE_VIEWTYPE_RECOVERY;
 		vconf_set_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT,
 				SETTING_SCREEN_LOCK_TYPE_SWIPE);
 #if SECURITY_SERVER
@@ -188,148 +193,92 @@ static void *setting_locktype_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 //		SETTING_TRACE_DEBUG("reset_pwd result : %d", result);
 #endif
 	} else {
-		locktypeUG->viewtype = SETTING_LOCKTYPE_VIEWTYPE_MAIN;
+		ad->viewtype = SETTING_LOCKTYPE_VIEWTYPE_MAIN;
 	}
-	FREE(locktypeUG->caller);
+	FREE(ad->caller);
 
 	setting_view_node_set_cur_view(&setting_view_locktype_main);
-	setting_view_create(&setting_view_locktype_main, (void *)locktypeUG);
-	evas_object_event_callback_add(locktypeUG->win_main_layout,
+	setting_view_create(&setting_view_locktype_main, (void *)ad);
+	evas_object_event_callback_add(ad->md.view_layout,
 			EVAS_CALLBACK_RESIZE, setting_locktype_ug_cb_resize,
-			locktypeUG);
-
-	return locktypeUG->ly_main;
+			ad);
 }
 
-static void setting_locktype_ug_on_start(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void on_app_pause(void *data)
 {
+	SETTING_TRACE_BEGIN;
 }
 
-static void setting_locktype_ug_on_pause(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void on_app_resume(void *data)
 {
+	SETTING_TRACE_BEGIN;
 }
 
-static void setting_locktype_ug_on_resume(ui_gadget_h ug, app_control_h service,
-		void *priv)
-{
-}
-
-static void setting_locktype_ug_on_destroy(ui_gadget_h ug,
-		app_control_h service, void *priv)
+static void on_app_terminate(void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
-	SettingLocktypeUG *locktypeUG = priv;
-	locktypeUG->ug = ug;
+	SettingLocktypeUG *ad = priv;
 
 	/* fix flash issue for gallery */
-	evas_object_event_callback_del(locktypeUG->win_main_layout,
+	evas_object_event_callback_del(ad->md.view_layout,
 			EVAS_CALLBACK_RESIZE, setting_locktype_ug_cb_resize);
 
-	if (locktypeUG->save_popup) {
-		evas_object_del(locktypeUG->save_popup);
-		locktypeUG->save_popup = NULL;
+	if (ad->save_popup) {
+		evas_object_del(ad->save_popup);
+		ad->save_popup = NULL;
 	}
 
-	setting_view_destroy(&setting_view_locktype_main, locktypeUG);
+	setting_view_destroy(&setting_view_locktype_main, ad);
 
-	FREE(locktypeUG->input_pwd);
+	FREE(ad->input_pwd);
 
-	if (NULL != ug_get_layout(locktypeUG->ug)) {
-		evas_object_hide((Evas_Object *)ug_get_layout(locktypeUG->ug));
-		evas_object_del((Evas_Object *)ug_get_layout(locktypeUG->ug));
+	if (ad->md.win_main) {
+		evas_object_del(ad->md.win_main);
+		ad->md.win_main = NULL;
 	}
 
 	SETTING_TRACE_END;
 }
 
-static void setting_locktype_ug_on_message(ui_gadget_h ug, app_control_h msg,
-		app_control_h service, void *priv)
+static void _lang_changed(app_event_info_h event_info, void *data)
 {
-
-}
-
-static void setting_locktype_ug_on_event(ui_gadget_h ug, enum ug_event event,
-		app_control_h service, void *priv)
-{
-	switch (event) {
-	case UG_EVENT_LOW_MEMORY:
-		break;
-	case UG_EVENT_LOW_BATTERY:
-		break;
-	case UG_EVENT_LANG_CHANGE:
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT:
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-		break;
-	case UG_EVENT_REGION_CHANGE:
-		break;
-	default:
-		break;
+	char *lang = NULL;
+	if (app_event_get_language(event_info, &lang) == APP_ERROR_NONE) {
+		SETTING_TRACE_DEBUG("Setting - language is changed : %s", lang);
+		elm_language_set(lang);
+		elm_config_all_flush();
+		free(lang);
+	} else {
+		SETTING_TRACE_ERROR("Cannot get language from event_info");
 	}
 }
 
-static void setting_locktype_ug_on_key_event(ui_gadget_h ug,
-		enum ug_key_event event, app_control_h service, void *priv)
+EXPORT_PUBLIC
+int main(int argc, char *argv[])
 {
-	if (!priv)
-		return;
-	/* ad is point to priv */
-	SettingLocktypeUG *ad = (SettingLocktypeUG *)priv;
-	switch (event) {
-	case UG_KEY_EVENT_END: {
-		if (elm_naviframe_top_item_get(ad->navi_bar) ==
-				elm_naviframe_bottom_item_get(ad->navi_bar)) {
-			ug_destroy_me(ug);
-		} else {
-			/* elm_naviframe_item_pop(ad->navi_bar); */
-			setting_view_cb_at_endKey(ad);
-		}
-	}
-		break;
-
-	default:
-		break;
-	}
-}
-
-UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
-{
-	SettingLocktypeUG *locktypeUG = calloc(1, sizeof(SettingLocktypeUG));
-	setting_retvm_if(!locktypeUG, -1,
-			"Create SettingLocktypeUG obj failed");
-
-	memset(locktypeUG, 0x00, sizeof(SettingLocktypeUG));
-
-	ops->create = setting_locktype_ug_on_create;
-	ops->start = setting_locktype_ug_on_start;
-	ops->pause = setting_locktype_ug_on_pause;
-	ops->resume = setting_locktype_ug_on_resume;
-	ops->destroy = setting_locktype_ug_on_destroy;
-	ops->message = setting_locktype_ug_on_message;
-	ops->event = setting_locktype_ug_on_event;
-	ops->key_event = setting_locktype_ug_on_key_event;
-	ops->priv = locktypeUG;
-	ops->opt = UG_OPT_INDICATOR_ENABLE;
-
-	return 0;
-}
-
-UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
-{
-	struct SettingLocktypeUG *locktypeUG;
-	setting_retm_if(!ops, "ops == NULL");
-
-	locktypeUG = ops->priv;
-	if (locktypeUG)
-		FREE(locktypeUG);
+	app_event_handler_h handlers[5] = {NULL, };
+	ui_app_lifecycle_callback_s ops = {
+		.create = on_app_create,
+		.app_control = on_app_control,
+		.pause = on_app_pause,
+		.resume = on_app_resume,
+		.terminate = on_app_terminate,
+	};
+	SettingLocktypeUG app_data;
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY],
+			APP_EVENT_LOW_MEMORY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY],
+			APP_EVENT_LOW_BATTERY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED],
+			APP_EVENT_LANGUAGE_CHANGED, _lang_changed, &app_data);
+	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED],
+			APP_EVENT_REGION_FORMAT_CHANGED, NULL, NULL);
+	ui_app_add_event_handler(
+			&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED],
+			APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
+	memset(&app_data, 0x0, sizeof(app_data));
+	return ui_app_main(argc, argv, &ops, &app_data);
 }
 
 /* ***************************************************
@@ -338,7 +287,7 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
  *
  ***************************************************/
 
-void setting_locktype_layout_passwd_ug_cb(ui_gadget_h ug, enum ug_mode mode,
+static void _layout_passwd_ug_cb(ui_gadget_h ug, enum ug_mode mode,
 		void *priv)
 {
 	if (!priv)
@@ -361,19 +310,19 @@ void setting_locktype_layout_passwd_ug_cb(ui_gadget_h ug, enum ug_mode mode,
 	return;
 }
 
-void setting_locktype_destroy_password_ug_cb(ui_gadget_h ug, void *priv)
+static void _destroy_password_ug_cb(ui_gadget_h ug, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(priv == NULL);
 	SettingLocktypeUG *ad = (SettingLocktypeUG *)priv;
 
-	if (ad->ly_main)
-		elm_object_tree_focus_allow_set(ad->ly_main, EINA_TRUE);
+	if (ad->md.ly_main)
+		elm_object_tree_focus_allow_set(ad->md.ly_main, EINA_TRUE);
 	if (ug)
 		ug_destroy(ug);
 }
 
-void setting_locktype_end_password_ug_cb(ui_gadget_h ug, void *priv)
+void _end_password_ug_cb(ui_gadget_h ug, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(priv == NULL);
@@ -408,10 +357,10 @@ gboolean setting_locktype_create_password_sg(void *data)
 
 	if (!cbs)
 		return FALSE;
-	cbs->layout_cb = setting_locktype_layout_passwd_ug_cb;
-	cbs->result_cb = setting_locktype_result_password_ug_cb;
-	cbs->destroy_cb = setting_locktype_destroy_password_ug_cb;
-	cbs->end_cb = setting_locktype_end_password_ug_cb;
+	cbs->layout_cb = _layout_passwd_ug_cb;
+	cbs->result_cb = _result_password_ug_cb;
+	cbs->destroy_cb = _destroy_password_ug_cb;
+	cbs->end_cb = _end_password_ug_cb;
 	cbs->priv = (void *)ad;
 
 	app_control_h svc;
@@ -427,11 +376,11 @@ gboolean setting_locktype_create_password_sg(void *data)
 	if (ad->input_pwd)
 		app_control_add_extra_data(svc, "current", ad->input_pwd);
 
-	elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
-	ad->ug_passwd = setting_ug_create(ad->ug, "setting-password-efl",
+	elm_object_tree_focus_allow_set(ad->md.ly_main, EINA_FALSE);
+	ad->ug_passwd = setting_ug_create(NULL, "setting-password-efl",
 			UG_MODE_FULLVIEW, svc, cbs);
 	if (NULL == ad->ug_passwd) { /* error handling */
-		evas_object_show(ad->ly_main);
+		evas_object_show(ad->md.ly_main);
 	}
 
 	app_control_destroy(svc);
@@ -458,7 +407,7 @@ int _get_locktype_table_index(char *name)
 	return -1;
 }
 
-void setting_locktype_result_password_ug_cb(ui_gadget_h ug,
+static void _result_password_ug_cb(ui_gadget_h ug,
 		app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
@@ -487,7 +436,7 @@ void setting_locktype_result_password_ug_cb(ui_gadget_h ug,
 		}
 	}
 
-	evas_object_show(ad->ly_main);
+	evas_object_show(ad->md.ly_main);
 	FREE(result);
 	SETTING_TRACE_END;
 }
