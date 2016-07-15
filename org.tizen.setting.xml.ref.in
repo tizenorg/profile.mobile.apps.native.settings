@@ -71,26 +71,6 @@
 				<operation name="http://tizen.org/appcontrol/operation/setting/mobile_network"/>
 			</application-service>
 	</ui-application>
-	<ui-application appid="setting-font-efl" exec="@TZ_SYS_RO_UG@/bin/setting-font-efl" type="capp" nodisplay="true" taskmanage="false">
-			<icon>@TZ_SYS_RO_APP@/org.tizen.setting/res/icons/A01-1_icon_Font.png</icon>
-			<label>Font</label>
-			<label xml:lang="en-us">Font</label>
-			<label xml:lang="ja-jp">フォント</label>
-			<label xml:lang="ko-kr">서체</label>
-			<application-service>
-				<operation name="http://samsung.com/appcontrol/operation/configure/font/type"/>
-			</application-service>
-			<application-service>
-				<operation name="http://tizen.org/appcontrol/operation/configure/font/type"/>
-			</application-service>
-
-			<application-service>
-				<operation name="http://samsung.com/appcontrol/operation/configure/font/size"/>
-			</application-service>
-			<application-service>
-				<operation name="http://tizen.org/appcontrol/operation/configure/font/size"/>
-			</application-service>
-	</ui-application>
 	<ui-application appid="setting-ledindicator-efl" exec="@TZ_SYS_RO_UG@/bin/setting-ledindicator-efl" type="capp" nodisplay="true" taskmanage="false">
                         <icon>@TZ_SYS_RO_APP@/org.tizen.setting/res/icons/settings_led_indi.png</icon>
                         <label>LED indicator</label>

@@ -51,7 +51,6 @@ SET(SETTING_FILEVIEW_UG setting-fileview-efl)
 SET(SETTING_RINGTONE_UG setting-ringtone-efl)
 
 SET(SETTING_PASSWORD_UG setting-password-efl)
-SET(SETTING_FONT_UG setting-font-efl)
 SET(SETTING_STORAGE_UG setting-storage-efl)
 SET(SETTING_MANAGE_APPS_UG setting-manage-applications-efl)
 SET(SETTING_FLIGHTMODE_UG setting-flightmode-efl)
@@ -102,7 +101,7 @@ CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting.xml.in 
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting_font-lite.xml.in ${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting_font-lite.xml @ONLY)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/mime.setting.xml.in ${CMAKE_SOURCE_DIR}/mime.setting.xml @ONLY)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/src/setting-common-internal.pc.in ${CMAKE_SOURCE_DIR}/src/setting-common-internal.pc @ONLY)
-
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/setting-font/org.tizen.setting-font.xml.in ${CMAKE_SOURCE_DIR}/org.tizen.setting-font.xml @ONLY)
 
 # setting bin
 # setting plugin
