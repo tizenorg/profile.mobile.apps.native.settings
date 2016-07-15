@@ -191,12 +191,6 @@
 			<label xml:lang="en-us">Applications</label>
 	</ui-application>
 
-	<ui-application appid="setting-fileview-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-fileview-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
-			<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
-			<label>Fileview</label>
-			<label xml:lang="en-us">Fileview</label>
-	</ui-application>
-
 	<ui-application appid="setting-flightmode-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-flightmode-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
 		<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
 		<label>Flight mode</label>
