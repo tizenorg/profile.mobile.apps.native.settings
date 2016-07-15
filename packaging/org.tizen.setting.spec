@@ -131,6 +131,13 @@ Group: Application Framework/Settings
 #Requires: pkgconfig(setting-common-internal)
 %description devel
 
+%package fileview
+Summary: A setting fileview application
+Group: Application
+
+%description fileview
+Configuration application for fileview
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -342,3 +349,10 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %files ref
 %{_datadir}/mime/packages/mime.setting.xml
 %{_datadir}/packages/org.tizen.setting.xml.ref
+
+%files fileview
+%manifest setting-fileview/org.tizen.setting-fileview.manifest
+%{_prefix}/apps/org.tizen.setting-fileview/bin/setting-fileview
+%{_datadir}/packages/org.tizen.setting-fileview.xml
+%{_prefix}/apps/org.tizen.setting-fileview/res/*
+

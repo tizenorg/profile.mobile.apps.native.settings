@@ -1868,17 +1868,24 @@ int setting_set_i18n_force(char *pkgname, char *localedir)
 /*example 2:  app_launcher("emergency-msg-setting-efl"); */
 /*example 3:  app_launcher(
  * "sevenemail-setting-efl|caller:setting;cmd:main option"); */
-EXPORT_PUBLIC int app_launcher(const char *pkg_name, app_control_reply_cb callback, void *user_data)
+EXPORT_PUBLIC int app_launcher(const char *pkg_name,
+		app_control_reply_cb callback, void *user_data)
+{
+	app_control_h service = get_bundle_from_ug_args((void *)pkg_name);
+	if (!service)	/*get no bundle from ug args */
+		app_control_create(&service);
+
+	return app_launcher_svc(pkg_name, callback, user_data, service);
+}
+
+EXPORT_PUBLIC int app_launcher_svc(const char *pkg_name,
+		app_control_reply_cb callback, void *user_data,
+		app_control_h service)
 {
 	int ret = -1;
 	char *path = NULL;
-	path = get_ug_path_from_ug_args((void *)pkg_name);
-	app_control_h service = get_bundle_from_ug_args((void *)pkg_name);
-	if (!service) {
-		/*get no bundle from ug args */
-		app_control_create(&service);
-	}
 
+	path = get_ug_path_from_ug_args((void *)pkg_name);
 	app_control_set_operation(service, APP_CONTROL_OPERATION_PICK);
 	app_control_set_launch_mode(service, APP_CONTROL_LAUNCH_MODE_GROUP);
 	if (path) {
