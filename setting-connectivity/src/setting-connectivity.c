@@ -24,14 +24,17 @@
  *UG creation code for setting-connectivity
  */
 
-#include <setting-connectivity.h>
 #include <setting-cfg.h>
+
+#include "setting-connectivity.h"
 
 #ifndef UG_MODULE_API
 #define UG_MODULE_API __attribute__ ((visibility("default")))
 #endif
 
-#define USB_BTN_NO	0
+#define SETTING_CONNECTIVITY_PACKAGE_NAME "org.tizen.setting-connectivity"
+#define CONNECTIVITY_LOCALEDIR _TZ_SYS_RO_APP"/org.tizen.setting-connectivity/res/locale"
+#define USB_BTN_NO 0
 
 /**
  * This function checks the USB connection status
@@ -69,16 +72,14 @@ setting_view *__get_connective_view_to_load(app_control_h service)
 
 }
 
-Evas_Object *__get_connective_layout_to_return(app_control_h service,
-		void *priv)
+bool __get_connective_layout(SettingConnectivityUG *connectiveUG,
+		app_control_h service)
 {
 	SETTING_TRACE_BEGIN;
-	SettingConnectivityUG *connectiveUG = priv;
 	char *viewtype = NULL;
 
 	app_control_get_extra_data(service, "viewtype", &viewtype);
-	if (!viewtype)
-		return NULL;
+	retv_if(!viewtype, false);
 
 	SETTING_TRACE("viewtype:%s", viewtype);
 
@@ -87,9 +88,8 @@ Evas_Object *__get_connective_layout_to_return(app_control_h service,
 		return connectiveUG->ly_usb;
 	} else {
 		FREE(viewtype);
-		return NULL; /* &setting_view_connective_main; */
+		return false; /* &setting_view_connective_main; */
 	}
-
 }
 
 static void setting_connective_ug_cb_resize(void *data, Evas *e,
@@ -100,24 +100,21 @@ static void setting_connective_ug_cb_resize(void *data, Evas *e,
 	setting_view_update(ad->view_to_load, ad);
 }
 
-static void *setting_connective_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
-		app_control_h service, void *priv)
+//static void *setting_connective_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
+//		app_control_h service, void *priv)
+bool app_create(void *priv)
 {
-	setting_retvm_if((!priv), NULL, "!priv");
+	app_control_h service;
+	SettingConnectivityUG *ad = priv;
+	retv_if((!ad), false);
 
-	SettingConnectivityUG *connectiveUG = priv;
-	connectiveUG->ug = ug;
+	if (app_init(&ad->md, SETTING_CONNECTIVITY_PACKAGE_NAME)
+			!= SETTING_RETURN_SUCCESS) {
+		SETTING_TRACE_ERROR("Cannot initialize application");
+		return false;
+	}
 
-	connectiveUG->win_main_layout = (Evas_Object *)ug_get_parent_layout(ug);
-	connectiveUG->win_get = (Evas_Object *)ug_get_window();
-	evas_object_show(connectiveUG->win_main_layout);
-	connectiveUG->evas = evas_object_evas_get(
-			connectiveUG->win_main_layout);
-
-	setting_retvm_if(connectiveUG->win_main_layout == NULL, NULL,
-			"cannot get main window ");
-
-	setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR);
+	setting_set_i18n(SETTING_PACKAGE, CONNECTIVITY_LOCALEDIR);
 
 	/* register view node table */
 	setting_view_node_table_intialize();
@@ -127,110 +124,78 @@ static void *setting_connective_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 
 	/*	creating a view. */
 	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE,
-			&(connectiveUG->itc_title));
+			&(ad->itc_title));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(connectiveUG->itc_1text));
+			&(ad->itc_1text));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(connectiveUG->itc_1text_1icon));
+			&(ad->itc_1text_1icon));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(connectiveUG->itc_1text_1icon_gen)); /* toggle */
+			&(ad->itc_1text_1icon_gen)); /* toggle */
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(connectiveUG->itc_1icon_1text_sub));
+			&(ad->itc_1icon_1text_sub));
 	setting_create_Gendial_itc("dialogue/2text.3",
-			&(connectiveUG->itc_2text_3));
+			&(ad->itc_2text_3));
 	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
-			&(connectiveUG->itc_2text_3_parent));
+			&(ad->itc_2text_3_parent));
 	setting_create_Gendial_itc("multiline_sub",
-			&(connectiveUG->itc_help_style));
+			&(ad->itc_help_style));
 
-	connectiveUG->view_to_load = __get_connective_view_to_load(service);
-	setting_retvm_if(NULL == connectiveUG->view_to_load, NULL,
-			"NULL == connectiveUG->view_to_load");
-	setting_view_node_set_cur_view(connectiveUG->view_to_load);
-	setting_view_create(connectiveUG->view_to_load, (void *)connectiveUG);
-	evas_object_event_callback_add(connectiveUG->win_main_layout,
+	retv_if(app_control_create(&service) != APP_CONTROL_ERROR_NONE, false);
+
+	ad->view_to_load = __get_connective_view_to_load(service);
+	retv_if(!ad->view_to_load, false);
+
+	setting_view_node_set_cur_view(ad->view_to_load);
+	setting_view_create(ad->view_to_load, (void *)ad);
+	evas_object_event_callback_add(ad->md.ly_main,
 			EVAS_CALLBACK_RESIZE, setting_connective_ug_cb_resize,
-			connectiveUG);
-	return __get_connective_layout_to_return(service, connectiveUG);
+			ad);
+	retv_if(!__get_connective_layout(ad, service), false);
+	app_control_destroy(service);
+
+	return true;
 }
 
-static void setting_connective_ug_on_start(ui_gadget_h ug,
-		app_control_h service, void *priv)
+static void app_pause(void *data)
 {
 }
 
-static void setting_connective_ug_on_pause(ui_gadget_h ug,
-		app_control_h service, void *priv)
+static void app_resume(void *data)
 {
 }
 
-static void setting_connective_ug_on_resume(ui_gadget_h ug,
-		app_control_h service, void *priv)
+static void app_controll(app_control_h service, void *data)
 {
 }
 
-static void setting_connective_ug_on_destroy(ui_gadget_h ug,
-		app_control_h service, void *priv)
+//static void setting_connective_ug_on_destroy(ui_gadget_h ug,
+//		app_control_h service, void *priv)
+static void app_terminate(void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
-	SettingConnectivityUG *connectiveUG = priv;
+	SettingConnectivityUG *ad = priv;
 
 	/* fix flash issue for gallery */
-	evas_object_event_callback_del(connectiveUG->win_main_layout,
+	evas_object_event_callback_del(ad->md.ly_main,
 			EVAS_CALLBACK_RESIZE, setting_connective_ug_cb_resize);
-	connectiveUG->ug = ug;
 
 	/* called when this shared gadget is terminated. similar with
 	 * app_exit */
-	if (&setting_view_connectivity_usb == connectiveUG->view_to_load) {
-		setting_view_destroy(&setting_view_connectivity_usb_help,
-				connectiveUG);
-		setting_view_destroy(&setting_view_connectivity_usb,
-				connectiveUG);
+	if (&setting_view_connectivity_usb == ad->view_to_load) {
+		setting_view_destroy(&setting_view_connectivity_usb_help, ad);
+		setting_view_destroy(&setting_view_connectivity_usb, ad);
 	}
 
-	if (NULL != ug_get_layout(connectiveUG->ug)) {
-		evas_object_hide(
-				(Evas_Object *)ug_get_layout(connectiveUG->ug));
-		evas_object_del((Evas_Object *)ug_get_layout(connectiveUG->ug));
+	if (ad->md.win_main) {
+		evas_object_del(ad->md.win_main);
+		ad->md.win_main = NULL;
 	}
 
 	SETTING_TRACE_END;
 }
 
-static void setting_connective_ug_on_message(ui_gadget_h ug, app_control_h msg,
-		app_control_h service, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-}
-
-static void setting_connective_ug_on_event(ui_gadget_h ug, enum ug_event event,
-		app_control_h service, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-	switch (event) {
-	case UG_EVENT_LOW_MEMORY:
-		break;
-	case UG_EVENT_LOW_BATTERY:
-		break;
-	case UG_EVENT_LANG_CHANGE:
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT:
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-		break;
-	case UG_EVENT_REGION_CHANGE:
-		break;
-	default:
-		break;
-	}
-}
-
+/*
 static void setting_connective_ug_on_key_event(ui_gadget_h ug,
 		enum ug_key_event event, app_control_h service, void *priv)
 {
@@ -244,7 +209,7 @@ static void setting_connective_ug_on_key_event(ui_gadget_h ug,
 						ad->navi_bar)) {
 			ug_destroy_me(ug);
 		} else {
-			/* elm_naviframe_item_pop(ad->navi_bar); */
+			 elm_naviframe_item_pop(ad->navi_bar);
 			setting_view_cb_at_endKey(ad);
 		}
 	}
@@ -253,40 +218,49 @@ static void setting_connective_ug_on_key_event(ui_gadget_h ug,
 		break;
 	}
 }
+*/
 
-UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
+static void _lang_changed(app_event_info_h event_info, void *data)
 {
-	SETTING_TRACE_BEGIN;
-	SettingConnectivityUG *connectiveUG = calloc(1,
-			sizeof(SettingConnectivityUG));
-	setting_retvm_if(!connectiveUG, -1,
-			"Create SettingConnectivityUG obj failed");
-
-	ops->create = setting_connective_ug_on_create;
-	ops->start = setting_connective_ug_on_start;
-	ops->pause = setting_connective_ug_on_pause;
-	ops->resume = setting_connective_ug_on_resume;
-	ops->destroy = setting_connective_ug_on_destroy;
-	ops->message = setting_connective_ug_on_message;
-	ops->event = setting_connective_ug_on_event;
-	ops->key_event = setting_connective_ug_on_key_event;
-	ops->priv = connectiveUG;
-	ops->opt = UG_OPT_INDICATOR_ENABLE;
-
-	return 0;
+	char *lang = NULL;
+	if (app_event_get_language(event_info, &lang) == APP_ERROR_NONE) {
+		SETTING_TRACE_DEBUG("Setting - language is changed : %s", lang);
+		elm_language_set(lang);
+		elm_config_all_flush();
+		free(lang);
+	} else {
+		SETTING_TRACE_ERROR("Cannot get language from event_info");
+	}
 }
 
-UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
+EXPORT_PUBLIC
+int main(int argc, char *argv[])
 {
-	SETTING_TRACE_BEGIN;
-	struct SettingConnectivityUG *connectiveUG;
-	setting_retm_if(!ops, "ops == NULL");
-
-	connectiveUG = ops->priv;
-	if (connectiveUG)
-		FREE(connectiveUG);
+	app_event_handler_h handlers[5] = {NULL, };
+	ui_app_lifecycle_callback_s ops = {
+		.create = app_create,
+		.pause = app_pause,
+		.resume = app_resume,
+		.terminate = app_terminate,
+		.app_control = app_controll,
+	};
+	SettingConnectivityUG app_data;
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY],
+			APP_EVENT_LOW_MEMORY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY],
+			APP_EVENT_LOW_BATTERY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED],
+			APP_EVENT_LANGUAGE_CHANGED, _lang_changed, &app_data);
+	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED],
+			APP_EVENT_REGION_FORMAT_CHANGED, NULL, NULL);
+	ui_app_add_event_handler(
+			&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED],
+			APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
+	memset(&app_data, 0x0, sizeof(app_data));
+	return ui_app_main(argc, argv, &ops, &app_data);
 }
 
+/*
 UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
 		char **applocale)
 {
@@ -371,4 +345,5 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
 	}
 	return 0;
 }
+*/
 
