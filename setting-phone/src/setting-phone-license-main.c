@@ -201,6 +201,7 @@ static void __main_license_clicked(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
+	int ret;
 	SettingPhoneUG *ad = (SettingPhoneUG *)data;
 	struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
 	setting_retm_if(cbs == NULL, "calloc failed");
@@ -223,9 +224,13 @@ static void __main_license_clicked(void *data)
 	if (ad->ly_language)
 		elm_object_tree_focus_allow_set(ad->ly_language, EINA_FALSE);
 
+	ret = app_launcher_svc("org.tizen.setting-fileview", NULL, NULL, svc);
+	/*
 	ad->ug_loading = setting_ug_create(ad->ug, "setting-fileview-efl",
 			UG_MODE_FULLVIEW, svc, cbs);
-	if (NULL == ad->ug_loading)	/* error handling */
+	if (NULL == ad->ug_loading)	// error handling
+	*/
+	if (ret != 0)
 		setting_create_popup(ad, ad->win_get, NULL,
 				_(UNSUPPORTED_FUNCTION), NULL, 0, false, false,
 				0);
