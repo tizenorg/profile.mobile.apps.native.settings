@@ -1,3 +1,6 @@
+SET(PROJECT_SETTING_FILEVIEW "setting-fileview")
+SET(SETTING_PKG_FILEVIEW "org.tizen.setting-fileview")
+
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -5,9 +8,18 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${SETTING_COMMON}/include)
 
 INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_fileview REQUIRED
-	elementary appcore-common appcore-efl ui-gadget-1 capi-appfw-application evas ecore
-	chromium-efl	json-glib-1.0 libtzplatform-config)
-
+	appcore-common
+	appcore-efl
+	capi-appfw-application
+	chromium-efl
+	dlog
+	ecore
+	elementary
+	evas
+	json-glib-1.0
+	libtzplatform-config
+	ui-gadget-1
+)
 
 FOREACH(flag ${pkgs_fileview_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
@@ -28,12 +40,16 @@ ADD_DEFINITIONS("-shared")
 
 SET(CMAKE_EXE_LINKER_FLAGS "-Wl,--as-needed -Wl,--rpath=/usr/lib")
 
-ADD_LIBRARY(${SETTING_FILEVIEW_UG} SHARED
+ADD_EXECUTABLE(${PROJECT_SETTING_FILEVIEW}
 	src/setting-fileview.c
 	src/setting-fileview-main.c
 )
 
-TARGET_LINK_LIBRARIES(${SETTING_FILEVIEW_UG} -L${CMAKE_BINARY_DIR}/${SETTING_COMMON}/ -lsetting-common)
-TARGET_LINK_LIBRARIES(${SETTING_FILEVIEW_UG} ${CMAKE_LDFLAGS} ${pkgs_fileview_LDFLAGS})
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/org.tizen.setting-fileview.xml.in ${CMAKE_CURRENT_SOURCE_DIR}/org.tizen.setting-fileview.xml @ONLY)
 
-INSTALL(TARGETS ${SETTING_FILEVIEW_UG} DESTINATION ${PREFIX}/lib/ug)
+TARGET_LINK_LIBRARIES(${PROJECT_SETTING_FILEVIEW} -L${CMAKE_BINARY_DIR}/${SETTING_COMMON}/ -lsetting-common)
+TARGET_LINK_LIBRARIES(${PROJECT_SETTING_FILEVIEW} ${CMAKE_LDFLAGS} ${pkgs_fileview_LDFLAGS})
+
+INSTALL(PROGRAMS ${PROJECT_SETTING_FILEVIEW} DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_FILEVIEW}/bin)
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/org.tizen.setting-fileview.xml DESTINATION /usr/share/packages/)
+
