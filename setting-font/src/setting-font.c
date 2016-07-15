@@ -22,15 +22,15 @@
 #include <system_settings.h>
 #include <setting-cfg.h>
 
-#ifndef UG_MODULE_API
-#define UG_MODULE_API __attribute__ ((visibility("default")))
-#endif
+
+#define SETTING_FONT_PACKAGE_NAME "org.tizen.setting-font"
+#define SETTING_FONT_LOCALEDIR _TZ_SYS_RO_APP"/org.tizen.setting-font/res/locale"
 
 setting_view *__default_view_state(void *data, app_control_h service)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if((!data), NULL, "data is NULL");
-	SettingFontUG *fontUG = (SettingFontUG *) data;
+	SettingFontData *fontUG = (SettingFontData *) data;
 
 	/* argument processing */
 	char *category = NULL;
@@ -82,7 +82,7 @@ setting_view *__app_control_get_operation_handler(void *data,
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if((!data), NULL, "data is NULL");
 	setting_retvm_if((!service), NULL, "service is NULL");
-	SettingFontUG *fontUG = (SettingFontUG *) data;
+	SettingFontData *fontUG = (SettingFontData *) data;
 	char *output_url = NULL;
 
 	int ret = app_control_get_operation(service, &output_url);
@@ -131,7 +131,7 @@ setting_view *__get_font_view_to_load(void *data, app_control_h service)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if((!data), NULL, "data is NULL");
-	SettingFontUG *fontUG = (SettingFontUG *) data;
+	SettingFontData *fontUG = (SettingFontData *) data;
 
 	/*if ug is called by accessibility, view node table should not be
 	 * initialized */
@@ -170,26 +170,26 @@ setting_view *__get_font_view_to_load(void *data, app_control_h service)
 static void setting_font_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
 		void *event_info)
 {
-	SettingFontUG *ad = (SettingFontUG *) data;
+	SettingFontData *ad = (SettingFontData *) data;
 	setting_view_update(&setting_view_font_main, ad);
 }
 
-static void *setting_font_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
-		app_control_h service, void *priv)
+static bool _setting_font_app_create(void *priv)
 {
 	setting_retvm_if((!priv), NULL, "!priv");
-	SettingFontUG *fontUG = priv;
+	SettingFontData *fontUG = priv;
 
-	setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR);
+	setting_set_i18n(SETTING_PACKAGE, SETTING_FONT_LOCALEDIR);
 
-	fontUG->ug = ug;
-	fontUG->win_main_layout = (Evas_Object *) ug_get_parent_layout(ug);
-	fontUG->win_get = (Evas_Object *) ug_get_window();
-	evas_object_show(fontUG->win_main_layout);
-	fontUG->evas = evas_object_evas_get(fontUG->win_main_layout);
+	if (app_init(&fontUG->md, SETTING_FONT_PACKAGE_NAME)
+	        != SETTING_RETURN_SUCCESS) {
+	    SETTING_TRACE_ERROR("Cannot initialize application");
+	    return false;
+	}
 
-	setting_retvm_if(fontUG->win_main_layout == NULL, NULL,
-			"cannot get main window ");
+	elm_theme_extension_add(NULL, SETTING_FONT_EDJEDIR"/font-slider.edj");
+	elm_theme_extension_add(NULL, SETTING_FONT_EDJEDIR"/setting-genlist.edj");
+	elm_theme_extension_add(NULL, SETTING_FONT_EDJEDIR"/setting-theme.edj");
 
 	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
 			&(fontUG->itc_2text_3_parent));
@@ -203,142 +203,102 @@ static void *setting_font_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 			&(fontUG->itc_group_item));
 
 	/* view type checking */
-	fontUG->view_to_load = __get_font_view_to_load(fontUG, service);
+/*TODO: select proper view to load*/
+	fontUG->view_to_load = __get_font_view_to_load(fontUG, /*service*/NULL);
 	setting_retvm_if(NULL == fontUG->view_to_load, NULL,
 			"NULL == fontUG->view_to_load");
 
 	setting_view_node_set_cur_view(fontUG->view_to_load);
 	setting_view_create(fontUG->view_to_load, (void *) fontUG);
 
-	elm_theme_extension_add(NULL, SETTING_5STEP_SLIDER_EDJ_NAME);
-
 	/*	creating a view. */
 	/*setting_view_create(&setting_view_font_main, (void *)fontUG); */
-	evas_object_event_callback_add(fontUG->win_main_layout,
+	evas_object_event_callback_add(fontUG->md.view_layout,
 			EVAS_CALLBACK_RESIZE, setting_font_ug_cb_resize,
 			fontUG);
-	return fontUG->ly_main;
+
+	return true;
 }
 
-static void setting_font_ug_on_start(ui_gadget_h ug, app_control_h service,
-		void *priv)
+
+static void _setting_font_app_pause(void *priv)
 {
 }
 
-static void setting_font_ug_on_pause(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void _setting_font_app_resume(void *priv)
 {
 }
 
-static void setting_font_ug_on_resume(ui_gadget_h ug, app_control_h service,
-		void *priv)
-{
-}
-
-static void setting_font_ug_on_destroy(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void _setting_font_app_terminate(void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
-	SettingFontUG *fontUG = priv;
+	SettingFontData *fontUG = priv;
 
 	/* fix flash issue for gallery */
-	evas_object_event_callback_del(fontUG->win_main_layout,
+	evas_object_event_callback_del(fontUG->md.view_layout,
 			EVAS_CALLBACK_RESIZE, setting_font_ug_cb_resize);
-	fontUG->ug = ug;
 
 	setting_view_destroy(&setting_view_font_font_size, fontUG);
 	setting_view_destroy(&setting_view_font_main, fontUG);
 
-	if (NULL != ug_get_layout(fontUG->ug)) {
-		evas_object_hide((Evas_Object *) ug_get_layout(fontUG->ug));
-		evas_object_del((Evas_Object *) ug_get_layout(fontUG->ug));
+	if (fontUG->md.win_main) {
+	    evas_object_del(fontUG->md.win_main);
+	    fontUG->md.win_main = NULL;
 	}
 
 	SETTING_TRACE_END;
 }
 
-static void setting_font_ug_on_message(ui_gadget_h ug, app_control_h msg,
-		app_control_h service, void *priv)
+static void _setting_font_app_controll(app_control_h service, void *data)
 {
-	SETTING_TRACE_BEGIN;
+
 }
 
-static void setting_font_ug_on_event(ui_gadget_h ug, enum ug_event event,
-		app_control_h service, void *priv)
+
+static void _lang_changed(app_event_info_h event_info, void *data)
 {
-	SETTING_TRACE_BEGIN;
-	SettingFontUG *ad = (SettingFontUG *) priv;
-	setting_retm_if(NULL == ad, "ad is NULL");
-	switch (event) {
-	case UG_EVENT_LOW_MEMORY:
-		break;
-	case UG_EVENT_LOW_BATTERY:
-		break;
-	case UG_EVENT_LANG_CHANGE:
-		setting_navi_items_update(ad->navibar);
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT:
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-		break;
-	case UG_EVENT_REGION_CHANGE:
-		break;
-	default:
-		break;
-	}
+    char *lang = NULL;
+
+    if (app_event_get_language(event_info, &lang) == APP_ERROR_NONE) {
+        SETTING_TRACE_DEBUG("Setting - language is changed : %s", lang);
+        elm_language_set(lang);
+        elm_config_all_flush();
+        free(lang);
+    } else {
+        SETTING_TRACE_ERROR("Cannot get language from event_info");
+    }
 }
 
-static void setting_font_ug_on_key_event(ui_gadget_h ug,
-		enum ug_key_event event, app_control_h service, void *priv)
+EXPORT_PUBLIC
+int main(int argc, char *argv[])
 {
 	SETTING_TRACE_BEGIN;
-	ret_if(!ug);
+    app_event_handler_h handlers[5] = {NULL, };
+    ui_app_lifecycle_callback_s ops = {
+        .create = _setting_font_app_create,
+        .pause = _setting_font_app_pause,
+        .resume = _setting_font_app_resume,
+        .terminate = _setting_font_app_terminate,
+        .app_control = _setting_font_app_controll
+    };
 
-	switch (event) {
-	case UG_KEY_EVENT_END:
-		ug_destroy_me(ug);
-		break;
-	default:
-		break;
-	}
-}
+	SettingFontData app_data;
+	memset(&app_data, 0, sizeof(SettingFontData));
 
-UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
-{
-	SETTING_TRACE_BEGIN;
-	SettingFontUG *fontUG = calloc(1, sizeof(SettingFontUG));
-	setting_retvm_if(!fontUG, -1, "Create SettingFontUG obj failed");
+    ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY],
+            APP_EVENT_LOW_MEMORY, NULL, NULL);
+    ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY],
+            APP_EVENT_LOW_BATTERY, NULL, NULL);
+    ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED],
+            APP_EVENT_LANGUAGE_CHANGED, _lang_changed, &app_data);
+    ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED],
+            APP_EVENT_REGION_FORMAT_CHANGED, NULL, NULL);
+    ui_app_add_event_handler(
+            &handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED],
+            APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
 
-	ops->create = setting_font_ug_on_create;
-	ops->start = setting_font_ug_on_start;
-	ops->pause = setting_font_ug_on_pause;
-	ops->resume = setting_font_ug_on_resume;
-	ops->destroy = setting_font_ug_on_destroy;
-	ops->message = setting_font_ug_on_message;
-	ops->event = setting_font_ug_on_event;
-	ops->key_event = setting_font_ug_on_key_event;
-	ops->priv = fontUG;
-	ops->opt = UG_OPT_INDICATOR_ENABLE;
-
-	memset(fontUG, 0x00, sizeof(SettingFontUG));
-
-	return 0;
-}
-
-UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
-{
-	SETTING_TRACE_BEGIN;
-	struct SettingFontUG *fontUG;
-	setting_retm_if(!ops, "ops == NULL");
-
-	fontUG = ops->priv;
-	if (fontUG)
-		FREE(fontUG);
+    return ui_app_main(argc, argv, &ops, &app_data);
 }
 
 /* ***************************************************
@@ -351,7 +311,7 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
  * Reset function to 'reset' the settings of the UG, it will be invoked by
  * 'Reset' UG
  */
-UG_MODULE_API int setting_plugin_reset(app_control_h service, void *priv)
+int setting_plugin_reset(app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	int ret = 0;
@@ -403,7 +363,7 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 	},
 };
 
-UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
+int setting_plugin_search_init(app_control_h service, void *priv,
 		char **applocale)
 {
 	SETTING_TRACE_BEGIN;
