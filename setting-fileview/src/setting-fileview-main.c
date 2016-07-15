@@ -63,22 +63,23 @@ static void __setting_fileview_policy_navigation_decide(void *data,
 static int setting_fileview_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
-	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-
-	SettingFileviewUG *ad = (SettingFileviewUG *)cb;
-
+	int ret;
 	Evas_Object *scroller = NULL;
+	SettingFileviewUG *ad = (SettingFileviewUG *)cb;
+	retv_if(!ad, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	ad->ly_main = setting_create_layout_navi_bar_scroller(
-			ad->win_main_layout, ad->win_get, _(ad->input_title),
-			/*_("IDS_ST_BODY_OPEN_SOURCE_LICENCES"), */
+	ret = view_init(&ad->md, _(ad->input_title));
+	if (ret != SETTING_RETURN_SUCCESS)
+		return ret;
+
+	setting_create_navi_bar_buttons(
+			_(ad->input_title),
 			_("IDS_ST_BUTTON_BACK"),
-			NULL, setting_fileview_click_back_cb,
-			NULL, ad, &scroller, &(ad->navi_bar));
+			setting_fileview_click_back_cb,
+			ad, ad->md.genlist, ad->md.navibar_main,
+			NULL);
 
-	Evas *evas = evas_object_evas_get(ad->win_get);
-	Evas_Object *webview = ewk_view_add(evas);
-
+	Evas_Object *webview = ewk_view_add(ad->md.evas);
 	ad->webkit = webview;
 
 	SETTING_TRACE("ad->input_file:%s", ad->input_file);
@@ -87,7 +88,7 @@ static int setting_fileview_create(void *cb)
 	elm_scroller_bounce_set(scroller, EINA_FALSE, EINA_FALSE);
 	elm_object_content_set(scroller, ad->webkit);
 
-	elm_access_object_register(ad->webkit, ad->win_get);
+	elm_access_object_register(ad->webkit, ad->md.win_main);
 	evas_object_show(ad->webkit);
 	ad->scroller = scroller;
 
@@ -125,9 +126,9 @@ static int setting_fileview_destroy(void *cb)
 		ad->scroller = NULL;
 	}
 
-	if (ad->ly_main != NULL) {
-		evas_object_del(ad->ly_main);
-		ad->ly_main = NULL;
+	if (ad->md.ly_main != NULL) {
+		evas_object_del(ad->md.ly_main);
+		ad->md.ly_main = NULL;
 		setting_view_fileview_main.is_create = 0;
 	}
 
@@ -139,8 +140,8 @@ static int setting_fileview_update(void *cb)
 	SETTING_TRACE_BEGIN;
 	SettingFileviewUG *ad = (SettingFileviewUG *)cb;
 
-	if (ad->ly_main != NULL)
-		evas_object_show(ad->ly_main);
+	if (ad->md.ly_main != NULL)
+		evas_object_show(ad->md.ly_main);
 
 	return SETTING_RETURN_SUCCESS;
 
@@ -151,8 +152,8 @@ static int setting_fileview_cleanup(void *cb)
 	SETTING_TRACE_BEGIN;
 	SettingFileviewUG *ad = (SettingFileviewUG *)cb;
 
-	if (ad->ly_main != NULL)
-		evas_object_hide(ad->ly_main);
+	if (ad->md.ly_main != NULL)
+		evas_object_hide(ad->md.ly_main);
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -167,10 +168,10 @@ static void setting_fileview_click_back_cb(void *data, Evas_Object *obj,
 		void *event_info)
 {
 	/* error check */
-	setting_retm_if(data == NULL, " Data parameter is NULL");
-
 	SettingFileviewUG *ad = (SettingFileviewUG *)data;
-	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+	setting_retm_if(!ad, " Data parameter is NULL");
+
+	if (ad->md.win_main)
+		elm_win_lower(ad->md.win_main);
 	return;
 }
