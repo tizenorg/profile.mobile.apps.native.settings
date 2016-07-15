@@ -41,7 +41,10 @@ static int setting_locktype_main_create(void *cb);
 static int setting_locktype_main_destroy(void *cb);
 static int setting_locktype_main_update(void *cb);
 static int setting_locktype_main_cleanup(void *cb);
-
+void setting_locktype_main_click_softkey_back_cb(void *data, Evas_Object *obj,
+		void *event_info);
+static void setting_locktype_main_mouse_up_Gendial_list_cb(void *data,
+		Evas_Object *obj, void *event_info);
 #if 0
 static void __record_btn_click_cb(void *data, Evas_Object *obj,
 		void *event_info);
@@ -292,7 +295,7 @@ static int __add_3rd_party_lock(void *data)
 	int index = 0;
 	for (index = 0; index < count; index++) {
 		ad->data_locktype_3rd[index] = setting_create_Gendial_field_1radio(
-				ad->genlist,
+				ad->md.genlist,
 				&(itc_1text_1icon_3),
 				/*add to sel_cb */
 				setting_locktype_main_mouse_up_Gendial_list_cb,
@@ -367,20 +370,20 @@ void __add_locktype_items(void *data)
 	vconf_get_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, &locktype);
 	SETTING_TRACE("locktype is %d", locktype);
 
-	radio = elm_radio_add(ad->genlist);
+	radio = elm_radio_add(ad->md.genlist);
 	if (radio) {
 		elm_radio_state_value_set(radio, -1);
 		ad->lock_type_rd = radio;
 	}
 
-	evas_object_smart_callback_add(ad->genlist, "realized",
+	evas_object_smart_callback_add(ad->md.genlist, "realized",
 			__gl_realized_cb, NULL);
 
 
 	/* to do : radio menu */
 	/* 0) None */
 	ad->data_locktype_none = setting_create_Gendial_field_def(
-			ad->genlist, &(itc_1text_1icon_3),
+			ad->md.genlist, &(itc_1text_1icon_3),
 			/*add to sel_cb */
 			setting_locktype_main_mouse_up_Gendial_list_cb,
 			ad, /* sel data */
@@ -394,7 +397,7 @@ void __add_locktype_items(void *data)
 		SETTING_TRACE_ERROR("item_data is NULL");
 
 	/* 1) swipe */
-	ad->data_locktype_swipe = setting_create_Gendial_field_def(ad->genlist,
+	ad->data_locktype_swipe = setting_create_Gendial_field_def(ad->md.genlist,
 			&(itc_1text_1icon_3),
 			/*add to sel_cb */
 			setting_locktype_main_mouse_up_Gendial_list_cb,
@@ -410,7 +413,7 @@ void __add_locktype_items(void *data)
 
 	/* 4) simple password */
 	ad->data_locktype_simple = setting_create_Gendial_field_def(
-			ad->genlist,
+			ad->md.genlist,
 			&(itc_1text_1icon_3),
 			/*add to sel_cb */
 			setting_locktype_main_mouse_up_Gendial_list_cb,
@@ -429,7 +432,7 @@ void __add_locktype_items(void *data)
 
 	/* 5) password */
 	ad->data_locktype_password = setting_create_Gendial_field_def(
-			ad->genlist,
+			ad->md.genlist,
 			&(itc_1text_1icon_3),
 			/*add to sel_cb */
 			setting_locktype_main_mouse_up_Gendial_list_cb,
@@ -525,8 +528,8 @@ static void __lock_type_key_changed_cb(keynode_t *key, void *data)
 			setting_ug_destroy(ad->ug_passwd);
 		}
 
-		if (ad->genlist) {
-			elm_genlist_clear(ad->genlist);
+		if (ad->md.genlist) {
+			elm_genlist_clear(ad->md.genlist);
 			__add_locktype_items(ad);
 		}
 	}
@@ -537,22 +540,21 @@ static void __lock_type_key_changed_cb(keynode_t *key, void *data)
 static int setting_locktype_main_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
-	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+	int ret;
+	SettingLocktypeUG *ad = (SettingLocktypeUG *)cb;
 
-	SettingLocktypeUG *ad = (SettingLocktypeUG *) cb;
+	retv_if(ad == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+	ret = view_init(&ad->md, _("IDS_ST_BODY_SCREEN_LOCK_TYPE"));
+	if (ret != SETTING_RETURN_SUCCESS)
+		return ret;
 
-	/* add basic layout */
-
-	Evas_Object *scroller = NULL;
-	ad->ly_main = setting_create_layout_navi_bar_genlist(
-			ad->win_main_layout, ad->win_get,
-			"IDS_ST_BODY_SCREEN_LOCK_TYPE", _("IDS_ST_BUTTON_BACK"),
-			NULL,
-			(setting_call_back_func) setting_locktype_main_click_softkey_back_cb,
-			NULL, ad, &scroller, &(ad->navi_bar));
-	ad->screen_lock_main_item = elm_naviframe_top_item_get(ad->navi_bar);
-
-	ad->genlist = scroller;
+	setting_create_navi_bar_buttons(
+			_("IDS_ST_BODY_SCREEN_LOCK_TYPE"),
+			_("IDS_ST_BUTTON_BACK"),
+			setting_locktype_main_click_softkey_back_cb,
+			ad, ad->md.genlist, ad->md.navibar_main,
+			NULL);
+	ad->screen_lock_main_item = elm_naviframe_top_item_get(ad->md.navibar_main);
 
 	__add_locktype_items(ad);
 
@@ -583,7 +585,7 @@ static int setting_locktype_main_destroy(void *cb)
 			__lock_type_key_changed_cb);
 #endif
 
-	evas_object_del(ad->ly_main);
+	evas_object_del(ad->md.ly_main);
 	ad->screen_lock_main_item = NULL;
 
 	setting_view_locktype_main.is_create = 0;
@@ -634,7 +636,7 @@ __motion_set_cb(void *data, Evas_Object *obj, void *event_info)
 	retm_if(data == NULL, "[Setting > Security] Data parameter is NULL");
 	SettingLocktypeUG *ad = (SettingLocktypeUG *) data;
 
-	elm_naviframe_item_pop(ad->navi_bar);
+	elm_naviframe_item_pop(ad->md.navibar_main);
 	ug_destroy_me(ad->ug);
 }
 
@@ -647,7 +649,7 @@ __motion_cancel_cb(void *data, Evas_Object *obj, void *event_info)
 	retm_if(data == NULL, "[Setting > Security] Data parameter is NULL");
 	SettingLocktypeUG *ad = (SettingLocktypeUG *) data;
 
-	elm_naviframe_item_pop(ad->navi_bar);
+	elm_naviframe_item_pop(ad->md.navibar_main);
 	ug_destroy_me(ad->ug);
 }
 #endif
@@ -715,12 +717,13 @@ static void setting_locktype_main_mouse_up_Gendial_list_cb(void *data,
 			elm_radio_value_set(list_item->eo_check, lock_type);
 		}
 		/*SETTING_TRACE_DEBUG("PASS #1"); */
-		ug_destroy_me(ad->ug);
+		if (ad->md.win_main)
+			elm_win_lower(ad->md.win_main);
 		break;
 #if 0
 	case SETTING_SCREEN_LOCK_TYPE_MOTION:
 		ad->old_type = old_type;
-		setting_create_guild_layout(ad->navi_bar,
+		setting_create_guild_layout(ad->md.navibar_main,
 				_(About_Motion_Unlock_Str),
 				_("IDS_ST_BUTTON_CANCEL_ABB"),
 				_(SET_AS_LOCK_STR), NULL,
@@ -784,7 +787,8 @@ static void setting_locktype_main_mouse_up_Gendial_list_cb(void *data,
 		vconf_set_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, lock_type);
 		/* set radio */
 		elm_radio_value_set(list_item->eo_check, lock_type + index);
-		ug_destroy_me(ad->ug);
+		if (ad->md.win_main)
+			elm_win_lower(ad->md.win_main);
 		break;
 	default:
 		break;
@@ -839,7 +843,7 @@ setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj,
 	case SETTING_SCREEN_LOCK_TYPE_MOTION:
 		ad->old_type = old_type;
 		elm_radio_value_set(obj, old_type);
-		setting_create_guild_layout(ad->navi_bar,
+		setting_create_guild_layout(ad->md.navibar_main,
 				_(About_Motion_Unlock_Str),
 				_("IDS_ST_BUTTON_CANCEL_ABB"),
 				_(SET_AS_LOCK_STR), NULL,
@@ -915,21 +919,17 @@ setting_locktype_main_click_radio_cb(void *data, Evas_Object *obj,
 }
 #endif
 
-Eina_Bool setting_locktype_main_click_softkey_back_cb(void *data,
-		Elm_Object_Item *it)
+void setting_locktype_main_click_softkey_back_cb(void *data, Evas_Object *obj,
+		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-
-	/* error check */
-	retvm_if(data == NULL, EINA_FALSE,
-			"[Setting > Security] Data parameter is NULL");
-
 	SettingLocktypeUG *ad = (SettingLocktypeUG *) data;
-	if (ad->ug_passwd)
-		return EINA_FALSE;
+	ret_if(!ad);
 
-	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+	if (ad->ug_passwd)
+		return;
+	if (ad->md.win_main)
+		elm_win_lower(ad->md.win_main);
+
 	SETTING_TRACE_END;
-	return EINA_TRUE;
 }

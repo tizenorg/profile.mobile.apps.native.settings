@@ -131,6 +131,13 @@ Group: Application Framework/Settings
 #Requires: pkgconfig(setting-common-internal)
 %description devel
 
+%package locktype
+Summary: A setting locktype application
+Group: Application
+
+%description locktype
+Configuration application for locktype
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -342,3 +349,10 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %files ref
 %{_datadir}/mime/packages/mime.setting.xml
 %{_datadir}/packages/org.tizen.setting.xml.ref
+
+%files locktype
+%manifest setting-locktype/org.tizen.setting-locktype.manifest
+%{_prefix}/apps/org.tizen.setting-locktype/bin/setting-locktype
+%{_datadir}/packages/org.tizen.setting-locktype.xml
+%{_prefix}/apps/org.tizen.setting-locktype/res/*
+
