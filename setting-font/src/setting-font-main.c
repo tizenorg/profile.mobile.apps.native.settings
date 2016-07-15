@@ -56,8 +56,8 @@ static void setting_font_rot_changed_cb(void *data, Evas_Object *obj,
 {
 	SETTING_TRACE_BEGIN;
 	SettingFontUG *ad = (SettingFontUG *)data;
-	ret_if(ad == NULL || ad->win_get == NULL);
-	int change_ang = elm_win_rotation_get(ad->win_get);
+	ret_if(ad == NULL || ad->md.win_main == NULL);
+	int change_ang = elm_win_rotation_get(ad->md.win_main);
 
 	switch (change_ang) {
 	case APP_DEVICE_ORIENTATION_0:
@@ -466,8 +466,6 @@ static void __setting_progress_popup_cb(void *data, Evas_Object *obj,
 		ad->main_popup = NULL;
 	}
 	ad->font_change_status = SELECTED_FONT_CHANGE_DONE;
-
-	ug_destroy_me(ad->ug);
 }
 
 static Eina_Bool __slide_timer(void *data)
@@ -701,7 +699,7 @@ static int _slider_get_width(void *data)
 	SettingFontUG *ad = (SettingFontUG *)data;
 
 	int x, y, w, h;
-	elm_win_screen_size_get(ad->win_get, &x, &y, &w, &h);
+	elm_win_screen_size_get(ad->md.win_main, &x, &y, &w, &h);
 	SETTING_TRACE("-------> x : %d ", x);
 	SETTING_TRACE("-------> y : %d ", y);
 	SETTING_TRACE("-------> w : %d ", w);
@@ -856,7 +854,7 @@ static void setting_font_done_click_cb(void *data, Evas_Object *obj,
 
 		ad->font_change_status = SELECTED_FONT_CHANGE_IN_PROCESS;
 		ad->main_popup = setting_create_popup_with_progressbar(ad,
-				ad->win_get,
+				ad->md.win_main,
 				PROGRESSBAR_STYLE,
 				NULL, KeyStr_Loading,
 				__setting_progress_popup_cb, 3/*0*/, TRUE, TRUE,
@@ -867,7 +865,7 @@ static void setting_font_done_click_cb(void *data, Evas_Object *obj,
 				(Ecore_Task_Cb)__font_change_call, ad);
 	} else {
 		/* Send destroy request */
-		ug_destroy_me(ad->ug);
+	//ug_destroy_me(ad->ug);
 	}
 }
 
@@ -877,10 +875,9 @@ static void setting_font_cancel_click_cb(void *data, Evas_Object *obj,
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");
-	SettingFontUG *ad = (SettingFontUG *)data;
 
 	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+//ug_destroy_me(ad->ug);
 }
 
 static void __setting_get_font_size_str(void *data, int size)
@@ -950,10 +947,16 @@ static void __setting_get_font_type_str(void *data, char *font_data)
 static int setting_font_main_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
+	char *font_name = NULL;
+	int size = -1;
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
 	SettingFontUG *ad = (SettingFontUG *)cb;
+
+	int ret = view_init(&ad->md, _("IDS_ST_BODY_FONT"));
+	if (ret != SETTING_RETURN_SUCCESS)
+	    return ret;
 
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
 			&(ad->itc_1text_1icon_2));
@@ -968,37 +971,29 @@ static int setting_font_main_create(void *cb)
 			&(ad->itc_preview));
 	ad->itc_preview.func.content_get = _font_size_preview_get;
 
-	retvm_if(ad->win_main_layout == NULL, SETTING_DRAW_ERR_FAIL_LOAD_EDJ,
-			"win_main_layout is NULL");
+	retvm_if(ad->md.view_layout == NULL, SETTING_DRAW_ERR_FAIL_LOAD_EDJ,
+			"md.view_layout is NULL");
 	ad->font_change_status = SELECTED_FONT_CHANGE_NONE;
-	ad->ly_main = setting_create_layout_navi_bar_genlist(
-			ad->win_main_layout, ad->win_get, "IDS_ST_BODY_FONT",
-			_("IDS_ST_BUTTON_BACK"),
-			NULL,
-			(setting_call_back_func)__setting_font_main_click_softkey_back_cb,
-			NULL, ad, &ad->genlist, &ad->navibar);
-	ad->navi_it_font = elm_naviframe_top_item_get(ad->navibar);
 
 	/* Title Cancel Button */
-	ad->btn_cancel = setting_create_button(ad->navibar,
+	ad->btn_cancel = setting_create_button(ad->md.navibar_main,
 			"IDS_MSG_ACBUTTON_CANCEL_ABB", "naviframe/title_cancel",
 			setting_font_cancel_click_cb, ad);
 	elm_object_item_part_content_set(ad->navi_it_font, "title_left_btn",
 			ad->btn_cancel);
 	/* Title Done Button */
-	ad->btn_done = setting_create_button(ad->navibar,
+	ad->btn_done = setting_create_button(ad->md.navibar_main,
 			"IDS_MSG_ACBUTTON_DONE_ABB", "naviframe/title_done",
 			setting_font_done_click_cb, ad);
 	elm_object_item_part_content_set(ad->navi_it_font, "title_right_btn",
 			ad->btn_done);
 
-	elm_genlist_mode_set(ad->genlist, ELM_LIST_COMPRESS);
-	evas_object_smart_callback_add(ad->genlist, "realized",
+	elm_genlist_mode_set(ad->md.genlist, ELM_LIST_COMPRESS);
+	evas_object_smart_callback_add(ad->md.genlist, "realized",
 			__gl_realized_cb, ad);
 
-	char *font_name = NULL;
 	G_FREE(ad->font_type_str);
-	int ret = system_settings_get_value_string(
+	ret = system_settings_get_value_string(
 			SYSTEM_SETTINGS_KEY_FONT_TYPE, &font_name);
 	if (ret != SYSTEM_SETTINGS_ERROR_NONE) {
 		SETTING_TRACE_ERROR(
@@ -1007,7 +1002,7 @@ static int setting_font_main_create(void *cb)
 		font_name = _get_default_font();
 	}
 	__setting_get_font_type_str(ad, font_name);
-	int size = -1;
+
 	ret = system_settings_get_value_int(SYSTEM_SETTINGS_KEY_FONT_SIZE,
 			&size);
 	setting_retvm_if(ret != 0, SETTING_RETURN_SUCCESS, "fail to get vconf");
@@ -1020,7 +1015,7 @@ static int setting_font_main_create(void *cb)
 	char *default_example_str = get_example_style_text(ad->font_size_str,
 			ad->font_type_str);
 
-	ad->font_example = setting_create_Gendial_field_def(ad->genlist,
+	ad->font_example = setting_create_Gendial_field_def(ad->md.genlist,
 			&(ad->itc_preview),
 			NULL, ad, SWALLOW_Type_INVALID, NULL,
 			NULL, 0, default_example_str, NULL,  NULL);
@@ -1033,7 +1028,7 @@ static int setting_font_main_create(void *cb)
 	G_FREE(default_example_str);
 
 	/*2.Font Size..... */
-	setting_create_Gendial_field_titleItem(ad->genlist, &(itc_group_item),
+	setting_create_Gendial_field_titleItem(ad->md.genlist, &(itc_group_item),
 			"IDS_ST_BODY_SIZE", NULL);
 
 	size = -1;
@@ -1042,7 +1037,7 @@ static int setting_font_main_create(void *cb)
 	setting_retvm_if(ret != 0, SETTING_RETURN_SUCCESS, "fail to get vconf");
 	ad->init_font_size = size;
 	ad->font_size = setting_create_Gendial_field_def(
-			ad->genlist,
+			ad->md.genlist,
 			&(ad->itc_bg_1icon),
 			NULL,
 			NULL,
@@ -1055,8 +1050,8 @@ static int setting_font_main_create(void *cb)
 			__font_size_slider_value_change_cb);
 
 	if (ad->font_size) {
-		ad->font_size->win_main = ad->win_main_layout;
-		ad->font_size->evas = ad->evas;
+		ad->font_size->win_main = ad->md.view_layout;
+		ad->font_size->evas = ad->md.evas;
 		ad->font_size->slider_min = 0;
 		ad->font_size->slider_max = 4;
 		ad->font_size->isIndicatorVisible = 0;
@@ -1070,7 +1065,7 @@ static int setting_font_main_create(void *cb)
 	}
 
 	/*3.Font Type..... */
-	setting_create_Gendial_field_titleItem(ad->genlist, &(itc_group_item),
+	setting_create_Gendial_field_titleItem(ad->md.genlist, &(itc_group_item),
 			"IDS_ST_BODY_TYPE", NULL);
 	Evas_Object *rgd = NULL;
 	int i = 0;
@@ -1087,7 +1082,7 @@ static int setting_font_main_create(void *cb)
 		SETTING_TRACE_DEBUG("ad->font_name dfrom vconf :%s", ad->font_name);
 	}
 
-	rgd = elm_radio_add(ad->genlist);
+	rgd = elm_radio_add(ad->md.genlist);
 	elm_radio_value_set(rgd, -1);
 
 	char *default_font_name = NULL;
@@ -1110,7 +1105,7 @@ static int setting_font_main_create(void *cb)
 		item_data->chk_change_cb = NULL;
 		/*the real font type value */
 		item_data->sub_desc = strdup(default_font_name);
-		item_data->item = elm_genlist_item_append(ad->genlist,
+		item_data->item = elm_genlist_item_append(ad->md.genlist,
 				&(ad->itc_1text_1icon_2), item_data, NULL,
 				ELM_GENLIST_ITEM_NONE,
 				setting_font_main_list_sel_cb, ad);
@@ -1159,7 +1154,7 @@ static int setting_font_main_create(void *cb)
 			item_data->rgd = rgd;
 			item_data->chk_change_cb = NULL;
 			item_data->sub_desc = strdup((char *)font_data);
-			item_data->item = elm_genlist_item_append(ad->genlist,
+			item_data->item = elm_genlist_item_append(ad->md.genlist,
 					&(ad->itc_1text_1icon_2), item_data,
 					NULL, ELM_GENLIST_ITEM_NONE,
 					setting_font_main_list_sel_cb, ad);
@@ -1205,7 +1200,7 @@ static int setting_font_main_create(void *cb)
 	evas_font_reinit();
 
 	/*------------------------------------------------------------------- */
-	evas_object_smart_callback_add(ad->win_get, "wm,rotation,changed",
+	evas_object_smart_callback_add(ad->md.win_main, "wm,rotation,changed",
 			setting_font_rot_changed_cb, ad);
 
 	setting_view_font_main.is_create = 1;
@@ -1260,9 +1255,9 @@ static int setting_font_main_destroy(void *cb)
 		ad->main_popup = NULL;
 	}
 
-	if (ad->ly_main != NULL) {
-		evas_object_del(ad->ly_main);
-		ad->ly_main = NULL;
+	if (ad->md.ly_main != NULL) {
+		evas_object_del(ad->md.ly_main);
+		ad->md.ly_main = NULL;
 	}
 	if (ad->navi_it_font != NULL)
 		ad->navi_it_font = NULL;
@@ -1285,8 +1280,8 @@ static int setting_font_main_update(void *cb)
 
 	SettingFontUG *ad = (SettingFontUG *)cb;
 
-	if (ad->ly_main != NULL) {
-		evas_object_show(ad->ly_main);
+	if (ad->md.ly_main != NULL) {
+		evas_object_show(ad->md.ly_main);
 
 		int value = -1;
 		int err = -1;
@@ -1320,8 +1315,8 @@ static int setting_font_main_cleanup(void *cb)
 
 	SettingFontUG *ad = (SettingFontUG *)cb;
 
-	if (ad->ly_main != NULL)
-		evas_object_hide(ad->ly_main);
+	if (ad->md.ly_main != NULL)
+		evas_object_hide(ad->md.ly_main);
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -1354,7 +1349,7 @@ static Eina_Bool __setting_font_main_click_softkey_back_cb(void *data,
 		SETTING_TRACE(" SERVICE_ADD_EXTRA : %s %s", "FontType",
 				ad->font_name);
 
-		ug_send_result(ad->ug, svc);
+//ug_send_result(ad->ug, svc);
 		app_control_destroy(svc);
 	} else if (ad->viewmode == FONT_SIZE_VIEW_APPCONTROL) {
 		app_control_h svc;
@@ -1380,10 +1375,10 @@ static Eina_Bool __setting_font_main_click_softkey_back_cb(void *data,
 		SETTING_TRACE(" SERVICE_ADD_EXTRA : %s %s", "FontSize",
 				font_size);
 
-		ug_send_result(ad->ug, svc);
+	//ug_send_result(ad->ug, svc);
 		app_control_destroy(svc);
 	}
 	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+//ug_destroy_me(ad->ug);
 	return EINA_FALSE;
 }

@@ -29,6 +29,7 @@
 #include <setting-common-draw-widget.h>
 #include <setting-common-view.h>
 #include <system_settings.h>
+#include "setting-common-init.h"
 
 typedef struct _SettingFontUG SettingFontUG;
 
@@ -57,17 +58,10 @@ typedef enum {
  * and the functions access app context.
  */
 struct _SettingFontUG {
-	ui_gadget_h ug;
+
+	MainData md;
 
 	/* add more variables here (move your appdata to here) */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-
-	Evas_Object *ly_main;
-
-	Evas_Object *genlist;
-	Evas_Object *navibar;
 	Elm_Object_Item *navi_it_font;
 	Elm_Object_Item *navi_it_font_size;
 

@@ -116,26 +116,26 @@ static int setting_font_font_size_create(void *cb)
 			&(ad->itc_1text_1icon_2_font_size));
 	ad->itc_1text_1icon_2_font_size.func.text_get =
 			_item_text_font_size_keystr2_get;
-	retvm_if(ad->win_main_layout == NULL, SETTING_DRAW_ERR_FAIL_LOAD_EDJ,
+	retvm_if(ad->md.view_layout == NULL, SETTING_DRAW_ERR_FAIL_LOAD_EDJ,
 			"win_main_layout is NULL");
 
 	/* create a navigation bar */
 	if (ad->view_to_load == &setting_view_font_font_size) {
-		ad->ly_main = setting_create_layout_navi_bar_genlist(
-				ad->win_main_layout, ad->win_get,
+		ad->md.ly_main = setting_create_layout_navi_bar_genlist(
+				ad->md.view_layout, ad->md.win_main,
 				"IDS_ST_MBODY_FONT_SIZE",
 				_("IDS_ST_BUTTON_BACK"), NULL,
 				(setting_call_back_func)__setting_font_font_size_click_softkey_back_cb,
-				NULL, ad, &scroller, &ad->navibar);
-		ad->navi_it_font_size = elm_naviframe_top_item_get(ad->navibar);
+				NULL, ad, &scroller, &ad->md.navibar_main);
+		ad->navi_it_font_size = elm_naviframe_top_item_get(ad->md.navibar_main);
 	} else {
 		ad->navi_it_font_size = setting_push_layout_navi_bar_genlist(
-				ad->win_main_layout, ad->win_get,
+				ad->md.view_layout, ad->md.win_main,
 				"IDS_ST_MBODY_FONT_SIZE",
 				_("IDS_ST_BUTTON_BACK"),
 				NULL,
 				(setting_call_back_func)__setting_font_font_size_click_softkey_back_cb,
-				NULL, ad, &scroller, ad->navibar);
+				NULL, ad, &scroller, ad->md.navibar_main);
 	}
 
 	/* [UI] separator */
@@ -202,12 +202,12 @@ static int setting_font_font_size_destroy(void *cb)
 	SettingFontUG *ad = (SettingFontUG *)cb;
 
 	if (ad->view_to_load == &setting_view_font_font_size) {
-		if (ad->ly_main) {
-			evas_object_del(ad->ly_main);
-			ad->ly_main = NULL;
+		if (ad->md.ly_main) {
+			evas_object_del(ad->md.ly_main);
+			ad->md.ly_main = NULL;
 		}
 	} else {
-		elm_naviframe_item_pop(ad->navibar);
+		elm_naviframe_item_pop(ad->md.navibar_main);
 	}
 	if (ad->navi_it_font_size)
 		ad->navi_it_font_size = NULL;
@@ -275,10 +275,10 @@ static Eina_Bool __setting_font_font_size_click_softkey_back_cb(void *data,
 		SETTING_TRACE(" SERVICE_ADD_EXTRA : %s %s", "FontSize",
 				result_str_arr[value]);
 
-		ug_send_result(ad->ug, svc);
+//ug_send_result(ad->ug, svc);
 		app_control_destroy(svc);
 
-		ug_destroy_me(ad->ug);
+//	ug_destroy_me(ad->ug);
 	} else {
 		setting_view_change(&setting_view_font_font_size,
 				&setting_view_font_main, ad);
@@ -354,7 +354,7 @@ void setting_font_font_size_list_mouse_up_cb(void *data, Evas_Object *obj,
 
 	/* original popup */
 	ad->size_rdg = NULL;
-	ad->size_popup = setting_create_popup_with_progressbar(ad, ad->win_get,
+	ad->size_popup = setting_create_popup_with_progressbar(ad, ad->md.win_main,
 			PROGRESSBAR_STYLE,
 			NULL, KeyStr_Loading,
 			__setting_font_size_progress_popup_cb, 3/*0*/,
