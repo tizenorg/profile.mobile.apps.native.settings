@@ -131,6 +131,13 @@ Group: Application Framework/Settings
 #Requires: pkgconfig(setting-common-internal)
 %description devel
 
+%package connectivity
+Summary: A setting connectivity application
+Group: Application
+
+%description connectivity
+Configuration application for connectivity
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -342,3 +349,10 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %files ref
 %{_datadir}/mime/packages/mime.setting.xml
 %{_datadir}/packages/org.tizen.setting.xml.ref
+
+%files connectivity
+%manifest setting-connectivity/org.tizen.setting-connectivity.manifest
+%{_prefix}/apps/org.tizen.setting-connectivity/bin/setting-connectivity
+%{_datadir}/packages/org.tizen.setting-connectivity.xml
+%{_prefix}/apps/org.tizen.setting-connectivity/res/*
+
