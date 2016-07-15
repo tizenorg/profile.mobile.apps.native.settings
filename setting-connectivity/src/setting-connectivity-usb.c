@@ -19,8 +19,9 @@
  *
  */
 
-#include <setting-connectivity-usb.h>
 #include <app_manager.h>
+
+#include "setting-connectivity-usb.h"
 
 #define GROUP_MAX	30
 #define USB_BTN_NO	0
@@ -310,7 +311,7 @@ static int setting_connectivity_change_debug_mode_toggle(
 						"ETAPPL_USB_DEBUG_MODE_BOOL)");
 				return -1;
 			}
-			setting_create_popup(ad, ad->view_layout, NULL,
+			setting_create_popup(ad, ad->md.view_layout, NULL,
 					CONNECTTIVITY_SELECT_INFO_POPUP_STR,
 					NULL, 3, false, false, 0);
 		} else {
@@ -510,45 +511,48 @@ static int setting_connectivity_usb_create(void *cb)
 	Evas_Object *scroller = NULL;
 
 	int vconf_ret = -1;
-	int err = -1;
+	int ret = -1;
 
-	Evas_Object *view_layout = elm_layout_add(ad->win_main_layout);
-	elm_layout_file_set(view_layout, SETTING_THEME_EDJ_NAME,
+	ret = view_init(&ad->md, KeyStr_DeveloperOption);
+	if (ret != SETTING_RETURN_SUCCESS)
+		return ret;
+
+	elm_layout_file_set(ad->md.view_layout, SETTING_THEME_EDJ_NAME,
 			"selinfo_bottom");
-	evas_object_size_hint_weight_set(view_layout, EVAS_HINT_EXPAND, 0.0);
-	ad->view_layout = view_layout;
+	evas_object_size_hint_weight_set(ad->md.view_layout, EVAS_HINT_EXPAND,
+			0.0);
 
 	/* win_main of the popup */
 #ifdef HELP_UG_EXIST
 	ad->ly_usb =
-	setting_create_layout_navi_bar_genlist(ad->win_main_layout,
-			ad->win_get,
+	setting_create_layout_navi_bar_genlist(ad->md.ly_main,
+			ad->md.win_main,
 			KeyStr_DeveloperOption,
 			dgettext("sys_string", "IDS_ST_BUTTON_BACK"),
 			_("IDS_ST_HEADER_HELP"),
 			setting_connectivity_usb_click_softkey_cancel_cb,
 			setting_connectivity_usb_click_softkey_set_cb,
 			ad, &scroller,
-			&ad->navi_bar);
+			&ad->md.navibar_main);
 #else
-	ad->ly_usb = setting_create_layout_navi_bar(ad->win_main_layout,
-			ad->win_get,
+	ad->ly_usb = setting_create_layout_navi_bar(ad->md.ly_main,
+			ad->md.win_main,
 			KeyStr_DeveloperOption, _("IDS_ST_BUTTON_BACK"),
 			setting_connectivity_usb_click_softkey_cancel_cb, ad,
-			view_layout, &ad->navi_bar, NULL);
+			ad->md.view_layout, &ad->md.navibar_main, NULL);
 #endif
 
 	SETTING_TRACE("before init\n");
 
-	scroller = elm_genlist_add(ad->win_main_layout);
+	scroller = elm_genlist_add(ad->md.ly_main);
 	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
-			"Cannot set scroller object  as contento of layout");
+			"Cannot set scroller object  as content of layout");
 	elm_object_style_set(scroller, "dialogue");
 	elm_genlist_clear(scroller); /* first to clear list */
 	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb,
 			NULL);
 
-	elm_object_part_content_set(view_layout, "elm.swallow.contents",
+	elm_object_part_content_set(ad->md.view_layout, "elm.swallow.contents",
 			scroller);
 
 	/*button[SETTING_USB_DEBUG_MODE].item = NULL; */
@@ -568,8 +572,8 @@ static int setting_connectivity_usb_create(void *cb)
 	int vconf_val;
 	int toggle_dbg = 0;
 
-	err = vconf_get_bool(VCONFKEY_SETAPPL_USB_DEBUG_MODE_BOOL, &toggle_dbg);
-	if (err != 0) {
+	ret = vconf_get_bool(VCONFKEY_SETAPPL_USB_DEBUG_MODE_BOOL, &toggle_dbg);
+	if (ret != 0) {
 		SETTING_TRACE_ERROR("FAIL: vconf_get_bool(VCONFKEY_SETAPPL_USB"\
 				"_DEBUG_MODE_BOOL)");
 		/* set debug mode to true to find the problem*/
@@ -920,9 +924,8 @@ static void setting_connectivity_usb_click_softkey_cancel_cb(void *data,
 
 	SettingConnectivityUG *ad = (SettingConnectivityUG *)data;
 
-	/* Not to block back(->) button */
-	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+	if (ad->md.win_main)
+		elm_win_lower(ad->md.win_main);
 
 	SETTING_TRACE_END;
 }
@@ -994,7 +997,7 @@ static void debug_mode_resp_cb(void *data, Evas_Object *obj, void *event_info)
 					"SB_DEBUG_MODE_BOOL)");
 			return;
 		}
-		setting_create_popup(ad, ad->view_layout, NULL,
+		setting_create_popup(ad, ad->md.view_layout, NULL,
 		CONNECTTIVITY_SELECT_INFO_POPUP_STR, NULL, 3, false, false, 0);
 	} else if (resp_type == POPUP_RESPONSE_CANCEL) {
 		/* rollback */
@@ -1020,7 +1023,7 @@ void load_usb_connection_popup(void *data)
 	SettingConnectivityUG *ad = (SettingConnectivityUG *)data;
 
 	unload_popup(ad);
-	ad->pop = setting_create_popup(ad, ad->win_get, NULL,
+	ad->pop = setting_create_popup(ad, ad->md.win_main, NULL,
 			_(DEBUG_MODE_POPUP_TEXT), debug_mode_resp_cb, 0, false,
 			false, 2, _("IDS_ST_BUTTON_CANCEL_ABB"),
 			_("IDS_ST_BUTTON_ENABLE"));
