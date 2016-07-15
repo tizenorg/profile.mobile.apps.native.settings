@@ -19,8 +19,9 @@
  *
  */
 
-#include <setting-connectivity-usb.h>
 #include <app_manager.h>
+
+#include "setting-connectivity-usb.h"
 
 #define GROUP_MAX	30
 #define USB_BTN_NO	0
@@ -51,15 +52,22 @@ static char *bgprocess_list[] = {
 	"IDS_ST_HEADER_3_PROCESSES_AT_MOST_ABB",
 	"IDS_ST_HEADER_4_PROCESSES_AT_MOST_ABB", };
 
-static int setting_connectivity_usb_create(void *cb);
-static int setting_connectivity_usb_destroy(void *cb);
-static int setting_connectivity_usb_update(void *cb);
-static int setting_connectivity_usb_cleanup(void *cb);
+static int _view_create(void *cb);
+static int _view_destroy(void *cb);
+static int _view_update(void *cb);
+static int _view_cleanup(void *cb);
 
-static void debug_mode_change_vconf_cb(keynode_t *key, void *data);
-static void in_mode_change_vconf_cb(keynode_t *key, void *data);
-static void unload_popup(void *data);
-void load_usb_connection_popup(void *data);
+static void _debug_mode_change_vconf_cb(keynode_t *key, void *data);
+static void _in_mode_change_vconf_cb(keynode_t *key, void *data);
+static void _unload_popup(void *data);
+static void _load_usb_connection_popup(void *data);
+
+static void _click_softkey_cancel_cb(void *data, Evas_Object *obj,
+		void *event_info);
+#ifdef HELP_UG_EXIST
+static void _click_softkey_set_cb(void *data, Evas_Object *obj,
+		void *event_info);
+#endif
 
 /* This is pointer to indicate progressbars*/
 /*static button_status button[NUM_PROGRESSBAR]; */
@@ -67,12 +75,12 @@ void load_usb_connection_popup(void *data);
 /* These variables are for the popup */
 
 setting_view setting_view_connectivity_usb = {
-	.create = setting_connectivity_usb_create,
-	.destroy = setting_connectivity_usb_destroy,
-	.update = setting_connectivity_usb_update,
-	.cleanup = setting_connectivity_usb_cleanup, };
+	.create = _view_create,
+	.destroy = _view_destroy,
+	.update = _view_update,
+	.cleanup = _view_cleanup, };
 
-static void __setting_processes_sub_list_sel_cb(void *data, Evas_Object *obj,
+static void _processes_sub_list_sel_cb(void *data, Evas_Object *obj,
 		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
@@ -102,8 +110,8 @@ static void __setting_processes_sub_list_sel_cb(void *data, Evas_Object *obj,
 }
 
 #if 1
-static void __setting_devoptions_main_sub_list_sel_cb(void *data,
-		Evas_Object *obj, void *event_info)
+static void _devoptions_main_sub_list_sel_cb(void *data, Evas_Object *obj,
+		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(event_info == NULL,
@@ -167,12 +175,12 @@ static char *_get_graphic_engine()
 	}
 }
 
-static void __setting_devoptions_main_exp_cb(void *data, Evas_Object *obj,
+static void _devoptions_main_exp_cb(void *data, Evas_Object *obj,
 		void *event_info)
 {
 	ret_if(NULL == data || NULL == event_info);
 	SETTING_TRACE_BEGIN;
-	SettingConnectivityUG *ad = (SettingConnectivityUG *)data;
+	SettingConnectivity *ad = (SettingConnectivity *)data;
 
 	Elm_Object_Item *parentItem = event_info; /*parent item */
 	Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(
@@ -190,37 +198,37 @@ static void __setting_devoptions_main_exp_cb(void *data, Evas_Object *obj,
 
 			setting_create_Gendial_exp_sub_field(scroller,
 					&itc_1text_1icon,
-					__setting_processes_sub_list_sel_cb, ad,
+					_processes_sub_list_sel_cb, ad,
 					parentItem, SWALLOW_Type_1RADIO, rgd, 0,
 					_(bgprocess_list[0]),
 					NULL);
 			setting_create_Gendial_exp_sub_field(scroller,
 					&itc_1text_1icon,
-					__setting_processes_sub_list_sel_cb, ad,
+					_processes_sub_list_sel_cb, ad,
 					parentItem, SWALLOW_Type_1RADIO, rgd, 1,
 					_(bgprocess_list[1]),
 					NULL);
 			setting_create_Gendial_exp_sub_field(scroller,
 					&itc_1text_1icon,
-					__setting_processes_sub_list_sel_cb, ad,
+					_processes_sub_list_sel_cb, ad,
 					parentItem, SWALLOW_Type_1RADIO, rgd, 2,
 					_(bgprocess_list[2]),
 					NULL);
 			setting_create_Gendial_exp_sub_field(scroller,
 					&itc_1text_1icon,
-					__setting_processes_sub_list_sel_cb, ad,
+					_processes_sub_list_sel_cb, ad,
 					parentItem, SWALLOW_Type_1RADIO, rgd, 3,
 					_(bgprocess_list[3]),
 					NULL);
 			setting_create_Gendial_exp_sub_field(scroller,
 					&itc_1text_1icon,
-					__setting_processes_sub_list_sel_cb, ad,
+					_processes_sub_list_sel_cb, ad,
 					parentItem, SWALLOW_Type_1RADIO, rgd, 4,
 					_(bgprocess_list[4]),
 					NULL);
 			setting_create_Gendial_exp_sub_field(scroller,
 					&itc_1text_1icon,
-					__setting_processes_sub_list_sel_cb, ad,
+					_processes_sub_list_sel_cb, ad,
 					parentItem, SWALLOW_Type_1RADIO, rgd, 5,
 					_(bgprocess_list[5]),
 					NULL);
@@ -235,7 +243,7 @@ static void __setting_devoptions_main_exp_cb(void *data, Evas_Object *obj,
 
 			setting_create_Gendial_exp_sub_field(scroller,
 					&itc_1text_1icon,
-					__setting_devoptions_main_sub_list_sel_cb,
+					_devoptions_main_sub_list_sel_cb,
 					ad, parentItem, SWALLOW_Type_1RADIO,
 					rgd,
 					/*NONE*/0, "NONE",
@@ -243,14 +251,14 @@ static void __setting_devoptions_main_exp_cb(void *data, Evas_Object *obj,
 
 			setting_create_Gendial_exp_sub_field(scroller,
 					&itc_1text_1icon,
-					__setting_devoptions_main_sub_list_sel_cb,
+					_devoptions_main_sub_list_sel_cb,
 					ad, parentItem, SWALLOW_Type_1RADIO,
 					rgd,
 					/*SOFTWARE*/1, "OFF",
 					NULL);
 			setting_create_Gendial_exp_sub_field(scroller,
 					&itc_1text_1icon,
-					__setting_devoptions_main_sub_list_sel_cb,
+					_devoptions_main_sub_list_sel_cb,
 					ad, parentItem, SWALLOW_Type_1RADIO,
 					rgd,
 					/*HARDWARE*/2, "ON",
@@ -282,8 +290,7 @@ static void __setting_devoptions_main_exp_cb(void *data, Evas_Object *obj,
 	}
 }
 
-static int setting_connectivity_change_debug_mode_toggle(
-		SettingConnectivityUG *ad)
+static int _change_debug_mode_toggle(SettingConnectivity *ad)
 {
 	SETTING_TRACE_BEGIN;
 	if (!ad)
@@ -310,11 +317,11 @@ static int setting_connectivity_change_debug_mode_toggle(
 						"ETAPPL_USB_DEBUG_MODE_BOOL)");
 				return -1;
 			}
-			setting_create_popup(ad, ad->view_layout, NULL,
+			setting_create_popup(ad, ad->md.view_layout, NULL,
 					CONNECTTIVITY_SELECT_INFO_POPUP_STR,
 					NULL, 3, false, false, 0);
 		} else {
-			load_usb_connection_popup(ad);
+			_load_usb_connection_popup(ad);
 		}
 	} else {
 		ret = vconf_set_bool(VCONFKEY_SETAPPL_USB_DEBUG_MODE_BOOL, 0);
@@ -334,16 +341,16 @@ static int setting_connectivity_change_debug_mode_toggle(
 	return 0;
 }
 
-static void setting_connectivity_main_chk_usb_debug_cb(void *data,
-		Evas_Object *obj, void *event_info)
+static void _main_chk_usb_debug_cb(void *data, Evas_Object *obj,
+		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item =
 			(Setting_GenGroupItem_Data *)data;
-	SettingConnectivityUG *ad = list_item->userdata;
+	SettingConnectivity *ad = list_item->userdata;
 
-	if (0 > setting_connectivity_change_debug_mode_toggle(ad)) {
+	if (0 > _change_debug_mode_toggle(ad)) {
 		SETTING_TRACE("FAIL: setting_connectivity_change_debug_mode_to"\
 				"ggle()");
 	}
@@ -351,18 +358,18 @@ static void setting_connectivity_main_chk_usb_debug_cb(void *data,
 	SETTING_TRACE_END;
 }
 
-static void setting_connectivity_usb_mouse_up_Gendial_list_cb(void *data,
-		Evas_Object *obj, void *event_info)
+static void _mouse_up_Gendial_list_cb(void *data, Evas_Object *obj,
+		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Invalid argument: data is NULL");
 	retm_if(event_info == NULL, "Invalid argument: event_info is NULL");
 	Elm_Object_Item *item = (Elm_Object_Item *)event_info;
-	SettingConnectivityUG *ad = (SettingConnectivityUG *)data;
+	SettingConnectivity *ad = (SettingConnectivity *)data;
 
 	elm_genlist_item_selected_set(item, 0);
 
-	if (0 > setting_connectivity_change_debug_mode_toggle(ad)) {
+	if (0 > _change_debug_mode_toggle(ad)) {
 		SETTING_TRACE("FAIL: setting_connectivity_change_debug_mode_to"\
 				"ggle()");
 	}
@@ -370,8 +377,7 @@ static void setting_connectivity_usb_mouse_up_Gendial_list_cb(void *data,
 	SETTING_TRACE_END;
 }
 
-static void setting_connectivity_main_chk_btn_cb(void *data, Evas_Object *obj,
-		void *event_info)
+static void _main_chk_btn_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/*error check */
@@ -422,7 +428,7 @@ static void setting_connectivity_main_chk_btn_cb(void *data, Evas_Object *obj,
 	/*app_launcher("org.tizen.dispcpuinfo"); */
 }
 
-static void setting_connectivity_usb_mouse_up_Gendial_CPU_usage_cb(void *data,
+static void _mouse_up_Gendial_CPU_usage_cb(void *data,
 		Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
@@ -436,7 +442,7 @@ static void setting_connectivity_usb_mouse_up_Gendial_CPU_usage_cb(void *data,
 					item);
 
 	setting_retm_if(data == NULL, "Data parameter is NULL");
-	/*SettingConnectivityUG *ad = (SettingConnectivityUG *) data; */
+	/*SettingConnectivity *ad = (SettingConnectivity *) data; */
 
 	if (list_item) {
 		setting_update_gl_item_chk_status(list_item,
@@ -453,7 +459,7 @@ static void setting_connectivity_usb_mouse_up_Gendial_CPU_usage_cb(void *data,
 	SETTING_TRACE_END;
 }
 
-static void __setting_connectivity_usb_dia_usage_mouse_up_cb(void *data,
+static void _dia_usage_mouse_up_cb(void *data,
 		Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
@@ -475,7 +481,7 @@ static void __setting_connectivity_usb_dia_usage_mouse_up_cb(void *data,
 	app_launcher("org.tizen.crash-viewer", NULL, NULL);
 }
 
-char *get_bg_processes()
+static char *_get_bg_processes()
 {
 	int value;
 	int err;
@@ -499,62 +505,65 @@ char *get_bg_processes()
  *
  *@return
  */
-static int setting_connectivity_usb_create(void *cb)
+static int _view_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE("Start USB utilities\n");
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingConnectivityUG *ad = (SettingConnectivityUG *)cb;
+	SettingConnectivity *ad = (SettingConnectivity *)cb;
 	Evas_Object *scroller = NULL;
 
 	int vconf_ret = -1;
-	int err = -1;
+	int ret = -1;
 
-	Evas_Object *view_layout = elm_layout_add(ad->win_main_layout);
-	elm_layout_file_set(view_layout, SETTING_THEME_EDJ_NAME,
+	ret = view_init(&ad->md, KeyStr_DeveloperOption);
+	if (ret != SETTING_RETURN_SUCCESS)
+		return ret;
+
+	elm_layout_file_set(ad->md.view_layout, SETTING_THEME_EDJ_NAME,
 			"selinfo_bottom");
-	evas_object_size_hint_weight_set(view_layout, EVAS_HINT_EXPAND, 0.0);
-	ad->view_layout = view_layout;
+	evas_object_size_hint_weight_set(ad->md.view_layout, EVAS_HINT_EXPAND,
+			0.0);
 
 	/* win_main of the popup */
 #ifdef HELP_UG_EXIST
 	ad->ly_usb =
-	setting_create_layout_navi_bar_genlist(ad->win_main_layout,
-			ad->win_get,
+	setting_create_layout_navi_bar_genlist(ad->md.ly_main,
+			ad->md.win_main,
 			KeyStr_DeveloperOption,
 			dgettext("sys_string", "IDS_ST_BUTTON_BACK"),
 			_("IDS_ST_HEADER_HELP"),
 			setting_connectivity_usb_click_softkey_cancel_cb,
 			setting_connectivity_usb_click_softkey_set_cb,
 			ad, &scroller,
-			&ad->navi_bar);
+			&ad->md.navibar_main);
 #else
-	ad->ly_usb = setting_create_layout_navi_bar(ad->win_main_layout,
-			ad->win_get,
+	ad->ly_usb = setting_create_layout_navi_bar(ad->md.ly_main,
+			ad->md.win_main,
 			KeyStr_DeveloperOption, _("IDS_ST_BUTTON_BACK"),
-			setting_connectivity_usb_click_softkey_cancel_cb, ad,
-			view_layout, &ad->navi_bar, NULL);
+			_click_softkey_cancel_cb, ad,
+			ad->md.view_layout, &ad->md.navibar_main, NULL);
 #endif
 
 	SETTING_TRACE("before init\n");
 
-	scroller = elm_genlist_add(ad->win_main_layout);
+	scroller = elm_genlist_add(ad->md.ly_main);
 	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
-			"Cannot set scroller object  as contento of layout");
+			"Cannot set scroller object  as content of layout");
 	elm_object_style_set(scroller, "dialogue");
 	elm_genlist_clear(scroller); /* first to clear list */
 	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb,
 			NULL);
 
-	elm_object_part_content_set(view_layout, "elm.swallow.contents",
+	elm_object_part_content_set(ad->md.view_layout, "elm.swallow.contents",
 			scroller);
 
 	/*button[SETTING_USB_DEBUG_MODE].item = NULL; */
 	/*button[SETTING_USB_DEBUG_MODE].pstate = STATE_NONE; */
 	setting_enable_expandable_genlist(scroller, ad,
-			__setting_devoptions_main_exp_cb, NULL);
+			_devoptions_main_exp_cb, NULL);
 
 	Elm_Object_Item *item = NULL;;
 #if 1
@@ -568,8 +577,8 @@ static int setting_connectivity_usb_create(void *cb)
 	int vconf_val;
 	int toggle_dbg = 0;
 
-	err = vconf_get_bool(VCONFKEY_SETAPPL_USB_DEBUG_MODE_BOOL, &toggle_dbg);
-	if (err != 0) {
+	ret = vconf_get_bool(VCONFKEY_SETAPPL_USB_DEBUG_MODE_BOOL, &toggle_dbg);
+	if (ret != 0) {
 		SETTING_TRACE_ERROR("FAIL: vconf_get_bool(VCONFKEY_SETAPPL_USB"\
 				"_DEBUG_MODE_BOOL)");
 		/* set debug mode to true to find the problem*/
@@ -579,10 +588,10 @@ static int setting_connectivity_usb_create(void *cb)
 
 	ad->debug_mode = setting_create_Gendial_field_def(scroller,
 			&itc_1text_1icon,
-			setting_connectivity_usb_mouse_up_Gendial_list_cb, ad,
+			_mouse_up_Gendial_list_cb, ad,
 			SWALLOW_Type_1ICON_1RADIO, NULL,
 			NULL, toggle_dbg, "IDS_ST_BODY_USB_DEBUGGING",
-			NULL, setting_connectivity_main_chk_usb_debug_cb);
+			NULL, _main_chk_usb_debug_cb);
 
 	if (ad->debug_mode) {
 		ad->debug_mode->userdata = ad;
@@ -612,10 +621,10 @@ static int setting_connectivity_usb_create(void *cb)
 
 		ad->cpu_usage = setting_create_Gendial_field_def(scroller,
 				&itc_1text_1icon,
-				setting_connectivity_usb_mouse_up_Gendial_CPU_usage_cb,
+				_mouse_up_Gendial_CPU_usage_cb,
 				ad, SWALLOW_Type_1ICON_1RADIO, NULL,
 				NULL, vconf_val, "IDS_ST_MBODY_SHOW_CPU_USAGE",
-				NULL, setting_connectivity_main_chk_btn_cb);
+				NULL, _main_chk_btn_cb);
 		if (ad->cpu_usage) {
 			ad->cpu_usage->userdata = ad;
 			__BACK_POINTER_SET(ad->cpu_usage);
@@ -658,7 +667,7 @@ static int setting_connectivity_usb_create(void *cb)
 		/* NEWCODE: */
 
 		/* [UI] expandble list - Automatic answering */
-		char *bgproc = get_bg_processes();
+		char *bgproc = _get_bg_processes();
 		ad->bg_processes = setting_create_Gendial_exp_parent_field(
 				scroller, &(ad->itc_2text_3_parent),
 				NULL, NULL, SWALLOW_Type_INVALID,
@@ -684,7 +693,7 @@ static int setting_connectivity_usb_create(void *cb)
 
 		/* [UI] Diagnostics and Usage */
 		setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
-				__setting_connectivity_usb_dia_usage_mouse_up_cb,
+				_dia_usage_mouse_up_cb,
 				ad, SWALLOW_Type_INVALID, NULL, NULL, 0,
 				DIAGNOSTICS_USAGE_STR,
 				NULL, NULL);
@@ -702,7 +711,7 @@ static int setting_connectivity_usb_create(void *cb)
 	/* Registering callback function for VCONFKEY_SETAPPL_USB_MODE_INT */
 	vconf_ret = vconf_notify_key_changed(
 			VCONFKEY_SETAPPL_USB_DEBUG_MODE_BOOL,
-			debug_mode_change_vconf_cb, ad);
+			_debug_mode_change_vconf_cb, ad);
 	if (vconf_ret != 0) {
 		SETTING_TRACE("FAIL: vconf_notify_key_changed(VCONFKEY_SETAPPL"\
 				"_USB_DEBUG_MODE_BOOL)");
@@ -713,7 +722,7 @@ static int setting_connectivity_usb_create(void *cb)
 	 * VCONFKEY_SETAPPL_USB_IN_MODE_CHANGE */
 	vconf_ret = vconf_notify_key_changed(
 			VCONFKEY_SETAPPL_USB_IN_MODE_CHANGE,
-			in_mode_change_vconf_cb, ad);
+			_in_mode_change_vconf_cb, ad);
 	if (vconf_ret != 0) {
 		SETTING_TRACE("FAIL: vconf_notify_key_changed(VCONFKEY_SETAPPL"\
 				"_USB_IN_MODE_CHANGE)\n");
@@ -743,11 +752,11 @@ static int setting_connectivity_usb_create(void *cb)
  *
  *@param data
  */
-static void in_mode_change_vconf_cb(keynode_t *key, void *data)
+static void _in_mode_change_vconf_cb(keynode_t *key, void *data)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(NULL == data, "ERROR:The parameter(data) is NULL\n");
-	SettingConnectivityUG *ad = (SettingConnectivityUG *)data;
+	SettingConnectivity *ad = (SettingConnectivity *)data;
 	SETTING_TRACE("ad->blockUI: %d\n", ad->blockUI);
 
 	int in_mode_change;
@@ -777,11 +786,11 @@ static void in_mode_change_vconf_cb(keynode_t *key, void *data)
  *@param key
  *@param data
  */
-static void debug_mode_change_vconf_cb(keynode_t *key, void *data)
+static void _debug_mode_change_vconf_cb(keynode_t *key, void *data)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(NULL == data, "ERROR:The parameter(data) is NULL\n");
-	SettingConnectivityUG *ad = (SettingConnectivityUG *)data;
+	SettingConnectivity *ad = (SettingConnectivity *)data;
 
 	int ret = -1;
 	int debugMode = 0;
@@ -812,13 +821,13 @@ static void debug_mode_change_vconf_cb(keynode_t *key, void *data)
  *
  *@return
  */
-static int setting_connectivity_usb_destroy(void *cb)
+static int _view_destroy(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingConnectivityUG *ad = (SettingConnectivityUG *)cb;
+	SettingConnectivity *ad = (SettingConnectivity *)cb;
 	if (!setting_view_connectivity_usb.is_create)
 		return SETTING_RETURN_SUCCESS;
 
@@ -827,7 +836,7 @@ static int setting_connectivity_usb_destroy(void *cb)
 	int num_err = 0;
 
 	/* Removing the popup if the popup is loaded */
-	unload_popup(ad);
+	_unload_popup(ad);
 
 	/*if (ad->selectioninfo_popup) {
 	 evas_object_del(ad->selectioninfo_popup);
@@ -837,7 +846,7 @@ static int setting_connectivity_usb_destroy(void *cb)
 	/* Closing vconf trace */
 	vconf_ret = vconf_ignore_key_changed(
 			VCONFKEY_SETAPPL_USB_DEBUG_MODE_BOOL,
-			debug_mode_change_vconf_cb);
+			_debug_mode_change_vconf_cb);
 
 	if (vconf_ret != 0) {
 		SETTING_TRACE("FAIL: vconf_ignore_key_changed(VCONFKEY_SETAPPL"\
@@ -847,7 +856,7 @@ static int setting_connectivity_usb_destroy(void *cb)
 
 	vconf_ret = vconf_ignore_key_changed(
 			VCONFKEY_SETAPPL_USB_IN_MODE_CHANGE,
-			in_mode_change_vconf_cb);
+			_in_mode_change_vconf_cb);
 
 	if (vconf_ret != 0) {
 		SETTING_TRACE("FAIL: vconf_ignore_key_changed(VCONFKEY_SETAPPL"\
@@ -876,12 +885,12 @@ static int setting_connectivity_usb_destroy(void *cb)
  *
  *@return
  */
-static int setting_connectivity_usb_update(void *cb)
+static int _view_update(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	SettingConnectivityUG *ad = (SettingConnectivityUG *)cb;
+	SettingConnectivity *ad = (SettingConnectivity *)cb;
 
 	if (ad->ly_usb != NULL)
 		evas_object_show(ad->ly_usb);
@@ -897,7 +906,7 @@ static int setting_connectivity_usb_update(void *cb)
  *
  *@return
  */
-static int setting_connectivity_usb_cleanup(void *cb)
+static int _view_cleanup(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	SETTING_TRACE_END;
@@ -911,20 +920,11 @@ static int setting_connectivity_usb_cleanup(void *cb)
  *@param obj
  *@param event_info
  */
-static void setting_connectivity_usb_click_softkey_cancel_cb(void *data,
-		Evas_Object *obj, void *event_info)
+static void _click_softkey_cancel_cb(void *data, Evas_Object *obj,
+		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	/* error check */
-	setting_retm_if(data == NULL, "Data parameter is NULL");
-
-	SettingConnectivityUG *ad = (SettingConnectivityUG *)data;
-
-	/* Not to block back(->) button */
-	/* Send destroy request */
-	ug_destroy_me(ad->ug);
-
-	SETTING_TRACE_END;
+	ui_app_exit();
 }
 
 /**
@@ -935,15 +935,14 @@ static void setting_connectivity_usb_click_softkey_cancel_cb(void *data,
  *@param event_info
  */
 #ifdef HELP_UG_EXIST
-static void
-setting_connectivity_usb_click_softkey_set_cb(void *data, Evas_Object *obj,
+static void _click_softkey_set_cb(void *data, Evas_Object *obj,
 		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	setting_retm_if(data == NULL, "Data parameter is NULL");
 
-	SettingConnectivityUG *ad = (SettingConnectivityUG *) data;
+	SettingConnectivity *ad = (SettingConnectivity *) data;
 
 	/* Send destroy request */
 	setting_view_change(&setting_view_connectivity_usb,
@@ -959,10 +958,10 @@ setting_connectivity_usb_click_softkey_set_cb(void *data, Evas_Object *obj,
 /**
  * unload popup
  */
-static void unload_popup(void *data)
+static void _unload_popup(void *data)
 {
 	SETTING_TRACE_BEGIN;
-	SettingConnectivityUG *ad = (SettingConnectivityUG *)data;
+	SettingConnectivity *ad = (SettingConnectivity *)data;
 
 	/*ad->pop */
 	if (ad->pop) {
@@ -979,10 +978,10 @@ static void unload_popup(void *data)
  * Callback function to respond pushing cancel button of the usb connection
  * popup
  */
-static void debug_mode_resp_cb(void *data, Evas_Object *obj, void *event_info)
+static void _debug_mode_resp_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	SettingConnectivityUG *ad = (SettingConnectivityUG *)data;
+	SettingConnectivity *ad = (SettingConnectivity *)data;
 
 	int resp_type = btn_type(obj);
 	if (resp_type == POPUP_RESPONSE_OK) {
@@ -994,7 +993,7 @@ static void debug_mode_resp_cb(void *data, Evas_Object *obj, void *event_info)
 					"SB_DEBUG_MODE_BOOL)");
 			return;
 		}
-		setting_create_popup(ad, ad->view_layout, NULL,
+		setting_create_popup(ad, ad->md.view_layout, NULL,
 		CONNECTTIVITY_SELECT_INFO_POPUP_STR, NULL, 3, false, false, 0);
 	} else if (resp_type == POPUP_RESPONSE_CANCEL) {
 		/* rollback */
@@ -1006,7 +1005,7 @@ static void debug_mode_resp_cb(void *data, Evas_Object *obj, void *event_info)
 		}
 	}
 
-	unload_popup(ad);
+	_unload_popup(ad);
 	SETTING_TRACE_END;
 }
 
@@ -1014,14 +1013,14 @@ static void debug_mode_resp_cb(void *data, Evas_Object *obj, void *event_info)
  * When a button on USB utilities is pushed,
  * this function makes a popup if USB cable is not connected
  */
-void load_usb_connection_popup(void *data)
+void _load_usb_connection_popup(void *data)
 {
 	SETTING_TRACE_BEGIN;
-	SettingConnectivityUG *ad = (SettingConnectivityUG *)data;
+	SettingConnectivity *ad = (SettingConnectivity *)data;
 
-	unload_popup(ad);
-	ad->pop = setting_create_popup(ad, ad->win_get, NULL,
-			_(DEBUG_MODE_POPUP_TEXT), debug_mode_resp_cb, 0, false,
+	_unload_popup(ad);
+	ad->pop = setting_create_popup(ad, ad->md.win_main, NULL,
+			_(DEBUG_MODE_POPUP_TEXT), _debug_mode_resp_cb, 0, false,
 			false, 2, _("IDS_ST_BUTTON_CANCEL_ABB"),
 			_("IDS_ST_BUTTON_ENABLE"));
 
