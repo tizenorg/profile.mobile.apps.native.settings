@@ -18,7 +18,9 @@
  * limitations under the License.
  *
  */
-#include <setting-connectivity-usb-help.h>
+
+#include "setting-connectivity-usb-help.h"
+
 #define HELP_LEN 2048
 
 static int setting_connectivity_usb_help_create(void *cb);
@@ -72,10 +74,10 @@ static int setting_connectivity_usb_help_create(void *cb)
 	FREE(debugmode_help_mk);
 
 	Evas_Object *genlist;
-	setting_push_layout_navi_bar_genlist(ad->win_main_layout, ad->win_get,
+	setting_push_layout_navi_bar_genlist(ad->md.ly_main, ad->md.win_main,
 			"IDS_ST_HEADER_HELP", _("IDS_ST_BUTTON_BACK"),
 			NULL, setting_connectivity_usb_help_click_back_cb,
-			NULL, ad, &genlist, ad->navi_bar);
+			NULL, ad, &genlist, ad->md.navibar_main);
 
 	char *strsamsung_kies_help = samsung_kies_help;
 	char *strmass_storage_help = mass_storage_help;
@@ -97,7 +99,7 @@ static int setting_connectivity_usb_help_destroy(void *cb)
 	SettingConnectivityUG *ad = (SettingConnectivityUG *)cb;
 
 	if (setting_view_connectivity_usb_help.is_create) {
-		elm_naviframe_item_pop(ad->navi_bar);
+		elm_naviframe_item_pop(ad->md.navibar_main);
 		setting_view_connectivity_usb_help.is_create = 0;
 	}
 
