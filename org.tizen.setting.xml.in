@@ -208,11 +208,6 @@
 				<operation name="http://tizen.org/appcontrol/operation/setting/airplane_mode"/>
 			</application-service>
 	</ui-application>
-	<ui-application appid="setting-locktype-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-locktype-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
-                        <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
-                        <label>Locktype</label>
-                        <label xml:lang="en-us">Locktype</label>
-       </ui-application>
 	<ui-application appid="setting-password-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-password-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
                         <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
                         <label>Password</label>
