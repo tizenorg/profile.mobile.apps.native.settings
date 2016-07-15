@@ -119,10 +119,16 @@ EXPORT_PUBLIC Evas_Object *setting_create_5step_slider(
 		setting_call_back_func slider_stop_change_cb,
 		void *cb_data)
 {
-
+	char path_str[PATH_MAX] = {'\0',};
 	Evas_Object *layout = elm_layout_add(parent);
-	int r = elm_layout_file_set(layout, SETTING_5STEP_SLIDER_EDJ_NAME,
+	char *app_res_path = app_get_resource_path();
+
+	snprintf(path_str, PATH_MAX, "%sedje/font-slider.edj", app_res_path);
+	free(app_res_path);
+
+	int r = elm_layout_file_set(layout, path_str,
 			"elm/slider/horizontal/music/soundalive");
+
 	if (!r) {
 		SETTING_TRACE_ERROR("elm_layout_add failed : %s",
 				"elm/slider/horizontal/music/soundalive");

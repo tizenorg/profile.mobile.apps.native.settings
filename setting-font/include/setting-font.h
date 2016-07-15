@@ -29,8 +29,9 @@
 #include <setting-common-draw-widget.h>
 #include <setting-common-view.h>
 #include <system_settings.h>
+#include "setting-common-init.h"
 
-typedef struct _SettingFontUG SettingFontUG;
+typedef struct _SettingFontData SettingFontData;
 
 typedef enum {
 	FONT_SIZE_AND_FONT_SEL_UG,
@@ -50,25 +51,18 @@ typedef enum {
 	FONT_EXPAND_STATE_FONT_SIZE,
 } FontExpandState;
 
+#define SETTING_FONT_EDJEDIR _TZ_SYS_RO_APP"/org.tizen.setting-font/res/edje"
 
 /**
  * Setting Font UG context
- * all UG function has void* as an agument. this is casted back to SettingFontUG
+ * all UG function has void* as an agument. this is casted back to SettingFontData
  * and the functions access app context.
  */
-struct _SettingFontUG {
-	ui_gadget_h ug;
+struct _SettingFontData {
+
+	MainData md;
 
 	/* add more variables here (move your appdata to here) */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-
-	Evas_Object *ly_main;
-
-	Evas_Object *genlist;
-	Evas_Object *navibar;
-	Elm_Object_Item *navi_it_font;
 	Elm_Object_Item *navi_it_font_size;
 
 	Evas_Object *btn_done;
