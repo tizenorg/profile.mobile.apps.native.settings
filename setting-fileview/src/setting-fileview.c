@@ -27,8 +27,11 @@
 
 #include <setting-fileview.h>
 #ifndef UG_MODULE_API
-#define UG_MODULE_API __attribute__ ((visibility("default")))
+#define UG_MODULE_API __attribute__((visibility("default")))
 #endif
+
+#define SETTING_FILEVIEW_PACKAGE_NAME "org.tizen.setting-fileview"
+#define FILEVIEW_LOCALEDIR _TZ_SYS_RO_APP"/org.tizen.setting-fileview/res/locale"
 
 bool __parse_ug_argument(app_control_h service, void *priv)
 {
@@ -65,56 +68,53 @@ static void setting_fileview_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
 }
 
 /**
- * on_create function of the UG
+ * on_create function
  *
- * @param ug
- * @param mode
  * @param data
- * @param priv
  *
  * @return
  */
-static void *setting_fileview_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
-		app_control_h service, void *priv)
+bool app_create(void *priv)
 {
 	SETTING_TRACE_BEGIN;
-	setting_retvm_if((NULL == priv), NULL, "NULL == priv");
-	SettingFileviewUG *fileviewUG = priv;
-	fileviewUG->ug = ug;
+	app_control_h service;
+	SettingFileviewUG *ad = priv;
+	retv_if(!ad, false);
 
-	fileviewUG->win_main_layout = (Evas_Object *)ug_get_parent_layout(ug);
-	fileviewUG->win_get = (Evas_Object *)ug_get_window();
-	evas_object_show(fileviewUG->win_main_layout);
-	fileviewUG->evas = evas_object_evas_get(fileviewUG->win_main_layout);
+	if (app_init(&ad->md, SETTING_FILEVIEW_PACKAGE_NAME)
+			!= SETTING_RETURN_SUCCESS) {
+		SETTING_TRACE_ERROR("Cannot initialize application");
+		return false;
+	}
 
-	setting_retvm_if(fileviewUG->win_main_layout == NULL, NULL,
-			"cannot get main window ");
+	setting_set_i18n(SETTING_PACKAGE, FILEVIEW_LOCALEDIR);
 
-	/*	creating a view. */
+	retv_if(app_control_create(&service) != APP_CONTROL_ERROR_NONE, false);
+	/* creating a view. */
 	if (!__parse_ug_argument(service, priv)) {
 		SETTING_TRACE_ERROR("Invalid arguement");
+		app_control_destroy(service);
 		return NULL;
 	}
-	setting_view_create(&setting_view_fileview_main, (void *)fileviewUG);
-	evas_object_event_callback_add(fileviewUG->win_main_layout,
+	setting_view_create(&setting_view_fileview_main, (void *)ad);
+	evas_object_event_callback_add(ad->md.view_layout,
 			EVAS_CALLBACK_RESIZE, setting_fileview_ug_cb_resize,
-			fileviewUG);
-	return fileviewUG->ly_main;
+			ad);
+	app_control_destroy(service);
+	return true;
 }
 
-static void setting_fileview_ug_on_start(ui_gadget_h ug, app_control_h service,
-		void *priv)
-{
-}
-
-static void setting_fileview_ug_on_pause(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void app_pause(void *data)
 {
 	SETTING_TRACE_BEGIN;
 }
 
-static void setting_fileview_ug_on_resume(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void app_resume(void *data)
+{
+	SETTING_TRACE_BEGIN;
+}
+
+static void app_controll(app_control_h service, void *data)
 {
 	SETTING_TRACE_BEGIN;
 }
@@ -126,122 +126,67 @@ static void setting_fileview_ug_on_resume(ui_gadget_h ug, app_control_h service,
  * @param data
  * @param priv
  */
-static void setting_fileview_ug_on_destroy(ui_gadget_h ug,
-		app_control_h service, void *priv)
+static void app_terminate(void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
-	SettingFileviewUG *fileviewUG = priv;
+	SettingFileviewUG *ad = priv;
 
 	/* fix flash issue for gallery */
-	evas_object_event_callback_del(fileviewUG->win_main_layout,
+	evas_object_event_callback_del(ad->md.view_layout,
 			EVAS_CALLBACK_RESIZE, setting_fileview_ug_cb_resize);
-	fileviewUG->ug = ug;
 	/*	delete the allocated objects. */
-	setting_view_destroy(&setting_view_fileview_main, fileviewUG);
+	setting_view_destroy(&setting_view_fileview_main, ad);
 
-	if (fileviewUG->input_file)
-		FREE(fileviewUG->input_file);
-	if (fileviewUG->input_title)
-		FREE(fileviewUG->input_title);
+	if (ad->input_file)
+		FREE(ad->input_file);
+	if (ad->input_title)
+		FREE(ad->input_title);
 
-	if (NULL != ug_get_layout(fileviewUG->ug)) {
-		evas_object_hide((Evas_Object *)ug_get_layout(fileviewUG->ug));
-		evas_object_del((Evas_Object *)ug_get_layout(fileviewUG->ug));
+	if (ad->md.win_main) {
+		evas_object_del(ad->md.win_main);
+		ad->md.win_main = NULL;
 	}
 
 	SETTING_TRACE_END;
 }
 
-static void setting_fileview_ug_on_message(ui_gadget_h ug, app_control_h msg,
-		app_control_h service, void *priv)
+static void _lang_changed(app_event_info_h event_info, void *data)
 {
-	SETTING_TRACE_BEGIN;
-}
-
-static void setting_fileview_ug_on_event(ui_gadget_h ug, enum ug_event event,
-		app_control_h service, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-	switch (event) {
-	case UG_EVENT_LOW_MEMORY:
-		break;
-	case UG_EVENT_LOW_BATTERY:
-		break;
-	case UG_EVENT_LANG_CHANGE:
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT:
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-		break;
-	case UG_EVENT_REGION_CHANGE:
-		break;
-	default:
-		break;
+	char *lang = NULL;
+	if (app_event_get_language(event_info, &lang) == APP_ERROR_NONE) {
+		SETTING_TRACE_DEBUG("Setting - language is changed : %s", lang);
+		elm_language_set(lang);
+		elm_config_all_flush();
+		free(lang);
+	} else {
+		SETTING_TRACE_ERROR("Cannot get language from event_info");
 	}
 }
 
-static void setting_fileview_ug_on_key_event(ui_gadget_h ug,
-		enum ug_key_event event, app_control_h service, void *priv)
+EXPORT_PUBLIC
+int main(int argc, char *argv[])
 {
-	SETTING_TRACE_BEGIN;
-	SettingFileviewUG *ad = (SettingFileviewUG *)priv;
-
-	switch (event) {
-	case UG_KEY_EVENT_END: {
-		if (elm_naviframe_top_item_get(ad->navi_bar) ==
-				elm_naviframe_bottom_item_get(ad->navi_bar)) {
-			ug_destroy_me(ug);
-		} else {
-			/* elm_naviframe_item_pop(ad->navi_bar); */
-			setting_view_cb_at_endKey(ad);
-		}
-	}
-		break;
-	default:
-		break;
-	}
+	app_event_handler_h handlers[5] = {NULL, };
+	ui_app_lifecycle_callback_s ops = {
+		.create = app_create,
+		.pause = app_pause,
+		.resume = app_resume,
+		.terminate = app_terminate,
+		.app_control = app_controll,
+	};
+	SettingFileviewUG app_data;
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY],
+			APP_EVENT_LOW_MEMORY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY],
+			APP_EVENT_LOW_BATTERY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED],
+			APP_EVENT_LANGUAGE_CHANGED, _lang_changed, &app_data);
+	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED],
+			APP_EVENT_REGION_FORMAT_CHANGED, NULL, NULL);
+	ui_app_add_event_handler(
+			&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED],
+			APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
+	memset(&app_data, 0x0, sizeof(app_data));
+	return ui_app_main(argc, argv, &ops, &app_data);
 }
-
-UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
-{
-	SETTING_TRACE_BEGIN;
-	SettingFileviewUG *fileviewUG = calloc(1, sizeof(SettingFileviewUG));
-	setting_retvm_if(!fileviewUG, -1,
-			"Create SettingFileviewUG obj failed");
-
-	ops->create = setting_fileview_ug_on_create;
-	ops->start = setting_fileview_ug_on_start;
-	ops->pause = setting_fileview_ug_on_pause;
-	ops->resume = setting_fileview_ug_on_resume;
-	ops->destroy = setting_fileview_ug_on_destroy;
-	ops->message = setting_fileview_ug_on_message;
-	ops->event = setting_fileview_ug_on_event;
-	ops->key_event = setting_fileview_ug_on_key_event;
-	ops->priv = fileviewUG;
-	ops->opt = UG_OPT_INDICATOR_ENABLE;
-
-	return 0;
-}
-
-UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
-{
-	SETTING_TRACE_BEGIN;
-	struct SettingFileviewUG *fileviewUG;
-	setting_retm_if(!ops, "ops == NULL");
-
-	fileviewUG = ops->priv;
-	if (fileviewUG)
-		FREE(fileviewUG);
-}
-
-/* ***************************************************
- **
- **general func
- **
- ****************************************************/
-
