@@ -40,12 +40,4 @@ struct _button_status {
 	int pstate; /*	progressbar status to show or hide */
 };
 
-static void setting_connectivity_usb_click_softkey_cancel_cb(void *data,
-		Evas_Object *obj, void *event_info);
-#ifdef HELP_UG_EXIST
-static void setting_connectivity_usb_click_softkey_set_cb(void *data,
-		Evas_Object *obj,
-		void *event_info);
-#endif
-
 #endif				/* __SETTING_CONNECTIVITY_USB_H__ */
