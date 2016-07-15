@@ -131,54 +131,16 @@ static int setting_phone_license_main_cleanup(void *cb)
 	return SETTING_RETURN_SUCCESS;
 }
 
-static void __ug_layout_cb(ui_gadget_h ug, enum ug_mode mode, void *priv)
+static void _app_reply_cb(app_control_h request, app_control_h reply,
+		app_control_result_e result_code, void *priv)
 {
 	SETTING_TRACE_BEGIN;
-	Evas_Object *base;
-	ret_if(!priv);
-	base = (Evas_Object *)ug_get_layout(ug);
-	ret_if(!base);
-
-	switch (mode) {
-	case UG_MODE_FULLVIEW:
-		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-		EVAS_HINT_EXPAND);
-		/*elm_win_resize_object_add(ad->win_get, base); */
-		evas_object_show(base);
-		break;
-	default:
-		break;
-	}
-
-	SETTING_TRACE_END;
-}
-
-static void __ug_destroy_cb(ui_gadget_h ug, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-
-	/* restore the '<-' button on the navigate bar */
-	ret_if(!priv);
-	SettingPhoneUG *ad = (SettingPhoneUG *)priv; /* ad is point to priv */
-
-	if (ug) {
-		setting_ug_destroy(ug);
-		ad->ug_loading = NULL;
-	}
-
-}
-
-static void __ug_result_cb(ui_gadget_h ug, app_control_h result, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-	/* error check */
-	retm_if(priv == NULL, "Data parameter is NULL");
-
 	SettingPhoneUG *ad = (SettingPhoneUG *)priv;
+	ret_if(!ad);
 
-	if (result) {
+	if (reply) {
 		char *webkit_address = NULL;
-		app_control_get_extra_data(result, "webkit_address",
+		app_control_get_extra_data(reply, "webkit_address",
 				&webkit_address);
 		SETTING_TRACE("webkit_address = %s", webkit_address);
 
@@ -201,20 +163,11 @@ static void __main_license_clicked(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
+	int ret;
 	SettingPhoneUG *ad = (SettingPhoneUG *)data;
-	struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
-	setting_retm_if(cbs == NULL, "calloc failed");
-	cbs->layout_cb = __ug_layout_cb;
-	cbs->result_cb = __ug_result_cb;
-	cbs->destroy_cb = __ug_destroy_cb;
-	cbs->priv = (void *)ad;
+	app_control_h svc = NULL;
 
-	/*bundle *b = bundle_create(); */
-	app_control_h svc;
-	if (app_control_create(&svc)) {
-		FREE(cbs);
-		return;
-	}
+	ret_if(app_control_create(&svc) != 0);
 	app_control_add_extra_data(svc, "file",
 			SETTING_OPEN_SOURCE_LICENSE_PATH);
 	app_control_add_extra_data(svc, "title",
@@ -223,15 +176,14 @@ static void __main_license_clicked(void *data)
 	if (ad->ly_language)
 		elm_object_tree_focus_allow_set(ad->ly_language, EINA_FALSE);
 
-	ad->ug_loading = setting_ug_create(ad->ug, "setting-fileview-efl",
-			UG_MODE_FULLVIEW, svc, cbs);
-	if (NULL == ad->ug_loading)	/* error handling */
+	ret = app_launcher_svc("org.tizen.setting-fileview", svc,
+			_app_reply_cb, (void *)ad);
+	if (ret != 0)
 		setting_create_popup(ad, ad->win_get, NULL,
 				_(UNSUPPORTED_FUNCTION), NULL, 0, false, false,
 				0);
 
 	app_control_destroy(svc);
-	FREE(cbs);
 }
 
 void setting_phone_license_main_mouse_up_Gendial_list_cb(void *data,
