@@ -21,21 +21,19 @@
 #ifndef __SETTING_LOCKTYPE_H__
 #define __SETTING_LOCKTYPE_H__
 
-#include <glib.h>
-#include <stdio.h>
+#include <app_manager.h>
 #include <dirent.h>
+#include <dlog.h>
 #include <Elementary.h>
 #include <Ecore_IMF.h>
+#include <glib.h>
 #include <glib-object.h>
+#include <stdio.h>
 
-#include <setting-common-draw-widget.h>
-#include <setting-common-view.h>
-#include <setting-debug.h>
-#include <dlog.h>
-#include <app_manager.h>
-
-/*#include <ckmc/ckmc-control.h> */
-/*#include <ckmc/ckmc-type.h> */
+#include "setting-common-draw-widget.h"
+#include "setting-common-init.h"
+#include "setting-common-view.h"
+#include "setting-debug.h"
 
 
 /*///////////////////face and voice unlock */
@@ -140,12 +138,9 @@ enum {
  * SettingSecurityUG and the functions access app context.
  */
 struct _SettingLocktypeUG {
-	ui_gadget_h ug;
+	MainData md;
 
 	/* add more variables here (move your appdata to here) */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
 	Evas_Object *notify;
 	Evas_Object *video_ly;
 	Evas_Object *video_ly_show_face_btn;
@@ -158,11 +153,8 @@ struct _SettingLocktypeUG {
 	char *selected_lock_type;
 
 	Evas_Object *ly_guild;
-	Evas_Object *ly_main;
-	Evas_Object *navi_bar;
 	ui_gadget_h ug_passwd;
 	ui_gadget_h ug_loading;
-	Evas_Object *genlist;
 	Evas_Object *save_popup;
 
 	Elm_Genlist_Item_Class itc_1text;
@@ -200,13 +192,6 @@ struct _SettingLocktypeUG {
 
 extern setting_view setting_view_locktype_main;
 
-
-void setting_locktype_result_password_ug_cb(ui_gadget_h ug,
-		app_control_h service, void *priv);
 gboolean setting_locktype_create_password_sg(void *data);
-void setting_locktype_destroy_password_ug_cb(ui_gadget_h ug,
-		void *priv);
-void setting_locktype_layout_passwd_ug_cb(ui_gadget_h ug,
-		enum ug_mode mode, void *priv);
 
 #endif
