@@ -34,15 +34,10 @@ struct _openlock_appdata {
 	int index;
 };
 
-Eina_Bool setting_locktype_main_click_softkey_back_cb(
-		void *data, Elm_Object_Item *it);
 #if 0
 static void
 setting_locktype_main_click_radio_cb(
 		void *data, Evas_Object *obj, void *event_info);
 #endif
-static void
-setting_locktype_main_mouse_up_Gendial_list_cb(
-		void *data, Evas_Object *obj, void *event_info);
 
 #endif
