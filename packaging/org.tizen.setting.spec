@@ -131,6 +131,13 @@ Group: Application Framework/Settings
 #Requires: pkgconfig(setting-common-internal)
 %description devel
 
+%package font
+Summary: A setting font application
+Group: Application
+
+%description font
+Configuration application for font
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -342,3 +349,9 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %files ref
 %{_datadir}/mime/packages/mime.setting.xml
 %{_datadir}/packages/org.tizen.setting.xml.ref
+
+%files font
+%manifest setting-font/org.tizen.setting-font.manifest
+%{_prefix}/apps/org.tizen.setting-font/bin/setting-font
+%{_datadir}/packages/org.tizen.setting-font.xml
+%{_prefix}/apps/org.tizen.setting-font/res/*
