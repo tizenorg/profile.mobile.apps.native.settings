@@ -54,20 +54,16 @@
 #include <ewk_web_application_icon_data.h>
 #endif
 
-typedef struct _SettingFileviewUG SettingFileviewUG;
+#include "setting-common-init.h"
+
+typedef struct _SettingFileview SettingFileview;
 
 /**
- * Setting About UG context
- * all UG function has void* as an agument. this is casted back to
- * SettingFileviewUG and the functions access app context.
+ * Setting About context
  */
-struct _SettingFileviewUG {
-	ui_gadget_h ug;
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-	Evas_Object *navi_bar;
-	Evas_Object *ly_main;
+struct _SettingFileview {
+	MainData md;
+
 	char *input_file;
 	char *input_title;
 
