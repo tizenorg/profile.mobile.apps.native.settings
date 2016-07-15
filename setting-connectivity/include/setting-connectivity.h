@@ -21,17 +21,14 @@
 #ifndef __SETTING_CONNECTIVITY_H__
 #define __SETTING_CONNECTIVITY_H__
 
-
-
 #include <stdio.h>
 #include <Elementary.h>
-
 #include <glib-object.h>
-
-#include <setting-common-draw-widget.h>
-#include <setting-common-view.h>
-
 #include <runtime_info.h>
+
+#include "setting-common-draw-widget.h"
+#include "setting-common-view.h"
+#include "setting-common-init.h"
 
 
 #define DEVOPTION_STR_USB_DEBUGGING	"IDS_ST_BODY_USB_DEBUGGING"
@@ -61,20 +58,11 @@ typedef struct _SettingConnectivityUG SettingConnectivityUG;
  * SettingConnectivityUG and the functions access app context.
  */
 struct _SettingConnectivityUG {
-	ui_gadget_h ug;
-
-	/* add more variables here (move your appdata to here) */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-	Evas_Object *navi_bar;
+	MainData md;
 
 	Evas_Object *ly_usb;
 	Evas_Object *chk_con;
-
 	Evas_Object *pop;
-
-	Evas_Object *view_layout;
 	Evas_Object *selectioninfo_popup;
 
 	Setting_GenGroupItem_Data *debug_mode;	/* debug mode */
@@ -82,7 +70,6 @@ struct _SettingConnectivityUG {
 	Setting_GenGroupItem_Data *gpu_render;	/* Force GPU Rendering */
 	Setting_GenGroupItem_Data *bg_processes;/* Limit background processes */
 
-	/*****/
 	setting_view *view_to_load;
 
 	Elm_Genlist_Item_Class itc_title;
@@ -98,7 +85,6 @@ struct _SettingConnectivityUG {
 
 	int noti_fd;
 	Eina_Bool blockUI;
-
 };
 
 extern setting_view setting_view_connectivity_usb;
