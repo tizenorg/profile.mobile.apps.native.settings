@@ -41,7 +41,7 @@ static void __network_main_gl_mouse_up(void *data, Evas *e, Evas_Object *obj,
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(!data || !event_info);
-	SettingNetworkUG *ad = (SettingNetworkUG *)data;
+	SettingNetwork *ad = (SettingNetwork *)data;
 	Evas_Event_Mouse_Up *ev = (Evas_Event_Mouse_Up *)event_info;
 	Elm_Object_Item *selected_item = elm_genlist_at_xy_item_get(
 			ad->genlist_sel_network, ev->output.x, ev->output.y,
@@ -91,7 +91,7 @@ static void __network_main_gl_mouse_down(void *data, Evas *e, Evas_Object *obj,
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(!data || !event_info);
-	SettingNetworkUG *ad = (SettingNetworkUG *)data;
+	SettingNetwork *ad = (SettingNetwork *)data;
 	Evas_Event_Mouse_Down *ev = (Evas_Event_Mouse_Down *)event_info;
 	ad->point_down.x = ev->output.x;
 	ad->point_down.y = ev->output.y;
@@ -134,7 +134,7 @@ static void __network_main_gl_mouse_move(void *data, Evas *e, Evas_Object *obj,
 {
 	/*SETTING_TRACE_BEGIN; */
 	ret_if(!data || !event_info);
-	SettingNetworkUG *ad = (SettingNetworkUG *)data;
+	SettingNetwork *ad = (SettingNetwork *)data;
 	Evas_Event_Mouse_Move *ev = (Evas_Event_Mouse_Move *)event_info;
 	int x_offset = ev->cur.output.x - ad->point_down.x;
 	int y_offset = ev->cur.output.y - ad->point_down.y;
@@ -174,23 +174,23 @@ static int setting_network_select_network_create(void *cb)
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingNetworkUG *ad = (SettingNetworkUG *)cb;
+	SettingNetwork *ad = (SettingNetwork *)cb;
 	if (ad->view_to_load == &setting_view_network_select_network) {
-		ad->ly_main = setting_create_layout_navi_bar_genlist(
-				ad->win_main_layout, ad->win_get,
+		ad->md.ly_main = setting_create_layout_navi_bar_genlist(
+				ad->md.view_layout, ad->md.win_main,
 				"IDS_COM_BODY_NETWORK_OPERATORS",
 				_("IDS_ST_BUTTON_BACK"), NULL,
 				setting_network_select_network_click_softkey_cancel_cb,
 				NULL, ad, &ad->genlist_sel_network,
-				&ad->navi_bar);
+				&ad->md.navibar_main);
 	} else {
-		setting_push_layout_navi_bar_genlist(ad->win_main_layout,
-				ad->win_get, "IDS_COM_BODY_NETWORK_OPERATORS",
+		setting_push_layout_navi_bar_genlist(ad->md.view_layout,
+				ad->md.win_main, "IDS_COM_BODY_NETWORK_OPERATORS",
 				_("IDS_ST_BUTTON_BACK"),
 				NULL,
 				setting_network_select_network_click_softkey_cancel_cb,
 				NULL, ad, &ad->genlist_sel_network,
-				ad->navi_bar);
+				ad->md.navibar_main);
 	}
 
 	/*m_Object_Item *item = elm_genlist_item_append(ad->genlist_sel_network,
@@ -362,7 +362,7 @@ static int setting_network_select_network_destroy(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingNetworkUG *ad = (SettingNetworkUG *)cb;
+	SettingNetwork *ad = (SettingNetwork *)cb;
 
 	evas_object_event_callback_del(ad->genlist_sel_network,
 			EVAS_CALLBACK_MOUSE_UP, __network_main_gl_mouse_up);
@@ -417,14 +417,14 @@ static int setting_network_select_network_destroy(void *cb)
 	setting_network_update_sel_network(ad);
 
 	if (ad->view_to_load == &setting_view_network_select_network) {
-		if (ad->ly_main) {
-			evas_object_del(ad->ly_main);
-			ad->ly_main = NULL;
+		if (ad->md.ly_main) {
+			evas_object_del(ad->md.ly_main);
+			ad->md.ly_main = NULL;
 		}
 	} else {
-		elm_naviframe_item_pop(ad->navi_bar);
+		elm_naviframe_item_pop(ad->md.navibar_main);
 	}
-	/* elm_naviframe_item_pop(ad->navi_bar); */
+	/* elm_naviframe_item_pop(ad->md.navibar_main); */
 
 	/*Following handlers will be used by async listening callback. They
 	 * must be reset after genlist is 'popuped'. */
@@ -442,7 +442,7 @@ static int setting_network_select_network_update(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	/*SettingNetworkUG *ad = (SettingNetworkUG *) cb; */
+	/*SettingNetwork *ad = (SettingNetwork *) cb; */
 	/*elm_radio_value_set(ad->chk_sel, ad->sel_net); */
 
 	return SETTING_RETURN_SUCCESS;
@@ -470,7 +470,7 @@ static void setting_network_select_network_click_softkey_cancel_cb(void *data,
 		Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	SettingNetworkUG *ad = (SettingNetworkUG *)data;
+	SettingNetwork *ad = (SettingNetwork *)data;
 
 	/* If registering.. popup is displaying, Back must be ignored. */
 	if (ad->network_select_registering_pop) {
@@ -483,8 +483,7 @@ static void setting_network_select_network_click_softkey_cancel_cb(void *data,
 			"[Setting > Network > Select] Data parameter is NULL");
 
 	if (ad->view_to_load == &setting_view_network_select_network) {
-		/* exit */
-		ug_destroy_me(ad->ug);
+		ui_app_exit();
 		return;
 	} else {
 		setting_view_change(&setting_view_network_select_network,

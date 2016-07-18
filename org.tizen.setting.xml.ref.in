@@ -58,19 +58,6 @@
 		<label xml:lang="zh-sg">设定</label>
 		<label xml:lang="zh-tw">設定</label>
 	</ui-application>
-	<ui-application appid="setting-network-efl" exec="@TZ_SYS_RO_UG@/bin/setting-network-efl" type="capp" nodisplay="true" taskmanage="false">
-			<icon>@TZ_SYS_RO_APP@/org.tizen.setting/res/icons/A01-1_icon_Network.png</icon>
-			<label>Network</label>
-			<label xml:lang="en-us">Network</label>
-			<label xml:lang="ja-jp">ネットワーク</label>
-			<label xml:lang="ko-kr">네트워크</label>
-			<application-service>
-				<operation name="http://samsung.com/appcontrol/operation/setting/mobile_network"/>
-			</application-service>
-			<application-service>
-				<operation name="http://tizen.org/appcontrol/operation/setting/mobile_network"/>
-			</application-service>
-	</ui-application>
 	<ui-application appid="setting-font-efl" exec="@TZ_SYS_RO_UG@/bin/setting-font-efl" type="capp" nodisplay="true" taskmanage="false">
 			<icon>@TZ_SYS_RO_APP@/org.tizen.setting/res/icons/A01-1_icon_Font.png</icon>
 			<label>Font</label>

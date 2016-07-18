@@ -27,24 +27,20 @@
 #include <Elementary.h>
 #include <Ecore_IMF.h>
 #include <string.h>
-
 #include <glib-object.h>
 #include <net_connection.h>
-
 #include <efl_extension.h>
-
-#include <setting-common-draw-widget.h>
-#include <setting-common-view.h>
-#include <setting-debug.h>
-
 #include <TapiUtility.h>
 #include <ITapiNetwork.h>
 #include <ITapiSim.h>
-
 #include <Ecore_IMF.h>
-
 #include <bundle_internal.h>
 #include <system_settings.h>
+
+#include "setting-common-draw-widget.h"
+#include "setting-common-init.h"
+#include "setting-common-view.h"
+#include "setting-debug.h"
 
 #define UI_NETWORK_MODE
 
@@ -157,7 +153,7 @@ typedef enum {
 
 } setting_network_preferred_network_operation_type_t;
 
-typedef struct _SettingNetworkUG SettingNetworkUG;
+typedef struct _SettingNetwork SettingNetwork;
 
 struct gl_network_data {
 	int index;
@@ -174,12 +170,11 @@ typedef enum {
 
 #define MAX_PROFILE_NUM 100
 /**
- * Setting Network UG context
- * all UG function has void* as an agument. this is casted back to
- * SettingNetworkUG and the functions access app context.
+ * Setting Network context
  */
-struct _SettingNetworkUG {
-	ui_gadget_h ug;
+struct _SettingNetwork {
+	MainData md;
+
 	TapiHandle *handle;
 	connection_h connection;
 	connection_profile_h sel_profile_h;
@@ -199,11 +194,6 @@ struct _SettingNetworkUG {
 	int profile_service_type;
 
 	/* add more variables here (move your appdata to here) */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-	Evas_Object *navi_bar;
-
 	Evas_Object *network_mode_popup;
 
 	Evas_Object *popup_concreate;
@@ -234,19 +224,17 @@ struct _SettingNetworkUG {
 	/*Evas_Object *m_button; */
 
 	bool has_form_changed;
-	Evas_Object *genlist;
 	Evas_Object *genlist_sel_network;
 	Evas_Object *connections_gl; /* genlist in connections view */
 	Evas_Object *con_list_gl; /* genlist in connections view */
 	int cur_profile_num;
 
-	Evas_Object *network_ug_pop;
+	Evas_Object *network_popup;
 	Evas_Object *network_select_registering_pop;
 	Evas_Object *controllbar;
 
 	char *view_type_string;
 
-	Evas_Object *ly_main;
 	unsigned int subs_id_net[SETTING_NETWORK_SUBS_ID_NET_LEN];
 
 	Evas_Point point_down;
@@ -364,6 +352,8 @@ struct _SettingNetworkUG {
 
 	/*dual sim */
 	int sim_type;
+
+	bool init_done;
 };
 
 extern setting_view setting_view_network_main;

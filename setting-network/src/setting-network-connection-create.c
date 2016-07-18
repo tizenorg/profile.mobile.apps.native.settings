@@ -40,7 +40,6 @@ setting_view setting_view_network_connection_create = {
 		.update = setting_network_connection_update,
 		.cleanup = setting_network_connection_cleanup, };
 
-SettingNetworkUG *g_networkUG = NULL;
 #define SUPPORT_EXPANDABLE_AUTHTYPE 1
 #define URL_HEAD "http://"
 #define INTERNET "IDS_ST_BODY_CONNECTIONSETTINGS_INTERNET"
@@ -73,7 +72,7 @@ void __sub_list_rd_change(void *data, Evas_Object *obj, void *event_info)
 	elm_object_item_data_set(data_parentItem->item, data_parentItem);
 	elm_genlist_item_update(data_parentItem->item);
 
-	SettingNetworkUG *ad = data_parentItem->userdata;
+	SettingNetwork *ad = data_parentItem->userdata;
 
 	if (data_parentItem == ad->data_auth_type) {
 		elm_genlist_item_expanded_set(ad->data_auth_type->item, FALSE);
@@ -106,7 +105,7 @@ void __sub_list_rd_change(void *data, Evas_Object *obj, void *event_info)
 					if (ad->data_hm_url->limit_filter_data) {
 						ad->data_hm_url->limit_filter_data->max_byte_count = MAX_HOME_URL_LEN_MAX
 								- 1;
-						ad->data_hm_url->win_main = ad->win_get;
+						ad->data_hm_url->win_main = ad->md.win_main;
 					}
 				} else {
 					SETTING_TRACE_ERROR(
@@ -123,7 +122,7 @@ void __sub_list_rd_change(void *data, Evas_Object *obj, void *event_info)
 	}
 }
 
-static void _create_new_cellular_internet_profile(SettingNetworkUG *ad)
+static void _create_new_cellular_internet_profile(SettingNetwork *ad)
 {
 	int ret;
 	const char *profile_name = NULL;
@@ -166,7 +165,7 @@ void __sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 			(Setting_GenGroupItem_Data *) data;
 	ret_if(NULL == data_subItem || NULL == data_parentItem);
 
-	SettingNetworkUG *ad = data_parentItem->userdata;
+	SettingNetwork *ad = data_parentItem->userdata;
 	ret_if(NULL == ad);
 
 	int chk_status = data_subItem->chk_status;
@@ -210,7 +209,7 @@ void __sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 					if (ad->data_hm_url->limit_filter_data) {
 						ad->data_hm_url->limit_filter_data->max_byte_count = MAX_HOME_URL_LEN_MAX
 								- 1;
-						ad->data_hm_url->win_main = ad->win_get;
+						ad->data_hm_url->win_main = ad->md.win_main;
 					}
 				} else {
 					SETTING_TRACE_ERROR(
@@ -281,7 +280,7 @@ void __sub_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 
 void __popup_del(void *data, Evas_Object *obj, void *event_info)
 {
-	SettingNetworkUG *ad = data;
+	SettingNetwork *ad = data;
 
 	ret_if(data == NULL);
 
@@ -299,7 +298,7 @@ static void __create_auth_type_popup(void *data, Evas_Object *obj,
 {
 	ret_if(NULL == data || NULL == event_info);
 	SETTING_TRACE_BEGIN;
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	SettingNetwork *ad = (SettingNetwork *) data;
 	Elm_Object_Item *parentItem = event_info; /* parent item */
 	elm_genlist_item_selected_set(parentItem, 0);
 	Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(
@@ -312,7 +311,7 @@ static void __create_auth_type_popup(void *data, Evas_Object *obj,
 	}
 	Evas_Object *scroller = NULL;
 	ad->popup_auth_type = setting_create_popup_with_list(&scroller, ad,
-			ad->win_get, data_parentItem->keyStr, __popup_del, 0,
+			ad->md.win_main, data_parentItem->keyStr, __popup_del, 0,
 			false, false, 0);
 	_P(ad->popup_auth_type);
 
@@ -386,7 +385,7 @@ static void __create_pdn_type_popup(void *data, Evas_Object *obj,
 {
 	ret_if(NULL == data || NULL == event_info);
 	SETTING_TRACE_BEGIN;
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	SettingNetwork *ad = (SettingNetwork *) data;
 	Elm_Object_Item *parentItem = event_info; /* parent item */
 	elm_genlist_item_selected_set(parentItem, 0);
 	Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(
@@ -399,7 +398,7 @@ static void __create_pdn_type_popup(void *data, Evas_Object *obj,
 	}
 	Evas_Object *scroller = NULL;
 	ad->popup_pdn_type = setting_create_popup_with_list(&scroller, ad,
-			ad->win_get, data_parentItem->keyStr, __popup_del, 0,
+			ad->md.win_main, data_parentItem->keyStr, __popup_del, 0,
 			false, false, 0);
 	_P(ad->popup_pdn_type);
 
@@ -475,7 +474,7 @@ static void __setting_network_connection_exp_cb(void *data, Evas_Object *obj,
 {
 	ret_if(NULL == data || NULL == event_info);
 	SETTING_TRACE_BEGIN;
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	SettingNetwork *ad = (SettingNetwork *) data;
 	Elm_Object_Item *parentItem = event_info; /* parent item */
 	Setting_GenGroupItem_Data *data_parentItem = elm_object_item_data_get(
 			parentItem); /* parent data */
@@ -557,7 +556,7 @@ static Eina_Bool __connection_idler(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	retv_if(!data, FALSE);
-	SettingNetworkUG *ad = data;
+	SettingNetwork *ad = data;
 	/*__genlist_disable_set(ad->scl_edit, TRUE); */
 	setting_network_connection_hide_input_pannel(ad);
 	return FALSE;
@@ -566,7 +565,7 @@ void __get_connection_info(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(cb == NULL);
-	SettingNetworkUG *ad = (SettingNetworkUG *) cb;
+	SettingNetwork *ad = (SettingNetwork *) cb;
 
 	G_FREE(ad->ed_profile_name_desc);
 	G_FREE(ad->ed_acs_name_desc);
@@ -845,10 +844,10 @@ static void __network_max_len_reached(void *data, Evas_Object *obj,
 
 	SETTING_TRACE("list_item->enterKeyPressFlag : %d",
 			list_item->enterKeyPressFlag);
-	SettingNetworkUG *ad = list_item->userdata;
+	SettingNetwork *ad = list_item->userdata;
 
 	/* popup show */
-	ad->popup = setting_create_popup(ad, ad->win_get, NULL,
+	ad->popup = setting_create_popup(ad, ad->md.win_main, NULL,
 			"IDS_ST_TPOP_MAXIMUM_NUMBER_OF_CHARACTERS_REACHED",
 			NULL, 2, TRUE, FALSE, 0);
 }
@@ -864,7 +863,7 @@ static void setting_network_connection_entry_next_activated_cb(void *data,
 
 	Setting_GenGroupItem_Data *list_item =
 			(Setting_GenGroupItem_Data *) data;
-	SettingNetworkUG *ad = list_item->userdata;
+	SettingNetwork *ad = list_item->userdata;
 
 	Evas_Object *pObj_NextEntry = NULL;
 
@@ -910,7 +909,7 @@ static void _init_context(void *cb)
 	SETTING_TRACE_BEGIN;
 	ret_if(cb == NULL);
 
-	SettingNetworkUG *ad = (SettingNetworkUG *) cb;
+	SettingNetwork *ad = (SettingNetwork *) cb;
 
 	/* connection intializes */
 	ad->data_profile_name = NULL;
@@ -990,9 +989,9 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj,
 		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	SettingNetwork *ad = (SettingNetwork *) data;
 	/*Evas_Object *it_obj; */
-	Evas_Object *nf = ad->navi_bar;
+	Evas_Object *nf = ad->md.navibar_main;
 	Evas_Object *win;
 	/*Elm_Object_Item *it; */
 
@@ -1040,11 +1039,11 @@ static int setting_network_connection_create(void *cb)
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingNetworkUG *ad = (SettingNetworkUG *) cb;
+	SettingNetwork *ad = (SettingNetwork *) cb;
 	setting_retvm_if(!ad->con_name, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
 			"!ad->con_name");
 
-	Evas_Object *scroller = elm_genlist_add(ad->win_main_layout);
+	Evas_Object *scroller = elm_genlist_add(ad->md.view_layout);
 	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
 			"Cannot set scroller object  as contento of layout");
 	elm_genlist_mode_set(scroller, ELM_LIST_COMPRESS);
@@ -1076,14 +1075,14 @@ static int setting_network_connection_create(void *cb)
 			setting_network_connection_click_softkey_save_cb,
 			/* setting_network_connection_click_softkey_back_cb, */
 			setting_network_connection_click_softkey_cancel_cb,
-			ad, scroller, ad->navi_bar, NULL);
+			ad, scroller, ad->md.navibar_main, NULL);
 
 	elm_naviframe_item_pop_cb_set(ad->navi_it,
 			setting_network_connection_click_softkey_back_cb, ad);
-	evas_object_data_set(ad->navi_bar, "sip.naviframe.title_obj", "*");
+	evas_object_data_set(ad->md.navibar_main, "sip.naviframe.title_obj", "*");
 
 	/* Add ctx popup handler */
-	Evas_Object *btn = elm_button_add(ad->navi_bar);
+	Evas_Object *btn = elm_button_add(ad->md.navibar_main);
 	elm_object_style_set(btn, "naviframe/more/default");
 	evas_object_smart_callback_add(btn, "clicked",
 			create_ctxpopup_more_button_cb, ad);
@@ -1152,7 +1151,7 @@ static int setting_network_connection_create(void *cb)
 	if (ad->data_profile_name) {
 		__BACK_POINTER_SET(ad->data_profile_name);
 		ad->data_profile_name->userdata = ad;
-		ad->data_profile_name->win_main = ad->win_get;
+		ad->data_profile_name->win_main = ad->md.win_main;
 		ad->data_profile_name->isSinglelineFlag = TRUE;
 		/*there is no CAPI to set profile name,so disable it: */
 		/*setting_disable_genlist_item(ad->data_profile_name->item); */
@@ -1184,7 +1183,7 @@ static int setting_network_connection_create(void *cb)
 		__BACK_POINTER_SET(ad->data_acs_name);
 		ad->data_acs_name->userdata = ad;
 		ad->data_acs_name->isSinglelineFlag = TRUE;
-		ad->data_acs_name->win_main = ad->win_get;
+		ad->data_acs_name->win_main = ad->md.win_main;
 	} else {
 		SETTING_TRACE_ERROR("ad->data_acs_name is NULL");
 	}
@@ -1226,7 +1225,7 @@ static int setting_network_connection_create(void *cb)
 			__BACK_POINTER_SET(ad->data_user_name);
 			ad->data_user_name->userdata = ad;
 			ad->data_user_name->isSinglelineFlag = TRUE;
-			ad->data_user_name->win_main = ad->win_get;
+			ad->data_user_name->win_main = ad->md.win_main;
 		} else {
 			SETTING_TRACE_ERROR("ad->data_user_name is NULL");
 		}
@@ -1250,7 +1249,7 @@ static int setting_network_connection_create(void *cb)
 		if (ad->data_pwd) {
 			__BACK_POINTER_SET(ad->data_pwd);
 			ad->data_pwd->userdata = ad;
-			ad->data_pwd->win_main = ad->win_get;
+			ad->data_pwd->win_main = ad->md.win_main;
 			ad->data_pwd->isSinglelineFlag = TRUE;
 			ad->is_show_user = 1;
 
@@ -1277,7 +1276,7 @@ static int setting_network_connection_create(void *cb)
 		__BACK_POINTER_SET(ad->data_pxy_addr);
 		ad->data_pxy_addr->userdata = ad;
 		ad->data_pxy_addr->isSinglelineFlag = TRUE;
-		ad->data_pxy_addr->win_main = ad->win_get;
+		ad->data_pxy_addr->win_main = ad->md.win_main;
 	} else {
 		SETTING_TRACE_ERROR("ad->data_pxy_addr is NULL");
 	}
@@ -1309,7 +1308,7 @@ static int setting_network_connection_create(void *cb)
 		ad->data_pxy_port->userdata = ad;
 		ad->data_pxy_port->isSinglelineFlag = TRUE;
 		__BACK_POINTER_SET(ad->data_pxy_port);
-		ad->data_pxy_port->win_main = ad->win_get;
+		ad->data_pxy_port->win_main = ad->md.win_main;
 	} else {
 		SETTING_TRACE_ERROR("ad->data_pxy_port is NULL");
 	}
@@ -1333,7 +1332,7 @@ static int setting_network_connection_create(void *cb)
 			__BACK_POINTER_SET(ad->data_hm_url);
 			ad->data_hm_url->userdata = ad;
 			ad->data_hm_url->isSinglelineFlag = TRUE;
-			ad->data_hm_url->win_main = ad->win_get;
+			ad->data_hm_url->win_main = ad->md.win_main;
 			ad->data_hm_url->return_key_type = ELM_INPUT_PANEL_RETURN_KEY_TYPE_DONE;
 		} else {
 			SETTING_TRACE_ERROR("ad->data_hm_url is NULL");
@@ -1399,9 +1398,9 @@ static int setting_network_connection_destroy(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingNetworkUG *ad = (SettingNetworkUG *) cb;
+	SettingNetwork *ad = (SettingNetwork *) cb;
 
-	evas_object_data_set(ad->navi_bar, "sip.naviframe.title_obj", NULL);
+	evas_object_data_set(ad->md.navibar_main, "sip.naviframe.title_obj", NULL);
 	ad->navi_it = NULL;
 	ad->bottom_btn = NULL;
 	ad->back_btn = NULL;
@@ -1430,7 +1429,7 @@ static int setting_network_connection_destroy(void *cb)
 
 	G_FREE(ad->ed_hm_url_desc);
 
-	elm_naviframe_item_pop(ad->navi_bar);
+	elm_naviframe_item_pop(ad->md.navibar_main);
 
 	setting_view_network_connection_create.is_create = 0;
 	return SETTING_RETURN_SUCCESS;
@@ -1456,7 +1455,7 @@ bool need_check_default_profile(void *data,
 		connection_cellular_service_type_e inputtype)
 {
 	retv_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	SettingNetwork *ad = (SettingNetwork *) data;
 	SETTING_TRACE("inputtype:%d", inputtype);
 	connection_profile_iterator_h profile_iter = NULL;
 	connection_profile_h profile_h = NULL;
@@ -1515,7 +1514,7 @@ static void __setting_network_connection_popup_rsp_cb(void *data,
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(obj == NULL, "obj parameter is NULL");
 	setting_retm_if(data == NULL, "Data parameter is NULL");
-	/*SettingNetworkUG *ad = (SettingNetworkUG *) data; */
+	/*SettingNetwork *ad = (SettingNetwork *) data; */
 
 	/* remove ctxpopup */
 	if (ctxpopup != NULL) {
@@ -1530,7 +1529,7 @@ static int __save_connection(void *data)
 	/* error check */
 	retv_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	SettingNetwork *ad = (SettingNetwork *) data;
 	const char *profile_name = NULL;
 	const char *acs_name = NULL;
 	const char *usr_name = NULL;
@@ -1586,7 +1585,7 @@ static int __save_connection(void *data)
 		snprintf(name, sizeof(name), _("IDS_ST_POP_ENTER_PS"),
 				_("IDS_ST_BODY_PROFILE_NAME"));
 
-		setting_create_popup(ad, ad->win_get, NULL, _(name),
+		setting_create_popup(ad, ad->md.win_main, NULL, _(name),
 				__setting_network_connection_popup_rsp_cb,
 				2/*SECONDS*/, false, false, 0);
 		FREE(acs_name);
@@ -1603,7 +1602,7 @@ static int __save_connection(void *data)
 		char name[MAX_DISPLAY_NAME_LEN_ON_UI + 1] = { 0, };
 		snprintf(name, sizeof(name), _("IDS_ST_POP_ENTER_PS"),
 				_("IDS_DLNA_BODY_ACCESS_POINT_NAME"));
-		setting_create_popup(ad, ad->win_get, NULL, _(name),
+		setting_create_popup(ad, ad->md.win_main, NULL, _(name),
 				__setting_network_connection_popup_rsp_cb,
 				2/*SECONDS*/, false, false, 0);
 		FREE(acs_name);
@@ -1701,7 +1700,7 @@ static int __save_connection(void *data)
 	/* save user name */
 	if (!safeStrCmp(usr_name, "")
 			&& CONNECTION_CELLULAR_AUTH_TYPE_NONE != type) {
-		setting_create_popup(ad, ad->win_get,
+		setting_create_popup(ad, ad->md.win_main,
 				NULL, _(Insert_User_Name_Desc),
 				__setting_network_connection_popup_rsp_cb, 2/*SECONDS*/, false, false, 0);
 		FREE(usr_name);
@@ -1716,7 +1715,7 @@ static int __save_connection(void *data)
 			&& CONNECTION_CELLULAR_AUTH_TYPE_NONE != type) {
 		/*this code is not used now, so remove the ID which is not
 		 *  used in po file*/
-		setting_create_popup(ad, ad->win_get,
+		setting_create_popup(ad, ad->md.win_main,
 				NULL, _(""),
 				__setting_network_connection_popup_rsp_cb,
 				2/*SECONDS*/, false, false, 0);
@@ -1739,7 +1738,7 @@ static int __save_connection(void *data)
 	if (isEmptyStr(addr)) {
 		/* check proxy port */
 		if (!isEmptyStr(port)) {
-			setting_create_popup(ad, ad->win_get,
+			setting_create_popup(ad, ad->md.win_main,
 					NULL,
 					_("IDS_COM_BODY_ENTER_PROXY_EMPTY"),
 					__setting_network_connection_popup_rsp_cb,
@@ -1840,7 +1839,7 @@ static int __save_connection(void *data)
 					"err=%d ***",
 					err);
 			ret = SETTING_DNET_RETURN_ERR;
-			setting_create_popup(ad, ad->win_get, NULL,
+			setting_create_popup(ad, ad->md.win_main, NULL,
 					_("IDS_CST_POP_FAILED"), NULL, 0, false,
 					false, 0);
 			return ret;
@@ -1880,7 +1879,7 @@ static int __save_connection(void *data)
 						"file. err=%d ***",
 						err);
 				ret = SETTING_DNET_RETURN_ERR;
-				setting_create_popup(ad, ad->win_get, NULL,
+				setting_create_popup(ad, ad->md.win_main, NULL,
 						_("IDS_CST_POP_FAILED"), NULL,
 						0, false, false, 0);
 				return ret;
@@ -1917,7 +1916,7 @@ static int __save_connection(void *data)
 					SETTING_FONT_RED, err,
 					SETTING_FONT_BLACK);
 			ret = SETTING_DNET_RETURN_ERR;
-			setting_create_popup(ad, ad->win_get,
+			setting_create_popup(ad, ad->md.win_main,
 			NULL, _("IDS_CST_POP_FAILED"), NULL, 0, false, false,
 					0);
 		}
@@ -1940,7 +1939,7 @@ setting_network_connection_click_softkey_done_cb(void *data,
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");
 
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	SettingNetwork *ad = (SettingNetwork *) data;
 	if (ad->data_profile_name)
 		setting_hide_input_pannel_cb(ad->data_profile_name->eo_check);
 
@@ -1969,7 +1968,7 @@ static void __save_response_cb(void *data, Evas_Object *obj, void *event_info)
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
 
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	SettingNetwork *ad = (SettingNetwork *) data;
 	if (obj) {
 		evas_object_del(obj);
 		obj = NULL;
@@ -1983,7 +1982,7 @@ static void __save_response_cb(void *data, Evas_Object *obj, void *event_info)
 	/* Call automatically
 	 * setting_network_connection_click_softkey_back_cb() by registering
 	 * elm_naviframe_item_pop_cb_set() */
-	elm_naviframe_item_pop(ad->navi_bar);
+	elm_naviframe_item_pop(ad->md.navibar_main);
 }
 
 /**
@@ -1996,7 +1995,7 @@ static void setting_network_connection_click_softkey_save_cb(void *data,
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");
 
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	SettingNetwork *ad = (SettingNetwork *) data;
 
 	int ret = __save_connection(ad);
 	/* need special handle */
@@ -2014,7 +2013,7 @@ static void setting_network_connection_click_softkey_save_cb(void *data,
 
 	elm_object_tree_focus_allow_set(ad->con_create_gl, EINA_FALSE);
 
-	setting_create_popup(ad, ad->win_get, NULL, KeyStr_Saved,
+	setting_create_popup(ad, ad->md.win_main, NULL, KeyStr_Saved,
 			__save_response_cb, 1, FALSE, FALSE, 0);
 
 	if (ctxpopup != NULL) {
@@ -2030,7 +2029,7 @@ static Eina_Bool setting_network_connection_click_softkey_back_cb(void *data,
 	/* error check */
 	retvm_if(data == NULL, EINA_TRUE, "Data parameter is NULL");
 
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	SettingNetwork *ad = (SettingNetwork *) data;
 
 	elm_object_tree_focus_allow_set(ad->con_create_gl, EINA_FALSE);
 
@@ -2069,15 +2068,15 @@ static void setting_network_connection_click_softkey_cancel_cb(void *data,
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");
 
-	SettingNetworkUG *ad = (SettingNetworkUG *) data;
+	SettingNetwork *ad = (SettingNetwork *) data;
 
 	/* Call automatically
 	 * setting_network_connection_click_softkey_back_cb() by registering
 	 * elm_naviframe_item_pop_cb_set() */
-	elm_naviframe_item_pop(ad->navi_bar);
+	elm_naviframe_item_pop(ad->md.navibar_main);
 }
 
-static void setting_network_connection_check_entry_empty(SettingNetworkUG *ad)
+static void setting_network_connection_check_entry_empty(SettingNetwork *ad)
 {
 	SETTING_TRACE_BEGIN;
 	if (!ad->has_form_changed) {
@@ -2142,7 +2141,7 @@ static void setting_network_connection_check_entry_empty(SettingNetworkUG *ad)
 	}
 }
 
-static void setting_network_connection_display_auth_type(SettingNetworkUG *ad,
+static void setting_network_connection_display_auth_type(SettingNetwork *ad,
 		int auth_type)
 {
 	SETTING_TRACE_BEGIN;
@@ -2187,7 +2186,7 @@ static void setting_network_connection_display_auth_type(SettingNetworkUG *ad,
 			if (ad->data_user_name->limit_filter_data) {
 				ad->data_user_name->limit_filter_data->max_byte_count =
 						MAX_PDP_AUTH_USERNAME_LEN_MAX;
-				ad->data_user_name->win_main = ad->win_get;
+				ad->data_user_name->win_main = ad->md.win_main;
 			}
 			ad->data_user_name->item = elm_genlist_item_insert_after(
 					ad->scl_edit, &itc_editfield,
@@ -2229,7 +2228,7 @@ static void setting_network_connection_display_auth_type(SettingNetworkUG *ad,
 			if (ad->data_pwd->limit_filter_data) {
 				ad->data_pwd->limit_filter_data->max_byte_count =
 						MAX_PDP_AUTH_PASSWORD_LEN_MAX;
-				ad->data_pwd->win_main = ad->win_get;
+				ad->data_pwd->win_main = ad->md.win_main;
 			}
 			ad->data_pwd->item = elm_genlist_item_insert_after(
 					ad->scl_edit, &itc_editfield,
@@ -2291,7 +2290,7 @@ static void setting_network_connection_entry_changed_cb(void *data,
 	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item =
 			(Setting_GenGroupItem_Data *) data;
-	SettingNetworkUG *ad = list_item->userdata;
+	SettingNetwork *ad = list_item->userdata;
 	const char *entry_str = elm_entry_entry_get(obj);
 
 	if (list_item->maxLengthReachFlag
@@ -2303,7 +2302,7 @@ static void setting_network_connection_entry_changed_cb(void *data,
 		SETTING_TRACE_ERROR(
 				"notification_status_message_post() failed(%d)",
 				ret);
-		ad->popup = setting_create_popup(ad, ad->win_get, NULL,
+		ad->popup = setting_create_popup(ad, ad->md.win_main, NULL,
 				"IDS_ST_TPOP_MAXIMUM_NUMBER_OF_CHARACTERS_REACHED",
 				NULL, 2, TRUE, FALSE, 0);
 		elm_object_focus_set(list_item->eo_check, EINA_FALSE);
@@ -2320,7 +2319,7 @@ static void setting_network_connection_hide_input_pannel(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
-	SettingNetworkUG *ad = data;
+	SettingNetwork *ad = data;
 	if (ad->data_profile_name && ad->data_profile_name->eo_check)
 		setting_hide_input_pannel_cb(ad->data_profile_name->eo_check);
 
