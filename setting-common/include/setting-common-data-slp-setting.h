@@ -277,20 +277,6 @@ typedef enum {
 	STR_SLP_LIST_MAX
 } setting_str_slp_list;
 
-typedef struct _Vconf_Change_Node {
-	const char *in_key;
-	vconf_callback_fn cb;
-	void *cb_data;
-} Vconf_Change_Node;
-#define DEREGISTER_VCONFS(listened_list) \
-	setting_destory_listen_list(&(listened_list))
-#define REGISTER_VCONF_NODE(listened_list, vconf, cb, data) \
-	setting_add_listen_node(&(listened_list), vconf, cb, data)
-
-extern void setting_destory_listen_list(Eina_List **listened_list);
-extern bool setting_add_listen_node(Eina_List **listened_list,
-		const char *vconf, vconf_callback_fn cb, void *data);
-
 extern int setting_set_int_slp_key(
 		setting_int_slp_list key, int value, int *err);
 extern int setting_get_int_slp_key(
