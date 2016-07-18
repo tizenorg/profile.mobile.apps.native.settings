@@ -203,10 +203,19 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 		NULL, uuid_MobileAP, 0, NULL},
 #endif
 #ifdef TIZEN_BUILD_TARGET
-	{	KeyStr_MobileNetworks, IMG_Network, "setting-network-efl",
-		Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0,
-		Cfg_Item_Ug_Node, NULL, KeyStr_Connections, NULL,
-		uuid_Network, 0, NULL},
+	{	KeyStr_MobileNetworks,
+		IMG_Network,
+		"org.tizen.setting-network",
+		Cfg_Item_Pos_Level0,
+		Cfg_Item_Resetable,
+		0,
+		Cfg_Item_AppLauncher_Node,
+		NULL,
+		KeyStr_Connections,
+		NULL,
+		uuid_Network,
+		0,
+		"org.tizen.setting-network"},
 #endif
 	/*More connections */
 	{	KeyStr_MoreConnectionSettings, IMG_More_Connections,

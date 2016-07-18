@@ -26,6 +26,9 @@
 #define UG_MODULE_API __attribute__ ((visibility("default")))
 #endif
 
+#define SETTING_NETWORK_PACKAGE_NAME "org.tizen.setting-network"
+#define NETWORK_LOCALEDIR _TZ_SYS_RO_APP"/org.tizen.setting-network/res/locale"
+
 const char *STR_SETTING_OPERATION_FAILED = "IDS_BT_POP_OPERATION_FAILED";
 static Evas_Object *__create_registering_popup(void *data);
 
@@ -147,14 +150,13 @@ char *__get_profile_name(int conType, void *data)
 static void __notify_response_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	setting_retm_if(!data, "!data");
 	SettingNetworkUG *ad = data;
+	ret_if(!ad);
 	if (obj) {
 		evas_object_del(obj);
 		obj = NULL;
 	}
-	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+	ui_app_exit();
 }
 
 static void __selected_network_change_cb(keynode_t *key, void *data)
@@ -186,7 +188,7 @@ static void __selected_network_change_cb(keynode_t *key, void *data)
 		setting_network_update_sel_network(ad);
 	} else if (!safeStrCmp(vconf_name, VCONFKEY_TELEPHONY_FLIGHT_MODE)) {
 		SETTING_TRACE("vconf_name:%s", vconf_name);
-		setting_create_popup(ad, ad->ly_main, NULL,
+		setting_create_popup(ad, ad->md.ly_main, NULL,
 				"IDS_ST_BODY_FLIGHT_MODE_HAS_BEEN_ENABLED_NETWORK_SETTINGS_WILL_CLOSE",
 				__notify_response_cb,
 				POPUP_INTERVAL * 2, TRUE, FALSE, 0);
@@ -201,8 +203,7 @@ static void setting_network_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
 	setting_view_update(&setting_view_network_main, ad);
 }
 
-static setting_view *__get_network_view_to_load(void *data,
-		app_control_h service)
+static setting_view *__get_network_view_to_load(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if((!data), NULL, "data is NULL");
@@ -299,15 +300,13 @@ void ___popup_view_resp_cb(void *data, Evas_Object *obj, void *event_info)
 #else
 
 	evas_object_hide(ad->popup);
-	SETTING_TRACE("ad->ug:%p", ad->ug);
-	ug_destroy_me(ad->ug);
+	ui_app_exit();
 #endif
 }
 
-static void *___load_popup_view(ui_gadget_h ug, enum ug_mode mode,
-		app_control_h service, void *priv)
+static Evas_Object *___load_popup_view(app_control_h service,
+		SettingNetworkUG *ad)
 {
-	SettingNetworkUG *ad = priv;
 	char *viewtype = NULL;
 	app_control_get_extra_data(service, "viewtype", &viewtype);
 
@@ -317,15 +316,15 @@ static void *___load_popup_view(ui_gadget_h ug, enum ug_mode mode,
 		setting_get_bool_slp_key(BOOL_SLP_SETTING_USE_PACKET_DATA,
 				&status, &err);
 		if (status) {
-			/*set to off */
-			ad->popup = setting_create_popup(ad, ad->win_get,
+			//set to off
+			ad->popup = setting_create_popup(ad, ad->md.win_main,
 					_(KeyStr_Network_Turn_Off_Mobile_Data),
 					_(KeyStr_Network_Mobile_Data_Has_Been_Disabled_Msg),
 					___popup_view_resp_cb, 0, FALSE, FALSE,
 					2, keyStr_OK, keyStr_CANCEL);
 		} else {
-			/*set to on */
-			ad->popup = setting_create_popup(ad, ad->win_get,
+			//set to on
+			ad->popup = setting_create_popup(ad, ad->md.win_main,
 			NULL, _(Data_packet_Popup_desc), ___popup_view_resp_cb,
 					0, FALSE, FALSE, 2, _("IDS_ST_SK_YES"),
 					_("IDS_ST_SK_NO"));
@@ -338,50 +337,63 @@ static void *___load_popup_view(ui_gadget_h ug, enum ug_mode mode,
 	return ad->popup;
 }
 
-static void *setting_network_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
-		app_control_h service, void *priv)
+static bool on_app_create(void *priv)
 {
-	setting_retvm_if((!priv), NULL, "!priv");
+	SettingNetworkUG *ad = priv;
+	retv_if(!ad, false);
 
-	SettingNetworkUG *networkUG = priv;
-	networkUG->ug = ug;
+	if (app_init(&ad->md, SETTING_NETWORK_PACKAGE_NAME)
+			!= SETTING_RETURN_SUCCESS) {
+		SETTING_TRACE_ERROR("Cannot initialize application");
+		return false;
+	}
 
-	networkUG->win_main_layout = (Evas_Object *)ug_get_parent_layout(ug);
-	networkUG->win_get = (Evas_Object *)ug_get_window();
+	return true;
+}
 
-	evas_object_show(networkUG->win_main_layout);
-	networkUG->evas = evas_object_evas_get(networkUG->win_main_layout);
+static void on_app_pause(void *data)
+{
+	SETTING_TRACE_BEGIN;
+}
 
-	setting_retvm_if(networkUG->win_main_layout == NULL, NULL,
-			"cannot get main window ");
+static void on_app_resume(void *data)
+{
+	SETTING_TRACE_BEGIN;
+}
+
+static void on_app_control(app_control_h service, void *priv)
+{
+	SETTING_TRACE_BEGIN;
+	Evas_Object *popup_view = NULL;
+	SettingNetworkUG *ad = priv;
+	ret_if(!ad);
+
+	ret_if(ad->init_done);
+	ad->init_done = true;
+
 #if 1
-	Evas_Object *popup_view = ___load_popup_view(ug, mode, service, priv);
+	popup_view = ___load_popup_view(service, ad);
 	if (popup_view)
-		return popup_view;
+		return;
 #endif
 
 	/* init */
 	ecore_imf_init();
 
 	/*pass NULL to let TAPI access default module */
-	networkUG->handle = tel_init(NULL);
-	if (!networkUG->handle) {
+	ad->handle = tel_init(NULL);
+	if (!ad->handle)
 		SETTING_TRACE_DEBUG("%s*** [ERR] tel_init. ***%s",
 				SETTING_FONT_RED, SETTING_FONT_BLACK);
-	}
 
-	if (CONNECTION_ERROR_NONE != connection_create(
-			&(networkUG->connection))) {
+	if (connection_create(&(ad->connection)) != CONNECTION_ERROR_NONE)
 		SETTING_TRACE_ERROR("***Failed to connection_create.***");
-	}
 
-	setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR);
+	setting_set_i18n(SETTING_PACKAGE, NETWORK_LOCALEDIR);
 
-	networkUG->view_type_string = NULL;
-	app_control_get_extra_data(service, "viewtype",
-			&(networkUG->view_type_string));
-	networkUG->view_to_load = __get_network_view_to_load(networkUG,
-			service);
+	ad->view_type_string = NULL;
+	app_control_get_extra_data(service, "viewtype", &ad->view_type_string);
+	ad->view_to_load = __get_network_view_to_load(ad);
 	/*SETTING_TRACE("ad->whitelist_doc:%p", networkUG->whitelist_doc); */
 	/*SETTING_TRACE("ad->whitelist_root_node:%p",
 	 * networkUG->whitelist_root_node); */
@@ -395,82 +407,62 @@ static void *setting_network_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	 * networkUG->whitelist_root_node); */
 
 	/*	creating a view. */
-	setting_view_node_set_cur_view(networkUG->view_to_load);
+	setting_view_node_set_cur_view(ad->view_to_load);
 	/*fix load network ug repeatedly issue */
-	if (networkUG->view_to_load == &setting_view_network_main
-			&& networkUG->view_to_load->is_create) {
-		networkUG->view_to_load->is_create = 0;
+	if (ad->view_to_load == &setting_view_network_main
+			&& ad->view_to_load->is_create) {
+		ad->view_to_load->is_create = 0;
 	}
-	setting_view_create(networkUG->view_to_load, (void *)networkUG);
+	setting_view_create(ad->view_to_load, (void *)ad);
 
 	/* register view node table */
 #ifdef UI_NETWORK_MODE
-	if (tel_get_network_mode(networkUG->handle, setting_tapi_get_band_cb,
-			networkUG) != TAPI_API_SUCCESS) {
+	if (tel_get_network_mode(ad->handle, setting_tapi_get_band_cb, ad)
+			!= TAPI_API_SUCCESS) {
 		SETTING_TRACE_ERROR("*** [ERR] tel_get_network_band. ***");
 	}
 #endif
 
-	if (tel_get_network_selection_mode(networkUG->handle,
-			setting_tapi_get_plmn_mode_cb, networkUG)
+	if (tel_get_network_selection_mode(ad->handle,
+			setting_tapi_get_plmn_mode_cb, ad)
 			!= TAPI_API_SUCCESS) {
 		SETTING_TRACE_ERROR(
 				"*** [ERR] tel_get_network_selection_mode. ***");
 	}
 
-	if (tel_get_network_serving(networkUG->handle,
-			setting_tapi_get_serving_network_cb, networkUG)
+	if (tel_get_network_serving(ad->handle,
+			setting_tapi_get_serving_network_cb, ad)
 			!= TAPI_API_SUCCESS) {
 		SETTING_TRACE_ERROR("*** [ERR] tel_get_network_serving. ***");
 	}
 
-	evas_object_event_callback_add(networkUG->win_main_layout,
+	evas_object_event_callback_add(ad->md.view_layout,
 			EVAS_CALLBACK_RESIZE, setting_network_ug_cb_resize,
-			networkUG);
+			ad);
 
 	(void)vconf_notify_key_changed(VCONFKEY_TELEPHONY_NWNAME,
-			__selected_network_change_cb, networkUG);
+			__selected_network_change_cb, ad);
 	(void)vconf_notify_key_changed(VCONFKEY_TELEPHONY_SPN_DISP_CONDITION,
-			__selected_network_change_cb, networkUG);
+			__selected_network_change_cb, ad);
 	(void)vconf_notify_key_changed(VCONFKEY_TELEPHONY_SPN_NAME,
-			__selected_network_change_cb, networkUG);
+			__selected_network_change_cb, ad);
 	(void)vconf_notify_key_changed(VCONFKEY_TELEPHONY_SVCTYPE,
-			__selected_network_change_cb, networkUG);
+			__selected_network_change_cb, ad);
 	(void)vconf_notify_key_changed(VCONFKEY_TELEPHONY_FLIGHT_MODE,
-			__selected_network_change_cb, networkUG);
+			__selected_network_change_cb, ad);
 
-	return networkUG->ly_main;
-}
-
-static void setting_network_ug_on_start(ui_gadget_h ug, app_control_h service,
-		void *priv)
-{
-	setting_retm_if((!priv), "!priv");
-
-	SettingNetworkUG *ad = priv;
+	/* from UG _on_start() */
 	ad->apn_internet = __get_profile_name(
 			CONNECTION_CELLULAR_SERVICE_TYPE_INTERNET, ad);
 	ad->apn_MMS = __get_profile_name(CONNECTION_CELLULAR_SERVICE_TYPE_MMS,
 			ad);
-
 }
 
-static void setting_network_ug_on_pause(ui_gadget_h ug, app_control_h service,
-		void *priv)
-{
-}
-
-static void setting_network_ug_on_resume(ui_gadget_h ug, app_control_h service,
-		void *priv)
-{
-}
-
-static void setting_network_ug_on_destroy(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void on_app_terminate(void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
-	SettingNetworkUG *networkUG = priv;
+	SettingNetworkUG *ad = priv;
 	/*unload_XML(&(networkUG->whitelist_doc),
 	 * &(networkUG->whitelist_root_node)); */
 
@@ -485,62 +477,53 @@ static void setting_network_ug_on_destroy(ui_gadget_h ug, app_control_h service,
 	(void)vconf_ignore_key_changed(VCONFKEY_TELEPHONY_FLIGHT_MODE,
 			__selected_network_change_cb);
 
-	evas_object_event_callback_del(networkUG->win_main_layout,
+	evas_object_event_callback_del(ad->md.view_layout,
 			EVAS_CALLBACK_RESIZE, setting_network_ug_cb_resize);
 	/* fix flash issue for gallery */
-	networkUG->ug = ug;
+	if (ad->view_type_string)
+		FREE(ad->view_type_string);
 
-	if (networkUG->view_type_string)
-		FREE(networkUG->view_type_string);
-	G_FREE(networkUG->ed_pxy_addr_desc);
-	G_FREE(networkUG->ed_pxy_port_desc);
-	FREE(networkUG->sel_network);
-	FREE(networkUG->access_name);
-	FREE(networkUG->con_name);
-	FREE(networkUG->apn_internet);
-	FREE(networkUG->apn_MMS);
+	G_FREE(ad->ed_pxy_addr_desc);
+	G_FREE(ad->ed_pxy_port_desc);
+	FREE(ad->sel_network);
+	FREE(ad->access_name);
+	FREE(ad->con_name);
+	FREE(ad->apn_internet);
+	FREE(ad->apn_MMS);
 	/* release */
 	ecore_imf_shutdown();
 
 	/*	unregister dnet client */
-	if (networkUG->connection) {
-		connection_destroy(networkUG->connection);
-		networkUG->connection = NULL;
+	if (ad->connection) {
+		connection_destroy(ad->connection);
+		ad->connection = NULL;
 	}
 
-	if (networkUG->handle
-			&& tel_deinit(networkUG->handle) != TAPI_API_SUCCESS) {
+	if (ad->handle && tel_deinit(ad->handle) != TAPI_API_SUCCESS) {
 		SETTING_TRACE_DEBUG(
 				"%s*** [ERR] setting_network_unsubscribe_tapi_events. ***%s",
 				SETTING_FONT_RED, SETTING_FONT_BLACK);
 	}
-	if (networkUG->profile_list != NULL) {
-		eina_list_free(networkUG->profile_list);
-		networkUG->profile_list = NULL;
+	if (ad->profile_list != NULL) {
+		eina_list_free(ad->profile_list);
+		ad->profile_list = NULL;
 	}
 
-	setting_network_popup_delete(networkUG);
+	setting_network_popup_delete(ad);
 	/*	delete the allocated objects. */
-	setting_view_destroy(&setting_view_network_select_network, networkUG);
+	setting_view_destroy(&setting_view_network_select_network, ad);
+	setting_view_destroy(&setting_view_network_con, ad);
+	setting_view_destroy(&setting_view_network_con_list, ad);
+	setting_view_destroy(&setting_view_network_connection_create, ad);
+	setting_view_destroy(&setting_view_network_profile_delete, ad);
+	setting_view_destroy(&setting_view_network_main, ad);
 
-	setting_view_destroy(&setting_view_network_con, networkUG);
-	setting_view_destroy(&setting_view_network_con_list, networkUG);
-	setting_view_destroy(&setting_view_network_connection_create,
-			networkUG);
-	setting_view_destroy(&setting_view_network_profile_delete, networkUG);
-	setting_view_destroy(&setting_view_network_main, networkUG);
-
-	if (NULL != ug_get_layout(networkUG->ug)) {
-		evas_object_hide((Evas_Object *)ug_get_layout(networkUG->ug));
-		evas_object_del((Evas_Object *)ug_get_layout(networkUG->ug));
+	if (ad->md.win_main) {
+		evas_object_del(ad->md.win_main);
+		ad->md.win_main = NULL;
 	}
 
 	SETTING_TRACE_END;
-}
-
-static void setting_network_ug_on_message(ui_gadget_h ug, app_control_h msg,
-		app_control_h service, void *priv)
-{
 }
 
 static void __update_mobile_data_on_popup(void *data)
@@ -577,128 +560,74 @@ static void __update_mobile_data_off_popup(void *data)
 	G_FREE(pop_info);
 }
 
-static void setting_network_ug_on_event(ui_gadget_h ug, enum ug_event event,
-		app_control_h service, void *priv)
+static void _lang_changed(app_event_info_h event_info, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	SettingNetworkUG *ad = (SettingNetworkUG *)priv;
+	ret_if(!ad || !ad->md.genlist || !setting_view_network_main.is_create);
 
-	switch (event) {
-	case UG_EVENT_LOW_MEMORY:
-		break;
-	case UG_EVENT_LOW_BATTERY:
-		break;
-	case UG_EVENT_LANG_CHANGE:
-		if (ad->genlist && setting_view_network_main.is_create) {
-			/*update items */
-			elm_genlist_realized_items_update(ad->genlist);
-			Elm_Object_Item *item = NULL;
-			Setting_GenGroupItem_Data *item_data = NULL;
-			if (ad->data_mobile_data) {
-				item = elm_genlist_item_next_get(
-						ad->data_mobile_data->item);
-				if (item)
-					item = elm_genlist_item_next_get(item);
+	/*update items */
+	elm_genlist_realized_items_update(ad->md.genlist);
+	Elm_Object_Item *item = NULL;
+	Setting_GenGroupItem_Data *item_data = NULL;
+	if (ad->data_mobile_data) {
+		item = elm_genlist_item_next_get(ad->data_mobile_data->item);
+		if (item)
+			item = elm_genlist_item_next_get(item);
 
-				if (item)
-					item_data = (Setting_GenGroupItem_Data *)elm_object_item_data_get(
-							item);
-			}
-			if (item_data) {
-				const char *title = Data_packet_Sub_desc;
-				item_data->keyStr = strdup(title);
-				elm_object_item_data_set(item_data->item,
-						item_data);
-				elm_genlist_item_update(item_data->item);
-			}
+		if (item)
+			item_data = (Setting_GenGroupItem_Data *)
+					elm_object_item_data_get(item);
+	}
+	if (item_data) {
+		const char *title = Data_packet_Sub_desc;
+		item_data->keyStr = strdup(title);
+		elm_object_item_data_set(item_data->item, item_data);
+		elm_genlist_item_update(item_data->item);
+	}
 #ifdef UI_NETWORK_MODE
-			/*update sub text */
-			if (ad->handle && tel_get_network_mode(ad->handle,
-					setting_tapi_get_band_cb, ad)
-					!= TAPI_API_SUCCESS) {
-				SETTING_TRACE_ERROR(
-						"*** [ERR] tel_get_network_band. ***");
-			}
-			setting_network_update_sel_network(ad);
+	/*update sub text */
+	if (ad->handle && tel_get_network_mode(ad->handle,
+			setting_tapi_get_band_cb, ad)
+			!= TAPI_API_SUCCESS) {
+		SETTING_TRACE_ERROR("*** [ERR] tel_get_network_band. ***");
+	}
+	setting_network_update_sel_network(ad);
 #endif
-			/*update title */
-			Elm_Object_Item *navi_it = elm_naviframe_bottom_item_get(
-					ad->navi_bar);
-			ret_if(!navi_it);
-			elm_object_item_text_set(navi_it,
-					_("IDS_ST_BODY_NETWORK"));
-			/*update popup */
-			__update_mobile_data_on_popup(ad);
-			__update_mobile_data_off_popup(ad);
-		}
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT:
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-		break;
-	case UG_EVENT_REGION_CHANGE:
-		break;
-	default:
-		break;
-	}
+	/*update title */
+	Elm_Object_Item *navi_it = elm_naviframe_bottom_item_get(ad->md.navibar_main);
+	ret_if(!navi_it);
+	elm_object_item_text_set(navi_it, _("IDS_ST_BODY_NETWORK"));
+	/*update popup */
+	__update_mobile_data_on_popup(ad);
+	__update_mobile_data_off_popup(ad);
 }
 
-static void setting_network_ug_on_key_event(ui_gadget_h ug,
-		enum ug_key_event event, app_control_h service, void *priv)
+EXPORT_PUBLIC
+int main(int argc, char *argv[])
 {
-	SETTING_TRACE_BEGIN;
-	SettingNetworkUG *ad = (SettingNetworkUG *)priv;
-
-	switch (event) {
-	case UG_KEY_EVENT_END: {
-		/* setting_network_popup_delete(ad); */
-		if (elm_naviframe_top_item_get(ad->navi_bar)
-				== elm_naviframe_bottom_item_get(ad->navi_bar)
-				) {
-			ug_destroy_me(ug);
-		} else {
-			/* elm_naviframe_item_pop(ad->navi_bar); */
-			setting_view_cb_at_endKey(ad);
-		}
-	}
-		break;
-	default:
-		break;
-	}
-}
-
-UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
-{
-	SETTING_TRACE_BEGIN;
-	SettingNetworkUG *networkUG = calloc(1, sizeof(SettingNetworkUG));
-	setting_retvm_if(!networkUG, -1, "Create SettingNetworkUG obj failed");
-
-	ops->create = setting_network_ug_on_create;
-	ops->start = setting_network_ug_on_start;
-	ops->pause = setting_network_ug_on_pause;
-	ops->resume = setting_network_ug_on_resume;
-	ops->destroy = setting_network_ug_on_destroy;
-	ops->message = setting_network_ug_on_message;
-	ops->event = setting_network_ug_on_event;
-	ops->key_event = setting_network_ug_on_key_event;
-	ops->priv = networkUG;
-	ops->opt = UG_OPT_INDICATOR_ENABLE;
-
-	return 0;
-}
-
-UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
-{
-	SETTING_TRACE_BEGIN;
-	struct SettingNetworkUG *networkUG;
-	setting_retm_if(!ops, "ops == NULL");
-
-	networkUG = ops->priv;
-	FREE(networkUG);
+	app_event_handler_h handlers[5] = { NULL, };
+	ui_app_lifecycle_callback_s ops = {
+		.create = on_app_create,
+		.app_control = on_app_control,
+		.pause = on_app_pause,
+		.resume = on_app_resume,
+		.terminate = on_app_terminate,
+	};
+	SettingNetworkUG app_data;
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY],
+			APP_EVENT_LOW_MEMORY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY],
+			APP_EVENT_LOW_BATTERY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED],
+			APP_EVENT_LANGUAGE_CHANGED, _lang_changed, &app_data);
+	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED],
+			APP_EVENT_REGION_FORMAT_CHANGED, NULL, NULL);
+	ui_app_add_event_handler(
+			&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED],
+			APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
+	memset(&app_data, 0x0, sizeof(app_data));
+	return ui_app_main(argc, argv, &ops, &app_data);
 }
 
 /* ***************************************************
@@ -890,7 +819,7 @@ void setting_tapi_set_plmn_mode_cb(TapiHandle *handle, int result, void *data,
 				&& ad->data_auto_network_item
 				&& !ad->data_auto_network_item->chk_status) {
 			SETTING_TRACE("Need refreshing");
-			setting_create_popup(ad, ad->win_get, NULL,
+			setting_create_popup(ad, ad->md.win_main, NULL,
 					keyStr_Failed_Select_Network, NULL,
 					2 * POPUP_INTERVAL, FALSE, FALSE, 0);
 			elm_radio_value_set(ad->chk_sel, -2);
@@ -912,7 +841,7 @@ void setting_tapi_set_plmn_mode_cb(TapiHandle *handle, int result, void *data,
 	ad->b_set_manul_network = FALSE;
 	setting_network_update_sel_network(ad);
 
-	Evas_Object *popup = elm_popup_add(ad->win_get);
+	Evas_Object *popup = elm_popup_add(ad->md.win_main);
 	elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
 	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK,
 			eext_popup_back_cb, NULL);
@@ -1152,18 +1081,18 @@ void setting_tapi_search_network_cb(TapiHandle *handle, int result, void *data,
 		/*valid_cnt = 0; for test.. */
 		if (valid_cnt > 0) {
 			/* [ UI UPDATE ]*/
-			setting_create_popup(ad, ad->win_get, NULL,
+			setting_create_popup(ad, ad->md.win_main, NULL,
 					keyStr_Searched, NULL, POPUP_INTERVAL,
 					FALSE, FALSE, 0);
 		} else { /*there is no invalid plmn nearby */
 			/* [ UI UPDATE ]*/
-			setting_create_popup(ad, ad->win_get, NULL,
+			setting_create_popup(ad, ad->md.win_main, NULL,
 					keyStr_No_Other_Network, NULL,
 					POPUP_INTERVAL, FALSE, FALSE, 0);
 		}
 	} else {
 		/* [ UI UPDATE ]*/
-		setting_create_popup(ad, ad->win_get, NULL,
+		setting_create_popup(ad, ad->md.win_main, NULL,
 				keyStr_Failed_Searched, NULL, POPUP_INTERVAL,
 				FALSE, FALSE, 0);
 	}
@@ -1352,7 +1281,7 @@ void __register_network(Setting_GenGroupItem_Data *list_item)
 					"%s*** [ERR] " "tel_select_network_manual. " "tapi_ret=%d ***%s",
 					SETTING_FONT_RED, tapi_ret,
 					SETTING_FONT_BLACK);
-			setting_create_popup(ad, ad->win_get, NULL,
+			setting_create_popup(ad, ad->md.win_main, NULL,
 					"IDS_ST_BODY_FAILED_TO_SELECT_NETWORK",
 					NULL, POPUP_INTERVAL, FALSE, FALSE, 0);
 
@@ -1397,7 +1326,7 @@ static Evas_Object *__create_registering_popup(void *data)
 			(Setting_GenGroupItem_Data *)data;
 	SettingNetworkUG *ad = list_item->userdata;
 
-	Evas_Object *popup = elm_popup_add(ad->win_get);
+	Evas_Object *popup = elm_popup_add(ad->md.win_main);
 	elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
 	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK,
 			__ignore_back_key_cb, list_item);
@@ -1505,7 +1434,7 @@ Evas_Object *__create_searching_popup(void *data)
 			(Setting_GenGroupItem_Data *)data;
 	SettingNetworkUG *ad = list_item->userdata;
 
-	Evas_Object *popup = elm_popup_add(ad->ly_main);
+	Evas_Object *popup = elm_popup_add(ad->md.ly_main);
 	elm_object_domain_translatable_part_text_set(popup, "title,text",
 			SETTING_PACKAGE, _("IDS_ST_POP_SEARCHING_NETWORK_ING"));
 
@@ -1602,7 +1531,7 @@ static Eina_Bool __search_net_on_timer(void *data)
 		SETTING_TRACE_ERROR(
 				"%s*** [ERR] tel_search_network. tapi_ret=%d ***%s",
 				SETTING_FONT_RED, tapi_ret, SETTING_FONT_BLACK);
-		setting_create_popup(ad, ad->win_get, NULL,
+		setting_create_popup(ad, ad->md.win_main, NULL,
 				STR_SETTING_OPERATION_FAILED, NULL,
 				POPUP_INTERVAL, FALSE, FALSE, 0);
 
@@ -1672,7 +1601,7 @@ void __switch_automatic_on_resp_cb(void *data, Evas_Object *obj,
 
 		 //for delay..
 		 ad->popup = setting_create_popup_with_progressbar(ad,
-		 ad->win_get,
+		 ad->md.win_main,
 		 PROGRESSBAR_STYLE,
 		 NULL, NULL, NULL, 0, TRUE, FALSE, 0);
 
@@ -1754,7 +1683,7 @@ void setting_network_searching_network(Setting_GenGroupItem_Data *list_item)
 
 	SETTING_TRACE("ad->sel_net:%d", ad->sel_net);
 	if (value_use_packet != VCONFKEY_DNET_OFF) {
-		ad->popup = setting_create_popup(list_item, ad->ly_main,
+		ad->popup = setting_create_popup(list_item, ad->md.ly_main,
 				IDS_ST_BODY_UNABLE_TO_SCAN_FOR_NETWORKS,
 				_(SETTING_NETWORK_SEARCH_3G_ON_DESC),
 				__switch_automatic_on_resp_cb, 0, FALSE, FALSE,
@@ -1772,7 +1701,7 @@ void setting_network_searching_network(Setting_GenGroupItem_Data *list_item)
 		SETTING_TRACE_ERROR(
 				"%s*** [ERR] tel_search_network. tapi_ret=%d ***%s",
 				SETTING_FONT_RED, tapi_ret, SETTING_FONT_BLACK);
-		setting_create_popup(ad, ad->win_get, NULL,
+		setting_create_popup(ad, ad->md.win_main, NULL,
 				STR_SETTING_OPERATION_FAILED, NULL,
 				POPUP_INTERVAL, FALSE, FALSE, 0);
 
@@ -2171,6 +2100,7 @@ int is_lte_on_feature(void *data)
 	return ret;
 }
 
+/*
 static Setting_Cfg_Node_T s_cfg_node_array[] = { {
 	"IDS_ST_MBODY_MOBILE_DATA",
 	NULL,
@@ -2232,7 +2162,7 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
 		char **applocale)
 {
 	SETTING_TRACE_BEGIN;
-	SETTING_TRACE(">> setting-network-efl DB search code");
+	SETTING_TRACE(">> org.tizen.setting-network DB search code");
 
 	*applocale = strdup("setting:"_TZ_SYS_RO_APP\
 			"/org.tizen.setting/res/locale");
@@ -2253,6 +2183,7 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
 	}
 	return 0;
 }
+*/
 
 int setting_network_get_state_data_roaming(int *value)
 {

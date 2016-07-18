@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="3.0" package="org.tizen.setting-network" version="0.9.5" install-location="internal-only">
+	<label>Network</label>
+	<author email="mj2004.park@samsung.com" href="www.samsung.com">MyoungJune Park</author>
+	<description>Network Setting Application</description>
+	<ui-application appid="org.tizen.setting-network" exec="setting-network" nodisplay="true" multiple="true" type="capp" taskmanage="false" hw-acceleration="use-GL" launch_mode="caller">
+		<category name="http://tizen.org/category/homeapp"/>
+		<metadata key="http://developer.samsung.com/tizen/metadata/legacylifecycle"/>
+		<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
+		<label>Network</label>
+		<label xml:lang="en-us">Network</label>
+		<label xml:lang="ja-jp">ネットワーク</label>
+		<label xml:lang="ko-kr">네트워크</label>
+		<application-service>
+			<operation name="http://samsung.com/appcontrol/operation/setting/mobile_network"/>
+		</application-service>
+		<application-service>
+			<operation name="http://tizen.org/appcontrol/operation/setting/mobile_network"/>
+		</application-service>
+	</ui-application>
+	<privileges>
+		<privilege>http://tizen.org/privilege/appmanager.launch</privilege>
+		<privilege>http://tizen.org/privilege/appmanager.kill</privilege>
+		<privilege>http://tizen.org/privilege/account.read</privilege>
+		<privilege>http://tizen.org/privilege/account.write</privilege>
+		<privilege>http://tizen.org/privilege/notification</privilege>
+		<privilege>http://tizen.org/privilege/telephony.admin</privilege>
+		<privilege>http://tizen.org/privilege/systemsettings.admin</privilege>
+		<privilege>http://tizen.org/privilege/display</privilege>
+	</privileges>
+</manifest>
+
