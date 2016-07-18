@@ -2285,12 +2285,16 @@ static int setting_about_main_destroy(void *cb)
 	if (ret != 0)
 		SETTING_TRACE_ERROR("call vconf_ignore_key_changed failed");
 
+	ret = vconf_ignore_key_changed(VCONFKEY_BT_STATUS,
+			__setting_about_main_vconf_change_cb);
+	if (ret != 0)
+		SETTING_TRACE_ERROR("call vconf_ignore_key_changed failed");
+
 	ret = vconf_ignore_key_changed(VCONFKEY_SETAPPL_DEVICE_NAME_STR,
 			__setting_about_main_vconf_change_cb);
 	if (ret != 0)
 		SETTING_TRACE_ERROR("call vconf_ignore_key_changed failed");
 
-	/*__setting_about_main_remove_noti(ad);*/
 
 	if (ad->update_timer) {
 		ecore_timer_del(ad->update_timer);
