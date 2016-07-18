@@ -36,7 +36,7 @@ static void __setting_network_con_genlist_create(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "data is NULL");
-	SettingNetworkUG *ad = (SettingNetworkUG *)data;
+	SettingNetwork *ad = (SettingNetwork *)data;
 	elm_genlist_clear(ad->connections_gl); /* first to clear list */
 
 	/*Elm_Object_Item *item = NULL;*/
@@ -183,8 +183,8 @@ static void ctxpopup_item_select_cb(void *data, Evas_Object *obj,
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");
-	SettingNetworkUG *ad = (SettingNetworkUG *)data;
-	ad->popup_conreset = setting_create_popup(ad, ad->win_get,
+	SettingNetwork *ad = (SettingNetwork *)data;
+	ad->popup_conreset = setting_create_popup(ad, ad->md.win_main,
 	NULL, _("IDS_ST_POP_RESET_TO_DEFAULT_Q"),
 			setting_network_con_reset_popup_cb, 0, false, false, 2,
 			_("IDS_ST_BUTTON_OK"), _("IDS_ST_BUTTON_CANCEL_ABB"));
@@ -200,9 +200,9 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj,
 		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	SettingNetworkUG *ad = (SettingNetworkUG *)data;
+	SettingNetwork *ad = (SettingNetwork *)data;
 	/*Evas_Object *it_obj; */
-	Evas_Object *nf = ad->navi_bar;
+	Evas_Object *nf = ad->md.navibar_main;
 	Evas_Object *win;
 	/*Elm_Object_Item *it; */
 
@@ -247,9 +247,9 @@ static int setting_network_con_create(void *cb)
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingNetworkUG *ad = (SettingNetworkUG *)cb;
+	SettingNetwork *ad = (SettingNetwork *)cb;
 
-	Evas_Object *scroller = elm_genlist_add(ad->win_main_layout);
+	Evas_Object *scroller = elm_genlist_add(ad->md.view_layout);
 	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
 			"Cannot set scroller object  as contento of layout");
 	elm_genlist_mode_set(scroller, ELM_LIST_COMPRESS);
@@ -265,14 +265,14 @@ static int setting_network_con_create(void *cb)
 			setting_network_con_click_softkey_cancel_cb,
 			/*setting_network_con_click_softkey_create_cb, */
 			NULL, setting_network_con_click_softkey_reset_cb,
-			ad, scroller, ad->navi_bar, NULL);
+			ad, scroller, ad->md.navibar_main, NULL);
 
 	elm_naviframe_item_pop_cb_set(navi_it,
 			setting_network_con_click_softkey_cancel_cb, ad);
 
 	__setting_network_con_genlist_create(ad);
 
-	Evas_Object *btn = elm_button_add(ad->navi_bar);
+	Evas_Object *btn = elm_button_add(ad->md.navibar_main);
 	elm_object_style_set(btn, "naviframe/more/default");
 	evas_object_smart_callback_add(btn, "clicked",
 			create_ctxpopup_more_button_cb, ad);
@@ -290,7 +290,7 @@ static int setting_network_con_destroy(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingNetworkUG *ad = (SettingNetworkUG *)cb;
+	SettingNetwork *ad = (SettingNetwork *)cb;
 	ad->is_update = 0;
 	/*FREE(ad->con_name); */
 	ad->connections_gl = NULL;
@@ -300,7 +300,7 @@ static int setting_network_con_destroy(void *cb)
 			ad->add_apn_timer = NULL;
 		}
 
-		elm_naviframe_item_pop(ad->navi_bar);
+		elm_naviframe_item_pop(ad->md.navibar_main);
 		setting_view_network_con.is_create = 0;
 	} else {
 		SETTING_TRACE("why is this is_create == 0 ?? !!!");
@@ -313,7 +313,7 @@ static int setting_network_con_update(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	SettingNetworkUG *ad = (SettingNetworkUG *)cb;
+	SettingNetwork *ad = (SettingNetwork *)cb;
 	__setting_network_con_genlist_create(ad);
 	return SETTING_RETURN_SUCCESS;
 }
@@ -349,7 +349,7 @@ static void setting_network_con_item_Gendial_mouse_up_cb(void *data,
 					item);
 	setting_retm_if(NULL == list_item, "list_item is NULL");
 
-	SettingNetworkUG *ad = (SettingNetworkUG *)data;
+	SettingNetwork *ad = (SettingNetwork *)data;
 	ad->profile_topper_view = NULL;
 
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
@@ -388,7 +388,7 @@ static void setting_network_con_item_Gendial_mouse_up_cb(void *data,
 
 			/* this code is not used now, so remove the ID which is
 			 * not in po file*/
-			setting_create_popup(NULL, ad->win_get,
+			setting_create_popup(NULL, ad->md.win_main,
 					NULL, _(""), NULL, 0, false, false, 0);
 			SETTING_TRACE_DEBUG("%s*** [ERR] INCORRECTED SIM. sim_slot_type=%d ***%s",
 					SETTING_FONT_RED, value,
@@ -400,7 +400,7 @@ static void setting_network_con_item_Gendial_mouse_up_cb(void *data,
 		case VCONFKEY_TELEPHONY_SIM_CARD_ERROR:
 		case VCONFKEY_TELEPHONY_SIM_UNKNOWN:
 
-			setting_create_popup(NULL, ad->win_get,
+			setting_create_popup(NULL, ad->md.win_main,
 					NULL,
 					_("IDS_SIM_BODY_INVALID_SIM_CARD"),
 					NULL, 0, false, false, 0);
@@ -462,9 +462,9 @@ static void setting_network_con_click_softkey_reset_cb(void *data,
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");
 
-	SettingNetworkUG *ad = (SettingNetworkUG *)data;
+	SettingNetwork *ad = (SettingNetwork *)data;
 
-	ad->popup_conreset = setting_create_popup(ad, ad->win_get,
+	ad->popup_conreset = setting_create_popup(ad, ad->md.win_main,
 	NULL, _("IDS_ST_POP_RESET_TO_DEFAULT_Q"),
 			setting_network_con_reset_popup_cb, 0, false, false, 2,
 			_("IDS_ST_BUTTON_OK"), _("IDS_ST_BUTTON_CANCEL_ABB"));
@@ -475,11 +475,11 @@ void _reset_do_default_cb(connection_error_e result, void *user_data)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(NULL == user_data, "NULL == data");
-	SettingNetworkUG *ad = (SettingNetworkUG *)user_data;
+	SettingNetwork *ad = (SettingNetwork *)user_data;
 
-	if (ad->network_ug_pop) {
-		evas_object_del(ad->network_ug_pop);
-		ad->network_ug_pop = NULL;
+	if (ad->network_popup) {
+		evas_object_del(ad->network_popup);
+		ad->network_popup = NULL;
 	}
 
 	if (ad->popup_conreset_complete) {
@@ -508,7 +508,7 @@ static void setting_network_con_reset_popup_cb(void *data, Evas_Object *obj,
 	int response_type = btn_type(obj);
 	int ret = 0;
 
-	SettingNetworkUG *ad = (SettingNetworkUG *)data;
+	SettingNetwork *ad = (SettingNetwork *)data;
 
 	if (ad) {
 		evas_object_del(ad->popup_conreset);
@@ -519,7 +519,7 @@ static void setting_network_con_reset_popup_cb(void *data, Evas_Object *obj,
 
 		/* waiting popup should be here */
 		ad->popup_conreset_complete = setting_create_popup_with_progressbar(
-				ad, ad->win_get,
+				ad, ad->md.win_main,
 				PROGRESSBAR_STYLE, NULL, IDS_ST_SK2_PLEASE_WAIT,
 				NULL, 0, TRUE, TRUE, 0);
 
@@ -543,7 +543,7 @@ static Eina_Bool setting_network_con_click_softkey_cancel_cb(void *data,
 	SETTING_TRACE_BEGIN;
 	retvm_if(data == NULL, EINA_FALSE, "Data parameter is NULL");
 
-	SettingNetworkUG *ad = (SettingNetworkUG *)data;
+	SettingNetwork *ad = (SettingNetwork *)data;
 
 	setting_view_change(&setting_view_network_con,
 			&setting_view_network_main, ad);

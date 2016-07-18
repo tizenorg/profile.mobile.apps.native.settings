@@ -100,9 +100,9 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj,
 		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	SettingNetworkUG *ad = (SettingNetworkUG *)data;
+	SettingNetwork *ad = (SettingNetwork *)data;
 	/*Evas_Object *it_obj; */
-	Evas_Object *nf = ad->navi_bar;
+	Evas_Object *nf = ad->md.navibar_main;
 	Evas_Object *win;
 	/*Elm_Object_Item *it; */
 
@@ -154,7 +154,7 @@ static int __con_list_recreate(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	SettingNetworkUG *ad = (SettingNetworkUG *)cb;
+	SettingNetwork *ad = (SettingNetwork *)cb;
 	Evas_Object *scroller;
 	scroller = ad->con_list_gl;
 	elm_genlist_clear(scroller); /* first to clear list */
@@ -322,9 +322,9 @@ static int setting_network_con_list_create(void *cb)
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingNetworkUG *ad = (SettingNetworkUG *)cb;
+	SettingNetwork *ad = (SettingNetwork *)cb;
 
-	Evas_Object *scroller = elm_genlist_add(ad->win_main_layout);
+	Evas_Object *scroller = elm_genlist_add(ad->md.view_layout);
 	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
 			"Cannot set scroller object  as contento of layout");
 
@@ -349,7 +349,7 @@ static int setting_network_con_list_create(void *cb)
 			setting_network_con_list_click_softkey_cancel_cb,
 			setting_network_con_list_click_softkey_delete_cb,
 			setting_network_con_list_click_softkey_create_cb, ad,
-			scroller, ad->navi_bar, NULL);
+			scroller, ad->md.navibar_main, NULL);
 
 	elm_naviframe_item_pop_cb_set(ad->navi_it_con_list,
 			setting_network_con_list_click_softkey_cancel_cb, ad);
@@ -357,7 +357,7 @@ static int setting_network_con_list_create(void *cb)
 			NULL);
 
 	/* Add ctx popup handler */
-	Evas_Object *btn = elm_button_add(ad->navi_bar);
+	Evas_Object *btn = elm_button_add(ad->md.navibar_main);
 	elm_object_style_set(btn, "naviframe/more/default");
 	evas_object_smart_callback_add(btn, "clicked",
 			create_ctxpopup_more_button_cb, ad);
@@ -381,14 +381,14 @@ static int setting_network_con_list_destroy(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingNetworkUG *ad = (SettingNetworkUG *)cb;
+	SettingNetwork *ad = (SettingNetwork *)cb;
 	if (setting_view_network_con_list.is_create) {
 		/*ad->connections_gl = NULL; */
 		setting_view_network_con_list.is_create = 0;
 		ad->selected_profile = NULL;
 		ad->navi_it_con_list = NULL;
 		ad->con_list_gl = NULL;
-		elm_naviframe_item_pop(ad->navi_bar);
+		elm_naviframe_item_pop(ad->md.navibar_main);
 	} else {
 		SETTING_TRACE("why is this is_create == 0 ?? !!!");
 	}
@@ -429,7 +429,7 @@ static void setting_network_con_list_go_button_cb(void *data, Evas_Object *obj,
 	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *item_data = data;
 
-	SettingNetworkUG *ad = item_data->userdata;
+	SettingNetwork *ad = item_data->userdata;
 	FREE(ad->access_name);
 	ad->access_name = strdup(item_data->keyStr2);
 	setting_view_change(&setting_view_network_con_list,
@@ -442,11 +442,11 @@ static void ___network_con_set_default_cb(connection_error_e result, void *data)
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item = data;
-	SettingNetworkUG *ad = list_item->userdata;
+	SettingNetwork *ad = list_item->userdata;
 	setting_retm_if(ad == NULL, "ad parameter is NULL");
-	if (ad->network_ug_pop) {
-		evas_object_del(ad->network_ug_pop);
-		ad->network_ug_pop = NULL;
+	if (ad->network_popup) {
+		evas_object_del(ad->network_popup);
+		ad->network_popup = NULL;
 	}
 
 	int srvType = CONNECTION_CELLULAR_SERVICE_TYPE_APPLICATION;
@@ -477,7 +477,7 @@ static void __set_default_response_cb(void *data, Evas_Object *obj,
 {
 	setting_retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item = data;
-	SettingNetworkUG *ad = list_item->userdata;
+	SettingNetwork *ad = list_item->userdata;
 
 	int srvType = CONNECTION_CELLULAR_SERVICE_TYPE_APPLICATION;
 	if (0 == safeStrCmp(ad->con_name, "IDS_ST_BODY_INTERNET_CONNECTION"))
@@ -510,7 +510,7 @@ void __set_default_profile(void *data)
 {
 	setting_retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item = data;
-	SettingNetworkUG *ad = list_item->userdata;
+	SettingNetwork *ad = list_item->userdata;
 	setting_retm_if(ad == NULL, "ad parameter is NULL");
 
 	connection_profile_iterator_h profile_iter = NULL;
@@ -561,7 +561,7 @@ void __set_default_profile(void *data)
 		if (0 == safeStrCmp(profile_id, list_item->keyStr2)) {
 
 			if (CONNECTION_CELLULAR_SERVICE_TYPE_MMS == srvType) {
-				setting_create_popup(ad, ad->win_get, NULL,
+				setting_create_popup(ad, ad->md.win_main, NULL,
 						_("IDS_MSGF_POP_UNSUPPORTED"),
 						NULL, 0, false, false, 0);
 				if (ad->selected_profile)
@@ -577,9 +577,9 @@ void __set_default_profile(void *data)
 						profile_h);
 				SETTING_TRACE("The result is :%d", ret);
 
-				if (ad->network_ug_pop) {
-					evas_object_del(ad->network_ug_pop);
-					ad->network_ug_pop = NULL;
+				if (ad->network_popup) {
+					evas_object_del(ad->network_popup);
+					ad->network_popup = NULL;
 				}
 				if (ret != CONNECTION_ERROR_NONE) {
 					if (ad->selected_profile)
@@ -588,14 +588,14 @@ void __set_default_profile(void *data)
 								ad->selected_profile->chk_status);
 
 					setting_create_popup(list_item,
-							ad->win_get, NULL,
+							ad->md.win_main, NULL,
 							_("IDS_CST_POP_FAILED"),
 							NULL, 2.0, FALSE, FALSE,
 							0);
 					return;
 				}
 
-				setting_create_popup(list_item, ad->win_get,
+				setting_create_popup(list_item, ad->md.win_main,
 						NULL,
 						_("IDS_ST_BUTTON2_PROCESSING_ING"),
 						__set_default_response_cb, 2.0,
@@ -624,7 +624,7 @@ static void setting_network_con_list_item_Gendial_mouse_up_cb(void *data,
 					item);
 	setting_retm_if(NULL == list_item, "list_item is NULL");
 
-	SettingNetworkUG *ad = list_item->userdata;
+	SettingNetwork *ad = list_item->userdata;
 	FREE(ad->access_name);
 	ad->access_name = strdup(list_item->keyStr2);
 	setting_view_change(&setting_view_network_con_list,
@@ -649,7 +649,7 @@ static void setting_network_con_list_click_softkey_delete_cb(void *data,
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");
 
-	SettingNetworkUG *ad = (SettingNetworkUG *)data;
+	SettingNetwork *ad = (SettingNetwork *)data;
 	setting_view_change(&setting_view_network_con_list,
 			&setting_view_network_profile_delete, ad);
 	if (ctxpopup != NULL) {
@@ -665,7 +665,7 @@ static void setting_network_con_list_click_softkey_create_cb(void *data,
 	/* error check */
 	retm_if(data == NULL, "Data parameter is NULL");
 
-	SettingNetworkUG *ad = (SettingNetworkUG *)data;
+	SettingNetwork *ad = (SettingNetwork *)data;
 
 	FREE(ad->access_name);
 	setting_view_change(&setting_view_network_con_list,
@@ -683,7 +683,7 @@ static Eina_Bool setting_network_con_list_click_softkey_cancel_cb(void *data,
 	/* error check */
 	retvm_if(data == NULL, EINA_FALSE, "Data parameter is NULL");
 
-	SettingNetworkUG *ad = (SettingNetworkUG *)data;
+	SettingNetwork *ad = (SettingNetwork *)data;
 
 	setting_view_change(&setting_view_network_con_list,
 			&setting_view_network_con, ad);

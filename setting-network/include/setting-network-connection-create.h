@@ -22,8 +22,8 @@
 #define __SETTING_NETWORK_CONNECTION_CREATE_H__
 
 #include <setting-network.h>
-static void setting_network_connection_check_entry_empty(SettingNetworkUG *ad);
-static void setting_network_connection_display_auth_type(SettingNetworkUG * ad,
+static void setting_network_connection_check_entry_empty(SettingNetwork *ad);
+static void setting_network_connection_display_auth_type(SettingNetwork * ad,
 		int auth_type);
 
 static void setting_network_connection_entry_changed_cb(void *data,
