@@ -131,6 +131,13 @@ Group: Application Framework/Settings
 #Requires: pkgconfig(setting-common-internal)
 %description devel
 
+%package moreconnections
+Summary: A setting moreconnections application
+Group: Application
+
+%description moreconnections
+Configuration application for moreconnections
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -342,3 +349,9 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %files ref
 %{_datadir}/mime/packages/mime.setting.xml
 %{_datadir}/packages/org.tizen.setting.xml.ref
+
+%files moreconnections
+%manifest setting-moreconnections/org.tizen.setting-moreconnections.manifest
+%{_prefix}/apps/org.tizen.setting-moreconnections/bin/setting-moreconnections
+%{_datadir}/packages/org.tizen.setting-moreconnections.xml
+%{_prefix}/apps/org.tizen.setting-moreconnections/res/*
