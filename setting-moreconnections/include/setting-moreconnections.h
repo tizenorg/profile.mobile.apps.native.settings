@@ -25,40 +25,26 @@
 #include <string.h>
 #include <Elementary.h>
 #include <glib-object.h>
-#include <setting-common-draw-widget.h>
-#include <setting-common-view.h>
-#include <setting-common-data-type.h>
-#include <setting-cfg.h>
-/*#include <locations.h> */
+
+#include "setting-cfg.h"
+#include "setting-common-data-type.h"
+#include "setting-common-draw-widget.h"
+#include "setting-common-init.h"
+#include "setting-common-view.h"
 
 #define KeyStr_On		"IDS_ST_BODY_ON"
 #define KeyStr_Off		"IDS_ST_BODY_ALERTTYPE_OFF"
 #define KeyStr_LocationService	"IDS_LBS_BODY_LOCATION_SERVICE"
 #define KeyStr_VPN		"IDS_ST_BODY_VPN"
 
-typedef struct _SettingMoreConnectionsUG SettingMoreConnectionsUG;
+typedef struct _SettingMoreConnections SettingMoreConnections;
 
 /**
- * Setting MoreConnections UG context
- * all UG function has void* as an agument. this is casted back to
- * SettingMoreConnectionsUG and the functions access app context.
+ * Setting MoreConnections context
  */
-struct _SettingMoreConnectionsUG {
-	ui_gadget_h ug;
+struct _SettingMoreConnections {
+	MainData md;
 
-	/* add more variables here (move your appdata to here) */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-
-	Evas_Object *ly_main;
-
-	/*	for navigation effect */
-	Evas_Object *navi_bar;
-	Elm_Object_Item *navi_item;
-
-	/* genlist */
-	Evas_Object *genlist;
 	Setting_GenGroupItem_Data *location_service;
 	Setting_GenGroupItem_Data *VPN;
 
@@ -67,12 +53,9 @@ struct _SettingMoreConnectionsUG {
 	Elm_Genlist_Item_Class itc_1text;
 
 	bool empty_flag;
-
 };
 
 extern setting_view setting_view_moreconnections_main;
-char *setting_location_is_enable(void *data);
-void setting_moreconnections_layout_ug_cb(
-		ui_gadget_h ug, enum ug_mode mode, void *priv);
+char *setting_location_is_enabled(void *data);
 
 #endif				/* __SETTING_MORECONNECTIONS_H__ */

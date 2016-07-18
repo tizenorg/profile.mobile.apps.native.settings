@@ -179,12 +179,6 @@
 			<label xml:lang="en-us">Display</label>
 	</ui-application>
 
-	<ui-application appid="setting-moreconnections-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-moreconnections-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
-			<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
-			<label>MoreConnections</label>
-			<label xml:lang="en-us">MoreConnections</label>
-	</ui-application>
-
 	<ui-application appid="setting-applications-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-applications-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
 			<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
 			<label>Applications</label>
