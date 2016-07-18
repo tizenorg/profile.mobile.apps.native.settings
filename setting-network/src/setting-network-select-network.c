@@ -176,21 +176,21 @@ static int setting_network_select_network_create(void *cb)
 
 	SettingNetworkUG *ad = (SettingNetworkUG *)cb;
 	if (ad->view_to_load == &setting_view_network_select_network) {
-		ad->ly_main = setting_create_layout_navi_bar_genlist(
-				ad->win_main_layout, ad->win_get,
+		ad->md.ly_main = setting_create_layout_navi_bar_genlist(
+				ad->md.view_layout, ad->md.win_main,
 				"IDS_COM_BODY_NETWORK_OPERATORS",
 				_("IDS_ST_BUTTON_BACK"), NULL,
 				setting_network_select_network_click_softkey_cancel_cb,
 				NULL, ad, &ad->genlist_sel_network,
-				&ad->navi_bar);
+				&ad->md.navibar_main);
 	} else {
-		setting_push_layout_navi_bar_genlist(ad->win_main_layout,
-				ad->win_get, "IDS_COM_BODY_NETWORK_OPERATORS",
+		setting_push_layout_navi_bar_genlist(ad->md.view_layout,
+				ad->md.win_main, "IDS_COM_BODY_NETWORK_OPERATORS",
 				_("IDS_ST_BUTTON_BACK"),
 				NULL,
 				setting_network_select_network_click_softkey_cancel_cb,
 				NULL, ad, &ad->genlist_sel_network,
-				ad->navi_bar);
+				ad->md.navibar_main);
 	}
 
 	/*m_Object_Item *item = elm_genlist_item_append(ad->genlist_sel_network,
@@ -417,14 +417,14 @@ static int setting_network_select_network_destroy(void *cb)
 	setting_network_update_sel_network(ad);
 
 	if (ad->view_to_load == &setting_view_network_select_network) {
-		if (ad->ly_main) {
-			evas_object_del(ad->ly_main);
-			ad->ly_main = NULL;
+		if (ad->md.ly_main) {
+			evas_object_del(ad->md.ly_main);
+			ad->md.ly_main = NULL;
 		}
 	} else {
-		elm_naviframe_item_pop(ad->navi_bar);
+		elm_naviframe_item_pop(ad->md.navibar_main);
 	}
-	/* elm_naviframe_item_pop(ad->navi_bar); */
+	/* elm_naviframe_item_pop(ad->md.navibar_main); */
 
 	/*Following handlers will be used by async listening callback. They
 	 * must be reset after genlist is 'popuped'. */
@@ -483,8 +483,7 @@ static void setting_network_select_network_click_softkey_cancel_cb(void *data,
 			"[Setting > Network > Select] Data parameter is NULL");
 
 	if (ad->view_to_load == &setting_view_network_select_network) {
-		/* exit */
-		ug_destroy_me(ad->ug);
+		ui_app_exit();
 		return;
 	} else {
 		setting_view_change(&setting_view_network_select_network,
