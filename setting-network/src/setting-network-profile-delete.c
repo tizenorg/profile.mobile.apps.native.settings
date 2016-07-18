@@ -227,7 +227,7 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj,
 	SETTING_TRACE_BEGIN;
 	SettingNetworkUG *ad = (SettingNetworkUG *)data;
 	/*Evas_Object *it_obj; */
-	Evas_Object *nf = ad->navi_bar;
+	Evas_Object *nf = ad->md.navibar_main;
 	Evas_Object *win;
 	/*Elm_Object_Item *it; */
 
@@ -276,7 +276,7 @@ static int setting_network_profile_delete_create(void *cb)
 	SETTING_TRACE_BEGIN;
 	SettingNetworkUG *ad = (SettingNetworkUG *)cb;
 
-	Evas_Object *scroller = elm_genlist_add(ad->win_main_layout);
+	Evas_Object *scroller = elm_genlist_add(ad->md.view_layout);
 	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
 			"Cannot set scroller object  as contento of layout");
 	elm_object_style_set(scroller, "dialogue");
@@ -292,14 +292,14 @@ static int setting_network_profile_delete_create(void *cb)
 			setting_network_profile_delete_click_softkey_cancel_cb,
 			setting_network_profile_delete_click_softkey_delete_cb,
 			setting_network_profile_delete_click_softkey_cancel_cb,
-			ad, scroller, ad->navi_bar, NULL);
+			ad, scroller, ad->md.navibar_main, NULL);
 	/*disable Delete button */
 	Evas_Object *toolbar = elm_object_item_part_content_get(
 			ad->navi_it_profile_del_list, "toolbar");
 	Elm_Object_Item *it = elm_toolbar_last_item_get(toolbar);
 	elm_object_item_disabled_set(it, EINA_TRUE);
 
-	Evas_Object *allbtn = elm_button_add(ad->navi_bar);
+	Evas_Object *allbtn = elm_button_add(ad->md.navibar_main);
 	evas_object_size_hint_weight_set(allbtn, EVAS_HINT_EXPAND,
 			EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(allbtn, EVAS_HINT_FILL, 0.5);
@@ -322,7 +322,7 @@ static int setting_network_profile_delete_create(void *cb)
 	}
 
 	/* Add ctx popup handler */
-	Evas_Object *morebtn = elm_button_add(ad->navi_bar);
+	Evas_Object *morebtn = elm_button_add(ad->md.navibar_main);
 	elm_object_style_set(morebtn, "naviframe/more/default");
 	evas_object_smart_callback_add(morebtn, "clicked",
 			create_ctxpopup_more_button_cb, ad);
@@ -365,7 +365,7 @@ static int setting_network_profile_delete_destroy(void *cb)
 	}
 	ad->gl_profile_del = NULL;
 	ad->navi_it_profile_del_list = NULL;
-	elm_naviframe_item_pop(ad->navi_bar);
+	elm_naviframe_item_pop(ad->md.navibar_main);
 	setting_view_network_profile_delete.is_create = 0;
 
 	return SETTING_RETURN_SUCCESS;
@@ -414,7 +414,7 @@ void ___profile_selected(void *data)
 
 		check_list = eina_list_next(check_list);
 	}
-	Elm_Object_Item *navi_it = elm_naviframe_top_item_get(ad->navi_bar);
+	Elm_Object_Item *navi_it = elm_naviframe_top_item_get(ad->md.navibar_main);
 	if (navi_it) {
 		Evas_Object *toolbar = elm_object_item_part_content_get(navi_it,
 				"toolbar");
@@ -604,7 +604,7 @@ static void setting_network_profile_delete_click_softkey_delete_cb(void *data,
 		g_strlcat(speciliztion, _(": "), MAX_SPECIALIZITION_LEN);
 		g_strlcat(speciliztion, _("IDS_COM_POP_DELETE_FAILED"),
 				MAX_SPECIALIZITION_LEN);
-		setting_create_popup(ad, ad->win_get, NULL, _(speciliztion),
+		setting_create_popup(ad, ad->md.win_main, NULL, _(speciliztion),
 				NULL, 0, false, false, 0);
 
 		if (ad->navi_it_profile_del_list)
@@ -622,7 +622,7 @@ static void setting_network_profile_delete_click_softkey_delete_cb(void *data,
 	}
 
 	if (result) {
-		setting_create_popup(ad, ad->win_get, NULL,
+		setting_create_popup(ad, ad->md.win_main, NULL,
 				"IDS_ST_BODY_DELETED",
 				__popup_deleted_response_cb, 1, FALSE, FALSE,
 				0);
