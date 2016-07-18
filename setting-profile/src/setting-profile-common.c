@@ -380,7 +380,7 @@ static void __disable_sound_menu(void *data)
 	item_to_update = ad->data_sound_when_ring;
 	setting_genlist_item_disabled_set(item_to_update, EINA_TRUE);
 	/* Disable Call Volume slider if Silent ringtone is selected */
-	if (!safeStrCmp(ad->data_call_alert_tone && ad->data_call_alert_tone->sub_desc, "Silent")) {
+	if (ad->data_call_alert_tone && !safeStrCmp(ad->data_call_alert_tone->sub_desc, "Silent")) {
 		elm_object_item_disabled_set(ad->data_call_volume->item, EINA_TRUE);
 		elm_object_disabled_set(ad->data_call_volume->eo_check, EINA_TRUE);
 	}
