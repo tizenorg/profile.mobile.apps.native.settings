@@ -25,11 +25,12 @@
 #include <string.h>
 #include <Elementary.h>
 #include <glib-object.h>
-#include <setting-common-draw-widget.h>
-#include <setting-common-view.h>
-#include <setting-common-data-type.h>
-#include <setting-cfg.h>
-/*#include <locations.h> */
+
+#include "setting-cfg.h"
+#include "setting-common-data-type.h"
+#include "setting-common-draw-widget.h"
+#include "setting-common-init.h"
+#include "setting-common-view.h"
 
 #define KeyStr_On		"IDS_ST_BODY_ON"
 #define KeyStr_Off		"IDS_ST_BODY_ALERTTYPE_OFF"
@@ -44,21 +45,8 @@ typedef struct _SettingMoreConnectionsUG SettingMoreConnectionsUG;
  * SettingMoreConnectionsUG and the functions access app context.
  */
 struct _SettingMoreConnectionsUG {
-	ui_gadget_h ug;
+	MainData md;
 
-	/* add more variables here (move your appdata to here) */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-
-	Evas_Object *ly_main;
-
-	/*	for navigation effect */
-	Evas_Object *navi_bar;
-	Elm_Object_Item *navi_item;
-
-	/* genlist */
-	Evas_Object *genlist;
 	Setting_GenGroupItem_Data *location_service;
 	Setting_GenGroupItem_Data *VPN;
 
@@ -67,7 +55,6 @@ struct _SettingMoreConnectionsUG {
 	Elm_Genlist_Item_Class itc_1text;
 
 	bool empty_flag;
-
 };
 
 extern setting_view setting_view_moreconnections_main;

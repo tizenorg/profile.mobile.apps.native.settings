@@ -21,29 +21,22 @@
 
 #include "setting-moreconnections.h"
 
-#ifndef UG_MODULE_API
-#define UG_MODULE_API __attribute__ ((visibility("default")))
-#endif
+#define SETTING_MORECONNECTIONS_PACKAGE_NAME "org.tizen.setting-moreconnections"
+#define MORECONNECTIONS_LOCALEDIR _TZ_SYS_RO_APP"/org.tizen.setting-moreconnections/res/locale"
 
-static void *setting_moreconnections_ug_on_create(ui_gadget_h ug,
-		enum ug_mode mode, app_control_h service, void *priv)
+bool app_create(void *priv)
 {
 	SETTING_TRACE_BEGIN;
-	setting_retvm_if((!priv), NULL, "!priv");
+	SettingMoreConnectionsUG *ad = priv;
+	retv_if(!ad, NULL);
 
-	SettingMoreConnectionsUG *moreconnectionsUG = priv;
-	moreconnectionsUG->ug = ug;
-	moreconnectionsUG->win_main_layout =
-			(Evas_Object *)ug_get_parent_layout(
-					ug);
-	moreconnectionsUG->win_get = (Evas_Object *)ug_get_window();
+	if (app_init(&ad->md, SETTING_MORECONNECTIONS_PACKAGE_NAME)
+			!= SETTING_RETURN_SUCCESS) {
+		SETTING_TRACE_ERROR("Cannot initialize application");
+		return false;
+	}
 
-	moreconnectionsUG->evas = evas_object_evas_get(
-			moreconnectionsUG->win_main_layout);
-
-	setting_retvm_if(moreconnectionsUG->win_main_layout == NULL, NULL,
-			"cannot get main window ");
-	setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR);
+	setting_set_i18n(SETTING_PACKAGE, MORECONNECTIONS_LOCALEDIR);
 
 	/* register view node table */
 	setting_view_node_table_intialize();
@@ -52,121 +45,94 @@ static void *setting_moreconnections_ug_on_create(ui_gadget_h ug,
 
 	/*	creating a view. */
 	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
-			&(moreconnectionsUG->itc_2text_2));
+			&(ad->itc_2text_2));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(moreconnectionsUG->itc_1text));
+			&(ad->itc_1text));
 
 	setting_view_node_set_cur_view(&setting_view_moreconnections_main);
-	setting_view_create(&setting_view_moreconnections_main,
-			(void *)moreconnectionsUG);
+	setting_view_create(&setting_view_moreconnections_main, (void *)ad);
 
-	return moreconnectionsUG->ly_main;
+	return true;
 }
 
-static void setting_moreconnections_ug_on_start(ui_gadget_h ug,
-		app_control_h service, void *priv)
+static void app_pause(void *data)
 {
 	SETTING_TRACE_BEGIN;
-	SETTING_TRACE_END;
 }
 
-static void setting_moreconnections_ug_on_pause(ui_gadget_h ug,
-		app_control_h service, void *priv)
+static void app_controll(app_control_h service, void *data)
 {
 	SETTING_TRACE_BEGIN;
-	SETTING_TRACE_END;
 }
 
-static void setting_moreconnections_ug_on_resume(ui_gadget_h ug,
-		app_control_h service, void *priv)
+static void app_resume(void *priv)
 {
 	SETTING_TRACE_BEGIN;
-	setting_retm_if((!priv), "!priv");
+	char *sub_desc;
+	SettingMoreConnectionsUG *ad = priv;
+	ret_if(!priv);
 
-	SettingMoreConnectionsUG *moreconnectionsUG = priv;
-	setting_view_create(&setting_view_moreconnections_main,
-			(void *)moreconnectionsUG);
+	setting_view_create(&setting_view_moreconnections_main, (void *)ad);
 
-	if (moreconnectionsUG->location_service) {
-		char *sub_desc = setting_location_is_enable(priv);
-		moreconnectionsUG->location_service->sub_desc = (char *)strdup(
-				sub_desc);
-		elm_object_item_data_set(
-				moreconnectionsUG->location_service->item,
-				moreconnectionsUG->location_service);
-		elm_genlist_item_update(
-				moreconnectionsUG->location_service->item);
+	if (ad->location_service) {
+		sub_desc = setting_location_is_enable(priv);
+		ad->location_service->sub_desc = (char *)strdup(sub_desc);
+		elm_object_item_data_set(ad->location_service->item,
+				ad->location_service);
+		elm_genlist_item_update(ad->location_service->item);
 	}
 
 	SETTING_TRACE_END;
 }
 
-static void setting_moreconnections_ug_on_destroy(ui_gadget_h ug,
-		app_control_h service, void *priv)
+static void app_terminate(void *priv)
 {
 	SETTING_TRACE_BEGIN;
-	SettingMoreConnectionsUG *moreconnectionsUG = priv;
+	SettingMoreConnectionsUG *ad = priv;
 
 	/* called when this shared gadget is terminated. similar with
 	 * app_exit */
-	setting_view_destroy(&setting_view_moreconnections_main,
-			moreconnectionsUG);
+	setting_view_destroy(&setting_view_moreconnections_main, ad);
 
 	SETTING_TRACE_END;
 }
 
-static void setting_moreconnections_ug_on_message(ui_gadget_h ug,
-		app_control_h msg, app_control_h service, void *priv)
+static void _lang_changed(app_event_info_h event_info, void *data)
 {
-	SETTING_TRACE_BEGIN;
-	SETTING_TRACE_END;
+	char *lang = NULL;
+	if (app_event_get_language(event_info, &lang) == APP_ERROR_NONE) {
+		SETTING_TRACE_DEBUG("Setting - language is changed : %s", lang);
+		elm_language_set(lang);
+		elm_config_all_flush();
+		free(lang);
+	} else {
+		SETTING_TRACE_ERROR("Cannot get language from event_info");
+	}
 }
 
-static void setting_moreconnections_ug_on_event(ui_gadget_h ug,
-		enum ug_event event, app_control_h service, void *priv)
+EXPORT_PUBLIC
+int main(int argc, char *argv[])
 {
-	SETTING_TRACE_BEGIN;
-	SETTING_TRACE_END;
-}
-
-static void setting_moreconnections_ug_on_key_event(ui_gadget_h ug,
-		enum ug_key_event event, app_control_h service, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-	SETTING_TRACE_END;
-}
-
-UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
-{
-	SETTING_TRACE_BEGIN;
-	SettingMoreConnectionsUG *moreconnectionsUG = calloc(1,
-			sizeof(SettingMoreConnectionsUG));
-	setting_retvm_if(!moreconnectionsUG, -1,
-			"Create SettingMoreConnectionsUG obj failed");
-
-	memset(moreconnectionsUG, 0x00, sizeof(SettingMoreConnectionsUG));
-
-	ops->create = setting_moreconnections_ug_on_create;
-	ops->start = setting_moreconnections_ug_on_start;
-	ops->pause = setting_moreconnections_ug_on_pause;
-	ops->resume = setting_moreconnections_ug_on_resume;
-	ops->destroy = setting_moreconnections_ug_on_destroy;
-	ops->message = setting_moreconnections_ug_on_message;
-	ops->event = setting_moreconnections_ug_on_event;
-	ops->key_event = setting_moreconnections_ug_on_key_event;
-	ops->priv = moreconnectionsUG;
-	ops->opt = UG_OPT_INDICATOR_ENABLE;
-
-	return 0;
-}
-
-UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
-{
-	SETTING_TRACE_BEGIN;
-	struct SettingMoreConnectionsUG *moreconnectionsUG;
-	setting_retm_if(!ops, "ops == NULL");
-
-	moreconnectionsUG = ops->priv;
-	if (moreconnectionsUG)
-		FREE(moreconnectionsUG);
+	app_event_handler_h handlers[5] = {NULL, };
+	ui_app_lifecycle_callback_s ops = {
+		.create = app_create,
+		.pause = app_pause,
+		.resume = app_resume,
+		.terminate = app_terminate,
+		.app_control = app_controll,
+	};
+	SettingMoreConnectionsUG app_data;
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY],
+			APP_EVENT_LOW_MEMORY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY],
+			APP_EVENT_LOW_BATTERY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED],
+			APP_EVENT_LANGUAGE_CHANGED, _lang_changed, &app_data);
+	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED],
+			APP_EVENT_REGION_FORMAT_CHANGED, NULL, NULL);
+	ui_app_add_event_handler(
+			&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED],
+			APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
+	memset(&app_data, 0x0, sizeof(app_data));
+	return ui_app_main(argc, argv, &ops, &app_data);
 }
