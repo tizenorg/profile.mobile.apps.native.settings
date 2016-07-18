@@ -25,6 +25,8 @@ static int setting_moreconnections_main_create(void *cb);
 static int setting_moreconnections_main_destroy(void *cb);
 static int setting_moreconnections_main_update(void *cb);
 static int setting_moreconnections_main_cleanup(void *cb);
+static void setting_moreconnections_main_mouse_up_Gendial_list_cb(
+		void *data, Evas_Object *obj, void *event_info);
 
 setting_view setting_view_moreconnections_main = {
 	.create = setting_moreconnections_main_create,
@@ -39,18 +41,17 @@ setting_view setting_view_moreconnections_main = {
  * @param obj evas object
  * @param event_info event type
  ************************************************/
-static Eina_Bool setting_moreconnections_main_click_softkey_back_cb(void *data,
-		Evas_Object *obj, void *event_info)
+static void setting_moreconnections_main_click_softkey_back_cb(
+		void *data, Evas_Object *obj, void *event_info)
 {
-	setting_retvm_if(data == NULL, EINA_FALSE, "Data parameter is NULL");
+	SETTING_TRACE_BEGIN;
 	SettingMoreConnectionsUG *ad = (SettingMoreConnectionsUG *)data;
-	if (ad->empty_flag)
-		return EINA_FALSE;
+	ret_if(!ad);
 
-	/* Send destroy request */
-	ug_destroy_me(ad->ug);
-	SETTING_TRACE_END;
-	return EINA_FALSE;
+	if (ad->empty_flag)
+		return;
+	if (ad->md.win_main)
+		elm_win_lower(ad->md.win_main);
 }
 
 static void setting_moreconnections_main_mouse_up_Gendial_list_cb(void *data,
@@ -140,16 +141,15 @@ char *setting_location_is_enable(void *data)
  * @return FALSE for call it once and then destory the timer, TRUE for always
  * call it when the timer is reached.
  **************************************************/
-int setting_moreconnections_main_generate_genlist(void *data)
+int setting_moreconnections_main_generate_genlist(SettingMoreConnectionsUG *ad)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
-	retv_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	SettingMoreConnectionsUG *ad = (SettingMoreConnectionsUG *)data;
+	retv_if(!ad, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	Evas_Object *scroller = ad->genlist;
+	Evas_Object *scroller = ad->md.genlist;
 
-	char *sub_desc = setting_location_is_enable(data);
+	char *sub_desc = setting_location_is_enable(ad);
 
 	ad->location_service = setting_create_Gendial_field_def(scroller,
 			&(ad->itc_2text_2),
@@ -189,36 +189,29 @@ int setting_moreconnections_main_generate_genlist(void *data)
 static int setting_moreconnections_main_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
-	/* error check */
-	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+	int ret;
 	SettingMoreConnectionsUG *ad = (SettingMoreConnectionsUG *)cb;
-	Evas_Object *scroller = elm_genlist_add(ad->win_main_layout);
-	setting_retvm_if(NULL == scroller, SETTING_DRAW_ERR_FAIL_SCROLLER,
-			"Scroller is NULL");
-	elm_object_style_set(scroller, "dialogue");
-	elm_genlist_clear(scroller);
+	retv_if(!ad, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	ad->genlist = scroller;
-	ad->ly_main = setting_create_layout_navi_bar_genlist(
-			ad->win_main_layout, ad->win_get,
+	ret = view_init(&ad->md, KeyStr_MoreConnectionSettings);
+	if (ret != SETTING_RETURN_SUCCESS)
+		return ret;
+	elm_object_style_set(ad->md.genlist, "dialogue");
+
+	setting_create_navi_bar_buttons(
 			KeyStr_MoreConnectionSettings,
-			NULL,/* Arrow Back button */
-			NULL,
-			(setting_call_back_func)setting_moreconnections_main_click_softkey_back_cb,
-			NULL, ad, &scroller, &(ad->navi_bar));
-	ad->genlist = scroller;
+			_("IDS_ST_BUTTON_BACK"),
+			setting_moreconnections_main_click_softkey_back_cb,
+			ad, ad->md.genlist, ad->md.navibar_main, NULL);
 
-	setting_moreconnections_main_generate_genlist((void *)ad);
+	setting_moreconnections_main_generate_genlist(ad);
 
-	int ret = vconf_notify_key_changed(VCONFKEY_LOCATION_USE_MY_LOCATION,
+	ret = vconf_notify_key_changed(VCONFKEY_LOCATION_USE_MY_LOCATION,
 			__setting_moreconnections_main_vconf_changed_cb, ad);
-	if (ret != 0) {
-		SETTING_TRACE_ERROR(
-				" >>> call vconf_notify_key_changed failed");
-	} else {
-		SETTING_TRACE_ERROR(
-				" >>> call vconf_notify_key_changed succeeded");
-	}
+	if (ret != 0)
+		SETTING_TRACE_ERROR("call vconf_notify_key_changed failed");
+	else
+		SETTING_TRACE_ERROR("call vconf_notify_key_changed succeeded");
 
 	setting_view_moreconnections_main.is_create = 1;
 	SETTING_TRACE_END;
@@ -245,9 +238,9 @@ static int setting_moreconnections_main_destroy(void *cb)
 				" >>> call vconf_ignore_key_changed succeeded");
 	}
 
-	if (ad->ly_main != NULL) {
-		evas_object_del(ad->ly_main);
-		ad->ly_main = NULL;
+	if (ad->md.ly_main != NULL) {
+		evas_object_del(ad->md.ly_main);
+		ad->md.ly_main = NULL;
 	}
 
 	setting_view_moreconnections_main.is_create = 0;
