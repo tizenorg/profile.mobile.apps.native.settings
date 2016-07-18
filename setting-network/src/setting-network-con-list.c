@@ -102,7 +102,7 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj,
 	SETTING_TRACE_BEGIN;
 	SettingNetworkUG *ad = (SettingNetworkUG *)data;
 	/*Evas_Object *it_obj; */
-	Evas_Object *nf = ad->navi_bar;
+	Evas_Object *nf = ad->md.navibar_main;
 	Evas_Object *win;
 	/*Elm_Object_Item *it; */
 
@@ -324,7 +324,7 @@ static int setting_network_con_list_create(void *cb)
 
 	SettingNetworkUG *ad = (SettingNetworkUG *)cb;
 
-	Evas_Object *scroller = elm_genlist_add(ad->win_main_layout);
+	Evas_Object *scroller = elm_genlist_add(ad->md.view_layout);
 	retvm_if(scroller == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
 			"Cannot set scroller object  as contento of layout");
 
@@ -349,7 +349,7 @@ static int setting_network_con_list_create(void *cb)
 			setting_network_con_list_click_softkey_cancel_cb,
 			setting_network_con_list_click_softkey_delete_cb,
 			setting_network_con_list_click_softkey_create_cb, ad,
-			scroller, ad->navi_bar, NULL);
+			scroller, ad->md.navibar_main, NULL);
 
 	elm_naviframe_item_pop_cb_set(ad->navi_it_con_list,
 			setting_network_con_list_click_softkey_cancel_cb, ad);
@@ -357,7 +357,7 @@ static int setting_network_con_list_create(void *cb)
 			NULL);
 
 	/* Add ctx popup handler */
-	Evas_Object *btn = elm_button_add(ad->navi_bar);
+	Evas_Object *btn = elm_button_add(ad->md.navibar_main);
 	elm_object_style_set(btn, "naviframe/more/default");
 	evas_object_smart_callback_add(btn, "clicked",
 			create_ctxpopup_more_button_cb, ad);
@@ -388,7 +388,7 @@ static int setting_network_con_list_destroy(void *cb)
 		ad->selected_profile = NULL;
 		ad->navi_it_con_list = NULL;
 		ad->con_list_gl = NULL;
-		elm_naviframe_item_pop(ad->navi_bar);
+		elm_naviframe_item_pop(ad->md.navibar_main);
 	} else {
 		SETTING_TRACE("why is this is_create == 0 ?? !!!");
 	}
@@ -561,7 +561,7 @@ void __set_default_profile(void *data)
 		if (0 == safeStrCmp(profile_id, list_item->keyStr2)) {
 
 			if (CONNECTION_CELLULAR_SERVICE_TYPE_MMS == srvType) {
-				setting_create_popup(ad, ad->win_get, NULL,
+				setting_create_popup(ad, ad->md.win_main, NULL,
 						_("IDS_MSGF_POP_UNSUPPORTED"),
 						NULL, 0, false, false, 0);
 				if (ad->selected_profile)
@@ -588,14 +588,14 @@ void __set_default_profile(void *data)
 								ad->selected_profile->chk_status);
 
 					setting_create_popup(list_item,
-							ad->win_get, NULL,
+							ad->md.win_main, NULL,
 							_("IDS_CST_POP_FAILED"),
 							NULL, 2.0, FALSE, FALSE,
 							0);
 					return;
 				}
 
-				setting_create_popup(list_item, ad->win_get,
+				setting_create_popup(list_item, ad->md.win_main,
 						NULL,
 						_("IDS_ST_BUTTON2_PROCESSING_ING"),
 						__set_default_response_cb, 2.0,
