@@ -131,6 +131,13 @@ Group: Application Framework/Settings
 #Requires: pkgconfig(setting-common-internal)
 %description devel
 
+%package network
+Summary: A setting network application
+Group: Application
+
+%description network
+Configuration application for network
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -342,3 +349,10 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %files ref
 %{_datadir}/mime/packages/mime.setting.xml
 %{_datadir}/packages/org.tizen.setting.xml.ref
+
+%files network
+%manifest setting-network/org.tizen.setting-network.manifest
+%{_prefix}/apps/org.tizen.setting-network/bin/setting-network
+%{_datadir}/packages/org.tizen.setting-network.xml
+%{_prefix}/apps/org.tizen.setting-network/res/*
+
