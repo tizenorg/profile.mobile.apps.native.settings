@@ -237,34 +237,6 @@ static void setting_main_lang_changed_cb(app_event_info_h event_info,
 	}
 }
 
-/**
- * the event process when int VCONFS changes
- * @todo code clean - it has big if-else structure
- */
-static void setting_int_vconf_change_cb(keynode_t *key, void *data)
-{
-	/* setting_main_appdata *ad = data; */
-	retm_if(!data, "Invalid argument: data is NULL");
-
-	int status = vconf_keynode_get_int(key);
-	char *vconf_name = vconf_keynode_get_name(key);
-	SETTING_TRACE("Enter %s(%s=%d)", __FUNCTION__, vconf_name, status);
-	return;
-}
-
-/**
- * the event process when string VCONFS changes
- */
-static void setting_string_vconf_change_cb(keynode_t *key, void *data)
-{
-	/* setting_main_appdata *ad = data; */
-	retm_if(!data, "Invalid argument: data is NULL");
-
-	char *value = vconf_keynode_get_str(key);
-	char *vconf_name = vconf_keynode_get_name(key);
-	SETTING_TRACE("Enter %s(%s=%s)", __FUNCTION__, vconf_name, value);
-
-}
 
 /**
  * The function is called to create Setting view widgets
@@ -423,7 +395,6 @@ static void setting_main_app_terminate(void *data)
 
 #endif
 	SETTING_TRACE("*** SETTING APPLICATION CLOSED ***");
-	DEREGISTER_VCONFS(ad->listened_list);
 	setting_view_destroy(&setting_view_main, ad);
 
 	SETTING_TRACE_DEBUG("!!! After setting_view_destroy");
@@ -487,43 +458,6 @@ static void setting_main_app_reset(app_control_h service, void *data)
 		evas_object_hide(ad->view_layout);
 	else
 		evas_object_show(ad->view_layout);
-
-	vconf_callback_fn cb = NULL;
-
-	cb = setting_int_vconf_change_cb;
-	REGISTER_VCONF_NODE(ad->listened_list, VCONFKEY_BT_STATUS, cb, data);
-	REGISTER_VCONF_NODE(ad->listened_list, VCONFKEY_WIFI_STATE, cb, ad);
-
-	REGISTER_VCONF_NODE(ad->listened_list,
-			VCONFKEY_SETAPPL_BRIGHTNESS_AUTOMATIC_INT, cb, data);
-	REGISTER_VCONF_NODE(ad->listened_list,
-			VCONFKEY_SETAPPL_LCD_TIMEOUT_NORMAL, cb, data);
-	REGISTER_VCONF_NODE(ad->listened_list,
-			VCONFKEY_SETAPPL_ACCESSIBILITY_FONT_SIZE, cb, data);
-	REGISTER_VCONF_NODE(ad->listened_list, VCONFKEY_SYSMAN_BATTERY_CAPACITY,
-			cb, data);
-
-	cb = setting_string_vconf_change_cb;
-	REGISTER_VCONF_NODE(ad->listened_list, VCONFKEY_WIFI_CONNECTED_AP_NAME,
-			cb, ad);
-	REGISTER_VCONF_NODE(ad->listened_list,
-			VCONFKEY_SETAPPL_SCREENMODE_SELNAME, cb, ad);
-	REGISTER_VCONF_NODE(ad->listened_list, VCONFKEY_BGSET, cb, ad);
-	REGISTER_VCONF_NODE(ad->listened_list, VCONFKEY_IDLE_LOCK_BGSET, cb,
-			ad);
-
-	REGISTER_VCONF_NODE(ad->listened_list, VCONFKEY_SETAPPL_USB_MODE_INT,
-			cb, ad);
-	REGISTER_VCONF_NODE(ad->listened_list,
-			VCONFKEY_SETAPPL_AUTO_ROTATE_SCREEN_BOOL, cb, ad);
-	REGISTER_VCONF_NODE(ad->listened_list, VCONFKEY_TELEPHONY_FLIGHT_MODE,
-			cb, ad);
-	REGISTER_VCONF_NODE(ad->listened_list,
-			VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, cb, ad);
-	REGISTER_VCONF_NODE(ad->listened_list,
-			VCONFKEY_SETAPPL_VIBRATION_STATUS_BOOL, cb, ad);
-
-	/*------------------------------------------------------------------ */
 
 	/*------------------------------------------------------------------ */
 
