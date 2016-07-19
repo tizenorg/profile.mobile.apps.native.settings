@@ -26,7 +26,15 @@
 #define __SETTING_H__
 
 #include <setting-common-view.h>
-#include <setting-common-search.h>
+
+#include <Elementary.h>
+#include <Eina.h>
+
+#include <setting-common-general-func.h>
+#include <setting-common-draw-widget.h>
+
+#include <setting-cfg.h>
+
 
 /*	TAPI*/
 #include <tapi_common.h>
