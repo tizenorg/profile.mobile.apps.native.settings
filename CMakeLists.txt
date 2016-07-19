@@ -91,7 +91,6 @@ ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/${SETTING_COMMON})
 ADD_SUBDIRECTORY(resource/po)
 
 
-
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/org.tizen.setting.xml.in ${CMAKE_SOURCE_DIR}/org.tizen.setting.xml @ONLY)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/org.tizen.setting.xml.ref.in ${CMAKE_SOURCE_DIR}/org.tizen.setting.xml.ref @ONLY)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/langlist_all.xml.in ${CMAKE_SOURCE_DIR}/resource/langlist_all.xml @ONLY)
@@ -102,7 +101,7 @@ CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting.xml.in 
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting_font-lite.xml.in ${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting_font-lite.xml @ONLY)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/mime.setting.xml.in ${CMAKE_SOURCE_DIR}/mime.setting.xml @ONLY)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/src/setting-common-internal.pc.in ${CMAKE_SOURCE_DIR}/src/setting-common-internal.pc @ONLY)
-
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/setting-profile/org.tizen.setting-profile.xml.in ${CMAKE_SOURCE_DIR}/org.tizen.setting-profile.xml @ONLY)
 
 # setting bin
 # setting plugin
