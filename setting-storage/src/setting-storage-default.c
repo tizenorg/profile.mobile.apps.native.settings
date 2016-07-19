@@ -361,6 +361,7 @@ static int storageUg_default_create(void *data)
 		SETTING_TRACE_ERROR("ad->data_bt is NULL");
 	}
 
+#if 0
 	/* Wifi Direct */
 	cur_storage = storageUg_default_cur_storage_get(ad->mmc_status,
 			INT_SLP_SETTING_DEFAULT_MEM_WIFIDIRECT);
@@ -375,6 +376,7 @@ static int storageUg_default_create(void *data)
 	} else {
 		SETTING_TRACE_ERROR("ad->data_wifidirect is NULL");
 	}
+#endif
 
 #if 0
 	/*Install application */
