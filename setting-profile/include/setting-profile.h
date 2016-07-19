@@ -30,6 +30,7 @@
 #include <feedback.h>
 #include <call-manager.h>
 #include <system_settings.h>
+#include "setting-common-init.h"
 
 #define VOLUME_APP_NAME "org.tizen.setting.volume"
 #define MAX_SAFETY_VOLUME_LEVEL 10
@@ -85,18 +86,10 @@ typedef struct _SettingProfileUG SettingProfileUG;
  * SettingProfileUG and the functions access app context.
  */
 struct _SettingProfileUG {
-	ui_gadget_h ug;
-	ui_gadget_h ug_loading;
 	char *viewtype;
+	MainData md;
 
 	/* add more variables here (move your appdata to here) */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-	Evas_Object *navi_bar;
-	Evas_Object *ly_main;
-	Evas_Object *gl_lite_main;
-
 	Elm_Genlist_Item_Class itc_layout;
 	Elm_Genlist_Item_Class itc_layout_1icon;
 

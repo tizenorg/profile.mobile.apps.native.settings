@@ -131,6 +131,13 @@ Group: Application Framework/Settings
 #Requires: pkgconfig(setting-common-internal)
 %description devel
 
+%package profile
+Summary: A setting profile application
+Group: Application
+
+%description profile
+Configuration application for sound
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -342,3 +349,9 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %files ref
 %{_datadir}/mime/packages/mime.setting.xml
 %{_datadir}/packages/org.tizen.setting.xml.ref
+
+%files profile
+%manifest setting-profile/org.tizen.setting-profile.manifest
+%{_prefix}/apps/org.tizen.setting-profile/bin/setting-profile
+%{_datadir}/packages/org.tizen.setting-profile.xml
+%{_prefix}/apps/org.tizen.setting-profile/res/*

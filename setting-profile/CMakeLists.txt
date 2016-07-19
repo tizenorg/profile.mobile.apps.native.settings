@@ -1,6 +1,8 @@
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${SETTING_COMMON}/include)
 
+SET(PROJECT_SETTING_PROFILE "setting-profile")
+SET(SETTING_PKG_PROFILE "org.tizen.setting-profile")
 
 INCLUDE(FindPkgConfig)
 pkg_check_modules(pkgs_profile REQUIRED
@@ -29,16 +31,19 @@ ADD_DEFINITIONS("-shared")
 
 SET(CMAKE_EXE_LINKER_FLAGS "-Wl,--as-needed -Wl,--rpath=/usr/lib")
 
-ADD_LIBRARY(${SETTING_PROFILE_UG} SHARED
+ADD_EXECUTABLE(${PROJECT_SETTING_PROFILE}
 	./src/setting-profile.c
 	./src/setting-profile-common.c
 	./src/setting-profile-sound-main.c
 	)
 
-TARGET_LINK_LIBRARIES(${SETTING_PROFILE_UG} -L${CMAKE_BINARY_DIR}/${SETTING_COMMON} -lsetting-common)
-TARGET_LINK_LIBRARIES(${SETTING_PROFILE_UG} ${pkgs_profile_LDFLAGS})
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/org.tizen.setting-profile.xml.in ${CMAKE_CURRENT_SOURCE_DIR}/org.tizen.setting-profile.xml @ONLY)
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/org.tizen.setting-profile.xml DESTINATION /usr/share/packages/)
 
-INSTALL(TARGETS ${SETTING_PROFILE_UG} DESTINATION ${PREFIX}/lib/ug)
+TARGET_LINK_LIBRARIES(${PROJECT_SETTING_PROFILE} -L${CMAKE_BINARY_DIR}/${SETTING_COMMON} -lsetting-common)
+TARGET_LINK_LIBRARIES(${PROJECT_SETTING_PROFILE} ${pkgs_profile_LDFLAGS})
+
+INSTALL(PROGRAMS ${PROJECT_SETTING_PROFILE} DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_PROFILE}/bin)
 
 # support volume popup
 SET(SETTING_VOLUME_POPUP setting_volume_popup)
@@ -47,8 +52,7 @@ ADD_EXECUTABLE(${SETTING_VOLUME_POPUP}
 	./src/setting-profile-common.c
 	./src/setting-profile-sound-main.c
 	)
+
 TARGET_LINK_LIBRARIES(${SETTING_VOLUME_POPUP} -L${CMAKE_BINARY_DIR}/${SETTING_COMMON} -lsetting-common)
 TARGET_LINK_LIBRARIES(${SETTING_VOLUME_POPUP} ${pkgs_profile_LDFLAGS} "-pie")
 INSTALL(TARGETS ${SETTING_VOLUME_POPUP} DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/bin)
-# end
-
