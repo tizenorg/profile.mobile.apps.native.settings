@@ -28,6 +28,8 @@
 #include <player.h>
 #include <sound_manager_internal.h>
 
+#define PROFILE_LOCALEDIR _TZ_SYS_RO_APP"/org.tizen.setting-profile/res/locale"
+
 #define PLAY_FEEDBACK(f_type, f_pattern) {\
 		if (feedback_initialize() == FEEDBACK_ERROR_NONE) {\
 			feedback_play_type(f_type, f_pattern);\
@@ -1051,7 +1053,7 @@ static Eina_Bool __volume_key_down_cb(void *data, int type, void *event)
 	} else if (!safeStrCmp(key, "XF86Home")) { /*XF86Phone*/
 		SETTING_TRACE("KEY_HOME is pressed");
 		if (!safeStrCmp(ad->viewtype, "org.tizen.volume"))
-			ug_destroy_me(ad->ug);
+			;//ug_destroy_me(ad->ug);
 	} else if (!safeStrCmp(key, "XF86Back")) { /*Back hard key*/
 		SETTING_TRACE(" Back is pressed");
 		/*SETTING_TRACE(" ad->viewtype %s", ad->viewtype);*/
@@ -1160,7 +1162,7 @@ Evas_Object *setting_sound_init(void *data)
 	retv_if(data == NULL, NULL);
 	SettingProfileUG *ad = data;
 
-	bindtextdomain(SETTING_PACKAGE, SETTING_LOCALEDIR);
+	bindtextdomain(SETTING_PACKAGE, PROFILE_LOCALEDIR);
 
 	setting_create_Gendial_itc(SETTING_GENLIST_LEFT_ICON_CONTENT_ICON_STYLE,
 			&(ad->itc_layout));
@@ -1177,9 +1179,9 @@ Evas_Object *setting_sound_init(void *data)
 	setting_view_node_table_register(&setting_view_sound_main, NULL);
 
 	if (!safeStrCmp(ad->viewtype, VOLUME_APP_NAME))
-		elm_win_wm_rotation_preferred_rotation_set(ad->win_get, -1);
+		elm_win_wm_rotation_preferred_rotation_set(ad->md.win_main, -1);
 	else
-		elm_win_wm_rotation_preferred_rotation_set(ad->win_get, 0);
+		elm_win_wm_rotation_preferred_rotation_set(ad->md.win_main, 0);
 
 	/* creating a view. */
 	setting_view_node_set_cur_view(&setting_view_sound_main);
@@ -1187,7 +1189,7 @@ Evas_Object *setting_sound_init(void *data)
 
 	setting_sound_listen_vconf_change(ad);
 
-	return ad->ly_main;
+	return ad->md.ly_main;
 }
 
 void setting_sound_deinit(void *data)
@@ -1195,7 +1197,7 @@ void setting_sound_deinit(void *data)
 	SETTING_TRACE_BEGIN;
 	ret_if(data == NULL);
 	SettingProfileUG *ad = data;
-	elm_win_wm_rotation_preferred_rotation_set(ad->win_get, -1);
+	elm_win_wm_rotation_preferred_rotation_set(ad->md.win_main, -1);
 
 	setting_sound_unlisten_vconf_change(ad);
 	setting_sound_close_all_mm_players(ad);
@@ -1258,7 +1260,7 @@ void setting_sound_create_warning_popup_during_call(void *data)
 		if (!ad->calling_popup) {
 			ad->calling_popup = setting_create_popup(
 					ad,
-					ad->win_get,
+					ad->md.win_main,
 					"IDS_ST_HEADER_UNABLE_TO_PLAY_SAMPLE_ABB",
 					"IDS_ST_POP_SAMPLES_CANNOT_BE_PLAYED_DURING_CALLS",
 					__calling_popup_cb,

@@ -21,9 +21,8 @@
 
 #include <setting-profile.h>
 
-#ifndef UG_MODULE_API
-#define UG_MODULE_API __attribute__ ((visibility("default")))
-#endif
+#define SETTING_PROFILE_PACKAGE_NAME "org.tizen.setting-profile"
+
 
 static void setting_sound_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
 		void *event_info)
@@ -34,38 +33,36 @@ static void setting_sound_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
 	setting_view_update(&setting_view_sound_main, ad);
 }
 
-static void *setting_sound_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
-		app_control_h service, void *priv)
+
+static bool _setting_sound_app_create(void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	/*appcore_measure_start(); */
 	retv_if(priv == NULL, NULL);
 
 	SettingProfileUG *profileUG = priv;
-	profileUG->ug = ug;
 
-	profileUG->win_main_layout = (Evas_Object *)ug_get_parent_layout(ug);
-	profileUG->win_get = (Evas_Object *)ug_get_window();
-	evas_object_show(profileUG->win_main_layout);
-	profileUG->evas = evas_object_evas_get(profileUG->win_main_layout);
-	setting_retvm_if(profileUG->win_main_layout == NULL, NULL,
-			"cannot get main window ");
+	if (app_init(&profileUG->md, VOLUME_APP_NAME)
+	        != SETTING_RETURN_SUCCESS) {
+	    SETTING_TRACE_ERROR("Cannot initialize application");
+	    return false;
+	}
 
-	app_control_get_caller(service, &(profileUG->viewtype));
-	setting_sound_init(profileUG);
-	evas_object_event_callback_add(profileUG->win_main_layout,
+//profileUG->md.view_layout = (Evas_Object *)ug_get_parent_layout(ug);
+//profileUG->win_get = (Evas_Object *)ug_get_window();
+//evas_object_show(profileUG->md.view_layout);
+
+//app_control_get_caller(service, &(profileUG->viewtype));
+	if (setting_sound_init(profileUG) == NULL)
+		return false;
+
+	evas_object_event_callback_add(profileUG->md.view_layout,
 			EVAS_CALLBACK_RESIZE, setting_sound_ug_cb_resize,
 			profileUG);
-	return profileUG->ly_main;
+	return true;
 }
 
-static void setting_sound_ug_on_start(ui_gadget_h ug, app_control_h service,
-		void *priv)
-{
-}
-
-static void setting_sound_ug_on_pause(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void _setting_sound_app_pause(void *priv)
 {
 	ret_if(priv == NULL);
 	SettingProfileUG *profileUG = (SettingProfileUG *)priv;
@@ -82,8 +79,7 @@ static void setting_sound_ug_on_pause(ui_gadget_h ug, app_control_h service,
 	vconf_set_int(VCONFKEY_STARTER_USE_VOLUME_KEY, 0);
 }
 
-static void setting_sound_ug_on_resume(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void _setting_sound_app_resume(void *priv)
 {
 	ret_if(priv == NULL);
 	SettingProfileUG *profileUG = (SettingProfileUG *)priv;
@@ -202,107 +198,73 @@ static void setting_sound_ug_on_resume(ui_gadget_h ug, app_control_h service,
 	setting_sound_update_do_not_disturb_item(profileUG);
 }
 
-static void setting_sound_ug_on_destroy(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void _setting_sound_app_terminate(void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(priv == NULL);
 
 	SettingProfileUG *ad = priv;
 	/* fix flash issue for gallery */
-	evas_object_event_callback_del(ad->win_main_layout,
+	evas_object_event_callback_del(ad->md.view_layout,
 			EVAS_CALLBACK_RESIZE, setting_sound_ug_cb_resize);
 	setting_sound_deinit(ad);
 
-	if (NULL != ug_get_layout(ad->ug)) {
-		evas_object_hide((Evas_Object *)ug_get_layout(ad->ug));
-		evas_object_del((Evas_Object *)ug_get_layout(ad->ug));
-	}
+    evas_object_del(ad->md.win_main);
+    ad->md.win_main = NULL;
+
 	SETTING_TRACE_END;
 }
 
-static void setting_sound_ug_on_message(ui_gadget_h ug, app_control_h msg,
-		app_control_h service, void *priv)
+static void _setting_sound_app_controll(app_control_h service, void *data)
 {
+
 }
 
-static void setting_sound_ug_on_event(ui_gadget_h ug, enum ug_event event,
-		app_control_h service, void *priv)
+static void _setting_sound_lang_changed(app_event_info_h event_info, void *data)
 {
-	SETTING_TRACE_BEGIN;
-	/*SettingProfileUG *ad = (SettingProfileUG *)priv; */
+    char *lang = NULL;
 
-	switch (event) {
-	case UG_EVENT_LOW_MEMORY:
-		break;
-	case UG_EVENT_LOW_BATTERY:
-		break;
-	case UG_EVENT_LANG_CHANGE:
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT:
-	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE:
-	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-		break;
-	case UG_EVENT_REGION_CHANGE:
-		break;
-	default:
-		break;
-	}
+    if (app_event_get_language(event_info, &lang) == APP_ERROR_NONE) {
+        SETTING_TRACE_DEBUG("Setting - language is changed : %s", lang);
+        elm_language_set(lang);
+        elm_config_all_flush();
+        free(lang);
+
+    } else {
+        SETTING_TRACE_ERROR("Cannot get language from event_info");
+    }
 }
 
-static void setting_sound_ug_on_key_event(ui_gadget_h ug,
-		enum ug_key_event event, app_control_h service, void *priv)
+EXPORT_PUBLIC
+int main(int argc, char *argv[])
 {
-	ret_if(priv == NULL);
+    app_event_handler_h handlers[5] = {NULL, };
+    ui_app_lifecycle_callback_s ops = {
+        .create = _setting_sound_app_create,
+        .pause = _setting_sound_app_pause,
+        .resume = _setting_sound_app_resume,
+        .terminate = _setting_sound_app_terminate,
+        .app_control = _setting_sound_app_controll,
+    };
 
-	/*SettingProfileUG *ad = (SettingProfileUG *) priv; */
+    SettingProfileUG app_data;
+    memset(&app_data, 0, sizeof(SettingProfileUG));
 
-	switch (event) {
-	case UG_KEY_EVENT_END:
-		break;
-	default:
-		break;
-	}
+    ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY],
+            APP_EVENT_LOW_MEMORY, NULL, NULL);
+
+    ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY],
+            APP_EVENT_LOW_BATTERY, NULL, NULL);
+
+    ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED],
+            APP_EVENT_LANGUAGE_CHANGED, _setting_sound_lang_changed, &app_data);
+
+    ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED],
+            APP_EVENT_REGION_FORMAT_CHANGED, NULL, NULL);
+
+    ui_app_add_event_handler(
+            &handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED],
+            APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
+
+    return ui_app_main(argc, argv, &ops, &app_data);
 }
-
-UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
-{
-	SETTING_TRACE_BEGIN;
-	/*appcore_measure_start(); */
-	SettingProfileUG *profileUG = calloc(1, sizeof(SettingProfileUG));
-	setting_retvm_if(!profileUG, -1, "Create SettingProfileUG obj failed");
-
-	ops->create = setting_sound_ug_on_create;
-	ops->start = setting_sound_ug_on_start;
-	ops->pause = setting_sound_ug_on_pause;
-	ops->resume = setting_sound_ug_on_resume;
-	ops->destroy = setting_sound_ug_on_destroy;
-	ops->message = setting_sound_ug_on_message;
-	ops->event = setting_sound_ug_on_event;
-	ops->key_event = setting_sound_ug_on_key_event;
-	ops->priv = profileUG;
-	ops->opt = UG_OPT_INDICATOR_ENABLE;
-
-	memset(profileUG, 0x00, sizeof(SettingProfileUG));
-
-	return 0;
-}
-
-UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
-{
-	ret_if(ops == NULL);
-
-	struct SettingProfileUG *profileUG;
-	profileUG = ops->priv;
-	if (profileUG)
-		FREE(profileUG);
-}
-
-/* ***************************************************
- *
- *general func
- *
- ***************************************************/
-

@@ -91,14 +91,14 @@ static bool vp_app_create(void *data)
 	SettingProfileUG *ad = data;
 
 	/* create window */
-	ad->win_get = vp_create_win("org.tizen.setting.volume", TRUE);
-	if (ad->win_get == NULL) {
+	ad->md.win_main = vp_create_win("org.tizen.setting.volume", TRUE);
+	if (ad->md.win_main == NULL) {
 		SETTING_TRACE("Can't create window");
 		return FALSE;
 	}
 
-	UG_INIT_EFL(ad->win_get, UG_OPT_INDICATOR_DISABLE);
-	ad->evas = evas_object_evas_get(ad->win_get);
+	UG_INIT_EFL(ad->md.win_main, UG_OPT_INDICATOR_DISABLE);
+	ad->md.evas = evas_object_evas_get(ad->md.win_main);
 	ad->viewtype = strdup(VOLUME_APP_NAME);
 	setting_sound_init(ad);
 
@@ -118,11 +118,11 @@ static void vp_app_terminate(void *data)
 	SETTING_TRACE("volume_popup_terminate!");
 
 	evas_object_smart_callback_del(
-			ad->win_get, "wm,rotation,changed", _vp_rot_changed_cb);
+			ad->md.win_main, "wm,rotation,changed", _vp_rot_changed_cb);
 	setting_sound_deinit(ad);
-	if (ad->win_get) {
-		evas_object_del(ad->win_get);
-		ad->win_get = NULL;
+	if (ad->md.win_main) {
+		evas_object_del(ad->md.win_main);
+		ad->md.win_main = NULL;
 	}
 	SETTING_TRACE_END;
 }
