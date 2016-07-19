@@ -166,8 +166,8 @@ setting_view setting_view_sound_main = {
 				NULL,\
 				sld_cb);\
 		if (item_data) {\
-			item_data->win_main = data->win_main_layout;\
-			item_data->evas = data->evas;\
+			item_data->win_main = data->md.view_layout;\
+			item_data->evas = data->md.evas;\
 			item_data->isIndicatorVisible = FALSE;\
 			item_data->slider_min = 0;\
 			item_data->slider_max = sld_max;\
@@ -376,7 +376,7 @@ static void __call_slider_change_cb(
 	ad->play_ringtone_idler = ecore_idler_add(
 			__play_ringtone_sound_idle_cb, list_item);
 
-	/*SWIP_EFFECT_ENABLE(ad->ly_main, ad->ctrl_bar); */
+	/*SWIP_EFFECT_ENABLE(ad->md.ly_main, ad->ctrl_bar); */
 	SETTING_TRACE("list_item->chk_status:%d", list_item->chk_status);
 }
 
@@ -651,8 +651,6 @@ static void __get_lite_main_list(void *data)
 	ret_if(!data);
 	SettingProfileUG *ad = (SettingProfileUG *)data;
 
-
-
 	int vconf_value = 0;
 	char *sub_desc = NULL;
 	char *left_icon = NULL;
@@ -661,7 +659,7 @@ static void __get_lite_main_list(void *data)
 	int vconf_ret = 0;
 	char *pa_ringtone = NULL;
 
-	Evas_Object *genlist = ad->gl_lite_main;
+	Evas_Object *genlist = ad->md.genlist;
 	elm_genlist_block_count_set(genlist, 3);
 	elm_genlist_homogeneous_set(genlist, 1);
 
@@ -957,7 +955,7 @@ static void __get_lite_main_list(void *data)
 				"INDIVIDUAL_APPLICATIONS",
 				NULL);
 
-		ad->gl_lite_main = genlist;
+		ad->md.genlist = genlist;
 
 	}
 	if (!sound_value) {
@@ -988,12 +986,11 @@ setting_soudn_main_click_softkey_back_cb(void *data, Evas_Object *obj,
 	SettingProfileUG *ad = (SettingProfileUG *) data;
 
 	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+//ug_destroy_me(ad->ug);
 	SETTING_TRACE_END;
 	return EINA_FALSE;
 
 }
-
 
 static int setting_sound_main_create(void *cb)
 {
@@ -1001,35 +998,33 @@ static int setting_sound_main_create(void *cb)
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 	SettingProfileUG *ad = (SettingProfileUG *) cb;
 
+	int ret = view_init(&ad->md, _("VOLUME_APP_NAME"));
+
+	if (ret != SETTING_RETURN_SUCCESS)
+	    return ret;
 
 	/* 1.Grab Hard Key */
 	__setting_sound_ug_key_grab(ad);
 	SETTING_TRACE("viewtype: %s", ad->viewtype);
 	if (!safeStrCmp(ad->viewtype, VOLUME_APP_NAME)) {
-		ad->ly_main = setting_create_popup_with_list(
-				&ad->gl_lite_main, ad, ad->win_get,
-				"IDS_ST_BODY_VOLUME", __volume_popup_del_cb,
-				0 , false, false, 1, "IDS_ST_SK3_DONE");
+		//ad->md.ly_main = setting_create_popup_with_list(
+				//&ad->md.genlist, ad, ad->md.win_main,
+				//"IDS_ST_BODY_VOLUME", __volume_popup_del_cb,
+				//0 , false, false, 1, "IDS_ST_SK3_DONE");
 		__get_lite_main_list(ad);
 	} else {
-		ad->ly_main = setting_create_win_layout(ad->win_get);
-		ad->navi_bar = setting_create_navi_bar(ad->ly_main);
-
-		ADD_GENLIST(ad->gl_lite_main, ad->navi_bar);
-
 		__get_lite_main_list(ad);
 
-		Evas_Object *lbtn = setting_create_button(ad->navi_bar, _(NULL),
+		Evas_Object *lbtn = setting_create_button(ad->md.navibar_main, _(NULL),
 				NAVI_BACK_ARROW_BUTTON_STYLE,
 				&setting_soudn_main_click_softkey_back_cb, ad);
 
-
 		Elm_Object_Item *navi_it = elm_naviframe_item_push(
-				ad->navi_bar,
+				ad->md.navibar_main,
 				KeyStr_Sounds,
 				lbtn,
 				NULL,
-				ad->gl_lite_main,
+				ad->md.genlist,
 				NULL);
 		elm_naviframe_item_pop_cb_set(
 				navi_it,
@@ -1064,8 +1059,8 @@ static int setting_sound_main_destroy(void *cb)
 		ad->play_ringtone_idler = NULL;
 	}
 
-	if (ad->ly_main != NULL)
-		evas_object_del(ad->ly_main);
+	evas_object_del(ad->md.ly_main);
+	ad->md.ly_main = NULL;
 
 	setting_view_sound_main.is_create = FALSE;
 	return SETTING_RETURN_SUCCESS;
@@ -1078,8 +1073,8 @@ static int setting_sound_main_update(void *cb)
 
 	SettingProfileUG *ad = (SettingProfileUG *) cb;
 
-	if (ad->ly_main != NULL)
-		evas_object_show(ad->ly_main);
+	if (ad->md.ly_main != NULL)
+		evas_object_show(ad->md.ly_main);
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -1091,8 +1086,8 @@ static int setting_sound_main_cleanup(void *cb)
 
 	SettingProfileUG *ad = (SettingProfileUG *) cb;
 
-	if (ad->ly_main != NULL)
-		evas_object_hide(ad->ly_main);
+	if (ad->md.ly_main != NULL)
+		evas_object_hide(ad->md.ly_main);
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -1122,72 +1117,31 @@ static Eina_Bool setting_sound_main_click_softkey_cancel_cb(
 	setting_sound_close_all_mm_players(ad);
 
 	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+	//ug_destroy_me(ad->ug);
 
 	return EINA_FALSE;
 }
 
-static void setting_sound_main_destroy_myfile_ug_cb(ui_gadget_h ug, void *priv)
+static void _setting_sound_main_result_myfile_cb(app_control_h request,
+					app_control_h reply, app_control_result_e result,
+					void *priv)
 {
-	SETTING_TRACE_BEGIN;
-	ret_if(priv == NULL);
-	SettingProfileUG *ad = (SettingProfileUG *) priv;
-
-	int sound_value = 0, volume = 0;
-
-	__setting_sound_ug_key_grab(ad);
-
-	if (ug) {
-		setting_ug_destroy(ug);
-		ad->ug_loading = NULL;
-	}
-
-	if (vconf_get_bool(
-			VCONFKEY_SETAPPL_SOUND_STATUS_BOOL, &sound_value) < 0)
-		sound_value = TRUE;
-
-	if (sound_value == FALSE)
-		volume = 0;
-	else
-		(void)sound_manager_get_volume(SOUND_TYPE_RINGTONE, &volume);
-
-	if (ad->data_call_volume && ad->data_call_volume->eo_check) {
-		ad->data_call_volume->chk_status = volume;
-		elm_slider_value_set(ad->data_call_volume->eo_check, volume);
-	}
-
-	if (sound_value == FALSE)
-		volume = 0;
-	else
-		(void)sound_manager_get_volume(
-				SOUND_TYPE_NOTIFICATION, &volume);
-
-	if (ad->data_noti_volume && ad->data_noti_volume->eo_check) {
-		ad->data_noti_volume->chk_status = volume;
-		elm_slider_value_set(ad->data_noti_volume->eo_check, volume);
-	}
-
-	setting_sound_update_slider_icon(ad->data_call_volume, SND_SLIDER_CALL);
-	setting_sound_update_slider_icon(ad->data_noti_volume, SND_SLIDER_NOTI);
-}
-
-static void
-setting_sound_main_result_myfile_ug_cb(ui_gadget_h ug,
-		app_control_h result, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-	ret_if(priv == NULL);
-
-	SettingProfileUG *ad = (SettingProfileUG *) priv;
 	char *ringtone_file = NULL;
 	char *ringtone_path = NULL;
+	SETTING_TRACE_BEGIN;
+	ret_if(priv == NULL);
 
-	app_control_get_extra_data(result, "result", &ringtone_path);
+	SettingProfileUG *ad = (SettingProfileUG *) priv;
+
+	if (APP_CONTROL_RESULT_SUCCEEDED != result)
+		return;
+
+	app_control_get_extra_data(reply, "result", &ringtone_path);
 	if (!ringtone_path)
 		return;
 
 	char *recommend_time = NULL;
-	app_control_get_extra_data(result, "position", &recommend_time);
+	app_control_get_extra_data(reply, "position", &recommend_time);
 
 	SETTING_TRACE("ringtone_path:%s", ringtone_path);
 
@@ -1279,7 +1233,6 @@ setting_sound_main_result_myfile_ug_cb(ui_gadget_h ug,
 	FREE(ringtone_path);
 	FREE(recommend_time);
 	G_FREE(ringtone_file);
-	return;
 }
 
 static void setting_sound_main_create_myfile_ug(
@@ -1287,25 +1240,9 @@ static void setting_sound_main_create_myfile_ug(
 {
 	ret_if(ad == NULL);
 
-	if (ad->ug_loading) {
-		SETTING_TRACE("Myfiles ug is already loaded.");
+	app_control_h svc = NULL;
+	if (app_control_create(&svc))
 		return;
-	}
-
-	struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
-	if (!cbs)
-		return;
-
-	cbs->layout_cb = setting_layout_ug_cb;
-	cbs->result_cb = setting_sound_main_result_myfile_ug_cb;
-	cbs->destroy_cb = setting_sound_main_destroy_myfile_ug_cb;
-	cbs->priv = (void *)ad;
-
-	app_control_h svc;
-	if (app_control_create(&svc)) {
-		FREE(cbs);
-		return;
-	}
 
 	const char *pa_cur_ringtone = NULL;
 	const char *dir_path = NULL;
@@ -1348,20 +1285,17 @@ static void setting_sound_main_create_myfile_ug(
 	else
 		app_control_add_extra_data(svc, "marked_mode", pa_cur_ringtone);
 
-	elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
-	SETTING_TRACE("ad->ug->layout:%p", (void *)ug_get_layout(ad->ug));
-	ad->ug_loading = setting_ug_create(
-			ad->ug,
-			"setting-ringtone-efl",
-			UG_MODE_FULLVIEW,
-			svc,
-			cbs);
-	if (NULL == ad->ug_loading) {	/* error handling */
-		SETTING_TRACE_ERROR("NULL == ad->ug_loading");
+
+	elm_object_tree_focus_allow_set(ad->md.ly_main, EINA_FALSE);
+
+	app_control_set_app_id(svc, "org.tizen.setting-ringtone");
+	if (APP_CONTROL_ERROR_NONE !=
+			app_control_send_launch_request(svc, _setting_sound_main_result_myfile_cb, ad)
+		) {
+		SETTING_TRACE_ERROR("org.tizen.setting-ringtone launch request failed");
 	}
 
 	app_control_destroy(svc);
-	FREE(cbs);
 
 	/** @todo verify it's valid */
 	if (pa_cur_ringtone) {
@@ -1382,7 +1316,7 @@ static Eina_Bool __feedback_back_cb(void *data, Elm_Object_Item *it)
 	SettingProfileUG *ad = (SettingProfileUG *) data;
 	/*setting_view_change(&setting_view_feedback_main,
 	 *  &setting_view_sound_main, ad); */
-	elm_naviframe_item_pop(ad->navi_bar);
+	elm_naviframe_item_pop(ad->md.navibar_main);
 	SETTING_TRACE_END;
 	return EINA_TRUE;
 }
@@ -1451,7 +1385,7 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 		cbs->destroy_cb = setting_sound_notifications_destroy_ug_cb;
 		cbs->priv = (void *)ad;
 
-		elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
+		elm_object_tree_focus_allow_set(ad->md.ly_main, EINA_FALSE);
 
 		SETTING_TRACE("To load ug[%s]",
 				"ug-setting-notification-do-not-disturb-efl");
@@ -1479,7 +1413,7 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 		cbs->destroy_cb = setting_sound_notifications_destroy_ug_cb;
 		cbs->priv = (void *)ad;
 
-		elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
+		elm_object_tree_focus_allow_set(ad->md.ly_main, EINA_FALSE);
 
 		SETTING_TRACE("To load ug[%s]",
 				"ug-setting-notification-app-notifications-efl");
@@ -1548,7 +1482,7 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 
 		int vconf_value = 0;
 		Evas_Object *genlist = NULL;
-		ADD_GENLIST2(genlist, ad->navi_bar);
+		ADD_GENLIST2(genlist, ad->md.navibar_main);
 		/* 1. Touch sounds */
 		if (vconf_get_bool(VCONFKEY_SETAPPL_TOUCH_SOUNDS_BOOL,
 				&vconf_value) < 0)
@@ -1582,7 +1516,7 @@ setting_sound_main_mouse_up_Gendial_list_cb(void *data,
 				"IDS_ST_BODY_PLAY_SOUNDS_WHEN_LOCKING_AND_UNLOCKING_SCREEN",
 				vconf_value, ad)
 
-		Elm_Object_Item *navi_it = elm_naviframe_item_push(ad->navi_bar,
+		Elm_Object_Item *navi_it = elm_naviframe_item_push(ad->md.navibar_main,
 				"IDS_ST_HEADER_FEEDBACK", NULL, NULL, genlist,
 				NULL);
 		elm_object_item_domain_text_translatable_set(navi_it,
