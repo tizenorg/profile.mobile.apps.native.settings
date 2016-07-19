@@ -30,7 +30,6 @@
 #include "setting-main.h"
 #include <setting-cfg.h>
 
-#include <setting-common-search.h>
 #include <elm_object.h>
 #include <appsvc.h>
 /*#include <nfc.h> */

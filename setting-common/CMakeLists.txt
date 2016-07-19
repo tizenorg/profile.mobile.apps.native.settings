@@ -44,11 +44,9 @@ ADD_LIBRARY(${LIB_SETTING_COMMON} SHARED
 	./src/setting-common-draw-naviframe.c
 	./src/setting-common-draw-genlist.c
 	./src/setting-common-general-func.c
-	./src/setting-common-search.c
 	./src/setting-common-sound.c
 	./src/setting-common-alarmmgr.c
 	./src/setting-cfg.c
-#	./src/setting-backup-restore.c
 )
 
 TARGET_LINK_LIBRARIES(${LIB_SETTING_COMMON} ${pkgs_common_data_LDFLAGS})
@@ -61,5 +59,4 @@ INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-general-func.h 
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-resource.h DESTINATION ${INCLUDEDIR})
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-cfg.h DESTINATION ${INCLUDEDIR})
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-data-error.h DESTINATION ${INCLUDEDIR})
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/setting-common-search.h DESTINATION ${INCLUDEDIR})
 

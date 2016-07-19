@@ -21,7 +21,6 @@
 #include <stdio.h>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
-#include <setting-common-search.h>
 
 static char *get_timezone();
 
@@ -125,14 +124,6 @@ int main(int argc, char *argv[])
 		generate_setting_cfg();
 	else if ((argc == 2) && (0 == strcmp(argv[1], "mig_cfg")))
 		migrate_setting_cfg();
-
-#if SETTING_SEARCH
-	else if ((argc == 2) && (0 == strcmp(argv[1], "search_db_indexing"))) {
-		/* app db search */
-		__setting_init_search_index_app();
-		__setting_init_search_index_module();
-	}
-#endif
 	else {
 		/* cfg create */
 		/* TRUE or FALSE */
