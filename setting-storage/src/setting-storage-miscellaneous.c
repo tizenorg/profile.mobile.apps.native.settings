@@ -156,7 +156,7 @@ static void create_ctxpopup_more_button_cb(void *data, Evas_Object *obj,
 {
 	SETTING_TRACE_BEGIN;
 	SettingStorageUG *ad = (SettingStorageUG *)data;
-	Evas_Object *nf = ad->navi;
+	Evas_Object *nf = ad->md.navibar_main;
 
 	if (ctxpopup != NULL)
 		evas_object_del(ctxpopup);
@@ -815,7 +815,7 @@ static void storageUg_misces_delete_list(SettingStorageUG *ad)
 		}
 		if (NULL == ad->misces_lo_noitem) {
 			ad->misces_lo_noitem = _create_ly_misces_no_item(
-					ad->navi);
+					ad->md.navibar_main);
 		}
 
 		ad->gl_misces = NULL;
@@ -847,7 +847,7 @@ static void storageUg_misces_add_list(SettingStorageUG *ad)
 	if (0 == ad->misces_sz_all) {
 		if (NULL == ad->misces_lo_noitem) {
 			lo_new = ad->misces_lo_noitem =
-					_create_ly_misces_no_item(ad->navi);
+					_create_ly_misces_no_item(ad->md.navibar_main);
 
 			btn = elm_object_item_part_content_get(
 					ad->misces_navi_it, "title_right_btn");
@@ -860,7 +860,7 @@ static void storageUg_misces_add_list(SettingStorageUG *ad)
 			elm_genlist_clear(ad->gl_misces);
 		else
 			lo_new = ad->gl_misces = storageUg_misces_genlist(
-					ad->navi);
+					ad->md.navibar_main);
 
 		storageUg_misces_gl_append_items(ad);
 
@@ -976,7 +976,7 @@ static void storageUg_misces_delete_resp(void *data, Evas_Object *obj,
 			ad->misces_checked);
 
 	if (ad->misces_checked) {
-		ad->popup = setting_create_popup_with_progressbar(ad, ad->win,
+		ad->popup = setting_create_popup_with_progressbar(ad, ad->md.win_main,
 				PROGRESSBAR_STYLE,
 				NULL, NULL, storageUg_popup_del, 0, TRUE, TRUE,
 				0);
@@ -987,7 +987,7 @@ static void storageUg_misces_delete_resp(void *data, Evas_Object *obj,
 				storageUg_misces_delete_files,
 				storageUg_misces_delete_files_cb, ad);
 	} else {
-		ad->popup = setting_create_popup(ad, ad->win, NULL,
+		ad->popup = setting_create_popup(ad, ad->md.win_main, NULL,
 		STORAGEUG_STR_NO_SELECTED, storageUg_popup_del,
 		SETTING_STORAGE_POPUP_TIMER, FALSE, FALSE, 0);
 	}
@@ -1003,7 +1003,7 @@ static void storageUg_misces_delete_cb(void *data, Evas_Object *obj,
 
 	ret_if(NULL == data);
 
-	ad->popup = setting_create_popup(ad, ad->win, NULL,
+	ad->popup = setting_create_popup(ad, ad->md.win_main, NULL,
 	STORAGEUG_STR_DELETE_Q, storageUg_misces_delete_resp, 0, FALSE, FALSE,
 			2, STORAGEUG_STR_DELETE, STORAGEUG_STR_CANCEL);
 }
@@ -1089,7 +1089,7 @@ static void storageUg_misces_cancel_cb(void *data, Evas_Object *obj,
 	} else {
 		SETTING_TRACE_ERROR(
 				"ad->misces_ctx_popup_selected == false, go naviframe_back");
-		elm_naviframe_item_pop(ad->navi);
+		elm_naviframe_item_pop(ad->md.navibar_main);
 	}
 
 	SETTING_TRACE_END;
@@ -1121,20 +1121,20 @@ static int storageUg_misces_create(void *data)
 				NULL, NULL, NULL,
 				(setting_call_back_func)storageUg_misces_back_cb,
 				NULL,
-				NULL, ad, NULL, ad->navi, NULL);
+				NULL, ad, NULL, ad->md.navibar_main, NULL);
 
 		elm_object_item_part_content_set(ad->misces_navi_it,
 				"elm.swallow.content", ad->gl_misces);
 
 		/* Title Cancel Button */
-		ad->title_left_btn = elm_button_add(ad->navi);
+		ad->title_left_btn = elm_button_add(ad->md.navibar_main);
 		elm_object_style_set(ad->title_left_btn,
 				"naviframe/title_cancel");
 		evas_object_smart_callback_add(ad->title_left_btn, "clicked",
 				storageUg_misces_cancel_cb, ad);
 
 		/* Title Done Button */
-		ad->title_right_btn = elm_button_add(ad->navi);
+		ad->title_right_btn = elm_button_add(ad->md.navibar_main);
 		elm_object_style_set(ad->title_right_btn,
 				"naviframe/title_done");
 		evas_object_smart_callback_add(ad->title_right_btn, "clicked",
@@ -1148,11 +1148,11 @@ static int storageUg_misces_create(void *data)
 				NULL,
 				(setting_call_back_func)storageUg_misces_back_cb,
 				NULL,
-				NULL, ad, NULL, ad->navi, NULL);
+				NULL, ad, NULL, ad->md.navibar_main, NULL);
 
 		if (NULL == ad->misces_lo_noitem) {
 			ad->misces_lo_noitem = _create_ly_misces_no_item(
-					ad->navi);
+					ad->md.navibar_main);
 
 			Evas_Object *btn = elm_object_item_part_content_get(
 					ad->misces_navi_it, "title_right_btn");
@@ -1171,7 +1171,7 @@ static int storageUg_misces_create(void *data)
 			storageUg_misces_back_cb, ad);
 
 	/* Add ctx popup handler */
-	Evas_Object *btn = elm_button_add(ad->navi);
+	Evas_Object *btn = elm_button_add(ad->md.navibar_main);
 	elm_object_style_set(btn, "naviframe/more/default");
 	evas_object_smart_callback_add(btn, "clicked",
 			create_ctxpopup_more_button_cb, ad);
@@ -1215,7 +1215,7 @@ static int storageUg_misces_destroy(void *data)
 	ad->misces_checked = 0;
 
 	setting_view_storage_misc.is_create = 0;
-	elm_naviframe_item_pop(ad->navi);
+	elm_naviframe_item_pop(ad->md.navibar_main);
 
 	return SETTING_RETURN_SUCCESS;
 }

@@ -145,7 +145,7 @@ void storageUg_ug_destroy_cb(ui_gadget_h ug, void *priv)
 	if (ug)
 		setting_ug_destroy(ug);
 
-	elm_object_tree_focus_allow_set(ad->lo_main, EINA_TRUE);
+	elm_object_tree_focus_allow_set(ad->md.ly_main, EINA_TRUE);
 	setting_view_update(ad->main_view, ad);
 }
 
@@ -156,7 +156,7 @@ void storageUg_fail_popup(SettingStorageUG *ad)
 		ad->popup = NULL;
 	}
 
-	ad->popup = setting_create_popup(ad, ad->win, NULL,
+	ad->popup = setting_create_popup(ad, ad->md.win_main, NULL,
 	STORAGEUG_STR_FAIL, storageUg_popup_del,
 	SETTING_STORAGE_POPUP_TIMER, FALSE, FALSE, 0);
 }
@@ -171,7 +171,7 @@ static Eina_Bool storageUg_manage_apps_freeze_event_timer_cb(
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 	SettingStorageUG *ad = (SettingStorageUG *)cb;
 
-	evas_object_freeze_events_set(ad->navi, EINA_FALSE);
+	evas_object_freeze_events_set(ad->md.navibar_main, EINA_FALSE);
 
 	ad->event_freeze_timer = NULL;
 	SETTING_TRACE_END;
@@ -186,12 +186,12 @@ void storageUg_manage_apps_ug(SettingStorageUG *ad)
 	ret_if(NULL == ad);
 
 	if (app_launcher(
-			"setting-manage-applications-efl|viewtype:manage-applications", NULL, NULL)
+			"org.tizen.setting-appmgr", NULL, NULL)
 			== 0) {
 		ad->event_freeze_timer = ecore_timer_add(1,
 				storageUg_manage_apps_freeze_event_timer_cb,
 				ad);
-		evas_object_freeze_events_set(ad->navi, EINA_TRUE);
+		evas_object_freeze_events_set(ad->md.navibar_main, EINA_TRUE);
 	}
 }
 

@@ -62,6 +62,8 @@
 	"/org.tizen.setting/res/locale"
 #define DISPLAY_LOCALEDIR		_TZ_SYS_RO_APP\
 	"/org.tizen.setting-display/res/locale"
+#define STORAGE_LOCALEDIR		_TZ_SYS_RO_APP\
+	"/org.tizen.setting-storage/res/locale"
 
 #define MODE_SYSPOPUP_PACKAGE		"mode-syspopup"
 #define MODE_SYSPOPUP_LOCALEDIR	_TZ_SYS_RO_APP\
@@ -106,6 +108,14 @@
 //#define DISPLAY_NEWUX_EDJ_NAME		DISPLAYEDJ"/setting-newux.edj"
 //#define DISPLAY_NEW_GENLIST_EDJ_NAME	DISPLAYEDJ"/setting-new-genlist.edj"
 
+/* STORAGE PART */
+#if !defined(STORAGEEDJ)
+#define STORAGEEDJ _TZ_SYS_RO_APP"/org.tizen.setting-storage/res/edje"
+#endif
+
+#define STORAGE_THEME_EDJ_NAME		STORAGEEDJ"/setting-theme.edj"
+#define STORAGE_GENLIST_EDJ_NAME	STORAGEEDJ"/setting-genlist.edj"
+#define STORAGE_ICON_PATH	_TZ_SYS_RO_APP"/org.tizen.setting-storage/res/icons"
 
 #define RCS_CHECHING_FILE		_TZ_SYS_SHARE"/ims/.RCS_ENABLED"
 
