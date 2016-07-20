@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="3.0" package="org.tizen.setting-storage" version="0.9.5" install-location="internal-only">
+	<label>settings-storage</label>
+	<author email="p.pruski@samsung.com" href="www.samsung.com">Piotr Pruski</author>
+	<description>Setting Application Storage Module</description>
+	<ui-application appid="org.tizen.setting-storage" exec="setting-storage" nodisplay="false" multiple="false" type="capp" taskmanage="true" hw-acceleration="use-GL">
+		<metadata key="http://developer.samsung.com/tizen/metadata/legacylifecycle"/>
+		<label>settings-storage</label>
+		<label xml:lang="ar-ae">settings-storage</label>
+		<label xml:lang="az-az">settings-storage</label>
+		<label xml:lang="bg-bg">settings-storage</label>
+		<label xml:lang="ca-es">settings-storage</label>
+		<label xml:lang="cs-cz">settings-storage</label>
+		<label xml:lang="da-dk">settings-storage</label>
+		<label xml:lang="de-de">settings-storage</label>
+		<label xml:lang="el-gr">settings-storage</label>
+		<label xml:lang="en-gb">settings-storage</label>
+		<label xml:lang="en-ph">settings-storage</label>
+		<label xml:lang="en-us">settings-storage</label>
+		<label xml:lang="es-es">settings-storage</label>
+		<label xml:lang="es-us">settings-storage</label>
+		<label xml:lang="es-mx">settings-storage</label>
+		<label xml:lang="et-ee">settings-storage</label>
+		<label xml:lang="eu-es">settings-storage</label>
+		<label xml:lang="fi-fi">settings-storage</label>
+		<label xml:lang="fr-ca">settings-storage</label>
+		<label xml:lang="fr-fr">settings-storage</label>
+	</ui-application>
+	<privileges>
+		<privilege>http://tizen.org/privilege/appmanager.launch</privilege>
+		<privilege>http://tizen.org/privilege/appmanager.kill</privilege>
+		<privilege>http://tizen.org/privilege/account.read</privilege>
+		<privilege>http://tizen.org/privilege/notification</privilege>
+		<privilege>http://tizen.org/privilege/haptic</privilege>
+
+		<privilege>http://tizen.org/privilege/packagemanager.install</privilege>
+		<privilege>http://tizen.org/privilege/packagemanager.admin</privilege>
+		<privilege>http://tizen.org/privilege/packagemanager.info</privilege>
+		<privilege>http://tizen.org/privilege/packagemanager.clearcache</privilege>
+
+		<privilege>http://tizen.org/privilege/system</privilege>
+		<privilege>http://tizen.org/privilege/systemsettings.admin</privilege>
+		<privilege>http://tizen.org/privilege/systemmanager</privilege>
+
+		<privilege>http://tizen.org/privilege/application.launch</privilege>
+		<privilege>http://tizen.org/privilege/content.read</privilege>
+		<privilege>http://tizen.org/privilege/filesystem.read</privilege>
+		<privilege>http://tizen.org/privilege/filesystem.write</privilege>
+		<privilege>http://tizen.org/privilege/fullscreen</privilege>
+
+		<privilege>http://tizen.org/privilege/mediastorage</privilege>
+		<privilege>http://tizen.org/privilege/externalstorage</privilege>
+		<privilege>http://tizen.org/privilege/externalstorage.appdata</privilege>
+
+		<privilege>http://tizen.org/privilege/package.info</privilege>
+	</privileges>
+</manifest>
