@@ -27,6 +27,7 @@
 #include <dd-deviced.h>
 #include <package-manager.h>
 
+#include "setting-common-init.h"
 #include "setting-common-view.h"
 #include "setting-common-draw-widget.h"
 #include "setting-storage-string.h"
@@ -64,18 +65,11 @@ typedef struct {
 } storageUg_worker_data;
 
 struct _SettingStorageUG {
-	ui_gadget_h ug;
+	MainData md;
 
 	setting_view *main_view;
 	setting_view *default_view;
 	setting_view *misces_view;
-
-	Evas_Object *win;
-	Evas_Object *lo_parent;
-	Evas_Object *navi;
-
-	Evas_Object *lo_main;
-	Evas_Object *gl_main;
 
 	Ecore_Timer *event_freeze_timer;
 

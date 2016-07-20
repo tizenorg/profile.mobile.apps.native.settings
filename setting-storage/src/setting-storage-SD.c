@@ -57,7 +57,7 @@ static void storageUg_SD_unmount(SettingStorageUG *ad, storageUg_mmc_cb cb)
 
 	ret_if(ad == NULL);
 
-	ad->popup = setting_create_popup_with_progressbar(ad, ad->win,
+	ad->popup = setting_create_popup_with_progressbar(ad, ad->md.win_main,
 			PROGRESSBAR_STYLE,
 			NULL, STORAGEUG_STR_UNMOUNTING_SD, storageUg_popup_del,
 			0, TRUE, TRUE, 0);
@@ -104,7 +104,7 @@ static void storageUg_SD_handle_mount_unmount(void *data)
 	}
 
 	if (VCONFKEY_SYSMAN_MMC_MOUNTED == ad->mmc_status) {
-		ad->popup = setting_create_popup(ad, ad->win,
+		ad->popup = setting_create_popup(ad, ad->md.win_main,
 				STORAGEUG_STR_UNMOUNT_SD,
 				STORAGEUG_STR_SD_UNMOUNT_POPUP_MSG,
 				storageUg_SD_unmount_resp, 0, FALSE, FALSE, 2,
@@ -112,7 +112,7 @@ static void storageUg_SD_handle_mount_unmount(void *data)
 	} else {
 		int ret;
 
-		ad->popup = setting_create_popup_with_progressbar(ad, ad->win,
+		ad->popup = setting_create_popup_with_progressbar(ad, ad->md.win_main,
 		PROGRESSBAR_STYLE, NULL, "IDS_ST_POP_MOUNTING_SD_CARD_ING",
 				storageUg_popup_del, 0, TRUE, TRUE, 0);
 
@@ -168,7 +168,7 @@ static void storageUg_SD_format(int result, void *data)
 		return;
 	}
 
-	ad->popup = setting_create_popup_with_progressbar(ad, ad->win,
+	ad->popup = setting_create_popup_with_progressbar(ad, ad->md.win_main,
 			"default",
 			NULL, STORAGEUG_STR_FORMATTING_SD, NULL, 0, TRUE, TRUE,
 			0);
@@ -206,7 +206,7 @@ static void storageUg_SD_format_se_confirm(SettingStorageUG *ad)
 	if (ad->popup)
 		evas_object_del(ad->popup);
 
-	ad->popup = setting_create_popup(ad, ad->win, NULL,
+	ad->popup = setting_create_popup(ad, ad->md.win_main, NULL,
 	STORAGEUG_STR_FORMAT_SECOND_Q, storageUg_SD_format_se_confirm_resp, 0,
 			FALSE, FALSE, 2, STORAGEUG_STR_OK,
 			STORAGEUG_STR_CANCEL);
@@ -229,7 +229,7 @@ static void storageUg_passwd_ug_result_cb(ui_gadget_h ug, app_control_h service,
 
 	FREE(result);
 
-	elm_object_tree_focus_allow_set(ad->lo_main, EINA_TRUE);
+	elm_object_tree_focus_allow_set(ad->md.ly_main, EINA_TRUE);
 	setting_ug_destroy(ug);
 }
 
@@ -253,8 +253,9 @@ static inline void storageUg_passwd_ug(SettingStorageUG *ad)
 	cbs.destroy_cb = storageUg_ug_destroy_cb;
 	cbs.priv = (void *)ad;
 
-	elm_object_tree_focus_allow_set(ad->lo_main, EINA_FALSE);
-	ug = setting_ug_create(ad->ug, "setting-password-efl", UG_MODE_FULLVIEW,
+	elm_object_tree_focus_allow_set(ad->md.ly_main, EINA_FALSE);
+	////TODO FIX ME
+	ug = setting_ug_create(NULL, "setting-password-efl", UG_MODE_FULLVIEW,
 			svc, &cbs);
 	warn_if(NULL == ug, "setting_ug_create() Fail");
 
@@ -313,7 +314,7 @@ static inline void storageUg_SD_handle_format(SettingStorageUG *ad)
 
 	popup_msg = STORAGEUG_STR_FORMAT_USE_MSG;
 
-	ad->popup = setting_create_popup(ad, ad->win, NULL, popup_msg,
+	ad->popup = setting_create_popup(ad, ad->md.win_main, NULL, popup_msg,
 			storageUg_SD_format_first_confirm_resp, 0, FALSE, FALSE,
 			2, STORAGEUG_STR_OK, STORAGEUG_STR_CANCEL);
 }
@@ -360,7 +361,7 @@ static Setting_GenGroupItem_Data *storageUg_SD_gl_insert_after(
 static inline void storageUg_SD_info_removed(SettingStorageUG *ad)
 {
 
-	ad->sd_mount = storageUg_SD_gl_insert_after(ad->gl_main, &itc_2text_2,
+	ad->sd_mount = storageUg_SD_gl_insert_after(ad->md.genlist, &itc_2text_2,
 			ad->sd_card->item, NULL, NULL, STORAGEUG_STR_MOUNT_SD,
 			STORAGEUG_STR_INSERT,
 			NULL);
@@ -372,7 +373,7 @@ static inline void storageUg_SD_info_removed(SettingStorageUG *ad)
 
 static inline void storageUg_SD_info_inserted_not_mounted(SettingStorageUG *ad)
 {
-	ad->sd_mount = storageUg_SD_gl_insert_after(ad->gl_main, &itc_1text,
+	ad->sd_mount = storageUg_SD_gl_insert_after(ad->md.genlist, &itc_1text,
 			ad->sd_card->item, storageUg_SD_sel, ad,
 			STORAGEUG_STR_MOUNT_SD, NULL, ad);
 	warn_if(NULL == ad->sd_mount, "ad->sd_mount is NULL");
@@ -403,19 +404,19 @@ static inline void storageUg_SD_info_mounted(SettingStorageUG *ad)
 	storageUg_size_to_str(total, total_str, sizeof(total_str));
 	storageUg_size_to_str(avail, avail_str, sizeof(avail_str));
 
-	ad->sd_total = storageUg_SD_gl_insert_after(ad->gl_main, &itc_2text_2,
+	ad->sd_total = storageUg_SD_gl_insert_after(ad->md.genlist, &itc_2text_2,
 			ad->sd_card->item, NULL, ad, STORAGEUG_STR_TOTAL,
 			total_str, ad);
 	if (ad->sd_total) {
 		elm_genlist_item_select_mode_set(ad->sd_total->item,
 				ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-		ad->sd_avail = storageUg_SD_gl_insert_after(ad->gl_main,
+		ad->sd_avail = storageUg_SD_gl_insert_after(ad->md.genlist,
 				&itc_2text_2, ad->sd_total->item, NULL, ad,
 				STORAGEUG_STR_AVAIL_SPACE, avail_str, ad);
 		if (ad->sd_avail) {
 			elm_genlist_item_select_mode_set(ad->sd_avail->item,
 					ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-			ad->sd_mount = storageUg_SD_gl_insert_after(ad->gl_main,
+			ad->sd_mount = storageUg_SD_gl_insert_after(ad->md.genlist,
 					&itc_1text, ad->sd_avail->item,
 					storageUg_SD_sel, ad,
 					STORAGEUG_STR_UNMOUNT_SD, NULL, ad);
@@ -423,7 +424,7 @@ static inline void storageUg_SD_info_mounted(SettingStorageUG *ad)
 		} else {
 			SETTING_TRACE_ERROR("ad->sd_avail is NULL");
 		}
-		ad->sd_format = storageUg_SD_gl_insert_after(ad->gl_main,
+		ad->sd_format = storageUg_SD_gl_insert_after(ad->md.genlist,
 				&itc_1text, ad->sd_mount->item,
 				storageUg_SD_sel, ad, STORAGEUG_STR_FORMAT_SD,
 				NULL, ad);
