@@ -139,6 +139,14 @@ Requires(post): org.tizen.setting
 %description display
 Replace for org.tizen.setting-display from ug to app-control
 
+%package storage
+Summary: replacement for org.tizen.setting-storage
+Group: Application/Core Applications
+Requires(post): org.tizen.setting
+
+%description storage
+Replace for org.tizen.setting-storage from ug to app-control
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -292,6 +300,10 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 mkdir -p %{_prefix}/apps/org.tizen.setting-display/shared
 mkdir -p %{_prefix}/apps/org.tizen.setting-display/shared/res
 
+%post storage
+mkdir -p %{_prefix}/apps/org.tizen.setting-storage/shared
+mkdir -p %{_prefix}/apps/org.tizen.setting-storage/shared/res
+
 %posttrans
 
 %files -n org.tizen.setting
@@ -360,3 +372,9 @@ mkdir -p %{_prefix}/apps/org.tizen.setting-display/shared/res
 %{_prefix}/apps/org.tizen.setting-display/bin/setting-display
 %{_datadir}/packages/org.tizen.setting-display.xml
 %{_prefix}/apps/org.tizen.setting-display/res/*
+
+%files storage
+%manifest setting-storage/org.tizen.setting-storage.manifest
+%{_prefix}/apps/org.tizen.setting-storage/bin/setting-storage
+%{_datadir}/packages/org.tizen.setting-storage.xml
+%{_prefix}/apps/org.tizen.setting-storage/res/*

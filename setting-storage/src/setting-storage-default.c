@@ -54,7 +54,7 @@ Evas_Object *storageUg_default_notice_get_icon(void *data, Evas_Object *obj,
 	/* in landscape mode, the size should be resize */
 	evas_object_geometry_get(obj, NULL, NULL, &width, NULL);
 
-	app_device_orientation_e m = elm_win_rotation_get(ad->win);
+	app_device_orientation_e m = elm_win_rotation_get(ad->md.win_main);
 	if (APP_DEVICE_ORIENTATION_90 == m || APP_DEVICE_ORIENTATION_270 == m)
 		height = SETTING_STORAGE_DEFAULT_STORAGE_APP_DESP_SIZE * 2 / 3;
 	else
@@ -261,7 +261,7 @@ static void storageUg_default_main_item_sel(void *data, Evas_Object *obj,
 	}
 
 	Evas_Object *scroller = NULL;
-	ad->popup = setting_create_popup_with_list(&scroller, ad, ad->win,
+	ad->popup = setting_create_popup_with_list(&scroller, ad, ad->md.win_main,
 			data_parentItem->keyStr, NULL, 0, false, false, 0);
 	_P(ad->popup);
 
@@ -337,10 +337,10 @@ static int storageUg_default_create(void *data)
 				storageUg_MMC_stat);
 	}
 
-	setting_push_layout_navi_bar_genlist(ad->lo_parent, ad->win,
+	setting_push_layout_navi_bar_genlist(ad->md.ly_main, ad->md.win_main,
 	STORAGEUG_STR_DEF_STORAGE, STORAGEUG_STR_BACK, NULL,
 			(setting_call_back_func)storageUg_default_back_cb,
-			NULL, ad, &genlist, ad->navi);
+			NULL, ad, &genlist, ad->md.navibar_main);
 
 	/*Shared contents */
 	setting_create_Gendial_field_titleItem(genlist, &itc_group_item,
@@ -427,7 +427,7 @@ static int storageUg_default_destroy(void *data)
 			storageUg_MMC_stat, ret);
 
 	setting_view_storage_default.is_create = 0;
-	elm_naviframe_item_pop(ad->navi);
+	elm_naviframe_item_pop(ad->md.navibar_main);
 
 	return SETTING_RETURN_SUCCESS;
 }

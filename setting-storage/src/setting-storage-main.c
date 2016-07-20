@@ -21,6 +21,7 @@
 #include <media_content.h>
 #include <package_manager.h>
 #include <Elementary.h>
+#include <efl_extension.h>
 
 #include "setting-common-general-func.h"
 #include "setting-storage-SD.h"
@@ -38,7 +39,7 @@
 #else
 #define SETTING_STORAGE_PIE_RECT_WIDTH (ELM_SCALE_SIZE(432))
 #define SETTING_STORAGE_PIE_RECT_HEIGHT (ELM_SCALE_SIZE(414))
-#define SETTING_STORAGE_PIE_CYCLE_SIZE (ELM_SCALE_SIZE(123))
+#define SETTING_STORAGE_PIE_CYCLE_SIZE (ELM_SCALE_SIZE(294))
 #endif
 
 
@@ -59,6 +60,27 @@
 const char *storageUg_MMC_stat = VCONFKEY_SYSMAN_MMC_STATUS;
 
 static setting_view setting_view_storage_main;
+
+Eina_Bool _back_cb(void *data, Elm_Object_Item *it)
+{
+	SETTING_TRACE_BEGIN;
+	ui_app_exit();
+	return EINA_TRUE;
+}
+
+static Eina_Bool setting_storage_main_click_softkey_back_cb(
+		void *data, Evas_Object *obj,
+		void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+	/* Send destroy request */
+	ui_app_exit();
+
+	SETTING_TRACE_END;
+
+	return EINA_FALSE;
+
+}
 
 static int dpm_usb_mass_storage(int* enable)
 {
@@ -95,6 +117,7 @@ static int dpm_usb_mass_storage(int* enable)
 static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 		SettingStorageUG *ad)
 {
+	SETTING_TRACE_BEGIN;
 	cairo_t *cr;
 	double total_size;
 	int cairo_w, cairo_h;
@@ -109,6 +132,7 @@ static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 	total_size = ad->sz_inter_total;
 
 	if (total_size == 0) {
+		SETTING_TRACE_BEGIN;
 		apps_sz = 0;
 		pics_sz = 0;
 		audio_size = 0;
@@ -116,6 +140,7 @@ static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 		internal_sz = 0;
 		cache_sz = 0;
 	} else {
+		SETTING_TRACE_BEGIN;
 		/* system memory */
 		system_sz = ad->sz_sys / total_size;
 		if (system_sz > 1 || system_sz < 0)
@@ -125,7 +150,6 @@ static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 		apps_sz = ad->sz_apps / total_size;
 		if (apps_sz > 1 || apps_sz < 0)
 			apps_sz = 1;
-
 		/* pics */
 		pics_sz = ad->sz_pics_videos / total_size;
 		if (pics_sz > 1 || pics_sz < 0)
@@ -169,6 +193,7 @@ static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 
 	/*all, use avaliable color */
 	cairo_set_line_width(cr, 4);
+	SETTING_TRACE("cairo_w: [%d], cairo_h[%d]", cairo_w, cairo_h);
 	cairo_arc(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2, 0, 2 * M_PI);
 	cairo_set_source_rgba(cr, 230 / 255., 226 / 255., 218 / 255., 1);
 	cairo_fill(cr);
@@ -176,14 +201,17 @@ static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 	/*system memory */
 	account_size = 0.75;
 	cairo_line_to(cr, cairo_w / 2, cairo_h / 2);
+	SETTING_TRACE("SYSTEM cairo_w: [%d], cairo_h[%d]", cairo_w, cairo_h);
 	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2,
 			account_size * 2 * M_PI,
 			(account_size - system_sz) * 2 * M_PI);
 	cairo_set_source_rgba(cr, 153 / 255., 66 / 255., 194 / 255., 1);
 	cairo_fill(cr);
+	SETTING_TRACE("SYSTEM system_sz: [%f]", system_sz);
 	account_size -= system_sz;
 
 	/*app */
+	SETTING_TRACE("APP cairo_w: [%d], cairo_h[%d]", cairo_w, cairo_h);
 	cairo_line_to(cr, cairo_w / 2, cairo_h / 2);
 	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2,
 			account_size * 2 * M_PI,
@@ -191,7 +219,7 @@ static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 	cairo_set_source_rgba(cr, 255 / 255., 189 / 255., 8 / 255., 1);
 	cairo_fill(cr);
 	account_size -= apps_sz;
-
+	SETTING_TRACE("PIC cairo_w: [%d], cairo_h[%d]", cairo_w, cairo_h);
 	/*pic */
 	cairo_line_to(cr, cairo_w / 2, cairo_h / 2);
 	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2,
@@ -201,6 +229,7 @@ static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 	cairo_fill(cr);
 	account_size -= pics_sz;
 
+	SETTING_TRACE("AUDIO cairo_w: [%d], cairo_h[%d]", cairo_w, cairo_h);
 	/*audio */
 	cairo_line_to(cr, cairo_w / 2, cairo_h / 2);
 	cairo_arc_negative(cr, cairo_w / 2, cairo_h / 2, cairo_w / 2,
@@ -236,11 +265,13 @@ static inline void storageUg_main_pie_graph_cairo(Evas_Object *pie_image,
 	evas_object_image_fill_set(pie_image, 0, 0, cairo_w, cairo_h);
 	evas_object_resize(pie_image, cairo_w, cairo_h);
 	ad->cr = cr;
+	SETTING_TRACE_BEGIN;
 }
 
 static inline void storageUg_main_part_pie_graph_set(Evas_Object *parent,
 		const char *part, void *data)
 {
+	SETTING_TRACE_BEGIN;
 	Evas *evas;
 	int cairo_w, cairo_h;
 	Evas_Object *clip;
@@ -274,6 +305,7 @@ static inline void storageUg_main_part_pie_graph_set(Evas_Object *parent,
 Evas_Object *storageUg_main_pie_item_get_icon(void *data, Evas_Object *obj,
 		const char *part)
 {
+	SETTING_TRACE_BEGIN;
 	double used_size;
 	Evas_Object *layout;
 	SettingStorageUG *ad = data;
@@ -283,12 +315,13 @@ Evas_Object *storageUg_main_pie_item_get_icon(void *data, Evas_Object *obj,
 	retv_if(NULL == obj, NULL);
 	retv_if(NULL == data, NULL);
 
+	SETTING_TRACE_ERROR("###PART: [%s]", part);
 	retvm_if(safeStrCmp(part, "elm.swallow.content"), NULL,
 			"part(%s) Invaild", part);
-
+	SETTING_TRACE_BEGIN;
 	layout = elm_layout_add(obj);
 
-	elm_layout_file_set(layout, SETTING_THEME_EDJ_NAME,
+	elm_layout_file_set(layout, STORAGE_THEME_EDJ_NAME,
 			"storage_pie");
 
 	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND,
@@ -308,10 +341,10 @@ Evas_Object *storageUg_main_pie_item_get_icon(void *data, Evas_Object *obj,
 	snprintf(final_str, sizeof(final_str), "%s %s", size_str,
 			 _(STORAGEUG_STR_USED));
 	elm_object_part_text_set(layout, "storage_used.text", final_str);
-
+	SETTING_TRACE_BEGIN;
 	/*pie */
 	storageUg_main_part_pie_graph_set(layout, "pie_rect", ad);
-
+	SETTING_TRACE_BEGIN;
 	evas_object_show(layout);
 
 	return layout;
@@ -320,17 +353,18 @@ Evas_Object *storageUg_main_pie_item_get_icon(void *data, Evas_Object *obj,
 Evas_Object *storageUg_color_item_content_get(void *data, Evas_Object *obj,
 		const char *part)
 {
+	SETTING_TRACE_BEGIN;
 	setting_retvm_if(data == NULL, NULL, "data is NULL");
 	Setting_GenGroupItem_Data *list_item = data;
 	int color = list_item->color;
 
-	//SETTING_TRACE_ERROR("part : %s", part);
+//	SETTING_TRACE_ERROR("part : %s", part);
 
 	if (!strcmp(part, "elm.swallow.icon")) {
 		Evas_Object *layout = elm_layout_add(obj);
 
 		Eina_Bool result = elm_layout_file_set(layout,
-				SETTING_THEME_EDJ_NAME, "storage_edge");
+				STORAGE_THEME_EDJ_NAME, "storage_edge");
 		evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND,
 				EVAS_HINT_EXPAND);
 		evas_object_size_hint_align_set(layout, EVAS_HINT_FILL,
@@ -462,14 +496,14 @@ static void storageUg_main_sel(void *data, Evas_Object *obj, void *event_info)
 		setting_view_change(ad->main_view, ad->misces_view, ad);
 	} else if (!safeStrCmp(STORAGEUG_STR_CACHE, list_item->keyStr)) {
 		if (ad->sz_caches <= 0) {
-			ad->popup = setting_create_popup(ad, ad->win,
+			ad->popup = setting_create_popup(ad, ad->md.win_main,
 					"IDS_ST_HEADER_CLEAR_CACHE_ABB",
 					"IDS_ST_POP_THERE_IS_NO_CACHE_DATA_TO_CLEAR",
 					__storage_cache_file_clean_popup_no_cache_rsp_cb,
 					0, FALSE, FALSE,
 					1, "IDS_ST_BUTTON_OK_ABB");
 		} else {
-			ad->popup = setting_create_popup(ad, ad->win,
+			ad->popup = setting_create_popup(ad, ad->md.win_main,
 					"IDS_ST_HEADER_CLEAR_CACHE_ABB",
 					"IDS_ST_POP_ALL_THE_CACHE_DATA_WILL_BE_CLEARED",
 					__storage_cache_file_clean_popup_rsp_cb,
@@ -492,7 +526,7 @@ static Setting_GenGroupItem_Data *storageUg_main_append_group_mid_item(
 		item_data->keyStr = (char *)g_strdup(key_str);
 		item_data->sub_desc = (char *)g_strdup(sub_str);
 		item_data->color = color;
-		item_data->item = elm_genlist_item_append(ad->gl_main,
+		item_data->item = elm_genlist_item_append(ad->md.genlist,
 				&(ad->itc_color_item), item_data, NULL,
 				ELM_GENLIST_ITEM_NONE, storageUg_main_sel, ad);
 	} else {
@@ -510,7 +544,7 @@ static inline void storageUg_main_dev_memory_detail(SettingStorageUG *ad)
 	/* memory total */
 	storageUg_size_to_str(ad->sz_inter_total, total_desc,
 			sizeof(total_desc));
-	ad->total_space = setting_create_Gendial_field_def(ad->gl_main,
+	ad->total_space = setting_create_Gendial_field_def(ad->md.genlist,
 			&itc_2text_2, NULL, ad, SWALLOW_Type_INVALID, NULL,
 			NULL, 0, STORAGEUG_STR_TOTAL, total_desc, NULL);
 	ret_if(NULL == ad->total_space);
@@ -666,7 +700,7 @@ static Eina_Bool storageUg_main_back_cb(void *data, Elm_Object_Item *it)
 		SETTING_TRACE("ad->size_worker is NULL <<--------");
 	}
 
-	ug_destroy_me(ad->ug);
+//	ug_destroy_me(ad->ug);
 	SETTING_TRACE_END;
 	return EINA_FALSE;
 }
@@ -693,34 +727,132 @@ static inline Evas_Object *storageUg_main_genlist(Evas_Object *parent)
 
 static int storageUg_main_create(void *data)
 {
+	SETTING_TRACE_BEGIN;
+
 	int ret;
 	Elm_Object_Item *pie_item;
 	SettingStorageUG *ad = data;
 
-	bindtextdomain(SETTING_PACKAGE, SETTING_LOCALEDIR);
+//	bindtextdomain(SETTING_PACKAGE, SETTING_LOCALEDIR);
 
 
 	ad->update_timer = NULL;
 
 	retv_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	retv_if(NULL == ad->lo_parent, SETTING_DRAW_ERR_FAIL_LOAD_EDJ);
 
-	ad->gl_main = storageUg_main_genlist(ad->navi);
-	setting_create_navi_bar_buttons(STORAGEUG_STR_STORAGE,
-			NULL, /* arrow style */
-			(setting_call_back_func)storageUg_main_back_cb,
-			ad,
-			ad->gl_main, ad->navi, NULL);
+	SETTING_TRACE_BEGIN;
 
+	Evas_Object *layout = NULL;
+	Evas_Object *conform = NULL;
+	Evas_Object *bg = NULL;
+
+	// Conformant
+	conform = elm_conformant_add(ad->md.win_main);
+	if (conform == NULL) {
+		SETTING_TRACE(" *** elm_conformant_add returns NULL *** ");
+		return SETTING_GENERAL_ERR_NULL_DATA_PARAMETER;
+	}
+	evas_object_size_hint_weight_set(conform, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_win_resize_object_add(ad->md.win_main, conform);
+	evas_object_show(conform);
+//
+//	SETTING_TRACE_BEGIN;
+//	/*  Base Layout */
+//	layout = elm_layout_add(conform);
+//	setting_retvm_if(layout == NULL, FALSE, "layout == NULL");
+//
+//	elm_layout_theme_set(layout, "layout", "application", "default");
+//	evas_object_size_hint_align_set(conform, EVAS_HINT_FILL,
+//			EVAS_HINT_FILL);
+//	elm_win_resize_object_add(ad->md.win_main, conform);
+//	elm_object_content_set(conform, layout);
+//
+//	SETTING_TRACE_BEGIN;
+//	bg = setting_create_bg(layout, ad->md.win_main, "group_list");
+//	elm_object_part_content_set(layout, "elm.swallow.bg", bg);
+//	SETTING_TRACE_BEGIN;
+//	evas_object_show(layout);
+//	ad->md.ly_main = layout;
+//
+//	SETTING_TRACE_BEGIN;
+////	elm_win_conformant_set(ad->md.win_main, EINA_TRUE);
+//	evas_object_show(conform);
+//
+//	SETTING_TRACE_BEGIN;
+//	ad->md.conform = conform;
+//
+//	evas_object_data_set(ad->md.win_main, "conformant", conform);
+//	SETTING_TRACE_BEGIN;
+	/* navi frame */
+	Evas_Object *navi = NULL;
+	SETTING_TRACE_BEGIN;
+	/* navi frame */
+	navi = elm_naviframe_add(conform);
+	SETTING_TRACE_BEGIN;
+	if (navi == NULL) {
+		SETTING_TRACE(" *** elm_naviframe_add returns NULL *** ");
+		return SETTING_GENERAL_ERR_NULL_DATA_PARAMETER;
+	}
+	SETTING_TRACE_BEGIN;
+	elm_naviframe_prev_btn_auto_pushed_set(navi, EINA_TRUE);
+	elm_object_part_content_set(conform, "elm.swallow.content", navi);
+	ad->md.navibar_main = navi;
+	evas_object_show(navi);
+	SETTING_TRACE_BEGIN;
+	eext_object_event_callback_add(navi, EEXT_CALLBACK_BACK, eext_naviframe_back_cb, NULL);
+	eext_object_event_callback_add(navi, EEXT_CALLBACK_MORE, eext_naviframe_more_cb, NULL);
+
+	/* genlist */
+	Evas_Object *genlist = NULL;
+	genlist = elm_genlist_add(navi);
+	retvm_if(genlist == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER, "Cannot set scroller object as contento of layout");
+	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
+	elm_genlist_clear(genlist);	/* first to clear list */
+
+	ad->md.genlist = genlist;
+
+	evas_object_size_hint_weight_set(ad->md.genlist, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_win_resize_object_add(ad->md.navibar_main, ad->md.genlist);
+	evas_object_show(genlist);
+
+	Evas_Object *button = elm_button_add(ad->md.navibar_main);
+	elm_object_style_set(button, NAVI_BACK_ARROW_BUTTON_STYLE);
+	evas_object_smart_callback_add(button, "clicked",
+			(setting_call_back_func)setting_storage_main_click_softkey_back_cb,
+			ad);
+	evas_object_show(button);
+
+	Elm_Object_Item *nf_it = NULL;
+	nf_it = elm_naviframe_item_push(navi, _("IDS_ST_BODY_STORAGE"), button, NULL, genlist, NULL);
+	elm_naviframe_item_pop_cb_set(nf_it, _back_cb, ad);
+
+//	ret = view_init(&ad->md, _("IDS_ST_BODY_STORAGE"));
+//	if (ret != SETTING_RETURN_SUCCESS)
+//		return ret;
+//	SETTING_TRACE_BEGIN;
+
+//	ad->gl_main = storageUg_main_genlist(ad->navi);
+//	setting_create_navi_bar_buttons(STORAGEUG_STR_STORAGE,
+//			NULL, /* arrow style */
+//			(setting_call_back_func)storageUg_main_back_cb,
+//			ad,
+//			ad->md.genlist, ad->md.navibar_main, NULL);
+//
+
+	SETTING_TRACE_BEGIN;
 	storageUg_get_internal_storage_status(&ad->sz_inter_total,
 			&ad->sz_inter_avail);
 
+	SETTING_TRACE_BEGIN;
 	/* storage pie view */
-	pie_item = elm_genlist_item_append(ad->gl_main, &(ad->itc_pie),
+	pie_item = elm_genlist_item_append(ad->md.genlist, &(ad->itc_pie),
 			ad, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
+
 	elm_genlist_item_select_mode_set(pie_item,
 			ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 	ad->pie_it = pie_item;
+
+	SETTING_TRACE_BEGIN;
 
 	storageUg_main_dev_memory_detail(ad);
 
@@ -740,7 +872,7 @@ static int storageUg_main_create(void *data)
 
 		/* Default storage */
 		setting_create_Gendial_field_def(
-				ad->gl_main,
+				ad->md.genlist,
 				&itc_1text,
 				storageUg_main_sel,
 				ad,
@@ -753,7 +885,7 @@ static int storageUg_main_create(void *data)
 
 		/* SD */
 		ad->sd_card = setting_create_Gendial_field_titleItem(
-				ad->gl_main,
+				ad->md.genlist,
 				&itc_group_item,
 				STORAGEUG_STR_SD_CARD,
 				NULL);
@@ -770,12 +902,8 @@ static int storageUg_main_create(void *data)
 	ad->usb_otg_status = SETTING_STORAGE_USB_OTG_REMOVE;
 
 	storageUg_init_USB(ad);
-/* TODO Temporary fix for white screen issue
- * Application can be called from myfiles app then we have more than one instance
- * then the new view is updated and then the white screen occurs
- */
-//	setting_view_storage_main.is_create = 1;
 
+	setting_view_storage_main.is_create = 1;
 	media_content_set_db_updated_cb(storageUg_media_filesys_changed_cb, ad);
 	SETTING_TRACE("-----------------------------------------------");
 	SETTING_TRACE(" WIDGET_SCALE_FACTOR : %f", WIDGET_SCALE_FACTOR);
@@ -852,7 +980,7 @@ static int storageUg_main_update(void *data)
 	storageUG_update_apps_cache_info(ad);
 
 	if (!ad->misces_list)
-		evas_object_show(ad->lo_main);
+		evas_object_show(ad->md.ly_main);
 	/* else
 		setting_view_update(ad->misces_view, ad); */
 
