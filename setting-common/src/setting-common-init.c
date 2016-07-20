@@ -48,6 +48,7 @@ static Evas_Object *_create_main_window(char *name)
 		evas_object_size_hint_weight_set(bg, EVAS_HINT_EXPAND,
 				EVAS_HINT_EXPAND);
 		elm_win_resize_object_add(win, bg);
+		evas_object_color_set(bg, 120,120, 250, 125);
 		evas_object_show(bg);
 	}
 	if (win) {

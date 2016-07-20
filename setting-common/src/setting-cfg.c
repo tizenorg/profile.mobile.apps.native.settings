@@ -283,10 +283,10 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 		uuid_LanguageKeyboard, 0, "org.tizen.setting.language"},
 #if SUPPORT_STORAGE
 	{	KeyStr_Storage, IMG_Storage,
-		"setting-storage-efl|caller:setting",
+		"org.tizen.setting-storage",
 		Cfg_Item_Pos_Level0, Cfg_Item_unResetable, 0,
 		Cfg_Item_AppLauncher_Node, NULL, KeyStr_System, NULL,
-		uuid_Storage, 0, "setting-storage-efl"},
+		uuid_Storage, 0, "org.tizen.setting-storage"},
 #endif
 	{	KeyStr_DateTime, IMG_DateTime, "setting-time-efl",
 		Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0,
