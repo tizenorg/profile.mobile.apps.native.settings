@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <langlist>
+  <language id="ar_AE" string="العربية" lang="Arabic" mcc="400"/>
   <language id="az_AZ" string="Azərbaycanca" lang="Azerbaijani" mcc="400"/>
   <language id="bg_BG" string="Български език" lang="Bulgarian" mcc="284"/>
   <language id="ca_ES" string="Català" lang="Catalan" mcc=""/>
