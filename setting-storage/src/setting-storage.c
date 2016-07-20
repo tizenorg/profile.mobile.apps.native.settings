@@ -20,6 +20,8 @@
 #define UG_MODULE_API __attribute__ ((visibility("default")))
 #endif
 
+#include <app.h>
+#include <appcore-common.h>
 #include <efl_extension.h>
 #include <media_content.h>
 
@@ -51,6 +53,23 @@ typedef struct {
 	char *key_name;
 	int keynum;
 } storageUg_search_data;
+
+
+#define SETTING_STORAGE_PACKAGE_NAME "org.tizen.setting-storage"
+
+/******************************APP CONTROL***********************************/
+static bool _setting_storage_app_create(void *data);
+static void _setting_storage_app_control_cb(app_control_h app_control, void *data);
+static void _setting_storage_app_on_pause(void *data);
+static void _setting_storage_app_on_resume(void *data);
+static void _setting_storage_app_terminate(void *data);
+/********************************OTHER***************************************/
+static void _main_win_del_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	SETTING_TRACE_BEGIN;
+//	ui_app_exit();
+	elm_exit();
+}
 
 static void _storageUg_vconf_change_cb(keynode_t *key, void *data)
 {
@@ -152,160 +171,57 @@ static inline Evas_Object *storageUg_create_navi(Evas_Object *parent,
 	return navi;
 }
 
-static inline void storageUg_move_view(STORAGEUG_KEYWORD keynum,
-		SettingStorageUG *ad)
+static void _lang_changed(app_event_info_h event_info, void *data)
 {
-	Setting_GenGroupItem_Data *item_data;
+	SETTING_TRACE_BEGIN;
+	SettingStorageUG *ad = data;
+	setting_retm_if(NULL == data, "data is NULL");
 
-	retm_if(keynum <= STORAGEUG_KEYWORD_NONE
-			|| STORAGEUG_KEYWORD_MAX <= keynum,
-			"keynum(%d) is Invalid", keynum);
-
-	switch (keynum) {
-	case STORAGEUG_KEYWORD_MAIN_SYS_MEM:
-		item_data = ad->sys_mem;
-		break;
-	case STORAGEUG_KEYWORD_MAIN_APPS:
-		item_data = ad->apps;
-		break;
-	case STORAGEUG_KEYWORD_MAIN_PICS:
-		item_data = ad->pics_videos;
-		break;
-	case STORAGEUG_KEYWORD_MAIN_AUDIO:
-		item_data = ad->audio;
-		break;
-	case STORAGEUG_KEYWORD_MAIN_MISCES:
-		item_data = ad->misces;
-		break;
-	case STORAGEUG_KEYWORD_MAIN_AVAIL:
-		item_data = ad->avail;
-		break;
-	case STORAGEUG_KEYWORD_MAIN_SD_CARD:
-		item_data = ad->sd_card;
-		break;
-	case STORAGEUG_KEYWORD_DEFAULT_BT:
-		item_data = ad->data_bt;
-		break;
-	case STORAGEUG_KEYWORD_DEFAULT_WIFI:
-		item_data = ad->data_wifidirect;
-		break;
-	case STORAGEUG_KEYWORD_DEFAULT_NFC:
-		item_data = ad->data_nfc;
-		break;
-	case STORAGEUG_KEYWORD_DEFAULT_APP:
-		item_data = ad->data_installapp;
-		break;
-	default:
-		item_data = NULL;
-		break;
-	}
-
-	if (item_data && item_data->item) {
-		if (STORAGEUG_KEYWORD_DEFAULT < keynum)
-			elm_genlist_item_expanded_set(item_data->item, TRUE);
-		else
-			elm_genlist_item_bring_in(item_data->item,
-					ELM_GENLIST_ITEM_SCROLLTO_MIDDLE);
+	char *lang = NULL;
+	if (app_event_get_language(event_info, &lang) == APP_ERROR_NONE) {
+		SETTING_TRACE_DEBUG("Setting - language is changed : %s", lang);
+		elm_language_set(lang);
+		elm_config_all_flush();
+		free(lang);
+		setting_navi_items_update(ad->md.navibar_main);
+	} else {
+		SETTING_TRACE_ERROR("Cannot get language from event_info");
 	}
 }
 
-#if SUPPORT_APP_ROATION
-static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
+static void _setting_storage_app_control_cb(app_control_h app_control, void *data)
 {
 	SETTING_TRACE_BEGIN;
+}
+
+static bool _setting_storage_app_create(void *data)
+{
+	SETTING_TRACE_BEGIN;
+	int ret = 0;
+	setting_retvm_if(NULL == data, false, "!data");
 	SettingStorageUG *ad = (SettingStorageUG *)data;
-	ret_if(ad == NULL || ad->win == NULL);
-	int change_ang = elm_win_rotation_get(ad->win);
-
-	SETTING_TRACE_DEBUG("....change_ang:%d", change_ang);
-	SETTING_TRACE_DEBUG("current_rotation:%d", ad->current_rotation);
-	/*Send the rotation event to UGs.. */
-	enum ug_event event = UG_EVENT_ROTATE_PORTRAIT;
-	switch (change_ang) {
-	case APP_DEVICE_ORIENTATION_0:
-		event = UG_EVENT_ROTATE_PORTRAIT;
-		break;
-	case APP_DEVICE_ORIENTATION_180:
-		event = UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN;
-		break;
-	case APP_DEVICE_ORIENTATION_270:
-		event = UG_EVENT_ROTATE_LANDSCAPE;
-		break;
-	case APP_DEVICE_ORIENTATION_90:
-		event = UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN;
-		break;
-	default:
-		return;
-	}
-	SETTING_TRACE_DEBUG("diff:%d",
-			elm_win_rotation_get(ad->win) - ad->current_rotation);
-
-	if (change_ang != ad->current_rotation) {
-		int diff = change_ang - ad->current_rotation;
-		if (diff < 0)
-			diff = -diff;
-
-		/**
-		 * @todo if app didn't launch UG, is the call required to
-		 * invoke?
-		 */
-		ug_send_event(event);
-		/* if (diff == 180) {
-			do nothing
-		} */
-		ad->current_rotation = change_ang;
-	}
-}
-#endif
-
-static void *setting_storageUg_on_create(ui_gadget_h ug, enum ug_mode mode,
-		app_control_h service, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-	int ret;
-	char *caller = NULL;
-	SettingStorageUG *ad = priv;
-	char *search_keyword = NULL;
-	STORAGEUG_KEYWORD keyword_val = STORAGEUG_KEYWORD_NONE;
-
 	SETTING_TRACE(" -----> [TIME-1] before ");
 	appcore_measure_start();
 
-	retvm_if(NULL == ug || NULL == priv, NULL, "ug=%p, priv=%p is Invalid",
-			ug, priv);
-
-	ad->ug = ug;
-	ad->win = ug_get_window();
-	ad->lo_parent = ug_get_parent_layout(ug);
-	if (NULL == ad->lo_parent) {
-		SETTING_TRACE_ERROR("ug_get_parent_layout(ug) Fail");
-		return NULL;
+	setting_set_i18n("setting", STORAGE_LOCALEDIR);
+	if (app_init(&ad->md, SETTING_STORAGE_PACKAGE_NAME)
+							!= SETTING_RETURN_SUCCESS) {
+		SETTING_TRACE_ERROR("Cannot initialize application");
+		return false;
 	}
-
-	ad->current_rotation = elm_win_rotation_get(ad->win);
-	SETTING_TRACE_DEBUG("ad->current_rotation:%d", ad->current_rotation);
-	if (elm_win_wm_rotation_supported_get(ad->win)) {
-		int rots[4] = { 0, 90, 180, 270 }; /* rotation value that app
-		may want */
-		elm_win_wm_rotation_available_rotations_set(ad->win, rots, 4);
-	}
-	evas_object_smart_callback_add(ad->win, "wm,rotation,changed",
-			_rot_changed_cb, ad);
-
-	ret = media_content_connect();
-	if (MEDIA_CONTENT_ERROR_NONE != ret) {
-		SETTING_TRACE_ERROR("media_content_connect() Fail(%d)", ret);
-		/*return NULL; */
-	}
-
-	app_control_get_extra_data(service, "caller", &caller);
-	app_control_get_extra_data(service, "keyword", &search_keyword);
-	if (NULL == caller)
-	elm_theme_extension_add(NULL, SETTING_GENLIST_EDJ_NAME);
+	evas_object_smart_callback_add(ad->md.win_main, "delete,request",
+				_main_win_del_cb, ad);
 
 	/* add listening */
 	_storageUg_listen_vconf(ad);
 
+	ret = media_content_connect();
+	if (MEDIA_CONTENT_ERROR_NONE != ret) {
+		SETTING_TRACE_ERROR("media_content_connect() Fail(%d)", ret);
+		/*return false; */
+	}
+
+	storageUg_init_itcs(ad);
 	storageUg_main_init(ad);
 	storageUg_default_init(ad);
 	storageUg_misc_init(ad);
@@ -315,51 +231,21 @@ static void *setting_storageUg_on_create(ui_gadget_h ug, enum ug_mode mode,
 	setting_view_node_table_register(ad->default_view, ad->main_view);
 	setting_view_node_table_register(ad->misces_view, ad->main_view);
 
-	storageUg_init_itcs(ad);
-
-	ad->lo_main = setting_create_win_layout(ad->win);
-	ad->navi = storageUg_create_navi(ad->lo_main, ad);
-	if (NULL == ad->navi) {
-		SETTING_TRACE_ERROR("calloc() Fail");
-		return NULL;
-	}
-	elm_object_part_content_set(ad->lo_main, "elm.swallow.content",
-			ad->navi);
-
-	if (search_keyword)
-		keyword_val = atoi(search_keyword);
-
-	if (STORAGEUG_KEYWORD_DEFAULT <= keyword_val
-			&& keyword_val < STORAGEUG_KEYWORD_MAX)
-		setting_view_create(ad->default_view, ad);
-	else
-		setting_view_create(ad->main_view, ad);
-
-	if (keyword_val)
-		storageUg_move_view(keyword_val, ad);
-
-	free(caller);
-	free(search_keyword);
-
+	setting_view_create(ad->main_view, ad);
 	SETTING_TRACE(" -----> [TIME-2] it took %d msec ",
 			appcore_measure_time());
 	appcore_measure_start();
 
-
-	ad->misces_ctx_popup_selected = EINA_FALSE;
-
-	return ad->lo_main;
+	return true;
 }
 
-static void setting_storageUg_on_destroy(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void _setting_storage_app_terminate(void *data)
 {
 	SETTING_TRACE_BEGIN;
-	int ret;
-	SettingStorageUG *storageUG = priv;
+	int ret = 0;
+	SettingStorageUG *storageUG = data;
 
-	retm_if(NULL == ug || NULL == priv, "ug=%p, priv=%p is Invalid", ug,
-			priv);
+	retm_if(NULL == data, "data=%p is Invalid", data);
 
 	FREE(storageUG->usb_otg_path);
 
@@ -369,179 +255,66 @@ static void setting_storageUg_on_destroy(ui_gadget_h ug, app_control_h service,
 	warn_if(ret != MEDIA_CONTENT_ERROR_NONE,
 			"media_content_disconnect Fail");
 
-	if (storageUG->main_view->is_create)
-		setting_view_destroy(storageUG->main_view, storageUG);
 	if (storageUG->default_view->is_create)
 		setting_view_destroy(storageUG->default_view, storageUG);
+	if (storageUG->misces_view->is_create)
+		setting_view_destroy(storageUG->misces_view, storageUG);
+	if (storageUG->main_view->is_create)
+		setting_view_destroy(storageUG->main_view, storageUG);
 
-	if (storageUG->lo_main) {
-		evas_object_del(storageUG->lo_main);
-		storageUG->lo_main = NULL;
+	if (storageUG->md.win_main) {
+		evas_object_del(storageUG->md.win_main);
+		storageUG->md.win_main = NULL;
 	}
 }
 
-static void setting_storageUg_on_resume(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void _setting_storage_app_on_pause(void *data)
 {
 	SETTING_TRACE_BEGIN;
-	SettingStorageUG *storageUG = priv;
+}
 
-	retm_if(NULL == ug || NULL == priv, "ug=%p, priv=%p is Invalid", ug,
-			priv);
+static void _setting_storage_app_on_resume(void *data)
+{
+	SETTING_TRACE_BEGIN;
+	SettingStorageUG *storageUG = data;
+
+	retm_if(NULL == data, "data=%p is Invalid", data);
 
 	if (storageUG->main_view->is_create)
 		setting_view_update(storageUG->main_view, storageUG);
-
 }
 
-static void setting_storageUg_on_event(ui_gadget_h ug, enum ug_event event,
-		app_control_h service, void *priv)
+EXPORT_PUBLIC
+int main(int argc, char *argv[])
 {
-	SETTING_TRACE_BEGIN;
-	SettingStorageUG *storageUG = priv;
+	int r = 0;
+	SettingStorageUG storage_ad ;
+	app_event_handler_h handlers[5] = {NULL, };
 
-	retm_if(NULL == ug || NULL == priv, "ug=%p, priv=%p is Invalid", ug,
-			priv);
+	ui_app_lifecycle_callback_s ops = {
+		.create = _setting_storage_app_create,
+		.pause = _setting_storage_app_on_pause,
+		.resume = _setting_storage_app_on_resume,
+		.terminate = _setting_storage_app_terminate,
+		.app_control = _setting_storage_app_control_cb,
+	};
 
-	switch (event) {
-	case UG_EVENT_LOW_MEMORY:
-		break;
-	case UG_EVENT_LOW_BATTERY:
-		break;
-	case UG_EVENT_LANG_CHANGE:
-		if (storageUG->navi)
-			setting_navi_items_update(storageUG->navi);
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT:
-	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-	case UG_EVENT_ROTATE_LANDSCAPE:
-	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-		/*
-		 if (storageUG->application_desp)
-		 elm_genlist_item_update(storageUG->application_desp->item);
-		 */
-		break;
-	case UG_EVENT_REGION_CHANGE:
-		break;
-	default:
-		break;
-	}
-}
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY],
+			APP_EVENT_LOW_MEMORY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY],
+			APP_EVENT_LOW_BATTERY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED],
+			APP_EVENT_LANGUAGE_CHANGED, _lang_changed, &storage_ad);
+	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED],
+			APP_EVENT_REGION_FORMAT_CHANGED, NULL, NULL);
+	ui_app_add_event_handler(
+			&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED],
+			APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
 
-static void setting_storageUg_on_key_event(ui_gadget_h ug,
-		enum ug_key_event event, app_control_h service, void *priv)
-{
-	if (!ug)
-		return;
 
-	switch (event) {
-	case UG_KEY_EVENT_END:
-		ug_destroy_me(ug);
-		break;
-	default:
-		break;
-	}
-}
-
-static void setting_storageUg_on_start(ui_gadget_h ug,
-		app_control_h app_control, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-
-	retm_if(NULL == ug || NULL == priv, "ug=%p, priv=%p is Invalid", ug,
-			priv);
-
-	SETTING_TRACE(" -----> [TIME-3] it took %d msec to finish on_Start ",
-			appcore_measure_time());
-}
-
-UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
-{
-	SettingStorageUG *storageUG;
-
-	retv_if(NULL == ops, -1);
-
-	storageUG = calloc(1, sizeof(SettingStorageUG));
-	if (NULL == storageUG) {
-		SETTING_TRACE_ERROR("calloc() Fail");
-		return -1;
-	}
-
-	ops->create = setting_storageUg_on_create;
-	ops->start = setting_storageUg_on_start;
-	ops->pause = NULL;
-	ops->resume = setting_storageUg_on_resume;
-	ops->destroy = setting_storageUg_on_destroy;
-	ops->message = NULL;
-	ops->event = setting_storageUg_on_event;
-	ops->key_event = setting_storageUg_on_key_event;
-	ops->priv = storageUG;
-	ops->opt = UG_OPT_INDICATOR_ENABLE;
+	memset(&storage_ad, 0x00, sizeof(SettingStorageUG));
+	r = ui_app_main(argc, argv, &ops, &storage_ad);
+	retv_if(r == -1, -1);
 
 	return 0;
 }
-
-UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
-{
-	ret_if(NULL == ops);
-
-	FREE(ops->priv);
-}
-
-UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
-		char **applocale)
-{
-	int i;
-	int size;
-	char ug_args[STORAGEUG_MAX_STR_LEN];
-	Setting_Cfg_Node_T *node;
-	Eina_List **pplist = (Eina_List **)priv;
-	const storageUg_search_data search_configs[] = {
-	/* key_name, view_type, keyword, action, data */
-	{ STORAGEUG_STR_SYS_MEM, STORAGEUG_KEYWORD_MAIN_SYS_MEM }, {
-		STORAGEUG_STR_APPS,
-		STORAGEUG_KEYWORD_MAIN_APPS }, {
-		STORAGEUG_STR_PICS,
-		STORAGEUG_KEYWORD_MAIN_PICS }, {
-		STORAGEUG_STR_AUDIO,
-		STORAGEUG_KEYWORD_MAIN_AUDIO }, {
-		STORAGEUG_STR_MISCES,
-		STORAGEUG_KEYWORD_MAIN_MISCES }, {
-		STORAGEUG_STR_AVAIL,
-		STORAGEUG_KEYWORD_MAIN_AVAIL }, {
-		STORAGEUG_STR_SD_CARD,
-		STORAGEUG_KEYWORD_MAIN_SD_CARD }, {
-		STORAGEUG_STR_DEF_STORAGE,
-		STORAGEUG_KEYWORD_DEFAULT }, {
-		STORAGEUG_STR_BT,
-		STORAGEUG_KEYWORD_DEFAULT_BT }, {
-		STORAGEUG_STR_WIFI,
-		STORAGEUG_KEYWORD_DEFAULT_WIFI }, {
-		STORAGEUG_STR_NFC,
-		STORAGEUG_KEYWORD_DEFAULT_NFC }, {
-		STORAGEUG_STR_INSTALLED_APP_B,
-		STORAGEUG_KEYWORD_DEFAULT_APP } };
-
-	retv_if(NULL == priv, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	retv_if(NULL == applocale, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-
-	*applocale = strdup("setting:"_TZ_SYS_RO_APP"/org.tizen.setting/res/locale");
-
-	size = sizeof(search_configs) / sizeof(storageUg_search_data);
-
-	for (i = 0; i < size; i++) {
-		snprintf(ug_args, STORAGEUG_MAX_STR_LEN, "keyword:%d",
-				search_configs[i].keynum);
-		node = setting_plugin_search_item_subindex_add(
-				search_configs[i].key_name,
-				ug_args,
-				IMG_Storage,
-				Cfg_Item_View_Node,
-				NULL,
-				"Storage");
-
-		*pplist = eina_list_append(*pplist, node);
-	}
-	return 0;
-}
-

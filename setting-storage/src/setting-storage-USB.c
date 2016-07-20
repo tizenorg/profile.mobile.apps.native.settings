@@ -39,7 +39,7 @@ static inline void storageUg_USB_unmount(SettingStorageUG *ad)
 		storageUg_fail_popup(ad);
 		ad->usb_request = STORAGEUG_USB_REQ_NONE;
 	} else {
-		ad->popup = setting_create_popup_with_progressbar(ad, ad->win,
+		ad->popup = setting_create_popup_with_progressbar(ad, ad->md.win_main,
 				PROGRESSBAR_STYLE,
 				NULL, STORAGEUG_STR_UNMOUNTING,
 				storageUg_popup_del, 0, TRUE, TRUE, 0);
@@ -57,7 +57,7 @@ static inline void storageUg_USB_mount(SettingStorageUG *ad)
 		storageUg_fail_popup(ad);
 		ad->usb_request = STORAGEUG_USB_REQ_NONE;
 	} else {
-		ad->popup = setting_create_popup_with_progressbar(ad, ad->win,
+		ad->popup = setting_create_popup_with_progressbar(ad, ad->md.win_main,
 				PROGRESSBAR_STYLE,
 				NULL, NULL, storageUg_popup_del, 2, TRUE, TRUE,
 				0);
@@ -76,7 +76,7 @@ static inline int storageUg_USB_format(SettingStorageUG *ad)
 		storageUg_fail_popup(ad);
 		return SETTING_RETURN_FAIL;
 	} else {
-		ad->popup = setting_create_popup_with_progressbar(ad, ad->win,
+		ad->popup = setting_create_popup_with_progressbar(ad, ad->md.win_main,
 				PROGRESSBAR_STYLE,
 				NULL, STORAGEUG_STR_FORMATTING,
 				storageUg_popup_del, 0, TRUE, TRUE, 0);
@@ -142,7 +142,7 @@ static void storageUg_USB_format_first_confirm(void *data, Evas_Object *obj,
 		if (ad->popup)
 			evas_object_del(ad->popup);
 
-		ad->popup = setting_create_popup(ad, ad->win, NULL,
+		ad->popup = setting_create_popup(ad, ad->md.win_main, NULL,
 		STORAGEUG_STR_USB_FORMAT_SECOND_Q,
 				storageUg_USB_format_se_confirm, 0, FALSE,
 				FALSE, 2, STORAGEUG_STR_OK,
@@ -175,13 +175,13 @@ static void storageUg_main_USB_sel(void *data, Evas_Object *obj,
 	if (list_item == ad->usb_mount) {
 		storageUg_USB_mount(ad);
 	} else if (list_item == ad->usb_unmount) {
-		ad->popup = setting_create_popup(ad, ad->win, NULL,
+		ad->popup = setting_create_popup(ad, ad->md.win_main, NULL,
 		STORAGEUG_STR_USB_UNMOUNT_POPUP_MSG, storageUg_USB_unmount_resp,
 				0, FALSE, FALSE, 2, STORAGEUG_STR_OK,
 				STORAGEUG_STR_CANCEL);
 
 	} else if (list_item == ad->usb_format) {
-		ad->popup = setting_create_popup(ad, ad->win, NULL,
+		ad->popup = setting_create_popup(ad, ad->md.win_main, NULL,
 		STORAGEUG_STR_USB_FORMAT_Q, storageUg_USB_format_first_confirm,
 				0, FALSE, FALSE, 2, STORAGEUG_STR_OK,
 				STORAGEUG_STR_CANCEL);
@@ -232,7 +232,7 @@ static inline void storageUg_USB_append_mounted_info(SettingStorageUG *ad)
 	storageUg_size_to_str(avail, avail_str, sizeof(avail_str));
 
 	/* Total space */
-	ad->usb_total = setting_create_Gendial_field_def(ad->gl_main,
+	ad->usb_total = setting_create_Gendial_field_def(ad->md.genlist,
 			&(ad->itc_2text_2),
 			NULL, ad, SWALLOW_Type_INVALID, NULL, NULL, 0,
 			STORAGEUG_STR_TOTAL, total_str, NULL);
@@ -245,7 +245,7 @@ static inline void storageUg_USB_append_mounted_info(SettingStorageUG *ad)
 	}
 
 	/* Avaliable */
-	ad->usb_available = setting_create_Gendial_field_def(ad->gl_main,
+	ad->usb_available = setting_create_Gendial_field_def(ad->md.genlist,
 			&(ad->itc_2text_2),
 			NULL, ad, SWALLOW_Type_INVALID, NULL, NULL, 0,
 			STORAGEUG_STR_AVAIL_SPACE, avail_str, NULL);
@@ -258,7 +258,7 @@ static inline void storageUg_USB_append_mounted_info(SettingStorageUG *ad)
 	}
 
 	/* Usb Unmount*/
-	ad->usb_unmount = setting_create_Gendial_field_def(ad->gl_main,
+	ad->usb_unmount = setting_create_Gendial_field_def(ad->md.genlist,
 			&(ad->itc_1text), storageUg_main_USB_sel, ad,
 			SWALLOW_Type_INVALID, NULL, NULL, 0,
 			STORAGEUG_STR_UNMOUNT_USB, NULL, NULL);
@@ -268,7 +268,7 @@ static inline void storageUg_USB_append_mounted_info(SettingStorageUG *ad)
 		SETTING_TRACE_ERROR("ad->usb_unmount is NULL");
 
 	/* Usb Format*/
-	ad->usb_format = setting_create_Gendial_field_def(ad->gl_main,
+	ad->usb_format = setting_create_Gendial_field_def(ad->md.genlist,
 			&(ad->itc_1text), storageUg_main_USB_sel, ad,
 			SWALLOW_Type_INVALID, NULL, NULL, 0,
 			STORAGEUG_STR_FORMAT_USB, NULL, NULL);
@@ -289,14 +289,14 @@ static inline void storageUg_main_append_USB_info(SettingStorageUG *ad)
 		return;
 
 	/* USB OTG storage */
-	ad->usb_card = setting_create_Gendial_field_titleItem(ad->gl_main,
+	ad->usb_card = setting_create_Gendial_field_titleItem(ad->md.genlist,
 			&(ad->itc_group_item), STORAGEUG_STR_USB, NULL);
 
 	if (SETTING_STORAGE_USB_OTG_MOUNT == ad->usb_otg_status) {
 		storageUg_USB_append_mounted_info(ad);
 	} else {
 		/* Usb Mount*/
-		ad->usb_mount = setting_create_Gendial_field_def(ad->gl_main,
+		ad->usb_mount = setting_create_Gendial_field_def(ad->md.genlist,
 				&(ad->itc_1text), storageUg_main_USB_sel, ad,
 				SWALLOW_Type_INVALID, NULL, NULL, 0,
 				STORAGEUG_STR_MOUNT_USB, NULL, NULL);
