@@ -45,7 +45,7 @@ static Eina_Bool setting_phone_language_region_flush_timer_cb(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	SettingPhoneUG *ad = (SettingPhoneUG *) cb;
+	SettingPhone *ad = (SettingPhone *) cb;
 
 	elm_config_all_flush();
 	ad->lang_flush_timer = NULL;
@@ -59,9 +59,9 @@ static Eina_Bool setting_phone_language_region_freeze_event_timer_cb(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	SettingPhoneUG *ad = (SettingPhoneUG *)cb;
+	SettingPhone *ad = (SettingPhone *)cb;
 
-	evas_object_freeze_events_set(ad->navi_bar, EINA_FALSE);
+	evas_object_freeze_events_set(ad->md.navibar_main, EINA_FALSE);
 
 	ad->event_freeze_timer = NULL;
 	SETTING_TRACE_END;
@@ -100,7 +100,7 @@ static int _find_appid_ime_list(const pkgmgrinfo_appinfo_h handle,
  *
  * @param ad The view data passed
  */
-static void setting_phone_lang_create_keyboard_ug(SettingPhoneUG *ad)
+static void setting_phone_lang_create_keyboard_ug(SettingPhone *ad)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(ad == NULL);
@@ -155,14 +155,14 @@ static void setting_phone_lang_create_keyboard_ug(SettingPhoneUG *ad)
  * @brief create voice recognition ug by app control
  *
  */
-static void setting_phone_lang_create_voice_recognition_ug(SettingPhoneUG *ad)
+static void setting_phone_lang_create_voice_recognition_ug(SettingPhone *ad)
 {
 	SETTING_TRACE_BEGIN;
 	if (app_group_launcher("setting-voice-efl|show_what:stt") == 0) {
 		ad->event_freeze_timer = ecore_timer_add(1,
 				setting_phone_language_region_freeze_event_timer_cb,
 				ad);
-		evas_object_freeze_events_set(ad->navi_bar, EINA_TRUE);
+		evas_object_freeze_events_set(ad->md.navibar_main, EINA_TRUE);
 	}
 }
 
@@ -170,14 +170,14 @@ static void setting_phone_lang_create_voice_recognition_ug(SettingPhoneUG *ad)
  * @brief create text-to-speech ug by app control
  *
  */
-static void setting_phone_lang_create_text_speech_ug(SettingPhoneUG *ad)
+static void setting_phone_lang_create_text_speech_ug(SettingPhone *ad)
 {
 	SETTING_TRACE_BEGIN;
 	if (app_group_launcher("setting-voice-efl|show_what:tts") == 0) {
 		ad->event_freeze_timer = ecore_timer_add(1,
 				setting_phone_language_region_freeze_event_timer_cb,
 				ad);
-		evas_object_freeze_events_set(ad->navi_bar, EINA_TRUE);
+		evas_object_freeze_events_set(ad->md.navibar_main, EINA_TRUE);
 	}
 }
 
@@ -186,7 +186,7 @@ static void setting_phone_lang_create_text_speech_ug(SettingPhoneUG *ad)
  *
  * @param ad The view data passed
  */
-static void setting_phone_lang_create_readout_ug(SettingPhoneUG *ad)
+static void setting_phone_lang_create_readout_ug(SettingPhone *ad)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(ad == NULL);
@@ -195,7 +195,7 @@ static void setting_phone_lang_create_readout_ug(SettingPhoneUG *ad)
 		ad->event_freeze_timer = ecore_timer_add(1,
 				setting_phone_language_region_freeze_event_timer_cb,
 				ad);
-		evas_object_freeze_events_set(ad->navi_bar, EINA_TRUE);
+		evas_object_freeze_events_set(ad->md.navibar_main, EINA_TRUE);
 	}
 }
 
@@ -204,19 +204,19 @@ static void setting_phone_lang_create_readout_ug(SettingPhoneUG *ad)
  *
  * @param cb The view data passed between all callbacks
  */
-static Eina_Bool setting_phone_lang_click_softkey_cancel_cb(void *data,
+static Eina_Bool _click_softkey_cancel_cb(void *data,
 		Elm_Object_Item *it)
 {
 	SETTING_TRACE_BEGIN;
 	retvm_if(data == NULL, EINA_FALSE, "Data parameter is NULL");
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
+	SettingPhone *ad = (SettingPhone *)data;
 
-	Eina_Bool is_freezed = evas_object_freeze_events_get(ad->navi_bar);
+	Eina_Bool is_freezed = evas_object_freeze_events_get(ad->md.navibar_main);
 	SETTING_TRACE_DEBUG("is_freezed : %d", is_freezed);
 	if (is_freezed)
 		return EINA_FALSE;
-
-	ug_destroy_me(ad->ug);
+	if (ad->md.win_main)
+		elm_win_lower(ad->md.win_main);
 	return EINA_FALSE;
 }
 
@@ -231,7 +231,7 @@ static void setting_phone_lang_item_Gendial_mouse_up_cb(void *data,
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(!data || !event_info, "data||event_info is NULL");
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
+	SettingPhone *ad = (SettingPhone *)data;
 	Elm_Object_Item *item = (Elm_Object_Item *)event_info;
 
 	elm_genlist_item_selected_set(item, 0);
@@ -282,35 +282,36 @@ static void setting_phone_lang_item_Gendial_mouse_up_cb(void *data,
 static int setting_phone_language_region_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
-	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-
-	SettingPhoneUG *ad = (SettingPhoneUG *)cb;
-	Evas_Object *scroller = NULL;
-
+	SettingPhone *ad = (SettingPhone *)cb;
+	int ret;
 	int region_automatic;
+	Elm_Object_Item *navi_it = NULL;
+
+	ret = view_init(&ad->md, _("IDS_ST_HEADER_LANGUAGE_AND_INPUT"));
+	if (ret != SETTING_RETURN_SUCCESS)
+		return ret;
 
 	ad->lang_change = EINA_FALSE;
+	setting_create_navi_bar_buttons(
+			_("IDS_ST_HEADER_LANGUAGE_AND_INPUT"),
+			_("IDS_ST_BUTTON_BACK"),
+			_click_softkey_cancel_cb,
+			ad, ad->md.genlist, ad->md.navibar_main,
+			NULL);
 
-	char *title = "IDS_ST_HEADER_LANGUAGE_AND_INPUT";
-	ad->ly_language = setting_create_layout_navi_bar_genlist(
-			ad->win_main_layout, ad->win_get, title,
-			NULL,
-			NULL, setting_phone_lang_click_softkey_cancel_cb,
-			NULL, ad, &scroller, &(ad->navi_bar));
-	Elm_Object_Item *navi_it = elm_naviframe_top_item_get(ad->navi_bar);
-	elm_naviframe_item_pop_cb_set(navi_it,
-			setting_phone_lang_click_softkey_cancel_cb, ad);
+	navi_it = elm_naviframe_top_item_get(ad->md.navibar_main);
+	elm_naviframe_item_pop_cb_set(navi_it, _click_softkey_cancel_cb, ad);
 	retv_if(ad->ly_language == NULL, SETTING_RETURN_FAIL);
-	ad->gl_lang_region = scroller;
+	ad->gl_lang_region = ad->md.genlist;
 	ad->lang_region_navi_it = navi_it;
 	SETTING_TRACE("navi_it:%p", navi_it);
 	evas_object_smart_callback_add(ad->gl_lang_region, "realized",
 			__gl_realized_cb, NULL);
 
 	char *pa_display_lang = get_pa_display_language_str();
-	ad->data_display_language = setting_create_Gendial_field_def(scroller,
-			&(ad->itc_2text_2),
+	ad->data_display_language = setting_create_Gendial_field_def(
+			ad->md.genlist, &(ad->itc_2text_2),
 			setting_phone_lang_item_Gendial_mouse_up_cb, ad,
 			SWALLOW_Type_INVALID,
 			NULL, NULL, 0, "IDS_ST_HEADER_DISPLAY_LANGUAGE",
@@ -340,7 +341,7 @@ static int setting_phone_language_region_create(void *cb)
 		region_format_str = setting_phone_lang_get_region_str(
 				pa_region);
 
-	ad->data_region_fmt = setting_create_Gendial_field_def(scroller,
+	ad->data_region_fmt = setting_create_Gendial_field_def(ad->md.genlist,
 			&(ad->itc_2text_2),
 			setting_phone_lang_item_Gendial_mouse_up_cb, ad,
 			SWALLOW_Type_INVALID,
@@ -352,7 +353,7 @@ static int setting_phone_language_region_create(void *cb)
 		SETTING_TRACE_ERROR("ad->data_region_fmt is NULL");
 
 	char *example_desc = setting_phone_lang_get_example_desc(pa_region, ad);
-	ad->data_region_fmt_example = setting_create_Gendial_field_def(scroller,
+	ad->data_region_fmt_example = setting_create_Gendial_field_def(ad->md.genlist,
 			&itc_multiline_text,
 			NULL,
 			NULL, SWALLOW_Type_LAYOUT_SPECIALIZTION_X,
@@ -364,9 +365,9 @@ static int setting_phone_language_region_create(void *cb)
 
 	/* keyboard */
 	ad->data_title_keyboard = setting_create_Gendial_field_titleItem(
-			scroller, &itc_group_item, _("IDS_ST_BODY_KEYBOARD"),
+			ad->md.genlist, &itc_group_item, _("IDS_ST_BODY_KEYBOARD"),
 			NULL);
-	ad->data_keyboard = setting_create_Gendial_field_def(scroller,
+	ad->data_keyboard = setting_create_Gendial_field_def(ad->md.genlist,
 			&(ad->itc_1text),
 			setting_phone_lang_item_Gendial_mouse_up_cb, ad,
 			SWALLOW_Type_INVALID, NULL,
@@ -374,14 +375,14 @@ static int setting_phone_language_region_create(void *cb)
 			NULL, NULL);
 
 	/* Speech */
-	ad->data_title_speech = setting_create_Gendial_field_titleItem(scroller,
+	ad->data_title_speech = setting_create_Gendial_field_titleItem(ad->md.genlist,
 			&itc_group_item, _("IDS_ST_BODY_SPEECH"), NULL);
-	setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
+	setting_create_Gendial_field_def(ad->md.genlist, &(ad->itc_1text),
 			setting_phone_lang_item_Gendial_mouse_up_cb, ad,
 			SWALLOW_Type_INVALID, NULL,
 			NULL, 0, "IDS_ST_BODY_VOICE_CONTROL",
 			NULL, NULL);
-	setting_create_Gendial_field_def(scroller, &(ad->itc_1text),
+	setting_create_Gendial_field_def(ad->md.genlist, &(ad->itc_1text),
 			setting_phone_lang_item_Gendial_mouse_up_cb, ad,
 			SWALLOW_Type_INVALID, NULL,
 			NULL, 0, "IDS_ST_BODY_TTS",
@@ -408,7 +409,7 @@ static int setting_phone_language_region_destroy(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPhoneUG *ad = (SettingPhoneUG *)cb;
+	SettingPhone *ad = (SettingPhone *)cb;
 
 	evas_object_smart_callback_del(ad->gl_lang_region, "realized",
 			__gl_realized_cb);
@@ -449,7 +450,7 @@ static int setting_phone_language_region_update(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPhoneUG *ad = (SettingPhoneUG *)cb;
+	SettingPhone *ad = (SettingPhone *)cb;
 
 	if (ad->ly_language != NULL) {
 		evas_object_show(ad->ly_language);
