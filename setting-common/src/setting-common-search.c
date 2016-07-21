@@ -640,7 +640,6 @@ int __setting_init_search_index_module()
 		"setting-manage-applications-efl", /* NO CODE !!! */
 		"setting-manage-certificates-efl", /* NO CODE !!! */
 		"setting-myaccount-efl", /* NO CODE !!! */
-		"setting-phone-efl", /* NO CODE !!! */
 		"setting-readytoshare-efl", /* NO CODE !!! */
 		"setting-synchronise-efl", /* NO CODE !!! */
 		"wifi-efl-UG", /* NO CODE !!! */
