@@ -37,24 +37,16 @@ setting_view setting_view_phone_display_language = {
  *
  * @param data The view data passed between all callbacks
  */
-static void setting_phone_display_language_caller_exist_right_cb(void *data,
-		Evas_Object *obj, void *event_info)
+static void _caller_exist_right_cb(void *data, Evas_Object *obj,
+		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "Data parameter is NULL");
+	SettingPhone *ad = (SettingPhone *)data;
 
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
-	/*	Create Bundle and send message */
-	app_control_h svc;
-	if (app_control_create(&svc))
-		return;
-
-	app_control_add_extra_data(svc, "result", "rbutton_click");
-	ug_send_result(ad->ug, svc);
-
-	app_control_destroy(svc);
-
-	ug_destroy_me(ad->ug);
+	/* Bundle send message */
+	add_app_reply(&ad->md, "result", "rbutton_click");
+	ui_app_exit();
 }
 
 /**
@@ -63,12 +55,12 @@ static void setting_phone_display_language_caller_exist_right_cb(void *data,
  * @param data The view data passed between all callbacks
  * @param it Naviframe item
  */
-static Eina_Bool setting_phone_display_language_click_softkey_cancel_cb(
+static Eina_Bool _click_softkey_cancel_cb(
 		void *data, Elm_Object_Item *it)
 {
 	SETTING_TRACE_BEGIN;
 	retvm_if(data == NULL, EINA_FALSE, "Data parameter is NULL");
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
+	SettingPhone *ad = (SettingPhone *)data;
 	setting_view_change(&setting_view_phone_display_language,
 			&setting_view_phone_language_region, ad);
 
@@ -80,19 +72,19 @@ static Eina_Bool setting_phone_display_language_click_softkey_cancel_cb(
  *
  * @param data The view data passed between all callbacks
  */
-void setting_phone_display_language_done_popup_resp_cb(void *data,
+void _done_popup_resp_cb(void *data,
 		Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	retm_if(data == NULL, "Data parameter is NULL");
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
+	SettingPhone *ad = (SettingPhone *)data;
 
 	if (ad->pop_progress_lang) {
 		evas_object_del(ad->pop_progress_lang);
 		ad->pop_progress_lang = NULL;
 	}
 
-	elm_naviframe_item_pop(ad->navi_bar);
+	elm_naviframe_item_pop(ad->md.navibar_main);
 	setting_view_phone_display_language.is_create = 0;
 }
 
@@ -101,11 +93,11 @@ void setting_phone_display_language_done_popup_resp_cb(void *data,
  *
  * @param data The view data passed between all callbacks
  */
-static void setting_phone_display_language_close_popup_ex(void *data)
+static void _close_popup_ex(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "Data parameter is NULL");
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
+	SettingPhone *ad = (SettingPhone *)data;
 
 	if (ad->selected_locale == NULL)
 		return;
@@ -187,9 +179,7 @@ static void setting_phone_display_language_close_popup_ex(void *data)
 	uloc_setDefault(pa_lang, &err);
 
 	char *caller = NULL;
-	app_control_h service = ad->bundle_data;
-
-	app_control_get_extra_data(service, "caller", &caller);
+	app_control_get_extra_data(ad->md.app_caller_svc, "caller", &caller);
 
 	if (caller) {
 		int ret = setting_phone_region_format_set_dateformat(pa_lang,
@@ -208,17 +198,9 @@ static void setting_phone_display_language_close_popup_ex(void *data)
 			FREE(lang);
 		}
 
-		/*	Create Bundle and send message */
-		app_control_h svc;
-		if (app_control_create(&svc))
-			return;
-
-		app_control_add_extra_data(svc, "result", "rbutton_click");
-		ug_send_result(ad->ug, svc);
-
-		app_control_destroy(svc);
-
-		ug_destroy_me(ad->ug);
+		/* Bundle send message */
+		add_app_reply(&ad->md, "result", "rbutton_click");
+		ui_app_exit();
 		FREE(caller);
 
 	} else {
@@ -226,7 +208,7 @@ static void setting_phone_display_language_close_popup_ex(void *data)
 				ad, ad->ly_language,
 				PROGRESSBAR_STYLE,
 				NULL, KeyStr_Loading,
-				setting_phone_display_language_done_popup_resp_cb,
+				_done_popup_resp_cb,
 				/* 3 seconds to wait in maximum */
 				3/*0*/, TRUE, TRUE, 0);
 	}
@@ -240,14 +222,14 @@ static void setting_phone_display_language_close_popup_ex(void *data)
  * @param data The view data passed between all callbacks
  * @param event_info The select genlist item
  */
-static void setting_phone_display_language_mouse_up_Gendial_list_radio_cb(
+static void _mouse_up_Gendial_list_radio_cb(
 		void *data, Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "Data parameter is NULL");
 	setting_retm_if(event_info == NULL,
 			"Invalid argument: event info is NULL");
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
+	SettingPhone *ad = (SettingPhone *)data;
 	Elm_Object_Item *item = (Elm_Object_Item *)event_info;
 
 	elm_genlist_item_selected_set(item, 0);
@@ -257,7 +239,7 @@ static void setting_phone_display_language_mouse_up_Gendial_list_radio_cb(
 	setting_retm_if(NULL == list_item, "list_item is NULL");
 
 	ad->selected_locale = (char *)strdup(list_item->keyStr);
-	setting_phone_display_language_close_popup_ex(ad);
+	_close_popup_ex(ad);
 }
 
 /* ***************************************************
@@ -276,56 +258,52 @@ static int setting_phone_display_language_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-
-	SettingPhoneUG *ad = (SettingPhoneUG *)cb;
+	SettingPhone *ad = (SettingPhone *)cb;
 	/*char *title = "IDS_ST_HEADER_LANGUAGE_AND_INPUT"; */
 	char *title = "IDS_ST_HEADER_DISPLAY_LANGUAGE";
-
-	Evas_Object *scroller = NULL;
+	char *caller = NULL;
 	setting_call_back_func gl_sel_cb = NULL;
+	int ret;
 
-	if (&setting_view_phone_display_language == ad->view_to_load) {
-		char *caller = NULL;
+	ret = view_init(&ad->md, title);
+	if (ret != SETTING_RETURN_SUCCESS)
+		return ret;
 
-		app_control_h service = ad->bundle_data;
+	if (ad->view_to_load == &setting_view_phone_display_language) {
+		app_control_get_extra_data(ad->md.app_caller_svc, "caller",
+				&caller);
+		retv_if(!caller, SETTING_RETURN_FAIL);
 
-		app_control_get_extra_data(service, "caller", &caller);
-
-		if (caller) {
-			ad->ly_language = setting_create_layout_navi_bar_genlist(
-					ad->win_main_layout, ad->win_get, title,
-					"IDS_ST_BUTTON_BACK", NULL,
-					setting_phone_display_language_caller_exist_right_cb,
-					NULL, ad, &scroller, &ad->navi_bar);
-			gl_sel_cb = setting_phone_display_language_mouse_up_Gendial_list_radio_cb;
-			FREE(caller);
-		} else {
-			SETTING_TRACE_ERROR("[ERROR] caller is empty");
-			return SETTING_RETURN_FAIL;
-		}
+		setting_create_navi_bar_buttons(
+				title,
+				_("IDS_ST_BUTTON_BACK"),
+				_caller_exist_right_cb,
+				ad, ad->md.genlist, ad->md.navibar_main,
+				NULL);
+		gl_sel_cb = _mouse_up_Gendial_list_radio_cb;
+		FREE(caller);
 	} else {
 		/* add basic layout */
 		Elm_Object_Item *navi_it = setting_push_layout_navi_bar_genlist(
-				ad->win_main_layout, ad->win_get, title,
+				ad->md.view_layout, ad->md.win_main, title,
 				"IDS_ST_BUTTON_BACK",
 				NULL,
-				setting_phone_display_language_click_softkey_cancel_cb,
-				NULL, ad, &scroller, ad->navi_bar);
-		elm_naviframe_item_pop_cb_set(navi_it,
-				setting_phone_display_language_click_softkey_cancel_cb,
+				_click_softkey_cancel_cb,
+				NULL, ad, &ad->md.genlist, ad->md.navibar_main);
+		elm_naviframe_item_pop_cb_set(navi_it, _click_softkey_cancel_cb,
 				ad);
-		gl_sel_cb = setting_phone_display_language_mouse_up_Gendial_list_radio_cb;
+		gl_sel_cb = _mouse_up_Gendial_list_radio_cb;
 	}
 
-	ad->gl_lang = scroller;
-	elm_scroller_policy_set(scroller, ELM_SCROLLER_POLICY_OFF,
+	ad->gl_lang = ad->md.genlist;
+	elm_scroller_policy_set(ad->md.genlist, ELM_SCROLLER_POLICY_OFF,
 			ELM_SCROLLER_POLICY_AUTO);
 
 	evas_object_smart_callback_add(ad->gl_lang, "realized",
 			__gl_realized_cb, NULL);
 
 	/* scroller is a genlist */
-	ad->chk_lang = elm_radio_add(scroller);
+	ad->chk_lang = elm_radio_add(ad->md.genlist);
 	elm_radio_state_value_set(ad->chk_lang, -1);
 
 	/* create loop operation here */
@@ -340,7 +318,7 @@ static int setting_phone_display_language_create(void *cb)
 
 	EINA_LIST_FOREACH(langlist, elist, pnode)
 	{
-		item_data = setting_create_Gendial_field_def(scroller,
+		item_data = setting_create_Gendial_field_def(ad->md.genlist,
 				&(ad->itc_1text), gl_sel_cb, ad,
 				SWALLOW_Type_INVALID, NULL, NULL,
 				/*idx,			// <<< WARNING */
@@ -371,7 +349,7 @@ static int setting_phone_display_language_destroy(void *cb)
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	SettingPhoneUG *ad = (SettingPhoneUG *)cb;
+	SettingPhone *ad = (SettingPhone *)cb;
 
 	evas_object_smart_callback_del(ad->gl_lang, "realized",
 			__gl_realized_cb);
@@ -382,7 +360,7 @@ static int setting_phone_display_language_destroy(void *cb)
 			evas_object_del(ad->pop_progress_lang);
 			ad->pop_progress_lang = NULL;
 		}
-		elm_naviframe_item_pop(ad->navi_bar);
+		elm_naviframe_item_pop(ad->md.navibar_main);
 		setting_view_phone_display_language.is_create = 0;
 
 		setting_get_language_list_destroy();
