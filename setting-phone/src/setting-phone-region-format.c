@@ -18,10 +18,10 @@
  * limitations under the License.
  *
  */
-#include <setting-phone-region-format.h>
-#include <setting-common-draw-widget.h>
-
 #include <system_settings.h>
+
+#include "setting-phone-region-format.h"
+#include "setting-common-draw-widget.h"
 
 #define MAX_REGION_STRLEN 256
 
@@ -46,7 +46,7 @@ static char *__setting_phone_region_format_get_str_colr(void *data,
 		char *old_str)
 {
 	setting_retvm_if(NULL == data, ECORE_CALLBACK_CANCEL, "data is NULL");
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
+	SettingPhone *ad = (SettingPhone *)data;
 
 	int len_search;
 	/*int len_display; */
@@ -380,7 +380,7 @@ EXPORT_PUBLIC int setting_phone_region_format_set_dateformat(const char *region,
 	setting_retvm_if(data == NULL, SETTING_RETURN_FAIL,
 			"Data parameter is NULL");
 
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
+	SettingPhone *ad = (SettingPhone *)data;
 
 	char *ret_str = NULL;
 	UChar *uret = NULL;
@@ -502,7 +502,7 @@ static Eina_Bool __region_genlist_update(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retvm_if(NULL == data, ECORE_CALLBACK_CANCEL, "data is NULL");
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
+	SettingPhone *ad = (SettingPhone *)data;
 
 	SETTING_TRACE_DEBUG("ad->search_text: %s", ad->search_text);
 
@@ -581,7 +581,7 @@ static Eina_Bool __region_genlist_update(void *data)
 
 	if (search_count == 0) {
 		if (!ad->nocontents) {
-			ad->nocontents = elm_layout_add(ad->win_get);
+			ad->nocontents = elm_layout_add(ad->md.win_main);
 			elm_layout_theme_set(ad->nocontents, "layout",
 					"nocontents", "search");
 			elm_object_part_text_set(ad->nocontents, "elm.text",
@@ -635,7 +635,7 @@ static void __searchbar_changed_cb(void *data, Evas_Object *obj,
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "Data parameter is NULL");
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
+	SettingPhone *ad = (SettingPhone *)data;
 
 	Evas_Object *entry = elm_object_part_content_get(ad->search_bar,
 			"elm.swallow.content");
@@ -673,7 +673,7 @@ static void __searchbar_prediction_changed_cb(void *data, Evas_Object *obj,
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "Data parameter is NULL");
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
+	SettingPhone *ad = (SettingPhone *)data;
 
 	Evas_Object *entry = elm_object_part_content_get(ad->search_bar,
 			"elm.swallow.content");
@@ -720,7 +720,7 @@ static void setting_phone_region_format_mouse_up_Gendial_list_radio_cb(
 					item);
 	setting_retm_if(NULL == list_item, "list_item is NULL");
 
-	SettingPhoneUG *ad = (SettingPhoneUG *)list_item->userdata;
+	SettingPhone *ad = (SettingPhone *)list_item->userdata;
 
 	int ret;
 	char region[MAX_REGION_STRLEN] = { 0, };
@@ -762,8 +762,8 @@ static void setting_phone_region_format_mouse_up_Gendial_list_radio_cb(
 			"[Error] set value of VCONFKEY_REGIONFORMAT fail");
 
 	if (!safeStrCmp(ad->region_search_id, "region")) {
-		/* after changed, desroy ug */
-		ug_destroy_me(ad->ug);
+		/* after changed, exit */
+		ui_app_exit();
 	} else {
 		/* after changed, go back to the previous page */
 		setting_view_change(&setting_view_phone_region_format,
@@ -780,7 +780,7 @@ static Eina_Bool __region_animator_cb(void *data)
 {
 	/*SETTING_TRACE_BEGIN; */
 	setting_retvm_if(NULL == data, ECORE_CALLBACK_CANCEL, "data is NULL");
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
+	SettingPhone *ad = (SettingPhone *)data;
 
 	Setting_GenGroupItem_Data *item_data = NULL;
 	if (ad->gl_region_cur_index >= ad->region_num) {
@@ -843,7 +843,7 @@ static Eina_Bool __region_popup_timer_cb(void *data)
 {
 	/*SETTING_TRACE_BEGIN; */
 	setting_retvm_if(NULL == data, ECORE_CALLBACK_CANCEL, "data is NULL");
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
+	SettingPhone *ad = (SettingPhone *)data;
 
 	if (ad->pop_progress) {
 		evas_object_del(ad->pop_progress);
@@ -867,7 +867,7 @@ static void __region_genlist_create(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(NULL == data, "data is NULL");
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
+	SettingPhone *ad = (SettingPhone *)data;
 
 	/* disable layout operation event */
 	elm_object_tree_focus_allow_set(ad->ly_region, EINA_FALSE);
@@ -877,7 +877,7 @@ static void __region_genlist_create(void *data)
 		ad->pop_progress = NULL;
 	}
 	ad->pop_progress = setting_create_popup_with_progressbar(ad,
-			ad->win_get,
+			ad->md.win_main,
 			PROGRESSBAR_STYLE,
 			NULL, KeyStr_Loading, NULL, 0, TRUE, TRUE, 0);
 
@@ -971,7 +971,7 @@ static Eina_Bool setting_phone_region_format_click_softkey_cancel_cb(void *data,
 {
 	SETTING_TRACE_BEGIN;
 	retvm_if(data == NULL, EINA_FALSE, "Data parameter is NULL");
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
+	SettingPhone *ad = (SettingPhone *)data;
 	setting_view_change(&setting_view_phone_region_format,
 			&setting_view_phone_language_region, ad);
 
@@ -1009,20 +1009,13 @@ static Eina_Bool setting_phone_region_format_caller_exist_right_cb(void *data,
 		Elm_Object_Item *it)
 {
 	SETTING_TRACE_BEGIN;
-	setting_retvm_if(data == NULL, EINA_FALSE, "Data parameter is NULL");
+	SettingPhone *ad = (SettingPhone *)data;
+	retv_if(data == NULL, EINA_FALSE);
 
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
-	/* Create Bundle and send message */
-	app_control_h svc;
-	if (app_control_create(&svc))
-		return EINA_FALSE;
+	/* Bundle send message */
+	add_app_reply(&ad->md, "result", "rbutton_click");
 
-	app_control_add_extra_data(svc, "result", "rbutton_click");
-	ug_send_result(ad->ug, svc);
-
-	app_control_destroy(svc);
-
-	ug_destroy_me(ad->ug);
+	ui_app_exit();
 	return EINA_FALSE;
 }
 
@@ -1041,43 +1034,32 @@ static Eina_Bool setting_phone_region_format_caller_exist_right_cb(void *data,
 static int setting_phone_region_format_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
-	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	SettingPhoneUG *ad = (SettingPhoneUG *)cb;
-
-	Evas_Object *sub_layout = NULL;
+	int ret;
+	SettingPhone *ad = (SettingPhone *)cb;
 	Elm_Naviframe_Item_Pop_Cb gl_sel_cb = NULL;
+	retv_if(ad == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
+
+	ret = view_init(&ad->md, REGION_FORMAT_LOWER);
+	if (ret != SETTING_RETURN_SUCCESS)
+		return ret;
 
 	ad->region_search_id = NULL;
-	app_control_h service = ad->bundle_data;
-	app_control_get_extra_data(service, "viewtype", &ad->region_search_id);
+	app_control_get_extra_data(ad->md.app_caller_svc, "viewtype",
+			&ad->region_search_id);
 	if (!safeStrCmp(ad->region_search_id, "region")) {
-		Evas_Object *layout_main = setting_create_win_layout(
-				ad->win_get);
-		retvm_if(layout_main == NULL,
-				SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
-				"layout_main create fail");
-		ad->ly_region = layout_main;
-
-		ad->navi_bar = setting_create_navi_bar(layout_main);
-		retvm_if(ad->navi_bar == NULL,
-				SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
-				"navi_bar create fail");
-
-		sub_layout = elm_layout_add(ad->navi_bar);
-		elm_layout_theme_set(sub_layout, "layout", "application",
-				"searchbar_base");
-		elm_object_signal_emit(sub_layout, "elm,state,show,searchbar",
-				"elm");
-		evas_object_show(sub_layout);
+		ad->ly_region = ad->md.ly_main;
+		elm_layout_theme_set(ad->md.view_layout, "layout",
+				"application", "searchbar_base");
+		elm_object_signal_emit(ad->md.view_layout,
+				"elm,state,show,searchbar", "elm");
 
 		gl_sel_cb = setting_phone_region_format_caller_exist_right_cb;
 	} else {
-		sub_layout = elm_layout_add(ad->navi_bar);
-		elm_layout_theme_set(sub_layout, "layout", "application",
-				"searchbar_base");
-		elm_object_signal_emit(sub_layout, "elm,state,show,searchbar",
-				"elm");
-		ad->ly_region = sub_layout;
+		elm_layout_theme_set(ad->md.view_layout, "layout",
+				"application", "searchbar_base");
+		elm_object_signal_emit(ad->md.view_layout,
+				"elm,state,show,searchbar", "elm");
+		ad->ly_region = ad->md.view_layout;
 
 		gl_sel_cb = setting_phone_region_format_click_softkey_cancel_cb;
 	}
@@ -1093,18 +1075,16 @@ static int setting_phone_region_format_create(void *cb)
 			NULL,
 			setting_phone_region_format_click_softkey_cancel_cb,
 			NULL,
-			NULL, ad, sub_layout, ad->navi_bar, NULL);
+			NULL, ad, ad->md.view_layout, ad->md.navibar_main, NULL);
 	elm_naviframe_item_pop_cb_set(navi_it, gl_sel_cb, ad);
-	evas_object_data_set(ad->navi_bar, "sip.naviframe.title_obj", "SEARCH");
-	ad->gl_region = elm_genlist_add(ad->navi_bar);
+	evas_object_data_set(ad->md.navibar_main, "sip.naviframe.title_obj", "SEARCH");
+	ad->gl_region = elm_genlist_add(ad->md.navibar_main);
 	/* resolve abnormal height issue */
 	elm_genlist_mode_set(ad->gl_region, ELM_LIST_COMPRESS);
 	elm_genlist_homogeneous_set(ad->gl_region, EINA_TRUE);
 	/* first to clear list */
 	elm_genlist_clear(ad->gl_region);
-
-	retvm_if(ad->gl_region == NULL, SETTING_DRAW_ERR_FAIL_SCROLLER,
-			"ad->gl_region is NULL");
+	retv_if(!ad->gl_region, SETTING_DRAW_ERR_FAIL_SCROLLER);
 	/*evas_object_smart_callback_add(ad->gl_region, "realized",
 	 * __gl_realized_cb, NULL); */
 
@@ -1112,7 +1092,7 @@ static int setting_phone_region_format_create(void *cb)
 	elm_radio_state_value_set(ad->chk_region, -1);
 	elm_radio_value_set(ad->chk_region, -1);
 
-	int ret = setting_phone_region_format_get_region_fmt(ad->region_desc,
+	ret = setting_phone_region_format_get_region_fmt(ad->region_desc,
 			ad->region_index, ad->region_keyStr, &ad->region_num);
 	if (ret != 0)
 		SETTING_TRACE_ERROR("get region format list failed");
@@ -1121,7 +1101,7 @@ static int setting_phone_region_format_create(void *cb)
 	memset(ad->search_text, '\0', MAX_SEARCH_STR_LEN + 1);
 
 	__region_genlist_create(ad);
-	ad->search_bar = setting_create_searchbar(ad, sub_layout,
+	ad->search_bar = setting_create_searchbar(ad, ad->md.view_layout,
 			__searchbar_changed_cb, NULL);
 	if (ad->search_bar) {
 		Evas_Object *entry = evas_object_data_get(ad->search_bar,
@@ -1142,10 +1122,10 @@ static int setting_phone_region_format_create(void *cb)
 	else
 		elm_object_signal_emit(ad->search_bar, "set,show,normal", "*");
 
-	elm_object_part_content_set(sub_layout, "elm.swallow.content",
+	elm_object_part_content_set(ad->md.view_layout, "elm.swallow.content",
 			ad->gl_region);
 
-	ad->ly_sub_region = sub_layout;
+	ad->ly_sub_region = ad->md.view_layout;
 
 	setting_view_phone_region_format.is_create = 1;
 	return SETTING_RETURN_SUCCESS;
@@ -1162,13 +1142,13 @@ static int setting_phone_region_format_destroy(void *cb)
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	SettingPhoneUG *ad = (SettingPhoneUG *)cb;
+	SettingPhone *ad = (SettingPhone *)cb;
 
 	evas_object_smart_callback_del(ad->gl_region, "realized",
 			__gl_realized_cb);
 
 	/*Apply new SIP concept */
-	evas_object_data_set(ad->navi_bar, "sip.naviframe.title_obj", NULL);
+	evas_object_data_set(ad->md.navibar_main, "sip.naviframe.title_obj", NULL);
 
 	/* FIXED : destroy only if it was created. */
 	if (setting_view_phone_region_format.is_create) {
@@ -1202,7 +1182,7 @@ static int setting_phone_region_format_destroy(void *cb)
 			ad->searchlist_update_timer = NULL;
 		}
 
-		elm_naviframe_item_pop(ad->navi_bar);
+		elm_naviframe_item_pop(ad->md.navibar_main);
 		setting_view_phone_region_format.is_create = 0;
 	}
 
