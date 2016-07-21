@@ -131,6 +131,13 @@ Group: Application Framework/Settings
 #Requires: pkgconfig(setting-common-internal)
 %description devel
 
+%package phone
+Summary: A setting phone application
+Group: Application
+
+%description phone
+Configuration application for phone
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -342,3 +349,10 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %files ref
 %{_datadir}/mime/packages/mime.setting.xml
 %{_datadir}/packages/org.tizen.setting.xml.ref
+
+%files phone
+%manifest setting-phone/org.tizen.setting-phone.manifest
+%{_prefix}/apps/org.tizen.setting-phone/bin/setting-phone
+%{_datadir}/packages/org.tizen.setting-phone.xml
+%{_prefix}/apps/org.tizen.setting-phone/res/*
+
