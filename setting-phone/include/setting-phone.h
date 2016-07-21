@@ -23,21 +23,14 @@
 
 #include <stdio.h>
 #include <Elementary.h>
-
 #include <glib-object.h>
-
-#include <setting-common-draw-widget.h>
-#include <setting-common-view.h>
-
 #include <aul.h>
-
 #ifdef Status
 #undef Status
 #endif
 #include <tapi_common.h>
 #include <ITapiSim.h>
 #include <TapiUtility.h>
-
 #include <unicode/ucal.h>
 #include <unicode/uloc.h>
 #include <unicode/udat.h>
@@ -45,6 +38,10 @@
 #include <unicode/udatpg.h>
 #include <unicode/utmscale.h>
 #include <unicode/ucol.h>
+
+#include "setting-common-draw-widget.h"
+#include "setting-common-view.h"
+#include "setting-common-init.h"
 
 /* Choose default programe*/
 #define Display_APP_Full_Name 1
@@ -76,22 +73,13 @@
 
 #define REGION_FORMAT_LOWER "IDS_ST_BODY_REGION"
 
-typedef struct _SettingPhoneUG SettingPhoneUG;
+typedef struct _SettingPhone SettingPhone;
 
 /**
- * Setting Phone UG context
- * all UG function has void* as an agument. this is casted back to
- * SettingPhoneUG and the functions access app context.
+ * Setting Phone context
  */
-struct _SettingPhoneUG {
-	ui_gadget_h ug;
-	TapiHandle *handle;
-
-	/* add more variables here (move your appdata to here) */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-	ui_gadget_h ug_loading;
+struct _SettingPhone {
+	MainData md;
 
 	Evas_Object *gl_lang_region;
 	Evas_Object *gl_lang;
@@ -99,7 +87,6 @@ struct _SettingPhoneUG {
 
 	Evas_Object *ly_region;
 
-	Evas_Object *navi_bar;
 	Evas_Object *popup;
 	Evas_Object *popup_clear_license;
 	void (*popup_cb)(void *data, Evas_Object *obj, void *event_info);
@@ -111,6 +98,8 @@ struct _SettingPhoneUG {
 	Evas_Object *ly_license;
 	Evas_Object *nocontents;
 	Evas_Object *ly_sub_region;
+
+	TapiHandle *handle;
 
 	/* [UI] notification details */
 	Setting_GenGroupItem_Data *data_details_notification;
@@ -149,8 +138,6 @@ struct _SettingPhoneUG {
 	Setting_GenGroupItem_Data *manual;
 	Setting_GenGroupItem_Data *always_reject;
 
-	/*bundle *bundle_data; */
-	app_control_h bundle_data;
 	setting_view *view_to_load;
 	TelSimImsiInfo_t imsi;
 	const char *sim_lang;
@@ -226,8 +213,6 @@ extern setting_view setting_view_phone_license_main;
 extern setting_view setting_view_phone_display_language;
 extern setting_view setting_view_phone_region_format;
 
-/* void setting_phone_lang_changed_cb(void *data); */
-int app_terminate_dead_cb(int pid, void *data);
 extern char *setting_phone_lang_get_region_str(const char *region);
 extern char *setting_phone_lang_get_by_pattern(const char *locale,
 		const char *skeleton, void *data);
