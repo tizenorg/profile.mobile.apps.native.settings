@@ -21,7 +21,7 @@
 
 /**
  *@defgroup setting-phone
- *UG creation code for setting-phone
+ *Application main routine code for setting-phone
  *
  * - display
  * - event notification
@@ -38,18 +38,15 @@
 
 #include <system_settings.h>
 
-#ifndef UG_MODULE_API
-#define UG_MODULE_API __attribute__ ((visibility("default")))
-#endif
-
 #define SETTING_PHONE_EDJ_PATH		EDJDIR
 #define SETTING_PHONE_GENLIST_EDJ_NAME	SETTING_PHONE_EDJ_PATH\
 	"/setting-genlist.edj"
+#define SETTING_PHONE_PACKAGE_NAME "org.tizen.setting-phone"
+#define PHONE_LOCALEDIR _TZ_SYS_RO_APP"/org.tizen.setting-phone/res/locale"
 
 setting_view *__get_phone_view_to_load(app_control_h service)
 {
 	SETTING_TRACE_BEGIN;
-
 	char *viewtype = NULL;
 	app_control_get_extra_data(service, "viewtype", &viewtype);
 	retv_if(!viewtype, NULL);
@@ -109,35 +106,6 @@ setting_view *__get_phone_view_to_load(app_control_h service)
 	}
 }
 
-Evas_Object *__get_phone_layout_to_return(app_control_h service, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-	SettingPhoneUG *phoneUG = priv;
-	char *viewtype = NULL;
-
-	app_control_get_extra_data(service, "viewtype", &viewtype);
-	retv_if(!viewtype, NULL);
-	SETTING_TRACE("viewtype:%s", viewtype);
-
-	if (!safeStrCmp(viewtype, "language")) {
-		FREE(viewtype);
-		return phoneUG->ly_language;
-	} else if (!safeStrCmp(viewtype, "license")) {
-		FREE(viewtype);
-		return phoneUG->ly_license;
-	} else if (!safeStrCmp(viewtype, "notification")) {
-		FREE(viewtype);
-		return phoneUG->ly_ticker;
-	} else if (!safeStrCmp(viewtype, "region")) {
-		FREE(viewtype);
-		return phoneUG->ly_region;
-	} else {
-		FREE(viewtype);
-		return NULL; /* &setting_view_phone_main; */
-	}
-
-}
-
 const char *get_language_by_mobile_country_code(char *mcc)
 {
 	const char *simLanguage = NULL;
@@ -162,7 +130,7 @@ const char *get_language_by_mobile_country_code(char *mcc)
 static void setting_phone_update_item(void *data)
 {
 	setting_retm_if(data == NULL, "data is NULL");
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
+	SettingPhone *ad = (SettingPhone *)data;
 
 	Setting_GenGroupItem_Data *item_to_update = NULL;
 
@@ -305,7 +273,7 @@ char *setting_phone_lang_get_by_pattern(const char *locale,
 	setting_retvm_if(!locale, NULL, "locale parameter is NULL");
 	setting_retvm_if(data == NULL, NULL, "Data parameter is NULL");
 
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
+	SettingPhone *ad = (SettingPhone *)data;
 
 	/*remove ".UTF-8" in locale */
 	char locale_tmp[32] = { 0, };
@@ -517,92 +485,37 @@ char *setting_phone_lang_get_example_desc(const char *region, void *data)
 	return r_str_text; /* will be freed in calling place */
 }
 
-static void setting_phone_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
+static void _cb_resize(void *data, Evas *e, Evas_Object *obj,
 		void *event_info)
 {
-	SettingPhoneUG *ad = (SettingPhoneUG *)data;
+	SettingPhone *ad = (SettingPhone *)data;
 	/* setting_view_update(&setting_view_about_main, ad); */
 	setting_view_update(ad->view_to_load, ad);
 }
 
-#if SUPPORT_APP_ROATION
-static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
+static bool on_app_create(void *priv)
 {
 	SETTING_TRACE_BEGIN;
-	SettingPhoneUG *phoneUG = (SettingPhoneUG *)data;
-	ret_if(phoneUG == NULL || phoneUG->win_get == NULL);
+	int value = 0;
+	int err;
+	int ret;
+	SettingPhone *ad = priv;
+	retv_if(!ad, false);
 
-	int change_ang = elm_win_rotation_get(phoneUG->win_get);
-	SETTING_TRACE_DEBUG("....change_ang:%d", change_ang);
-	SETTING_TRACE_DEBUG("current_rotation:%d", phoneUG->current_rotation);
-	/*Send the rotation event to UGs.. */
-	enum ug_event event = UG_EVENT_ROTATE_PORTRAIT;
-	switch (change_ang) {
-	case APP_DEVICE_ORIENTATION_0:
-		event = UG_EVENT_ROTATE_PORTRAIT;
-		break;
-	case APP_DEVICE_ORIENTATION_180:
-		event = UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN;
-		break;
-	case APP_DEVICE_ORIENTATION_270:
-		event = UG_EVENT_ROTATE_LANDSCAPE;
-		break;
-	case APP_DEVICE_ORIENTATION_90:
-		event = UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN;
-		break;
-	default:
-		return;
+	if (app_init(&ad->md, SETTING_PHONE_PACKAGE_NAME)
+			!= SETTING_RETURN_SUCCESS) {
+		SETTING_TRACE_ERROR("Cannot initialize application");
+		return false;
 	}
-	SETTING_TRACE_DEBUG("diff:%d",
-			elm_win_rotation_get(phoneUG->win_get)
-					- phoneUG->current_rotation);
 
-	if (change_ang != phoneUG->current_rotation) {
-		int diff = change_ang - phoneUG->current_rotation;
-		if (diff < 0)
-			diff = -diff;
-
-		/**
-		 * @todo if app didn't launch UG, is the call required to
-		 * invoke?
-		 */
-		ug_send_event(event);
-
-		/* if (diff == 180) {
-			do nothing
-		} */
-		phoneUG->current_rotation = change_ang;
-	}
-}
-#endif
-
-static void *setting_phone_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
-		app_control_h service, void *priv)
-{
-	setting_retvm_if((!priv), NULL, "!priv");
-	SETTING_TRACE_BEGIN;
-	SettingPhoneUG *phoneUG = priv;
-	phoneUG->ug = ug;
-
-	phoneUG->win_main_layout = (Evas_Object *)ug_get_parent_layout(ug);
-	phoneUG->win_get = (Evas_Object *)ug_get_window();
-	evas_object_show(phoneUG->win_main_layout);
-	phoneUG->evas = evas_object_evas_get(phoneUG->win_main_layout);
-
-	setting_retvm_if(phoneUG->win_main_layout == NULL, NULL,
-			"cannot get main window ");
-
-	phoneUG->current_rotation = elm_win_rotation_get(phoneUG->win_get);
-	SETTING_TRACE_DEBUG("ad->current_rotation:%d",
-			phoneUG->current_rotation);
-	if (elm_win_wm_rotation_supported_get(phoneUG->win_get)) {
+	ad->current_rotation = elm_win_rotation_get(ad->md.win_main);
+	SETTING_TRACE_DEBUG("ad->current_rotation:%d", ad->current_rotation);
+	if (elm_win_wm_rotation_supported_get(ad->md.win_main)) {
 		/* rotation value that app may want */
 		int rots[4] = { 0, 90, 180, 270 };
-		elm_win_wm_rotation_available_rotations_set(phoneUG->win_get,
+		elm_win_wm_rotation_available_rotations_set(ad->md.win_main,
 				rots, 4);
 	}
-	evas_object_smart_callback_add(phoneUG->win_get, "wm,rotation,changed",
-			_rot_changed_cb, phoneUG);
 
 	/* --------------------------------------------------------- */
 	char *pa_path = NULL;
@@ -613,342 +526,240 @@ static void *setting_phone_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
 	if (!pa_path) {
 		SETTING_TRACE("%s*** language setting has no proper value (nil) ***%s",
 				SETTING_FONT_BGREEN, SETTING_FONT_BLACK);
-		return NULL;
+		return false;
 	}
-	/* set launguage */
-bindtextdomain(SETTING_PACKAGE, SETTING_LOCALEDIR);
-		FREE(pa_path);
-	/* ---------------------------------------------------------	 */
-	int value = 0;
-	int err;
-	int ret = setting_get_int_slp_key(INT_SLP_SETTING_SIM_SLOT, &value,
-			&err);
-	if (ret != 0)
-		SETTING_TRACE("fail to get vconf");
+	FREE(pa_path);
 
-	if (value == VCONFKEY_TELEPHONY_SIM_INSERTED) {
-		phoneUG->handle = tel_init(NULL);
-		SETTING_TRACE("phoneUG->handle:%d", phoneUG->handle);
-		memset(&(phoneUG->imsi), 0, sizeof(TelSimImsiInfo_t));
-		if (phoneUG->handle
+	/* set launguage */
+	bindtextdomain(SETTING_PACKAGE, PHONE_LOCALEDIR);
+
+	/* ---------------------------------------------------------	 */
+	ret = setting_get_int_slp_key(INT_SLP_SETTING_SIM_SLOT, &value,
+			&err);
+	if (ret != 0) {
+		SETTING_TRACE("fail to get vconf");
+	} else if (value == VCONFKEY_TELEPHONY_SIM_INSERTED) {
+		ad->handle = tel_init(NULL);
+		SETTING_TRACE("ad->handle: %d", ad->handle);
+		memset(&(ad->imsi), 0, sizeof(TelSimImsiInfo_t));
+		if (ad->handle
 				&& TAPI_API_SUCCESS == tel_get_sim_imsi(
-						phoneUG->handle,
-						&(phoneUG->imsi))) {
+						ad->handle,
+						&(ad->imsi))) {
 			SETTING_TRACE_SECURE_DEBUG(
 					"************************************");
 			SETTING_TRACE_SECURE_DEBUG("imsi.szMcc: [%s]",
-					phoneUG->imsi.szMcc);
+					ad->imsi.szMcc);
 			SETTING_TRACE_SECURE_DEBUG("imsi.szMnc: [%s]",
-					phoneUG->imsi.szMnc);
+					ad->imsi.szMnc);
 			SETTING_TRACE_SECURE_DEBUG("imsi.szMsin: [%s]",
-					phoneUG->imsi.szMsin);
+					ad->imsi.szMsin);
 			SETTING_TRACE_SECURE_DEBUG(
 					"************************************");
 
-			phoneUG->sim_lang = get_language_by_mobile_country_code(
-					phoneUG->imsi.szMcc);
+			ad->sim_lang = get_language_by_mobile_country_code(
+					ad->imsi.szMcc);
 		}
 	}
-	if (!phoneUG->sim_lang) {
+	if (!ad->sim_lang) {
 		/* if CSC has updated configuration for setting, initial vconf
 		 * value changes. */
 		/* allocated */
-		phoneUG->sim_lang = vconf_get_str(VCONFKEY_LANGSET);
+		ad->sim_lang = vconf_get_str(VCONFKEY_LANGSET);
 	}
-	SETTING_TRACE("sim_lang: [%s]", phoneUG->sim_lang);
+	SETTING_TRACE("sim_lang: [%s]", ad->sim_lang);
 
 	/* register view node table */
 	setting_view_node_table_intialize();
 
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(phoneUG->itc_1text_1icon_2));
+			&(ad->itc_1text_1icon_2));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(phoneUG->itc_1text_1icon));
+			&(ad->itc_1text_1icon));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(phoneUG->itc_1text_tb));
+			&(ad->itc_1text_tb));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(phoneUG->itc_1text));
+			&(ad->itc_1text));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(phoneUG->itc_1icon_1text_sub));
+			&(ad->itc_1icon_1text_sub));
 
 	/* 2 text - genlist > items */
 	setting_create_Gendial_itc("dialogue/2text",
-			&(phoneUG->itc_1icon_2text));
+			&(ad->itc_1icon_2text));
 	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
-			&(phoneUG->itc_2text_3_parent));
+			&(ad->itc_2text_3_parent));
 	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
-			&(phoneUG->itc_2text_2));
-	setting_create_Gendial_itc("multiline/1text", &(phoneUG->itc_bg_1icon));
-	phoneUG->pattern_generator = NULL;
-	phoneUG->prev_locale = NULL;
-	/* creating a view. */
-	phoneUG->bundle_data = service;
-	phoneUG->view_to_load = __get_phone_view_to_load(service);
-	setting_retvm_if(NULL == phoneUG->view_to_load, NULL,
-			"NULL == phoneUG->view_to_load");
-	setting_view_node_set_cur_view(phoneUG->view_to_load);
-	setting_view_create(phoneUG->view_to_load, (void *)phoneUG);
-	evas_object_event_callback_add(phoneUG->win_main_layout,
-			EVAS_CALLBACK_RESIZE, setting_phone_ug_cb_resize,
-			phoneUG);
-	return __get_phone_layout_to_return(service, phoneUG);
+			&(ad->itc_2text_2));
+	setting_create_Gendial_itc("multiline/1text", &(ad->itc_bg_1icon));
+	ad->pattern_generator = NULL;
+	ad->prev_locale = NULL;
+
+	return true;
 }
 
-static void setting_phone_ug_on_start(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void on_app_pause(void *priv)
 {
+	SETTING_TRACE_BEGIN;
 }
 
-static void setting_phone_ug_on_pause(ui_gadget_h ug, app_control_h service,
-		void *priv)
-{
-}
-
-static void setting_phone_ug_on_resume(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void on_app_resume(void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(!priv);
-	SettingPhoneUG *phoneUG = priv;
-
-	Eina_Bool is_freezed = evas_object_freeze_events_get(phoneUG->navi_bar);
+	SettingPhone *ad = priv;
+	Eina_Bool is_freezed = evas_object_freeze_events_get(ad->md.navibar_main);
 	SETTING_TRACE_DEBUG("is_freezed : %d", is_freezed);
 	if (is_freezed)
-		evas_object_freeze_events_set(phoneUG->navi_bar, EINA_FALSE);
+		evas_object_freeze_events_set(ad->md.navibar_main, EINA_FALSE);
 }
 
-static void setting_phone_ug_on_destroy(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void on_app_control(app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
-	setting_retm_if((!ug || !priv), "!ug || !priv");
-	SettingPhoneUG *phoneUG = priv;
-
-	/* fix flash issue for gallery */
-	evas_object_event_callback_del(phoneUG->win_main_layout,
-			EVAS_CALLBACK_RESIZE, setting_phone_ug_cb_resize);
-	phoneUG->ug = ug;
-
-	if (phoneUG->handle
-			&& tel_deinit(phoneUG->handle) != TAPI_API_SUCCESS) {
-		SETTING_TRACE_ERROR("tel_deinit failed");
-	}
-	/* called when this shared gadget is terminated. similar with
-	 * app_exit */
-	if (&setting_view_phone_language_region == phoneUG->view_to_load) {
-		setting_view_destroy(&setting_view_phone_display_language,
-				phoneUG);
-		setting_view_destroy(&setting_view_phone_region_format,
-				phoneUG);
-		setting_view_destroy(&setting_view_phone_language_region,
-				phoneUG);
-
-#ifdef ENABLE_TICKER_NOTI
-	} else if (&setting_view_phone_ticker_notification ==
-			phoneUG->view_to_load) {
-		setting_view_destroy(&setting_view_phone_ticker_notification,
-				phoneUG);
-		setting_view_destroy(
-				&setting_view_phone_ticker_notification_details,
-				phoneUG);
-
-
-#endif
-	} else if (&setting_view_phone_license_main == phoneUG->view_to_load) {
-		setting_view_destroy(&setting_view_phone_license_main, phoneUG);
-	}
-
-	FREE(phoneUG->sim_lang);
-
-	if (NULL != ug_get_layout(phoneUG->ug)) {
-		evas_object_hide((Evas_Object *)ug_get_layout(phoneUG->ug));
-		evas_object_del((Evas_Object *)ug_get_layout(phoneUG->ug));
-	}
-
-	SETTING_TRACE_END;
-}
-
-static void setting_phone_ug_on_message(ui_gadget_h ug, app_control_h msg,
-		app_control_h service, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-	setting_retm_if(NULL == priv, "priv is NULL");
+	static bool first_call = true;
 	char *pid_str = NULL;
+	SettingPhone *ad = (SettingPhone *)priv;
+	ret_if(!ad);
 
-	app_control_get_extra_data(msg, "DEADPID", &pid_str);
+	if (first_call) {
+		app_control_init(&ad->md, service);
+		/* creating a view. */
+		ad->view_to_load = __get_phone_view_to_load(service);
+		ret_if(!ad->view_to_load);
+		setting_view_node_set_cur_view(ad->view_to_load);
+		setting_view_create(ad->view_to_load, (void *)ad);
+		evas_object_event_callback_add(ad->md.view_layout,
+				EVAS_CALLBACK_RESIZE,
+				_cb_resize, ad);
+		first_call = false;
+	}
+
+	app_control_get_extra_data(service, "DEADPID", &pid_str);
 	if (pid_str) {
 		errno = 0;
 		int pid = (int)g_ascii_strtod(pid_str, NULL);
 		SETTING_TRACE_DEBUG("pid = %d", pid);
 		setting_retm_if(errno == ERANGE, "call g_ascii_strtod fail");
 
+		/* TODO: no app_terminate_dead_cb() function definition!
 		int ret = app_terminate_dead_cb(pid, priv);
 		setting_retm_if(ret != 0, "call app_terminate_dead_cb fail");
+		*/
 	}
 }
 
-static void setting_phone_ug_on_event(ui_gadget_h ug, enum ug_event event,
-		app_control_h service, void *priv)
+static void on_app_terminate(void *priv)
 {
 	SETTING_TRACE_BEGIN;
+	ret_if(!priv);
+	SettingPhone *ad = priv;
 
-	SettingPhoneUG *ad = (SettingPhoneUG *)priv;
-	switch (event) {
-	case UG_EVENT_LOW_MEMORY:
-		break;
-	case UG_EVENT_LOW_BATTERY:
-		break;
-	case UG_EVENT_REGION_CHANGE: {
-		if (ad->gl_lang_region
-				&& setting_view_phone_language_region.is_create) {
-			elm_genlist_realized_items_update(ad->gl_lang_region);
-			setting_phone_update_item(ad);
-		}
+	app_control_finish(&ad->md);
+
+	/* fix flash issue for gallery */
+	evas_object_event_callback_del(ad->md.view_layout,
+			EVAS_CALLBACK_RESIZE, _cb_resize);
+
+	if (ad->handle && tel_deinit(ad->handle) != TAPI_API_SUCCESS) {
+		SETTING_TRACE_ERROR("tel_deinit failed");
 	}
-		break;
-	case UG_EVENT_LANG_CHANGE: {
-		ad->lang_change = EINA_TRUE;
+	/* called when this shared gadget is terminated. similar with
+	 * app_exit */
+	if (&setting_view_phone_language_region == ad->view_to_load) {
+		setting_view_destroy(&setting_view_phone_display_language, ad);
+		setting_view_destroy(&setting_view_phone_region_format, ad);
+		setting_view_destroy(&setting_view_phone_language_region, ad);
 
-		if (ad->gl_lang_region
-				&& setting_view_phone_language_region.is_create) {
-			elm_genlist_realized_items_update(ad->gl_lang_region);
-			setting_phone_update_item(ad);
-		}
+#ifdef ENABLE_TICKER_NOTI
+	} else if (&setting_view_phone_ticker_notification ==
+			ad->view_to_load) {
+		setting_view_destroy(&setting_view_phone_ticker_notification,
+				ad);
+		setting_view_destroy(
+				&setting_view_phone_ticker_notification_details,
+				ad);
 
-		setting_navi_items_update(ad->navi_bar);
+
+#endif
+	} else if (&setting_view_phone_license_main == ad->view_to_load) {
+		setting_view_destroy(&setting_view_phone_license_main, ad);
 	}
-		break;
 
-	case UG_EVENT_ROTATE_PORTRAIT:
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-		break;
-	default:
-		break;
+	FREE(ad->sim_lang);
+
+	if (ad->md.win_main) {
+		evas_object_del(ad->md.win_main);
+		ad->md.win_main = NULL;
+	}
+
+	SETTING_TRACE_END;
+}
+
+static void _region_changed(app_event_info_h event_info, void *priv)
+{
+	SettingPhone *ad = (SettingPhone *)priv;
+	ret_if(!ad);
+
+	if (ad->gl_lang_region
+			&& setting_view_phone_language_region.is_create) {
+		elm_genlist_realized_items_update(ad->gl_lang_region);
+		setting_phone_update_item(ad);
 	}
 }
 
-static void setting_phone_ug_on_key_event(ui_gadget_h ug,
-		enum ug_key_event event, app_control_h service, void *priv)
+static void _lang_changed(app_event_info_h event_info, void *priv)
 {
-	SETTING_TRACE_BEGIN;
-	SettingPhoneUG *ad = (SettingPhoneUG *)priv;
+	SettingPhone *ad = (SettingPhone *)priv;
+	char *lang = NULL;
+	ret_if(!ad);
 
-	SETTING_TRACE("event:%d", event);
-	switch (event) {
-	case UG_KEY_EVENT_END: {
-		if (elm_naviframe_top_item_get(ad->navi_bar)
-				== elm_naviframe_bottom_item_get(
-						ad->navi_bar)) {
-			ug_destroy_me(ug);
-		} else {
-			setting_view_cb_at_endKey(ad);
-		}
+	if (app_event_get_language(event_info, &lang) == APP_ERROR_NONE) {
+		SETTING_TRACE_DEBUG("Setting - language is changed : %s", lang);
+		elm_language_set(lang);
+		elm_config_all_flush();
+		free(lang);
+	} else {
+		SETTING_TRACE_ERROR("Cannot get language from event_info");
 	}
-		break;
-	default:
-		break;
+
+	ad->lang_change = EINA_TRUE;
+
+	if (ad->gl_lang_region
+			&& setting_view_phone_language_region.is_create) {
+		elm_genlist_realized_items_update(ad->gl_lang_region);
+		setting_phone_update_item(ad);
 	}
+
+	setting_navi_items_update(ad->md.navibar_main);
 }
 
-UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
+
+EXPORT_PUBLIC
+int main(int argc, char *argv[])
 {
-	SETTING_TRACE_BEGIN;
-	SettingPhoneUG *phoneUG = calloc(1, sizeof(SettingPhoneUG));
-	setting_retvm_if(!phoneUG, -1, "Create SettingPhoneUG obj failed");
-
-	ops->create = setting_phone_ug_on_create;
-	ops->start = setting_phone_ug_on_start;
-	ops->pause = setting_phone_ug_on_pause;
-	ops->resume = setting_phone_ug_on_resume;
-	ops->destroy = setting_phone_ug_on_destroy;
-	ops->message = setting_phone_ug_on_message;
-	ops->event = setting_phone_ug_on_event;
-	ops->key_event = setting_phone_ug_on_key_event;
-	ops->priv = phoneUG;
-	ops->opt = UG_OPT_INDICATOR_ENABLE;
-
-	return 0;
-}
-
-UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
-{
-	SETTING_TRACE_BEGIN;
-	struct SettingPhoneUG *phoneUG;
-	setting_retm_if(!ops, "ops == NULL");
-
-	phoneUG = ops->priv;
-	if (phoneUG)
-		FREE(phoneUG);
-}
-
-/************* n-depth search **************/
-static Setting_Cfg_Node_T s_cfg_node_array[] = { {
-		"IDS_ST_HEADER_DISPLAY_LANGUAGE",
-		NULL,
-		"viewtype:language;caller:setting",
-		Cfg_Item_Pos_Level0,
-		0,
-		0,
-		Cfg_Item_View_Node,
-		NULL,
-		NULL,
-		NULL,
-		NULL }, {
-		"IDS_ST_BODY_REGION",
-		NULL,
-		"viewtype:region",
-		0,
-		0,
-		0,
-		Cfg_Item_View_Node,
-		NULL,
-		NULL,
-		NULL,
-		NULL }, {
-		"IDS_ST_BODY_KEYBOARD",
-		NULL,
-		"viewtype:language",
-		0,
-		0,
-		0,
-		Cfg_Item_View_Node,
-		NULL,
-		NULL,
-		NULL,
-		NULL }, };
-
-UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
-		char **applocale)
-{
-	SETTING_TRACE_BEGIN;
-	SETTING_TRACE(">> setting-phone-efl DB search code");
-	setting_retvm_if(!priv || !applocale,
-			SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
-			"pplist/applocale is NULL");
-
-	*applocale = strdup("setting:"_TZ_SYS_RO_APP\
-			"/org.tizen.setting/res/locale");
-
-	Eina_List **pplist = (Eina_List **)priv;
-	int i;
-	int size = sizeof(s_cfg_node_array) / sizeof(s_cfg_node_array[0]);
-	for (i = 0; i < size; i++) {
-		Setting_Cfg_Node_T *node =
-				setting_plugin_search_item_subindex_add(
-						s_cfg_node_array[i].key_name,
-						s_cfg_node_array[i].ug_args,
-						IMG_LanguageInput,
-						s_cfg_node_array[i].item_type,
-						s_cfg_node_array[i].data,
-						"Language and Region");
-		*pplist = eina_list_append(*pplist, node);
-	}
-	return 0;
+	app_event_handler_h handlers[5] = { NULL, };
+	ui_app_lifecycle_callback_s ops = {
+		.create = on_app_create,
+		.app_control = on_app_control,
+		.pause = on_app_pause,
+		.resume = on_app_resume,
+		.terminate = on_app_terminate,
+	};
+	SettingPhone app_data;
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY],
+			APP_EVENT_LOW_MEMORY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY],
+			APP_EVENT_LOW_BATTERY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED],
+			APP_EVENT_LANGUAGE_CHANGED, _lang_changed, &app_data);
+	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED],
+			APP_EVENT_REGION_FORMAT_CHANGED, _region_changed,
+			&app_data);
+	ui_app_add_event_handler(
+			&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED],
+			APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
+	memset(&app_data, 0x0, sizeof(app_data));
+	return ui_app_main(argc, argv, &ops, &app_data);
 }
 
 int set_language_helper(const char *lang)

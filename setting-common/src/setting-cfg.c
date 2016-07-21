@@ -268,19 +268,16 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 		Cfg_Item_AppLauncher_Node, NULL, KeyStr_Personal, NULL,
 		uuid_Accounts, 0, "org.tizen.privacy-setting"},
 
-
-
-
 	/* Group: System */
 	{	KeyStr_System, NULL, "move://Tab4.top",
 		Cfg_Item_Pos_Level0, 0, 0,
 		Cfg_Item_Title_Node, NULL, NULL, NULL,
 		uuid_DeviceMange, 0, NULL},
 	{	KeyStr_LanguageInput, IMG_LanguageInput,
-		"setting-phone-efl|viewtype:language",
+		"org.tizen.setting-phone|viewtype:language",
 		Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0,
 		Cfg_Item_AppLauncher_Node, NULL, KeyStr_System, NULL,
-		uuid_LanguageKeyboard, 0, "org.tizen.setting.language"},
+		uuid_LanguageKeyboard, 0, "org.tizen.setting-phone"},
 #if SUPPORT_STORAGE
 	{	KeyStr_Storage, IMG_Storage,
 		"setting-storage-efl|caller:setting",
