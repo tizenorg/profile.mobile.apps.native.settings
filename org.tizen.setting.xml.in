@@ -113,11 +113,6 @@
 			<label xml:lang="ja-jp">アクセサリ</label>
 			<label xml:lang="ko-kr">액세서리</label>
         </ui-application>
-	<ui-application appid="setting-phone-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-phone-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
-                        <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
-                        <label>Phone</label>
-        </ui-application>
-
 	<ui-application appid="setting-storage-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-storage-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
                         <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
                         <label>Storage</label>

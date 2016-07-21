@@ -1278,44 +1278,6 @@ static void __setting_about_main_certificates_clicked(void *data)
 }
 
 /**
- * @brief Lunch UG setting-phone-efl
- *
- * @param data application context
- */
-static void __setting_about_main_licence_launch(void *data)
-{
-	SETTING_TRACE_BEGIN;
-	retm_if(data == NULL, "Data parameter is NULL");
-	SettingAboutUG *ad = (SettingAboutUG *)data;
-
-	app_control_h svc;
-	ret_if(app_control_create(&svc));
-
-	app_control_add_extra_data(svc, "viewtype", "license");
-
-	struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
-	if (!cbs) {
-		app_control_destroy(svc);
-		return;
-	}
-
-	cbs->layout_cb = setting_about_layout_ug_cb;
-	cbs->result_cb = NULL;
-	cbs->destroy_cb = __destroy_ug_cb;
-	cbs->priv = (void *)ad;
-
-	elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
-	ad->ug_loading = setting_ug_create(ad->ug, "setting-phone-efl",
-			UG_MODE_FULLVIEW, svc, cbs);
-
-	if (NULL == ad->ug_loading) { /* error handling */
-		SETTING_TRACE_ERROR("NULL == ad->ug_loading");
-	}
-	app_control_destroy(svc);
-	FREE(cbs);
-}
-
-/**
  * @brief expanlist sub-item selected callback
  *
  * @param data app context
@@ -1676,7 +1638,8 @@ static void setting_about_main_mouse_up_Gendial_list_cb(void *data,
 		__setting_about_popup_regulatory_info(data);
 	} else if (!safeStrCmp("IDS_ST_MBODY_LEGAL_INFORMATION_ABB",
 			list_item->keyStr)) {
-		__setting_about_main_licence_launch(data);
+		app_launcher("org.tizen.setting-phone|viewtype:license",
+				NULL, NULL);
 	} else if (!safeStrCmp("IDS_ST_MBODY_SOFTWARE_UPDATE",
 			list_item->keyStr)) {
 #ifdef SUPPORT_FOTA
