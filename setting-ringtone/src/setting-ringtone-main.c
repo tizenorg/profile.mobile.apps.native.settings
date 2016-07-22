@@ -38,7 +38,8 @@ setting_view setting_view_ringtone_main = {
 	.create = setting_ringtone_create,
 	.destroy = setting_ringtone_destroy,
 	.update = setting_ringtone_update,
-	.cleanup = setting_ringtone_cleanup, };
+	.cleanup = setting_ringtone_cleanup
+};
 
 static void setting_ringtone_cancel_click_cb(void *data, Evas_Object *obj,
 		void *event_info)
@@ -47,7 +48,7 @@ static void setting_ringtone_cancel_click_cb(void *data, Evas_Object *obj,
 	retm_if(data == NULL, "Data parameter is NULL");
 	SettingRingtoneUG *ad = (SettingRingtoneUG *)data;
 
-	ug_destroy_me(ad->ug);
+	ui_app_exit();
 	SETTING_TRACE_END;
 }
 
@@ -98,12 +99,12 @@ static void setting_ringtone_done_click_cb(void *data, Evas_Object *obj,
 			app_control_reply_to_launch_request(reply,
 					ad->source_svc,
 					APP_CONTROL_RESULT_SUCCEEDED);
-			ug_send_result(ad->ug, reply);
+			//ug_send_result(ad->ug, reply);
 			app_control_destroy(reply);
 		}
 	}
 
-	ug_destroy_me(ad->ug);
+	ui_app_exit();
 	SETTING_TRACE_END;
 }
 
@@ -247,24 +248,29 @@ static int setting_ringtone_create(void *cb)
 
 	SettingRingtoneUG *ad = (SettingRingtoneUG *)cb;
 
-	ad->ly_main = setting_create_layout_navi_bar_genlist(
-			ad->win_main_layout, ad->win_get,
+	int ret = view_init(&ad->md, _("IDS_ST_OPT_SELECT"));
+	if (ret != SETTING_RETURN_SUCCESS)
+	    return ret;
+
+/*	ad->md.ly_main = setting_create_layout_navi_bar_genlist(
+			ad->md.view_layout, ad->md.win_main,
 			STR_RINGTONE_SELECT, "IDS_ST_BUTTON_BACK",
 			NULL,
 			NULL,
-			NULL, ad, &ad->scroller, &(ad->navi_bar));
-	Elm_Object_Item *navi_it;
-	navi_it = elm_naviframe_top_item_get(ad->navi_bar);
+			NULL, ad, &ad->md.genlist, &(ad->md.navibar_main));*/
+
+	Elm_Object_Item *navi_it = NULL;
+	navi_it = elm_naviframe_top_item_get(ad->md.navibar_main);
 	elm_naviframe_item_pop_cb_set(navi_it, setting_ringtone_click_back_cb,
 			ad);
 
-	Evas_Object *btn_cancel = elm_button_add(ad->navi_bar);
+	Evas_Object *btn_cancel = elm_button_add(ad->md.navibar_main);
 	elm_object_style_set(btn_cancel, "naviframe/title_cancel");
 	evas_object_smart_callback_add(btn_cancel, "clicked",
 			setting_ringtone_cancel_click_cb, ad);
 	elm_object_item_part_content_set(navi_it, "title_left_btn", btn_cancel);
 
-	Evas_Object *btn_done = elm_button_add(ad->navi_bar);
+	Evas_Object *btn_done = elm_button_add(ad->md.navibar_main);
 	elm_object_style_set(btn_done, "naviframe/title_done");
 	evas_object_smart_callback_add(btn_done, "clicked",
 			setting_ringtone_done_click_cb, ad);
@@ -274,7 +280,7 @@ static int setting_ringtone_create(void *cb)
 
 	/*Get file list */
 	Eina_List *filelist = NULL;
-	int ret = get_filelist_from_dir_path(ad->dir_path, &filelist);
+	ret = get_filelist_from_dir_path(ad->dir_path, &filelist);
 	if (ret != 0) {
 		SETTING_TRACE_ERROR("Failed to get filelist, ret = %d %s", ret,
 				RINGTONE_FILE_PATH);
@@ -285,15 +291,15 @@ static int setting_ringtone_create(void *cb)
 			_compare_cb);
 	ad->filelist = filelist;
 
-	Eina_List *l;
-	fileNodeInfo *pNode;
+	Eina_List *l = NULL;
+	fileNodeInfo *pNode = NULL;
 	Elm_Object_Item *cur_item = NULL;
 	Setting_GenGroupItem_Data *item_data = NULL;
 	int cnt = 0;
 	int cur_pos = -1; /*current selected item */
 	char fullPath[512] = { 0, };
 
-	ad->ring_rgd = elm_radio_add(ad->scroller);
+	ad->ring_rgd = elm_radio_add(ad->md.genlist);
 	elm_radio_state_value_set(ad->ring_rgd, -1);
 
 	/*create default item */
@@ -309,7 +315,7 @@ static int setting_ringtone_create(void *cb)
 			SETTING_TRACE("item_data->filepath = %s",
 					item_data->filepath);
 
-			item_data->item = elm_genlist_item_append(ad->scroller,
+			item_data->item = elm_genlist_item_append(ad->md.genlist,
 					&(ad->itc_ring), item_data, NULL,
 					ELM_GENLIST_ITEM_NONE,
 					ringtone_item_sel, ad);
@@ -335,7 +341,7 @@ static int setting_ringtone_create(void *cb)
 			item_data->rgd = ad->ring_rgd;
 			item_data->chk_status = cnt;
 			item_data->filepath = g_strdup("silent");
-			item_data->item = elm_genlist_item_append(ad->scroller,
+			item_data->item = elm_genlist_item_append(ad->md.genlist,
 					&(ad->itc_ring), item_data, NULL,
 					ELM_GENLIST_ITEM_NONE,
 					ringtone_item_sel, ad);
@@ -373,7 +379,7 @@ static int setting_ringtone_create(void *cb)
 			SETTING_TRACE("item_data->filepath = %s",
 					item_data->filepath);
 
-			item_data->item = elm_genlist_item_append(ad->scroller,
+			item_data->item = elm_genlist_item_append(ad->md.genlist,
 					&(ad->itc_ring), item_data, NULL,
 					ELM_GENLIST_ITEM_NONE,
 					ringtone_item_sel, ad);
@@ -404,9 +410,9 @@ static int setting_ringtone_destroy(void *cb)
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 	SettingRingtoneUG *ad = (SettingRingtoneUG *)cb;
 
-	if (ad->ly_main != NULL) {
-		evas_object_del(ad->ly_main);
-		ad->ly_main = NULL;
+	if (ad->md.ly_main != NULL) {
+		evas_object_del(ad->md.ly_main);
+		ad->md.ly_main = NULL;
 		setting_view_ringtone_main.is_create = 0;
 	}
 
@@ -439,8 +445,8 @@ static int setting_ringtone_update(void *cb)
 	SETTING_TRACE_BEGIN;
 	SettingRingtoneUG *ad = (SettingRingtoneUG *)cb;
 
-	if (ad->ly_main != NULL)
-		evas_object_show(ad->ly_main);
+	if (ad->md.ly_main != NULL)
+		evas_object_show(ad->md.ly_main);
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -450,8 +456,8 @@ static int setting_ringtone_cleanup(void *cb)
 	SETTING_TRACE_BEGIN;
 	SettingRingtoneUG *ad = (SettingRingtoneUG *)cb;
 
-	if (ad->ly_main != NULL)
-		evas_object_hide(ad->ly_main);
+	if (ad->md.ly_main != NULL)
+		evas_object_hide(ad->md.ly_main);
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -468,7 +474,8 @@ static Eina_Bool setting_ringtone_click_back_cb(void *data, Elm_Object_Item *it)
 
 	SettingRingtoneUG *ad = (SettingRingtoneUG *)data;
 
-	ug_destroy_me(ad->ug);
+	//ug_destroy_me(ad->ug);
+	ui_app_exit();
 	return EINA_FALSE;
 }
 

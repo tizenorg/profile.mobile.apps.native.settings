@@ -28,31 +28,31 @@
 #include <setting-ringtone.h>
 #include <setting-ringtone-util.h>
 
-#ifndef UG_MODULE_API
-#define UG_MODULE_API __attribute__ ((visibility("default")))
-#endif
+#define SETTING_RINGTONE_PACKAGE_NAME "org.tizen.setting-ringtone"
+#define RINGTONE_SETTING_LOCALEDIR _TZ_SYS_RO_APP"/org.tizen.setting-ringtone/res/locale"
+#define SETTING_RINGTONE_EDJEDIR _TZ_SYS_RO_APP"/org.tizen.setting-ringtone/res/edje"
 
 bool __parse_ug_argument(app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
+	char *default_str = NULL;
 	SettingRingtoneUG *ad = priv;
-
+	char *silent = NULL;
 	ad->file_path = NULL;
+	ad->dir_path = NULL;
+
 	app_control_get_extra_data(service, "marked_mode", &(ad->file_path));
 	setting_retvm_if(!ad->file_path, FALSE,
 			"no arguement to specialize file");
 
-	ad->dir_path = NULL;
 	app_control_get_extra_data(service, "path", &(ad->dir_path));
 	setting_retvm_if(!ad->dir_path, FALSE,
 			"no arguement to specialize file");
 
-	char *silent = NULL;
 	app_control_get_extra_data(service, "silent", &silent);
 	if (!safeStrCmp(silent, "silent show"))
 		ad->is_show_silent = 1;
 
-	char *default_str = NULL;
 	app_control_get_extra_data(service, "default", &default_str);
 	if (!safeStrCmp(default_str, "default show"))
 		ad->is_show_def = 1;
@@ -88,180 +88,127 @@ static void setting_ringtone_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
  *
  * @return
  */
-static void *setting_ringtone_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
-		app_control_h service, void *priv)
+static bool _setting_ringtone_app_create(void *priv)
 {
 	SETTING_TRACE_BEGIN;
-bindtextdomain(SETTING_PACKAGE, SETTING_LOCALEDIR);
+	bindtextdomain(SETTING_PACKAGE, RINGTONE_SETTING_LOCALEDIR);
 
-		setting_retvm_if((NULL == priv), NULL, "NULL == priv");
+	setting_retvm_if((NULL == priv), NULL, "NULL == priv");
 	SettingRingtoneUG *ringtoneUG = priv;
-	ringtoneUG->ug = ug;
+//ringtoneUG->ug = ug;
 
-	ringtoneUG->win_main_layout = (Evas_Object *)ug_get_parent_layout(ug);
-	ringtoneUG->win_get = (Evas_Object *)ug_get_window();
-	evas_object_show(ringtoneUG->win_main_layout);
-	ringtoneUG->evas = evas_object_evas_get(ringtoneUG->win_main_layout);
-
-	setting_retvm_if(ringtoneUG->win_main_layout == NULL, NULL,
-			"cannot get main window ");
-
-	/*	creating a view. */
-	if (!__parse_ug_argument(service, priv)) {
-		SETTING_TRACE_ERROR("Invalid arguement");
-		return NULL;
+	if (app_init(&ringtoneUG->md, SETTING_RINGTONE_PACKAGE_NAME)
+	        != SETTING_RETURN_SUCCESS) {
+	    SETTING_TRACE_ERROR("Cannot initialize application");
+	    return false;
 	}
 
-	if (0 != app_control_clone(&(ringtoneUG->source_svc), service))
-		SETTING_TRACE_ERROR("failed to clone svc");
+	elm_theme_extension_add(NULL, SETTING_RINGTONE_EDJEDIR"/setting-genlist.edj");
+	elm_theme_extension_add(NULL, SETTING_RINGTONE_EDJEDIR"/setting-theme.edj");
+
+	/*	creating a view. */
+	//if (!__parse_ug_argument(service, priv)) {
+		//SETTING_TRACE_ERROR("Invalid arguement");
+		//return false;
+	//}
+	ringtoneUG->is_show_silent = 1;
+	ringtoneUG->is_show_def = 1;
+	ringtoneUG->dir_path = strdup(_TZ_SYS_SHARE"/settings/Ringtones");
+//if (0 != app_control_clone(&(ringtoneUG->source_svc), service))
+	//SETTING_TRACE_ERROR("failed to clone svc");
 
 	setting_view_create(&setting_view_ringtone_main, (void *)ringtoneUG);
-	evas_object_event_callback_add(ringtoneUG->win_main_layout,
+	evas_object_event_callback_add(ringtoneUG->md.view_layout,
 			EVAS_CALLBACK_RESIZE, setting_ringtone_ug_cb_resize,
 			ringtoneUG);
-	return ringtoneUG->ly_main;
+	return true;
 }
 
-static void setting_ringtone_ug_on_start(ui_gadget_h ug, app_control_h service,
-		void *priv)
-{
-}
-
-static void setting_ringtone_ug_on_pause(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void _setting_ringtone_app_on_pause(void *priv)
 {
 	SETTING_TRACE_BEGIN;
 }
 
-static void setting_ringtone_ug_on_resume(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void _setting_ringtone_app_resume(void *priv)
 {
 	SETTING_TRACE_BEGIN;
 }
 
-/**
- * on_destroy function of the UG
- *
- * @param ug
- * @param data
- * @param priv
- */
-static void setting_ringtone_ug_on_destroy(ui_gadget_h ug,
-		app_control_h service, void *priv)
+static void _setting_ringtone_app_controll(app_control_h service, void *priv)
+{
+
+}
+
+static void _setting_ringtone_app_terminate(void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
 	SettingRingtoneUG *ringtoneUG = priv;
 
 	/* fix flash issue for gallery */
-	evas_object_event_callback_del(ringtoneUG->win_main_layout,
+	evas_object_event_callback_del(ringtoneUG->md.view_layout,
 			EVAS_CALLBACK_RESIZE, setting_ringtone_ug_cb_resize);
-	ringtoneUG->ug = ug;
+
 	/*	delete the allocated objects. */
 	setting_view_destroy(&setting_view_ringtone_main, ringtoneUG);
 
+/*
 	if (ringtoneUG->source_svc) {
 		app_control_destroy(ringtoneUG->source_svc);
 		ringtoneUG->source_svc = NULL;
 	}
+*/
 
-	if (NULL != ug_get_layout(ringtoneUG->ug)) {
-		evas_object_hide((Evas_Object *)ug_get_layout(ringtoneUG->ug));
-		evas_object_del((Evas_Object *)ug_get_layout(ringtoneUG->ug));
-	}
+	evas_object_del(ringtoneUG->md.win_main);
+	ringtoneUG->md.win_main = NULL;
 
 	SETTING_TRACE_END;
 }
 
-static void setting_ringtone_ug_on_message(ui_gadget_h ug, app_control_h msg,
-		app_control_h service, void *priv)
+static void _lang_changed(app_event_info_h event_info, void *priv)
 {
-	SETTING_TRACE_BEGIN;
+    char *lang = NULL;
+    if (app_event_get_language(event_info, &lang) == APP_ERROR_NONE) {
+        SETTING_TRACE_DEBUG("Setting - language is changed : %s", lang);
+        elm_language_set(lang);
+        elm_config_all_flush();
+        free(lang);
+    } else {
+        SETTING_TRACE_ERROR("Cannot get language from event_info");
+    }
 }
 
-static void setting_ringtone_ug_on_event(ui_gadget_h ug, enum ug_event event,
-		app_control_h service, void *priv)
+EXPORT_PUBLIC
+int main(int argc, char *argv[])
 {
-	SETTING_TRACE_BEGIN;
-	switch (event) {
-	case UG_EVENT_LOW_MEMORY:
-		break;
-	case UG_EVENT_LOW_BATTERY:
-		break;
-	case UG_EVENT_LANG_CHANGE:
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT:
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-		break;
-	case UG_EVENT_REGION_CHANGE:
-		break;
-	default:
-		break;
-	}
+    app_event_handler_h handlers[5] = {NULL, };
+    ui_app_lifecycle_callback_s ops = {
+        .create = _setting_ringtone_app_create,
+        .pause = _setting_ringtone_app_on_pause,
+        .resume = _setting_ringtone_app_resume,
+        .terminate = _setting_ringtone_app_terminate,
+        .app_control = _setting_ringtone_app_controll
+    };
+
+    SettingRingtoneUG app_data;
+    memset(&app_data, 0, sizeof(SettingRingtoneUG));
+
+    ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY],
+            APP_EVENT_LOW_MEMORY, NULL, NULL);
+
+    ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY],
+            APP_EVENT_LOW_BATTERY, NULL, NULL);
+
+    ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED],
+            APP_EVENT_LANGUAGE_CHANGED, _lang_changed, &app_data);
+
+    ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED],
+            APP_EVENT_REGION_FORMAT_CHANGED, NULL, NULL);
+
+    ui_app_add_event_handler(
+            &handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED],
+            APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
+
+    return ui_app_main(argc, argv, &ops, &app_data);
+
 }
-
-static void setting_ringtone_ug_on_key_event(ui_gadget_h ug,
-		enum ug_key_event event, app_control_h service, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-	SettingRingtoneUG *ad = (SettingRingtoneUG *)priv;
-
-	switch (event) {
-	case UG_KEY_EVENT_END: {
-		if (elm_naviframe_top_item_get(ad->navi_bar)
-				== elm_naviframe_bottom_item_get(ad->navi_bar)) {
-			ug_destroy_me(ug);
-		} else {
-			/* elm_naviframe_item_pop(ad->navi_bar); */
-			setting_view_cb_at_endKey(ad);
-		}
-	}
-		break;
-	default:
-		break;
-	}
-}
-
-UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
-{
-	SETTING_TRACE_BEGIN;
-	SettingRingtoneUG *ringtoneUG = calloc(1, sizeof(SettingRingtoneUG));
-	setting_retvm_if(!ringtoneUG, -1,
-			"Create SettingRingtoneUG obj failed");
-
-	ops->create = setting_ringtone_ug_on_create;
-	ops->start = setting_ringtone_ug_on_start;
-	ops->pause = setting_ringtone_ug_on_pause;
-	ops->resume = setting_ringtone_ug_on_resume;
-	ops->destroy = setting_ringtone_ug_on_destroy;
-	ops->message = setting_ringtone_ug_on_message;
-	ops->event = setting_ringtone_ug_on_event;
-	ops->key_event = setting_ringtone_ug_on_key_event;
-	ops->priv = ringtoneUG;
-	ops->opt = UG_OPT_INDICATOR_ENABLE;
-
-	return 0;
-}
-
-UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
-{
-	SETTING_TRACE_BEGIN;
-	struct SettingRingtoneUG *ringtoneUG;
-	setting_retm_if(!ops, "ops == NULL");
-
-	ringtoneUG = ops->priv;
-	if (ringtoneUG)
-		FREE(ringtoneUG);
-}
-
-/* ***************************************************
- **
- **general func
- **
- ****************************************************/
-

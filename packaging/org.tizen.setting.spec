@@ -131,6 +131,13 @@ Group: Application Framework/Settings
 #Requires: pkgconfig(setting-common-internal)
 %description devel
 
+%package ringtone
+Summary: A setting ringtone application
+Group: Application
+
+%description ringtone
+Configuration application for ringtone
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -342,3 +349,9 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %files ref
 %{_datadir}/mime/packages/mime.setting.xml
 %{_datadir}/packages/org.tizen.setting.xml.ref
+
+%files ringtone
+%manifest setting-ringtone/org.tizen.setting-ringtone.manifest
+%{_prefix}/apps/org.tizen.setting-ringtone/bin/setting-ringtone
+%{_datadir}/packages/org.tizen.setting-ringtone.xml
+%{_prefix}/apps/org.tizen.setting-ringtone/res/*

@@ -1,5 +1,6 @@
 # for i18n
 
+SET(SETTING_PKG_RINGTONE "org.tizen.setting-ringtone")
 
 #KIRAN INDIA
 #SET(POFILES bn.po en.po gu.po hi.po kn.po ml.po si.po ta.po te.po ur.po)
@@ -26,6 +27,7 @@ FOREACH(pofile ${POFILES})
 			DEPENDS ${absPofile}
 	)
 	INSTALL(FILES ${moFile} DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_NAME}/res/locale/${lang}/LC_MESSAGES RENAME setting.mo)
+	INSTALL(FILES ${moFile} DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_RINGTONE}/res/locale/${lang}/LC_MESSAGES RENAME setting.mo)
 
 #${TZ_SYS_RO_APP}/org.tizen.mode-syspopup
 
