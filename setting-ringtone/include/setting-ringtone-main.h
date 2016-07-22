@@ -24,7 +24,6 @@
 #include "setting-ringtone.h"
 #include "setting-ringtone-util.h"
 
-#define STR_RINGTONE_SELECT	"IDS_ST_OPT_SELECT"
 #define STR_DEFAULT_RINGTONE	"IDS_ST_OPT_DEFAULT_RINGTONE"
 
 static Eina_Bool setting_ringtone_click_back_cb(void *data,

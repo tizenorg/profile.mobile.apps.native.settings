@@ -30,6 +30,8 @@
 #include <setting-common-draw-widget.h>
 #include <setting-common-view.h>
 
+#include "setting-common-init.h"
+
 typedef struct _SettingRingtoneUG SettingRingtoneUG;
 
 /**
@@ -38,16 +40,10 @@ typedef struct _SettingRingtoneUG SettingRingtoneUG;
  * SettingRingtoneUG and the functions access app context.
  */
 struct _SettingRingtoneUG {
-	ui_gadget_h ug;
 	app_control_h source_svc;
 
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-	Evas_Object *navi_bar;
-	Evas_Object *ly_main;
+	MainData md;
 
-	Evas_Object *scroller;
 	Evas_Object *ring_rgd;
 
 	Elm_Genlist_Item_Class itc_ring;
