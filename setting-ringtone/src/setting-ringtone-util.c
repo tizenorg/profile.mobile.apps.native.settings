@@ -200,7 +200,7 @@ void ringtone_stop_sound(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "data is NULL");
-	SettingRingtoneUG *ad = (SettingRingtoneUG *) data;
+	SettingRingtoneData *ad = (SettingRingtoneData *) data;
 	setting_retm_if(ad->mp_ringtone == NULL, "ad->mp_ringtone is NULL");
 	player_state_e state = -1;
 	int ret = 0;
