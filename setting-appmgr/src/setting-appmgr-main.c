@@ -249,6 +249,10 @@ static void appmgrUg_main_gl_sel(void *data, Evas_Object *obj, void *event_info)
 	info = elm_object_item_data_get(item);
 	ret_if(NULL == info);
 
+	/*temporary code to prevent the crach when call twice package_manager_get_package_size_info() at the same time*/
+	if(info->total_size==0)
+		return;
+
 	ad->sel_pkgid = SAFE_STRDUP(info->pkgid);
 	ad->sel_label = SAFE_STRDUP(info->pkg_label);
 	ad->sel_icon = SAFE_STRDUP(info->icon_path);
