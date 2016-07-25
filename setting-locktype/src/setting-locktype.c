@@ -338,49 +338,6 @@ UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
  *
  ***************************************************/
 
-void setting_locktype_layout_passwd_ug_cb(ui_gadget_h ug, enum ug_mode mode,
-		void *priv)
-{
-	if (!priv)
-		return;
-
-	Evas_Object *base = ug_get_layout(ug);
-	if (!base)
-		return;
-
-	switch (mode) {
-	case UG_MODE_FULLVIEW:
-		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-		EVAS_HINT_EXPAND);
-		evas_object_show(base);
-		break;
-	default:
-		break;
-	}
-
-	return;
-}
-
-void setting_locktype_destroy_password_ug_cb(ui_gadget_h ug, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-	ret_if(priv == NULL);
-	SettingLocktypeUG *ad = (SettingLocktypeUG *)priv;
-
-	if (ad->ly_main)
-		elm_object_tree_focus_allow_set(ad->ly_main, EINA_TRUE);
-	if (ug)
-		ug_destroy(ug);
-}
-
-void setting_locktype_end_password_ug_cb(ui_gadget_h ug, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-	ret_if(priv == NULL);
-	SettingLocktypeUG *ad = (SettingLocktypeUG *)priv;
-	ad->ug_passwd = NULL;
-}
-
 gboolean setting_locktype_create_password_sg(void *data)
 {
 	SETTING_TRACE_BEGIN;
@@ -408,10 +365,7 @@ gboolean setting_locktype_create_password_sg(void *data)
 
 	if (!cbs)
 		return FALSE;
-	cbs->layout_cb = setting_locktype_layout_passwd_ug_cb;
-	cbs->result_cb = setting_locktype_result_password_ug_cb;
-	cbs->destroy_cb = setting_locktype_destroy_password_ug_cb;
-	cbs->end_cb = setting_locktype_end_password_ug_cb;
+	cbs->result_cb = ;
 	cbs->priv = (void *)ad;
 
 	app_control_h svc;
@@ -428,9 +382,9 @@ gboolean setting_locktype_create_password_sg(void *data)
 		app_control_add_extra_data(svc, "current", ad->input_pwd);
 
 	elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
-	ad->ug_passwd = setting_ug_create(ad->ug, "setting-password-efl",
-			UG_MODE_FULLVIEW, svc, cbs);
-	if (NULL == ad->ug_passwd) { /* error handling */
+	ad->passwd_loaded = !app_launcher_svc("org.tizen.setting-password", svc,
+			_result_password_cb, ad);
+	if (!ad->passwd_loaded) { /* error handling */
 		evas_object_show(ad->ly_main);
 	}
 
@@ -458,17 +412,17 @@ int _get_locktype_table_index(char *name)
 	return -1;
 }
 
-void setting_locktype_result_password_ug_cb(ui_gadget_h ug,
+void _result_password_cb(ui_gadget_h ug,
 		app_control_h service, void *priv)
 {
 	SETTING_TRACE_BEGIN;
-	/* error check */
 	retm_if(priv == NULL, "Data paremeter is NULL");
-
-	/* ad is point to priv */
 	SettingLocktypeUG *ad = (SettingLocktypeUG *)priv;
-
 	char *result = NULL;
+
+	ad->passwd_loaded = false;
+	if (ad->ly_main)
+		elm_object_tree_focus_allow_set(ad->ly_main, EINA_TRUE);
 
 	app_control_get_extra_data(service, "result", &result);
 
