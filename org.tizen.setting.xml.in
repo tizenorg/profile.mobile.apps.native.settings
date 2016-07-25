@@ -213,11 +213,6 @@
                         <label>Locktype</label>
                         <label xml:lang="en-us">Locktype</label>
        </ui-application>
-	<ui-application appid="setting-password-efl" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting-password-efl" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
-                        <icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
-                        <label>Password</label>
-                        <label xml:lang="en-us">Password</label>
-       </ui-application>
 	<ui-application appid="org.tizen.setting.volume" exec="@TZ_SYS_RO_APP@/org.tizen.setting/bin/setting_volume_popup" type="capp" nodisplay="true" taskmanage="false" ui-gadget="true" launch_mode="caller">
 		<icon>@TZ_SYS_RO_ICONS@/default/small/org.tizen.setting.png</icon>
 		<label>Volume</label>

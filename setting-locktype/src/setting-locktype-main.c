@@ -925,7 +925,7 @@ Eina_Bool setting_locktype_main_click_softkey_back_cb(void *data,
 			"[Setting > Security] Data parameter is NULL");
 
 	SettingLocktypeUG *ad = (SettingLocktypeUG *) data;
-	if (ad->ug_passwd)
+	if (ad->passwd_loaded)
 		return EINA_FALSE;
 
 	/* Send destroy request */

@@ -350,7 +350,7 @@ struct _SettingSecurityUG {
 	Evas_Object *ly_main;
 	Evas_Object *navi_bar;
 	Evas_Object *sim_popup;
-	ui_gadget_h ug_passwd;
+	int passwd_loaded;
 	ui_gadget_h ug_mmc_encryption;
 	ui_gadget_h ug_mt;
 	ui_gadget_h ug_firewall;

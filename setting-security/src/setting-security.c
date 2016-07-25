@@ -44,6 +44,9 @@ enum {
 	RESULT_OK, RESULT_FAILED, RESULT_CANCELED, RESULT_NETWORK_ERROR
 };
 
+static void _password_result_cb(app_control_h request, app_control_h reply,
+		app_control_result_e code, void *priv);
+
 void setting_security_ug_popup_resp_cb(void *data, Evas_Object *obj,
 		void *event_info)
 {
@@ -1039,37 +1042,12 @@ void setting_security_pin_get_facility_cb(TapiHandle *handle, int result,
 	SETTING_TRACE_END;
 }
 
-void setting_security_layout_passwd_ug_cb(ui_gadget_h ug, enum ug_mode mode,
-		void *priv)
-{
-	if (!priv)
-		return;
-
-	Evas_Object *base = ug_get_layout(ug);
-	if (!base)
-		return;
-
-	switch (mode) {
-	case UG_MODE_FULLVIEW:
-		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-		EVAS_HINT_EXPAND);
-		evas_object_show(base);
-		break;
-	default:
-		break;
-	}
-
-	return;
-}
-
 void setting_security_destroy_password_ug_cb(ui_gadget_h ug, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(priv == NULL);
 	SettingSecurityUG *ad = (SettingSecurityUG *)priv;
 
-	if (ad->ly_main)
-		elm_object_tree_focus_allow_set(ad->ly_main, EINA_TRUE);
 
 	if (ug)
 		setting_ug_destroy(ug);
@@ -1077,12 +1055,11 @@ void setting_security_destroy_password_ug_cb(ui_gadget_h ug, void *priv)
 	SETTING_TRACE_DEBUG("[TEST] current : %s", ad->input_pwd);
 }
 
-void setting_security_end_password_ug_cb(ui_gadget_h ug, void *priv)
+void setting_security_end_password(SettingSecurityUG *ad)
 {
 	SETTING_TRACE_BEGIN;
-	ret_if(priv == NULL);
-	SettingSecurityUG *ad = (SettingSecurityUG *)priv;
-	ad->ug_passwd = NULL;
+	ret_if(!ad);
+	ad->passwd_loaded = false;
 
 	if (setting_view_security_sim_settings.is_create == TRUE
 			&& ad->pw_type == SETTING_SEC_PW_PIN1_UNBLOCKED) {
@@ -1136,7 +1113,7 @@ gboolean setting_security_create_password_sg(void *data)
 
 	/* prevent the ug from being loaded again due to window event queuing */
 	/* added by JTS: CQ H0100135346 */
-	if (ad->ug_passwd) {
+	if (ad->passwd_loaded) {
 		SETTING_TRACE("Password UG is already loaded.");
 		return FALSE;
 	}
@@ -1148,24 +1125,11 @@ gboolean setting_security_create_password_sg(void *data)
 	safeCopyStr(str, security_table[ad->pw_type].pw_type_string,
 	Max_Passwd_View_Type_Len);
 
-	struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
-
-	if (!cbs)
-		return FALSE;
-	cbs->layout_cb = setting_security_layout_passwd_ug_cb;
-	cbs->result_cb = setting_security_result_password_ug_cb;
-	cbs->destroy_cb = setting_security_destroy_password_ug_cb;
-	cbs->end_cb = setting_security_end_password_ug_cb;
-	cbs->priv = (void *)ad;
-
 	app_control_h svc;
-	if (app_control_create(&svc)) {
-		FREE(cbs);
+	if (app_control_create(&svc))
 		return FALSE;
-	}
 
 	app_control_add_extra_data(svc, "viewtype", str);
-
 	SETTING_TRACE_DEBUG("send viewtype to password : %s", str);
 
 	if ((ad->pw_type != SETTING_SEC_PW_ENTER_LOCK_TYPE) && ad->input_pwd) {
@@ -1176,14 +1140,13 @@ gboolean setting_security_create_password_sg(void *data)
 	if (ad->ly_main)
 		elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
 	ad->ug_removed = FALSE;
-	ad->ug_passwd = setting_ug_create(ad->ug, "setting-password-efl",
-			UG_MODE_FULLVIEW, svc, cbs);
-	if (NULL == ad->ug_passwd) { /* error handling */
+	ad->passwd_loaded = !app_launcher_svc("org.tizen.setting-password",
+			svc, _password_result_cb, ad);
+	if (!ad->passwd_loaded) { /* error handling */
 		evas_object_show(ad->ly_main);
 	}
 
 	app_control_destroy(svc);
-	FREE(cbs);
 
 	return TRUE;
 }
@@ -1394,15 +1357,14 @@ int _get_security_table_index(char *name)
 	return -1;
 }
 
-void setting_security_result_password_ug_cb(ui_gadget_h ug,
-		app_control_h service, void *priv)
+static void _password_result_cb(app_control_h request, app_control_h reply,
+		app_control_result_e code, void *priv)
 {
 	SETTING_TRACE_BEGIN;
-	/* error check */
-	retm_if(priv == NULL, "Data paremeter is NULL");
-
-	/* ad is point to priv */
 	SettingSecurityUG *ad = (SettingSecurityUG *)priv;
+	ret_if(!ad);
+
+	setting_security_end_password(ad);
 
 	if (ad->ly_main)
 		elm_object_tree_focus_allow_set(ad->ly_main, EINA_TRUE);
@@ -1410,8 +1372,8 @@ void setting_security_result_password_ug_cb(ui_gadget_h ug,
 	char *result = NULL;
 	char *current = NULL;
 
-	app_control_get_extra_data(service, "result", &result);
-	app_control_get_extra_data(service, "current", &current);
+	app_control_get_extra_data(reply, "result", &result);
+	app_control_get_extra_data(reply, "current", &current);
 
 	/* divided pw view type */
 	SETTING_TRACE("ad->pw_type: %d result :%s", ad->pw_type, result);
