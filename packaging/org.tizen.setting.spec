@@ -131,6 +131,13 @@ Group: Application Framework/Settings
 #Requires: pkgconfig(setting-common-internal)
 %description devel
 
+%package password
+Summary: A setting password application
+Group: Application
+
+%description password
+Configuration application for password
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -341,3 +348,10 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %files ref
 %{_datadir}/mime/packages/mime.setting.xml
 %{_datadir}/packages/org.tizen.setting.xml.ref
+
+%files password
+%manifest setting-password/org.tizen.setting-password.manifest
+%{_prefix}/apps/org.tizen.setting-password/bin/setting-password
+%{_datadir}/packages/org.tizen.setting-password.xml
+%{_prefix}/apps/org.tizen.setting-password/res/*
+
