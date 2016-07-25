@@ -73,7 +73,7 @@ static void setting_password_simple_click_softkey_cancel_cb(void *data,
 	/* error check */
 	retm_if(data == NULL, "[Setting > Password] Data parameter is NULL");
 
-	SettingPasswordUG *ad = (SettingPasswordUG *) data;
+	SettingPassword *ad = (SettingPassword *) data;
 
 	if (ad->focus_timer) {
 		ecore_timer_del(ad->focus_timer);
@@ -91,16 +91,11 @@ static void setting_password_simple_click_softkey_cancel_cb(void *data,
 	}
 
 	/* send result : Cancel */
-	app_control_h svc;
-	if (app_control_create(&svc) == 0) {
-		app_control_add_extra_data(svc, "result", "Cancel");
-		ug_send_result(ad->ug, svc);
-		SETTING_TRACE("Send Result : %s", "Cancel");
+	add_app_reply(&ad->md, "result", "Cancel");
+	SETTING_TRACE("Send Result : %s", "Cancel");
 
-		app_control_destroy(svc);
-	}
 	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+	ui_app_exit();
 }
 
 static void setting_password_simple_add_description(Evas_Object *layout,
@@ -114,7 +109,7 @@ static void _copy_chars_from_sp_entries(void *data, char *collection)
 {
 	ret_if(data == NULL || collection == NULL);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *) data;
+	SettingPassword *ad = (SettingPassword *) data;
 
 	if (ad->sp_entry1 == NULL || ad->sp_entry2 == NULL ||
 		ad->sp_entry3 == NULL || ad->sp_entry4 == NULL)
@@ -130,7 +125,7 @@ static int _handle_step1(void *data, char *collection)
 	SETTING_TRACE_BEGIN;
 	retv_if(data == NULL, SETTING_RETURN_FAIL);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *) data;
+	SettingPassword *ad = (SettingPassword *) data;
 	int ret = 0;
 	int err = 0;
 
@@ -185,26 +180,17 @@ static int _handle_step1(void *data, char *collection)
 		/* Correct Password. Send Bundle to caller for status change */
 	}
 
-	app_control_h svc;
-	if (app_control_create(&svc)) {
-		setting_password_simple_draw_next_simple_password(ad, 3);
-		return SETTING_RETURN_FAIL;
-	}
-
-	app_control_add_extra_data(svc, "result", ad->view_type_string);
+	add_app_reply(&ad->md, "result", ad->view_type_string);
+	SETTING_TRACE("Send Result : %s", ad->view_type_string);
 
 	if (0 == safeStrCmp(ad->view_type_string,
 			"SETTING_PW_TYPE_ENTER_LOCK_TYPE"))
-		app_control_add_extra_data(svc, "current", collection);
+		add_app_reply(&ad->md, "current", collection);
 
 	/* reset static variables */
 	memset(collection, 0x00, SETTING_PW_UG_NORMAL_PASSWORD_MIN_LENGTH + 1);
-
-	ug_send_result(ad->ug, svc);
-	SETTING_TRACE("Send Result : %s", ad->view_type_string);
-	app_control_destroy(svc);
 	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+	ui_app_exit();
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -216,7 +202,7 @@ static int _handle_step2(void *data, int *step, char *collection1,
 	SETTING_TRACE_BEGIN;
 	retv_if(data == NULL, SETTING_RETURN_FAIL);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *) data;
+	SettingPassword *ad = (SettingPassword *) data;
 	int ret = 0;
 
 
@@ -254,33 +240,26 @@ static int _handle_step2(void *data, int *step, char *collection1,
 			if (SETTING_RETURN_SUCCESS == ret) {
 				FREE(ad->step1_str);
 
-				app_control_h svc;
-				if (!app_control_create(&svc)) {
-					app_control_add_extra_data(svc,
-							"result",
-							ad->view_type_string);
+				add_app_reply(&ad->md, "result",
+						ad->view_type_string);
+				SETTING_TRACE("Send Result : %s",
+						ad->view_type_string);
 
-					/* reset static variables */
-					*step = 0;
-					/* reset static variables */
-					memset(collection1, 0x00,
-							SETTING_PW_UG_NORMAL_PASSWORD_MIN_LENGTH + 1);
-					memset(collection2, 0x00,
-							SETTING_PW_UG_NORMAL_PASSWORD_MIN_LENGTH + 1);
-
-					ug_send_result(ad->ug, svc);
-					SETTING_TRACE("Send Result : %s",
-							ad->view_type_string);
-					app_control_destroy(svc);
-					/* Send destroy request */
-					ug_destroy_me(ad->ug);
-					return SETTING_RETURN_SUCCESS;
-				}
+				/* reset static variables */
+				*step = 0;
+				memset(collection1, 0x00,
+						SETTING_PW_UG_NORMAL_PASSWORD_MIN_LENGTH + 1);
+				memset(collection2, 0x00,
+						SETTING_PW_UG_NORMAL_PASSWORD_MIN_LENGTH + 1);
 				/* Display popup */
 				setting_password_ug_create_popup_notitle_nobtn(
 						ad,
 						_("IDS_ST_POP_NEW_PASSWD_SAVED"),
 						TRUE);
+				/* Send destroy request */
+				ui_app_exit();
+				return SETTING_RETURN_SUCCESS;
+
 			} else if (ret == SETTING_PW_ERROR_REUSED) {
 				setting_password_simple_draw_next_simple_password(
 						ad, 1);
@@ -327,7 +306,7 @@ static int setting_password_simple_done_simple_password(void *data,
 	SETTING_TRACE_BEGIN;
 	retv_if(data == NULL, SETTING_RETURN_FAIL);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *) data;
+	SettingPassword *ad = (SettingPassword *) data;
 
 	static int step = 0;
 
@@ -355,7 +334,7 @@ static Eina_Bool setting_password_simple_check_4entries(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	retv_if(data == NULL, EINA_FALSE);
-	SettingPasswordUG *ad = (SettingPasswordUG *) data;
+	SettingPassword *ad = (SettingPassword *) data;
 
 	int ret = 0;
 
@@ -446,7 +425,7 @@ Ecore_IMF_Context *__imf_context_create(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	retv_if(data == NULL, NULL);
-	SettingPasswordUG *ad = (SettingPasswordUG *) data;
+	SettingPassword *ad = (SettingPassword *) data;
 
 	Ecore_IMF_Context *imf_context = NULL;
 	const char *ctx_id = ecore_imf_context_default_id_get();
@@ -454,12 +433,12 @@ Ecore_IMF_Context *__imf_context_create(void *data)
 	if (ctx_id) {
 		imf_context = ecore_imf_context_add(ctx_id);
 
-		if (ad->evas && imf_context) {
+		if (ad->md.evas && imf_context) {
 			ecore_imf_context_client_window_set(imf_context,
 					(void *)ecore_evas_window_get(
-							ecore_evas_ecore_evas_get(ad->evas)));
+							ecore_evas_ecore_evas_get(ad->md.evas)));
 			ecore_imf_context_client_canvas_set(imf_context,
-					ad->evas);
+					ad->md.evas);
 		}
 	}
 	return imf_context;
@@ -468,7 +447,7 @@ Ecore_IMF_Context *__imf_context_create(void *data)
 static Eina_Bool __imf_event_key_down_cb(void *data, int type, void *event)
 {
 	SETTING_TRACE_BEGIN;
-	SettingPasswordUG *ad = (SettingPasswordUG *)data;
+	SettingPassword *ad = (SettingPassword *)data;
 	Ecore_Event_Key *ev = event;
 
 	char *commit_str = (char *)ev->key;
@@ -519,7 +498,7 @@ void __imf_show_for_simple_password(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(data == NULL);
-	SettingPasswordUG *ad = (SettingPasswordUG *) data;
+	SettingPassword *ad = (SettingPassword *) data;
 
 	if (ad->imf_context) {
 		ecore_imf_context_input_panel_show(ad->imf_context);
@@ -551,7 +530,7 @@ static void __enable_imf_cb(void *data, Evas *e, Evas_Object *obj,
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if(data == NULL, "Data parameter is NULL");
-	SettingPasswordUG *ad = (SettingPasswordUG *) data;
+	SettingPassword *ad = (SettingPassword *) data;
 
 	__imf_show_for_simple_password(ad);
 }
@@ -562,12 +541,12 @@ static int setting_password_simple_create(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *) cb;
+	SettingPassword *ad = (SettingPassword *) cb;
 
 	ad->sp_focused_num = 0;
 
 	/* Create layout : layout/simple_password in setting-theme.edc */
-	ad->simple_layout = elm_layout_add(ad->win_main_layout);
+	ad->simple_layout = elm_layout_add(ad->md.view_layout);
 	elm_layout_file_set(ad->simple_layout, SETTING_THEME_EDJ_NAME,
 			"layout/simple_password");
 
@@ -607,15 +586,15 @@ static int setting_password_simple_create(void *cb)
 				_(sp_titles[1]));
 	/* End */
 
-	ad->ly_main = setting_create_layout_navi_bar(
-			ad->win_main_layout,
-			ad->win_get,
+	ad->md.ly_main = setting_create_layout_navi_bar(
+			ad->md.view_layout,
+			ad->md.win_main,
 			"IDS_ST_BODY_SIMPLE_PASSWORD",
 			_("IDS_ST_BUTTON_BACK"),
 			setting_password_simple_click_softkey_cancel_cb,
 			ad,
 			ad->simple_layout,
-			&(ad->navi_bar), NULL);
+			&(ad->md.navibar_main), NULL);
 	evas_object_event_callback_add(ad->sp_entry1, EVAS_CALLBACK_MOUSE_DOWN,
 			__enable_imf_cb, ad);
 	evas_object_event_callback_add(ad->sp_entry2, EVAS_CALLBACK_MOUSE_DOWN,
@@ -641,7 +620,7 @@ static int setting_password_simple_destroy(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *) cb;
+	SettingPassword *ad = (SettingPassword *) cb;
 
 	if (ad->imf_handler) {
 		ecore_event_handler_del(ad->imf_handler);
@@ -662,9 +641,9 @@ static int setting_password_simple_destroy(void *cb)
 		ad->notify = NULL;
 	}
 
-	if (ad->ly_main != NULL) {
-		evas_object_del(ad->ly_main);
-		ad->ly_main = NULL;
+	if (ad->md.ly_main != NULL) {
+		evas_object_del(ad->md.ly_main);
+		ad->md.ly_main = NULL;
 	}
 
 	setting_view_password_simple.is_create = 0;
@@ -678,10 +657,10 @@ static int setting_password_simple_update(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *) cb;
+	SettingPassword *ad = (SettingPassword *) cb;
 
-	if (ad->ly_main != NULL)
-		evas_object_show(ad->ly_main);
+	if (ad->md.ly_main != NULL)
+		evas_object_show(ad->md.ly_main);
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -691,10 +670,10 @@ static int setting_password_simple_cleanup(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *) cb;
+	SettingPassword *ad = (SettingPassword *) cb;
 
-	if (ad->ly_main != NULL)
-		evas_object_hide(ad->ly_main);
+	if (ad->md.ly_main != NULL)
+		evas_object_hide(ad->md.ly_main);
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -712,7 +691,7 @@ int setting_password_simple_draw_next_simple_password(void *data,
 	retvm_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
 			 "[Setting > Password] Data parameter is NULL");
 
-	SettingPasswordUG *ad = (SettingPasswordUG *) data;
+	SettingPassword *ad = (SettingPassword *) data;
 
 	elm_object_part_text_set(ad->simple_layout, "title.txt",
 			_(sp_titles[title_index]));
