@@ -37,7 +37,7 @@ void setting_password_main_click_softkey_done_cb(void *data, Evas_Object *obj,
 void setting_password_main_click_softkey_continue_cb(void *data,
 		Evas_Object *obj, void *event_info);
 
-void setting_password_main_warning_entry_added_byte_popup(SettingPasswordUG *ad,
+void setting_password_main_warning_entry_added_byte_popup(SettingPassword *ad,
 		int min, int max);
 
 #endif

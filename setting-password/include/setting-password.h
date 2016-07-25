@@ -30,10 +30,11 @@
 #include <glib-object.h>
 #include <dlog.h>
 
-#include <setting-common-draw-widget.h>
-#include <setting-common-view.h>
-#include <setting-debug.h>
-#include <setting-password-strings.h>
+#include "setting-common-draw-widget.h"
+#include "setting-common-view.h"
+#include "setting-debug.h"
+#include "setting-common-init.h"
+#include "setting-password-strings.h"
 
 /*#include <ckmc/ckmc-control.h> */
 /*#include <ckmc/ckmc-type.h> */
@@ -202,19 +203,14 @@ typedef struct _pw_quality {
 /**
  * Setting Password UG context
  * all UG function has void* as an agument. this is casted back to
- * SettingPasswordUG and the functions access app context.
+ * SettingPassword and the functions access app context.
  */
-typedef struct _SettingPasswordUG {
-	ui_gadget_h ug;
+typedef struct _SettingPassword {
+	MainData md;
 	TapiHandle *handle;
 	TelSimSecResult_t *verify_puks_result;
 
 	/* add more variables here (move your appdata to here) */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-	Evas_Object *ly_main;
-
 	setting_pw_type view_type;
 	char *view_type_string;
 	int step;
@@ -232,14 +228,11 @@ typedef struct _SettingPasswordUG {
 	Setting_GenGroupItem_Data *err_desc;
 	Elm_Genlist_Item_Class itc_err_desc;
 
-	Elm_Object_Item *navi_it;
 	Evas_Object *controllbar;
 	tapi_request_tapi_info *t_info;
-	Evas_Object *navi_bar;
 	Elm_Genlist_Item_Class itc_variable_height;
 	Elm_Genlist_Item_Class itc_layout;
 	Elm_Genlist_Item_Class itc_group_item;
-	Evas_Object *scroller;
 	int disable_item_type;
 
 	unsigned int remain_attempt;
@@ -288,7 +281,7 @@ typedef struct _SettingPasswordUG {
 	/* fingerprint's alternative password */
 	int cur_step;
 
-} SettingPasswordUG;
+} SettingPassword;
 
 extern setting_view setting_view_password_sim;
 extern setting_view setting_view_password_simple;
