@@ -213,15 +213,15 @@ static void storageUg_SD_format_se_confirm(SettingStorageUG *ad)
 
 }
 
-static void storageUg_passwd_ug_result_cb(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void storageUg_passwd_ug_result_cb(app_control_h request,
+		app_control_h reply, app_control_result_e code, void *priv)
 {
 	char *result = NULL;
 	SettingStorageUG *ad = priv;
+	ret_if(!priv);
+	ret_if(code != APP_CONTROL_RESULT_SUCCEEDED);
 
-	ret_if(NULL == priv);
-
-	app_control_get_extra_data(service, "result", &result);
+	app_control_get_extra_data(reply, "result", &result);
 	if (safeStrCmp(result, "SETTING_PW_TYPE_ENTER_LOCK_TYPE") == 0)
 		storageUg_SD_format_se_confirm(ad);
 	else
@@ -230,35 +230,6 @@ static void storageUg_passwd_ug_result_cb(ui_gadget_h ug, app_control_h service,
 	FREE(result);
 
 	elm_object_tree_focus_allow_set(ad->lo_main, EINA_TRUE);
-	setting_ug_destroy(ug);
-}
-
-static inline void storageUg_passwd_ug(SettingStorageUG *ad)
-{
-	app_control_h svc;
-	ui_gadget_h ug;
-	struct ug_cbs cbs;
-
-	ret_if(NULL == ad);
-
-	if (app_control_create(&svc))
-		return;
-
-	app_control_add_extra_data(svc, "viewtype",
-			"SETTING_PW_TYPE_ENTER_LOCK_TYPE");
-
-	memset(&cbs, 0, sizeof(struct ug_cbs));
-	cbs.layout_cb = storageUg_ug_layout_cb;
-	cbs.result_cb = storageUg_passwd_ug_result_cb;
-	cbs.destroy_cb = storageUg_ug_destroy_cb;
-	cbs.priv = (void *)ad;
-
-	elm_object_tree_focus_allow_set(ad->lo_main, EINA_FALSE);
-	ug = setting_ug_create(ad->ug, "setting-password-efl", UG_MODE_FULLVIEW,
-			svc, &cbs);
-	warn_if(NULL == ug, "setting_ug_create() Fail");
-
-	app_control_destroy(svc);
 }
 
 static inline int storageUg_checkencrypt()
@@ -279,7 +250,8 @@ static inline void storageUg_SD_prepare_format(SettingStorageUG *ad)
 
 	is_encrypt = storageUg_checkencrypt();
 	if (is_encrypt)
-		storageUg_passwd_ug(ad);
+		app_launcher("org.tizen.setting-password|viewtype:SETTING_PW_TYPE_ENTER_LOCK_TYPE",
+				storageUg_passwd_ug_result_cb, (void *)ad);
 	else
 		storageUg_SD_format_se_confirm(ad);
 }
