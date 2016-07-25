@@ -619,7 +619,7 @@ Eina_Bool setting_security_sim_settings_click_softkey_back_cb(void *data,
 	retv_if(data == NULL, EINA_FALSE);
 
 	SettingSecurityUG *ad = (SettingSecurityUG *)data;
-	if (ad->ug_passwd)
+	if (ad->passwd_loaded)
 		return EINA_FALSE;
 
 	if (ad->sim_popup)

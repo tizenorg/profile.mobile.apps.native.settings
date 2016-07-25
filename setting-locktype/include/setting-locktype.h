@@ -160,7 +160,7 @@ struct _SettingLocktypeUG {
 	Evas_Object *ly_guild;
 	Evas_Object *ly_main;
 	Evas_Object *navi_bar;
-	ui_gadget_h ug_passwd;
+	bool passwd_loaded;
 	ui_gadget_h ug_loading;
 	Evas_Object *genlist;
 	Evas_Object *save_popup;
@@ -200,9 +200,6 @@ struct _SettingLocktypeUG {
 
 extern setting_view setting_view_locktype_main;
 
-
-void setting_locktype_result_password_ug_cb(ui_gadget_h ug,
-		app_control_h service, void *priv);
 gboolean setting_locktype_create_password_sg(void *data);
 void setting_locktype_destroy_password_ug_cb(ui_gadget_h ug,
 		void *priv);
