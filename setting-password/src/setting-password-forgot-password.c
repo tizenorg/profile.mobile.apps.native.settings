@@ -43,7 +43,7 @@ void __reset_personal_popup_resp_cb(void *data, Evas_Object *obj,
 	SETTING_TRACE_BEGIN;
 	ret_if(!data);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)data;
+	SettingPassword *ad = (SettingPassword *)data;
 
 	char *btn_str = elm_entry_markup_to_utf8(elm_object_text_get(obj));
 	if (!safeStrCmp(btn_str, _(PW_ST_RESET))) {
@@ -60,15 +60,8 @@ void __reset_personal_popup_resp_cb(void *data, Evas_Object *obj,
 					0);
 
 			ode_deinit();
-			/* send resunt to personal mode ug */
-			app_control_h svc;
-			if (!app_control_create(&svc)) {
-				app_control_add_extra_data(svc, "result",
-						"Restore");
-				ug_send_result(ad->ug, svc);
-				app_control_destroy(svc);
-			}
-			ug_destroy_me(ad->ug);
+			/* send result to personal mode */
+			add_app_reply(&ad->md, "result", "Restore");
 		}
 	}
 
@@ -122,7 +115,7 @@ static void setting_password_forgot_password_mouse_up_Gendial_list_cb(
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	setting_retm_if(data == NULL, "Data parameter is NULL");
-	SettingPasswordUG *ad = (SettingPasswordUG *)data;
+	SettingPassword *ad = (SettingPassword *)data;
 
 	retm_if(event_info == NULL, "Invalid argument: event info is NULL");
 	Elm_Object_Item *item = (Elm_Object_Item *)event_info;
@@ -148,7 +141,7 @@ static void setting_password_forgot_password_mouse_up_Gendial_list_cb(
 		}
 
 		/* draw popup */
-		ad->reset_personal_popup = setting_create_popup(ad, ad->win_get,
+		ad->reset_personal_popup = setting_create_popup(ad, ad->md.win_main,
 		PW_ST_RESET_PERSONAL_MODE,
 		PW_ST_RESET_PERSONAL_MODE_POPUP_Q,
 				__reset_personal_popup_resp_cb, 0, FALSE, FALSE,
@@ -172,15 +165,15 @@ static int setting_password_forgot_password_create(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)cb;
+	SettingPassword *ad = (SettingPassword *)cb;
 
 	Evas_Object *genlist = NULL;
 	Elm_Object_Item *navi_it = NULL;
 
-	navi_it = setting_push_layout_navi_bar_genlist(ad->win_main_layout,
-			ad->win_get,
+	navi_it = setting_push_layout_navi_bar_genlist(ad->md.view_layout,
+			ad->md.win_main,
 			PW_ST_FORGOT_PASSWORD,
-			NULL, NULL, NULL, NULL, NULL, &genlist, ad->navi_bar);
+			NULL, NULL, NULL, NULL, NULL, &genlist, ad->md.navibar_main);
 	/* add pop cb */
 	elm_naviframe_item_pop_cb_set(navi_it,
 			(Elm_Naviframe_Item_Pop_Cb)__forgot_password_pop_cb,
@@ -222,10 +215,10 @@ static int setting_password_forgot_password_update(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)cb;
+	SettingPassword *ad = (SettingPassword *)cb;
 
-	if (ad->ly_main != NULL)
-		evas_object_show(ad->ly_main);
+	if (ad->md.ly_main != NULL)
+		evas_object_show(ad->md.ly_main);
 
 	return SETTING_RETURN_SUCCESS;
 }
