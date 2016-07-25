@@ -30,18 +30,22 @@
 #include <time.h>
 #include <notification.h>
 
-static int setting_password_sim_create(void *cb);
-static int setting_password_sim_destroy(void *cb);
-static int setting_password_sim_update(void *cb);
-static int setting_password_sim_cleanup(void *cb);
+static int _view_create(void *cb);
+static int _view_destroy(void *cb);
+static int _view_update(void *cb);
+static int _view_cleanup(void *cb);
+
+static void _warning_entry_added_byte_popup(SettingPassword *ad,
+		int min, int max);
+static void _display_result_popup(tapi_receive_info *result,
+		SettingPassword *ad);
+static void setting_password_sim_done(void *data);
 
 setting_view setting_view_password_sim = {
-	.create = setting_password_sim_create,
-	.destroy = setting_password_sim_destroy,
-	.update = setting_password_sim_update,
-	.cleanup = setting_password_sim_cleanup, };
-
-static void setting_password_sim_done(void *data);
+	.create = _view_create,
+	.destroy = _view_destroy,
+	.update = _view_update,
+	.cleanup = _view_cleanup, };
 
 /* ***************************************************
  *
@@ -52,7 +56,7 @@ static void __password_sim_gl_mouse_up(void *data, Evas *e, Evas_Object *obj,
 		void *event)
 {
 	ret_if(!data);
-	/*SettingPasswordUG *ad = (SettingPasswordUG *) data; */
+	/*SettingPassword *ad = (SettingPassword *) data; */
 
 	/* P131121-05156 : do not hide input panel when genlist scrolls,
 	 * plz compare with [about device > device name] item */
@@ -62,7 +66,7 @@ static char *setting_password_sim_get_title_str(void *data)
 {
 	retvm_if(data == NULL, NULL,
 			"[Setting > Password] Data parameter is NULL");
-	SettingPasswordUG *ad = (SettingPasswordUG *)data;
+	SettingPassword *ad = (SettingPassword *)data;
 
 	switch (ad->view_type) {
 	case SETTING_PW_TYPE_SIM_LOCK_ON:
@@ -105,9 +109,9 @@ static void setting_password_sim_click_softkey_cancel_cb(void *data,
 	setting_retm_if(NULL == data,
 			"[Setting > Password] Data parameter is NULL");
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)data;
+	SettingPassword *ad = (SettingPassword *)data;
 #if 0
-	/* if IME is displayed, hide IME. or Destroy password ug. */
+	/* if IME is displayed, hide IME. or exit password app. */
 	if (ad->ed_pw1 && ad->ed_pw1->isFocusFlag == TRUE
 			&& elm_object_focus_get(ad->ed_pw1->eo_check)) {
 		SETTING_TRACE_DEBUG("wait to hide IME");
@@ -131,16 +135,11 @@ static void setting_password_sim_click_softkey_cancel_cb(void *data,
 	}
 
 	/* send result : Cancel */
-	app_control_h svc;
-	if (app_control_create(&svc) == 0) {
-		app_control_add_extra_data(svc, "result", "Cancel");
-		ug_send_result(ad->ug, svc);
-		SETTING_TRACE("Send Result : %s\n", "Cancel");
+	add_app_reply(&ad->md, "result", "Cancel");
+	SETTING_TRACE("Send Result : %s\n", "Cancel");
 
-		app_control_destroy(svc);
-	}
 	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+	ui_app_exit();
 }
 
 static int __create_sim_layout(void *data)
@@ -148,43 +147,43 @@ static int __create_sim_layout(void *data)
 	SETTING_TRACE_BEGIN;
 	retv_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)data;
+	SettingPassword *ad = (SettingPassword *)data;
 	static int count = 0;
 
 	count++;
 	/* CONTENT */
-	if (ad->scroller != NULL) {
-		evas_object_del(ad->scroller);
-		ad->scroller = NULL;
+	if (ad->md.genlist != NULL) {
+		evas_object_del(ad->md.genlist);
+		ad->md.genlist = NULL;
 	}
 
 	/* PIN related views have 2 toolbar buttons. CANCEL and DONE button */
-	ad->ly_main = setting_create_layout_navi_bar_genlist(
-			ad->win_main_layout, ad->win_get,
+	ad->md.ly_main = setting_create_layout_navi_bar_genlist(
+			ad->md.view_layout, ad->md.win_main,
 			setting_password_sim_get_title_str(ad),
 			_("IDS_ST_BUTTON_BACK"),
 			NULL,
 			(setting_call_back_func)setting_password_sim_click_softkey_cancel_cb,
-			NULL, ad, &(ad->scroller), &(ad->navi_bar));
+			NULL, ad, &(ad->md.genlist), &(ad->md.navibar_main));
 
-	ad->navi_it = elm_naviframe_top_item_get(ad->navi_bar);
-	ad->bottom_btn = elm_button_add(ad->navi_bar);
+	ad->md.navibar_main_it = elm_naviframe_top_item_get(ad->md.navibar_main);
+	ad->bottom_btn = elm_button_add(ad->md.navibar_main);
 
-	Evas_Object *btn_cancel = elm_button_add(ad->navi_bar);
+	Evas_Object *btn_cancel = elm_button_add(ad->md.navibar_main);
 	elm_object_style_set(btn_cancel, "naviframe/title_cancel");
 	evas_object_smart_callback_add(btn_cancel, "clicked",
 			setting_password_sim_click_softkey_cancel_cb, ad);
-	elm_object_item_part_content_set(ad->navi_it, "title_left_btn",
+	elm_object_item_part_content_set(ad->md.navibar_main_it, "title_left_btn",
 			btn_cancel);
 
-	Evas_Object *btn_done = elm_button_add(ad->navi_bar);
+	Evas_Object *btn_done = elm_button_add(ad->md.navibar_main);
 	elm_object_style_set(btn_done, "naviframe/title_done");
 	evas_object_smart_callback_add(btn_done, "clicked",
 			setting_password_sim_click_softkey_done_cb, ad);
-	elm_object_item_part_content_set(ad->navi_it, "title_right_btn",
+	elm_object_item_part_content_set(ad->md.navibar_main_it, "title_right_btn",
 			btn_done);
 
-	if (!ad->scroller) {
+	if (!ad->md.genlist) {
 		SETTING_TRACE("genlist is NULL");
 		return SETTING_RETURN_FAIL;
 	}
@@ -192,12 +191,12 @@ static int __create_sim_layout(void *data)
 	/* Disable Done button if exist */
 	elm_object_disabled_set(ad->bottom_btn, EINA_TRUE);
 	elm_object_focus_allow_set(ad->bottom_btn, EINA_FALSE);
-	elm_object_item_signal_emit(ad->navi_it, "elm,state,sip,shown", "");
+	elm_object_item_signal_emit(ad->md.navibar_main_it, "elm,state,sip,shown", "");
 
-	elm_genlist_mode_set(ad->scroller, ELM_LIST_COMPRESS);
-	/*evas_object_smart_callback_add(ad->scroller, "drag",
+	elm_genlist_mode_set(ad->md.genlist, ELM_LIST_COMPRESS);
+	/*evas_object_smart_callback_add(ad->md.genlist, "drag",
 	 * __password_main_gl_drag, ad); */
-	evas_object_event_callback_add(ad->scroller, EVAS_CALLBACK_MOUSE_UP,
+	evas_object_event_callback_add(ad->md.genlist, EVAS_CALLBACK_MOUSE_UP,
 			__password_sim_gl_mouse_up, ad);
 
 	return SETTING_RETURN_SUCCESS;
@@ -209,7 +208,7 @@ static Eina_Bool __setting_password_sim_rotate_cb(void *data)
 	SETTING_TRACE_BEGIN;
 	retv_if(data == NULL, FALSE);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)data;
+	SettingPassword *ad = (SettingPassword *)data;
 
 	if (ad->view_type == SETTING_PW_TYPE_PIN_LOCK_OFF
 			|| ad->view_type == SETTING_PW_TYPE_PIN_LOCK_ON
@@ -259,26 +258,26 @@ static Eina_Bool __setting_password_sim_rotate_cb(void *data)
 	return ECORE_CALLBACK_CANCEL;
 }
 
-static void __init_tapi(SettingPasswordUG *ad)
+static void __init_tapi(SettingPassword *ad)
 {
 	ad->handle = tel_init(NULL);
 	if (!ad->handle) {
 		SETTING_TRACE_DEBUG("%s*** [ERR] tel_init. ***%s",
 				SETTING_FONT_RED, SETTING_FONT_BLACK);
-		setting_password_ug_create_popup_notitle_nobtn(ad,
+		create_popup_notitle_nobtn(ad,
 				_("IDS_ST_POP_ERROR"),
 				FALSE);
 	}
 }
 
-static void __deinit_tapi(SettingPasswordUG *ad)
+static void __deinit_tapi(SettingPassword *ad)
 {
 	if (ad->handle) {
 		if (tel_deinit(ad->handle) != TAPI_API_SUCCESS) {
 			SETTING_TRACE_DEBUG(
 					"%s*** [ERR] setting_network_unsubscribe_tapi_events. ***%s",
 					SETTING_FONT_RED, SETTING_FONT_BLACK);
-			setting_password_ug_create_popup_notitle_nobtn(ad,
+			create_popup_notitle_nobtn(ad,
 					_("IDS_ST_POP_ERROR"),
 					FALSE);
 		}
@@ -286,13 +285,13 @@ static void __deinit_tapi(SettingPasswordUG *ad)
 	}
 }
 
-static int setting_password_sim_create(void *cb)
+static int _view_create(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)cb;
+	SettingPassword *ad = (SettingPassword *)cb;
 	int ret = 0;
 
 	ret = __create_sim_layout(ad);
@@ -313,13 +312,13 @@ static int setting_password_sim_create(void *cb)
 	return SETTING_RETURN_SUCCESS;
 }
 
-static int setting_password_sim_destroy(void *cb)
+static int _view_destroy(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)cb;
+	SettingPassword *ad = (SettingPassword *)cb;
 
 	__deinit_tapi(ad);
 
@@ -333,32 +332,32 @@ static int setting_password_sim_destroy(void *cb)
 	}
 	/*FREE(ad->guide_str); */
 
-	if (ad->ly_main != NULL) {
-		evas_object_del(ad->ly_main);
-		ad->ly_main = NULL;
+	if (ad->md.ly_main != NULL) {
+		evas_object_del(ad->md.ly_main);
+		ad->md.ly_main = NULL;
 		setting_view_password_sim.is_create = 0;
 	}
 	SETTING_TRACE_END;
 	return SETTING_RETURN_SUCCESS;
 }
 
-static int setting_password_sim_update(void *cb)
+static int _view_update(void *cb)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)cb;
+	SettingPassword *ad = (SettingPassword *)cb;
 
-	if (ad->ly_main != NULL)
-		evas_object_show(ad->ly_main);
+	if (ad->md.ly_main != NULL)
+		evas_object_show(ad->md.ly_main);
 
 	if (ad->puk_verified_flag == TRUE
 			&& ad->view_type == SETTING_PW_TYPE_PIN_BLOCKED) {
 		ad->puk_verified_flag = FALSE;
 		SETTING_TRACE_DEBUG("view type : PIN1_BLOCKED, change view");
-		if (ad->scroller) {
-			elm_genlist_clear(ad->scroller);
+		if (ad->md.genlist) {
+			elm_genlist_clear(ad->md.genlist);
 			if (ad->cur_pwd) {
 				setting_password_sim_draw_2line_entry(ad, NULL);
 			} else {
@@ -372,15 +371,15 @@ static int setting_password_sim_update(void *cb)
 	return SETTING_RETURN_SUCCESS;
 }
 
-static int setting_password_sim_cleanup(void *cb)
+static int _view_cleanup(void *cb)
 {
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)cb;
+	SettingPassword *ad = (SettingPassword *)cb;
 
-	if (ad->ly_main != NULL)
-		evas_object_hide(ad->ly_main);
+	if (ad->md.ly_main != NULL)
+		evas_object_hide(ad->md.ly_main);
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -397,7 +396,7 @@ int setting_password_sim_create_ui(void *data)
 	retvm_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
 			"[Setting > Password] Data parameter is NULL");
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)data;
+	SettingPassword *ad = (SettingPassword *)data;
 
 	SETTING_TRACE_DEBUG("ad->view_type=%d ***", ad->view_type);
 
@@ -435,7 +434,7 @@ static void setting_password_sim_entry_changed_cb(void *data, Evas_Object *obj,
 	retm_if(obj == NULL, "[Setting > Password] Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item =
 			(Setting_GenGroupItem_Data *)data;
-	SettingPasswordUG *ad = (SettingPasswordUG *)list_item->userdata;
+	SettingPassword *ad = (SettingPassword *)list_item->userdata;
 	const char *entry_str = elm_entry_entry_get(obj);
 	list_item->sub_desc = (char *)g_strdup(entry_str);
 	bool isFoundEmptyEntry = FALSE;
@@ -545,7 +544,7 @@ static void __reached_max_pwlength_cb(void *data, Evas_Object *obj,
 
 	/*Setting_GenGroupItem_Data *list_item =
 	 * (Setting_GenGroupItem_Data *) data; */
-	/*SettingPasswordUG *ad = (SettingPasswordUG *) list_item->userdata; */
+	/*SettingPassword *ad = (SettingPassword *) list_item->userdata; */
 
 	int haptic_return = 0;
 	haptic_device_h haptic_handle;
@@ -574,7 +573,7 @@ static void __entry_activated_cb(void *data, Evas_Object *obj, void *event_info)
 
 	Setting_GenGroupItem_Data *list_item =
 			(Setting_GenGroupItem_Data *)data;
-	SettingPasswordUG *ad = (SettingPasswordUG *)list_item->userdata;
+	SettingPassword *ad = (SettingPassword *)list_item->userdata;
 
 	if (elm_object_disabled_get(ad->bottom_btn) == EINA_FALSE) {
 		elm_object_focus_set(obj, EINA_FALSE);
@@ -587,7 +586,7 @@ static void __entry_activated_cb(void *data, Evas_Object *obj, void *event_info)
 				|| ad->view_type == SETTING_PW_TYPE_PIN2_BLOCKED) {
 			/* PUK should be 8 chars always */
 			if (safeStrLen(elm_entry_entry_get(ad->ed_pw1->eo_check))
-					< SETTING_PW_UG_PUK_MAX_LENGTH) {
+					< SETTING_PW_PUK_MAX_LENGTH) {
 				SETTING_TRACE_DEBUG(
 						"do not move focus to next entry.");
 				ad->ed_pw1->isFocusFlag = TRUE;
@@ -615,7 +614,7 @@ static void __entry_focused_cb(void *data, Evas_Object *obj, void *event_info)
 
 	Setting_GenGroupItem_Data *list_item =
 			(Setting_GenGroupItem_Data *)data;
-	SettingPasswordUG *ad = (SettingPasswordUG *)list_item->userdata;
+	SettingPassword *ad = (SettingPassword *)list_item->userdata;
 
 	if (!elm_entry_is_empty(obj)) {
 		elm_object_item_signal_emit(list_item->item,
@@ -674,12 +673,12 @@ int setting_password_sim_draw_1line_entry(void *data, void *cb)
 	retvm_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
 			"[Setting > Password] Data parameter is NULL");
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)data;
+	SettingPassword *ad = (SettingPassword *)data;
 
 	switch (ad->view_type) {
 	case SETTING_PW_TYPE_SIM_LOCK_OFF:
 		ad->ed_pw1 = setting_create_Gendial_field_editfield(
-				ad->scroller, &(itc_editfield),
+				ad->md.genlist, &(itc_editfield),
 				NULL, ad, SWALLOW_Type_LAYOUT_EDITFIELD,
 				"IDS_ST_BODY_SIM_PASSWORD",
 				NULL, setting_password_sim_entry_changed_cb,
@@ -687,14 +686,14 @@ int setting_password_sim_draw_1line_entry(void *data, void *cb)
 				NULL,
 				NULL, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY,
 				TRUE, TRUE,
-				SETTING_PW_UG_SIM_MAX_LENGTH, 0, "0123456789",
+				SETTING_PW_SIM_MAX_LENGTH, 0, "0123456789",
 				NULL);
 		break;
 
 	case SETTING_PW_TYPE_PIN_LOCK_ON:
 	case SETTING_PW_TYPE_PIN_LOCK_OFF:
 		ad->ed_pw1 = setting_create_Gendial_field_editfield(
-				ad->scroller, &(itc_editfield),
+				ad->md.genlist, &(itc_editfield),
 				NULL, ad, SWALLOW_Type_LAYOUT_EDITFIELD,
 				"IDS_ST_BODY_PIN", NULL,
 				setting_password_sim_entry_changed_cb,
@@ -702,7 +701,7 @@ int setting_password_sim_draw_1line_entry(void *data, void *cb)
 				__entry_activated_cb,
 				NULL, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY,
 				TRUE, TRUE,
-				SETTING_PW_UG_PIN_MAX_LENGTH, 0, "0123456789",
+				SETTING_PW_PIN_MAX_LENGTH, 0, "0123456789",
 				NULL);
 		if (ad->ed_pw1)
 			ad->ed_pw1->guide_text = (char *)g_strdup(
@@ -710,7 +709,7 @@ int setting_password_sim_draw_1line_entry(void *data, void *cb)
 		break;
 	case SETTING_PW_TYPE_PIN_BLOCKED:
 		ad->ed_pw1 = setting_create_Gendial_field_editfield(
-				ad->scroller, &(itc_editfield),
+				ad->md.genlist, &(itc_editfield),
 				NULL, ad, SWALLOW_Type_LAYOUT_EDITFIELD,
 				"IDS_ST_BODY_PUK1_CODE",
 				NULL, setting_password_sim_entry_changed_cb,
@@ -718,13 +717,13 @@ int setting_password_sim_draw_1line_entry(void *data, void *cb)
 				__entry_activated_cb,
 				NULL, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY,
 				TRUE, TRUE,
-				SETTING_PW_UG_PUK_MAX_LENGTH, 0, "0123456789",
+				SETTING_PW_PUK_MAX_LENGTH, 0, "0123456789",
 				NULL);
 		break;
 	case SETTING_PW_TYPE_CHANGE_PIN:
 	case SETTING_PW_TYPE_CHANGE_PIN2:
 		ad->ed_pw1 = setting_create_Gendial_field_editfield(
-				ad->scroller, &(itc_editfield),
+				ad->md.genlist, &(itc_editfield),
 				NULL, ad, SWALLOW_Type_LAYOUT_EDITFIELD,
 				PW_SHORT_GUIDE_CURRENT,
 				NULL, setting_password_sim_entry_changed_cb,
@@ -732,7 +731,7 @@ int setting_password_sim_draw_1line_entry(void *data, void *cb)
 				__entry_activated_cb,
 				NULL, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY,
 				TRUE, TRUE,
-				SETTING_PW_UG_PIN_MAX_LENGTH, 0, "0123456789",
+				SETTING_PW_PIN_MAX_LENGTH, 0, "0123456789",
 				NULL);
 		if (ad->ed_pw1)
 			ad->ed_pw1->guide_text = (char *)g_strdup(
@@ -755,7 +754,7 @@ int setting_password_sim_clear_1line_entry(void *data)
 	retvm_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
 			"[Setting > Password] Data parameter is NULL");
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)data;
+	SettingPassword *ad = (SettingPassword *)data;
 	retv_if(NULL == ad->ed_pw1, -1);
 
 	ad->ed_pw1->sub_desc = NULL;
@@ -773,12 +772,12 @@ int setting_password_sim_draw_2line_entry(void *data, void *cb)
 	/* error check */
 	retv_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)data;
+	SettingPassword *ad = (SettingPassword *)data;
 
 	switch (ad->view_type) {
 	case SETTING_PW_TYPE_SIM_LOCK_ON:
 		ad->ed_pw1 = setting_create_Gendial_field_editfield(
-				ad->scroller, &(itc_editfield),
+				ad->md.genlist, &(itc_editfield),
 				NULL, ad, SWALLOW_Type_LAYOUT_EDITFIELD,
 				PW_SHORT_GUIDE_NEW,
 				NULL, setting_password_sim_entry_changed_cb,
@@ -786,11 +785,11 @@ int setting_password_sim_draw_2line_entry(void *data, void *cb)
 				__entry_activated_cb,
 				NULL, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY,
 				TRUE, TRUE,
-				SETTING_PW_UG_SIM_MAX_LENGTH, 0, "0123456789",
+				SETTING_PW_SIM_MAX_LENGTH, 0, "0123456789",
 				NULL);
 
 		ad->ed_pw2 = setting_create_Gendial_field_editfield(
-				ad->scroller, &(itc_editfield),
+				ad->md.genlist, &(itc_editfield),
 				NULL, ad, SWALLOW_Type_LAYOUT_EDITFIELD,
 				PW_SHORT_GUIDE_CONFIRM,
 				NULL, setting_password_sim_entry_changed_cb,
@@ -798,14 +797,14 @@ int setting_password_sim_draw_2line_entry(void *data, void *cb)
 				NULL,
 				NULL, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY,
 				TRUE, FALSE,
-				SETTING_PW_UG_SIM_MAX_LENGTH, 0, "0123456789",
+				SETTING_PW_SIM_MAX_LENGTH, 0, "0123456789",
 				NULL);
 		break;
 	case SETTING_PW_TYPE_PIN_BLOCKED:
 	case SETTING_PW_TYPE_CHANGE_PIN:
 	case SETTING_PW_TYPE_CHANGE_PIN2:
 		ad->ed_pw1 = setting_create_Gendial_field_editfield(
-				ad->scroller, &(itc_editfield),
+				ad->md.genlist, &(itc_editfield),
 				NULL, ad, SWALLOW_Type_LAYOUT_EDITFIELD,
 				PW_SHORT_GUIDE_NEW,
 				NULL, setting_password_sim_entry_changed_cb,
@@ -813,14 +812,14 @@ int setting_password_sim_draw_2line_entry(void *data, void *cb)
 				__entry_activated_cb,
 				NULL, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY,
 				TRUE, TRUE,
-				SETTING_PW_UG_PIN_MAX_LENGTH, 0, "0123456789",
+				SETTING_PW_PIN_MAX_LENGTH, 0, "0123456789",
 				NULL);
 		if (ad->ed_pw1)
 			ad->ed_pw1->guide_text = (char *)g_strdup(
 					_("IDS_ST_HEADER_ENTER_PIN_ABB3"));
 
 		ad->ed_pw2 = setting_create_Gendial_field_editfield(
-				ad->scroller, &(itc_editfield),
+				ad->md.genlist, &(itc_editfield),
 				NULL, ad, SWALLOW_Type_LAYOUT_EDITFIELD,
 				PW_SHORT_GUIDE_CONFIRM,
 				NULL, setting_password_sim_entry_changed_cb,
@@ -828,7 +827,7 @@ int setting_password_sim_draw_2line_entry(void *data, void *cb)
 				__entry_activated_cb,
 				NULL, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY,
 				TRUE, FALSE,
-				SETTING_PW_UG_PIN_MAX_LENGTH, 0, "0123456789",
+				SETTING_PW_PIN_MAX_LENGTH, 0, "0123456789",
 				NULL);
 		if (ad->ed_pw2)
 			ad->ed_pw2->guide_text = (char *)g_strdup(
@@ -849,7 +848,7 @@ int setting_password_sim_clear_2line_entry(void *data)
 	retvm_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
 			"[Setting > Password] Data parameter is NULL");
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)data;
+	SettingPassword *ad = (SettingPassword *)data;
 
 	retv_if(NULL == ad->ed_pw1, -1);
 	ad->ed_pw1->sub_desc = NULL;
@@ -873,12 +872,12 @@ int setting_password_sim_draw_3line_entry(void *data, void *cb)
 	retvm_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
 			"[Setting > Password] Data parameter is NULL");
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)data;
+	SettingPassword *ad = (SettingPassword *)data;
 
 	switch (ad->view_type) {
 	case SETTING_PW_TYPE_PIN_BLOCKED:
 		ad->ed_pw1 = setting_create_Gendial_field_editfield(
-				ad->scroller, &(itc_editfield),
+				ad->md.genlist, &(itc_editfield),
 				NULL, ad, SWALLOW_Type_LAYOUT_EDITFIELD,
 				"IDS_ST_BODY_PUK1_CODE",
 				NULL, setting_password_sim_entry_changed_cb,
@@ -886,11 +885,11 @@ int setting_password_sim_draw_3line_entry(void *data, void *cb)
 				__entry_activated_cb,
 				NULL, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY,
 				TRUE, TRUE,
-				SETTING_PW_UG_PUK_MAX_LENGTH, 0, "0123456789",
+				SETTING_PW_PUK_MAX_LENGTH, 0, "0123456789",
 				NULL);
 
 		ad->ed_pw2 = setting_create_Gendial_field_editfield(
-				ad->scroller, &(itc_editfield),
+				ad->md.genlist, &(itc_editfield),
 				NULL, ad, SWALLOW_Type_LAYOUT_EDITFIELD,
 				"IDS_ST_BODY_NEW_PIN1",
 				NULL, setting_password_sim_entry_changed_cb,
@@ -898,11 +897,11 @@ int setting_password_sim_draw_3line_entry(void *data, void *cb)
 				__entry_activated_cb,
 				NULL, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY,
 				TRUE, FALSE,
-				SETTING_PW_UG_PIN_MAX_LENGTH, 0, "0123456789",
+				SETTING_PW_PIN_MAX_LENGTH, 0, "0123456789",
 				NULL);
 
 		ad->ed_pw3 = setting_create_Gendial_field_editfield(
-				ad->scroller, &(itc_editfield),
+				ad->md.genlist, &(itc_editfield),
 				NULL, ad, SWALLOW_Type_LAYOUT_EDITFIELD,
 				"IDS_ST_BODY_CONFIRM_NEW_PIN1",
 				NULL, setting_password_sim_entry_changed_cb,
@@ -910,12 +909,12 @@ int setting_password_sim_draw_3line_entry(void *data, void *cb)
 				NULL,
 				NULL, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY,
 				TRUE, FALSE,
-				SETTING_PW_UG_PIN_MAX_LENGTH, 0, "0123456789",
+				SETTING_PW_PIN_MAX_LENGTH, 0, "0123456789",
 				NULL);
 		break;
 	case SETTING_PW_TYPE_PIN2_BLOCKED:
 		ad->ed_pw1 = setting_create_Gendial_field_editfield(
-				ad->scroller, &(itc_editfield),
+				ad->md.genlist, &(itc_editfield),
 				NULL, ad, SWALLOW_Type_LAYOUT_EDITFIELD,
 				"IDS_ST_BODY_PUK2", NULL,
 				setting_password_sim_entry_changed_cb,
@@ -923,11 +922,11 @@ int setting_password_sim_draw_3line_entry(void *data, void *cb)
 				__entry_activated_cb,
 				NULL, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY,
 				TRUE, TRUE,
-				SETTING_PW_UG_PIN_MAX_LENGTH, 0, "0123456789",
+				SETTING_PW_PIN_MAX_LENGTH, 0, "0123456789",
 				NULL);
 
 		ad->ed_pw2 = setting_create_Gendial_field_editfield(
-				ad->scroller, &(itc_editfield),
+				ad->md.genlist, &(itc_editfield),
 				NULL, ad, SWALLOW_Type_LAYOUT_EDITFIELD,
 				"IDS_ST_BODY_NEW_PIN2",
 				NULL, setting_password_sim_entry_changed_cb,
@@ -935,11 +934,11 @@ int setting_password_sim_draw_3line_entry(void *data, void *cb)
 				__entry_activated_cb,
 				NULL, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY,
 				TRUE, FALSE,
-				SETTING_PW_UG_PIN_MAX_LENGTH, 0, "0123456789",
+				SETTING_PW_PIN_MAX_LENGTH, 0, "0123456789",
 				NULL);
 
 		ad->ed_pw3 = setting_create_Gendial_field_editfield(
-				ad->scroller, &(itc_editfield),
+				ad->md.genlist, &(itc_editfield),
 				NULL, ad, SWALLOW_Type_LAYOUT_EDITFIELD,
 				"IDS_ST_BODY_CONFIRM_NEW_PIN2",
 				NULL, setting_password_sim_entry_changed_cb,
@@ -947,7 +946,7 @@ int setting_password_sim_draw_3line_entry(void *data, void *cb)
 				NULL,
 				NULL, ELM_INPUT_PANEL_LAYOUT_NUMBERONLY,
 				TRUE, FALSE,
-				SETTING_PW_UG_PIN_MAX_LENGTH, 0, "0123456789",
+				SETTING_PW_PIN_MAX_LENGTH, 0, "0123456789",
 				NULL);
 		break;
 
@@ -963,7 +962,7 @@ int setting_password_sim_clear_3line_entry(void *data)
 	retvm_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER,
 			"[Setting > Password] Data parameter is NULL");
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)data;
+	SettingPassword *ad = (SettingPassword *)data;
 	/*Evas_Object *layout = NULL; */
 
 	retv_if(NULL == ad->ed_pw1, -1);
@@ -995,7 +994,7 @@ int setting_password_sim_check_1line_entry(void *data)
 	/* error check */
 	retv_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)data;
+	SettingPassword *ad = (SettingPassword *)data;
 
 	const char *entry_str = ad->ed_pw1->sub_desc;
 	ad->focus_data = ad->ed_pw1;
@@ -1007,21 +1006,21 @@ int setting_password_sim_check_1line_entry(void *data)
 	case SETTING_PW_TYPE_PIN_LOCK_OFF:
 	case SETTING_PW_TYPE_CHANGE_PIN:
 	case SETTING_PW_TYPE_CHANGE_PIN2: {
-		if (entry_str_len < SETTING_PW_UG_PIN_MIN_LENGTH
-				|| entry_str_len > SETTING_PW_UG_PIN_MAX_LENGTH) {
-			setting_password_sim_warning_entry_added_byte_popup(ad,
-					SETTING_PW_UG_PIN_MIN_LENGTH,
-					SETTING_PW_UG_PIN_MAX_LENGTH);
+		if (entry_str_len < SETTING_PW_PIN_MIN_LENGTH
+				|| entry_str_len > SETTING_PW_PIN_MAX_LENGTH) {
+			_warning_entry_added_byte_popup(ad,
+					SETTING_PW_PIN_MIN_LENGTH,
+					SETTING_PW_PIN_MAX_LENGTH);
 			return SETTING_ENTRY_REQUIRED_CORRECT_DIGIT_PW;
 		}
 	}
 		break;
 	case SETTING_PW_TYPE_SIM_LOCK_OFF: {
-		if (entry_str_len < SETTING_PW_UG_SIM_MIN_LENGTH
-				|| entry_str_len > SETTING_PW_UG_SIM_MAX_LENGTH) {
-			setting_password_sim_warning_entry_added_byte_popup(ad,
-					SETTING_PW_UG_SIM_MIN_LENGTH,
-					SETTING_PW_UG_SIM_MAX_LENGTH);
+		if (entry_str_len < SETTING_PW_SIM_MIN_LENGTH
+				|| entry_str_len > SETTING_PW_SIM_MAX_LENGTH) {
+			_warning_entry_added_byte_popup(ad,
+					SETTING_PW_SIM_MIN_LENGTH,
+					SETTING_PW_SIM_MAX_LENGTH);
 			return SETTING_ENTRY_REQUIRED_CORRECT_DIGIT_PW;
 		}
 	}
@@ -1036,7 +1035,7 @@ int setting_password_sim_check_2line_entry(void *data)
 	/* error check */
 	retv_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)data;
+	SettingPassword *ad = (SettingPassword *)data;
 	if (ad->ed_pw1 == NULL || ad->ed_pw2 == NULL)
 		return SETTING_GENERAL_ERR_NULL_DATA_PARAMETER;
 
@@ -1050,11 +1049,11 @@ int setting_password_sim_check_2line_entry(void *data)
 		if (ad->view_type == SETTING_PW_TYPE_PIN_BLOCKED
 				|| ad->view_type == SETTING_PW_TYPE_CHANGE_PIN
 				|| ad->view_type == SETTING_PW_TYPE_PIN2_BLOCKED) {
-			setting_password_ug_display_desc(ad,
+			display_desc(ad,
 					_("IDS_IDLE_BODY_NEW_PIN_AND_CONFIRM_PIN_DO_NOT_MATCH"),
 					FALSE);
 		} else if (ad->view_type == SETTING_PW_TYPE_CHANGE_PIN2) {
-			setting_password_ug_display_desc(ad,
+			display_desc(ad,
 					_("IDS_ST_BODY_NEW_PIN2_AND_CONFIRM_PIN2_DO_NOT_MATCH"),
 					FALSE);
 		}
@@ -1066,11 +1065,11 @@ int setting_password_sim_check_2line_entry(void *data)
 	/* Length Check */
 	int entry_str_len = safeStrLen(entry_str1);
 	if (ad->view_type == SETTING_PW_TYPE_SIM_LOCK_ON) {
-		if (entry_str_len < SETTING_PW_UG_SIM_MIN_LENGTH
-				|| entry_str_len > SETTING_PW_UG_SIM_MAX_LENGTH) {
+		if (entry_str_len < SETTING_PW_SIM_MIN_LENGTH
+				|| entry_str_len > SETTING_PW_SIM_MAX_LENGTH) {
 			setting_password_sim_warning_entry_added_byte_popup
-			(ad, SETTING_PW_UG_SIM_MIN_LENGTH,
-					SETTING_PW_UG_SIM_MAX_LENGTH);
+			(ad, SETTING_PW_SIM_MIN_LENGTH,
+					SETTING_PW_SIM_MAX_LENGTH);
 			return SETTING_ENTRY_REQUIRED_CORRECT_DIGIT_PW;
 		}
 	}
@@ -1079,14 +1078,14 @@ int setting_password_sim_check_2line_entry(void *data)
 	return SETTING_RETURN_SUCCESS;
 }
 
-void setting_password_sim_warning_entry_added_byte_popup(SettingPasswordUG *ad,
+static void _warning_entry_added_byte_popup(SettingPassword *ad,
 		int min, int max)
 {
 	char str[MAX_SPECIALIZITION_LEN + 1] = { 0 };
 
 	safeCopyStr(str, _("IDS_COM_BODY_TYPE_A_PIN_THAT_IS_4_TO_8_NUMBERS"),
 			MAX_SPECIALIZITION_LEN);
-	setting_password_ug_display_desc(ad, str, FALSE);
+	display_desc(ad, str, FALSE);
 }
 
 int setting_password_sim_check_3line_entry(void *data)
@@ -1094,7 +1093,7 @@ int setting_password_sim_check_3line_entry(void *data)
 	/* error check */
 	retv_if(data == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)data;
+	SettingPassword *ad = (SettingPassword *)data;
 
 	const char *entry_str1 = ad->ed_pw1->sub_desc;
 	const char *entry_str2 = ad->ed_pw2->sub_desc;
@@ -1107,26 +1106,26 @@ int setting_password_sim_check_3line_entry(void *data)
 	int entry_str3_len = safeStrLen(entry_str3);
 
 	/* PUK code always should be 8 chars. */
-	if (entry_str1_len != SETTING_PW_UG_PUK_MAX_LENGTH) {
-		setting_password_sim_warning_entry_added_byte_popup(ad,
-				SETTING_PW_UG_PUK_MAX_LENGTH,
-				SETTING_PW_UG_PUK_MAX_LENGTH);
+	if (entry_str1_len != SETTING_PW_PUK_MAX_LENGTH) {
+		_warning_entry_added_byte_popup(ad,
+				SETTING_PW_PUK_MAX_LENGTH,
+				SETTING_PW_PUK_MAX_LENGTH);
 		return SETTING_ENTRY_REQUIRED_CORRECT_DIGIT_PW;
 	}
-	if (entry_str2_len < SETTING_PW_UG_PIN_MIN_LENGTH
-			|| entry_str2_len > SETTING_PW_UG_PIN_MAX_LENGTH) {
+	if (entry_str2_len < SETTING_PW_PIN_MIN_LENGTH
+			|| entry_str2_len > SETTING_PW_PIN_MAX_LENGTH) {
 		ad->focus_data = ad->ed_pw2;
-		setting_password_sim_warning_entry_added_byte_popup(ad,
-				SETTING_PW_UG_PIN_MIN_LENGTH,
-				SETTING_PW_UG_PIN_MAX_LENGTH);
+		_warning_entry_added_byte_popup(ad,
+				SETTING_PW_PIN_MIN_LENGTH,
+				SETTING_PW_PIN_MAX_LENGTH);
 		return SETTING_ENTRY_REQUIRED_CORRECT_DIGIT_PW;
 	}
-	if (entry_str3_len < SETTING_PW_UG_PIN_MIN_LENGTH
-			|| entry_str3_len > SETTING_PW_UG_PIN_MAX_LENGTH) {
+	if (entry_str3_len < SETTING_PW_PIN_MIN_LENGTH
+			|| entry_str3_len > SETTING_PW_PIN_MAX_LENGTH) {
 		ad->focus_data = ad->ed_pw3;
-		setting_password_sim_warning_entry_added_byte_popup(ad,
-				SETTING_PW_UG_PIN_MIN_LENGTH,
-				SETTING_PW_UG_PIN_MAX_LENGTH);
+		_warning_entry_added_byte_popup(ad,
+				SETTING_PW_PIN_MIN_LENGTH,
+				SETTING_PW_PIN_MAX_LENGTH);
 		return SETTING_ENTRY_REQUIRED_CORRECT_DIGIT_PW;
 	}
 
@@ -1137,13 +1136,7 @@ static void setting_password_sim_done(void *data)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(data == NULL);
-	SettingPasswordUG *ad = (SettingPasswordUG *)data;
-
-	app_control_h svc;
-	if (app_control_create(&svc)) {
-		SETTING_TRACE_ERROR("app_control_create() failed");
-		return;
-	}
+	SettingPassword *ad = (SettingPassword *)data;
 
 	SETTING_TRACE("ad->view_type:%d", ad->view_type);
 	int ret = 0;
@@ -1164,10 +1157,9 @@ static void setting_password_sim_done(void *data)
 				ad->focus_data = ad->ed_pw1;
 				SETTING_TRACE_ERROR(
 						"[ERR] elm_entry_entry_get(ad->ed_pw1) return NULL!");
-				setting_password_ug_create_popup_notitle_nobtn(
+				create_popup_notitle_nobtn(
 						ad, _("IDS_ST_POP_ERROR"),
 						FALSE);
-				app_control_destroy(svc);
 				return;
 			}
 
@@ -1187,7 +1179,7 @@ static void setting_password_sim_done(void *data)
 						"%s*** [ERR] tel_disable_sim_facility err=%d ***%s",
 						SETTING_FONT_RED, tapi_ret,
 						SETTING_FONT_BLACK);
-				setting_password_ug_create_popup_notitle_nobtn(
+				create_popup_notitle_nobtn(
 						ad, _("IDS_ST_POP_ERROR"),
 						FALSE);
 			} else {
@@ -1198,7 +1190,6 @@ static void setting_password_sim_done(void *data)
 			setting_password_sim_clear_1line_entry(ad);
 		}
 	}
-		app_control_destroy(svc);
 		return;
 	case SETTING_PW_TYPE_PIN_LOCK_OFF: {
 		SETTING_TRACE("case SETTING_PW_TYPE_PIN_LOCK_OFF");
@@ -1215,10 +1206,9 @@ static void setting_password_sim_done(void *data)
 				ad->focus_data = ad->ed_pw1;
 				SETTING_TRACE_ERROR(
 						"[ERR] elm_entry_entry_get(ad->ed_pw1) return NULL!");
-				setting_password_ug_create_popup_notitle_nobtn(
+				create_popup_notitle_nobtn(
 						ad, _("IDS_ST_POP_ERROR"),
 						FALSE);
-				app_control_destroy(svc);
 				return;
 			}
 
@@ -1238,7 +1228,7 @@ static void setting_password_sim_done(void *data)
 						"%s*** [ERR] tel_disable_sim_facility err=%d ***%s",
 						SETTING_FONT_RED, tapi_ret,
 						SETTING_FONT_BLACK);
-				setting_password_ug_create_popup_notitle_nobtn(
+				create_popup_notitle_nobtn(
 						ad, _("IDS_ST_POP_ERROR"),
 						FALSE);
 			} else {
@@ -1249,7 +1239,6 @@ static void setting_password_sim_done(void *data)
 			setting_password_sim_clear_1line_entry(ad);
 		}
 	}
-		app_control_destroy(svc);
 		return;
 	case SETTING_PW_TYPE_PIN_BLOCKED: {
 		/* PIN1 Status is "Blocked": User should input puk code and new
@@ -1264,7 +1253,7 @@ static void setting_password_sim_done(void *data)
 			if (ret == SETTING_RETURN_SUCCESS) {
 				ad->cur_pwd = (char *)strdup(
 						ad->ed_pw1->sub_desc);
-				elm_genlist_clear(ad->scroller);
+				elm_genlist_clear(ad->md.genlist);
 				setting_password_sim_draw_2line_entry(ad, NULL);
 			} else {
 				setting_password_sim_clear_1line_entry(ad);
@@ -1305,7 +1294,7 @@ static void setting_password_sim_done(void *data)
 							SETTING_FONT_RED,
 							tapi_ret,
 							SETTING_FONT_BLACK);
-					setting_password_ug_create_popup_notitle_nobtn(
+					create_popup_notitle_nobtn(
 							ad,
 							_("IDS_ST_POP_ERROR"),
 							FALSE);
@@ -1319,7 +1308,6 @@ static void setting_password_sim_done(void *data)
 			}
 		}
 	}
-		app_control_destroy(svc);
 		return;
 	case SETTING_PW_TYPE_PIN2_BLOCKED: {
 		SETTING_TRACE("case SETTING_PW_TYPE_PIN2_BLOCKED");
@@ -1336,19 +1324,17 @@ static void setting_password_sim_done(void *data)
 			new_pin2 = ad->ed_pw2->sub_desc;
 			if (isEmptyStr(puk)) {
 				ad->focus_data = ad->ed_pw1;
-				setting_password_ug_create_popup_notitle_nobtn(
+				create_popup_notitle_nobtn(
 						ad, _("IDS_ST_POP_ERROR"),
 						FALSE);
-				app_control_destroy(svc);
 				return;
 			}
 
 			if (isEmptyStr(new_pin2)) {
 				ad->focus_data = ad->ed_pw2;
-				setting_password_ug_create_popup_notitle_nobtn(
+				create_popup_notitle_nobtn(
 						ad, _("IDS_ST_POP_ERROR"),
 						FALSE);
-				app_control_destroy(svc);
 				return;
 			}
 
@@ -1371,7 +1357,7 @@ static void setting_password_sim_done(void *data)
 						"%s*** [ERR] tel_verify_sim_puks err=%d ***%s",
 						SETTING_FONT_RED, tapi_ret,
 						SETTING_FONT_BLACK);
-				setting_password_ug_create_popup_notitle_nobtn(
+				create_popup_notitle_nobtn(
 						ad, _("IDS_ST_POP_ERROR"),
 						FALSE);
 			} else {
@@ -1383,7 +1369,6 @@ static void setting_password_sim_done(void *data)
 			setting_password_sim_clear_3line_entry(ad);
 		}
 	}
-		app_control_destroy(svc);
 		return;
 	case SETTING_PW_TYPE_CHANGE_PIN: {
 		SETTING_TRACE("case SETTING_PW_TYPE_CHANGE_PIN");
@@ -1419,7 +1404,7 @@ static void setting_password_sim_done(void *data)
 							SETTING_FONT_RED,
 							tapi_ret,
 							SETTING_FONT_BLACK);
-					setting_password_ug_create_popup_notitle_nobtn(
+					create_popup_notitle_nobtn(
 							ad,
 							_("IDS_ST_POP_ERROR"),
 							FALSE);
@@ -1449,7 +1434,7 @@ static void setting_password_sim_done(void *data)
 							imf_context);
 				}
 
-				elm_genlist_clear(ad->scroller);
+				elm_genlist_clear(ad->md.genlist);
 				setting_password_sim_draw_2line_entry(ad, NULL);
 				ad->focus_timer = ecore_timer_add(0.5,
 						__setting_password_sim_rotate_cb,
@@ -1459,7 +1444,6 @@ static void setting_password_sim_done(void *data)
 			}
 		}
 	}
-		app_control_destroy(svc);
 		return;
 	case SETTING_PW_TYPE_CHANGE_PIN2: {
 		SETTING_TRACE("case SETTING_PW_TYPE_CHANGE_PIN2");
@@ -1496,7 +1480,7 @@ static void setting_password_sim_done(void *data)
 							SETTING_FONT_RED,
 							tapi_ret,
 							SETTING_FONT_BLACK);
-					setting_password_ug_create_popup_notitle_nobtn(
+					create_popup_notitle_nobtn(
 							ad,
 							_("IDS_ST_POP_ERROR"),
 							FALSE);
@@ -1523,7 +1507,7 @@ static void setting_password_sim_done(void *data)
 							imf_context);
 				}
 
-				elm_genlist_clear(ad->scroller);
+				elm_genlist_clear(ad->md.genlist);
 				setting_password_sim_draw_2line_entry(ad, NULL);
 				ad->focus_timer = ecore_timer_add(0.5,
 						__setting_password_sim_rotate_cb,
@@ -1533,7 +1517,6 @@ static void setting_password_sim_done(void *data)
 			}
 		}
 	}
-		app_control_destroy(svc);
 		return;
 #if SUPPORT_SIMLOCK
 		case SETTING_PW_TYPE_SIM_LOCK_ON: {
@@ -1548,11 +1531,10 @@ static void setting_password_sim_done(void *data)
 				entry_str = ad->ed_pw1->sub_desc;
 				if (isEmptyStr(entry_str)) {
 					ad->focus_data = ad->ed_pw1;
-					setting_password_ug_create_popup_notitle_nobtn(
+					create_popup_notitle_nobtn(
 							ad,
 							_("IDS_ST_POP_ERROR"),
 							FALSE);
-					app_control_destroy(svc);
 					return;
 				}
 
@@ -1577,7 +1559,7 @@ static void setting_password_sim_done(void *data)
 							SETTING_FONT_RED,
 							tapi_ret,
 							SETTING_FONT_BLACK);
-					setting_password_ug_create_popup_notitle_nobtn(
+					create_popup_notitle_nobtn(
 							ad,
 							_("IDS_ST_POP_ERROR"),
 							FALSE);
@@ -1590,7 +1572,6 @@ static void setting_password_sim_done(void *data)
 				setting_password_sim_clear_2line_entry(ad);
 			}
 		}
-		app_control_destroy(svc);
 		return;
 		case SETTING_PW_TYPE_SIM_LOCK_OFF: {
 			SETTING_TRACE("case SETTING_PW_TYPE_SIM_LOCK_OFF");
@@ -1604,11 +1585,10 @@ static void setting_password_sim_done(void *data)
 				entry_str = ad->ed_pw1->sub_desc;
 				if (isEmptyStr(entry_str)) {
 					ad->focus_data = ad->ed_pw1;
-					setting_password_ug_create_popup_notitle_nobtn(
+					create_popup_notitle_nobtn(
 							ad,
 							_("IDS_ST_POP_ERROR"),
 							FALSE);
-					app_control_destroy(svc);
 					return;
 				}
 
@@ -1629,7 +1609,7 @@ static void setting_password_sim_done(void *data)
 							SETTING_FONT_RED,
 							tapi_ret,
 							SETTING_FONT_BLACK);
-					setting_password_ug_create_popup_notitle_nobtn(
+					create_popup_notitle_nobtn(
 							ad,
 							_("IDS_ST_POP_ERROR"),
 							FALSE);
@@ -1642,7 +1622,6 @@ static void setting_password_sim_done(void *data)
 				setting_password_sim_clear_1line_entry(ad);
 			}
 		}
-		app_control_destroy(svc);
 		return;
 #endif
 #if SUPPORT_FDN
@@ -1662,11 +1641,10 @@ static void setting_password_sim_done(void *data)
 					ad->focus_data = ad->ed_pw1;
 					SETTING_TRACE_ERROR(
 							"[ERR] elm_entry_entry_get(ad->ed_pw1) return NULL!");
-					setting_password_ug_create_popup_notitle_nobtn(
+					create_popup_notitle_nobtn(
 							ad,
 							_("IDS_ST_POP_ERROR"),
 							FALSE);
-					app_control_destroy(svc);
 					return;
 				}
 				/*TAPI_SIM_PTYPE_PIN2; */
@@ -1685,24 +1663,21 @@ static void setting_password_sim_done(void *data)
 					SETTING_TRACE_ERROR(
 							"[ERR] Failed to enable FDN. Tapi return %d",
 							tapi_ret);
-					setting_password_ug_create_popup_notitle_nobtn(
+					create_popup_notitle_nobtn(
 							ad,
 							_("IDS_ST_POP_ERROR"),
 							FALSE);
-					app_control_destroy(svc);
 					return;
 				}
 
-				app_control_add_extra_data(svc, "result",
+				add_app_reply(&ad->md, "result",
 						ad->view_type_string);
-				ug_send_result(ad->ug, svc);
 				SETTING_TRACE("Send Result : %s\n",
 						ad->view_type_string);
-				app_control_destroy(svc);
-				/*ug_destroy_me(ad->ug); */
+				/* ui_app_exit(); */
 			} else {
 				/* check failed */
-				setting_password_ug_create_popup_notitle_nobtn(
+				create_popup_notitle_nobtn(
 						ad,
 						_("IDS_ST_POP_ERROR"),
 						TRUE);
@@ -1724,11 +1699,10 @@ static void setting_password_sim_done(void *data)
 					ad->focus_data = ad->ed_pw1;
 					SETTING_TRACE_ERROR(
 							"[ERR] elm_entry_entry_get(ad->ed_pw1) return NULL!");
-					setting_password_ug_create_popup_notitle_nobtn(
+					create_popup_notitle_nobtn(
 							ad,
 							_("IDS_ST_POP_ERROR"),
 							FALSE);
-					app_control_destroy(svc);
 					return;
 				}
 				/*TAPI_SIM_PTYPE_PIN2 */
@@ -1746,25 +1720,21 @@ static void setting_password_sim_done(void *data)
 					ad->focus_data = ad->ed_pw1;
 					SETTING_TRACE_ERROR("[ERR] Failed to disable FDN. Tapi return %d",
 							tapi_ret);
-					setting_password_ug_create_popup_notitle_nobtn(
+					create_popup_notitle_nobtn(
 							ad,
 							_("IDS_ST_POP_ERROR"),
 							FALSE);
-					app_control_destroy(svc);
 					return;
 				}
 
-				app_control_add_extra_data(svc, "result",
+				add_app_reply(&ad->md, "result",
 						ad->view_type_string);
-				ug_send_result(ad->ug, svc);
 				SETTING_TRACE("Send Result : %s\n",
 						ad->view_type_string);
-
-				app_control_destroy(svc);
-				/*ug_destroy_me(ad->ug); */
+				/* ui_app_exit(); */
 			} else {
 				/* check failed */
-				setting_password_ug_create_popup_notitle_nobtn(
+				create_popup_notitle_nobtn(
 						ad, _("IDS_ST_POP_ERROR"),
 						TRUE);
 			}
@@ -1772,18 +1742,14 @@ static void setting_password_sim_done(void *data)
 		break;
 #endif
 	default:
-		app_control_destroy(svc);
 		return;
 	}
 
 #if SUPPORT_FDN
-	app_control_add_extra_data(svc, "result", ad->view_type_string);
-	ug_send_result(ad->ug, svc);
+	add_app_reply(&ad->md, "result", ad->view_type_string);
 	SETTING_TRACE("Send Result : %s\n", ad->view_type_string);
 
-	app_control_destroy(svc);
-	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+	ui_app_exit();
 #endif
 }
 
@@ -1794,7 +1760,7 @@ void setting_password_sim_click_softkey_done_cb(void *data, Evas_Object *obj,
 	/* error check */
 	retm_if(data == NULL, "[Setting > Password] Data parameter is NULL");
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)data;
+	SettingPassword *ad = (SettingPassword *)data;
 
 	if (ad->ed_pw1 && ad->ed_pw1->eo_check)
 		elm_object_focus_set(ad->ed_pw1->eo_check, EINA_FALSE);
@@ -1822,7 +1788,7 @@ void setting_get_sim_lock_info_cb(TapiHandle *handle, int result, void *data,
 	TelSimPinOperationResult_t sec_rt = result;
 	TelSimLockInfo_t *lock = data;
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)user_data;
+	SettingPassword *ad = (SettingPassword *)user_data;
 
 	SETTING_TRACE_SECURE_DEBUG(
 			"sec_ret[%d], lock_type[%d], lock_status[%d], retry_count[%d]",
@@ -1840,7 +1806,7 @@ void setting_get_sim_lock_info_cb(TapiHandle *handle, int result, void *data,
 		ad->err_desc = NULL;
 	}
 	ad->err_desc = setting_create_Gendial_field_helpitem_without_bottom_separator(
-			ad->scroller, &(itc_multiline_text),
+			ad->md.genlist, &(itc_multiline_text),
 			SWALLOW_Type_LAYOUT_SPECIALIZTION_X, temp);
 }
 
@@ -1852,7 +1818,7 @@ void setting_get_pin_lock_info_cb(TapiHandle *handle, int result, void *data,
 	TelSimPinOperationResult_t sec_rt = result;
 	TelSimLockInfo_t *lock = data;
 
-	SettingPasswordUG *ad = (SettingPasswordUG *)user_data;
+	SettingPassword *ad = (SettingPassword *)user_data;
 
 	SETTING_TRACE_SECURE_DEBUG(
 			"sec_ret[%d], lock_type[%d], lock_status[%d], retry_count[%d]",
@@ -1921,7 +1887,7 @@ void setting_get_pin_lock_info_cb(TapiHandle *handle, int result, void *data,
 		ad->err_desc = NULL;
 	}
 	ad->err_desc = setting_create_Gendial_field_helpitem_without_bottom_separator(
-			ad->scroller, &(itc_multiline_text),
+			ad->md.genlist, &(itc_multiline_text),
 			SWALLOW_Type_LAYOUT_SPECIALIZTION_X, temp);
 }
 
@@ -1962,7 +1928,7 @@ void setting_sim_change_pins_cb(TapiHandle *handle, int result, void *data,
 				SETTING_FONT_RED, SETTING_FONT_BLACK);
 		return;
 	}
-	setting_password_ug_display_result_popup(&result_info, user_data);
+	_display_result_popup(&result_info, user_data);
 }
 
 void setting_sim_verify_puks_cb(TapiHandle *handle, int result, void *data,
@@ -1971,7 +1937,7 @@ void setting_sim_verify_puks_cb(TapiHandle *handle, int result, void *data,
 	SETTING_TRACE_BEGIN;
 
 	ret_if(!user_data || !data);
-	SettingPasswordUG *ad = user_data;
+	SettingPassword *ad = user_data;
 	TelSimPinOperationResult_t sec_rt = result;
 	tapi_receive_info result_info = { 0, };
 	TelSimSecResult_t *sim_event_data = (TelSimSecResult_t *)data;
@@ -1994,7 +1960,7 @@ void setting_sim_verify_puks_cb(TapiHandle *handle, int result, void *data,
 			snprintf(tmp_str, SETTING_STR_SLP_LEN, "%s. %s.",
 					_("IDS_ST_POP_PUK1_VERIFIED"),
 					_("IDS_ST_POP_PIN_UNBLOCKED"));
-			setting_password_ug_create_popup_notitle_nobtn(ad,
+			create_popup_notitle_nobtn(ad,
 					tmp_str, TRUE);
 			return;
 		} else if (TAPI_SIM_PIN_INCORRECT_PASSWORD == sec_rt) {
@@ -2034,7 +2000,7 @@ void setting_sim_verify_puks_cb(TapiHandle *handle, int result, void *data,
 			/*snprintf(tmp_str, SETTING_STR_SLP_LEN, "%s. %s.",
 			 * _("IDS_ST_POP_PUK2_VERIFIED"),
 			 * _("IDS_ST_POP_PIN2_UNBLOCKED")); */
-			setting_password_ug_create_popup_notitle_nobtn(ad,
+			create_popup_notitle_nobtn(ad,
 					_("IDS_ST_POP_PIN2_UNBLOCKED"), TRUE);
 			return;
 		} else if (TAPI_SIM_PIN_INCORRECT_PASSWORD == sec_rt) {
@@ -2060,7 +2026,7 @@ void setting_sim_verify_puks_cb(TapiHandle *handle, int result, void *data,
 	} else {
 		result_info.stat = SIM_UNKNOWN_ERROR;
 	}
-	setting_password_ug_display_result_popup(&result_info, user_data);
+	_display_result_popup(&result_info, user_data);
 }
 
 void setting_sim_facility_enable_cb(TapiHandle *handle, int result, void *data,
@@ -2071,7 +2037,7 @@ void setting_sim_facility_enable_cb(TapiHandle *handle, int result, void *data,
 
 	SETTING_TRACE_SECURE_DEBUG("result[%d]", result);
 	if (result == TAPI_API_SIM_LOCKED) { /* -503 error */
-		setting_password_ug_create_popup_notitle_nobtn(user_data,
+		create_popup_notitle_nobtn(user_data,
 				_("IDS_ST_HEADER_UNAVAILABLE"), TRUE);
 		return;
 	}
@@ -2119,7 +2085,7 @@ void setting_sim_facility_enable_cb(TapiHandle *handle, int result, void *data,
 			return;
 		}
 	}
-	setting_password_ug_display_result_popup(&result_info, user_data);
+	_display_result_popup(&result_info, user_data);
 }
 
 void setting_sim_facility_disable_cb(TapiHandle *handle, int result, void *data,
@@ -2130,7 +2096,7 @@ void setting_sim_facility_disable_cb(TapiHandle *handle, int result, void *data,
 
 	SETTING_TRACE_SECURE_DEBUG("result[%d]", result);
 	if (result == TAPI_API_SIM_LOCKED) { /* -503 error */
-		setting_password_ug_create_popup_notitle_nobtn(user_data,
+		create_popup_notitle_nobtn(user_data,
 				_("IDS_ST_HEADER_UNAVAILABLE"), TRUE);
 		return;
 	}
@@ -2178,11 +2144,11 @@ void setting_sim_facility_disable_cb(TapiHandle *handle, int result, void *data,
 			return;
 		}
 	}
-	setting_password_ug_display_result_popup(&result_info, user_data);
+	_display_result_popup(&result_info, user_data);
 }
 
-static void setting_password_ug_display_result_popup(tapi_receive_info *result,
-		SettingPasswordUG *ad)
+static void _display_result_popup(tapi_receive_info *result,
+		SettingPassword *ad)
 {
 	SETTING_TRACE_BEGIN;
 	switch (result->stat) {
@@ -2201,73 +2167,51 @@ static void setting_password_ug_display_result_popup(tapi_receive_info *result,
 					"[Error] set value of vconf fail.");
 		}
 		/* Success to Operate */
-		app_control_h svc;
-		if (app_control_create(&svc))
-			return;
-
-		app_control_add_extra_data(svc, "result", ad->view_type_string);
-		ug_send_result(ad->ug, svc);
+		add_app_reply(&ad->md, "result", ad->view_type_string);
 		SETTING_TRACE("Send Result : %s\n", ad->view_type_string);
 
-		app_control_destroy(svc);
-		/* Send destroy request */
-		ug_destroy_me(ad->ug);
-	}
+		ui_app_exit();
 		break;
+	}
 
 	case SIM_PIN1_BLOCKED: {
 		SETTING_TRACE_DEBUG("SIM_PIN1_BLOCKED");
 		/*ad->view_type = SETTING_PW_TYPE_PIN_BLOCKED; */
 		/* Success to Operate */
-		app_control_h svc;
-		if (app_control_create(&svc))
-			return;
-
-		app_control_add_extra_data(svc, "result",
+		add_app_reply(&ad->md, "result",
 				"SETTING_PW_TYPE_PIN_BLOCKED");
-		ug_send_result(ad->ug, svc);
 		SETTING_TRACE("Send Result : %s\n",
 				"SETTING_PW_TYPE_PIN_BLOCKED");
 
-		app_control_destroy(svc);
-		/* Send destroy request */
-		ug_destroy_me(ad->ug);
-	}
+		ui_app_exit();
 		break;
+	}
 	case SIM_PIN2_BLOCKED: {
 		SETTING_TRACE_DEBUG("SIM_PIN2_BLOCKED");
 		/*ad->view_type = SETTING_PW_TYPE_PIN2_BLOCKED; */
-		app_control_h svc;
-		if (app_control_create(&svc))
-			return;
-
-		app_control_add_extra_data(svc, "result",
+		add_app_reply(&ad->md, "result",
 				"SETTING_PW_TYPE_PIN2_BLOCKED");
-		ug_send_result(ad->ug, svc);
 		SETTING_TRACE("Send Result : %s\n",
 				"SETTING_PW_TYPE_PIN2_BLOCKED");
-
-		app_control_destroy(svc);
-		/* Send destroy request */
-		ug_destroy_me(ad->ug);
+		ui_app_exit();
 		/*safeCopyStr(ad->view_type_string,
 		 * "SETTING_PW_TYPE_PIN2_BLOCKED",
 		 * safeStrLen("SETTING_PW_TYPE_PIN2_BLOCKED")+1); */
-		/*setting_password_ug_create_popup_notitle_nobtn(ad, */
+		/*create_popup_notitle_nobtn(ad, */
 		/* _("IDS_ST_POP_PIN2_BLOCKED"), TRUE); */
-	}
 		break;
+	}
 	case SIM_LOCK_INCORRECT_PASSWORD: {
 		SETTING_TRACE_DEBUG("SIM LOCK INCORRECT PASSWORD");
 		ad->focus_data = ad->ed_pw1;
-		setting_password_ug_display_desc(ad, PW_ERR_DESC, FALSE);
-	}
+		display_desc(ad, PW_ERR_DESC, FALSE);
 		break;
+	}
 	case SIM_INCORRECT_PIN1_CODE: {
 		if (ad->view_type == SETTING_PW_TYPE_CHANGE_PIN) {
 			ad->incorrect_pin1_flag = TRUE;
 			FREE(ad->cur_pwd);
-			elm_genlist_clear(ad->scroller);
+			elm_genlist_clear(ad->md.genlist);
 			setting_password_sim_draw_1line_entry(ad, NULL);
 			ad->focus_timer = ecore_timer_add(0.5,
 					__setting_password_sim_rotate_cb, ad);
@@ -2304,18 +2248,18 @@ static void setting_password_ug_display_result_popup(tapi_receive_info *result,
 
 		ad->focus_data = ad->ed_pw1;
 #ifdef SUPPORT_POPUP
-		setting_password_ug_create_popup_notitle_nobtn(
+		create_popup_notitle_nobtn(
 				ad, (char *)ret_str, FALSE);
 #else
-		setting_password_ug_display_desc(ad, (char *)ret_str, FALSE);
+		display_desc(ad, (char *)ret_str, FALSE);
 #endif
-	}
 		break;
+	}
 	case SIM_INCORRECT_PIN2_CODE: {
 		if (ad->view_type == SETTING_PW_TYPE_CHANGE_PIN2) {
 			ad->incorrect_pin2_flag = TRUE;
 			FREE(ad->cur_pwd);
-			elm_genlist_clear(ad->scroller);
+			elm_genlist_clear(ad->md.genlist);
 			setting_password_sim_draw_1line_entry(ad, NULL);
 			ad->focus_timer = ecore_timer_add(0.5,
 					__setting_password_sim_rotate_cb, ad);
@@ -2352,13 +2296,13 @@ static void setting_password_ug_display_result_popup(tapi_receive_info *result,
 
 		ad->focus_data = ad->ed_pw1;
 #ifdef SUPPORT_POPUP
-		setting_password_ug_create_popup_notitle_nobtn(ad, ret_str,
+		create_popup_notitle_nobtn(ad, ret_str,
 				FALSE);
 #else
-		setting_password_ug_display_desc(ad, ret_str, FALSE);
+		display_desc(ad, ret_str, FALSE);
 #endif
-	}
 		break;
+	}
 	case SIM_INCORRECT_PUK1_CODE: {
 		char *ret_str = NULL;
 		char tmp_str[SETTING_STR_SLP_LEN] = { 0, };
@@ -2377,10 +2321,10 @@ static void setting_password_ug_display_result_popup(tapi_receive_info *result,
 
 		ad->focus_data = ad->ed_pw1;
 #ifdef SUPPORT_POPUP
-		setting_password_ug_create_popup_notitle_nobtn(ad, ret_str,
+		create_popup_notitle_nobtn(ad, ret_str,
 				FALSE);
 #else
-		setting_password_ug_display_desc(ad, ret_str, FALSE);
+		display_desc(ad, ret_str, FALSE);
 #endif
 	}
 		break;
@@ -2413,10 +2357,10 @@ static void setting_password_ug_display_result_popup(tapi_receive_info *result,
 		}
 		ad->focus_data = ad->ed_pw1;
 #ifdef SUPPORT_POPUP
-		setting_password_ug_create_popup_notitle_nobtn(ad, ret_str,
+		create_popup_notitle_nobtn(ad, ret_str,
 				FALSE);
 #else
-		setting_password_ug_display_desc(ad, ret_str, FALSE);
+		display_desc(ad, ret_str, FALSE);
 #endif
 	}
 		break;
@@ -2425,34 +2369,27 @@ static void setting_password_ug_display_result_popup(tapi_receive_info *result,
 		SETTING_TRACE_DEBUG("SIM_PIN1_CHANGE_SUCCESS");
 		/*ad->view_type = SETTING_PW_TYPE_PIN_BLOCKED; */
 		/* Success to Operate */
-		app_control_h svc;
-		if (app_control_create(&svc))
-			return;
-
-		app_control_add_extra_data(svc, "result", ad->view_type_string);
-		ug_send_result(ad->ug, svc);
+		add_app_reply(&ad->md, "result", ad->view_type_string);
 		SETTING_TRACE("Send Result : %s\n", ad->view_type_string);
 
-		app_control_destroy(svc);
-		/* Send destroy request */
-		ug_destroy_me(ad->ug);
-	}
-		/* setting_password_ug_create_popup_notitle_nobtn(ad, */
+		ui_app_exit();
+		/* create_popup_notitle_nobtn(ad, */
 		/* _("IDS_ST_POP_PIN1_CHANGED"), TRUE); */
 		break;
+	}
 	case SIM_PIN2_CHANGE_SUCCESS:
-		setting_password_ug_create_popup_notitle_nobtn(ad,
+		create_popup_notitle_nobtn(ad,
 				_("IDS_ST_POP_PIN2_CHANGED"), TRUE);
 		break;
 	case SIM_PIN1_UNBLOCKED:
 		SETTING_TRACE_DEBUG("SIM_PIN1_UNBLOCKED");
 		safeCopyStr(ad->view_type_string, "SETTING_PW_TYPE_PIN_LOCK_ON",
 				safeStrLen("SETTING_PW_TYPE_PIN_LOCK_ON") + 1);
-		setting_password_ug_create_popup_notitle_nobtn(ad,
+		create_popup_notitle_nobtn(ad,
 				_("IDS_ST_POP_PIN_UNBLOCKED"), TRUE);
 		break;
 	case SIM_PIN2_UNBLOCKED:
-		setting_password_ug_create_popup_notitle_nobtn(ad,
+		create_popup_notitle_nobtn(ad,
 				_("IDS_ST_POP_PIN2_UNBLOCKED"), TRUE);
 		break;
 	case SIM_PUK1_BLOCKED: {
@@ -2462,68 +2399,58 @@ static void setting_password_ug_display_result_popup(tapi_receive_info *result,
 		safeCopyStr(ad->view_type_string,
 				"SETTING_PW_TYPE_PUK1_BLOCKED",
 				safeStrLen("SETTING_PW_TYPE_PUK1_BLOCKED") + 1);
-		setting_password_ug_create_popup_notitle_nobtn(ad, ret_str,
+		create_popup_notitle_nobtn(ad, ret_str,
 				TRUE);
-		/* Phone blocked. Call Permernent UG */
-	}
+		/* Phone blocked. Call Permernent */
 		break;
+	}
 	case SIM_PUK2_BLOCKED: {
-		app_control_h svc;
-		if (app_control_create(&svc))
-			return;
-
-		app_control_add_extra_data(svc, "result",
+		add_app_reply(&ad->md, "result",
 				"SETTING_PW_TYPE_PUK2_BLOCKED");
-		ug_send_result(ad->ug, svc);
 		SETTING_TRACE("Send Result : %s\n",
 				"SETTING_PW_TYPE_PUK2_BLOCKED");
-
-		app_control_destroy(svc);
-		/* Send destroy request */
-		ug_destroy_me(ad->ug);
-	}
-		/* Call Permernent UG */
+		ui_app_exit();
 		break;
+	}
 	case SIM_REQUIRED_PUK_CODE:
 		SETTING_TRACE_DEBUG("SIM_REQUIRED_PUK_CODE");
 		safeCopyStr(ad->view_type_string, "SETTING_PW_TYPE_PIN_BLOCKED",
 				safeStrLen("SETTING_PW_TYPE_PIN_BLOCKED") + 1);
-		setting_password_ug_create_popup_notitle_nobtn(ad,
+		create_popup_notitle_nobtn(ad,
 				_("IDS_ST_POP_PIN1_BLOCKED"), TRUE);
 		break;
 	case SIM_OPERATION_UNAVAILABLE:
-		setting_password_ug_create_popup_notitle_nobtn(ad,
+		create_popup_notitle_nobtn(ad,
 				_("IDS_ST_HEADER_UNAVAILABLE"), TRUE);
 		break;
 	case SIM_UNKNOWN_ERROR:
-		setting_password_ug_create_popup_notitle_nobtn(ad,
+		create_popup_notitle_nobtn(ad,
 				_("IDS_CST_POP_UNKNOWN_OPERATION"), FALSE);
 		break;
 	case SIM_ERROR:
 	case SIM_REQ_PIN:
 	case SIM_OPERATION_OFF:
-	case SIM_LOCK_ON_FAIL:
+	case SIM_LOCK_ON_FAIL: {
 		SETTING_TRACE_DEBUG("SIM_LOCK_ON_FAIL");
-		{
-			if (result->retry_cnt > 0) {
-				setting_password_ug_display_desc(ad,
-						PW_ERR_DESC, FALSE);
-			} else {
-				char tmp_str[SETTING_STR_SLP_LEN] = { 0, };
-				snprintf(tmp_str, SETTING_STR_SLP_LEN,
-						PW_ERR_DELAY_DESC,
-						PW_ERR_DELAY_TIME);
-				safeCopyStr(ad->view_type_string,
-						"SETTING_PW_TYPE_SIM_LOCK_DISABLE",
-						safeStrLen("SETTING_PW_TYPE_SIM_LOCK_DISABLE") + 1);
-				setting_password_ug_create_popup_notitle_nobtn(
-						ad, tmp_str, TRUE);
-			}
+		if (result->retry_cnt > 0) {
+			display_desc(ad,
+					PW_ERR_DESC, FALSE);
+		} else {
+			char tmp_str[SETTING_STR_SLP_LEN] = { 0, };
+			snprintf(tmp_str, SETTING_STR_SLP_LEN,
+					PW_ERR_DELAY_DESC,
+					PW_ERR_DELAY_TIME);
+			safeCopyStr(ad->view_type_string,
+					"SETTING_PW_TYPE_SIM_LOCK_DISABLE",
+					safeStrLen("SETTING_PW_TYPE_SIM_LOCK_DISABLE") + 1);
+			create_popup_notitle_nobtn(
+					ad, tmp_str, TRUE);
 		}
 		break;
+	}
 	case SIM_PIN1_CHANGE_FAIL:
 	case SIM_PIN2_CHANGE_FAIL:
-		setting_password_ug_create_popup_notitle_nobtn(ad,
+		create_popup_notitle_nobtn(ad,
 				_("Change Failed"), TRUE);
 		break;
 	default:

@@ -30,24 +30,22 @@
 #include <glib-object.h>
 #include <dlog.h>
 
-#include <setting-common-draw-widget.h>
-#include <setting-common-view.h>
-#include <setting-debug.h>
-#include <setting-password-strings.h>
+#include "setting-common-draw-widget.h"
+#include "setting-common-view.h"
+#include "setting-debug.h"
+#include "setting-common-init.h"
+#include "setting-password-strings.h"
 
 /*#include <ckmc/ckmc-control.h> */
 /*#include <ckmc/ckmc-type.h> */
 
-#define SETTING_PW_UG_NORMAL_PASSWORD_MIN_LENGTH 4
-#define SETTING_PW_UG_NORMAL_PASSWORD_MAX_LENGTH 16
-#define SETTING_PW_UG_PRIVACY_PASSWORD_MIN_LENGTH 4
-#define SETTING_PW_UG_PRIVACY_PASSWORD_MAX_LENGTH 16
-#define SETTING_PW_UG_SIM_MIN_LENGTH 4
-#define SETTING_PW_UG_SIM_MAX_LENGTH 8
-#define SETTING_PW_UG_PIN_MIN_LENGTH 4
-#define SETTING_PW_UG_PIN_MAX_LENGTH 8
-#define SETTING_PW_UG_PUK_MIN_LENGTH 4
-#define SETTING_PW_UG_PUK_MAX_LENGTH 8
+#define SETTING_PW_NORMAL_PASSWORD_MIN_LENGTH 4
+#define SETTING_PW_NORMAL_PASSWORD_MAX_LENGTH 16
+#define SETTING_PW_SIM_MIN_LENGTH 4
+#define SETTING_PW_SIM_MAX_LENGTH 8
+#define SETTING_PW_PIN_MIN_LENGTH 4
+#define SETTING_PW_PIN_MAX_LENGTH 8
+#define SETTING_PW_PUK_MAX_LENGTH 8
 #define SETTING_PW_MAX_TITLE_LENGTH MAX_DISPLAY_NAME_LEN_ON_UI
 
 #define PW_NORMAL_CONTAIN_ALPHANUMERIC 4
@@ -188,7 +186,7 @@ typedef struct _tapi_request_tapi_info {
 } tapi_request_tapi_info;
 
 struct _word_repeat_info {
-	char name[SETTING_PW_UG_NORMAL_PASSWORD_MAX_LENGTH + 1];
+	char name[SETTING_PW_NORMAL_PASSWORD_MAX_LENGTH + 1];
 	unsigned int count;
 	struct _word_repeat_info *next;
 };
@@ -200,21 +198,14 @@ typedef struct _pw_quality {
 } setting_pw_quality;
 
 /**
- * Setting Password UG context
- * all UG function has void* as an agument. this is casted back to
- * SettingPasswordUG and the functions access app context.
+ * Setting Password context
  */
-typedef struct _SettingPasswordUG {
-	ui_gadget_h ug;
+typedef struct _SettingPassword {
+	MainData md;
 	TapiHandle *handle;
 	TelSimSecResult_t *verify_puks_result;
 
 	/* add more variables here (move your appdata to here) */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
-	Evas_Object *ly_main;
-
 	setting_pw_type view_type;
 	char *view_type_string;
 	int step;
@@ -232,14 +223,11 @@ typedef struct _SettingPasswordUG {
 	Setting_GenGroupItem_Data *err_desc;
 	Elm_Genlist_Item_Class itc_err_desc;
 
-	Elm_Object_Item *navi_it;
 	Evas_Object *controllbar;
 	tapi_request_tapi_info *t_info;
-	Evas_Object *navi_bar;
 	Elm_Genlist_Item_Class itc_variable_height;
 	Elm_Genlist_Item_Class itc_layout;
 	Elm_Genlist_Item_Class itc_group_item;
-	Evas_Object *scroller;
 	int disable_item_type;
 
 	unsigned int remain_attempt;
@@ -288,24 +276,17 @@ typedef struct _SettingPasswordUG {
 	/* fingerprint's alternative password */
 	int cur_step;
 
-} SettingPasswordUG;
+} SettingPassword;
 
 extern setting_view setting_view_password_sim;
 extern setting_view setting_view_password_simple;
 extern setting_view setting_view_password_main;
 
-void setting_password_ug_popup_resp_cb(void *data, Evas_Object *obj,
-		void *event_info);
-void setting_password_ug_create_popup_notitle_nobtn(void *data, char *str,
-		int destroy);
-
-void setting_password_ug_display_desc(void *data, char *desc, int destroy);
-
-extern void setting_password_ug_check_attemps_left(void *data);
-
-int setting_password_check_password(const char *challenge,
-		unsigned int *remain_attempt, unsigned int *valid_sec);
-int setting_password_set_password(const char *cur_pwd, const char *new_pwd,
-		void *data);
+void create_popup_notitle_nobtn(void *data, char *str, int destroy);
+void display_desc(void *data, char *desc, int destroy);
+extern void check_attemps_left(void *data);
+int check_password(const char *challenge, unsigned int *remain_attempt,
+		unsigned int *valid_sec);
+int set_password(const char *cur_pwd, const char *new_pwd, void *data);
 
 #endif
