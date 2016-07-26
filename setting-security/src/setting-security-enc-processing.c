@@ -45,7 +45,7 @@ setting_view setting_view_security_enc_processing = {
  **
  ****************************************************/
 
-static void __encrypting_key_grab(SettingSecurityUG *ad)
+static void __encrypting_key_grab(SettingSecurity *ad)
 {
 	SETTING_TRACE_BEGIN;
 #ifdef ECORE_X
@@ -81,7 +81,7 @@ static void __encrypting_key_grab(SettingSecurityUG *ad)
 			NULL);
 	SETTING_TRACE_END;
 }
-static void __encrypting_key_ungrab(SettingSecurityUG *ad)
+static void __encrypting_key_ungrab(SettingSecurity *ad)
 {
 	SETTING_TRACE_BEGIN;
 #ifdef ECORE_X
@@ -120,7 +120,7 @@ static void __vconf_change_cb(keynode_t *key, void *data)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(data == NULL);
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 
 	/* To do : update progressbar */
 	char *vconf_name = vconf_keynode_get_name(key);
@@ -186,7 +186,7 @@ static int setting_security_enc_processing_create(void *cb)
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingSecurityUG *ad = (SettingSecurityUG *)cb;
+	SettingSecurity *ad = (SettingSecurity *)cb;
 
 	if (ad->input_pwd == NULL)
 		return SETTING_RETURN_FAIL;
@@ -196,7 +196,7 @@ static int setting_security_enc_processing_create(void *cb)
 	Evas_Object *progressbar = NULL;
 	char enc_type[16] = { 0, };
 
-	layout = elm_layout_add(ad->win_main_layout);
+	layout = elm_layout_add(ad->md.view_layout);
 	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND,
 			EVAS_HINT_EXPAND);
 
@@ -206,7 +206,7 @@ static int setting_security_enc_processing_create(void *cb)
 	/*elm_win_fullscreen_set(layout, EINA_TRUE); */
 	/*setting_resize_object(layout, 720, 1280); */
 
-	/*elm_win_resize_object_add(ad->win_get, layout); */
+	/*elm_win_resize_object_add(ad->md.win_main, layout); */
 
 	progressbar = elm_progressbar_add(layout);
 	elm_progressbar_value_set(progressbar, 0);
@@ -268,7 +268,7 @@ static int setting_security_enc_processing_destroy(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingSecurityUG *ad = (SettingSecurityUG *)cb;
+	SettingSecurity *ad = (SettingSecurity *)cb;
 
 	vconf_ignore_key_changed(VCONFKEY_ODE_ENCRYPT_PROGRESS,
 			__vconf_change_cb);

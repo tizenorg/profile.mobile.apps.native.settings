@@ -1,10 +1,13 @@
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${SETTING_COMMON}/include)
 
+SET(PROJECT_SETTING_SECURITY "setting-security")
+SET(SETTING_PKG_SECURITY "org.tizen.setting-security")
+
 INCLUDE(FindPkgConfig)
-pkg_check_modules(pkgs_security REQUIRED ecore evas elementary tapi dlog
+pkg_check_modules(pkgs_security REQUIRED aul ecore evas elementary tapi dlog
 ui-gadget-1 capi-appfw-application capi-appfw-app-manager appcore-common
-deviced capi-network-connection json-glib-1.0 efl-extension libtzplatform-config)
+deviced capi-network-connection json-glib-1.0 efl-extension libtzplatform-config vconf)
 
 FOREACH(flag ${pkgs_security_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
@@ -26,14 +29,20 @@ ADD_DEFINITIONS("-shared")
 
 SET(CMAKE_EXE_LINKER_FLAGS "-Wl,--as-needed -Wl,--rpath=/usr/lib")
 
-ADD_LIBRARY(${SETTING_SECURITY_UG} SHARED
+ADD_EXECUTABLE(${PROJECT_SETTING_SECURITY}
 	./src/setting-security.c
 	./src/setting-security-main.c
 	./src/setting-security-sim-settings.c
 	./src/setting-security-update.c
 	)
 
-TARGET_LINK_LIBRARIES(${SETTING_SECURITY_UG} -L${CMAKE_BINARY_DIR}/${SETTING_COMMON} -lsetting-common)
-TARGET_LINK_LIBRARIES(${SETTING_SECURITY_UG} ${pkgs_security_LDFLAGS})
+TARGET_LINK_LIBRARIES(${PROJECT_SETTING_SECURITY} -L${CMAKE_BINARY_DIR}/${SETTING_COMMON} -lsetting-common)
+TARGET_LINK_LIBRARIES(${PROJECT_SETTING_SECURITY} ${pkgs_security_LDFLAGS})
+INSTALL(PROGRAMS ${PROJECT_SETTING_SECURITY} DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_SECURITY}/bin)
 
-INSTALL(TARGETS ${SETTING_SECURITY_UG} DESTINATION ${PREFIX}/lib/ug)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/org.tizen.setting-security.xml.in ${CMAKE_CURRENT_SOURCE_DIR}/org.tizen.setting-security.xml @ONLY)
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/org.tizen.setting-security.xml DESTINATION /usr/share/packages/)
+
+INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-theme.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_SECURITY}/res/edje/)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/settings.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_SECURITY}/res/edje/)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/setting-genlist.edj DESTINATION ${TZ_SYS_RO_APP}/${SETTING_PKG_SECURITY}/res/edje/)
