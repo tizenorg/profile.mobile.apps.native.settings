@@ -49,16 +49,16 @@ static int setting_security_sim_settings_create(void *cb)
 	SETTING_TRACE_BEGIN;
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingSecurityUG *ad = (SettingSecurityUG *)cb;
+	SettingSecurity *ad = (SettingSecurity *)cb;
 
 	Evas_Object *scroller;
 	/*Elm_Object_Item *item = NULL;*/
 
 	/* add basic layout */
-	setting_push_layout_navi_bar_genlist(ad->win_main_layout, ad->win_get,
+	setting_push_layout_navi_bar_genlist(ad->md.view_layout, ad->md.win_main,
 	SECURITY_SIM_SETTINGS, _("IDS_ST_BUTTON_BACK"), NULL,
 			(setting_call_back_func)setting_security_sim_settings_click_softkey_back_cb,
-			NULL, ad, &scroller, ad->navi_bar);
+			NULL, ad, &scroller, ad->md.navibar_main);
 
 	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb,
 			NULL);
@@ -149,12 +149,12 @@ static int setting_security_sim_settings_destroy(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingSecurityUG *ad = (SettingSecurityUG *)cb;
+	SettingSecurity *ad = (SettingSecurity *)cb;
 	if (ad->tapi_async_cb_check_timer) {
 		ecore_timer_del(ad->tapi_async_cb_check_timer);
 		ad->tapi_async_cb_check_timer = NULL;
 	}
-	/*elm_naviframe_item_pop(ad->navi_bar); */
+	/*elm_naviframe_item_pop(ad->md.navibar_main); */
 
 	setting_view_security_sim_settings.is_create = 0;
 
@@ -167,7 +167,7 @@ static int setting_security_sim_settings_update(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingSecurityUG *ad = (SettingSecurityUG *)cb;
+	SettingSecurity *ad = (SettingSecurity *)cb;
 	SETTING_TRACE("Update PIN menu");
 	if (ad->data_pin_lk) { /*it indicates TAPI is not responsed in time */
 		/*setting_update_gl_item_chk_status(ad->data_pin_lk,
@@ -218,7 +218,7 @@ static int setting_security_sim_settings_cleanup(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingSecurityUG *ad = (SettingSecurityUG *)cb;
+	SettingSecurity *ad = (SettingSecurity *)cb;
 	return setting_security_sim_settings_destroy(ad);
 }
 
@@ -236,7 +236,7 @@ static void get_pin_lock_info_cb(TapiHandle *handle, int result, void *data,
 	TelSimPinOperationResult_t sec_rt = result;
 	TelSimLockInfo_t *lock = data;
 
-	SettingSecurityUG *ad = (SettingSecurityUG *)user_data;
+	SettingSecurity *ad = (SettingSecurity *)user_data;
 
 	/* delete popup */
 	if (ad->sim_popup) {
@@ -263,7 +263,7 @@ static void get_pin_lock_info_cb(TapiHandle *handle, int result, void *data,
 		SETTING_TRACE("Current status of PIN Lock is Blocked");
 		ad->pw_type = SETTING_SEC_PW_PIN1_BLOCKED;
 	} else if (lock->lock_status == 5) { /* Blocked */
-		setting_create_popup(NULL, ad->win_get,
+		setting_create_popup(NULL, ad->md.win_main,
 		NULL, _("PUK is blocked. Can't use PIN Lock"), NULL, 0, false,
 				false, 0);
 		return;
@@ -277,10 +277,10 @@ static Eina_Bool _check_tapi_async_cb_is_called(void *data)
 	SETTING_TRACE_BEGIN;
 	retv_if(data == NULL, EINA_FALSE);
 
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 
 	if (!ad->enter_tapi_async_cb_flag) {
-		ad->sim_popup = setting_create_popup(ad, ad->win_get,
+		ad->sim_popup = setting_create_popup(ad, ad->md.win_main,
 		NULL, KeyStr_Security_Waiting_Sim,
 		NULL, 0, TRUE, TRUE, 0);
 	}
@@ -295,7 +295,7 @@ void _draw_pin_onoff_status(void *data, Evas_Object *check)
 
 	ret_if(data == NULL);
 
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 	int value = 0;
 	int err = 0;
 	int ret = 0;
@@ -325,7 +325,7 @@ void _draw_pin_onoff_status(void *data, Evas_Object *check)
 		SETTING_TRACE_DEBUG(
 				"%s*** [ERR] tel_get_sim_type. sim_card=%d ***%s",
 				SETTING_FONT_RED, sim_card, SETTING_FONT_BLACK);
-		setting_create_popup(NULL, ad->win_get,
+		setting_create_popup(NULL, ad->md.win_main,
 		NULL, _("IDS_SIM_BODY_INVALID_SIM_CARD"), NULL, 0, false, false,
 				0);
 		return;
@@ -351,7 +351,7 @@ static void get_sim_lock_info_cb(TapiHandle *handle, int result, void *data,
 	TelSimPinOperationResult_t sec_rt = result;
 	TelSimLockInfo_t *lock = data;
 
-	SettingSecurityUG *ad = (SettingSecurityUG *)user_data;
+	SettingSecurity *ad = (SettingSecurity *)user_data;
 
 	/* delete popup */
 	if (ad->sim_popup) {
@@ -360,14 +360,16 @@ static void get_sim_lock_info_cb(TapiHandle *handle, int result, void *data,
 	}
 
 	/*elm_check_state_get(ad->data_sim_lk->eo_check); */
+	/* TODO: ad->data_sim_lk never set (always NULL)
 	int old_state = ad->data_sim_lk->chk_status;
 	if (old_state) {
 		SETTING_TRACE("Current status of SIM Lock is ON");
 		ad->pw_type = SETTING_SEC_PW_SIM_LOCK_OFF;
 	} else {
 		SETTING_TRACE("Current status of SIM Lock is OFF");
+	*/
 		ad->pw_type = SETTING_SEC_PW_SIM_LOCK_ON;
-	}
+	/*}*/
 
 	SETTING_TRACE_DEBUG(
 			"sec_ret[%d], lock_type[%d], lock_status[%d], retry_count[%d]",
@@ -375,7 +377,7 @@ static void get_sim_lock_info_cb(TapiHandle *handle, int result, void *data,
 			lock->retry_count);
 
 	if (lock->lock_status == 5) { /* Blocked */
-		setting_create_popup(NULL, ad->win_get,
+		setting_create_popup(NULL, ad->md.win_main,
 		NULL, _("SIM is blocked. Can't use SIM Lock"), NULL, 0, false,
 				false, 0);
 		return;
@@ -388,7 +390,7 @@ void _draw_sim_onoff_status(void *data, Evas_Object *check)
 {
 	ret_if(data == NULL);
 
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 	int value = 0;
 	int err = 0;
 	int ret = 0;
@@ -403,7 +405,7 @@ void _draw_sim_onoff_status(void *data, Evas_Object *check)
 		evas_object_del(ad->sim_popup);
 		ad->sim_popup = NULL;
 	}
-	ad->sim_popup = setting_create_popup(ad, ad->win_get,
+	ad->sim_popup = setting_create_popup(ad, ad->md.win_main,
 	NULL, KeyStr_Security_Waiting_Sim,
 	NULL, 0, FALSE, FALSE, 0);
 
@@ -422,7 +424,7 @@ static void get_change_pin_info_cb(TapiHandle *handle, int result, void *data,
 	TelSimPinOperationResult_t sec_rt = result;
 	TelSimLockInfo_t *lock = data;
 
-	SettingSecurityUG *ad = (SettingSecurityUG *)user_data;
+	SettingSecurity *ad = (SettingSecurity *)user_data;
 
 	SETTING_TRACE_DEBUG(
 			"sec_ret[%d], lock_type[%d], lock_status[%d], retry_count[%d]",
@@ -451,7 +453,7 @@ static void get_change_pin_info_cb(TapiHandle *handle, int result, void *data,
 		ad->pw_type = SETTING_SEC_PW_CHANGE_PIN2;
 	} else if (lock->lock_status == TAPI_SIM_LOCK_PERM_BLOCKED) {
 		/* Blocked : 0x05 */
-		setting_create_popup(NULL, ad->win_get,
+		setting_create_popup(NULL, ad->md.win_main,
 		NULL, _("Permanent block SIM"), NULL, 0, false, false, 0);
 		return;
 	}
@@ -463,7 +465,7 @@ void _mouse_up_change_pin(void *data, int sel_item)
 {
 	ret_if(data == NULL);
 
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 
 	/* 0:click pin lock, 1:change pin1 code, 2:fdn, 3: change pin2 code */
 	ad->sel_item = sel_item;
@@ -477,7 +479,7 @@ void _mouse_up_change_pin(void *data, int sel_item)
 	case VCONFKEY_TELEPHONY_SIM_INSERTED:
 		break;
 	case VCONFKEY_TELEPHONY_SIM_NOT_PRESENT:
-		setting_create_popup(NULL, ad->win_get,
+		setting_create_popup(NULL, ad->md.win_main,
 		NULL, _(SECURITY_SIM_NOT_PRESENT_MSG), NULL, 0, false, false,
 				0);
 		SETTING_TRACE_DEBUG(
@@ -487,7 +489,7 @@ void _mouse_up_change_pin(void *data, int sel_item)
 		break;
 	case VCONFKEY_TELEPHONY_SIM_CARD_ERROR:
 	case VCONFKEY_TELEPHONY_SIM_UNKNOWN:
-		setting_create_popup(NULL, ad->win_get,
+		setting_create_popup(NULL, ad->md.win_main,
 		NULL, _("IDS_SIM_BODY_INVALID_SIM_CARD"), NULL, 0, false, false,
 				0);
 		SETTING_TRACE_DEBUG(
@@ -514,7 +516,7 @@ void _mouse_up_change_pin(void *data, int sel_item)
 		SETTING_TRACE_DEBUG(
 				"%s*** [ERR] tel_get_sim_type. sim_card=%d ***%s",
 				SETTING_FONT_RED, sim_card, SETTING_FONT_BLACK);
-		setting_create_popup(NULL, ad->win_get,
+		setting_create_popup(NULL, ad->md.win_main,
 		NULL, _("IDS_SIM_BODY_INVALID_SIM_CARD"), NULL, 0, false, false,
 				0);
 		return;
@@ -551,7 +553,7 @@ static void setting_security_sim_settings_mouse_up_Gendial_list_cb(void *data,
 					item);
 	setting_retm_if(NULL == list_item, "list_item is NULL");
 
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 	if (!safeStrCmp("IDS_ST_BODY_PIN_LOCK", list_item->keyStr)) {
@@ -581,7 +583,7 @@ static void setting_security_sim_settings_chk_btn_cb(void *data,
 	retm_if(data == NULL, "[Setting > Reset] Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item =
 			(Setting_GenGroupItem_Data *)data;
-	SettingSecurityUG *ad = list_item->userdata;
+	SettingSecurity *ad = list_item->userdata;
 
 	/* for genlist update status */
 	list_item->chk_status = elm_check_state_get(obj);
@@ -618,10 +620,7 @@ Eina_Bool setting_security_sim_settings_click_softkey_back_cb(void *data,
 	/* error check */
 	retv_if(data == NULL, EINA_FALSE);
 
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
-	if (ad->ug_passwd)
-		return EINA_FALSE;
-
+	SettingSecurity *ad = (SettingSecurity *)data;
 	if (ad->sim_popup)
 		return EINA_FALSE;
 

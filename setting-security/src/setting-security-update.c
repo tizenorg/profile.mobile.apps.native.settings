@@ -33,7 +33,7 @@ static int setting_view_security_update_destroy(void *cb);
 static int setting_view_security_update_update(void *cb);
 static int setting_view_security_update_cleanup(void *cb);
 
-static Eina_Bool setting_security_update_click_softkey_back_cb(void *data,
+static void setting_security_update_click_softkey_back_cb(void *data,
 		Evas_Object *obj, void *event_info);
 static void setting_security_update_mouse_up_Gendial_chk_cb(void *data,
 		Evas_Object *obj, void *event_info);
@@ -62,9 +62,9 @@ static int setting_view_security_update_create(void *cb)
 		return SETTING_GENERAL_ERR_NULL_DATA_PARAMETER;
 	}
 	SETTING_TRACE_BEGIN;
-	SettingSecurityUG *ad = (SettingSecurityUG *)cb;
+	SettingSecurity *ad = (SettingSecurity *)cb;
 
-	Evas_Object *scroller;
+	Evas_Object *scroller = NULL;
 	/*Elm_Object_Item *item = NULL;*/
 
 	/* add basic layout */
@@ -73,25 +73,22 @@ static int setting_view_security_update_create(void *cb)
 			(char *)dgettext("sys_string", "IDS_ST_BUTTON_BACK"));
 
 	if (&setting_view_security_update == ad->view_to_load) {
-		ad->ly_main = setting_create_layout_navi_bar_genlist(
-				ad->win_main_layout, ad->win_get,
-				"IDS_EMAIL_POP_SECURITY_UPDATE_ABB", setBtnStr,
-				NULL,
-				(setting_call_back_func)setting_security_update_click_softkey_back_cb,
-				NULL, ad, &scroller, &(ad->navi_bar));
+		view_init(&ad->md, "IDS_EMAIL_POP_SECURITY_UPDATE_ABB");
 	} else {
-
-		setting_push_layout_navi_bar_genlist(ad->win_main_layout,
-				ad->win_get,
-				"IDS_EMAIL_POP_SECURITY_UPDATE_ABB", setBtnStr,
-				NULL,
-				(setting_call_back_func)setting_security_update_click_softkey_back_cb,
-				NULL, ad, &scroller, ad->navi_bar);
+		return SETTING_RETURN_FAIL;
 	}
+	scroller = ad->md.genlist;
 
-	ad->genlist = scroller;
-	evas_object_smart_callback_add(ad->genlist, "realized",
+	evas_object_smart_callback_add(scroller, "realized",
 			__gl_realized_cb, ad);
+
+	setting_create_navi_bar_buttons(
+			_("IDS_EMAIL_POP_SECURITY_UPDATE_ABB"),
+			_("IDS_ST_BUTTON_BACK"),
+			setting_security_update_click_softkey_back_cb,
+			ad, scroller, ad->md.navibar_main,
+			NULL);
+
 
 	/* separator */
 	/*em = elm_genlist_item_append(scroller, &itc_seperator, NULL, NULL,
@@ -165,17 +162,17 @@ static int setting_view_security_update_destroy(void *cb)
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 
-	SettingSecurityUG *ad = (SettingSecurityUG *)cb;
+	SettingSecurity *ad = (SettingSecurity *)cb;
 	if (&setting_view_security_update == ad->view_to_load) {
-		if (ad->ly_main) {
-			evas_object_del(ad->ly_main);
-			ad->ly_main = NULL;
+		if (ad->md.ly_main) {
+			evas_object_del(ad->md.ly_main);
+			ad->md.ly_main = NULL;
 		}
 	} else {
-		elm_naviframe_item_pop(ad->navi_bar);
+		elm_naviframe_item_pop(ad->md.navibar_main);
 	}
 
-	/*evas_object_smart_callback_del(ad->genlist, "realized",
+	/*evas_object_smart_callback_del(ad->md.genlist, "realized",
 	 * __gl_realized_cb); */
 
 	setting_view_security_update.is_create = 0;
@@ -197,7 +194,7 @@ static int setting_view_security_update_cleanup(void *cb)
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
-	SettingSecurityUG *ad = (SettingSecurityUG *)cb;
+	SettingSecurity *ad = (SettingSecurity *)cb;
 	return setting_view_security_update_destroy(ad);
 	/*return SETTING_RETURN_SUCCESS; */
 }
@@ -207,22 +204,21 @@ static int setting_view_security_update_cleanup(void *cb)
  **call back func
  **
  ****************************************************/
-static Eina_Bool setting_security_update_click_softkey_back_cb(void *data,
+static void setting_security_update_click_softkey_back_cb(void *data,
 		Evas_Object *obj, void *event_info)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
-	retvm_if(data == NULL, EINA_FALSE,
+	retm_if(data == NULL,
 			"[Setting > Security update] Data parameter is NULL");
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 	if (&setting_view_security_update == ad->view_to_load) {
 		/* Send destroy request */
-		ug_destroy_me(ad->ug);
+		ui_app_exit();
 	} else
 		setting_view_change(&setting_view_security_update,
 				&setting_view_security_main, ad);
 	SETTING_TRACE_END;
-	return EINA_TRUE;
 }
 
 static void setting_security_update_gl_item_chk_status(
@@ -243,7 +239,7 @@ static void security_update_get_status_service_reply_cb(app_control_h request,
 	SETTING_TRACE_BEGIN;
 	retm_if(request == NULL, "request is NULL");
 	retm_if(reply == NULL, "reply is NULL");
-	SettingSecurityUG *ad = (SettingSecurityUG *)user_data;
+	SettingSecurity *ad = (SettingSecurity *)user_data;
 	char *resultMsa = NULL;
 
 	SETTING_TRACE_DEBUG("result:[%d]", result);
@@ -336,7 +332,7 @@ static void security_update_on_service_reply_cb(app_control_h request,
 	retm_if(request == NULL, "request is NULL");
 	retm_if(reply == NULL, "reply is NULL");
 	retm_if(user_data == NULL, "user_data is NULL");
-	SettingSecurityUG *ad = (SettingSecurityUG *)user_data;
+	SettingSecurity *ad = (SettingSecurity *)user_data;
 
 	SETTING_TRACE_DEBUG("result:[%d]", result);
 
@@ -364,7 +360,7 @@ static void security_update_off_service_reply_cb(app_control_h request,
 	retm_if(request == NULL, "request is NULL");
 	retm_if(reply == NULL, "reply is NULL");
 	retm_if(user_data == NULL, "user_data is NULL");
-	SettingSecurityUG *ad = (SettingSecurityUG *)user_data;
+	SettingSecurity *ad = (SettingSecurity *)user_data;
 
 	SETTING_TRACE_DEBUG("result:[%d]", result);
 
@@ -448,7 +444,7 @@ static void __ask_create_auto_update_pop_on_cb(void *data, Evas_Object *obj,
 		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 	ret_if(NULL == data);
 	int response_type = btn_type(obj);
 
@@ -510,7 +506,7 @@ static void __ask_create_auto_update_pop_off_cb(void *data, Evas_Object *obj,
 		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 	ret_if(NULL == data);
 	int response_type = btn_type(obj);
 
@@ -571,7 +567,7 @@ static void __ask_create_manual_update_pop_cb(void *data, Evas_Object *obj,
 		void *event_info)
 {
 	SETTING_TRACE_BEGIN;
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 	ret_if(NULL == data);
 	int response_type = btn_type(obj);
 	if (POPUP_RESPONSE_OK == response_type) {
@@ -614,7 +610,7 @@ static void __ask_create_manual_update_pop_cb(void *data, Evas_Object *obj,
 		service = NULL;
 
 		/*POP_UP */
-		ad->pop_progress = elm_popup_add(ad->win_get);
+		ad->pop_progress = elm_popup_add(ad->md.win_main);
 		eext_object_event_callback_add(ad->pop_progress,
 				EEXT_CALLBACK_BACK, setting_popup_del_cb, NULL);
 		evas_object_size_hint_weight_set(ad->pop_progress,
@@ -678,7 +674,7 @@ static void setting_security_update_mouse_up_Gendial_list_cb(void *data,
 					item);
 	setting_retm_if(NULL == list_item, "list_item is NULL");
 
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 
 	SETTING_TRACE("clicking item[%s]", _(list_item->keyStr));
 
@@ -690,7 +686,7 @@ static void setting_security_update_mouse_up_Gendial_list_cb(void *data,
 			SETTING_TRACE_DEBUG(
 					"There is auto update toggle on->off");
 			ad->pop_auto_update_off = setting_create_popup(ad,
-					ad->win_get,
+					ad->md.win_main,
 					NULL, SECURITY_UPDATE_TOGGLE_OFF,
 					__ask_create_auto_update_pop_off_cb, 0,
 					FALSE, FALSE, 2, "IDS_ST_BODY_TURN_OFF",
@@ -701,7 +697,7 @@ static void setting_security_update_mouse_up_Gendial_list_cb(void *data,
 			SETTING_TRACE_DEBUG(
 					"There is auto update toggle off->on");
 			ad->pop_auto_update_on = setting_create_popup(ad,
-					ad->win_get,
+					ad->md.win_main,
 					NULL, SECURITY_UPDATE_TOGGLE_ON,
 					__ask_create_auto_update_pop_on_cb, 0,
 					FALSE, FALSE, 2, "IDS_ST_BUTTON_OK",
@@ -709,7 +705,7 @@ static void setting_security_update_mouse_up_Gendial_list_cb(void *data,
 		}
 	} else if (!safeStrCmp(_(UPDATE_TEXT), list_item->keyStr)) {
 		SETTING_TRACE_DEBUG("There is manual update");
-		ad->pop_manual_update = setting_create_popup(ad, ad->win_get,
+		ad->pop_manual_update = setting_create_popup(ad, ad->md.win_main,
 		NULL, SECURITY_MANUAL_UPDATE_TEXT,
 				__ask_create_manual_update_pop_cb, 0, FALSE,
 				FALSE, 2, "IDS_ST_BUTTON_OK",
@@ -757,12 +753,12 @@ static void __setting_security_update_toggle_automatic_chk(void *data,
 		int chk_status, char *keyStr)
 {
 	SETTING_TRACE_BEGIN;
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 
 	if (chk_status) {
 		/* TOGGLE ON */
 		SETTING_TRACE_DEBUG("There is auto update toggle off->on");
-		ad->pop_auto_update_on = setting_create_popup(ad, ad->win_get,
+		ad->pop_auto_update_on = setting_create_popup(ad, ad->md.win_main,
 		NULL, SECURITY_UPDATE_TOGGLE_ON,
 				__ask_create_auto_update_pop_on_cb, 0, FALSE,
 				FALSE, 2, "IDS_ST_BUTTON_OK",
@@ -770,7 +766,7 @@ static void __setting_security_update_toggle_automatic_chk(void *data,
 	} else {
 		/* TOGGLE OFF */
 		SETTING_TRACE_DEBUG("There is auto update toggle on->off");
-		ad->pop_auto_update_off = setting_create_popup(ad, ad->win_get,
+		ad->pop_auto_update_off = setting_create_popup(ad, ad->md.win_main,
 		NULL, SECURITY_UPDATE_TOGGLE_OFF,
 				__ask_create_auto_update_pop_off_cb, 0, FALSE,
 				FALSE, 2, "IDS_ST_BODY_TURN_OFF",
@@ -787,7 +783,7 @@ static void setting_security_update_mouse_up_Gendial_chk_cb(void *data,
 	retm_if(data == NULL, "Data parameter is NULL");
 	Setting_GenGroupItem_Data *list_item =
 			(Setting_GenGroupItem_Data *)data;
-	SettingSecurityUG *ad = list_item->userdata;
+	SettingSecurity *ad = list_item->userdata;
 	/* for genlist update status */
 	list_item->chk_status = elm_check_state_get(obj);
 	SETTING_TRACE_DEBUG("auto update toggle cb");
