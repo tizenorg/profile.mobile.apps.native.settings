@@ -77,11 +77,11 @@ static int setting_security_main_create(void *cb)
 	char setBtnStr[MAX_DISPLAY_NAME_LEN_ON_UI];
 	snprintf(setBtnStr, sizeof(setBtnStr), "%s",
 			(char *)dgettext("sys_string", "IDS_ST_BUTTON_BACK"));
-	ad->ly_main = setting_create_layout_navi_bar_genlist(
-			ad->win_main_layout, ad->win_get,
+	ad->md.ly_main = setting_create_layout_navi_bar_genlist(
+			ad->md.view_layout, ad->md.win_main,
 			KeyStr_LockScreen, setBtnStr, NULL,
 			(setting_call_back_func)setting_security_main_click_softkey_back_cb,
-			NULL, ad, &scroller, &ad->navi_bar);
+			NULL, ad, &scroller, &ad->md.navibar_main);
 
 	/*setting_enable_expandable_genlist(scroller, ad, __security_exp_cb, NULL); */
 
@@ -201,8 +201,8 @@ static int setting_security_main_destroy(void *cb)
 	if (ad->secrity_engine_list)
 		g_list_free(ad->secrity_engine_list);
 
-	if (ad->ly_main != NULL) {
-		evas_object_del(ad->ly_main);
+	if (ad->md.ly_main != NULL) {
+		evas_object_del(ad->md.ly_main);
 
 		FREE(g_ad);
 	}
@@ -219,7 +219,7 @@ static int setting_security_main_update(void *cb)
 	retv_if(cb == NULL, SETTING_GENERAL_ERR_NULL_DATA_PARAMETER);
 	SettingSecurityUG *ad = (SettingSecurityUG *)cb;
 
-	evas_object_show(ad->ly_main);
+	evas_object_show(ad->md.ly_main);
 
 	return SETTING_RETURN_SUCCESS;
 }
@@ -260,7 +260,7 @@ static Eina_Bool setting_security_main_click_softkey_back_cb(void *data,
 		return EINA_FALSE;
 
 	/* Send destroy request */
-	ug_destroy_me(ad->ug);
+//ug_destroy_me(ad->ug);
 	return EINA_TRUE;
 }
 
@@ -276,7 +276,7 @@ int _handle_sim_exception(void *data, int sim_status)
 
 	case VCONFKEY_TELEPHONY_SIM_NOT_PRESENT:
 
-		setting_create_popup(NULL, ad->win_get,
+		setting_create_popup(NULL, ad->md.win_main,
 		NULL, _(SECURITY_SIM_NOT_PRESENT_MSG), NULL, 0, false, false,
 				0);
 		SETTING_TRACE_DEBUG(
@@ -290,7 +290,7 @@ int _handle_sim_exception(void *data, int sim_status)
 	case VCONFKEY_TELEPHONY_SIM_CARD_ERROR:
 	case VCONFKEY_TELEPHONY_SIM_UNKNOWN:
 
-		setting_create_popup(NULL, ad->win_get,
+		setting_create_popup(NULL, ad->md.win_main,
 		NULL, _("IDS_SIM_BODY_INVALID_SIM_CARD"), NULL, 0, false, false,
 				0);
 		SETTING_TRACE_DEBUG(
@@ -328,7 +328,7 @@ static UNUSED Eina_Bool _check_tapi_async_cb_is_called(void *data)
 	SettingSecurityUG *ad = (SettingSecurityUG *)data;
 
 	if (!ad->enter_tapi_async_cb_flag) {
-		ad->sim_popup = setting_create_popup(ad, ad->win_get,
+		ad->sim_popup = setting_create_popup(ad, ad->md.win_main,
 		NULL, KeyStr_Security_Waiting_Sim,
 				(setting_call_back_func)__remove_sim_popup_cb,
 				0, FALSE, FALSE, 0);
@@ -347,7 +347,7 @@ static Eina_Bool __freeze_event_timer_cb(void *cb)
 
 	SettingSecurityUG *ad = (SettingSecurityUG *)cb;
 
-	evas_object_freeze_events_set(ad->navi_bar, EINA_FALSE);
+	evas_object_freeze_events_set(ad->md.navibar_main, EINA_FALSE);
 	ad->update_view_timer = NULL;
 	return EINA_FALSE;
 }
@@ -414,7 +414,7 @@ static void setting_security_main_mouse_up_Gendial_list_cb(void *data,
 			 * "setting-lockscreen-options-efl")) { */
 			ad->update_view_timer = ecore_timer_add(1,
 					__freeze_event_timer_cb, ad);
-			evas_object_freeze_events_set(ad->navi_bar, EINA_TRUE);
+			evas_object_freeze_events_set(ad->md.navibar_main, EINA_TRUE);
 		}
 	}
 }
