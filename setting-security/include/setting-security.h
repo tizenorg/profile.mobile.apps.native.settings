@@ -44,6 +44,8 @@
 #include <app_manager.h>
 #include <dd-deviced.h>
 
+#include "setting-common-init.h"
+
 /*///////////////////face and voice unlock */
 #define SET_AS_LOCK_STR "IDS_ST_SK_SET_LITE"/*"Set as lock" */
 #define CONTINUE_STR "Continue"
@@ -235,12 +237,12 @@ struct _BlockList_Info {
 #define Keystr_Firewall_dimm_desc \
 	"IDS_IM_POP_THIS_FEATURE_IS_NOT_AVAILABLE_WHILE_FLIGHT_MODE_IS_ON"
 
-typedef struct _SettingSecurityUG SettingSecurityUG;
+typedef struct _SettingSecurity SettingSecurity;
 
 struct _security_item {
 	int pw_type_num;
 	char *pw_type_string;
-	int (*passwd_handler)(SettingSecurityUG *ad, void *data);
+	int (*passwd_handler)(SettingSecurity *ad, void *data);
 };
 
 #if SUPPORT_SECURITY_FIREWALL
@@ -312,13 +314,11 @@ enum {
 };
 
 /**
- * Setting Security UG context
- * all UG function has void* as an agument. this is casted back to
- * SettingSecurityUG and the functions access app context.
+ * Setting Security context
  */
-struct _SettingSecurityUG {
-	ui_gadget_h ug;
-	ui_gadget_h ug_loading;
+struct _SettingSecurity {
+	MainData md;
+
 	TapiHandle *handle;
 	TelSimFacilityStatus_t sim_status;
 	TelSimFacilityStatus_t pin1_status;
@@ -326,9 +326,7 @@ struct _SettingSecurityUG {
 	unsigned int enter_tapi_async_cb_flag;
 
 	/* add more variables here (move your appdata to here) */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
+
 	Evas_Object *notify;
 	Evas_Object *video_ly;
 	Evas_Object *video_ly_show_face_btn;
@@ -342,13 +340,11 @@ struct _SettingSecurityUG {
 
 	int viewtype;
 
-	/*to export lock type UG */
+	/* to export lock type */
 	setting_view *view_to_load;
 	Evas_Object *save_popup;
 
 	Evas_Object *ly_guild;
-	Evas_Object *ly_main;
-	Evas_Object *navi_bar;
 	Evas_Object *sim_popup;
 	ui_gadget_h ug_passwd;
 	ui_gadget_h ug_mmc_encryption;
@@ -497,7 +493,7 @@ extern setting_view setting_view_security_sim_settings;
 
 extern setting_view setting_view_security_update;
 
-extern SettingSecurityUG *g_ad; /* for tapi callback */
+extern SettingSecurity *g_ad; /* for tapi callback */
 
 /*char *get_screen_lock_type_str(void * priv); */
 void setting_security_result_password_ug_cb(ui_gadget_h ug,
@@ -510,10 +506,6 @@ void setting_security_pin2_get_lock_info_cb(TapiHandle *handle, int result,
 		void *data, void *user_data);
 
 gboolean setting_security_create_password_sg(void *data);
-
-void setting_security_destroy_password_ug_cb(ui_gadget_h ug, void *priv);
-void setting_security_layout_passwd_ug_cb(ui_gadget_h ug, enum ug_mode mode,
-		void *priv);
 
 gboolean setting_security_create_lockscreen_options_sg(void *data);
 gboolean setting_security_create_mmc_encryption_sg(void *data);
