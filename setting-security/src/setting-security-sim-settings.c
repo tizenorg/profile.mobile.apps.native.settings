@@ -55,10 +55,10 @@ static int setting_security_sim_settings_create(void *cb)
 	/*Elm_Object_Item *item = NULL;*/
 
 	/* add basic layout */
-	setting_push_layout_navi_bar_genlist(ad->win_main_layout, ad->win_get,
+	setting_push_layout_navi_bar_genlist(ad->md.view_layout, ad->md.win_main,
 	SECURITY_SIM_SETTINGS, _("IDS_ST_BUTTON_BACK"), NULL,
 			(setting_call_back_func)setting_security_sim_settings_click_softkey_back_cb,
-			NULL, ad, &scroller, ad->navi_bar);
+			NULL, ad, &scroller, ad->md.navibar_main);
 
 	evas_object_smart_callback_add(scroller, "realized", __gl_realized_cb,
 			NULL);
@@ -154,7 +154,7 @@ static int setting_security_sim_settings_destroy(void *cb)
 		ecore_timer_del(ad->tapi_async_cb_check_timer);
 		ad->tapi_async_cb_check_timer = NULL;
 	}
-	/*elm_naviframe_item_pop(ad->navi_bar); */
+	/*elm_naviframe_item_pop(ad->md.navibar_main); */
 
 	setting_view_security_sim_settings.is_create = 0;
 
@@ -263,7 +263,7 @@ static void get_pin_lock_info_cb(TapiHandle *handle, int result, void *data,
 		SETTING_TRACE("Current status of PIN Lock is Blocked");
 		ad->pw_type = SETTING_SEC_PW_PIN1_BLOCKED;
 	} else if (lock->lock_status == 5) { /* Blocked */
-		setting_create_popup(NULL, ad->win_get,
+		setting_create_popup(NULL, ad->md.win_main,
 		NULL, _("PUK is blocked. Can't use PIN Lock"), NULL, 0, false,
 				false, 0);
 		return;
@@ -280,7 +280,7 @@ static Eina_Bool _check_tapi_async_cb_is_called(void *data)
 	SettingSecurityUG *ad = (SettingSecurityUG *)data;
 
 	if (!ad->enter_tapi_async_cb_flag) {
-		ad->sim_popup = setting_create_popup(ad, ad->win_get,
+		ad->sim_popup = setting_create_popup(ad, ad->md.win_main,
 		NULL, KeyStr_Security_Waiting_Sim,
 		NULL, 0, TRUE, TRUE, 0);
 	}
@@ -325,7 +325,7 @@ void _draw_pin_onoff_status(void *data, Evas_Object *check)
 		SETTING_TRACE_DEBUG(
 				"%s*** [ERR] tel_get_sim_type. sim_card=%d ***%s",
 				SETTING_FONT_RED, sim_card, SETTING_FONT_BLACK);
-		setting_create_popup(NULL, ad->win_get,
+		setting_create_popup(NULL, ad->md.win_main,
 		NULL, _("IDS_SIM_BODY_INVALID_SIM_CARD"), NULL, 0, false, false,
 				0);
 		return;
@@ -375,7 +375,7 @@ static void get_sim_lock_info_cb(TapiHandle *handle, int result, void *data,
 			lock->retry_count);
 
 	if (lock->lock_status == 5) { /* Blocked */
-		setting_create_popup(NULL, ad->win_get,
+		setting_create_popup(NULL, ad->md.win_main,
 		NULL, _("SIM is blocked. Can't use SIM Lock"), NULL, 0, false,
 				false, 0);
 		return;
@@ -403,7 +403,7 @@ void _draw_sim_onoff_status(void *data, Evas_Object *check)
 		evas_object_del(ad->sim_popup);
 		ad->sim_popup = NULL;
 	}
-	ad->sim_popup = setting_create_popup(ad, ad->win_get,
+	ad->sim_popup = setting_create_popup(ad, ad->md.win_main,
 	NULL, KeyStr_Security_Waiting_Sim,
 	NULL, 0, FALSE, FALSE, 0);
 
@@ -451,7 +451,7 @@ static void get_change_pin_info_cb(TapiHandle *handle, int result, void *data,
 		ad->pw_type = SETTING_SEC_PW_CHANGE_PIN2;
 	} else if (lock->lock_status == TAPI_SIM_LOCK_PERM_BLOCKED) {
 		/* Blocked : 0x05 */
-		setting_create_popup(NULL, ad->win_get,
+		setting_create_popup(NULL, ad->md.win_main,
 		NULL, _("Permanent block SIM"), NULL, 0, false, false, 0);
 		return;
 	}
@@ -477,7 +477,7 @@ void _mouse_up_change_pin(void *data, int sel_item)
 	case VCONFKEY_TELEPHONY_SIM_INSERTED:
 		break;
 	case VCONFKEY_TELEPHONY_SIM_NOT_PRESENT:
-		setting_create_popup(NULL, ad->win_get,
+		setting_create_popup(NULL, ad->md.win_main,
 		NULL, _(SECURITY_SIM_NOT_PRESENT_MSG), NULL, 0, false, false,
 				0);
 		SETTING_TRACE_DEBUG(
@@ -487,7 +487,7 @@ void _mouse_up_change_pin(void *data, int sel_item)
 		break;
 	case VCONFKEY_TELEPHONY_SIM_CARD_ERROR:
 	case VCONFKEY_TELEPHONY_SIM_UNKNOWN:
-		setting_create_popup(NULL, ad->win_get,
+		setting_create_popup(NULL, ad->md.win_main,
 		NULL, _("IDS_SIM_BODY_INVALID_SIM_CARD"), NULL, 0, false, false,
 				0);
 		SETTING_TRACE_DEBUG(
@@ -514,7 +514,7 @@ void _mouse_up_change_pin(void *data, int sel_item)
 		SETTING_TRACE_DEBUG(
 				"%s*** [ERR] tel_get_sim_type. sim_card=%d ***%s",
 				SETTING_FONT_RED, sim_card, SETTING_FONT_BLACK);
-		setting_create_popup(NULL, ad->win_get,
+		setting_create_popup(NULL, ad->md.win_main,
 		NULL, _("IDS_SIM_BODY_INVALID_SIM_CARD"), NULL, 0, false, false,
 				0);
 		return;
