@@ -44,6 +44,8 @@
 #include <app_manager.h>
 #include <dd-deviced.h>
 
+#include "setting-common-init.h"
+
 /*///////////////////face and voice unlock */
 #define SET_AS_LOCK_STR "IDS_ST_SK_SET_LITE"/*"Set as lock" */
 #define CONTINUE_STR "Continue"
@@ -317,8 +319,8 @@ enum {
  * SettingSecurityUG and the functions access app context.
  */
 struct _SettingSecurityUG {
-	ui_gadget_h ug;
-	ui_gadget_h ug_loading;
+	MainData md;
+
 	TapiHandle *handle;
 	TelSimFacilityStatus_t sim_status;
 	TelSimFacilityStatus_t pin1_status;
@@ -326,9 +328,7 @@ struct _SettingSecurityUG {
 	unsigned int enter_tapi_async_cb_flag;
 
 	/* add more variables here (move your appdata to here) */
-	Evas *evas;
-	Evas_Object *win_main_layout;
-	Evas_Object *win_get;
+
 	Evas_Object *notify;
 	Evas_Object *video_ly;
 	Evas_Object *video_ly_show_face_btn;
@@ -347,8 +347,6 @@ struct _SettingSecurityUG {
 	Evas_Object *save_popup;
 
 	Evas_Object *ly_guild;
-	Evas_Object *ly_main;
-	Evas_Object *navi_bar;
 	Evas_Object *sim_popup;
 	ui_gadget_h ug_passwd;
 	ui_gadget_h ug_mmc_encryption;
