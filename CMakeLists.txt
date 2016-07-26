@@ -38,7 +38,6 @@ SET(SETTING_FLIGHTMODE setting-flightmode)
 
 SET(SETTING_PROFILE_UG setting-profile-efl)
 SET(SETTING_DEVELOPEROPTION_UG setting-developeroption-efl)
-SET(SETTING_SECURITY_UG setting-security-efl)
 SET(SETTING_LOCKTYPE_UG setting-locktype-efl)
 SET(SETTING_DISPLAY_UG setting-display-efl)
 SET(SETTING_APPLICATIONS_UG setting-applications-efl)
@@ -102,7 +101,7 @@ CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting.xml.in 
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting_font-lite.xml.in ${CMAKE_SOURCE_DIR}/resource/changeable/org.tizen.setting_font-lite.xml @ONLY)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/mime.setting.xml.in ${CMAKE_SOURCE_DIR}/mime.setting.xml @ONLY)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/src/setting-common-internal.pc.in ${CMAKE_SOURCE_DIR}/src/setting-common-internal.pc @ONLY)
-
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/setting-security/org.tizen.setting-security.xml.in ${CMAKE_SOURCE_DIR}/org.tizen.setting-security.xml @ONLY)
 
 # setting bin
 # setting plugin

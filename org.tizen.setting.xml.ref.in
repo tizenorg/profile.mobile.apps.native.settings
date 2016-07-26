@@ -119,13 +119,6 @@
 			<label xml:lang="ja-jp">端末情報</label>
 			<label xml:lang="ko-kr">디바이스 정보</label>
         </ui-application>
-	<ui-application appid="setting-security-efl" exec="@TZ_SYS_RO_UG@/bin/setting-security-efl" type="capp" nodisplay="true" taskmanage="false">
-                        <icon>@TZ_SYS_RO_APP@/org.tizen.setting/res/icons/settings_security.png</icon>
-			<label>Security</label>
-                        <label xml:lang="en-us">Security</label>
-			<label xml:lang="ja-jp">セキュリティ</label>
-			<label xml:lang="ko-kr">보안</label>
-        </ui-application>
 	<ui-application appid="setting-time-efl" exec="@TZ_SYS_RO_UG@/bin/setting-time-efl" type="capp" nodisplay="true" taskmanage="true">
                         <icon>@TZ_SYS_RO_APP@/org.tizen.setting/res/icons/A01-1_icon_Date_and_time.png</icon>
                         <label>Date and time</label>
