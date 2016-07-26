@@ -245,10 +245,11 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 		Cfg_Item_AppLauncher_Node, NULL, KeyStr_Personal, NULL,
 		uuid_HomeAndLockscreen, 0,
 		"org.tizen.setting.wallpaper-ui-service"},
-	{	KeyStr_LockScreen, IMG_LockedScreen, "setting-security-efl",
-		Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0,
-		Cfg_Item_AppLauncher_Node, NULL, KeyStr_Personal, NULL,
-		uuid_LockedScreen, 0, "ug-lockscreen-options-efl"},
+	{	KeyStr_LockScreen, IMG_LockedScreen, "org.tizen.setting-security",
+		Cfg_Item_Pos_Level0, Cfg_Item_Resetable,
+		0, Cfg_Item_AppLauncher_Node, NULL, KeyStr_Personal,
+		NULL, uuid_LockedScreen, 0, "org.tizen.setting-security"
+	},
 #if 0
 	/*Accessbility - not supported since 2015.8.12 */
 	{	KeyStr_Accessibility, IMG_Accessibility,
@@ -303,10 +304,6 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 		uuid_AboutPhone, 0, NULL},
 
 #if 0
-	{	KeyStr_Security, IMG_Security, "setting-security-efl",
-		Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0,
-		Cfg_Item_Ug_Node, NULL, KeyStr_DeviceMange, NULL,
-		uuid_Security, 0, NULL},
 	/* Downloaded App */
 	{	KeyStr_DownloadedAPPs, NULL, "move://Tab6.top",
 		Cfg_Item_Pos_Level0,

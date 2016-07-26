@@ -196,7 +196,7 @@ static int setting_security_enc_processing_create(void *cb)
 	Evas_Object *progressbar = NULL;
 	char enc_type[16] = { 0, };
 
-	layout = elm_layout_add(ad->win_main_layout);
+	layout = elm_layout_add(ad->md.view_layout);
 	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND,
 			EVAS_HINT_EXPAND);
 
@@ -206,7 +206,7 @@ static int setting_security_enc_processing_create(void *cb)
 	/*elm_win_fullscreen_set(layout, EINA_TRUE); */
 	/*setting_resize_object(layout, 720, 1280); */
 
-	/*elm_win_resize_object_add(ad->win_get, layout); */
+	/*elm_win_resize_object_add(ad->md.win_main, layout); */
 
 	progressbar = elm_progressbar_add(layout);
 	elm_progressbar_value_set(progressbar, 0);
