@@ -131,6 +131,13 @@ Group: Application Framework/Settings
 #Requires: pkgconfig(setting-common-internal)
 %description devel
 
+%package security
+Summary: A setting security application
+Group: Application
+
+%description security
+Configuration application for security
+
 %prep
 mkdir -p %{buildroot}%{TZ_SYS_SHARE}/settings
 %setup -q
@@ -342,3 +349,9 @@ mv %{_datadir}/packages/org.tizen.setting.xml.ref %{_datadir}/packages/org.tizen
 %files ref
 %{_datadir}/mime/packages/mime.setting.xml
 %{_datadir}/packages/org.tizen.setting.xml.ref
+
+%files security
+%manifest setting-security/org.tizen.setting-security.manifest
+%{_prefix}/apps/org.tizen.setting-security/bin/setting-security
+%{_datadir}/packages/org.tizen.setting-security.xml
+%{_prefix}/apps/org.tizen.setting-security/res/*

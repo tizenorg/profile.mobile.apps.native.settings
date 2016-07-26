@@ -19,9 +19,6 @@
  *
  */
 
-#include <setting-security.h>
-#include <setting-cfg.h>
-
 #include <efl_extension.h>
 #include <app_manager.h>
 #if SUPPORT_ENCRYPTION
@@ -30,46 +27,27 @@
 #include <sys/wait.h>
 #include <bundle_internal.h>
 
+#include "setting-security.h"
+#include "setting-cfg.h"
+
+
 #define Max_Passwd_View_Type_Len	64
-#ifndef UG_MODULE_API
-#define UG_MODULE_API __attribute__ ((visibility("default")))
-#endif
+#define SETTING_SECURITY_PACKAGE_NAME "org.tizen.setting-security"
+#define SETTING_SECURITY_LOCALEDIR _TZ_SYS_RO_APP"/org.tizen.setting-security/res/locale"
+#define SETTING_SECURITY_EDJEDIR _TZ_SYS_RO_APP"/org.tizen.setting-security/res/edje"
 
-SettingSecurityUG *g_ad; /* for tapi callback */
-COMMAND *g_ipHead, *g_ipTail;
-COMMAND *g_urlHead, *g_urlTail;
-COMMAND *g_portHead, *g_portTail;
 
-enum {
-	RESULT_OK, RESULT_FAILED, RESULT_CANCELED, RESULT_NETWORK_ERROR
-};
-
-void setting_security_ug_popup_resp_cb(void *data, Evas_Object *obj,
-		void *event_info)
-{
-	retm_if(data == NULL, "Data parameter is NULL");
-
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
-	if (ad->save_popup) {
-		evas_object_del(ad->save_popup);
-		ad->save_popup = NULL;
-	}
-	ug_destroy_me(ad->ug);
-}
-
-int pwd_handler_do_nothing(SettingSecurityUG *data, void *arg)
+int pwd_handler_do_nothing(SettingSecurity *data, void *arg)
 {
 	SETTING_TRACE_BEGIN;
-	/*SettingSecurityUG *ad = (SettingSecurityUG *)data; */
-	/* DO NOTHING */
 	return 0;
 }
 
-int pwd_handler_sec_pw_passwd(SettingSecurityUG *data, void *arg)
+int pwd_handler_sec_pw_passwd(SettingSecurity *data, void *arg)
 {
 	SETTING_TRACE_BEGIN;
 #if SUPPORT_ENCRYPTION
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 
 	if (setting_view_security_encryption.is_create == TRUE
 			&& ad->pw_type == SETTING_SEC_PW_ENCRYPTION) {
@@ -110,67 +88,29 @@ int pwd_handler_sec_pw_passwd(SettingSecurityUG *data, void *arg)
 #endif
 
 	if (vconf_set_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT,
-			SETTING_SCREEN_LOCK_TYPE_PASSWORD) == 0) {
-		/* Success to save */
-	} else {
+			SETTING_SCREEN_LOCK_TYPE_PASSWORD) != 0)
 		SETTING_TRACE_ERROR(
 				"setting vconf value failed : screen_lock_type");
-	}
 
 	return 0;
 }
 
-static void __face_voice_done_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	/* error check */
-	retm_if(data == NULL, "[Setting > Security] Data parameter is NULL");
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
-
-	/*int i = 0; */
-	while (elm_naviframe_top_item_get(ad->navi_bar)
-			!= ad->screen_lock_main_item) {
-		elm_naviframe_item_pop(ad->navi_bar);
-		/*SETTING_TRACE("i:%d",i); */
-		/*i++; */
-		/*sleep(2); */
-		if (elm_naviframe_top_item_get(ad->navi_bar)
-				== elm_naviframe_bottom_item_get(ad->navi_bar)) {
-			break;
-		}
-	}
-}
-
-int pwd_handler_sec_pw_simple_passwd(SettingSecurityUG *data, void *arg)
+int pwd_handler_sec_pw_simple_passwd(SettingSecurity *data, void *arg)
 {
 	SETTING_TRACE_BEGIN;
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
 
-	SETTING_TRACE("ad->selected_lock_type:%s", ad->selected_lock_type);
-	/*'face and voice ' and 'simple password' share the same PASSWD_TYPE and
-	 * callback function */
 	int lock_type = SETTING_SCREEN_LOCK_TYPE_SIMPLE_PASSWORD;
-	if (!safeStrCmp(ad->selected_lock_type, Keystr_FaceAndVoice)) {
-		lock_type = SETTING_SCREEN_LOCK_TYPE_FACE_AND_VOICE;
-		setting_create_guild_layout(ad->navi_bar, Setup_Face_Unlock_Str,
-				_("IDS_SA_BUTTON_DONE_ABB"), NULL, NULL,
-				__face_voice_done_cb, NULL, NULL,
-				_(Finish_Setup_Face),
-				NULL, NULL, NULL, NULL, ad);
-	}
 
-	if (vconf_set_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, lock_type) == 0) {
-		/* Success to save */
-	} else {
-		SETTING_TRACE_ERROR(
-				"setting vconf value failed : screen_lock_type");
+	if (vconf_set_int(VCONFKEY_SETAPPL_SCREEN_LOCK_TYPE_INT, lock_type) != 0) {
+		SETTING_TRACE_ERROR("setting vconf value failed : screen_lock_type");
 	}
 	return 0;
 }
 
-int pwd_handler_sec_pw_sim_lock_on(SettingSecurityUG *data, void *arg)
+int pwd_handler_sec_pw_sim_lock_on(SettingSecurity *data, void *arg)
 {
 	SETTING_TRACE_BEGIN;
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 	if (tel_get_sim_facility(ad->handle, TAPI_SIM_LOCK_PS,
 			setting_security_sim_get_facility_cb, ad) != TAPI_API_SUCCESS) {
 		SETTING_TRACE_ERROR(
@@ -179,10 +119,10 @@ int pwd_handler_sec_pw_sim_lock_on(SettingSecurityUG *data, void *arg)
 	return 0;
 }
 
-int pwd_handler_sec_pw_sim_lock_off(SettingSecurityUG *data, void *arg)
+int pwd_handler_sec_pw_sim_lock_off(SettingSecurity *data, void *arg)
 {
 	SETTING_TRACE_BEGIN;
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 	if (tel_get_sim_facility(ad->handle, TAPI_SIM_LOCK_PS,
 			setting_security_sim_get_facility_cb, ad) != TAPI_API_SUCCESS) {
 		SETTING_TRACE_ERROR(
@@ -191,11 +131,11 @@ int pwd_handler_sec_pw_sim_lock_off(SettingSecurityUG *data, void *arg)
 	return 0;
 }
 
-int pwd_handler_sec_pw_pin_lock_on(SettingSecurityUG *data, void *arg)
+int pwd_handler_sec_pw_pin_lock_on(SettingSecurity *data, void *arg)
 {
 	SETTING_TRACE_BEGIN;
 	retv_if(!data, -1);
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 
 	if (tel_get_sim_facility(ad->handle, TAPI_SIM_LOCK_SC,
 			setting_security_pin_get_facility_cb, ad)
@@ -206,10 +146,10 @@ int pwd_handler_sec_pw_pin_lock_on(SettingSecurityUG *data, void *arg)
 	return 0;
 }
 
-int pwd_handler_sec_pw_pin_lock_off(SettingSecurityUG *data, void *arg)
+int pwd_handler_sec_pw_pin_lock_off(SettingSecurity *data, void *arg)
 {
 	SETTING_TRACE_BEGIN;
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 	if (tel_get_sim_facility(ad->handle, TAPI_SIM_LOCK_SC,
 			setting_security_pin_get_facility_cb, ad)
 			!= TAPI_API_SUCCESS) {
@@ -219,33 +159,34 @@ int pwd_handler_sec_pw_pin_lock_off(SettingSecurityUG *data, void *arg)
 	return 0;
 }
 
-int pwd_handler_sec_pw_sim_lock_disabled(SettingSecurityUG *data, void *arg)
+int pwd_handler_sec_pw_sim_lock_disabled(SettingSecurity *data, void *arg)
 {
 	SETTING_TRACE_BEGIN;
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
-	/* [in] Evas_Object *checkbtn */
+	/* SettingSecurity *ad = (SettingSecurity *)data;
+	 * [in] Evas_Object *checkbtn */
+	/* TODO: ad->data_sim_lk never set (always NULL)
 	if (ad->data_sim_lk)
 		setting_disable_genlist_item(ad->data_sim_lk->item);
-
+	*/
 	return 0;
 }
 
-int pwd_handler_sec_pw_change_pin1(SettingSecurityUG *data, void *arg)
+int pwd_handler_sec_pw_change_pin1(SettingSecurity *data, void *arg)
 {
 	SETTING_TRACE_BEGIN;
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 
-	setting_create_popup(ad, ad->ly_main, NULL, "IDS_ST_POP_PIN_CHANGED",
+	setting_create_popup(ad, ad->md.ly_main, NULL, "IDS_ST_POP_PIN_CHANGED",
 	NULL,
 	POPUP_INTERVAL, FALSE, FALSE, 0);
 	return 0;
 }
 
 #if SUPPORT_FDN
-int pwd_handler_sec_pw_fdn_mode_on(SettingSecurityUG *data, void *arg)
+int pwd_handler_sec_pw_fdn_mode_on(SettingSecurity *data, void *arg)
 {
 	SETTING_TRACE_BEGIN;
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 	if (tel_get_sim_facility(ad->handle, TAPI_SIM_LOCK_FD,
 					setting_security_sim_get_facility_cb, ad)
 			!= TAPI_API_SUCCESS) {
@@ -255,10 +196,10 @@ int pwd_handler_sec_pw_fdn_mode_on(SettingSecurityUG *data, void *arg)
 	return 0;
 }
 
-int pwd_handler_sec_pw_fdn_mode_off(SettingSecurityUG *data, void *arg)
+int pwd_handler_sec_pw_fdn_mode_off(SettingSecurity *data, void *arg)
 {
 	SETTING_TRACE_BEGIN;
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 	if (tel_get_sim_facility(ad->handle, TAPI_SIM_LOCK_FD,
 					setting_security_sim_get_facility_cb, ad)
 			!= TAPI_API_SUCCESS) {
@@ -269,7 +210,7 @@ int pwd_handler_sec_pw_fdn_mode_off(SettingSecurityUG *data, void *arg)
 }
 #endif
 
-int pwd_handler_sec_pw_change_pin2(SettingSecurityUG *data, void *arg)
+int pwd_handler_sec_pw_change_pin2(SettingSecurity *data, void *arg)
 {
 	SETTING_TRACE_BEGIN;
 	return 0;
@@ -280,7 +221,7 @@ static void setting_security_pin1_blocked_resp_cb(void *data, Evas_Object *obj,
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(!data);
-	SettingSecurityUG *ad = data;
+	SettingSecurity *ad = data;
 
 	int ret = 0;
 	/* Call pwlock. */
@@ -298,10 +239,10 @@ static void setting_security_pin1_blocked_resp_cb(void *data, Evas_Object *obj,
 	}
 }
 
-int pwd_handler_sec_pw_pin1_blocked(SettingSecurityUG *data, void *arg)
+int pwd_handler_sec_pw_pin1_blocked(SettingSecurity *data, void *arg)
 {
 	SETTING_TRACE_BEGIN;
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 
 	if (ad->sim_popup) {
 		evas_object_del(ad->sim_popup);
@@ -321,7 +262,7 @@ int pwd_handler_sec_pw_pin1_blocked(SettingSecurityUG *data, void *arg)
 
 	int ret = 0;
 	disp = ecore_x_display_get();
-	xwin = elm_win_xwindow_get(ad->win_get);
+	xwin = elm_win_xwindow_get(ad->md.win_main);
 
 	ecore_x_netwm_window_type_set(xwin, ECORE_X_WINDOW_TYPE_NOTIFICATION);
 	utilx_set_system_notification_level(disp, xwin,
@@ -358,7 +299,7 @@ int pwd_handler_sec_pw_pin1_blocked(SettingSecurityUG *data, void *arg)
 	/* @todo : repace codes using X with codes tizen 3.0 API */
 #endif
 
-	ad->sim_popup = setting_create_popup(ad, ad->win_get, NULL, popup_text,
+	ad->sim_popup = setting_create_popup(ad, ad->md.win_main, NULL, popup_text,
 			setting_security_pin1_blocked_resp_cb, 0, FALSE, FALSE,
 			1, "IDS_ST_BUTTON_OK");
 	eext_object_event_callback_del(ad->sim_popup, EEXT_CALLBACK_BACK,
@@ -368,11 +309,11 @@ int pwd_handler_sec_pw_pin1_blocked(SettingSecurityUG *data, void *arg)
 	return 0;
 }
 
-int pwd_handler_sec_pw_pin2_blocked(SettingSecurityUG *data, void *arg)
+int pwd_handler_sec_pw_pin2_blocked(SettingSecurity *data, void *arg)
 {
 	SETTING_TRACE_BEGIN;
 
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 #if SUPPORT_FDN
 	if (tel_get_sim_facility(ad->handle, TAPI_SIM_LOCK_FD,
 					setting_security_sim_get_facility_cb,
@@ -390,7 +331,7 @@ int pwd_handler_sec_pw_pin2_blocked(SettingSecurityUG *data, void *arg)
 	char popup_text[2048] = { 0, };
 	snprintf(popup_text, 2048, "%s", _("IDS_ST_POP_PIN2_BLOCKED"));
 
-	setting_create_popup(ad, ad->win_get, NULL, popup_text,
+	setting_create_popup(ad, ad->md.win_main, NULL, popup_text,
 	NULL, 2, FALSE, FALSE, 0);
 
 	ad->pin2_blocked_flag = TRUE;
@@ -399,21 +340,21 @@ int pwd_handler_sec_pw_pin2_blocked(SettingSecurityUG *data, void *arg)
 	return 0;
 }
 
-int pwd_handler_sec_pw_pin2_unblocked(SettingSecurityUG *data, void *arg)
+int pwd_handler_sec_pw_pin2_unblocked(SettingSecurity *data, void *arg)
 {
 	SETTING_TRACE_BEGIN;
 
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 	ad->pin2_blocked_flag = FALSE;
 	setting_view_update(&setting_view_security_sim_settings, ad);
 
 	return 0;
 }
 
-int pwd_handler_sec_pw_puk1_blocked(SettingSecurityUG *data, void *arg)
+int pwd_handler_sec_pw_puk1_blocked(SettingSecurity *data, void *arg)
 {
 	SETTING_TRACE_BEGIN;
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 	if (setting_view_security_sim_settings.is_create == TRUE) {
 		setting_view_change(&setting_view_security_sim_settings,
 				&setting_view_security_main, ad);
@@ -486,13 +427,31 @@ static struct _security_item security_table[] = { {
 	/*--------------------------------------------------------------------*/
 	{ SETTING_SEC_PW_MAX, NULL, pwd_handler_do_nothing } };
 
-static void setting_security_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
+/* ***************************************************
+ *
+ *call back func
+ *
+ ***************************************************/
+/* -1	on fail */
+/* 0~n	on success */
+int _get_security_table_index(char *name)
+{
+	int i = 0;
+
+	for (i = 0; i < SETTING_SEC_PW_MAX; i++) {
+		if (0 == safeStrCmp(name, security_table[i].pw_type_string))
+			return i;
+	}
+	return -1;
+}
+
+static void _cb_resize(void *data, Evas *e, Evas_Object *obj,
 		void *event_info)
 {
 	ret_if(data == NULL);
 
 	/* ad is point to data */
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 	if (ad->viewtype == SETTING_SEC_VIEWTYPE_MAIN)
 		setting_view_update(&setting_view_security_main, ad);
 }
@@ -500,13 +459,11 @@ static void setting_security_ug_cb_resize(void *data, Evas *e, Evas_Object *obj,
 setting_view *__get_security_view_to_load(void *data, app_control_h service)
 {
 	SETTING_TRACE_BEGIN;
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
+	SettingSecurity *ad = (SettingSecurity *)data;
 
 	char *viewtype = NULL;
-
 	app_control_get_extra_data(service, "viewtype", &viewtype);
-	/*if(!viewtype) */
-	/* return NULL; */
+
 	if (viewtype) {
 		if (!safeStrCmp(viewtype, "encryption"))
 			ad->viewtype = SETTING_SEC_VIEWTYPE_ENCRYPTION;
@@ -539,6 +496,7 @@ setting_view *__get_security_view_to_load(void *data, app_control_h service)
 	} else if (ad->viewtype == SETTING_SEC_VIEWTYPE_UPDATE) {
 		setting_view_node_table_register(&setting_view_security_update,
 		NULL);
+
 		return &setting_view_security_update;
 	}
 #if SUPPORT_ENCRYPTION
@@ -548,9 +506,6 @@ setting_view *__get_security_view_to_load(void *data, app_control_h service)
 		setting_view_node_table_register(
 				&setting_view_security_confirm_encryption,
 				&setting_view_security_encryption);
-		/*setting_view_node_table_register(
-		 * &setting_view_security_enc_processing,
-		 *  &setting_view_security_confirm_encryption); */
 		return &setting_view_security_encryption;
 	}
 #endif
@@ -560,140 +515,65 @@ setting_view *__get_security_view_to_load(void *data, app_control_h service)
 	}
 }
 
-#if SUPPORT_APP_ROATION
-static void _rot_changed_cb(void *data, Evas_Object *obj, void *event_info)
+static bool _setting_security_app_create(void *priv)
 {
-	SETTING_TRACE_BEGIN;
-	SettingSecurityUG *securityUG = (SettingSecurityUG *)data;
-	ret_if(securityUG == NULL || securityUG->win_get == NULL);
+	SettingSecurity *ad = priv;
+	retv_if(!ad, false);
 
-	int change_ang = elm_win_rotation_get(securityUG->win_get);
-	SETTING_TRACE_DEBUG("....change_ang:%d", change_ang);
-	SETTING_TRACE_DEBUG("current_rotation:%d",
-			securityUG->current_rotation);
-	/*Send the rotation event to UGs.. */
-	enum ug_event event = UG_EVENT_ROTATE_PORTRAIT;
-	switch (change_ang) {
-	case APP_DEVICE_ORIENTATION_0:
-		event = UG_EVENT_ROTATE_PORTRAIT;
-		break;
-	case APP_DEVICE_ORIENTATION_180:
-		event = UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN;
-		break;
-	case APP_DEVICE_ORIENTATION_270:
-		event = UG_EVENT_ROTATE_LANDSCAPE;
-		break;
-	case APP_DEVICE_ORIENTATION_90:
-		event = UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN;
-		break;
-	default:
-		return;
+	if (app_init(&ad->md, SETTING_SECURITY_PACKAGE_NAME)
+			!= SETTING_RETURN_SUCCESS) {
+		SETTING_TRACE_ERROR("Cannot initialize application");
+		return false;
 	}
-	SETTING_TRACE_DEBUG("diff:%d",
-			elm_win_rotation_get(securityUG->win_get)
-			- securityUG->current_rotation);
 
-	if (change_ang != securityUG->current_rotation) {
-		int diff = change_ang - securityUG->current_rotation;
-		if (diff < 0)
-			diff = -diff;
+	elm_theme_extension_add(NULL, SETTING_SECURITY_EDJEDIR"/setting-genlist.edj");
+	elm_theme_extension_add(NULL, SETTING_SECURITY_EDJEDIR"/setting-theme.edj");
+	elm_theme_extension_add(NULL, SETTING_SECURITY_EDJEDIR"/setting.edj");
 
-		/**
-		 * @todo if app didn't launch UG, is the call required to
-		 * invoke?
-		 */
-		ug_send_event(event);
-		/* if (diff == 180) {
-			do nothing
-		} */
-		securityUG->current_rotation = change_ang;
-	}
-}
-#endif
+	bindtextdomain(SETTING_PACKAGE, SETTING_SECURITY_LOCALEDIR);
 
-static void *setting_security_ug_on_create(ui_gadget_h ug, enum ug_mode mode,
-		app_control_h service, void *priv)
-{
-	setting_retvm_if((!priv), NULL, "!priv");
-
-	SettingSecurityUG *securityUG = priv;
-	securityUG->ug = ug;
-
-	securityUG->win_main_layout = (Evas_Object *)ug_get_parent_layout(ug);
-	securityUG->win_get = (Evas_Object *)ug_get_window();
-	evas_object_show(securityUG->win_main_layout);
-	securityUG->evas = evas_object_evas_get(securityUG->win_main_layout);
-
-	setting_retvm_if(securityUG->win_main_layout == NULL, NULL,
-			"[Setting >> About] cannot get main window ");
-
-	/*setting_set_i18n(SETTING_PACKAGE, SETTING_LOCALEDIR); */
-	bindtextdomain(SETTING_PACKAGE, SETTING_LOCALEDIR);
-
-	securityUG->current_rotation = elm_win_rotation_get(
-			securityUG->win_get);
-	SETTING_TRACE_DEBUG("ad->current_rotation:%d",
-			securityUG->current_rotation);
-	if (elm_win_wm_rotation_supported_get(securityUG->win_get)) {
+	if (elm_win_wm_rotation_supported_get(ad->md.win_main)) {
 		/* rotation value that app may want */
 		int rots[4] = { 0, 90, 180, 270 };
-		elm_win_wm_rotation_available_rotations_set(securityUG->win_get,
+		elm_win_wm_rotation_available_rotations_set(ad->md.win_main,
 				rots, 4);
 	}
-	evas_object_smart_callback_add(securityUG->win_get,
-			"wm,rotation,changed", _rot_changed_cb, securityUG);
 
 	/* register view node table */
 	setting_view_node_table_intialize();
 
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(securityUG->itc_1text));
+			&(ad->itc_1text));
 	setting_create_Gendial_itc(SETTING_GENLIST_ICON_1LINE_STYLE,
-			&(securityUG->itc_1text_1icon));
+			&(ad->itc_1text_1icon));
 	setting_create_Gendial_itc(SETTING_GENLIST_GROUP_INDEX_STYLE,
-			&(securityUG->itc_group_item));
+			&(ad->itc_group_item));
 	setting_create_Gendial_itc("multiline_sub",
-			&(securityUG->itc_bg_1icon));
+			&(ad->itc_bg_1icon));
 	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
-			&(securityUG->itc_2text_2));
+			&(ad->itc_2text_2));
 	setting_create_Gendial_itc(SETTING_GENLIST_2LINE_STYLE,
-			&(securityUG->itc_2text_3_parent));
+			&(ad->itc_2text_3_parent));
 
-	securityUG->update_view_timer = NULL;
-	securityUG->remove_sim_popup_timer = NULL;
-	securityUG->tapi_async_cb_check_timer = NULL;
-	securityUG->input_pwd = NULL;
-	/*securityUG->cur_enc_mode = 0; */
+	ad->update_view_timer = NULL;
+	ad->tapi_async_cb_check_timer = NULL;
+	ad->input_pwd = NULL;
+
 	/* creating a view. */
-	securityUG->handle = tel_init(NULL);
-	if (!securityUG->handle) {
+	ad->handle = tel_init(NULL);
+	if (!ad->handle) {
 		SETTING_TRACE_ERROR("*** [ERR] tel_init. ***");
 		/*return NULL; */
 	}
-	securityUG->view_to_load = __get_security_view_to_load(securityUG,
-			service);
-	setting_retvm_if(NULL == securityUG->view_to_load, NULL,
-			"NULL == securityUG->view_to_load");
 
-	app_control_get_extra_data(service, "current",
-			&(securityUG->input_pwd));
+	evas_object_event_callback_add(ad->md.view_layout,
+			EVAS_CALLBACK_RESIZE, _cb_resize,
+			ad);
 
-	setting_view_node_set_cur_view(securityUG->view_to_load);
-	setting_view_create(securityUG->view_to_load, (void *)securityUG);
-	evas_object_event_callback_add(securityUG->win_main_layout,
-			EVAS_CALLBACK_RESIZE, setting_security_ug_cb_resize,
-			securityUG);
-
-	return securityUG->ly_main;
+	return true;
 }
 
-static void setting_security_ug_on_start(ui_gadget_h ug, app_control_h service,
-		void *priv)
-{
-}
-
-static void setting_security_ug_on_pause(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void _setting_security_app_pause(void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	setting_retm_if((!priv), "!priv");
@@ -704,12 +584,12 @@ static void setting_security_ug_on_pause(ui_gadget_h ug, app_control_h service,
 		if (is_running) {
 			SETTING_TRACE_DEBUG("pwlock is running");
 #ifdef ECORE_X
-			SettingSecurityUG *securityUG = priv;
+			SettingSecurity *ad = priv;
 			Ecore_X_Window xwin = 0;
 			Ecore_X_Display *disp = NULL;
 
 			disp = ecore_x_display_get();
-			xwin = elm_win_xwindow_get(securityUG->win_get);
+			xwin = elm_win_xwindow_get(ad->md.win_main);
 
 			ecore_x_netwm_window_type_set(xwin,
 					ECORE_X_WINDOW_TYPE_NORMAL);
@@ -752,159 +632,129 @@ static void setting_security_ug_on_pause(ui_gadget_h ug, app_control_h service,
 	}
 }
 
-static void setting_security_ug_on_resume(ui_gadget_h ug, app_control_h service,
-		void *priv)
+static void _setting_security_app_resume(void *priv)
 {
 	SETTING_TRACE_BEGIN;
-	setting_retm_if((!priv), "!priv");
-	SettingSecurityUG *securityUG = priv;
+	SettingSecurity *ad = priv;
+	ret_if(!ad);
 
 	if (setting_view_security_sim_settings.is_create == TRUE) {
-		if (tel_get_sim_facility(securityUG->handle, TAPI_SIM_LOCK_SC,
+		if (tel_get_sim_facility(ad->handle, TAPI_SIM_LOCK_SC,
 				setting_security_pin_get_facility_cb,
-				securityUG) != TAPI_API_SUCCESS) {
+				ad) != TAPI_API_SUCCESS) {
 			SETTING_TRACE_ERROR(
 					"tel_get_sim_facility(TAPI_SIM_LOCK_PS) failed");
 		}
 	}
 }
 
-static void setting_security_ug_on_destroy(ui_gadget_h ug,
-		app_control_h service, void *priv)
+static void _setting_security_app_control(app_control_h service, void *priv)
+{
+	SettingSecurity *ad = priv;
+
+	if (!ad)
+		return;
+
+	ad->view_to_load = __get_security_view_to_load(ad,
+							service);
+
+	if (!ad->view_to_load) {
+		SETTING_TRACE_ERROR("NULL == ad->view_to_load");
+		return;
+	}
+
+	app_control_get_extra_data(service, "current",
+			&(ad->input_pwd));
+
+	setting_view_node_set_cur_view(ad->view_to_load);
+	setting_view_create(ad->view_to_load, ad);
+}
+
+static void _setting_security_app_terminate(void *priv)
 {
 	SETTING_TRACE_BEGIN;
-	setting_retm_if((!priv), "!priv");
-	SettingSecurityUG *securityUG = priv;
-	securityUG->ug = ug;
+	SettingSecurity *ad = priv;
+	ret_if(!ad);
 
 	/* fix flash issue for gallery */
-	evas_object_event_callback_del(securityUG->win_main_layout,
-			EVAS_CALLBACK_RESIZE, setting_security_ug_cb_resize);
+	evas_object_event_callback_del(ad->md.view_layout,
+			EVAS_CALLBACK_RESIZE, _cb_resize);
 
-	if (securityUG->handle && tel_deinit(securityUG->handle)
+	if (ad->handle && tel_deinit(ad->handle)
 			!= TAPI_API_SUCCESS) {
 		SETTING_TRACE_DEBUG(
 				"%s*** [ERR] setting_network_unsubscribe_tapi_events. ***%s",
 				SETTING_FONT_RED, SETTING_FONT_BLACK);
 	}
 
-	FREE(securityUG->input_pwd);
+	FREE(ad->input_pwd);
 #if SUPPORT_ENCRYPTION
-	if (securityUG->viewtype == SETTING_SEC_VIEWTYPE_ENCRYPTION) {
+	if (ad->viewtype == SETTING_SEC_VIEWTYPE_ENCRYPTION) {
 		setting_view_destroy(&setting_view_security_confirm_encryption,
-				securityUG);
+				ad);
 		setting_view_destroy(&setting_view_security_encryption,
-				securityUG);
+				ad);
 	} else {
 #endif
-	setting_view_destroy(&setting_view_security_sim_settings, securityUG);
-	setting_view_destroy(&setting_view_security_update, securityUG);
-	setting_view_destroy(&setting_view_security_main, securityUG);
+	setting_view_destroy(&setting_view_security_sim_settings, ad);
+	setting_view_destroy(&setting_view_security_update, ad);
+	setting_view_destroy(&setting_view_security_main, ad);
 #if SUPPORT_ENCRYPTION
 	setting_view_destroy(&setting_view_security_confirm_encryption,
-			securityUG);
-	setting_view_destroy(&setting_view_security_encryption, securityUG);
+			ad);
+	setting_view_destroy(&setting_view_security_encryption, ad);
 }
 #endif
 
-	if (NULL != ug_get_layout(securityUG->ug)) {
-		evas_object_hide((Evas_Object *)ug_get_layout(securityUG->ug));
-		evas_object_del((Evas_Object *)ug_get_layout(securityUG->ug));
+	if (ad->md.win_main) {
+	    evas_object_del(ad->md.win_main);
+	    ad->md.win_main = NULL;
 	}
 }
 
-static void setting_security_ug_on_message(ui_gadget_h ug, app_control_h msg,
-		app_control_h service, void *priv)
+static void _lang_changed(app_event_info_h event_info, void *priv)
 {
+	char *lang = NULL;
 
-}
-
-static void setting_security_ug_on_event(ui_gadget_h ug, enum ug_event event,
-		app_control_h service, void *priv)
-{
-	if (!priv)
-		return;
-	SettingSecurityUG *ad = (SettingSecurityUG *)priv;
-
-	switch (event) {
-	case UG_EVENT_LOW_MEMORY:
-		break;
-	case UG_EVENT_LOW_BATTERY:
-		break;
-	case UG_EVENT_LANG_CHANGE:
-		if (ad->navi_bar)
-			setting_navi_items_update(ad->navi_bar);
-
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT:
-		break;
-	case UG_EVENT_ROTATE_PORTRAIT_UPSIDEDOWN:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE:
-		break;
-	case UG_EVENT_ROTATE_LANDSCAPE_UPSIDEDOWN:
-		break;
-	case UG_EVENT_REGION_CHANGE:
-		break;
-	default:
-		break;
+	if (app_event_get_language(event_info, &lang) == APP_ERROR_NONE) {
+		SETTING_TRACE_DEBUG("Setting - language is changed : %s", lang);
+		elm_language_set(lang);
+		elm_config_all_flush();
+		free(lang);
+	} else {
+		SETTING_TRACE_ERROR("Cannot get language from event_info");
 	}
 }
 
-static void setting_security_ug_on_key_event(ui_gadget_h ug,
-		enum ug_key_event event, app_control_h service, void *priv)
+EXPORT_PUBLIC
+int main(int argc, char *argv[])
 {
-	if (!priv)
-		return;
-	/* ad is point to priv */
-	SettingSecurityUG *ad = (SettingSecurityUG *)priv;
-	switch (event) {
-	case UG_KEY_EVENT_END: {
-		if (elm_naviframe_top_item_get(ad->navi_bar)
-				== elm_naviframe_bottom_item_get(ad->navi_bar)) {
-			ug_destroy_me(ug);
-		} else {
-			/* elm_naviframe_item_pop(ad->navi_bar); */
-			setting_view_cb_at_endKey(ad);
-		}
-	}
-		break;
+	app_event_handler_h handlers[5] = {NULL, };
+	ui_app_lifecycle_callback_s ops = {
+		.create = _setting_security_app_create,
+		.pause = _setting_security_app_pause,
+		.resume = _setting_security_app_resume,
+		.terminate = _setting_security_app_terminate,
+		.app_control = _setting_security_app_control
+	};
 
-	default:
-		break;
-	}
-}
+	SettingSecurity app_data;
 
-UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
-{
-	SettingSecurityUG *securityUG = calloc(1, sizeof(SettingSecurityUG));
-	setting_retvm_if(!securityUG, -1,
-			"Create SettingSecurityUG obj failed");
+	memset(&app_data, 0, sizeof(app_data));
 
-	memset(securityUG, 0x00, sizeof(SettingSecurityUG));
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY],
+			APP_EVENT_LOW_MEMORY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY],
+			APP_EVENT_LOW_BATTERY, NULL, NULL);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED],
+			APP_EVENT_LANGUAGE_CHANGED, _lang_changed, &app_data);
+	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED],
+			APP_EVENT_REGION_FORMAT_CHANGED, NULL, NULL);
+	ui_app_add_event_handler(
+			&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED],
+			APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
 
-	ops->create = setting_security_ug_on_create;
-	ops->start = setting_security_ug_on_start;
-	ops->pause = setting_security_ug_on_pause;
-	ops->resume = setting_security_ug_on_resume;
-	ops->destroy = setting_security_ug_on_destroy;
-	ops->message = setting_security_ug_on_message;
-	ops->event = setting_security_ug_on_event;
-	ops->key_event = setting_security_ug_on_key_event;
-	ops->priv = securityUG;
-	ops->opt = UG_OPT_INDICATOR_ENABLE;
-
-	return 0;
-}
-
-UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
-{
-	struct SettingSecurityUG *securityUG;
-	setting_retm_if(!ops, "ops == NULL");
-
-	securityUG = ops->priv;
-	if (securityUG)
-		FREE(securityUG);
+	return ui_app_main(argc, argv, &ops, &app_data);
 }
 
 /* ***************************************************
@@ -925,7 +775,7 @@ void setting_security_sim_get_facility_cb(TapiHandle *handle, int result,
 
 	TelSimPinOperationResult_t sec_rt = result;
 	TelSimFacilityInfo_t *fi = data;
-	SettingSecurityUG *ad = user_data;
+	SettingSecurity *ad = user_data;
 	ad->enter_tapi_async_cb_flag++;
 
 	SETTING_TRACE("sec_rt[%d]", sec_rt);
@@ -959,31 +809,6 @@ void setting_security_sim_get_facility_cb(TapiHandle *handle, int result,
 	SETTING_TRACE_END;
 }
 
-void setting_security_pin2_get_lock_info_cb(TapiHandle *handle, int result,
-		void *data, void *user_data)
-{
-	SETTING_TRACE_BEGIN;
-	ret_if(!user_data);
-	SETTING_TRACE_DEBUG("user_data is not NULL");
-
-	ret_if(!data);
-	SETTING_TRACE_DEBUG("data is not NULL");
-
-	TelSimPinOperationResult_t sec_rt = result;
-	TelSimLockInfo_t *lock = data;
-
-	SettingSecurityUG *ad = (SettingSecurityUG *)user_data;
-
-	SETTING_TRACE_DEBUG(
-			"sec_ret[%d], lock_type[%d], lock_status[%d], retry_count[%d]",
-			sec_rt, lock->lock_type, lock->lock_status,
-			lock->retry_count);
-	if (lock->lock_type == TAPI_SIM_LOCK_FD
-			&& lock->lock_status == TAPI_SIM_LOCK_KEY_PUK2) {
-		ad->pin2_blocked_flag = TRUE;
-	}
-}
-
 void setting_security_pin_get_facility_cb(TapiHandle *handle, int result,
 		void *data, void *user_data)
 {
@@ -997,7 +822,7 @@ void setting_security_pin_get_facility_cb(TapiHandle *handle, int result,
 
 	TelSimPinOperationResult_t sec_rt = result;
 	TelSimFacilityInfo_t *fi = data;
-	SettingSecurityUG *ad = user_data;
+	SettingSecurity *ad = user_data;
 
 	SETTING_TRACE("sec_rt[%d]", sec_rt);
 	SETTING_TRACE("fi->type[%d]", fi->type);
@@ -1039,50 +864,11 @@ void setting_security_pin_get_facility_cb(TapiHandle *handle, int result,
 	SETTING_TRACE_END;
 }
 
-void setting_security_layout_passwd_ug_cb(ui_gadget_h ug, enum ug_mode mode,
-		void *priv)
-{
-	if (!priv)
-		return;
-
-	Evas_Object *base = ug_get_layout(ug);
-	if (!base)
-		return;
-
-	switch (mode) {
-	case UG_MODE_FULLVIEW:
-		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-		EVAS_HINT_EXPAND);
-		evas_object_show(base);
-		break;
-	default:
-		break;
-	}
-
-	return;
-}
-
-void setting_security_destroy_password_ug_cb(ui_gadget_h ug, void *priv)
-{
-	SETTING_TRACE_BEGIN;
-	ret_if(priv == NULL);
-	SettingSecurityUG *ad = (SettingSecurityUG *)priv;
-
-	if (ad->ly_main)
-		elm_object_tree_focus_allow_set(ad->ly_main, EINA_TRUE);
-
-	if (ug)
-		setting_ug_destroy(ug);
-
-	SETTING_TRACE_DEBUG("[TEST] current : %s", ad->input_pwd);
-}
-
 void setting_security_end_password_ug_cb(ui_gadget_h ug, void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	ret_if(priv == NULL);
-	SettingSecurityUG *ad = (SettingSecurityUG *)priv;
-	ad->ug_passwd = NULL;
+	SettingSecurity *ad = (SettingSecurity *)priv;
 
 	if (setting_view_security_sim_settings.is_create == TRUE
 			&& ad->pw_type == SETTING_SEC_PW_PIN1_UNBLOCKED) {
@@ -1125,297 +911,32 @@ void setting_security_end_password_ug_cb(ui_gadget_h ug, void *priv)
 #endif
 }
 
-gboolean setting_security_create_password_sg(void *data)
-{
-	SETTING_TRACE_BEGIN;
-	/* error check */
-	retv_if(data == NULL, FALSE);
-
-	/* ad is point to data */
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
-
-	/* prevent the ug from being loaded again due to window event queuing */
-	/* added by JTS: CQ H0100135346 */
-	if (ad->ug_passwd) {
-		SETTING_TRACE("Password UG is already loaded.");
-		return FALSE;
-	}
-
-	if ((ad->pw_type < 0) || (ad->pw_type > SETTING_SEC_PW_MAX))
-		return FALSE;
-
-	char str[Max_Passwd_View_Type_Len + 1] = { 0, };
-	safeCopyStr(str, security_table[ad->pw_type].pw_type_string,
-	Max_Passwd_View_Type_Len);
-
-	struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
-
-	if (!cbs)
-		return FALSE;
-	cbs->layout_cb = setting_security_layout_passwd_ug_cb;
-	cbs->result_cb = setting_security_result_password_ug_cb;
-	cbs->destroy_cb = setting_security_destroy_password_ug_cb;
-	cbs->end_cb = setting_security_end_password_ug_cb;
-	cbs->priv = (void *)ad;
-
-	app_control_h svc;
-	if (app_control_create(&svc)) {
-		FREE(cbs);
-		return FALSE;
-	}
-
-	app_control_add_extra_data(svc, "viewtype", str);
-
-	SETTING_TRACE_DEBUG("send viewtype to password : %s", str);
-
-	if ((ad->pw_type != SETTING_SEC_PW_ENTER_LOCK_TYPE) && ad->input_pwd) {
-		SETTING_TRACE_SECURE_DEBUG("Send current : %s", ad->input_pwd);
-		app_control_add_extra_data(svc, "current", ad->input_pwd);
-	}
-
-	if (ad->ly_main)
-		elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
-	ad->ug_removed = FALSE;
-	ad->ug_passwd = setting_ug_create(ad->ug, "setting-password-efl",
-			UG_MODE_FULLVIEW, svc, cbs);
-	if (NULL == ad->ug_passwd) { /* error handling */
-		evas_object_show(ad->ly_main);
-	}
-
-	app_control_destroy(svc);
-	FREE(cbs);
-
-	return TRUE;
-}
-
-void setting_security_layout_lockscreen_options_ug_cb(ui_gadget_h ug,
-		enum ug_mode mode, void *priv)
-{
-	if (!priv)
-		return;
-
-	Evas_Object *base = ug_get_layout(ug);
-	if (!base)
-		return;
-
-	switch (mode) {
-	case UG_MODE_FULLVIEW:
-		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-		EVAS_HINT_EXPAND);
-		evas_object_show(base);
-		break;
-	default:
-		break;
-	}
-
-	return;
-}
-
-void setting_security_destroy_lockscreen_options_ug_cb(ui_gadget_h ug,
-		void *priv)
-{
-	ret_if(priv == NULL);
-	SettingSecurityUG *ad = (SettingSecurityUG *)priv;
-	if (ug) {
-		setting_ug_destroy(ug);
-		ad->ug_lockscreen = NULL;
-	}
-}
-
-gboolean setting_security_create_lockscreen_options_sg(void *data)
-{
-	/* error check */
-	retv_if(data == NULL, FALSE);
-
-	/* ad is point to data */
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
-
-	if (ad->ug_lockscreen) {
-		SETTING_TRACE("Password UG is already loaded.");
-		return FALSE;
-	}
-
-	app_launcher("lockscreen-options", NULL, NULL);
-
-	return TRUE;
-}
-#if SUPPORT_ENCRYPTION
-void setting_security_layout_mmc_encryption_ug_cb(ui_gadget_h ug,
-		enum ug_mode mode, void *priv)
-{
-	if (!priv)
-	return;
-
-	Evas_Object *base = ug_get_layout(ug);
-	if (!base)
-	return;
-
-	switch (mode) {
-	case UG_MODE_FULLVIEW:
-		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-				EVAS_HINT_EXPAND);
-		evas_object_show(base);
-		break;
-	default:
-		break;
-	}
-
-	return;
-}
-
-void setting_security_destroy_mmc_encryption_ug_cb(ui_gadget_h ug,
-		void *priv)
-{
-	ret_if(priv == NULL);
-	SettingSecurityUG *ad = (SettingSecurityUG *) priv;
-	if (ug) {
-		setting_ug_destroy(ug);
-		ad->ug_mmc_encryption = NULL;
-	}
-
-}
-
-gboolean setting_security_create_mmc_encryption_sg(void *data)
-{
-	/* error check */
-	retv_if(data == NULL, FALSE);
-
-	/* ad is point to data */
-	SettingSecurityUG *ad = (SettingSecurityUG *) data;
-
-	if (ad->ug_mmc_encryption) {
-		SETTING_TRACE("mmc encryption UG is already loaded.");
-		return FALSE;
-	}
-	struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
-
-	if (!cbs)
-	return FALSE;
-	cbs->layout_cb = setting_security_layout_mmc_encryption_ug_cb;
-	cbs->result_cb = NULL;
-	cbs->destroy_cb = setting_security_destroy_mmc_encryption_ug_cb;
-	cbs->priv = (void *)ad;
-
-	if (ad->ly_main)
-	elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
-	ad->ug_mmc_encryption = setting_ug_create(ad->ug,
-			"setting-mmc-encryption-efl", UG_MODE_FULLVIEW, NULL,
-			cbs);
-	if (NULL == ad->ug_mmc_encryption) { /* error handling */
-		SETTING_TRACE_ERROR("NULL == ad->ug_mmc_encryption");
-		evas_object_show(ad->ly_main);
-	}
-
-	FREE(cbs);
-
-	return TRUE;
-}
-#endif
-
-void setting_security_layout_firewall_ug_cb(ui_gadget_h ug, enum ug_mode mode,
-		void *priv)
-{
-	Evas_Object *base = ug_get_layout(ug);
-	if (!base)
-		return;
-
-	switch (mode) {
-	case UG_MODE_FULLVIEW:
-		evas_object_size_hint_weight_set(base, EVAS_HINT_EXPAND,
-		EVAS_HINT_EXPAND);
-		/*elm_win_resize_object_add(ad->win_get, base); */
-		evas_object_show(base);
-		break;
-	default:
-		break;
-	}
-
-	return;
-}
-
-void setting_security_destroy_firewall_ug_cb(ui_gadget_h ug, void *priv)
-{
-	ret_if(priv == NULL);
-	SettingSecurityUG *ad = (SettingSecurityUG *)priv;
-
-	elm_object_tree_focus_allow_set(ad->ly_main, EINA_TRUE);
-	if (ug) {
-		setting_ug_destroy(ug);
-		ad->ug_firewall = NULL;
-	}
-}
-
-gboolean setting_security_create_firewall_sg(void *data)
-{
-	retv_if(data == NULL, FALSE);
-
-	SettingSecurityUG *ad = (SettingSecurityUG *)data;
-	if (ad->ug_firewall) {
-		SETTING_TRACE("firewall UG is already loaded.");
-		return FALSE;
-	}
-	struct ug_cbs *cbs = (struct ug_cbs *)calloc(1, sizeof(struct ug_cbs));
-
-	if (!cbs)
-		return FALSE;
-	cbs->layout_cb = setting_security_layout_firewall_ug_cb;
-	cbs->result_cb = NULL;
-	cbs->destroy_cb = setting_security_destroy_firewall_ug_cb;
-	cbs->priv = (void *)ad;
-
-	if (ad->ly_main)
-		elm_object_tree_focus_allow_set(ad->ly_main, EINA_FALSE);
-	ad->ug_firewall = setting_ug_create(ad->ug, "setting-firewall-efl",
-			UG_MODE_FULLVIEW, NULL, cbs);
-	if (NULL == ad->ug_firewall) {
-		SETTING_TRACE_ERROR("NULL == ad->ug_firewall");
-		evas_object_show(ad->ly_main);
-	}
-
-	FREE(cbs);
-	return TRUE;
-}
-
-/* ***************************************************
- *
- *call back func
- *
- ***************************************************/
-/* -1	on fail */
-/* 0~n	on success */
-int _get_security_table_index(char *name)
-{
-	int i = 0;
-
-	for (i = 0; i < SETTING_SEC_PW_MAX; i++) {
-		if (0 == safeStrCmp(name, security_table[i].pw_type_string))
-			return i;
-	}
-	return -1;
-}
-
-void setting_security_result_password_ug_cb(ui_gadget_h ug,
-		app_control_h service, void *priv)
+static void _setting_security_password_launch_reply_cb(app_control_h request,
+			app_control_h reply,
+			app_control_result_e res,
+			void *priv)
 {
 	SETTING_TRACE_BEGIN;
 	/* error check */
 	retm_if(priv == NULL, "Data paremeter is NULL");
 
 	/* ad is point to priv */
-	SettingSecurityUG *ad = (SettingSecurityUG *)priv;
+	SettingSecurity *ad = (SettingSecurity *)priv;
 
-	if (ad->ly_main)
-		elm_object_tree_focus_allow_set(ad->ly_main, EINA_TRUE);
+	if (APP_CONTROL_RESULT_APP_STARTED != res) {
+		SETTING_TRACE_ERROR("APP_CONTROL_RESULT_APP_STARTED != res");
+		setting_security_end_password_ug_cb(NULL, ad);
+		return;
+	}
+
+	if (ad->md.ly_main)
+		elm_object_tree_focus_allow_set(ad->md.ly_main, EINA_TRUE);
 
 	char *result = NULL;
 	char *current = NULL;
 
-	app_control_get_extra_data(service, "result", &result);
-	app_control_get_extra_data(service, "current", &current);
-
-	/* divided pw view type */
-	SETTING_TRACE("ad->pw_type: %d result :%s", ad->pw_type, result);
-	ret_if(NULL == result);
+	app_control_get_extra_data(reply, "result", &result);
+	app_control_get_extra_data(reply, "current", &current);
 
 	if (safeStrCmp(result, "Cancel") == 0) {
 		ad->pw_type = -1;
@@ -1424,19 +945,17 @@ void setting_security_result_password_ug_cb(ui_gadget_h ug,
 					ad);
 		}
 		FREE(result);
+		setting_security_end_password_ug_cb(NULL, ad);
 		return;
 		/* To do : rollback previouse status. */
 	} else if (safeStrCmp(result, "SETTING_PW_TYPE_ENTER_LOCK_TYPE") == 0) {
-		/*ug_destroy(ug); */
-		/*ad->ug_passwd = NULL; */
-		/*setting_view_update(&setting_view_security_locktype, ad); */
 		ad->pw_type = SETTING_SEC_PW_ENTER_LOCK_TYPE;
 	} else if (safeStrCmp(result, "SETTING_PW_TYPE_ENTER_LOCK_TYPE:Fail") == 0) {
 		ad->pw_type = -1;
-		ug_destroy_me(ad->ug);
 		FREE(result);
 		if (current)
 			FREE(current);
+		ui_app_exit();
 		return;
 	} else {
 		int index = _get_security_table_index(result);
@@ -1457,14 +976,58 @@ void setting_security_result_password_ug_cb(ui_gadget_h ug,
 		FREE(current);
 	}
 
-	evas_object_show(ad->ly_main);
+	evas_object_show(ad->md.ly_main);
 	FREE(result);
+
+	setting_security_end_password_ug_cb(NULL, ad);
+
 	SETTING_TRACE_END;
 }
 
-#ifdef Status
-#undef Status
-#endif
+gboolean setting_security_create_password_sg(void *data)
+{
+	SETTING_TRACE_BEGIN;
+	/* error check */
+	retv_if(data == NULL, FALSE);
+
+	/* ad is point to data */
+	SettingSecurity *ad = (SettingSecurity *)data;
+
+	if ((ad->pw_type < 0) || (ad->pw_type > SETTING_SEC_PW_MAX))
+		return FALSE;
+
+	char str[Max_Passwd_View_Type_Len + 1] = { 0, };
+	safeCopyStr(str, security_table[ad->pw_type].pw_type_string,
+	Max_Passwd_View_Type_Len);
+
+	app_control_h svc = NULL;
+	if (app_control_create(&svc)) {
+		return FALSE;
+	}
+
+	app_control_add_extra_data(svc, "viewtype", str);
+
+	SETTING_TRACE_DEBUG("send viewtype to password : %s", str);
+
+	if ((ad->pw_type != SETTING_SEC_PW_ENTER_LOCK_TYPE) && ad->input_pwd) {
+		SETTING_TRACE_SECURE_DEBUG("Send current : %s", ad->input_pwd);
+		app_control_add_extra_data(svc, "current", ad->input_pwd);
+	}
+
+	if (ad->md.ly_main)
+		elm_object_tree_focus_allow_set(ad->md.ly_main, EINA_FALSE);
+
+	if (APP_CONTROL_ERROR_NONE !=
+			app_launcher_svc("org.tizen.setting-password", svc,
+			_setting_security_password_launch_reply_cb, ad)
+		) {
+		evas_object_show(ad->md.ly_main);
+	}
+
+	app_control_destroy(svc);
+
+	return TRUE;
+}
 
 static Setting_Cfg_Node_T s_cfg_node_array[] = {
 	{
@@ -1552,7 +1115,7 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 		NULL,
 		NULL }, };
 
-UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
+int setting_plugin_search_init(app_control_h service, void *priv,
 		char **applocale)
 {
 	SETTING_TRACE_BEGIN;
@@ -1575,63 +1138,3 @@ UG_MODULE_API int setting_plugin_search_init(app_control_h service, void *priv,
 	}
 	return 0;
 }
-
-#if SUPPORT_SECURITY_FIREWALL
-int setting_security_system_command(const char *command, const char *commandex)
-{
-	SETTING_TRACE_BEGIN;
-	int pid = 0, status = 0;
-	char *argv[2] = { NULL, };
-	/*int ret; */
-
-	/* if (command == 0 && commandex == 0) {
-		not exist input
-	} */
-
-	pid = fork();
-
-	if (pid > 0) {
-		SETTING_TRACE("parent");
-		wait(&status);
-		return WEXITSTATUS(status);
-	}
-
-	if (pid == 0) {
-		char *args[100] = {
-			argv[0] = (char *)command,
-			argv[1] = (char *)commandex,
-			NULL, };
-
-		SETTING_TRACE_DEBUG("[%s]:%s", argv[0], argv[1]);
-		execv(_TZ_SYS_RO_APP"/org.tizen.setting/bin/firewall", args);
-	}
-	return 1;
-}
-
-int setting_security_firewall_reset()
-{
-	SETTING_TRACE_BEGIN;
-
-	struct dirent ent, *next_file;
-	DIR *theFolder;
-
-	char filepath[256];
-
-	theFolder = opendir(SEC_FIREWALL_DIR);
-	readdir_r(theFolder, &ent, &next_file);
-	while (next_file) {
-		/* build the full path for each file in the folder */
-		snprintf(filepath, 256, "%s/%s", SEC_FIREWALL_DIR, ent.d_name);
-		SETTING_TRACE_DEBUG("[%s]", filepath);
-		/*(void) remove(filepath); */
-		if (remove(filepath) != 0) { /*delete the file */
-			perror("remove");
-		}
-		readdir_r(theFolder, &ent, &next_file);
-	}
-
-	closedir(theFolder);
-	return 0;
-}
-#endif
-

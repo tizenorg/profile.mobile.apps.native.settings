@@ -659,7 +659,6 @@ int __setting_init_search_index_module()
 		"setting-accessory-efl", /* NO CODE !!! */
 		"setting-powersaving-efl", /* NO CODE !!! */
 		"setting-storage-efl", /* NO CODE !!! */
-		"setting-security-efl", /* NO CODE !!! */
 		"setting-privacy-efl", /* NO CODE !!! */
 		"isfsetting-efl", /* NO CODE !!! */
 		"setting-developeroption-efl", /* NO CODE !!! */
