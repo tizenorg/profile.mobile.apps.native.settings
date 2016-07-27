@@ -129,7 +129,10 @@ extern char *_get_default_font();
 extern int setting_set_i18n(char *pkgname, char *localedir);
 extern int setting_set_i18n_force(char *pkgname, char *localedir);
 
-extern int app_launcher(const char *pkg_name, app_control_reply_cb callback, void *user_data);
+extern int app_launcher(const char *pkg_name, app_control_reply_cb callback,
+		void *user_data);
+extern int app_launcher_svc(const char *pkg_name, app_control_h service,
+		app_control_reply_cb callback, void *user_data);
 extern int app_group_launcher(const char *pkg_name);
 extern char *substring(const char *str, size_t begin, size_t len);
 extern bool check_blockingmode_sub_item();
