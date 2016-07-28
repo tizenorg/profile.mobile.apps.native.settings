@@ -247,8 +247,12 @@ GOPTION="-g 6514"
 #resetImages
 #	DEFAULT_HOME="%{OPTSHAREREFIX}/Wallpapers/Home_default.jpg"
 #	DEFAULT_LOCK="%{OPTSHAREREFIX}/Wallpapers/Default.jpg"
-	DEFAULT_HOME="%{TZ_SYS_SHARE}/Wallpapers/Home_default.jpg"
-	DEFAULT_LOCK="%{TZ_SYS_SHARE}/Wallpapers/Default.jpg"
+
+#	DEFAULT_HOME="%{TZ_SYS_SHARE}/Wallpapers/Home_default.jpg"
+#	DEFAULT_LOCK="%{TZ_SYS_SHARE}/Wallpapers/Default.jpg"
+
+	DEFAULT_HOME="%{TZ_SYS_SHARE}/Wallpapers/home_002.png"
+	DEFAULT_LOCK="%{TZ_SYS_SHARE}/Wallpapers/home_003.png"
 
 	#rm -f %{_sysconfdir}/localtime
 	#ln -s %{_datadir}/zoneinfo/Asia/Seoul %{_sysconfdir}/localtime
