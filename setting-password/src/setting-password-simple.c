@@ -625,9 +625,15 @@ static int setting_password_simple_create(void *cb)
 	evas_object_event_callback_add(ad->sp_entry4, EVAS_CALLBACK_MOUSE_DOWN,
 			__enable_imf_cb, ad);
 
+	evas_object_event_callback_add(ad->win_main_layout, EVAS_CALLBACK_FOCUS_IN,
+			__enable_imf_cb, ad);
+
+
 	evas_object_show(ad->simple_layout);
 
+#if 0
 	__imf_show_for_simple_password(ad);
+#endif
 
 	setting_view_password_simple.is_create = 1;
 
