@@ -18,10 +18,46 @@
  * limitations under the License.
  *
  */
+
 /**
- *@defgroup setting-app
- *entry point of Setting application
- */
+ * @mainpage Settings documentation
+ *
+ * @section overview Detailed Description
+ *
+ * @image html org.tizen.setting.png
+ *
+ * \n
+ * <b>App ID:</b> org.tizen.setting\n
+ *
+ * Settings app main purpose is to give user possibility to configure main
+ * system settings and maintain the telephone.\n
+ *
+ * On the application's main screen you can find list of possible settings -
+ * icon and setting description. The ist is divided in four sections:\n
+ *
+ * <ul>
+ * <ui>Connections</ui>
+ * <ui>Device</ui>
+ * <ui>Personalization</ui>
+ * <ui>System</ui>
+ * </ul>
+ *
+ * The <b>Connections</b> section contains <i>Wi-Fi</i>, <i>Bluetooth</i>,
+ * <i>Airplane mode</i>, <i>NFC</i>, <i>Tethering</i>, <i>Mobile networks</i>
+ * settings and the button named <i>More connection settings</i> with
+ * <i>Location service</i> settings\n
+ *
+ * In the <b>Device</b> section you can find settings for <i>Sound</i>,
+ * <i>Display</i> and <i>Applications</i>\n
+ *
+ * The <b>Personalization</b> section has <i>Wallpapers</i>, <i>Lock screen</i>,
+ * <i>Accounts</i> and <i>Privacy and safety</i> settings nodes.\n
+ *
+ * And the <b>System</b> section allows to configure <i>Language and input</i>,
+ * <i>Storage</i> and <i>Date and time</i>. You can also press
+ * <i>About device</i> to see device information.\n
+ **/
+
 #ifndef __SETTING_H__
 #define __SETTING_H__
 
