@@ -18,6 +18,10 @@
  * limitations under the License.
  *
  */
+/**
+ *@defgroup setting-ringtone
+ *Ringtone page displaying settings to set ringtones volume.
+ */
 #ifndef __SETTING_RINGTONE_H__
 #define __SETTING_RINGTONE_H__
 

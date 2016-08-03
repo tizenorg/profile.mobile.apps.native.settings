@@ -18,6 +18,10 @@
  * limitations under the License.
  *
  */
+/**
+ *@defgroup setting-Display
+ *Display page displaying list of display options.
+ */
 #ifndef __SETTING_DISPLAY_H__
 #define __SETTING_DISPLAY_H__
 

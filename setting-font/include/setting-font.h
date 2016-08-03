@@ -18,6 +18,10 @@
  * limitations under the License.
  *
  */
+/**
+ *@defgroup setting-font
+ *Font page displaying menu to set font size and style.
+ */
 #ifndef __SETTING_FONT_H__
 #define __SETTING_FONT_H__
 

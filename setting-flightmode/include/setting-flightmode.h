@@ -18,6 +18,10 @@
  * limitations under the License.
  *
  */
+/**
+ *@defgroup setting-flightmode
+ *Flightmode page displaying menu to enable or disable flight mode.
+ */
 #ifndef __SETTING_FLIGHTMODE_H__
 #define __SETTING_FLIGHTMODE_H__
 
