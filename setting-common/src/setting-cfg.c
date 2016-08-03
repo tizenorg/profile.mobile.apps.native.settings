@@ -249,7 +249,7 @@ static Setting_Cfg_Node_T s_cfg_node_array[] = {
 		Cfg_Item_Pos_Level0, Cfg_Item_Resetable, 0,
 		Cfg_Item_AppLauncher_Node, NULL, KeyStr_Personal, NULL,
 		uuid_LockedScreen, 0, "ug-lockscreen-options-efl"},
-#if 0
+#if 1
 	/*Accessbility - not supported since 2015.8.12 */
 	{	KeyStr_Accessibility, IMG_Accessibility,
 		"setting-accessibility-efl",
