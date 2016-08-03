@@ -16,6 +16,10 @@
  * limitations under the License.
  *
  */
+/**
+ *@defgroup setting-appmgr
+ *Application Manager page displaying list view of installed application.
+ */
 #ifndef __SETTING_APPMGR_H__
 #define __SETTING_APPMGR_H__
 

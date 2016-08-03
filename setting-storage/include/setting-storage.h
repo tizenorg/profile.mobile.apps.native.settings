@@ -16,6 +16,10 @@
  * limitations under the License.
  *
  */
+/**
+ *@defgroup setting-storage
+ *Storage page displaying usage space in the device.
+ */
 #ifndef __SETTING_STORAGE_H__
 #define __SETTING_STORAGE_H__
 

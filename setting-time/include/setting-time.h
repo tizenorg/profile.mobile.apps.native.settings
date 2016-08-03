@@ -18,6 +18,10 @@
  * limitations under the License.
  *
  */
+/**
+ *@defgroup setting-time
+ *Time page displaying settings to set date and time in the device.
+ */
 #ifndef __SETTING_TIME_H__
 #define __SETTING_TIME_H__
 

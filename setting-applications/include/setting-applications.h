@@ -18,6 +18,10 @@
  * limitations under the License.
  *
  */
+/**
+ *@defgroup setting-application
+ *Application page displaying application manager and default app menu.
+ */
 #ifndef __SETTING_APPLICATION_H__
 #define __SETTING_APPLICATION_H__
 

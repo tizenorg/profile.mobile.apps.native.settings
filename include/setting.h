@@ -24,7 +24,9 @@
  *
  * @section overview Detailed Description
  *
- * @image html org.tizen.setting.png
+ * @image html org.tizen.setting.screen1.png
+ * @image html org.tizen.setting.screen2.png
+ * @image html org.tizen.setting.screen3.png
  *
  * \n
  * <b>App ID:</b> org.tizen.setting\n
@@ -54,7 +56,7 @@
  * \n- Privacy and safety - The privacy service settings.
  * - <b>System</b>
  * \n- Language and input - The settings to choose displayed language and TTS options.
- * \n- Storage - The Storage settings which show usage of used space in the device.
+ * \n- Storage - The Storage settings which show usage space in the device.
  * \n- Date and time - To setup time in the system.
  * \n- About device - Information about device, software version, serial number, etc.
  *

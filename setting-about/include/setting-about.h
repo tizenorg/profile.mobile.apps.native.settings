@@ -23,6 +23,7 @@
  *
  * @brief	   Setting > About
  * @details	   'About' view object by UI gadget
+ * @defgroup	setting-about
  */
 
 
