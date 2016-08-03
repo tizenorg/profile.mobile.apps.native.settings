@@ -40,25 +40,30 @@
  * - <b>Connections</b>
  * \n- Wi-Fi - To manage Wi-Fi connections and options.
  * \n- Bluetooth - The Bluetooth service.
- * \n- Flight mode - To disable calling and messaging function and turn off mobile data/Wi-Fi/Bluetooth.
+ * \n- Flight mode - To disable calling and messaging function and turn off
+ * mobile data/Wi-Fi/Bluetooth.
  * \n- Tethering - The icon will be shown when GPS module is in use.
  * \n- Mobile networks - The icon will be shown when GPS module is in use.
  * \n- NFC - To manage NFC options.
  * \n- More connections - The location service settings.
  * - <b>Device</b>
- * \n- Sound - The settings to manage ringtones for calls and volume of notification, media, system.
+ * \n- Sound - The settings to manage ringtones for calls and volume of
+ * notification, media, system.
  * \n- Display - To choose screen brightness, font size or screen timeout.
- * \n- Applications - The Application settings where user can manage application installed on the platform.
+ * \n- Applications - The Application settings where user can manage application
+ * installed on the platform.
  * - <b>Personalization</b>
  * \n- Wallpapers - The settings to manage wallpapers.
  * \n- Lock Screen - The locksreen settings. to setup screen lock type etc.
  * \n- Accounts - The settings to manage user accounts in the system.
  * \n- Privacy and safety - The privacy service settings.
  * - <b>System</b>
- * \n- Language and input - The settings to choose displayed language and TTS options.
+ * \n- Language and input - The settings to choose displayed language and TTS
+ * options.
  * \n- Storage - The Storage settings which show usage space in the device.
  * \n- Date and time - To setup time in the system.
- * \n- About device - Information about device, software version, serial number, etc.
+ * \n- About device - Information about device, software version, serial number,
+ * etc.
  *
  *
  * The <b>Connections</b> section contains <i>Wi-Fi</i>, <i>Bluetooth</i>,
@@ -75,6 +80,14 @@
  * And the <b>System</b> section allows to configure <i>Language and input</i>,
  * <i>Storage</i> and <i>Date and time</i>. You can also press
  * <i>About device</i> to see device information.\n
+ * \n
+ * Exact list of setting modules depends on hardware used (for example not all
+ * devices has NFC setting etc.).\n
+ * \n
+ * <h3>Achitecture overview</h3>
+ * Every module is an application called from main settings application or from
+ * other applications. If needed, it's called with parameters (messages), and
+ * it may return result (reply message) to the application, which called it.\n
  **/
 
 #ifndef __SETTING_H__
